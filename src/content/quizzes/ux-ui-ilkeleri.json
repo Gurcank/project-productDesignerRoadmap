@@ -1,0 +1,81 @@
+{
+  "category": "ux-ui-ilkeleri",
+  "source": "04-ui-ux-surec-ve-ilkeler.md",
+  "items": [
+    {
+      "n": 1,
+      "question": "UX ile UI arasındaki fark nedir? Kusursuz bir UI kötü bir UX üretebilir mi? Örnek ver.",
+      "answer": "UI arayüz katmanıdır (ekranlar, butonlar, tipografi); UX ise kullanıcının ürünle kurduğu ilişkinin bütünüdür — bekleme süreleri, e-postalar, destek dahil. Evet üretebilir: kusursuz bir ödeme ekranı, onay e-postası 20 dakika sonra geliyorsa kullanıcıda \"işlem geçti mi?\" endişesi bırakır."
+    },
+    {
+      "n": 2,
+      "question": "Double Diamond'ın iki elması neyi temsil eder? Her elmasın sonunda ne bilinmiş olur?",
+      "answer": "İlk elmas **problem alanını** (Discover, Define), ikinci elmas **çözüm alanını** (Develop, Deliver) temsil eder. İlkinin sonunda problemin ne olduğu, ikincisinin sonunda nasıl çözüleceği bilinmiş olur."
+    },
+    {
+      "n": 3,
+      "question": "Erken aşamada neden bilinçli olarak düşük detaylı (lo-fi) çıktı gösterilir?",
+      "answer": "Detay seviyesi geri bildirimin türünü belirler. Gerçekçi bir ekran gösterirsen konuşma renk ve fonta kayar, yapı tartışması kapanır. Yapıyı konuşmak istiyorsan kutu ve çizgi göster."
+    },
+    {
+      "n": 4,
+      "question": "Wireframe, mockup ve prototype hangi üç farklı soruyu cevaplar?",
+      "answer": "Wireframe: **ne nerede duracak, hiyerarşi ne?** Mockup: **nasıl görünecek?** Prototype: **akış çalışıyor mu, kullanıcı yolunu bulabiliyor mu?**"
+    },
+    {
+      "n": 5,
+      "question": "Card sorting ile tree testing arasındaki fark nedir? Hangisi ne zaman kullanılır?",
+      "answer": "Card sorting kullanıcıdan içeriği **kendi mantığına göre gruplamasını** ister — yapıyı kurmak için, önce kullanılır. Tree testing kurulmuş yapıyı, görsel tasarım olmadan **doğrulamak** için kullanılır — sonra."
+    },
+    {
+      "n": 6,
+      "question": "Bir özelliği kullanan kullanıcı oranı %3, ama kullananlar memnun. Bu findability sorunu mu, discoverability sorunu mu? Ne yaparsın?",
+      "answer": "Discoverability sorunu: kullanıcılar özelliğin varlığını bilmiyor (kullananlar memnun olduğuna göre kalite sorunu yok). Çözüm arama/menü düzeltmesi değil; boş ekranda tanıtım, onboarding adımı, ilgili bağlamda ipucu veya duyuru."
+    },
+    {
+      "n": 7,
+      "question": "\"Menüde 7'den fazla öğe olmasın\" cümlesi neden yanlış? Doğru referans hangi kavramdır?",
+      "answer": "Miller'ın 1956 çalışması **akılda tutulması gereken** bilgiyle ilgilidir; menü öğeleri ekranda görünür durur, bu bir tanıma görevidir, hatırlama görevi değil. Miller'ın kendisi de sayıyı bir tesadüf olarak nitelendirmiştir. Menü uzunluğu için doğru referans **Hick's Law** ve **bilişsel yük**tür; ayrıca asıl fayda seçenek silmekten değil gruplamaktan gelir."
+    },
+    {
+      "n": 8,
+      "question": "Affordance ile signifier arasındaki fark nedir? Bir örnekle açıkla.",
+      "answer": "Affordance imkânın kendisidir, signifier o imkânı görünür kılan ipucudur. Örnek: bir kart tıklanabilir olabilir (affordance var), ama imleç değişmiyor ve hover'da hiçbir şey olmuyorsa signifier yoktur — kullanıcı tıklanabildiğini anlamaz."
+    },
+    {
+      "n": 9,
+      "question": "Bir kullanıcı silme butonuna basınca \"Emin misiniz?\" diyaloğu göstermek yerine ne yapılabilir ve bu neden daha iyi olabilir?",
+      "answer": "İşlemi hemen yapıp geri alınabilir bir toast göstermek (\"Silindi — Geri al\"). Daha iyi olabilir çünkü sürekli onay sormak kullanıcıyı otomatik onaylamaya alıştırır ve diyaloğun koruma işlevi kaybolur; geri alma hem hızlı hem güvenlidir."
+    },
+    {
+      "n": 10,
+      "question": "F-pattern iyi bir tasarım hedefi midir? Neden?",
+      "answer": "Hayır. F-pattern bir hedef değil, **görsel hiyerarşisi zayıf sayfalarda ortaya çıkan bir gözlemdir**. Net başlıklar, alt başlıklar ve hiyerarşi konulduğunda kullanıcı bu desenden çıkar. Yani F-pattern görmek bir uyarı işaretidir."
+    },
+    {
+      "n": 11,
+      "question": "Placeholder metni label yerine kullanmanın üç sakıncasını say.",
+      "answer": "(1) Kullanıcı yazmaya başlayınca kaybolur, alanın ne olduğu unutulur. (2) Kontrastı düşüktür, okunabilirliği zayıftır. (3) Ekran okuyucularda güvenilir biçimde okunmaz, erişilebilirlik sorunu yaratır. (Ek olarak: doldurulmuş boş alan ayrımını da zorlaştırır.)"
+    },
+    {
+      "n": 12,
+      "question": "Bir hata mesajının cevaplaması gereken üç soru nedir? Hangi durumda mesaj bilinçli olarak belirsiz bırakılır?",
+      "answer": "Ne oldu, neden oldu, şimdi ne yapmalıyım. Güvenlik gerektiren yerlerde bilinçli olarak belirsiz bırakılır: giriş ekranında \"bu e-posta kayıtlı değil\" demek, saldırgana hangi hesapların var olduğunu doğrular."
+    },
+    {
+      "n": 13,
+      "question": "\"Beş kullanıcı yeterlidir\" kuralının üç sınırı nedir?",
+      "answer": "(1) Birbirinden belirgin şekilde farklı kullanıcı grupları varsa her grup için ayrı test gerekir. (2) Rakam sabit bir problem bulma oranı varsayan bir modelden gelir, ölçüm değil tahmindir. (3) Faulkner'in çalışması, rastgele beşerli grupların sorunların %55 ile %99'u arasında değişen oranlarını bulduğunu gösterdi — beş kişi ortalama iyidir, garanti değildir."
+    },
+    {
+      "n": 14,
+      "question": "Funnel analizi \"dönüşüm düşük\" bilgisinden neden daha kullanışlıdır?",
+      "answer": "Çünkü kaybın **nerede** olduğunu söyler. \"Dönüşüm düşük\" bir durum tespitidir ve eyleme dönüşmez; \"kayıp %60 kart bilgisi adımında\" doğrudan hangi ekranın çalışılacağını gösterir."
+    },
+    {
+      "n": 15,
+      "question": "Bir kullanıcı testinde \"bunu beğendiniz mi?\" diye sormak neden yöntem hatasıdır?",
+      "answer": "Çünkü beyan edilen tercih ile gerçek davranış sık sık ayrışır. Test, görev verip **davranışı gözlemlemektir**; kullanıcı nezaketen veya kendini suçlamamak için \"kolaydı\" diyebilirken görevi tamamlayamamış olabilir."
+    }
+  ]
+}

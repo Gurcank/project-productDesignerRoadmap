@@ -1,0 +1,96 @@
+{
+  "category": "tasarim-sistemi",
+  "source": "05-tasarim-sistemi-ve-gorsel-dil.md",
+  "items": [
+    {
+      "n": 1,
+      "question": "Style guide, component library ve design system arasındaki fark nedir?",
+      "answer": "Style guide kuralları **anlatan** bir belgedir (logo, renk, ton). Component library yeniden kullanılabilir arayüz parçalarının **koleksiyonudur**. Design system bunların tümünü — token, bileşen, kural, dokümantasyon, kod ve bunları güncelleyen süreci — birlikte tutan **yaşayan sistemdir**."
+    },
+    {
+      "n": 2,
+      "question": "Primitive, semantic ve component token katmanları neyi çözer? Bir bileşenin doğrudan primitive token kullanması neden sorunludur?",
+      "answer": "Katmanlar, değeri kullanım niyetinden ayırır. Primitive ham değeri (`blue-600`), semantic niyeti (`color-action-primary`), component ise bileşene özel kullanımı saklar. Bileşen doğrudan primitive kullanırsa tema değişimi imkânsız hâle gelir: `gray-900` koyu temada da `gray-900` kalır, oysa `color-text-primary` hedefini değiştirebilir."
+    },
+    {
+      "n": 3,
+      "question": "Dark mode neden \"renkleri ters çevirmek\" değildir? En az üç sebep say.",
+      "answer": "(1) Saf beyaz metin koyu zeminde göz yorar, kırılmış beyaz gerekir. (2) Gölge koyu zeminde işe yaramaz; derinlik yüzey açıklık farkıyla verilir. (3) Doygun renkler koyu zeminde titrer, kroma düşürülmelidir. (4) Kontrast oranları yeniden hesaplanmalıdır; açık temada geçen bir çift koyu temada kalabilir."
+    },
+    {
+      "n": 4,
+      "question": "Typeface ile font arasındaki fark pratikte neyi etkiler?",
+      "answer": "Typeface tasarımın kendisidir (Inter), font ise belirli bir ağırlık/stil/format dosyasıdır (Inter Bold, `.woff2`). Pratikte performansı etkiler: bir typeface seçersin ama kaç font **dosyası** yükleyeceğine ayrıca karar verirsin; her ağırlık ek bir dosyadır."
+    },
+    {
+      "n": 5,
+      "question": "Type scale neden gerekli? Ölçek olmadan ne olur?",
+      "answer": "Ölçek, rastgele boyut kullanımını engeller. 14, 15, 16, 17, 18 hepsi kullanılırsa aradaki farklar algılanamaz ve hiyerarşi okunmaz. Belirgin adımlar (16 / 20 / 25 / 31) fark edilebilir bir sıralama üretir."
+    },
+    {
+      "n": 6,
+      "question": "Gövde metni ve büyük başlık için satır yüksekliği neden farklı olmalı?",
+      "answer": "Yazı büyüdükçe satır yüksekliği **oranı** küçülmelidir. Gövde için 1.5 civarı rahat okunur; aynı oran 40px'lik bir başlıkta satırları kopuk ve dağınık gösterir, orada 1.1–1.2 uygundur."
+    },
+    {
+      "n": 7,
+      "question": "Bir makale sayfasında `max-width` vermenin gerekçesi nedir? Hangi kavramla ilgilidir?",
+      "answer": "Satır uzunluğu (measure) meselesi. Çok uzun satırda göz, satır sonundan bir sonraki satır başına dönerken kaybolur. Gövde metni için yaklaşık 45–75 karakter aralığı önerilir; geniş ekranda `max-width` olmadan bu aralık çok aşılır."
+    },
+    {
+      "n": 8,
+      "question": "WCAG AA seviyesinde normal metin, büyük metin ve arayüz bileşenleri için minimum kontrast oranları nedir?",
+      "answer": "Normal metin **4.5:1**, büyük metin **3:1** (≈24px veya kalınsa ≈18.66px ve üstü), metin olmayan arayüz bileşenleri ve odak göstergeleri **3:1**. (AAA seviyesinde 7:1 ve 4.5:1.)"
+    },
+    {
+      "n": 9,
+      "question": "OKLCH'in HSL'e göre avantajı nedir?",
+      "answer": "Algısal tekdüzelik. HSL'de aynı açıklık değerine sahip iki renk (sarı ve mavi gibi) gözle farklı parlaklıkta görünür; OKLCH'te eşit açıklık değeri eşit algılanan parlaklık üretir. Bu, rampa kurmayı ve kontrast korumayı öngörülebilir hâle getirir."
+    },
+    {
+      "n": 10,
+      "question": "8pt grid'in asıl faydası matematiksel midir? Değilse nedir?",
+      "answer": "Hayır. Ekran boyutlarının 8'e bölünebilmesi ikincil bir faydadır; asıl fayda **karar sayısını azaltmasıdır**. 8, 16, 24 arasından seçmek 0–100 arasından seçmekten hem hızlı hem tutarlıdır."
+    },
+    {
+      "n": 11,
+      "question": "Başlık üstündeki boşluk neden başlık altındakinden büyük olmalı? Hangi ilkeyle açıklanır?",
+      "answer": "Gestalt **yakınlık** (proximity) ilkesi gereği. Başlık, altındaki metne ait olarak okunmalıdır; üst boşluk alt boşluktan küçük olursa başlık bir önceki bloğa aitmiş gibi görünür."
+    },
+    {
+      "n": 12,
+      "question": "İç içe iki kutuda köşe yarıçapları nasıl ilişkilendirilmeli?",
+      "answer": "Dıştaki radius, içtekinden büyük olmalıdır — kabaca **dış radius = iç radius + aradaki boşluk**. Aksi hâlde köşeler optik olarak yanlış hizalanmış görünür."
+    },
+    {
+      "n": 13,
+      "question": "Breakpoint seçerken neden cihaz modeli referans alınmamalı?",
+      "answer": "Cihaz modelleri ve boyutları sürekli değişir; \"iPhone genişliği\" gibi sabitler hızla eskir. Doğru yaklaşım **içeriğe göre** seçmektir: yerleşim hangi genişlikte bozuluyorsa breakpoint oradadır."
+    },
+    {
+      "n": 14,
+      "question": "Container query hangi problemi çözer, breakpoint neden yetmez?",
+      "answer": "Aynı bileşenin, ekran genişliği aynıyken farklı kapsayıcılarda farklı davranması gerektiği durumu çözer. Bir kart geniş ana bölümde yatay, dar sidebar'da dikey olmalıdır; ikisi için de ekran genişliği aynı olduğundan breakpoint bunu ayırt edemez."
+    },
+    {
+      "n": 15,
+      "question": "Ekrana giren ve ekrandan çıkan öğeler için hangi easing türleri kullanılır ve neden?",
+      "answer": "Ekrana **giren** öğe `ease-out` (hızlı başlar, yavaşlar) — dikkat çeker ve doğal biçimde yerine oturur. Ekrandan **çıkan** öğe `ease-in` (yavaş başlar, hızlanır) — gidişi hızlandırır, kullanıcıyı bekletmez. Doğrusal hareket mekanik hisseder çünkü gerçek dünyada hiçbir şey sabit hızda başlayıp durmaz."
+    },
+    {
+      "n": 16,
+      "question": "`prefers-reduced-motion` açıkken ne yapılmalı? Tüm animasyonları kapatmak doğru mu?",
+      "answer": "Hayır, tamamen kapatmak doğru değil. Büyük yer değiştirmeler, paralaks ve zoom gibi vestibüler rahatsızlık yaratabilecek hareketler kaldırılır; yerine kısa bir opaklık geçişi gibi zararsız bir geri bildirim bırakılır. Amaç hareketi yok etmek değil, rahatsız edici olanı azaltmaktır."
+    },
+    {
+      "n": 17,
+      "question": "Figma'da Variable ile Style arasındaki fark nedir? Hangi durumda hâlâ Style kullanılır?",
+      "answer": "Variable dinamik ve tiplidir: modları (light/dark, marka A/B) destekler, başka bir değişkeni referans alabilir (aliasing) ve Dev Mode'da code syntax adıyla görünür. Style statik tek bir değer saklar, mod ve alias desteklemez. **Style hâlâ bileşik değerler için kullanılır** — özellikle metin stilleri (aile + boyut + ağırlık + satır yüksekliği) ve efektler."
+    },
+    {
+      "n": 18,
+      "question": "Figma'daki \"variant / component property\" kavramının kod tarafındaki karşılığı nedir?",
+      "answer": "Kod tarafındaki **props** (8.7). Bir bileşenin `variant`, `size`, `disabled` gibi özellikleri, Figma'daki component property'lerin doğrudan karşılığıdır; bu eşleşme handoff'u kolaylaştırır."
+    }
+  ]
+}

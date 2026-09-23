@@ -1,0 +1,111 @@
+{
+  "category": "guvenlik-ve-hukuk",
+  "source": "13-guvenlik-ve-hukuki-yukumluluk.md",
+  "items": [
+    {
+      "n": 1,
+      "question": "Güvenlik açıklarının çoğu neden bir tasarım kararının sonucudur? Üç örnek ver.",
+      "answer": "Çünkü mimari ve akış kararları, saldırı imkânlarını belirler. Örnekler: (a) URL'de sıralı ID göstermek → IDOR denemesini kolaylaştırır. (b) \"Bu e-posta kayıtlı değil\" mesajı → saldırgana hesap listesi verir. (c) Gereksiz form alanı toplamak → her kişisel veri bir yükümlülük ve sızma riski. (Ayrıca: çerez banner'ında reddi zorlaştırmak, gereksiz üçüncü parti gömmek.)"
+    },
+    {
+      "n": 2,
+      "question": "Attack surface ile tasarım sadeliği arasındaki ilişki nedir?",
+      "answer": "Her yeni özellik, form alanı ve üçüncü parti entegrasyon saldırı yüzeyini büyütür. **Kaldırılan bir özellik, korunması gereken bir yüzeyin de kaldırılması demektir** — yani sadelik burada bir güvenlik faydası üretir."
+    },
+    {
+      "n": 3,
+      "question": "OWASP Top 10'un güncel sürümü hangisidir ve 2021'e göre iki yeni kategori nedir?",
+      "answer": "**OWASP Top 10:2025** (Kasım 2025'te yayımlandı). İki yeni kategori: **A03 Software Supply Chain Failures** ve **A10 Mishandling of Exceptional Conditions**. Ayrıca SSRF ayrı madde olmaktan çıkıp A01 Broken Access Control'e dahil edildi."
+    },
+    {
+      "n": 4,
+      "question": "XSS ile CSRF arasındaki fark nedir?",
+      "answer": "**XSS**, saldırganın **senin sitende** kod çalıştırmasıdır. **CSRF**, saldırganın **başka bir siteden** senin sitene, kullanıcının oturumunu kullanarak istek attırmasıdır. Farklı savunmalar gerektirirler (escaping/CSP vs SameSite/CSRF jetonu)."
+    },
+    {
+      "n": 5,
+      "question": "IDOR nedir ve neden tasarımcıyı doğrudan ilgilendirir? Asıl savunması nedir?",
+      "answer": "Bir kaydın kimliğini değiştirerek başkasına ait kayda erişebilmektir (`/siparis/1042` → `/siparis/1043`). Tasarımcıyı ilgilendirir çünkü URL yapısı ve kimlik gösterimi tasarım kararıdır. **Asıl savunma, her istekte \"bu kayıt bu kullanıcıya mı ait?\" kontrolüdür** — tahmin edilemez kimlik kullanmak yalnızca zorlaştırır, korumaz."
+    },
+    {
+      "n": 6,
+      "question": "\"URL gir, biz önizlemesini getirelim\" özelliği hangi riski doğurur?",
+      "answer": "**SSRF** (Server-Side Request Forgery). Saldırgan, sunucunun iç ağdaki gizli servislere istek atmasını sağlayabilir. Hangi adreslere istek atılabileceği sınırlanmalıdır."
+    },
+    {
+      "n": 7,
+      "question": "CORS bir güvenlik önlemi midir? \"CORS var, güvendeyiz\" cümlesi neden yanlış?",
+      "answer": "Hayır — CORS aslında same-origin politikasının **kontrollü gevşetilmesidir**. Ayrıca yalnızca tarayıcıyı bağlar; sunucudan sunucuya istekleri engellemez. \"CORS var, güvendeyiz\" yanlıştır çünkü asıl koruma **yetkilendirmedir**."
+    },
+    {
+      "n": 8,
+      "question": "CSP ne yapar ve tasarımda hangi sürtüşmeyi yaratır?",
+      "answer": "Sayfanın hangi kaynaklardan kod, stil, görsel ve font yükleyebileceğini sınırlar; XSS'e karşı ikinci savunma katmanıdır. **Sürtüşme:** sıkı bir CSP, gömülü analitik, harita, video oynatıcı ve font servislerini kırabilir — bu yüzden üçüncü parti seçimleri CSP kararıyla birlikte alınmalıdır."
+    },
+    {
+      "n": 9,
+      "question": "Bir API anahtarı yanlışlıkla depoya commit edildi ve fark edilip silindi. Yeterli mi?",
+      "answer": "**Hayır.** Sır, Git geçmişinde kalır ve otomatik tarayıcılar bunu dakikalar içinde bulur. Doğru tepki: **anahtarı derhal iptal edip yenisini üretmek** (key rotation)."
+    },
+    {
+      "n": 10,
+      "question": "Ön yüzde bir butonu gizlemek, o işlemi korumak için yeterli mi? Neden?",
+      "answer": "Hayır. Tarayıcıya gönderilen hiçbir şey gizli değildir ve ön yüzde gizlenmiş bir öğe \"korunmuş\" değil, sadece görünmez durumdadır. **Sunucu tarafında da yetki kontrolü zorunludur.**"
+    },
+    {
+      "n": 11,
+      "question": "Input validation, sanitization ve escaping arasındaki fark nedir?",
+      "answer": "**Input validation**: gelen veri kurallara uyuyor mu? **Sanitization**: tehlikeli kısımları veriden çıkar. **Escaping**: gösterirken kod olarak yorumlanmasını engelle. Üçü farklı işler yapar ve birbirinin yerine geçmez."
+    },
+    {
+      "n": 12,
+      "question": "Client-side doğrulama güvenlik sağlar mı?",
+      "answer": "Hayır. Client-side doğrulama atlanabilir; yalnızca kullanıcı deneyimi içindir. **Güvenlik sunucu tarafındaki doğrulamayla sağlanır.**"
+    },
+    {
+      "n": 13,
+      "question": "En az ayrıcalık ilkesinin tasarımdaki karşılığı nedir? Bir örnek ver.",
+      "answer": "Her kullanıcıya, servise ve anahtara yalnızca işini yapması için gereken yetkinin verilmesi. Tasarımdaki karşılığı: **varsayılan rolün ne olacağı bir güvenlik kararıdır** — davet edilen kullanıcı varsayılan olarak en dar yetkiyle (Member) başlamalı, Admin bilinçli bir seçim gerektirmelidir."
+    },
+    {
+      "n": 14,
+      "question": "\"Fail securely\" ne demek? Yetki servisi çökerse ne yapılmalı?",
+      "answer": "Bir kontrol hata verdiğinde sistemin **erişimi reddedecek** biçimde davranması. Yetki servisi çökerse herkesi içeri almak yerine erişim kapatılmalı ve kullanıcıya açıklayıcı bir hata gösterilmelidir."
+    },
+    {
+      "n": 15,
+      "question": "CAPTCHA neden son çare olmalı?",
+      "answer": "Çünkü bir **erişilebilirlik sorunudur**: görsel bulmacalar görme engelli kullanıcılar için engel oluşturur ve bilişsel yük ekler; WCAG 2.2'nin Accessible Authentication ölçütü bilişsel test gerektiren doğrulamaları sınırlar. Önce honeypot ve hız sınırı gibi kullanıcıya yük bindirmeyen yöntemler denenmelidir."
+    },
+    {
+      "n": 16,
+      "question": "WAF, koddaki bir açığı kapatır mı?",
+      "answer": "Hayır. WAF bazı saldırıları filtreler ama koddaki açığı kapatmaz. \"WAF var\" cümlesi bir güvenlik açığını mazur göstermez."
+    },
+    {
+      "n": 17,
+      "question": "Veri minimizasyonu neden hem UX hem uyum meselesidir?",
+      "answer": "Çünkü **toplamadığın veri, korumak zorunda olmadığın veridir.** Formdaki her alan hem kullanıcı için sürtünme hem şirket için yükümlülük ve sızma riskidir. \"Bu alanı gerçekten kullanıyor muyuz?\" sorusu ikisini birden cevaplar."
+    },
+    {
+      "n": 18,
+      "question": "Aydınlatma metni ile açık rıza aynı onay kutusunda toplanabilir mi? Güncel yaklaşım ne diyor?",
+      "answer": "Hayır — güncel yaklaşım bunu sorunlu buluyor. KVK Kurulu'nun ilgili ilke kararına dair duyurusunda, **açık rıza ve aydınlatma metinlerinin ayrı ayrı düzenlenmesi gerektiği** ve iç içe geçmiş tek metin olarak sunulmasının en sık karşılaşılan hukuka aykırılıklardan biri olduğu belirtiliyor. Ayrıca **aydınlatma yapıldığına dair onay istenmesi** de hatalı sayılıyor: aydınlatma bir bilgilendirmedir, onay gerektirmez."
+    },
+    {
+      "n": 19,
+      "question": "Her veri işleme faaliyeti için açık rıza gerekli midir? Her şeyi rızaya dayandırmanın riski nedir?",
+      "answer": "Hayır. Sözleşmenin ifası, kanuni yükümlülük ve meşru menfaat gibi başka hukuki sebepler de vardır. **Her şeyi rızaya dayandırmanın riski:** rıza her an geri çekilebilir, dolayısıyla işleme faaliyetinin hukuki temeli kırılgan hâle gelir."
+    },
+    {
+      "n": 20,
+      "question": "Bir ABD merkezli analitik servisi kullanmak hangi hukuki başlığı gündeme getirir?",
+      "answer": "**Yurt dışına veri aktarımı.** KVKK'nın 9. maddesindeki değişikliklerle açık rızaya dayalı aktarım genel kural olmaktan çıktı; yeterlilik kararı veya standart sözleşme gibi güvence mekanizmaları gerekiyor. Bu, üçüncü parti servis ve hosting seçimini doğrudan etkiler."
+    },
+    {
+      "n": 21,
+      "question": "İlgili kişinin haklarının arayüzdeki karşılığı nedir?",
+      "answer": "**Ekranlar.** Kullanıcı verisine erişme, düzeltme ve silinmesini isteme hakkına sahiptir; bunun karşılığı \"verilerimi indir\" ve \"hesabımı sil\" akışlarıdır. Ayrıca başvuru yolu makul olmalıdır — yalnızca noter gibi maliyetli kanallar sunmak eleştirilen bir uygulamadır."
+    }
+  ]
+}

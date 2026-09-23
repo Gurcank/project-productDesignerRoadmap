@@ -1,0 +1,57 @@
+---
+import DiagramFigure from "./DiagramFigure.astro";
+
+const stages = [
+  { name: "Kod", sub: "push / PR" },
+  { name: "Build", sub: "derleme" },
+  { name: "Test", sub: "birim + E2E" },
+  { name: "Kapı", sub: "lint, tip, a11y", gate: true },
+  { name: "Önizleme", sub: "gerçek URL" },
+  { name: "Yayın", sub: "production" },
+];
+const width = 96;
+const gap = 12;
+---
+
+<DiagramFigure
+  label="CI/CD hattı şeması"
+  caption="Kod gönderildiği andan yayına kadar geçtiği sıralı adımlar. Kritik olan 'kapı' adımıdır: testler, tip kontrolü, erişilebilirlik taraması ve performans bütçesi burada kontrol edilir ve biri düşerse hat durur. Senin açından en değerli durak önizleme: her değişikliğin gerçek bir adreste açılabilmesi, tasarım incelemesini ekran görüntüsü tartışmasından çıkarır."
+>
+  <svg viewBox="0 0 640 150" role="img" aria-label="Koddan yayına giden altı aşamalı CI/CD hattı">
+    <title>CI/CD hattı</title>
+
+    {
+      stages.map((stage, index) => {
+        const x = 8 + index * (width + gap);
+        return (
+          <>
+            <rect
+              class:list={["dg-box", { "dg-box--progress": stage.gate, "dg-box--accent": index === stages.length - 1 }]}
+              x={x}
+              y={40}
+              width={width}
+              height={56}
+              rx={8}
+            />
+            <text class="dg-label" x={x + width / 2} y={64} text-anchor="middle">
+              {stage.name}
+            </text>
+            <text class="dg-sub" x={x + width / 2} y={82} text-anchor="middle">
+              {stage.sub}
+            </text>
+            {index < stages.length - 1 && (
+              <>
+                <path class="dg-line" d={`M${x + width} 68 H${x + width + gap}`} />
+                <path class="dg-line" d={`M${x + width + gap - 6} 62 l6 6 -6 6`} stroke-linejoin="round" />
+              </>
+            )}
+          </>
+        );
+      })
+    }
+
+    <text class="dg-sub" x="8" y="26">Her adım bir öncekine bağlı; kapı düşerse hat durur.</text>
+    <text class="dg-sub dg-progress" x="332" y="122" text-anchor="middle">↑ kalite kapısı</text>
+    <text class="dg-sub dg-accent" x="548" y="122" text-anchor="middle">↑ geri alınabilir olmalı</text>
+  </svg>
+</DiagramFigure>

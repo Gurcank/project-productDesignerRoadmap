@@ -1,0 +1,56 @@
+{
+  "category": "web-temelleri",
+  "source": "01-web-nasil-calisir.md",
+  "items": [
+    {
+      "n": 1,
+      "question": "Bir kullanıcı adres çubuğuna `ornek.com` yazıp Enter'a bastı. Ekranda görüntü oluşana kadar sırayla ne oluyor? Ana adımları say.",
+      "answer": "Tarayıcı önce DNS'e sorup domainin IP'sini bulur → o IP'deki sunucuya HTTP isteği (request) gönderir → sunucu bir cevap (response) döner → tarayıcı HTML'i işleyip DOM'u, CSS'i işleyip CSSOM'u oluşturur → ikisi birleşip render tree olur → layout hesaplanır → paint ve composite ile ekrana çizilir."
+    },
+    {
+      "n": 2,
+      "question": "Domain, DNS ve hosting arasındaki fark nedir? Üçünü tek cümleyle ayır.",
+      "answer": "Domain sitenin kayıtlı adı. DNS o adı sunucunun IP adresine çeviren sistem. Hosting ise dosyaların gerçekten durduğu ve servis edildiği yer. Üçü ayrı hizmettir, farklı firmalardan alınabilir."
+    },
+    {
+      "n": 3,
+      "question": "Bir geliştirici \"bu doğrulamayı client-side yapmayalım\" diyor. Gerekçesi ne olabilir?",
+      "answer": "Client-side'daki kod kullanıcının cihazında çalışır; kullanıcı onu görebilir ve değiştirebilir. Güvenlik veya iş kuralı gerektiren doğrulama server-side yapılmalıdır. (İdeali ikisi birden: client-side deneyim için, server-side güvenlik için.)"
+    },
+    {
+      "n": 4,
+      "question": "DOM ile HTML arasındaki fark nedir ve bu fark neden SEO'yu ilgilendirir?",
+      "answer": "HTML sunucudan gelen ham metin dosyası; DOM tarayıcının ondan ürettiği ve JavaScript'in sonradan değiştirebildiği canlı yapı. İçerik yalnızca JavaScript çalıştıktan sonra DOM'a ekleniyorsa, JavaScript çalıştırmayan botlar o içeriği göremeyebilir."
+    },
+    {
+      "n": 5,
+      "question": "Sayfa açılırken görseller yüklendikçe içerik aşağı kayıyor ve kullanıcı yanlış butona tıklıyor. Bu sorunun teknik adı nedir, tarayıcının hangi adımıyla ilgilidir?",
+      "answer": "Layout shift; ölçülen metriği CLS (Cumulative Layout Shift). Tarayıcının **layout** (reflow) adımıyla ilgilidir. Çözüm: görsel ve dinamik alanlara önceden yer ayırmak."
+    },
+    {
+      "n": 6,
+      "question": "Statik site ile dinamik site arasındaki fark nedir? Hangi durumda dinamik olmak zorunludur?",
+      "answer": "Statik sitede herkese aynı, önceden hazırlanmış dosyalar servis edilir. Dinamik sitede sayfa istek anında üretilir. Kişiye özel içerik, kullanıcı girişi veya anlık değişen veri (stok, fiyat) varsa dinamik olmak zorunludur."
+    },
+    {
+      "n": 7,
+      "question": "SPA ile MPA arasındaki fark nedir? SPA'nın tasarımcı olarak senin ekstra sorumluluğun hâline getirdiği iki şey say.",
+      "answer": "SPA'da sayfa bir kez yüklenir, geçişler yenilenmeden yapılır; MPA'da her geçişte sunucudan yeni belge gelir. SPA'da tasarımcının ekstra sorumluluğu: (a) URL'in her ekranda doğru güncellenmesi ve paylaşılabilir olması, (b) sayfa geçişinde focus yönetimi ve ekran okuyucuya geçişin bildirilmesi. (Ayrıca yükleme/boş/hata durumlarının ayrı ayrı tasarlanması da kabul edilir.)"
+    },
+    {
+      "n": 8,
+      "question": "`https://ornek.com/urunler/kirmizi-ceket?beden=m#yorumlar` adresinde `kirmizi-ceket`, `?beden=m` ve `#yorumlar` parçalarının adları nedir?",
+      "answer": "`kirmizi-ceket` = slug (path'in son parçası). `?beden=m` = query string; `beden` bir query parameter. `#yorumlar` = fragment (anchor / hash)."
+    },
+    {
+      "n": 9,
+      "question": "Local, staging ve production arasındaki farkı ve her birinin ne işe yaradığını açıkla.",
+      "answer": "Local: geliştiricinin kendi bilgisayarı, sadece ona açık, deneme yeri. Staging: canlının kopyası, dış kullanıcıya kapalı, son kontrol ve onay yeri. Production: gerçek kullanıcıların kullandığı canlı ortam, gerçek veri burada."
+    },
+    {
+      "n": 10,
+      "question": "\"Latency yüksek\" ile \"bandwidth düşük\" aynı şey mi? Değilse fark ne?",
+      "answer": "Aynı şey değil. Latency gecikme — isteğin gidip dönmesinin süresi. Bandwidth kapasite — birim zamanda taşınabilen veri miktarı. Bandwidth'i artırmak latency'yi düşürmez; mesafe ve gidiş-dönüş sayısı azalmadan gecikme azalmaz."
+    }
+  ]
+}

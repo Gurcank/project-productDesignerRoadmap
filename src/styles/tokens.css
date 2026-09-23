@@ -1,0 +1,157 @@
+/*
+ * Design tokens — two layers (SPEC §5).
+ *
+ * 1. Primitive scale: raw values, no meaning. Never used by components.
+ * 2. Semantic tokens: the only thing components are allowed to reference.
+ *
+ * Colours are authored in OKLCH because the lightness channel matches perceived
+ * lightness, which keeps ramp steps even and makes contrast predictable.
+ */
+
+/* ---------------------------------------------------------------- primitives */
+:root {
+  /* Warm neutrals (hue 75). Warm because this is a reading surface, not a dashboard. */
+  --n-0: oklch(1 0 0);
+  --n-50: oklch(0.985 0.004 75);
+  --n-100: oklch(0.965 0.005 75);
+  --n-200: oklch(0.925 0.006 75);
+  --n-300: oklch(0.872 0.007 75);
+  --n-400: oklch(0.715 0.009 75);
+  --n-500: oklch(0.595 0.01 75);
+  --n-600: oklch(0.49 0.01 75);
+  --n-700: oklch(0.395 0.01 75);
+  --n-800: oklch(0.285 0.009 75);
+  --n-900: oklch(0.215 0.008 75);
+  --n-950: oklch(0.165 0.007 75);
+  --n-1000: oklch(0.125 0.006 75);
+
+  /* Petrol — wayfinding and actions. Cool counterweight to the warm ground. */
+  --petrol-300: oklch(0.8 0.06 215);
+  --petrol-400: oklch(0.72 0.085 215);
+  --petrol-500: oklch(0.63 0.105 215);
+  --petrol-600: oklch(0.545 0.115 215);
+  --petrol-700: oklch(0.455 0.105 215);
+  --petrol-800: oklch(0.375 0.09 215);
+
+  /* Amber — reserved for progress and focus. The only saturated warm in the UI. */
+  --amber-300: oklch(0.875 0.115 80);
+  --amber-400: oklch(0.82 0.145 78);
+  --amber-500: oklch(0.755 0.155 75);
+  /* Sits on the near-white light ground as a non-text indicator, so it carries
+     the 3:1 rule on its own; 0.66 lightness measured 3.06:1 — too thin a margin
+     for a threshold this project gates on. */
+  --amber-600: oklch(0.63 0.145 72);
+
+  /* Status */
+  --green-400: oklch(0.78 0.13 150);
+  --green-700: oklch(0.5 0.115 150);
+  --red-400: oklch(0.72 0.15 25);
+  --red-600: oklch(0.55 0.17 25);
+
+  /* Motion */
+  --dur-fast: 120ms;
+  --dur: 180ms;
+  --dur-slow: 260ms;
+  --e-out: cubic-bezier(0.2, 0.8, 0.3, 1);
+  --e-in: cubic-bezier(0.4, 0, 1, 1);
+
+  /* Layering */
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-toast: 400;
+
+  /* Reading measure. Turkish runs ~15–25% longer than English, so 68ch not 65ch. */
+  --measure: 68ch;
+}
+
+/* ------------------------------------------------------- semantic: dark (default) */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --c-surface: var(--n-950);
+  --c-surface-raised: var(--n-900);
+  --c-surface-overlay: var(--n-800);
+  --c-surface-sunken: var(--n-1000);
+
+  --c-text: oklch(0.93 0.006 75);
+  --c-text-secondary: var(--n-400);
+  /* Lighter than --n-500: measured 4.34:1 on raised surfaces, which misses the
+     4.5 threshold for the small labels this token is used on. */
+  --c-text-muted: oklch(0.645 0.011 75);
+
+  --c-border: var(--n-800);
+  --c-border-strong: var(--n-700);
+  /* Form-control outlines carry meaning (an empty checkbox is only its border),
+     so they answer to the 3:1 non-text rule; decorative borders above do not. */
+  --c-control-border: var(--n-500);
+  /* The roadmap's connecting line and station rings. Order is also carried by
+     the numbers, so this is not the only cue — but it is what makes the page
+     read as one route, and --c-border-strong measured 2.06:1 here. */
+  --c-route-line: var(--n-500);
+
+  --c-action: var(--petrol-400);
+  --c-action-hover: var(--petrol-300);
+  /* A filled button's label sits on this, so the two must move apart — and the
+     direction differs per theme: dark carries a dark label, light a light one.
+     petrol-600 measured 4.39:1 against the dark label. */
+  --c-action-surface: var(--petrol-500);
+  --c-on-action: var(--n-1000);
+
+  --c-progress: var(--amber-400);
+  /* A tick drawn on the progress colour. Named rather than reached for, so a
+     change to --c-progress has one place to answer for its mark. */
+  --c-on-progress: var(--n-1000);
+  /* Amber as *text*. --c-progress is tuned for the 3:1 non-text rule; used for
+     words it measured 3.57:1 in light and failed an axe scan. On the dark ground
+     the indicator amber already clears the text threshold, so it stays. */
+  --c-progress-text: var(--amber-400);
+  --c-focus: var(--amber-400);
+  --c-success: var(--green-400);
+  --c-danger: var(--red-400);
+
+  /* Depth in dark mode comes from surface lightness, not shadow. */
+  --elev-1: none;
+  --elev-2: 0 8px 24px -12px oklch(0 0 0 / 0.8);
+}
+
+/* ---------------------------------------------------------- semantic: light */
+[data-theme="light"] {
+  color-scheme: light;
+
+  --c-surface: var(--n-50);
+  --c-surface-raised: var(--n-0);
+  --c-surface-overlay: var(--n-0);
+  --c-surface-sunken: var(--n-100);
+
+  --c-text: var(--n-900);
+  --c-text-secondary: var(--n-700);
+  --c-text-muted: var(--n-600);
+
+  --c-border: var(--n-200);
+  --c-border-strong: var(--n-300);
+  --c-control-border: var(--n-500);
+  /* n-300 measured 1.41:1 on the light ground — the route vanished entirely. */
+  --c-route-line: var(--n-500);
+
+  /* petrol-600 measured 4.43:1 on the light ground — just under the threshold. */
+  --c-action: var(--petrol-700);
+  --c-action-hover: var(--petrol-800);
+  /* Mirror of the dark rule: same label-to-fill distance, opposite direction. */
+  --c-action-surface: var(--petrol-700);
+  --c-on-action: var(--n-50);
+
+  --c-progress: var(--amber-600);
+  --c-on-progress: var(--n-1000);
+  /* Darker than the indicator amber so words clear 4.5:1 on the light ground. */
+  --c-progress-text: oklch(0.52 0.125 66);
+  /* Darker than the progress amber: the ring must clear 3:1 with margin on both
+     the page ground and raised cards. */
+  --c-focus: oklch(0.6 0.15 68);
+  /* green-600 measured 4.39:1 on the light ground. */
+  --c-success: var(--green-700);
+  --c-danger: var(--red-600);
+
+  --elev-1: 0 1px 2px oklch(0.3 0.02 75 / 0.06), 0 1px 1px oklch(0.3 0.02 75 / 0.04);
+  --elev-2: 0 4px 6px -2px oklch(0.3 0.02 75 / 0.08), 0 12px 20px -8px oklch(0.3 0.02 75 / 0.1);
+}

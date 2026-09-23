@@ -1,0 +1,121 @@
+{
+  "category": "front-end",
+  "source": "08-frontend-temelleri.md",
+  "items": [
+    {
+      "n": 1,
+      "question": "Padding ile margin arasındaki fark nedir? Butonun tıklanabilir alanını büyütmek için hangisi kullanılır ve neden?",
+      "answer": "Padding kutunun **içinde** kalır ve arka plan rengini alır; margin kutunun **dışındadır** ve almaz. Tıklanabilir alanı büyütmek için **padding** kullanılır — çünkü tıklanabilir alan kutunun kendisidir; margin dışarıda kalır ve tıklanmaz."
+    },
+    {
+      "n": 2,
+      "question": "`!important` neden bir borç olarak nitelendirilir?",
+      "answer": "Çünkü özgüllük yarışını zorla kazanır ve sonraki her düzeltmenin de `!important` gerektirmesine yol açar. Asıl sorun (fazla özgül seçiciler veya organizasyon eksikliği) çözülmeden birikir."
+    },
+    {
+      "n": 3,
+      "question": "Flexbox ile CSS Grid arasındaki temel fark nedir? Bento grid hangisiyle kurulur?",
+      "answer": "Flexbox **tek eksende** (satır veya sütun), CSS Grid **iki eksende** (satır ve sütun aynı anda) dizer. Bento grid, farklı boyutlarda kutuların iki boyutlu yerleşimi olduğu için **CSS Grid** ile kurulur."
+    },
+    {
+      "n": 4,
+      "question": "`display: none` kullanmanın erişilebilirlik açısından sonucu nedir?",
+      "answer": "Öğeyi tamamen kaldırır — **ekran okuyucudan da gizler.** Yalnızca görsel olarak gizlemek gerekiyorsa (ekran okuyucunun okumaya devam etmesi isteniyorsa) farklı bir teknik gerekir."
+    },
+    {
+      "n": 5,
+      "question": "Tailwind'in tasarım sistemi açısından iki gerçek faydası nedir?",
+      "answer": "(1) Sınıflar önceden tanımlı bir ölçekten geldiği için tasarım sistemine uymayı kolaylaştırır — rastgele 17px yazamazsın. (2) Stil bileşenin yanında durduğu için bileşen silindiğinde stili de silinir; kullanılmayan CSS birikmez."
+    },
+    {
+      "n": 6,
+      "question": "styled-components'in 2026'daki durumu nedir? Mevcut projede kullanıyorsan ne yapmalısın?",
+      "answer": "**Mart 2025'te bakım moduna geçti**; bakımcısı yeni projeler için önermiyor. Deprecated değil, çalışmaya devam ediyor. Mevcut projede kullanıyorsan panik yok — kademeli geçiş yap, yeni bileşenleri CSS Modules/Tailwind ile yaz. Toptan yeniden yazmak için yeterli sebep değil."
+    },
+    {
+      "n": 7,
+      "question": "TypeScript tip tanımının tasarımcı için pratik değeri nedir?",
+      "answer": "Tip tanımı, bir nesnenin **hangi alanlara sahip olduğunun listesidir**. Bir kart tasarlarken \"bu alanda ne var, boş olabilir mi?\" sorusunun cevabı orada yazar — böylece opsiyonel alanların boş hâlini de tasarlarsın."
+    },
+    {
+      "n": 8,
+      "question": "Props ile state arasındaki fark nedir? Figma'daki hangi kavram props'a karşılık gelir?",
+      "answer": "Props dışarıdan gelir ve bileşen onu değiştirmez; state bileşenin içinde yaşar ve değişir. Figma'daki **component property** (variant, size, disabled) props'a karşılık gelir."
+    },
+    {
+      "n": 9,
+      "question": "Prop drilling neden bir sorun işaretidir?",
+      "answer": "Aradaki bileşenler o veriyle ilgilenmedikleri hâlde taşımak zorunda kalır. Kod kırılganlaşır ve her değişiklik zincirin tamamına dokunmayı gerektirir. Çözüm genelde context veya bir state yönetimi kütüphanesidir."
+    },
+    {
+      "n": 10,
+      "question": "CSR, SSR ve SSG arasındaki temel fark nedir? Blog için hangisi doğal tercihtir ve neden?",
+      "answer": "CSR tarayıcıda, SSR her istekte sunucuda, SSG derleme anında bir kez HTML üretir. Blog için **SSG** doğal tercihtir: içerik herkese aynı ve seyrek değişiyor; en hızlı, en ucuz ve en dayanıklı seçenektir."
+    },
+    {
+      "n": 11,
+      "question": "ISR neyi çözmeye çalışır?",
+      "answer": "SSG'nin **tazelik** problemini. Statik sayfaların hızını korurken, içeriğin belirli aralıklarla veya tetikleyiciyle arka planda güncellenmesini sağlar — her seferinde tüm siteyi yeniden derlemeden."
+    },
+    {
+      "n": 12,
+      "question": "Hydration nedir ve kullanıcı açısından hangi soruna yol açar?",
+      "answer": "Sunucudan gelen hazır HTML'in tarayıcıda JavaScript ile etkileşimli hâle getirilmesi. Sorun: bu tamamlanana kadar kullanıcı butonu **görür ama basınca hiçbir şey olmaz**. Ne kadar çok JavaScript varsa bu ara dönem o kadar uzar."
+    },
+    {
+      "n": 13,
+      "question": "Server component ile SSR arasındaki fark nedir?",
+      "answer": "SSR bir bileşeni sunucuda HTML'e çevirir ama o bileşenin JavaScript'i **yine tarayıcıya gider** (hydration için). Server component'in JavaScript'i **hiç gitmez** — sadece sunucuda çalışır ve sonucu gönderir."
+    },
+    {
+      "n": 14,
+      "question": "Streaming/PPR tasarımcıyı neden ilgilendirir?",
+      "answer": "Çünkü hangi bölümün önce geleceğine ve bekleyen bölümde ne görüneceğine karar vermek bir **tasarım kararıdır**. Skeleton yerleşimi, öncelik sırası ve bekleme deneyimi tasarımcının işidir."
+    },
+    {
+      "n": 15,
+      "question": "Core Web Vitals laboratuvar verisi mi saha verisi mi? \"Lighthouse 100\" ne anlama gelmez?",
+      "answer": "**Saha verisi** — gerçek Chrome kullanıcılarından toplanan CrUX verisi, 75. yüzdelik dilimde, 28 günlük kayan pencerede. \"Lighthouse 100\" yalnızca laboratuvar koşullarında iyi olduğu anlamına gelir; gerçek kullanıcıların %25'inden fazlası yavaş yaşıyorsa metrik yine de geçmez."
+    },
+    {
+      "n": 16,
+      "question": "LCP, INP ve CLS'nin 2026 \"iyi\" eşikleri nedir?",
+      "answer": "LCP ≤ **2,5 saniye**, INP ≤ **200 ms**, CLS ≤ **0,1**. (Kötü bandı: >4 sn, >500 ms, >0,25.)"
+    },
+    {
+      "n": 17,
+      "question": "INP'nin FID'e göre geçilmesinin neden daha zor olduğu söyleniyor?",
+      "answer": "FID yalnızca **ilk** etkileşimden önceki gecikmeyi ölçüyordu. INP **tüm** etkileşimleri ölçer ve en kötüye yakın bir değeri raporlar. Bu yüzden FID'de yeşil olan birçok site INP'de sarı veya kırmızıya düştü."
+    },
+    {
+      "n": 18,
+      "question": "TTFB yüksek ama görseller optimize. Sorun nerede aranır?",
+      "answer": "Sunucu ve ağ tarafında: rendering stratejisi (her istekte hesaplama yapılıyor mu), sunucu bölgesinin kullanıcıya uzaklığı, veritabanı sorguları, önbellek ve CDN kullanımı. Ön yüz optimizasyonu bu durumda sorunu çözmez."
+    },
+    {
+      "n": 19,
+      "question": "Hero görseli neden lazy load edilmemeli?",
+      "answer": "Çünkü hero görseli genelde **LCP öğesidir**. Lazy load etmek, ölçülen metriğin ta kendisini geciktirir. Hero görseli tersine önceliklendirilmeli (preload), lazy loading ekran dışındaki görsellere uygulanmalıdır."
+    },
+    {
+      "n": 20,
+      "question": "FOIT ile FOUT arasındaki fark nedir? Hangisi tercih edilir ve yan etkisi nedir?",
+      "answer": "**FOIT** font yüklenene kadar metni görünmez tutar; **FOUT** yedek fontla gösterip sonra değiştirir. Genelde **FOUT** tercih edilir çünkü kullanıcı boş ekrana bakmaz. Yan etkisi: yedek fontun metrikleri farklıysa değişim anında metin sıçrar ve **CLS**'yi bozar — yedek fontu birincil fonta yakın seçmek bunu azaltır."
+    },
+    {
+      "n": 21,
+      "question": "Canonical URL hangi problemi çözer?",
+      "answer": "Aynı içeriğe birden fazla adresten ulaşılabilmesi problemini. Filtre ve sıralama parametreleri yüzünden aynı liste onlarca URL'de görünür; canonical, arama motoruna \"asıl olan budur\" diyerek değerin bölünmesini engeller."
+    },
+    {
+      "n": 22,
+      "question": "`sitemap.xml` ile tasarım çıktısı olan sitemap arasındaki fark nedir? Yayında sık yapılan robots.txt hatası nedir?",
+      "answer": "`sitemap.xml` arama motoru botları için üretilen makine okunur dosyadır; tasarımdaki sitemap (4.3) sayfaların hiyerarşisini gösteren insan okunur şemadır. Sık yapılan hata: **staging'deki \"botları engelle\" ayarının canlıya taşınması** — site aylarca arama sonuçlarında görünmez."
+    },
+    {
+      "n": 23,
+      "question": "OG görseli neden bir tasarım işidir?",
+      "answer": "Çünkü bir bağlantı paylaşıldığında sosyal medyada görünen görsel odur ve tıklanma oranını doğrudan etkiler. Tanımlanmamışsa paylaşım çıplak bir bağlantı olarak görünür. Şablon bir OG görseli tasarlamak (arka plan sabit, başlık dinamik) her sayfa için ayrı görsel üretmeden bunu çözer."
+    }
+  ]
+}

@@ -1,0 +1,336 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Ara" description="Tüm adımlarda tam metin arama." section="ara">
+  <div class="search">
+    <header class="search__head">
+      <h1>Ara</h1>
+      <p class="search__lead">
+        Tüm adımların içinde arar. Terim kartlarının gövdesi de indekste — "focus ring" yazdığında kartın geçtiği
+        adıma gidersin.
+      </p>
+
+      <form class="search__form" role="search" data-search-form>
+        <label class="sr-only" for="q">Aranacak terim</label>
+        <input
+          id="q"
+          name="q"
+          type="search"
+          class="search__input"
+          placeholder="focus ring, idempotent, N+1…"
+          autocomplete="off"
+          data-search-input
+        />
+        <button type="submit" class="search__submit">Ara</button>
+      </form>
+
+      <p class="search__status" role="status" aria-live="polite" data-search-status></p>
+    </header>
+
+    <div class="filters" data-filters hidden>
+      <span class="filters__label">Kategori</span>
+      <div class="filters__list" data-filter-list></div>
+    </div>
+
+    <ol class="results" data-results></ol>
+
+    <template data-result-template>
+      <li class="result">
+        <p class="result__category" data-field="category"></p>
+        <h2 class="result__title"><a data-field="link"></a></h2>
+        <p class="result__excerpt" data-field="excerpt"></p>
+      </li>
+    </template>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  // is:inline on purpose. Pagefind writes its runtime into dist/ after the build,
+  // so it is never in the module graph. When Astro bundles this script, Rollup
+  // wraps the dynamic import in its preload helper and leaves an unreplaced
+  // __VITE_PRELOAD__ behind, which throws — and the page then reports "no index"
+  // on a site that has a perfectly good one. Neither a vite-ignore comment nor
+  // rollup's `external` prevents that wrapper. Left inline, the import reaches
+  // the browser exactly as written. The cost: plain JS here, no npm imports.
+  const form = document.querySelector("[data-search-form]");
+  const input = document.querySelector("[data-search-input]");
+  const statusLine = document.querySelector("[data-search-status]");
+  const list = document.querySelector("[data-results]");
+  const template = document.querySelector("[data-result-template]");
+  const filterBox = document.querySelector("[data-filters]");
+  const filterList = document.querySelector("[data-filter-list]");
+
+  let pagefind = null;
+  let activeCategory = null;
+
+  const say = (message) => {
+    if (statusLine) statusLine.textContent = message;
+  };
+
+  async function loadPagefind() {
+    if (pagefind) return pagefind;
+    try {
+      pagefind = await import("/pagefind/pagefind.js");
+      await pagefind.init();
+      return pagefind;
+    } catch (error) {
+      say("Arama dizini bulunamadı. Bu sayfa yalnızca derlenmiş sitede çalışır (npm run build).");
+      return null;
+    }
+  }
+
+  function renderFilters(counts) {
+    if (!filterBox || !filterList) return;
+    const categories = counts.kategori || {};
+    const names = Object.keys(categories).filter((name) => categories[name] > 0);
+
+    if (names.length < 2) {
+      filterBox.hidden = true;
+      return;
+    }
+
+    filterList.replaceChildren();
+    for (const name of names.sort((a, b) => a.localeCompare(b, "tr"))) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "filters__chip";
+      button.textContent = name + " (" + categories[name] + ")";
+      button.setAttribute("aria-pressed", String(activeCategory === name));
+      button.addEventListener("click", () => {
+        activeCategory = activeCategory === name ? null : name;
+        run(input ? input.value : "");
+      });
+      filterList.append(button);
+    }
+    filterBox.hidden = false;
+  }
+
+  async function run(query) {
+    const trimmed = query.trim();
+
+    // Keep the address bar in step so a result list can be shared as a link.
+    const url = new URL(location.href);
+    if (trimmed) url.searchParams.set("q", trimmed);
+    else url.searchParams.delete("q");
+    history.replaceState(null, "", url);
+
+    if (!list || !template) return;
+
+    if (trimmed.length < 2) {
+      list.replaceChildren();
+      if (filterBox) filterBox.hidden = true;
+      say(trimmed ? "En az iki karakter yaz." : "");
+      return;
+    }
+
+    const api = await loadPagefind();
+    if (!api) return;
+
+    say("Aranıyor…");
+    const search = await api.search(
+      trimmed,
+      activeCategory ? { filters: { kategori: [activeCategory] } } : undefined,
+    );
+
+    renderFilters(search.filters);
+
+    const top = await Promise.all(search.results.slice(0, 30).map((result) => result.data()));
+    list.replaceChildren();
+
+    for (const item of top) {
+      const node = template.content.cloneNode(true);
+      const link = node.querySelector('[data-field="link"]');
+      link.href = item.url;
+      link.textContent = item.meta.title || item.url;
+      node.querySelector('[data-field="category"]').textContent = item.meta.kategori || "";
+      // Pagefind returns the excerpt with <mark> around the hit, which is the
+      // whole point of showing it.
+      node.querySelector('[data-field="excerpt"]').innerHTML = item.excerpt;
+      list.append(node);
+    }
+
+    const total = search.results.length;
+    say(total === 0 ? '"' + trimmed + '" için sonuç yok.' : total + " sonuç bulundu.");
+  }
+
+  if (form) {
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      run(input ? input.value : "");
+    });
+  }
+
+  let debounce;
+  if (input) {
+    input.addEventListener("input", () => {
+      window.clearTimeout(debounce);
+      debounce = window.setTimeout(() => run(input.value), 200);
+    });
+  }
+
+  // A shared /ara?q=… link must land on its results, not an empty box.
+  const initial = new URL(location.href).searchParams.get("q");
+  if (initial && input) {
+    input.value = initial;
+    run(initial);
+  }
+</script>
+
+<style>
+  .search {
+    max-width: 52rem;
+    margin-inline: auto;
+    padding: var(--spacing-12) var(--spacing-4) var(--spacing-16);
+  }
+
+  .search__head h1 {
+    font-size: var(--text-3xl);
+    letter-spacing: -0.02em;
+  }
+
+  .search__lead {
+    max-width: var(--measure);
+    margin-block-start: var(--spacing-3);
+    color: var(--c-text-secondary);
+  }
+
+  .search__form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+    margin-block-start: var(--spacing-6);
+  }
+
+  .search__input {
+    flex: 1 1 18rem;
+    min-height: 48px;
+    padding-inline: var(--spacing-3);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-raised);
+    color: var(--c-text);
+    font: inherit;
+  }
+
+  .search__submit {
+    min-height: 48px;
+    padding-inline: var(--spacing-4);
+    border: 0;
+    border-radius: var(--radius-md);
+    background-color: var(--c-action-surface);
+    color: var(--c-on-action);
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .search__submit:hover {
+    background-color: var(--c-action);
+  }
+
+  .search__status {
+    margin-block-start: var(--spacing-3);
+    font-size: var(--text-sm);
+    color: var(--c-text-muted);
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-2) var(--spacing-3);
+    margin-block-start: var(--spacing-4);
+  }
+
+  .filters__label {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-text-muted);
+  }
+
+  .filters__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+  }
+
+  .filters__chip {
+    min-height: 32px;
+    padding-inline: var(--spacing-3);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-full);
+    background: none;
+    color: var(--c-text-secondary);
+    font: inherit;
+    font-size: var(--text-xs);
+    cursor: pointer;
+  }
+
+  .filters__chip[aria-pressed="true"] {
+    border-color: var(--c-progress);
+    color: var(--c-text);
+  }
+
+  .results {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+    margin-block-start: var(--spacing-8);
+    padding: 0;
+    list-style: none;
+  }
+
+  .result {
+    padding-block-start: var(--spacing-4);
+    border-top: 1px solid var(--c-border);
+  }
+
+  .result__category {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-text-muted);
+  }
+
+  .result__title {
+    margin-block-start: var(--spacing-1);
+    font-size: var(--text-lg);
+  }
+
+  .result__title a {
+    color: var(--c-text);
+    text-decoration: none;
+  }
+
+  .result__title a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .result__excerpt {
+    margin-block-start: var(--spacing-2);
+    max-width: var(--measure);
+    color: var(--c-text-secondary);
+  }
+
+  /* Pagefind wraps the hit in <mark>; the default yellow would fight the amber
+     that means progress, so it is redrawn as a weight change plus an underline.
+     :global because the excerpt is injected at runtime, outside Astro's scoping. */
+  .result__excerpt :global(mark) {
+    background: none;
+    color: var(--c-text);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--c-progress);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+  }
+
+  @media (min-width: 48rem) {
+    .search {
+      padding-inline: var(--spacing-6);
+    }
+  }
+</style>

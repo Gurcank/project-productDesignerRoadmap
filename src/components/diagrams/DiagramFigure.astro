@@ -1,0 +1,114 @@
+---
+/**
+ * Shell for every inline diagram (SPEC Faz 5).
+ *
+ * Diagrams are components, never edits to the imported markdown: generated
+ * content is rewritten on every import and `import:check` guards it (ADR-002).
+ * ~/data/diagrams.ts says which section gets which figure.
+ *
+ * The caption is not decoration — it carries the same information in prose, so
+ * the drawing is never the only thing saying it.
+ */
+interface Props {
+  /** Accessible name; also what a screen reader announces for the graphic. */
+  label: string;
+  caption: string;
+}
+
+const { label, caption } = Astro.props;
+---
+
+<figure class="diagram">
+  {/* tabindex makes the scroll container reachable by keyboard — an overflow
+      box that only a mouse can pan is unusable without one (WCAG 2.1.1). */}
+  <div class="diagram__canvas" tabindex="0" role="group" aria-label={label}>
+    <slot />
+  </div>
+  <figcaption class="diagram__caption">{caption}</figcaption>
+</figure>
+
+<style is:global>
+  .diagram {
+    margin-block: var(--spacing-8);
+    padding: var(--spacing-4);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--c-surface-raised);
+  }
+
+  /* Diagrams are the one block besides tables allowed to be wider than the
+     reading column; below their minimum they scroll rather than shrink the
+     labels into illegibility. */
+  .diagram__canvas {
+    overflow-x: auto;
+  }
+
+  /* Never below the authored viewBox width. Letting the SVG shrink to the phone
+     scaled 13px labels down to 6.5px — legible only in theory. Below this the
+     figure scrolls instead, the same bargain tables make. */
+  .diagram__canvas svg {
+    display: block;
+    inline-size: 100%;
+    min-inline-size: 40rem;
+    block-size: auto;
+  }
+
+  .diagram__caption {
+    margin-block-start: var(--spacing-3);
+    padding-block-start: var(--spacing-3);
+    border-top: 1px solid var(--c-border);
+    color: var(--c-text-secondary);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  /* One shared vocabulary so ten diagrams read as one system. */
+  .dg-box {
+    fill: var(--c-surface-sunken);
+    stroke: var(--c-route-line);
+    stroke-width: 1.5;
+  }
+
+  .dg-box--accent {
+    stroke: var(--c-action);
+  }
+
+  .dg-box--progress {
+    stroke: var(--c-progress);
+  }
+
+  .dg-line {
+    stroke: var(--c-route-line);
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  .dg-line--accent {
+    stroke: var(--c-action);
+  }
+
+  .dg-label {
+    fill: var(--c-text);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .dg-sub {
+    fill: var(--c-text-muted);
+    font-family: var(--font-sans);
+    font-size: 11px;
+  }
+
+  .dg-accent {
+    fill: var(--c-action);
+  }
+
+  .dg-progress {
+    fill: var(--c-progress-text);
+  }
+
+  /* Diagrams never dim with opacity: a multiplier makes the rendered contrast
+     something other than what the token says, which is how the roadmap's
+     pending nodes failed an axe scan while measuring fine at token level. */
+</style>

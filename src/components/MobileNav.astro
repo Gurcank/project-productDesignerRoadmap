@@ -1,0 +1,100 @@
+---
+/**
+ * Thumb-reachable navigation, phone only.
+ *
+ * The header nav sits at the top of a tall page; on a phone held one-handed the
+ * top edge is the hardest place to reach. This is the same destinations moved
+ * to where the thumb already is, and it is hidden from ≥48rem where the header
+ * nav is fine.
+ */
+interface Props {
+  section?: string;
+}
+
+const { section } = Astro.props;
+
+const items = [
+  { href: "/", id: "roadmap", label: "Harita", glyph: "M4 6h16M4 12h10M4 18h7" },
+  { href: "/ara/", id: "ara", label: "Ara", glyph: "M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14ZM20 20l-4.2-4.2" },
+  { href: "/sozluk/", id: "sozluk", label: "Sözlük", glyph: "M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4ZM8 8h8M8 12h5" },
+  { href: "/ayarlar/", id: "ayarlar", label: "Ayarlar", glyph: "M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM12 3v3M12 18v3M3 12h3M18 12h3" },
+];
+---
+
+<nav class="mobile-nav" aria-label="Alt gezinme">
+  {
+    items.map((item) => (
+      <a href={item.href} aria-current={section === item.id ? "page" : undefined}>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d={item.glyph} />
+        </svg>
+        <span>{item.label}</span>
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .mobile-nav {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-end: 0;
+    z-index: var(--z-sticky);
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    border-top: 1px solid var(--c-border);
+    background-color: color-mix(in oklab, var(--c-surface) 94%, transparent);
+    backdrop-filter: blur(12px);
+    /* Clear the home indicator on phones that have one. */
+    padding-block-end: env(safe-area-inset-bottom, 0px);
+  }
+
+  .mobile-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-height: 56px;
+    color: var(--c-text-muted);
+    text-decoration: none;
+    font-size: var(--text-xs);
+  }
+
+  .mobile-nav a[aria-current="page"] {
+    color: var(--c-text);
+  }
+
+  .mobile-nav svg {
+    inline-size: 22px;
+    block-size: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* The active item gets a mark as well as a colour, so the state is not
+     carried by colour alone. */
+  .mobile-nav a[aria-current="page"]::before {
+    content: "";
+    position: absolute;
+    inset-block-start: 0;
+    inline-size: 28px;
+    block-size: 2px;
+    border-radius: var(--radius-full);
+    background-color: var(--c-action);
+  }
+
+  .mobile-nav a {
+    position: relative;
+  }
+
+  @media (min-width: 48rem) {
+    .mobile-nav {
+      display: none;
+    }
+  }
+</style>

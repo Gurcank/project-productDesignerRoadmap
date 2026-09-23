@@ -1,0 +1,127 @@
+---
+/**
+ * Animated checkbox — skeleton from the Framer "AnimatedCheckbox" component,
+ * rebuilt without React/framer-motion (ADR-003, ADR-013).
+ *
+ * Preserved from the original: a real hidden `<input type="checkbox">` carries
+ * the state and the accessibility, a visual `<span>` draws the box, and the tick
+ * is an SVG path revealed by animating `stroke-dashoffset` — not an icon font
+ * and not a rotated rectangle.
+ *
+ * Changed: framer-motion's spring becomes a CSS transition on the same property,
+ * and every colour comes from our tokens instead of the component's props.
+ */
+interface Props {
+  id?: string;
+  /** Progress id — the value both views of this checkbox are keyed by. */
+  value: string;
+  label: string;
+  /** Visually hidden label, for the compact tick in the step rail. */
+  hideLabel?: boolean;
+  class?: string;
+}
+
+const { id, value, label, hideLabel = false, class: className } = Astro.props;
+---
+
+<label class:list={["checkbox", className, { "checkbox--bare": hideLabel }]}>
+  <input type="checkbox" id={id} data-topic-check={value} aria-label={hideLabel ? label : undefined} />
+
+  <span class="checkbox__box" aria-hidden="true">
+    {/* pathLength normalises the tick so the dash maths is the same at any size. */}
+    <svg viewBox="0 0 24 24" focusable="false">
+      <path d="M5 12.5 L10 17.5 L19 7" pathLength="1" />
+    </svg>
+  </span>
+
+  {!hideLabel && <span class="checkbox__label">{label}</span>}
+</label>
+
+<style is:global>
+  .checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    cursor: pointer;
+  }
+
+  /* The real control stays in the DOM and keeps the keyboard and screen reader
+     behaviour; it is only visually replaced. */
+  .checkbox input {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    opacity: 0;
+    margin: 0;
+    pointer-events: none;
+  }
+
+  .checkbox__box {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    inline-size: 20px;
+    block-size: 20px;
+    border: 1.5px solid var(--c-control-border);
+    border-radius: var(--radius-sm);
+    background-color: transparent;
+    transition:
+      border-color var(--dur-fast) var(--e-out),
+      background-color var(--dur-fast) var(--e-out),
+      scale var(--dur-fast) var(--e-out);
+  }
+
+  .checkbox:hover .checkbox__box {
+    border-color: var(--c-text-secondary);
+  }
+
+  .checkbox input:active + .checkbox__box {
+    scale: 0.92;
+  }
+
+  .checkbox input:checked + .checkbox__box {
+    border-color: var(--c-progress);
+    background-color: var(--c-progress);
+  }
+
+  /* The focus ring lands on the drawn box, since the real input is invisible. */
+  .checkbox input:focus-visible + .checkbox__box {
+    outline: 2px solid var(--c-focus);
+    outline-offset: 2px;
+  }
+
+  .checkbox__box svg {
+    inline-size: 14px;
+    block-size: 14px;
+    fill: none;
+    stroke: var(--c-on-progress);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* The tick is drawn on, not switched on: the dash is the full path length and
+     the offset walks it back to zero. */
+  .checkbox__box path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset var(--dur) var(--e-out);
+  }
+
+  .checkbox input:checked + .checkbox__box path {
+    stroke-dashoffset: 0;
+  }
+
+  .checkbox__label {
+    font-size: var(--text-sm);
+  }
+
+  /* Compact form for the step rail: the tick keeps a 40px target around it. */
+  .checkbox--bare {
+    justify-content: center;
+    inline-size: 40px;
+    block-size: 40px;
+    border-radius: var(--radius-md);
+  }
+</style>

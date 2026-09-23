@@ -1,0 +1,131 @@
+{
+  "category": "arayuz-anatomisi",
+  "source": "07b-site-anatomisi.md",
+  "items": [
+    {
+      "n": 1,
+      "question": "Header ile hero arasındaki fark nedir?",
+      "answer": "Header sayfanın en üstündeki, logo ve navigasyonu barındıran ince şerittir. Hero onun altındaki, ana mesajı ve birincil eylemi barındıran büyük tanıtım alanıdır."
+    },
+    {
+      "n": 2,
+      "question": "Bir sitede kaç farklı nav olabilir? En az üçünü adlandır.",
+      "answer": "**Global nav** (her sayfada aynı ana menü), **local nav** (bir bölüm içindeki alt menü), **utility nav** (giriş, dil, arama gibi yardımcı bağlantılar), **footer nav** (alttaki geniş bağlantı listesi)."
+    },
+    {
+      "n": 3,
+      "question": "Bir hero'nun cevaplaması gereken üç soru nedir?",
+      "answer": "Bu ne? Kimin için? Şimdi ne yapmalıyım? Üçünü cevaplamayan hero işini yapmıyordur."
+    },
+    {
+      "n": 4,
+      "question": "Bir ekranda kaç birincil CTA olmalı? İkinci bir eylem gerekiyorsa ne yapılır?",
+      "answer": "**Tek** birincil CTA. İkinci eylem gerekiyorsa ikincil stilde verilir (outline, ghost veya link). İki dolu buton yan yana konduğunda kullanıcı hangisinin asıl olduğunu anlamaz."
+    },
+    {
+      "n": 5,
+      "question": "Feature grid'in en yaygın jenerikleşme biçimi nedir ve nasıl kaçınılır?",
+      "answer": "Eşit üç sütunda ikon + başlık + iki satır gri metin. Kaçınma yolları: kartları eşit ağırlıkta yapmamak (bento grid), her karta gerçek görsel/ekran görüntüsü koymak, sayıyı üçe zorlamak yerine içeriğin gerektirdiği kadar yapmak, alternating section'a geçmek."
+    },
+    {
+      "n": 6,
+      "question": "01/02/03 numaralandırması ne zaman uygundur, ne zaman değildir?",
+      "answer": "Gerçekten **sıralı** içerikte uygundur (nasıl çalışır, süreç adımları). Sırasız özellikleri numaralandırmak, okuyucuya olmayan bir sıra vaat eder ve yaygın bir jenerikleşme kalıbıdır."
+    },
+    {
+      "n": 7,
+      "question": "Carousel'e kritik mesaj koymak neden risklidir? Otomatik dönen carousel hangi WCAG ölçütüne tabidir?",
+      "answer": "İlk slayttan sonrasının görülme oranı hızla düşer; kritik mesajı carousel'e koymak onu gizlemekle aynı şeydir. Otomatik dönenler **Pause, Stop, Hide** ölçütüne (SC 2.2.2) tabidir — durdurma kontrolü gerekir."
+    },
+    {
+      "n": 8,
+      "question": "Logo cloud'da logoların \"optik olarak dengelenmesi\" ne demektir?",
+      "answer": "Logolar farklı biçim ve ağırlıkta olduğu için matematiksel olarak aynı boyut, görsel olarak eşit görünmez. Optik denge, her logonun **görsel olarak** eşit ağırlıkta durması için tek tek boyut ayarı yapmaktır (genelde tek renge indirmekle birlikte)."
+    },
+    {
+      "n": 9,
+      "question": "Cookie banner tasarımında en kritik kural nedir ve ihlali ne olarak adlandırılır?",
+      "answer": "**Reddetmek, kabul etmek kadar kolay olmalıdır.** \"Tümünü kabul et\" büyük ve renkli, \"Reddet\" küçük bir bağlantıysa bu bir **dark pattern**'dir ve bazı düzenlemelerde aykırı kabul edilebilir."
+    },
+    {
+      "n": 10,
+      "question": "Modal ile drawer arasındaki fark nedir? Bir liste içindeki öğenin detayını göstermek için hangisi daha uygun ve neden?",
+      "answer": "Modal arkadaki içerikle etkileşimi engeller ve bağlamı kaybettirir; drawer kenardan açılır ve arkadaki liste görünür kalır. Liste içindeki bir öğenin detayı için **drawer** daha uygundur, çünkü kullanıcı listedeki yerini kaybetmez."
+    },
+    {
+      "n": 11,
+      "question": "Tooltip ile popover arasındaki fark nedir? İçinde link olan bir açıklama hangisi olmalı?",
+      "answer": "Tooltip hover/focus ile açılır, kısa metin içerir, **etkileşimli içerik alamaz**. Popover tıklamayla açılır ve içinde link, buton, form barındırabilir. İçinde link olan açıklama **popover** olmalıdır — tooltip'teki linke fareyle gidilemez."
+    },
+    {
+      "n": 12,
+      "question": "Toast'a hangi bilgi konmaz ve neden?",
+      "answer": "**Kritik bilgi ve hata mesajları.** Toast kaybolur, geri getirilemez ve kaçırılabilir. Kalıcı olması gereken bilgi alert banner'a konur."
+    },
+    {
+      "n": 13,
+      "question": "Alert banner ile announcement bar arasındaki fark nedir?",
+      "answer": "Alert banner sistem durumunu bildirir, kalıcıdır ve genelde bir eylem gerektirir (ödeme başarısız, e-posta doğrulanmadı). Announcement bar pazarlama amaçlıdır, header'ın üstünde durur ve kapatılabilir olmalıdır."
+    },
+    {
+      "n": 14,
+      "question": "Confirm dialog yerine çoğu durumda daha iyi olan alternatif nedir ve neden?",
+      "answer": "**Geri alınabilir işlem** (undo): işlemi hemen yap, \"Geri al\" seçenekli bir toast göster. Daha iyidir çünkü sürekli onay sormak kullanıcıyı otomatik \"Evet\"e basmaya alıştırır ve diyaloğun koruma işlevi ölür."
+    },
+    {
+      "n": 15,
+      "question": "Veri gösteren bir ekranın kaç hâli tasarlanmalı? Hepsini say.",
+      "answer": "En az dört: **yükleniyor, boş, hata, dolu.** Beşincisi sık gerekir: **kısmi/az veri**."
+    },
+    {
+      "n": 16,
+      "question": "Üç farklı boş durum türü nedir ve her biri nasıl farklı tasarlanır?",
+      "answer": "(1) **İlk kullanım** — henüz hiç veri yok; onboarding fırsatıdır, ne yapılacağını anlat ve birincil eylemi göster. (2) **Kullanıcı temizledi** — hepsi tamamlandı/silindi; olumlu mesaj uygundur. (3) **Sonuç yok** — arama/filtre boş döndü; filtre temizleme veya öneri sunulmalı, kullanıcı çıkmazda bırakılmamalı."
+    },
+    {
+      "n": 17,
+      "question": "Skeleton'ın spinner'a göre iki avantajı nedir?",
+      "answer": "(1) Algılanan bekleme süresini kısaltır — kullanıcı boş ekrana değil oluşmakta olan bir yapıya bakar. (2) Yer önceden ayrıldığı için içerik geldiğinde yerleşim kaymaz (CLS önlenir)."
+    },
+    {
+      "n": 18,
+      "question": "Badge, chip ve tag arasındaki fark nedir? Uygulanmış filtreler hangisi olmalı?",
+      "answer": "**Badge** durumu veya sayıyı gösterir, tıklanmaz (\"Yeni\", bildirim sayacı). **Chip** kullanıcının seçtiği/kaldırabildiği öğedir, × içerir. **Tag** içeriği sınıflandırır, tıklanınca o etikete ait içeriğe götürür. Uygulanmış filtreler **chip** olmalıdır."
+    },
+    {
+      "n": 19,
+      "question": "Pagination ile infinite scroll arasındaki takas nedir? Infinite scroll'un erişilebilirlik sorunu nedir?",
+      "answer": "Pagination konum duygusu, kontrol ve paylaşılabilir URL verir; infinite scroll keşif akışlarında daha doğal hisseder ama footer'a ulaşmayı imkânsızlaştırır ve konum duygusunu kaybettirir. Erişilebilirlik sorunu: **klavye kullanıcısı sayfanın sonuna asla ulaşamaz**, ayrıca yeni içeriğin geldiği ekran okuyucuya duyurulmalıdır."
+    },
+    {
+      "n": 20,
+      "question": "Select yerine combobox ne zaman kullanılır? Çok az seçenek varsa hangisi tercih edilir?",
+      "answer": "Yaklaşık **7-10 seçeneğin üstünde** combobox kullanılır (kullanıcı yazarak arayabilsin). Çok az seçenek varsa (2-4) **radio** tercih edilir, çünkü tüm seçenekler görünür kalır ve tek tıkla seçilir."
+    },
+    {
+      "n": 21,
+      "question": "Checkbox, radio ve switch arasındaki fark nedir? Ayarlar sayfasında hangisi kullanılır?",
+      "answer": "**Checkbox** birden fazlası seçilebilir veya tek bir şeyin açık/kapalı olduğunu belirtir, form gönderilince etkili olur. **Radio** birbirini dışlayan seçeneklerden tam olarak birini seçtirir. **Switch** bir ayarı anında açar/kapatır. Ayarlar sayfasında **switch** kullanılır, çünkü değişiklik anında kaydedilir ve kullanıcı kaydet butonu aramaz."
+    },
+    {
+      "n": 22,
+      "question": "Gönder butonunu doğrulama geçilene kadar devre dışı bırakmak neden tartışmalıdır?",
+      "answer": "Kullanıcı butonun neden pasif olduğunu ve neyin eksik olduğunu anlamaz. Daha iyi yaklaşım: butonu aktif tutmak, basıldığında eksik alanları işaretlemek ve ilk hatalı alana odaklanmak."
+    },
+    {
+      "n": 23,
+      "question": "İyi bir onboarding'in, ürünü anlatan bir turdan farkı nedir?",
+      "answer": "İyi onboarding ürünü **anlatmaz**, kullanıcıya **ilk gerçek işini yaptırır**. Beş slaytlık tanıtım turu genelde atlanır ve unutulur; \"ilk projeni oluştur\" akışı ise kullanıcıyı ilk değere ulaştırır."
+    },
+    {
+      "n": 24,
+      "question": "Divider yerine çoğu zaman ne kullanmak daha iyidir ve neden?",
+      "answer": "**Boşluk.** Çizgi görsel gürültü ekler, boşluk eklemez ve Gestalt yakınlık ilkesiyle aynı ayrımı yapar. Çizgi, boşluğun yetmediği yoğun arayüzlerde (tablo satırları, ayar listeleri) anlamlıdır."
+    },
+    {
+      "n": 25,
+      "question": "İkon buton kullanırken zorunlu olan üç şey nedir?",
+      "answer": "(1) **Erişilebilir ad** (ekran okuyucu için). (2) **Tooltip** veya başka bir görsel açıklama. (3) **Yeterli dokunma hedefi** — ikon küçük kalabilir ama tıklanabilir alan en az 24×24 olmalıdır (dolgu ile büyütülür)."
+    }
+  ]
+}

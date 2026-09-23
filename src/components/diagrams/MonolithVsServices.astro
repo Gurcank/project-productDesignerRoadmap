@@ -1,0 +1,49 @@
+---
+import DiagramFigure from "./DiagramFigure.astro";
+---
+
+<DiagramFigure
+  label="Monolit ve mikroservis karşılaştırma şeması"
+  caption="Solda tek parça: her şey aynı yerde, birlikte yayınlanır, birlikte durur. Sağda parçalara ayrılmış: ayrı ayrı yayınlanır, biri durduğunda diğerleri ayakta kalabilir — ama aralarındaki her ok bir ağ çağrısıdır ve ağ çağrısı başarısız olabilir. Mikroservis 'daha modern' değil, farklı bir maliyet dağılımıdır: kod karmaşıklığını azaltıp işletme karmaşıklığını artırır."
+>
+  <svg viewBox="0 0 640 220" role="img" aria-label="Solda tek parça monolit, sağda birbirine bağlı ayrı servisler">
+    <title>Monolit ve mikroservis</title>
+
+    <text class="dg-label" x="8" y="18">Monolit</text>
+    <text class="dg-sub" x="8" y="34">tek yayın, tek hata alanı</text>
+
+    <rect class="dg-box dg-box--accent" x="8" y="48" width="240" height="140" rx="8"></rect>
+    <rect class="dg-box" x="28" y="68" width="200" height="30" rx="6"></rect>
+    <text class="dg-sub" x="128" y="88" text-anchor="middle">Arayüz</text>
+    <rect class="dg-box" x="28" y="104" width="200" height="30" rx="6"></rect>
+    <text class="dg-sub" x="128" y="124" text-anchor="middle">İş mantığı</text>
+    <rect class="dg-box" x="28" y="140" width="200" height="30" rx="6"></rect>
+    <text class="dg-sub" x="128" y="160" text-anchor="middle">Veri erişimi</text>
+
+    <path class="dg-line" d="M320 40 V196" stroke-dasharray="4 4"></path>
+
+    <text class="dg-label" x="392" y="18">Mikroservis</text>
+    <text class="dg-sub" x="392" y="34">ayrı yayın, ağ üstünden konuşur</text>
+
+    <rect class="dg-box dg-box--progress" x="392" y="48" width="110" height="46" rx="8"></rect>
+    <text class="dg-sub" x="447" y="76" text-anchor="middle">Sipariş</text>
+
+    <rect class="dg-box dg-box--progress" x="522" y="48" width="110" height="46" rx="8"></rect>
+    <text class="dg-sub" x="577" y="76" text-anchor="middle">Ödeme</text>
+
+    <rect class="dg-box dg-box--progress" x="392" y="142" width="110" height="46" rx="8"></rect>
+    <text class="dg-sub" x="447" y="170" text-anchor="middle">Kullanıcı</text>
+
+    <rect class="dg-box dg-box--progress" x="522" y="142" width="110" height="46" rx="8"></rect>
+    <text class="dg-sub" x="577" y="170" text-anchor="middle">Bildirim</text>
+
+    {/* Every line here is a network call that can fail */}
+    <path class="dg-line" d="M502 71 H522"></path>
+    <path class="dg-line" d="M447 94 V142"></path>
+    <path class="dg-line" d="M577 94 V142"></path>
+    <path class="dg-line" d="M502 165 H522"></path>
+    <path class="dg-line" d="M502 94 L522 142"></path>
+
+    <text class="dg-sub dg-progress" x="512" y="210" text-anchor="middle">her ok başarısız olabilir</text>
+  </svg>
+</DiagramFigure>

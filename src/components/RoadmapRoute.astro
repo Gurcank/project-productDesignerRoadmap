@@ -1,0 +1,551 @@
+---
+/**
+ * The home page's signature surface (SPEC §5): one continuous route from step 1
+ * to step 23, wrapping like text so every band still reads left-to-right.
+ *
+ * Data comes from ~/data/categories — deliberately not a second roadmap.ts.
+ * Order, area and node title already live there, and a second file would be a
+ * second truth to keep in sync.
+ *
+ * The node styling follows the Framer "Kireev-3" step-path component, rebuilt
+ * without React/framer-motion (ADR-013): a pill step badge, a dashed connector
+ * track with an arrowhead, a hover lift, and a two-line clamp on the title. Its
+ * staggered scroll-reveal is the one part not carried over — see the styles.
+ */
+import { AREAS, CATEGORIES, DURABILITY_LABEL } from "~/data/categories";
+
+interface Props {
+  /** Slugs that actually have imported content; the rest render as inert nodes. */
+  publishedSlugs: Set<string>;
+  topicIdsByCategory: Record<string, string[]>;
+}
+
+const { publishedSlugs, topicIdsByCategory } = Astro.props;
+
+/*
+ * The node's number is its position along the route, not `category.order`.
+ * The two agree everywhere except Şirket Sözlüğü, which is chapter 22 in the
+ * material but belongs to "Ürün ve Ekip" topically — so a band would read
+ * "2, 3, 22" and break the promise that this is one continuous path. The
+ * material's own numbering still shows on the category and topic pages.
+ */
+const routeOrder = AREAS.flatMap((area) =>
+  CATEGORIES.filter((category) => category.area === area.id).sort((a, b) => a.order - b.order),
+);
+const routePosition = new Map(routeOrder.map((category, index) => [category.slug, index + 1]));
+---
+
+<div class="route">
+  {
+    AREAS.map((area) => {
+      const categories = CATEGORIES.filter((category) => category.area === area.id).sort(
+        (a, b) => a.order - b.order,
+      );
+      if (categories.length === 0) return null;
+
+      const areaTopicIds = categories.flatMap((category) => topicIdsByCategory[category.slug] ?? []);
+
+      return (
+        <details class="band" open data-area={area.id}>
+          <summary class="band__head">
+            <span class="band__title-group">
+              <h2 class="band__title">{area.title}</h2>
+              <span class="band__description">{area.description}</span>
+            </span>
+            <span class="band__count" data-area-ids={areaTopicIds.join(" ")}>
+              <span data-area-done>0</span>/{areaTopicIds.length}
+            </span>
+          </summary>
+
+          <ol class="band__nodes">
+            {categories.map((category) => {
+              const live = publishedSlugs.has(category.slug);
+              const ids = topicIdsByCategory[category.slug] ?? [];
+              const durability = DURABILITY_LABEL[category.durability];
+              // A node with no destination is a dead end for keyboard and screen
+              // readers, so unpublished categories are not anchors.
+              const Tag = live ? "a" : "div";
+
+              return (
+                <li class="node">
+                  <Tag
+                    class:list={["node__body", { "node__body--pending": !live }]}
+                    href={live ? `/${category.slug}/` : undefined}
+                    data-node={category.slug}
+                    data-topic-ids={ids.join(" ")}
+                  >
+                    <span class="node__step" aria-hidden="true">
+                      {routePosition.get(category.slug)}
+                    </span>
+
+                    <span class="node__text">
+                      <span class="node__title">{category.nodeTitle}</span>
+                      <span class="node__meta">
+                        {live ? (
+                          <>
+                            <span data-node-count>0/{ids.length}</span>
+                            <span class="node__dot" title={durability.help}>
+                              {durability.dot}
+                            </span>
+                          </>
+                        ) : (
+                          <span class="node__pending">hazırlanıyor</span>
+                        )}
+                      </span>
+                    </span>
+
+                    {live && (
+                      <svg class="ring" viewBox="0 0 36 36" aria-hidden="true" data-ring>
+                        <circle class="ring__track" cx="18" cy="18" r="15.5" />
+                        {/* pathLength normalises the circumference to 100, so the
+                            offset is simply "100 minus percent done". */}
+                        <circle
+                          class="ring__fill"
+                          cx="18"
+                          cy="18"
+                          r="15.5"
+                          pathLength="100"
+                          stroke-dasharray="100"
+                          stroke-dashoffset="100"
+                        />
+                      </svg>
+                    )}
+                  </Tag>
+                </li>
+              );
+            })}
+          </ol>
+        </details>
+      );
+    })
+  }
+</div>
+
+<script>
+  import { initProgress, $progress, summarise } from "~/lib/progress";
+
+  initProgress();
+
+  const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-topic-ids]"));
+  const areas = Array.from(document.querySelectorAll<HTMLElement>("[data-area-ids]"));
+
+  const idsOf = (element: HTMLElement, attribute: "topicIds" | "areaIds") =>
+    (element.dataset[attribute] ?? "").split(" ").filter(Boolean);
+
+  $progress.subscribe((progress) => {
+    for (const node of nodes) {
+      const summary = summarise(idsOf(node, "topicIds"), progress);
+
+      const count = node.querySelector<HTMLElement>("[data-node-count]");
+      if (count) count.textContent = `${summary.done}/${summary.total}`;
+
+      const ring = node.querySelector<SVGCircleElement>("[data-ring] .ring__fill");
+      if (ring) ring.style.strokeDashoffset = String(100 - summary.percent);
+
+      node.classList.toggle("is-complete", summary.total > 0 && summary.done === summary.total);
+      node.classList.toggle("is-started", summary.done > 0 && summary.done < summary.total);
+    }
+
+    for (const area of areas) {
+      const summary = summarise(idsOf(area, "areaIds"), progress);
+      const done = area.querySelector<HTMLElement>("[data-area-done]");
+      if (done) done.textContent = String(summary.done);
+    }
+  });
+</script>
+
+<style>
+  .route {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+  }
+
+  /* ------------------------------------------------------------------ band */
+  .band {
+    position: relative;
+  }
+
+  /* The route continues between bands: a short rail entering each band from the
+     one above. It is decoration, so it never carries meaning on its own. */
+  .band + .band::before {
+    content: "";
+    position: absolute;
+    inset-block-start: calc(var(--spacing-8) * -1);
+    inset-inline-start: 26px;
+    inline-size: 2px;
+    block-size: var(--spacing-8);
+    background-image: var(--rail-dash-down);
+  }
+
+  /* The rail's dash is three times its stroke width in the original; at our 2px
+     rail that is the 6/6 below. Both orientations are defined once here. */
+  .route {
+    --rail-dash-down: repeating-linear-gradient(
+      to bottom,
+      var(--c-route-line) 0 6px,
+      transparent 6px 12px
+    );
+    --rail-dash-right: repeating-linear-gradient(
+      to right,
+      var(--c-route-line) 0 6px,
+      transparent 6px 12px
+    );
+  }
+
+  .band__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--spacing-4);
+    min-height: 32px;
+    padding-block: var(--spacing-1);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .band__head::-webkit-details-marker {
+    display: none;
+  }
+
+  .band__title-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--spacing-1) var(--spacing-3);
+    min-width: 0;
+  }
+
+  .band__title {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--c-text-secondary);
+  }
+
+  /* A caret instead of an icon set: one glyph, rotates to show state. */
+  .band__title::before {
+    content: "▸";
+    display: inline-block;
+    inline-size: 1em;
+    margin-inline-end: var(--spacing-1);
+    color: var(--c-text-muted);
+    transition: rotate var(--dur-fast) var(--e-out);
+  }
+
+  .band[open] .band__title::before {
+    rotate: 90deg;
+  }
+
+  .band__description {
+    font-size: var(--text-sm);
+    color: var(--c-text-muted);
+    text-transform: none;
+    letter-spacing: normal;
+  }
+
+  .band__count {
+    flex: 0 0 auto;
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--c-text-muted);
+  }
+
+  /* ----------------------------------------------------------------- nodes */
+  .band__nodes {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-3);
+    margin: 0;
+    margin-block-start: var(--spacing-3);
+    padding: 0;
+    list-style: none;
+  }
+
+  .node {
+    position: relative;
+  }
+
+  /*
+   * The connector segment, dashed like the original's rail (its dash is three
+   * times the stroke width, which at our 2px rail is the 6/6 below). In one
+   * column it runs vertically between stacked nodes; the multi-column rules
+   * further down turn it horizontal.
+   */
+  .node + .node::before {
+    content: "";
+    position: absolute;
+    inset-block-start: calc(var(--spacing-3) * -1);
+    inset-inline-start: 26px;
+    inline-size: 2px;
+    block-size: var(--spacing-3);
+    background-image: var(--rail-dash-down);
+  }
+
+  /* The arrowhead that ends each segment — a triangle drawn with borders, so it
+     needs no second asset and inherits the rail colour. */
+  .node + .node::after {
+    content: "";
+    position: absolute;
+    inline-size: 0;
+    block-size: 0;
+    border: 4px solid transparent;
+    inset-block-start: -5px;
+    inset-inline-start: 23px;
+    border-block-start-color: var(--c-route-line);
+    border-block-end-width: 0;
+  }
+
+  .node__body {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    min-height: 56px;
+    padding: var(--spacing-3);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-raised);
+    color: var(--c-text);
+    text-decoration: none;
+    transition:
+      translate var(--dur-fast) var(--e-out),
+      border-color var(--dur-fast) var(--e-out),
+      background-color var(--dur-fast) var(--e-out);
+  }
+
+  /* Hover lift — the original's only hover effect. A lift, not a scale: scaling
+     a card resamples its text. */
+  a.node__body:hover {
+    translate: 0 -2px;
+    border-color: var(--c-border-strong);
+    background-color: var(--c-surface-overlay);
+  }
+
+  /*
+   * The original's staggered scroll-reveal is deliberately not ported. It hides
+   * the page's primary navigation until you scroll to it, which costs more than
+   * the entrance is worth here; the hover lift above is the motion that reports
+   * something.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    a.node__body:hover {
+      translate: none;
+    }
+  }
+
+  /* De-emphasised by colour, not by opacity. An opacity multiplier changes the
+     rendered contrast without changing the token, so the node measured fine and
+     still failed an axe colour-contrast check at 0.55. */
+  .node__body--pending {
+    cursor: not-allowed;
+    border-style: dashed;
+    background-color: transparent;
+  }
+
+  .node__body--pending .node__title {
+    color: var(--c-text-secondary);
+    font-weight: 400;
+  }
+
+  .node__body--pending .node__step {
+    border-style: dashed;
+  }
+
+  /* Pill, not a circle: the original's badge is a 999-radius pill that grows
+     with its number instead of squeezing two digits into a disc. */
+  .node__step {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    min-inline-size: 28px;
+    block-size: 24px;
+    padding-inline: var(--spacing-2);
+    border-radius: var(--radius-full);
+    border: 2px solid var(--c-route-line);
+    background-color: var(--c-surface);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--c-text-muted);
+  }
+
+  .is-started .node__step {
+    border-color: var(--c-progress);
+  }
+
+  .is-complete .node__step {
+    border-color: var(--c-progress);
+    background-color: var(--c-progress);
+    color: var(--c-on-progress);
+  }
+
+  .node__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-px);
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  /* Clamped like the original's body text: a four-column band has to stay on a
+     grid line, and one long Turkish node title would set the row height. */
+  .node__title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .node__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--c-text-muted);
+  }
+
+  .node__pending {
+    font-size: var(--text-xs);
+    color: var(--c-text-muted);
+  }
+
+  /* ------------------------------------------------------------------ ring */
+  .ring {
+    flex: 0 0 auto;
+    inline-size: 28px;
+    block-size: 28px;
+    rotate: -90deg;
+  }
+
+  /* An empty ring is only its track, so it answers to the 3:1 non-text rule the
+     same way an empty checkbox does — --c-border measured 1.3:1 here. */
+  .ring__track {
+    fill: none;
+    stroke: var(--c-control-border);
+    stroke-width: 3;
+  }
+
+  .ring__fill {
+    fill: none;
+    stroke: var(--c-progress);
+    stroke-width: 3;
+    stroke-linecap: round;
+    /* Only the value moves, and only when it changes — the ring's job is to
+       report state, not to decorate. */
+    transition: stroke-dashoffset var(--dur) var(--e-out);
+  }
+
+  /* --------------------------------------------------------- two columns */
+  @media (min-width: 48rem) {
+    .band__nodes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--spacing-4);
+    }
+
+    /* Horizontal link to the previous node in the same row … */
+    .node + .node::before {
+      inset-block-start: 50%;
+      inset-inline-start: calc(var(--spacing-4) * -1);
+      inline-size: var(--spacing-4);
+      block-size: 2px;
+      translate: 0 -50%;
+      background-image: var(--rail-dash-right);
+    }
+
+    .node + .node::after {
+      inset-block-start: 50%;
+      inset-inline-start: -5px;
+      border-width: 4px;
+      border-block-start-color: transparent;
+      border-block-end-width: 4px;
+      border-inline-start-color: var(--c-route-line);
+      border-inline-end-width: 0;
+      translate: 0 -50%;
+    }
+
+    /* … and a vertical one where the route wraps to the next row. */
+    .node:nth-child(2n + 1)::before {
+      inset-block-start: calc(var(--spacing-4) * -1);
+      inset-inline-start: 26px;
+      inline-size: 2px;
+      block-size: var(--spacing-4);
+      translate: none;
+      background-image: var(--rail-dash-down);
+    }
+
+    .node:nth-child(2n + 1)::after {
+      inset-block-start: -5px;
+      inset-inline-start: 23px;
+      border-width: 4px;
+      border-block-end-width: 0;
+      border-block-start-color: var(--c-route-line);
+      border-inline-start-color: transparent;
+      border-inline-end-width: 4px;
+      translate: none;
+    }
+
+    .node:first-child::before,
+    .node:first-child::after {
+      content: none;
+    }
+  }
+
+  /* -------------------------------------------------------- four columns */
+  @media (min-width: 80rem) {
+    .band__nodes {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .node:nth-child(2n + 1)::before {
+      inset-block-start: 50%;
+      inset-inline-start: calc(var(--spacing-4) * -1);
+      inline-size: var(--spacing-4);
+      block-size: 2px;
+      translate: 0 -50%;
+      background-image: var(--rail-dash-right);
+    }
+
+    .node:nth-child(2n + 1)::after {
+      inset-block-start: 50%;
+      inset-inline-start: -5px;
+      border-width: 4px;
+      border-block-start-color: transparent;
+      border-block-end-width: 4px;
+      border-inline-start-color: var(--c-route-line);
+      border-inline-end-width: 0;
+      translate: 0 -50%;
+    }
+
+    .node:nth-child(4n + 1)::before {
+      inset-block-start: calc(var(--spacing-4) * -1);
+      inset-inline-start: 26px;
+      inline-size: 2px;
+      block-size: var(--spacing-4);
+      translate: none;
+      background-image: var(--rail-dash-down);
+    }
+
+    .node:nth-child(4n + 1)::after {
+      inset-block-start: -5px;
+      inset-inline-start: 23px;
+      border-width: 4px;
+      border-block-end-width: 0;
+      border-block-start-color: var(--c-route-line);
+      border-inline-start-color: transparent;
+      border-inline-end-width: 4px;
+      translate: none;
+    }
+
+    .node:first-child::before,
+    .node:first-child::after {
+      content: none;
+    }
+  }
+</style>

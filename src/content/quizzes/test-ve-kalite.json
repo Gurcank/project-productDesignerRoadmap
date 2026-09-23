@@ -1,0 +1,131 @@
+{
+  "category": "test-ve-kalite",
+  "source": "17-test-kalite-ve-kod-sagligi.md",
+  "items": [
+    {
+      "n": 1,
+      "question": "Otomatik testin asıl faydası nedir? Tasarım kalitesiyle bağlantısı ne?",
+      "answer": "Asıl faydası hata bulmak değil, **değişiklik yapabilme cesareti vermektir.** Testsiz bir kod tabanında her değişiklik risklidir; ekip dokunmaktan çekinir. Tasarım bağlantısı: test altyapısı zayıf bir projede **küçük tasarım düzeltmeleri de \"riskli\" sayılıp ertelenir.**"
+    },
+    {
+      "n": 2,
+      "question": "Test piramidi neyi önerir? Her şeyi E2E ile test etmenin sakıncası nedir?",
+      "answer": "Tabanda çok sayıda hızlı ve ucuz test (unit), ortada entegrasyon, tepede az sayıda E2E. Her şeyi E2E yapmak CI süresini dakikalardan saate çıkarır ve testler kırılgan olduğu için sürekli bakım ister."
+    },
+    {
+      "n": 3,
+      "question": "Unit test ile integration test hangi farklı hataları yakalar?",
+      "answer": "Unit test **bir parçanın içindeki** hataları yakalar (yanlış hesap, yanlış koşul). Integration test **parçaların arasındaki** hataları yakalar (yanlış alan adı, uyumsuz veri tipi, eksik kontrol) — ki gerçek hataların çoğu buradadır."
+    },
+    {
+      "n": 4,
+      "question": "E2E testler neden kırılgandır ve bu kırılganlık nasıl azaltılır?",
+      "answer": "Çünkü gerçek bir tarayıcıda çalışırlar; tasarım veya yapı değişince kırılırlar. Azaltmanın yolu: testleri görsel detaylara değil **erişilebilir adlara ve rollere** bağlamak — bu da semantic HTML'in bir yan faydasıdır."
+    },
+    {
+      "n": 5,
+      "question": "Regression test hangi disiplinden doğar?",
+      "answer": "**Her hata düzeltmesinin yanına bir test eklenmesi** disiplininden. Böylece aynı hata bir daha sessizce geri dönemez."
+    },
+    {
+      "n": 6,
+      "question": "Testing Library'nin yaklaşımı seni neden ilgilendirir?",
+      "answer": "Çünkü bileşenleri CSS sınıflarına göre değil **erişilebilir adlara ve rollere göre** bulmayı teşvik eder. Sonuç: erişilebilirlik için yaptığın işler testleri de sağlamlaştırır. İyi yazılmış bir arayüz, test edilmesi kolay bir arayüzdür."
+    },
+    {
+      "n": 7,
+      "question": "Test coverage neyi ölçer, neyi ölçmez? Hedefe dönüştüğünde ne olur?",
+      "answer": "**\"Kod çalıştırıldı mı\"yı ölçer, \"doğru mu\"yu ölçmez.** %100 kapsamlı bir kod yine de yanlış çalışabilir. Hedefe dönüştüğünde ekip, değer üretmeyen ama yüzdeyi yükselten testler yazmaya başlar; teşhis aracı olmaktan çıkar."
+    },
+    {
+      "n": 8,
+      "question": "Flaky test neden test altyapısının en yıkıcı sorunudur? Doğru tepki nedir?",
+      "answer": "Çünkü ekip \"yine takıldı, tekrar çalıştır\" demeye başlar ve **tüm test setine olan güven ölür** — gerçek bir hata olduğunda da aynı refleksle geçilir. Doğru tepki: **düzelt veya karantinaya al**; otomatik yeniden denemeyle örtme."
+    },
+    {
+      "n": 9,
+      "question": "Aşırı mock'lamanın riski nedir?",
+      "answer": "Her şey taklit edilirse test, gerçek sistemi değil **kendi kurgusunu** doğrular. Ayrıca fixture verisi gerçekçi değilse (uzun isimler, boş alanlar, uç değerler yoksa) uç durumlar hiç test edilmez."
+    },
+    {
+      "n": 10,
+      "question": "Senaryolu test ile keşifsel test ne bulur? Tasarımcının keşifsel testte avantajı nedir?",
+      "answer": "Senaryolu test **bilinen davranışları** doğrular; keşifsel test **kimsenin düşünmediği durumları** bulur. Tasarımcının avantajı: uç durumları zaten düşünmüş olduğu için nereyi kurcalayacağını bilir — çok uzun isim, boş liste, yavaş bağlantı, geri tuşu, çift tıklama."
+    },
+    {
+      "n": 11,
+      "question": "İyi bir hata raporunda en sık atlanan üç alan nedir ve neden önemli?",
+      "answer": "**Ortam bilgisi, sıklık ve kullanıcı/veri durumu.** Önemli çünkü bir hata yalnızca belirli bir tarayıcıda, belirli bir rolde veya 200 öğeli bir listede oluşuyorsa, bu bilgi olmadan geliştirici onu hiç göremez."
+    },
+    {
+      "n": 12,
+      "question": "Bir hata raporunun geçmesi gereken tek cümlelik testi nedir?",
+      "answer": "Raporu okuyan kişinin, **senin bilgisayarına ihtiyaç duymadan** hatayı kendi ekranında görebilmesini sağlamalıdır."
+    },
+    {
+      "n": 13,
+      "question": "Severity ile priority arasındaki fark nedir? \"Düşük severity + yüksek priority\" örneği ver.",
+      "answer": "**Severity** hatanın ne kadar kötü olduğudur (teknik etki); **priority** ne zaman düzeltileceğidir (iş kararı). Düşük severity + yüksek priority örneği: ana sayfadaki logonun yanlış olması — sistemi bozmaz ama herkes görür, hemen düzeltilir."
+    },
+    {
+      "n": 14,
+      "question": "Görsel regresyon testi hangi boşluğu doldurur? Bilinen sorunu nedir?",
+      "answer": "**Kod testlerinin yakalayamadığı görsel bozulmaları.** Bir CSS değişikliği başka bir sayfadaki kartı bozabilir ve hiçbir test bunu fark etmez. Bilinen sorunu **yanlış pozitiflerdir**: font yüklenme farkı, animasyon zamanlaması ve dinamik içerik sahte farklar üretir."
+    },
+    {
+      "n": 15,
+      "question": "CI'daki yeşil erişilebilirlik işareti ne anlama gelir, ne anlama gelmez?",
+      "answer": "**\"Bilinen otomatik kontroller geçti\"** anlamına gelir. **\"Erişilebilir\"** anlamına gelmez — otomatik araçlar sorunların yalnızca bir kısmını (yaygın olarak raporlanan aralık %30–40) yakalar."
+    },
+    {
+      "n": 16,
+      "question": "Performans bütçesi neden gerekli? Lighthouse skoru neyin kanıtı değildir?",
+      "answer": "Çünkü performans zamanla bozulur; her ekleme tek tek makul görünür ve birikir. Bütçe bu birikimi mekanik olarak durdurur. Lighthouse skoru bir **laboratuvar ölçümüdür** ve gerileme alarmı olarak değerlidir; **gerçek kullanıcı deneyiminin kanıtı değildir** (saha verisi ayrıdır)."
+    },
+    {
+      "n": 17,
+      "question": "Formatter'ın asıl faydası estetik midir?",
+      "answer": "Hayır — asıl faydası **tartışmayı ortadan kaldırmasıdır.** Kod incelemelerinde biçim tartışılmaz çünkü karar araca devredilmiştir; insan dikkati asıl konulara kalır."
+    },
+    {
+      "n": 18,
+      "question": "CI gate sayısını artırmanın sakıncası nedir?",
+      "answer": "**Kapı sayısı arttıkça yayın yavaşlar** ve ekip kapıları atlatmanın yollarını aramaya başlar. Zorunlu kontroller gerçekten kritik olanlarla sınırlı tutulmalıdır."
+    },
+    {
+      "n": 19,
+      "question": "Clean code ilkelerinin tasarım sistemindeki karşılıkları nelerdir? Üç örnek ver.",
+      "answer": "**Tek sorumluluk** = bir bileşen tek işi yapar. **DRY** = aynı boşluk değeri 40 yerde tekrarlanmaz, token'dan gelir. **Magic number** = `margin: 22px` yerine spacing ölçeğinden bir değer. (Ek: anlamlı isimlendirme = `color-4` değil `color-text-danger`.)"
+    },
+    {
+      "n": 20,
+      "question": "DRY ilkesi nasıl aşırıya kaçırılır?",
+      "answer": "İki şey **bugün aynı göründüğü için** birleştirilerek. Yarın farklılaştıklarında, o soyutlama ikisini birden bozar. \"Erken soyutlama, kopyalamadan pahalıdır\" yaygın bir karşı-ilkedir."
+    },
+    {
+      "n": 21,
+      "question": "İyi bir kod yorumu neyi açıklar?",
+      "answer": "**\"Ne yaptığını\" değil, \"neden öyle yaptığını.\"** Ne yaptığı zaten kodda görünür; neden görünmez — hangi kısıt yüzünden, hangi hatayı önlemek için, hangi kararın sonucu olarak. Aynı ilke commit mesajları ve ADR'ler için de geçerlidir."
+    },
+    {
+      "n": 22,
+      "question": "Teknik borç her zaman kötü müdür? Asıl sorun nedir?",
+      "answer": "Hayır. Bir tarihe yetişmek için **bilinçli borçlanmak meşru bir karardır.** Asıl sorun, borcun **kayıt altına alınmaması** ve faizinin görünmez birikmesidir."
+    },
+    {
+      "n": 23,
+      "question": "Tasarım borcu nasıl birikir? Dört örnek ver.",
+      "answer": "Sisteme girmemiş tek kullanımlık bileşenler · ölçek dışı boşluk ve renk değerleri · tanımlanmamış durum ekranları (boş, hata, yükleme) · kopyalanıp ana bileşenden koparılmış Figma örnekleri. (Ek: güncellenmemiş tasarım dokümantasyonu.)"
+    },
+    {
+      "n": 24,
+      "question": "Refactor'ın tanımındaki kritik kelime nedir? Neden refactor ile yeni özellik aynı PR'a konmaz?",
+      "answer": "**\"Davranışı değiştirmeden.\"** Refactor bir yeniden yazım değildir; kullanıcı hiçbir fark görmemelidir. Yeni özellikle aynı PR'a konmaz çünkü ikisi karışınca inceleyen kişi **neyin niyetli neyin kaza olduğunu** ayırt edemez."
+    },
+    {
+      "n": 25,
+      "question": "Kod incelemesinde ilk bakılacak soru nedir? Biçime neden bakılmaz?",
+      "answer": "**\"Doğru problemi mi çözüyor?\"** Kod kusursuz olabilir ama yanlış şeyi yapıyor olabilir. Biçime bakılmaz çünkü o formatter'ın işidir; insan dikkatini oraya harcamak israftır."
+    }
+  ]
+}

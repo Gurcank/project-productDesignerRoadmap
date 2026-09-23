@@ -1,0 +1,65 @@
+---
+/**
+ * Status dot with a pulsing ring — skeleton from the Framer "ActivityBadge"
+ * component, rebuilt without React/framer-motion (ADR-013).
+ *
+ * Preserved: a 12px dot, a colour preset (green / orange / red), an expanding
+ * ring that fades as it grows, and a soft glow behind the dot.
+ *
+ * Changed: framer-motion's `useInView`-gated animation becomes a CSS keyframe —
+ * it costs nothing and stops under prefers-reduced-motion like everything else.
+ * The three preset hexes become our status tokens.
+ */
+interface Props {
+  tone: "stable" | "slow" | "fast";
+  label: string;
+  /** A still dot, for places where a pulse would be noise. */
+  still?: boolean;
+}
+
+const { tone, label, still = false } = Astro.props;
+---
+
+<span class:list={["badge", `badge--${tone}`, { "badge--still": still }]} title={label}>
+  <span class="badge__dot" aria-hidden="true"></span>
+  <span class="sr-only">{label}</span>
+</span>
+
+<style is:global>
+  .badge {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    inline-size: 12px;
+    block-size: 12px;
+    flex: 0 0 auto;
+  }
+
+  .badge__dot {
+    inline-size: 10px;
+    block-size: 10px;
+    border-radius: var(--radius-full);
+    background-color: var(--badge-colour);
+    box-shadow: 0 0 10px color-mix(in oklab, var(--badge-colour) 28%, transparent);
+  }
+
+  /* The ring is a second circle that grows out of the dot and fades. */
+  .badge:not(.badge--still)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-full);
+    border: 1.5px solid var(--badge-colour);
+    animation: badge-pulse 2.4s var(--e-out) infinite;
+  }
+
+  @keyframes badge-pulse {
+    0% { scale: 1; opacity: 0.7; }
+    70% { scale: 2.1; opacity: 0; }
+    100% { scale: 2.1; opacity: 0; }
+  }
+
+  .badge--stable { --badge-colour: var(--c-success); }
+  .badge--slow { --badge-colour: var(--c-progress); }
+  .badge--fast { --badge-colour: var(--c-danger); }
+</style>

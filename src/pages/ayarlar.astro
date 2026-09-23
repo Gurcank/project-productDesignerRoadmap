@@ -1,0 +1,356 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Ayarlar"
+  description="İlerlemeni yedekle, geri yükle veya sıfırla."
+  section="ayarlar"
+>
+  <div class="settings">
+    <header class="settings__head">
+      <h1>Ayarlar</h1>
+      <p class="settings__lead">
+        İlerlemen yalnızca bu tarayıcıda, <code>localStorage</code> içinde saklanıyor. Hesap yok, sunucu yok — ama
+        bunun bir bedeli var.
+      </p>
+    </header>
+
+    {/* The plan calls this a known cost of the chosen approach; it belongs where
+        the user can act on it, not in a document they will not open. */}
+    <aside class="warning">
+      <h2 class="warning__title">Yedek almazsan ilerleme kaybolur</h2>
+      <p>
+        Tarayıcı verilerini temizlersen, gizli sekmede çalışırsan veya başka bir cihaza geçersen ilerlemen gelmez.
+        Aşağıdaki JSON tek yedeğin.
+      </p>
+    </aside>
+
+    <p class="storage-error" role="alert" data-storage-error hidden></p>
+
+    <section class="block" aria-labelledby="ozet">
+      <h2 id="ozet" class="block__title">Durum</h2>
+      <dl class="stats">
+        <div>
+          <dt>Tamamlanan adım</dt>
+          <dd data-stat-done>—</dd>
+        </div>
+        <div>
+          <dt>İşaretli liste maddesi</dt>
+          <dd data-stat-checklists>—</dd>
+        </div>
+        <div>
+          <dt>Son güncelleme</dt>
+          <dd data-stat-updated>—</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="block" aria-labelledby="disa-aktar">
+      <h2 id="disa-aktar" class="block__title">Dışa aktar</h2>
+      <p class="block__hint">
+        Aşağıdaki metni kopyala ya da dosya olarak indir. Geri yüklemek için tek ihtiyacın olan bu.
+      </p>
+
+      <label class="sr-only" for="export-json">Yedek JSON</label>
+      <textarea id="export-json" class="json" rows="6" readonly data-export></textarea>
+
+      <div class="actions">
+        <button type="button" class="button" data-copy>Kopyala</button>
+        <a class="button" download="pdr-ilerleme.json" data-download>Dosya olarak indir</a>
+        <span class="actions__status" role="status" data-copy-status></span>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="ice-aktar">
+      <h2 id="ice-aktar" class="block__title">İçe aktar</h2>
+      <p class="block__hint">
+        Yedek dosyasını seç ya da JSON'u buraya yapıştır. Geçerliyse mevcut ilerlemenin yerine geçer.
+      </p>
+
+      <label class="file">
+        <span class="file__label">Dosya seç</span>
+        <input type="file" accept="application/json,.json" data-import-file />
+      </label>
+
+      <label class="sr-only" for="import-json">Geri yüklenecek JSON</label>
+      <textarea id="import-json" class="json" rows="6" placeholder="{ &quot;version&quot;: 1, … }" data-import-text
+      ></textarea>
+
+      <div class="actions">
+        <button type="button" class="button button--primary" data-import>İçe aktar</button>
+        <span class="actions__status" role="status" data-import-status></span>
+      </div>
+    </section>
+
+    <section class="block block--danger" aria-labelledby="sifirla">
+      <h2 id="sifirla" class="block__title">Sıfırla</h2>
+      <p class="block__hint">Tüm tikleri ve liste işaretlerini siler. Geri alınamaz — önce yedek al.</p>
+
+      <div class="actions">
+        <button type="button" class="button button--danger" data-reset>İlerlemeyi sıfırla</button>
+        <span class="actions__status" role="status" data-reset-status></span>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  import { initProgress, $progress, $storageError, exportJson, importJson, reset } from "~/lib/progress";
+
+  initProgress();
+
+  const exportArea = document.querySelector<HTMLTextAreaElement>("[data-export]");
+  const download = document.querySelector<HTMLAnchorElement>("[data-download]");
+  const importText = document.querySelector<HTMLTextAreaElement>("[data-import-text]");
+  const importFile = document.querySelector<HTMLInputElement>("[data-import-file]");
+  const errorBox = document.querySelector<HTMLElement>("[data-storage-error]");
+
+  const statusOf = (name: string) => document.querySelector<HTMLElement>(`[data-${name}-status]`);
+
+  let objectUrl: string | null = null;
+
+  $progress.subscribe((progress) => {
+    const json = exportJson();
+    if (exportArea) exportArea.value = json;
+
+    if (download) {
+      // Revoke the previous blob before replacing it, or every change leaks one.
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+      objectUrl = URL.createObjectURL(new Blob([json], { type: "application/json" }));
+      download.href = objectUrl;
+    }
+
+    const done = Object.values(progress.topics).filter((topic) => topic.done).length;
+    const checked = Object.values(progress.checklists).filter(Boolean).length;
+
+    const set = (name: string, value: string) => {
+      const element = document.querySelector<HTMLElement>(`[data-stat-${name}]`);
+      if (element) element.textContent = value;
+    };
+
+    set("done", String(done));
+    set("checklists", String(checked));
+    set(
+      "updated",
+      progress.updatedAt ? new Date(progress.updatedAt).toLocaleString("tr-TR") : "henüz kayıt yok",
+    );
+  });
+
+  $storageError.subscribe((message) => {
+    if (!errorBox) return;
+    errorBox.textContent = message ?? "";
+    errorBox.hidden = !message;
+  });
+
+  document.querySelector("[data-copy]")?.addEventListener("click", async () => {
+    const status = statusOf("copy");
+    try {
+      await navigator.clipboard.writeText(exportArea?.value ?? "");
+      if (status) status.textContent = "Kopyalandı.";
+    } catch {
+      // Clipboard access can be refused; the textarea is still selectable.
+      exportArea?.select();
+      if (status) status.textContent = "Kopyalanamadı — metin seçildi, Ctrl+C ile kopyala.";
+    }
+  });
+
+  importFile?.addEventListener("change", async () => {
+    const file = importFile.files?.[0];
+    if (!file || !importText) return;
+    importText.value = await file.text();
+    const status = statusOf("import");
+    if (status) status.textContent = `${file.name} okundu. "İçe aktar"a bas.`;
+  });
+
+  document.querySelector("[data-import]")?.addEventListener("click", () => {
+    const status = statusOf("import");
+    const text = importText?.value.trim();
+    if (!text) {
+      if (status) status.textContent = "Önce bir yedek yapıştır veya dosya seç.";
+      return;
+    }
+
+    const error = importJson(text);
+    if (status) status.textContent = error ?? "İlerleme geri yüklendi.";
+  });
+
+  document.querySelector("[data-reset]")?.addEventListener("click", () => {
+    const status = statusOf("reset");
+    if (!confirm("Tüm ilerleme silinecek. Yedek aldın mı?")) {
+      if (status) status.textContent = "İptal edildi.";
+      return;
+    }
+    reset();
+    if (status) status.textContent = "İlerleme sıfırlandı.";
+  });
+</script>
+
+<style>
+  .settings {
+    max-width: 48rem;
+    margin-inline: auto;
+    padding: var(--spacing-12) var(--spacing-4) var(--spacing-16);
+  }
+
+  .settings__head h1 {
+    font-size: var(--text-3xl);
+    letter-spacing: -0.02em;
+  }
+
+  .settings__lead {
+    margin-block-start: var(--spacing-3);
+    color: var(--c-text-secondary);
+  }
+
+  .warning {
+    margin-block-start: var(--spacing-6);
+    padding: var(--spacing-4);
+    border: 1px solid var(--c-progress);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-raised);
+  }
+
+  .warning__title {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--c-progress-text);
+  }
+
+  .warning p {
+    margin-block-start: var(--spacing-2);
+    color: var(--c-text-secondary);
+    font-size: var(--text-sm);
+  }
+
+  .storage-error {
+    margin-block-start: var(--spacing-4);
+    padding: var(--spacing-3);
+    border: 1px solid var(--c-danger);
+    border-radius: var(--radius-md);
+    color: var(--c-danger);
+    font-size: var(--text-sm);
+  }
+
+  .block {
+    margin-block-start: var(--spacing-12);
+  }
+
+  .block__title {
+    font-size: var(--text-lg);
+  }
+
+  .block__hint {
+    margin-block-start: var(--spacing-2);
+    color: var(--c-text-secondary);
+    font-size: var(--text-sm);
+  }
+
+  .stats {
+    display: grid;
+    gap: var(--spacing-4);
+    margin-block-start: var(--spacing-4);
+  }
+
+  .stats dt {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-text-muted);
+  }
+
+  .stats dd {
+    margin: 0;
+    font-size: var(--text-lg);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .json {
+    inline-size: 100%;
+    margin-block-start: var(--spacing-3);
+    padding: var(--spacing-3);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-sunken);
+    color: var(--c-text-secondary);
+    font-family: var(--font-mono, monospace);
+    font-size: var(--text-xs);
+    line-height: 1.6;
+    resize: vertical;
+  }
+
+  .file {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-3);
+    margin-block-start: var(--spacing-3);
+  }
+
+  .file__label {
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-3);
+    margin-block-start: var(--spacing-3);
+  }
+
+  .actions__status {
+    font-size: var(--text-sm);
+    color: var(--c-text-muted);
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: var(--spacing-4);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-md);
+    background: none;
+    color: var(--c-text);
+    font: inherit;
+    font-size: var(--text-sm);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .button:hover {
+    background-color: var(--c-surface-raised);
+  }
+
+  .button--primary {
+    border-color: transparent;
+    background-color: var(--c-action-surface);
+    color: var(--c-on-action);
+  }
+
+  .button--primary:hover {
+    background-color: var(--c-action);
+  }
+
+  .button--danger {
+    border-color: var(--c-danger);
+    color: var(--c-danger);
+  }
+
+  .block--danger .block__title {
+    color: var(--c-danger);
+  }
+
+  @media (min-width: 48rem) {
+    .settings {
+      padding-inline: var(--spacing-6);
+    }
+
+    .stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

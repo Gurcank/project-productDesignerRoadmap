@@ -1,0 +1,63 @@
+---
+/**
+ * Progress bar — skeleton from the Framer "ProgressBar" component, rebuilt
+ * without React/framer-motion (ADR-013).
+ *
+ * Preserved: a rounded track, a fill that animates to its target the first time
+ * it is seen, and an optional label. The original gated the animation on
+ * `useInView`; here the fill starts at zero and the value is written by the
+ * progress store after hydration, which produces the same "fills on arrival"
+ * effect without an observer.
+ *
+ * Changed: colours and radius come from tokens; the label sits beside the track
+ * rather than inside it, because at 4px tall nothing fits inside.
+ */
+interface Props {
+  /** Element the progress script writes the width to. */
+  fillAttribute: string;
+  label?: string;
+  class?: string;
+}
+
+const { fillAttribute, label, class: className } = Astro.props;
+---
+
+<div class:list={["progress", className]}>
+  <div class="progress__track" role="presentation">
+    <span class="progress__fill" {...{ [fillAttribute]: true }}></span>
+  </div>
+  {label && <p class="progress__label">{label}</p>}
+</div>
+
+<style is:global>
+  .progress {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+  }
+
+  .progress__track {
+    flex: 1 1 auto;
+    block-size: 6px;
+    border-radius: var(--radius-full);
+    background-color: var(--c-surface-sunken);
+    overflow: hidden;
+  }
+
+  .progress__fill {
+    display: block;
+    block-size: 100%;
+    inline-size: 0;
+    border-radius: inherit;
+    background-color: var(--c-progress);
+    /* Only the width moves, and only when the value changes. */
+    transition: inline-size var(--dur-slow) var(--e-out);
+  }
+
+  .progress__label {
+    flex: 0 0 auto;
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+    color: var(--c-text-muted);
+  }
+</style>

@@ -1,0 +1,66 @@
+{
+  "category": "urun-gelistirme",
+  "source": "02-urun-gelistirme-yasam-dongusu.md",
+  "items": [
+    {
+      "n": 1,
+      "question": "Product Manager ile Project Manager arasındaki fark nedir?",
+      "answer": "Product Manager **ne** yapılacağına ve **neden** yapılacağına karar verir, ürünün sonucundan sorumludur. Project Manager işin **ne zaman ve nasıl** teslim edileceğine, plan ve koordinasyona odaklanır. İkisi de \"PM\" diye kısaltılır."
+    },
+    {
+      "n": 2,
+      "question": "Bir stakeholder \"kullanıcılar filtre istiyor\" diyor. Bunu problem statement olarak nasıl yeniden yazarsın ve neden?",
+      "answer": "\"Filtre\" bir çözüm, problem değil. Problem statement çözümden arındırılarak yazılır: \"Kullanıcı, aradığı ürünü uzun listede bulamıyor ve aramayı terk ediyor.\" Böylece filtre dışında sıralama, arama iyileştirmesi veya kategori değişikliği gibi alternatifler de masada kalır."
+    },
+    {
+      "n": 3,
+      "question": "User story'nin standart kalıbı nedir ve kalıbın hangi kısmı en çok atlanır? Atlanınca ne kaybedilir?",
+      "answer": "*\"[Rol] olarak, [şunu] yapmak istiyorum, çünkü [şu sebeple].\"* En çok atlanan kısım **sebep**tir. Sebep yazılmazsa geliştirici alternatif ve daha iyi bir çözüm öneremez; sadece söyleneni birebir uygular."
+    },
+    {
+      "n": 4,
+      "question": "Acceptance criteria ile Definition of Done arasındaki fark nedir? Birer örnek ver.",
+      "answer": "Acceptance criteria o işe özeldir: \"Filtre seçildiğinde URL güncellenir.\" Definition of Done tüm işler için ortaktır: \"Kod review'dan geçti, testler yeşil, mobilde kontrol edildi.\" İkisi birden sağlanmadan iş bitmiş sayılmaz."
+    },
+    {
+      "n": 5,
+      "question": "Şu kabul kriteri neden kötü: \"Arama sonuçları hızlı ve doğru gelmeli.\" Nasıl düzeltirsin?",
+      "answer": "Ölçülebilir değil; \"hızlı\" ve \"doğru\" kişiden kişiye değişir ve evet/hayır ile cevaplanamaz. Düzeltilmiş hâli: \"Given kullanıcı en az 3 karakter yazmış, When aramayı tetikler, Then sonuçlar 500 ms içinde görünür ve eşleşme yoksa boş durum ekranı gösterilir.\""
+    },
+    {
+      "n": 6,
+      "question": "MVP, POC ve prototype hangi üç farklı soruyu cevaplar?",
+      "answer": "POC: **teknik olarak mümkün mü?** Prototype: **kullanıcı bu deneyimi anlıyor ve kullanabiliyor mu?** MVP: **gerçek kullanıcılar bunu istiyor ve kullanıyor mu?**"
+    },
+    {
+      "n": 7,
+      "question": "Scope creep ile bilinçli kapsam değişikliği arasındaki fark nedir?",
+      "answer": "Kapsam değişikliği bilinçlidir, kayıt altına alınır ve süre/kaynak etkisi birlikte güncellenir. Scope creep sessizce, tek tek küçük eklemelerle olur; kimse ne zaman karar verildiğini hatırlamaz ama teslim tarihi kayar."
+    },
+    {
+      "n": 8,
+      "question": "MoSCoW yönteminin en değerli kutusu hangisidir ve neden?",
+      "answer": "**Won't have.** Bu turda yapılmayacakların açıkça yazılması, sonradan gelen \"ama bu da olacaktı\" itirazını baştan kapatır. Diğer üç kutu neyin yapılacağını söyler; asıl koruma bu kutudan gelir."
+    },
+    {
+      "n": 9,
+      "question": "Roadmap'e kesin tarih yazmak neden riskli görülüyor? Alternatif format nedir?",
+      "answer": "Uzak işlerin belirsizliği yüksektir; tarih yazmak tahmini taahhüde çevirir ve tutulmayınca güven kaybettirir. Alternatif: **Now / Next / Later** formatı — belirsizliği dürüstçe yansıtır."
+    },
+    {
+      "n": 10,
+      "question": "Discovery ve delivery'nin paralel yürütülmesine ne denir ve bu ne işe yarar?",
+      "answer": "**Dual-track.** Ekip aynı anda hem bir sonraki işi keşfeder hem mevcut kararı üretir. Böylece kimse sıra beklemez ve araştırma sonuçları eskimeden kullanılır."
+    },
+    {
+      "n": 11,
+      "question": "Bir tasarım handoff'unda ekran görüntüsünden başka neler bulunmalı? En az dört şey say.",
+      "answer": "En az dördü: ölçüler ve boşluk değerleri · renk ve tipografi token değerleri · tüm bileşen durumları (hover, focus, active, disabled, error, loading) · responsive davranış ve breakpoint'ler · boş durum, hata durumu ve yükleme ekranları · animasyon süresi ve easing değerleri · erişilebilirlik notları (odak sırası, alt metin)."
+    },
+    {
+      "n": 12,
+      "question": "Closed beta ile soft launch arasındaki fark nedir?",
+      "answer": "Closed beta sınırlı ve **davetli** bir gruba açılır, odaklı geri bildirim toplamak içindir. Soft launch ürünü açar ama **duyuru yapmaz**; amaç gerçek koşullarda sessizce test etmek ve sorun çıkarsa itibar maliyetini düşük tutmaktır. Biri erişimi, diğeri duyuruyu kısıtlar."
+    }
+  ]
+}

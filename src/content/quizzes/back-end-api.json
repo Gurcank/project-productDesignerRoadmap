@@ -1,0 +1,106 @@
+{
+  "category": "back-end-api",
+  "source": "10-backend-ve-api.md",
+  "items": [
+    {
+      "n": 1,
+      "question": "GET ile POST arasındaki fark nedir? Hangisi idempotent değildir ve bunun tasarımdaki karşılığı nedir?",
+      "answer": "GET veri okur ve hiçbir şeyi değiştirmez (safe); POST kayıt oluşturur veya işlem tetikler. **POST idempotent değildir**: aynı istek iki kez giderse iki kayıt oluşabilir. Tasarımdaki karşılığı: gönder butonunun basıldıktan sonra devre dışı kalması ve yükleme durumu göstermesi estetik değil, **veri bütünlüğü** meselesidir."
+    },
+    {
+      "n": 2,
+      "question": "4xx ile 5xx arasındaki fark nedir? Kim sorumludur?",
+      "answer": "4xx **istemci hatasıdır** — istek yanlış (eksik alan, geçersiz kimlik, olmayan adres). 5xx **sunucu hatasıdır** — istek doğru ama sunucu beceremedi. Sorumluluk sırasıyla istemci/kullanıcı ve sunucudadır."
+    },
+    {
+      "n": 3,
+      "question": "401 ile 403 arasındaki fark nedir? 403 alındığında kullanıcıyı giriş sayfasına yönlendirmek neden hatadır?",
+      "answer": "401 = \"kim olduğunu bilmiyorum, giriş yap.\" 403 = \"kim olduğunu biliyorum ama yetkin yok.\" 403'te giriş sayfasına yönlendirmek hatadır çünkü kullanıcı **zaten giriş yapmıştır**; tekrar giriş yapmak bir şey değiştirmez ve sonsuz döngü oluşur. 403 için ayrı bir \"erişiminiz yok\" ekranı gerekir."
+    },
+    {
+      "n": 4,
+      "question": "429 ne demektir ve tasarımda ne yapılmalıdır?",
+      "answer": "Çok fazla istek atıldığı için geçici olarak sınırlandın. Tasarımda kullanıcıya **ne kadar beklemesi gerektiği** söylenmelidir — sunucu genelde bir bekleme süresi döner ve bu geri sayım olarak gösterilebilir. \"Bir hata oluştu\" demek yetersizdir."
+    },
+    {
+      "n": 5,
+      "question": "API contract'ın tasarımcı için değeri nedir?",
+      "answer": "Sözleşme, hangi alanların geleceğini ve **hangilerinin boş olabileceğini** söyler — yani hangi boş ve uç durumları (4.4) tasarlaman gerektiğini. Ayrıca ön yüz ile arka yüzün paralel çalışmasını mümkün kılar."
+    },
+    {
+      "n": 6,
+      "question": "REST'in over-fetching ve under-fetching sorunları nedir? GraphQL bunu nasıl çözer, bedeli nedir?",
+      "answer": "**Over-fetching**: ihtiyacından fazla veri gelir. **Under-fetching**: bir ekran için birden fazla istek atmak gerekir. GraphQL, istemcinin tam olarak istediği alanları tek istekte almasını sağlayarak ikisini de çözer. Bedeli: önbellekleme zorlaşır, pahalı sorgulara karşı koruma gerekir ve ekstra bir katman/araç zinciri gelir."
+    },
+    {
+      "n": 7,
+      "question": "tRPC ne zaman uygun değildir?",
+      "answer": "**Yalnızca TypeScript istemcileri için çalışır.** Dışarıya API açacaksan, Swift/Kotlin gibi başka dillerde istemcin olacaksa veya webhook alacaksan tRPC o kısmı çözmez. Yaygın çözüm melez mimaridir: içeride tRPC, dışa bakan uçlarda REST."
+    },
+    {
+      "n": 8,
+      "question": "WebSocket, SSE ve polling arasındaki fark nedir? \"Bildirimler anında gelsin\" isteği neden bedava değildir?",
+      "answer": "**Polling** istemcinin belirli aralıklarla sorması (basit, israflı). **SSE** sunucudan istemciye tek yönlü sürekli akış. **WebSocket** çift yönlü kalıcı bağlantı (sohbet, işbirlikçi düzenleme). Bedava değildir çünkü kalıcı bağlantı ek bir altyapı katmanı ve maliyet demektir; çoğu bildirim senaryosunda 30 saniyelik tazeleme yeterlidir ve çok daha ucuzdur."
+    },
+    {
+      "n": 9,
+      "question": "Server action kullanmak, doğrulama ve yetki kontrolünü atlamak için gerekçe midir?",
+      "answer": "Hayır. Server action da bir endpoint'tir; dışarıdan çağrılabilir. **Girdi doğrulaması ve yetki kontrolü orada da zorunludur.**"
+    },
+    {
+      "n": 10,
+      "question": "BFF hangi problemi çözer?",
+      "answer": "Under-fetching'i. Ön yüzün ihtiyacı olan veriyi tek yerde toplar: birden fazla iç servisten veri çekip tek bir yanıt hâline getirir, böylece ön yüz birden fazla gidiş-dönüş yapmak zorunda kalmaz."
+    },
+    {
+      "n": 11,
+      "question": "Serverless'ta \"sunucu yok\" mudur? Cold start nedir ve kullanıcıya nasıl yansır?",
+      "answer": "**Sunucu vardır**, sadece sen yönetmezsin — isim yanıltıcıdır. **Cold start**, işlev uzun süre çağrılmadıktan sonraki ilk çağrıda yaşanan ek başlangıç gecikmesidir. Kullanıcıya yansıması: gece kimsenin girmediği bir siteye sabah ilk giren kişi diğerlerinden yavaş bir deneyim yaşar."
+    },
+    {
+      "n": 12,
+      "question": "Edge function ne kazandırır? Sınırı nedir?",
+      "answer": "Kodu kullanıcıya coğrafi olarak yakın çalıştırarak **gecikmeyi** düşürür. Sınırı: bazı Node API'leri çalışmaz ve **veritabanı uzaktaysa kazanç kaybolabilir** — kod yakın olsa da veri hâlâ uzaktadır."
+    },
+    {
+      "n": 13,
+      "question": "Webhook nedir ve tasarım açısından hangi ara durumu zorunlu kılar?",
+      "answer": "Dış servisin, bir olay olduğunda senin sunucunu çağırmasıdır. Tasarım açısından **\"işleniyor\" ara durumunu** zorunlu kılar: webhook gecikmeli gelebileceği için kullanıcı ödemeyi tamamladıktan sonra sipariş durumu hemen güncellenmeyebilir. Bu durum tasarlanmazsa kullanıcı \"param gitti ama sipariş yok\" paniği yaşar."
+    },
+    {
+      "n": 14,
+      "question": "Yayınlanabilir (publishable) anahtar ile gizli (secret) anahtar arasındaki fark nedir?",
+      "answer": "Yayınlanabilir anahtar ön yüz koduna gömülebilir; gizli anahtar **yalnızca sunucuda** kalmalıdır. Gizli anahtarı ön yüze koymak ciddi bir güvenlik açığıdır ve otomatik tarayıcılar tarafından anında bulunur."
+    },
+    {
+      "n": 15,
+      "question": "Offset ile cursor pagination arasındaki fark nedir? Sayfa numaralı bir arayüz istiyorsan hangisi gerekir?",
+      "answer": "**Offset**: \"20. kayıttan itibaren 20 tane\" — sayfa numaralarını mümkün kılar ama derin sayfalarda yavaşlar ve değişen listede kayıt kayması/tekrarı olabilir. **Cursor**: \"şu kayıttan sonrakiler\" — daha sağlamdır ama sayfa numarası veremez. Sayfa numaralı arayüz için **offset** gerekir."
+    },
+    {
+      "n": 16,
+      "question": "`stale-while-revalidate` nedir ve hangi durumun tasarlanmasını gerektirir?",
+      "answer": "Eski (bayat) kopyayı hemen göster, arka planda yenisini getir. Tasarlanması gereken durum: **\"eski veri gösteriliyor, tazeleniyor\"** hâli — kullanıcı anında içerik görür, güncel sürüm gelince ekran değişir; bu geçişin ve tazeleme göstergesinin tasarlanması gerekir."
+    },
+    {
+      "n": 17,
+      "question": "\"Değişikliğim sitede neden görünmüyor?\" sorusunun en yaygın teknik sebebi nedir?",
+      "answer": "**Önbellek geçersizleştirme** (cache invalidation) yapılmaması. Veri değişmiş ama önbellekteki eski kopya hâlâ servis ediliyor olabilir — tarayıcı, CDN, sunucu veya service worker katmanlarından herhangi birinde."
+    },
+    {
+      "n": 18,
+      "question": "Uzun süren bir işi kuyruğa almak tasarımda neyi zorunlu kılar?",
+      "answer": "Kullanıcıya **\"işleminiz alındı, hazır olunca haber vereceğiz\"** demeyi ve bir **takip yolu** sunmayı (bildirim, e-posta, durum ekranı). Bu ara durum tasarlanmazsa kullanıcı işlemin kaybolduğunu sanır."
+    },
+    {
+      "n": 19,
+      "question": "Yeniden deneme (retry) mekanizması hangi ön koşulu gerektirir ve neden?",
+      "answer": "İşin **idempotent** olmasını. Aksi hâlde yeniden deneme aynı e-postayı üç kez gönderir veya aynı ödemeyi iki kez alır."
+    },
+    {
+      "n": 20,
+      "question": "Signed URL neyi çözer?",
+      "answer": "Özel dosyalara (fatura, kimlik belgesi), herkese açık hâle getirmeden ve sınırlı süreyle erişim verilmesini. Adres belirli bir süre sonra geçersiz olur."
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+---
+import DiagramFigure from "./DiagramFigure.astro";
+
+// Two inputs merge into the render tree, then three sequential steps.
+const steps = [
+  { x: 286, label: "Render ağacı", sub: "ne çizilecek" },
+  { x: 402, label: "Layout", sub: "nerede, ne kadar" },
+  { x: 518, label: "Paint", sub: "pikseller" },
+];
+---
+
+<DiagramFigure
+  label="Kritik render yolu şeması"
+  caption="HTML ve CSS ayrı ayrı çözümlenir, birleşip render ağacını kurar; sonra sırayla yerleşim ve boyama gelir. Önemli olan şu: bu zincirin başındaki bir gecikme sonraki her adımı bekletir. Bir yazı tipi ya da CSS dosyası geç gelirse, kullanıcı boş ekrana bakar."
+>
+  <svg viewBox="0 0 640 200" role="img" aria-label="HTML ve CSS'ten render ağacına, oradan yerleşim ve boyamaya giden sıra">
+    <title>Kritik render yolu</title>
+
+    <rect class="dg-box dg-box--accent" x="8" y="26" width="120" height="52" rx="8"></rect>
+    <text class="dg-label" x="68" y="48" text-anchor="middle">HTML</text>
+    <text class="dg-sub" x="68" y="65" text-anchor="middle">→ DOM</text>
+
+    <rect class="dg-box dg-box--accent" x="8" y="112" width="120" height="52" rx="8"></rect>
+    <text class="dg-label" x="68" y="134" text-anchor="middle">CSS</text>
+    <text class="dg-sub" x="68" y="151" text-anchor="middle">→ CSSOM</text>
+
+    {/* Both inputs converge on the render tree */}
+    <path class="dg-line dg-line--accent" d="M128 52 H200 Q214 52 214 66 V88"></path>
+    <path class="dg-line dg-line--accent" d="M128 138 H200 Q214 138 214 124 V102"></path>
+    <path class="dg-line dg-line--accent" d="M214 95 H278"></path>
+    <path class="dg-line dg-line--accent" d="M270 89 l10 6 -10 6" stroke-linejoin="round"></path>
+
+    {
+      steps.map((step, index) => (
+        <>
+          <rect class="dg-box" x={step.x} y={69} width={104} height={52} rx={8} />
+          <text class="dg-label" x={step.x + 52} y={91} text-anchor="middle">
+            {step.label}
+          </text>
+          <text class="dg-sub" x={step.x + 52} y={108} text-anchor="middle">
+            {step.sub}
+          </text>
+          {index < steps.length - 1 && (
+            <>
+              <path class="dg-line" d={`M${step.x + 104} 95 H${step.x + 110}`} />
+              <path class="dg-line" d={`M${step.x + 104} 89 l6 6 -6 6`} stroke-linejoin="round" />
+            </>
+          )}
+        </>
+      ))
+    }
+
+    <path class="dg-line" d="M8 186 H632" stroke-dasharray="4 4"></path>
+    <text class="dg-sub" x="8" y="180">Zincir sıralıdır: baştaki gecikme, sonraki her adımı bekletir.</text>
+  </svg>
+</DiagramFigure>

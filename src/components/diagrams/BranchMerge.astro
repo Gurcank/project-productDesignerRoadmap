@@ -1,0 +1,39 @@
+---
+import DiagramFigure from "./DiagramFigure.astro";
+---
+
+<DiagramFigure
+  label="Dallanma ve birleştirme şeması"
+  caption="Ana dal kesintisiz ilerler; bir iş için ondan ayrılan dal kendi commit'lerini biriktirir ve bitince geri birleşir. Dal ne kadar uzun yaşarsa, ana dal o kadar uzaklaşır ve birleştirme o kadar zorlaşır — çakışma (conflict) tam olarak budur. Tasarım tarafındaki karşılığı şu: 'bu ekranı baştan alalım' dediğin büyük değişiklikler, küçük parçalara bölünmediğinde teknik olarak da pahalıya patlar."
+>
+  <svg viewBox="0 0 640 170" role="img" aria-label="Ana daldan ayrılan ve geri birleşen bir yan dalın commit akışı">
+    <title>Dallanma ve birleştirme</title>
+
+    {/* main line */}
+    <path class="dg-line dg-line--accent" d="M24 118 H616"></path>
+    <text class="dg-label dg-accent" x="24" y="142">main</text>
+
+    {/* branch out and back */}
+    <path class="dg-line" d="M160 118 Q200 118 200 84 V64 H400 V44"></path>
+    <path class="dg-line" d="M400 44 V64 H440 Q480 64 480 100 V118"></path>
+    <text class="dg-label" x="210" y="36">özellik dalı</text>
+
+    {/* commits on main */}
+    <circle class="dg-accent" cx="90" cy="118" r="6"></circle>
+    <circle class="dg-accent" cx="160" cy="118" r="6"></circle>
+    <circle class="dg-accent" cx="330" cy="118" r="6"></circle>
+    <circle class="dg-accent" cx="560" cy="118" r="6"></circle>
+
+    {/* commits on the branch */}
+    <circle class="dg-progress" cx="250" cy="64" r="6"></circle>
+    <circle class="dg-progress" cx="330" cy="64" r="6"></circle>
+    <circle class="dg-progress" cx="400" cy="64" r="6"></circle>
+
+    {/* merge point */}
+    <circle class="dg-accent" cx="480" cy="118" r="8"></circle>
+    <text class="dg-label dg-accent" x="480" y="148" text-anchor="middle">merge</text>
+
+    <text class="dg-sub" x="160" y="106" text-anchor="middle">ayrılma</text>
+    <text class="dg-sub dg-progress" x="325" y="24" text-anchor="middle">dal uzadıkça birleştirme zorlaşır</text>
+  </svg>
+</DiagramFigure>

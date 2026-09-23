@@ -1,0 +1,34 @@
+---
+import DiagramFigure from "./DiagramFigure.astro";
+---
+
+<DiagramFigure
+  label="İstek ve yanıt döngüsü şeması"
+  caption="Tarayıcı bir istek gönderir, sunucu onu işler ve bir yanıt döner. Aradaki her adım zaman alır: ağ gidiş-dönüşü, sunucunun işlem süresi, yanıtın boyutu. Bir sayfanın 'yavaş' olması bu üç yerden birinde olur — hangisi olduğunu sormak, çözümü de belirler."
+>
+  <svg viewBox="0 0 640 190" role="img" aria-label="Tarayıcıdan sunucuya giden istek ve geri dönen yanıt">
+    <title>İstek / yanıt döngüsü</title>
+
+    <rect class="dg-box dg-box--accent" x="8" y="60" width="150" height="66" rx="8"></rect>
+    <text class="dg-label" x="83" y="88" text-anchor="middle">Tarayıcı</text>
+    <text class="dg-sub" x="83" y="107" text-anchor="middle">istemci (client)</text>
+
+    <rect class="dg-box dg-box--accent" x="482" y="60" width="150" height="66" rx="8"></rect>
+    <text class="dg-label" x="557" y="88" text-anchor="middle">Sunucu</text>
+    <text class="dg-sub" x="557" y="107" text-anchor="middle">server</text>
+
+    {/* Request: left to right */}
+    <path class="dg-line dg-line--accent" d="M158 82 H466"></path>
+    <path class="dg-line dg-line--accent" d="M458 76 l10 6 -10 6" stroke-linejoin="round"></path>
+    <text class="dg-label dg-accent" x="312" y="68" text-anchor="middle">istek</text>
+    <text class="dg-sub" x="312" y="102" text-anchor="middle">GET /urunler · başlıklar · çerezler</text>
+
+    {/* Response: right to left */}
+    <path class="dg-line" d="M482 140 H182"></path>
+    <path class="dg-line" d="M190 134 l-10 6 10 6" stroke-linejoin="round"></path>
+    <text class="dg-label" x="332" y="130" text-anchor="middle">yanıt</text>
+    <text class="dg-sub" x="332" y="164" text-anchor="middle">durum kodu · HTML / JSON · başlıklar</text>
+
+    <text class="dg-sub" x="8" y="24">Her ok bir gidiş-dönüş: mesafe ve boyut, süreye doğrudan yazılır.</text>
+  </svg>
+</DiagramFigure>

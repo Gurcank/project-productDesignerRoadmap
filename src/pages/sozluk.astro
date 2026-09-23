@@ -1,0 +1,274 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { getGlossary, homonymTerms, TURKISH_LETTERS } from "~/lib/glossary";
+
+const entries = await getGlossary();
+const homonyms = homonymTerms(entries);
+
+const byLetter = new Map<string, typeof entries>();
+for (const entry of entries) {
+  const bucket = byLetter.get(entry.letter) ?? [];
+  bucket.push(entry);
+  byLetter.set(entry.letter, bucket);
+}
+
+const letters = [...TURKISH_LETTERS, "#"].filter((letter) => byLetter.has(letter));
+---
+
+<BaseLayout title="Sözlük" description={`${entries.length} terim, hepsi kendi adımına bağlı.`} section="sozluk">
+  <div class="glossary">
+    <header class="glossary__head">
+      <h1>Sözlük</h1>
+      <p class="glossary__lead">
+        {entries.length} terim. Her biri geldiği adıma bağlı — tanımı gördüğün yerde bağlamı da görürsün.
+      </p>
+
+      <div class="filter">
+        <label class="filter__label" for="glossary-filter">Terim ara</label>
+        <input
+          id="glossary-filter"
+          type="search"
+          class="filter__input"
+          placeholder="pull request, token, debounce…"
+          autocomplete="off"
+          data-filter
+        />
+        <p class="filter__status" role="status" data-filter-status></p>
+      </div>
+
+      <nav class="letters" aria-label="Harfe git">
+        {letters.map((letter) => <a href={`#harf-${letter}`}>{letter}</a>)}
+      </nav>
+    </header>
+
+    {
+      letters.map((letter) => (
+        <section class="letter" aria-labelledby={`harf-${letter}`} data-letter-section={letter}>
+          <h2 class="letter__title" id={`harf-${letter}`}>
+            {letter}
+          </h2>
+
+          <ul class="terms">
+            {(byLetter.get(letter) ?? []).map((entry) => (
+              <li
+                class="term"
+                data-term={`${entry.term} ${entry.english ?? ""}`.toLocaleLowerCase("tr")}
+              >
+                <a class="term__link" href={entry.href}>
+                  <span class="term__name">
+                    {entry.term}
+                    {homonyms.has(entry.term.toLocaleLowerCase("tr")) && (
+                      <span class="term__context">({entry.categoryTitle})</span>
+                    )}
+                  </span>
+                </a>
+                <p class="term__definition">{entry.definition}</p>
+                <p class="term__source">
+                  {entry.categoryTitle} · {entry.topicTitle}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+
+    <p class="glossary__empty" data-empty hidden>
+      Bu aramaya uyan terim yok. Harf bağlantılarından gezinebilir ya da aramayı temizleyebilirsin.
+    </p>
+  </div>
+</BaseLayout>
+
+<script>
+  const input = document.querySelector<HTMLInputElement>("[data-filter]");
+  const status = document.querySelector<HTMLElement>("[data-filter-status]");
+  const empty = document.querySelector<HTMLElement>("[data-empty]");
+  const terms = Array.from(document.querySelectorAll<HTMLElement>("[data-term]"));
+  const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-letter-section]"));
+  const letterNav = document.querySelector<HTMLElement>(".letters");
+
+  if (input) {
+    const total = terms.length;
+
+    const apply = () => {
+      const query = input.value.trim().toLocaleLowerCase("tr");
+      let shown = 0;
+
+      for (const term of terms) {
+        const match = query === "" || (term.dataset.term ?? "").includes(query);
+        term.hidden = !match;
+        if (match) shown += 1;
+      }
+
+      // A letter heading with nothing under it is noise.
+      for (const section of sections) {
+        section.hidden = !section.querySelector<HTMLElement>("[data-term]:not([hidden])");
+      }
+
+      if (letterNav) letterNav.hidden = query !== "";
+      if (empty) empty.hidden = shown > 0;
+      if (status) status.textContent = query === "" ? `${total} terim` : `${shown} terim bulundu`;
+    };
+
+    input.addEventListener("input", apply);
+    apply();
+  }
+</script>
+
+<style>
+  .glossary {
+    max-width: 62rem;
+    margin-inline: auto;
+    padding: var(--spacing-12) var(--spacing-4) var(--spacing-16);
+  }
+
+  .glossary__head h1 {
+    font-size: var(--text-3xl);
+    letter-spacing: -0.02em;
+  }
+
+  .glossary__lead {
+    max-width: var(--measure);
+    margin-block-start: var(--spacing-3);
+    color: var(--c-text-secondary);
+  }
+
+  /* ---------------------------------------------------------------- filter */
+  .filter {
+    margin-block-start: var(--spacing-6);
+  }
+
+  .filter__label {
+    display: block;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-text-muted);
+    margin-block-end: var(--spacing-2);
+  }
+
+  .filter__input {
+    inline-size: 100%;
+    max-inline-size: 26rem;
+    min-height: 44px;
+    padding: var(--spacing-2) var(--spacing-3);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-raised);
+    color: var(--c-text);
+    font: inherit;
+  }
+
+  .filter__status {
+    margin-block-start: var(--spacing-2);
+    font-size: var(--text-sm);
+    color: var(--c-text-muted);
+  }
+
+  /* --------------------------------------------------------------- letters */
+  .letters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-1);
+    margin-block-start: var(--spacing-6);
+    padding-block: var(--spacing-2);
+    border-block: 1px solid var(--c-border);
+  }
+
+  .letters a {
+    display: grid;
+    place-items: center;
+    min-inline-size: 32px;
+    min-block-size: 32px;
+    border-radius: var(--radius-sm);
+    color: var(--c-text-secondary);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .letters a:hover {
+    background-color: var(--c-surface-raised);
+    color: var(--c-text);
+  }
+
+  /* ----------------------------------------------------------------- terms */
+  .letter {
+    margin-block-start: var(--spacing-12);
+  }
+
+  .letter__title {
+    font-size: var(--text-xl);
+    color: var(--c-progress-text);
+    scroll-margin-top: 7.5rem;
+  }
+
+  .terms {
+    display: grid;
+    gap: var(--spacing-4);
+    margin-block-start: var(--spacing-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .term {
+    padding-block-start: var(--spacing-4);
+    border-top: 1px solid var(--c-border);
+  }
+
+  .term__link {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--spacing-1) var(--spacing-3);
+    min-height: 24px;
+    color: var(--c-text);
+    text-decoration: none;
+  }
+
+  .term__link:hover .term__name {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .term__name {
+    font-weight: 600;
+  }
+
+  /* Homonyms are the reason this site needs a glossary at all — "Tag" is three
+     different words. The context is part of the name, not a footnote. */
+  .term__context {
+    margin-inline-start: var(--spacing-1);
+    font-weight: 400;
+    font-size: var(--text-sm);
+    color: var(--c-progress-text);
+  }
+
+  .term__definition {
+    margin-block-start: var(--spacing-1);
+    max-width: var(--measure);
+    color: var(--c-text-secondary);
+  }
+
+  .term__source {
+    margin-block-start: var(--spacing-1);
+    font-size: var(--text-xs);
+    color: var(--c-text-muted);
+  }
+
+  .glossary__empty {
+    margin-block-start: var(--spacing-8);
+    color: var(--c-text-secondary);
+  }
+
+  @media (min-width: 48rem) {
+    .glossary {
+      padding-inline: var(--spacing-6);
+    }
+
+    .terms {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--spacing-4) var(--spacing-8);
+    }
+  }
+</style>

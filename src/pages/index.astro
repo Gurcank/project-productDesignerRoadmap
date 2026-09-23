@@ -1,0 +1,164 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import RoadmapRoute from "~/components/RoadmapRoute.astro";
+import WaveButton from "~/components/ui/WaveButton.astro";
+import { getPublishedCategories, topicId } from "~/lib/content";
+
+const published = await getPublishedCategories();
+const publishedSlugs = new Set(published.map((entry) => entry.category.slug));
+const topicIdsByCategory = Object.fromEntries(
+  published.map(({ category, topics }) => [category.slug, topics.map((topic) => topicId(topic))]),
+);
+// The "continue" card needs a real title, not a prettified slug.
+const topicTitles = Object.fromEntries(
+  published.flatMap(({ category, topics }) =>
+    topics.map((topic) => [topicId(topic), `${category.title} · ${topic.data.title}`]),
+  ),
+);
+const totalTopics = published.reduce((sum, entry) => sum + entry.topics.length, 0);
+---
+
+<BaseLayout title="Yol haritası" section="roadmap">
+  <div class="home">
+    {/* One number, one action. The instructions that used to sit here explained
+        a checkbox next to a checkbox — the interface already says it. */}
+    <header class="home__head">
+      <div class="home__status">
+        <p class="home__count">
+          <strong data-progress-done>0</strong>
+          <span>/{totalTopics}</span>
+        </p>
+        <div class="home__meter" aria-hidden="true"><span data-progress-rail></span></div>
+        <p class="home__meta"><span data-progress-percent>%0</span></p>
+      </div>
+
+      {/* Wrapper, not a class on the button: the width cap has to live on an
+          element this page's scoped styles can reach. */}
+      <div class="home__action">
+        <WaveButton href="#" label="Devam et" detail="" attrs={{ "data-continue": true, hidden: true }} />
+      </div>
+
+      <script type="application/json" id="topic-titles" set:html={JSON.stringify(topicTitles)} />
+    </header>
+
+    <RoadmapRoute publishedSlugs={publishedSlugs} topicIdsByCategory={topicIdsByCategory} />
+  </div>
+</BaseLayout>
+
+<script>
+  import { initProgress, $progress, summarise } from "~/lib/progress";
+
+  initProgress();
+
+  const allIds = Array.from(document.querySelectorAll<HTMLElement>("[data-topic-ids]")).flatMap((node) =>
+    (node.dataset.topicIds ?? "").split(" ").filter(Boolean),
+  );
+
+  const doneEl = document.querySelector<HTMLElement>("[data-progress-done]");
+  const percentEl = document.querySelector<HTMLElement>("[data-progress-percent]");
+  const rail = document.querySelector<HTMLElement>("[data-progress-rail]");
+  const continueLink = document.querySelector<HTMLAnchorElement>("[data-continue]");
+  const continueTitle = continueLink?.querySelector<HTMLElement>("[data-wave-detail]") ?? null;
+
+  const titles: Record<string, string> = JSON.parse(
+    document.getElementById("topic-titles")?.textContent ?? "{}",
+  );
+
+  $progress.subscribe((progress) => {
+    const summary = summarise(allIds, progress);
+    if (doneEl) doneEl.textContent = String(summary.done);
+    if (percentEl) percentEl.textContent = `%${summary.percent}`;
+    if (rail) rail.style.inlineSize = `${summary.percent}%`;
+
+    // Only offer to continue into a topic that still exists in this build.
+    const last = progress.last?.topic;
+    if (continueLink && continueTitle && last && titles[last]) {
+      continueLink.href = `/${last}/`;
+      continueTitle.textContent = titles[last];
+      continueLink.hidden = false;
+    }
+  });
+</script>
+
+<style>
+  .home {
+    max-width: 82rem;
+    margin-inline: auto;
+    padding: var(--spacing-12) var(--spacing-4) var(--spacing-16);
+  }
+
+  .home__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--spacing-4);
+    margin-block-end: var(--spacing-8);
+  }
+
+  .home__status {
+    flex: 1 1 16rem;
+    max-width: var(--measure);
+  }
+
+  .home__count {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-1);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .home__count strong {
+    font-size: var(--text-3xl);
+    font-weight: 600;
+    color: var(--c-progress-text);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .home__count span {
+    font-size: var(--text-lg);
+    color: var(--c-text-muted);
+  }
+
+  .home__meter {
+    margin-block-start: var(--spacing-3);
+    block-size: 4px;
+    border-radius: var(--radius-full);
+    background-color: var(--c-surface-sunken);
+    overflow: hidden;
+  }
+
+  .home__meter span {
+    display: block;
+    block-size: 100%;
+    inline-size: 0;
+    border-radius: inherit;
+    background-color: var(--c-progress);
+    transition: inline-size var(--dur) var(--e-out);
+  }
+
+  .home__meta {
+    margin-block-start: var(--spacing-2);
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+    color: var(--c-text-muted);
+  }
+
+  /* The page's one primary action; the wave fill is the only place on the home
+     page where colour is used as a surface. */
+  .home__action {
+    min-width: 0;
+    max-width: 22rem;
+  }
+
+  .home__action :global(.wave) {
+    max-inline-size: 100%;
+  }
+
+  @media (min-width: 48rem) {
+    .home {
+      padding-inline: var(--spacing-6);
+    }
+  }
+</style>

@@ -1,0 +1,81 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+
+// Served by the service worker when a page has never been opened and there is
+// no network. An honest dead end with a way back, not a spinner.
+---
+
+<BaseLayout title="Çevrimdışısın" description="Bu sayfa henüz indirilmemiş.">
+  <div class="offline">
+    <h1>Bu sayfa çevrimdışı yok</h1>
+    <p>
+      Daha önce açtığın her sayfa internet olmadan da açılır. Bu sayfaya ilk kez gidiyorsun, o yüzden indirilmemiş.
+    </p>
+    <p class="offline__hint">Bağlantı gelince yeniden dene ya da daha önce açtığın bir adıma dön.</p>
+
+    <div class="offline__actions">
+      <button type="button" class="offline__retry" data-retry>Yeniden dene</button>
+      <a class="offline__link" href="/">Yol haritası</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  document.querySelector("[data-retry]")?.addEventListener("click", () => location.reload());
+</script>
+
+<style>
+  .offline {
+    max-width: 34rem;
+    margin-inline: auto;
+    padding: var(--spacing-16) var(--spacing-4);
+  }
+
+  .offline h1 {
+    font-size: var(--text-2xl);
+    letter-spacing: -0.02em;
+  }
+
+  .offline p {
+    margin-block-start: var(--spacing-4);
+    color: var(--c-text-secondary);
+  }
+
+  .offline__hint {
+    font-size: var(--text-sm);
+    color: var(--c-text-muted);
+  }
+
+  .offline__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-3);
+    margin-block-start: var(--spacing-8);
+  }
+
+  .offline__retry,
+  .offline__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: var(--spacing-4);
+    border-radius: var(--radius-md);
+    font: inherit;
+    font-size: var(--text-sm);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .offline__retry {
+    border: 0;
+    background-color: var(--c-action-surface);
+    color: var(--c-on-action);
+    font-weight: 500;
+  }
+
+  .offline__link {
+    border: 1px solid var(--c-control-border);
+    background: none;
+    color: var(--c-text);
+  }
+</style>

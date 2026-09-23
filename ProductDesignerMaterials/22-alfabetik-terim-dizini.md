@@ -1,0 +1,1154 @@
+# Bölüm 22 — Alfabetik terim dizini
+
+Dosyadaki tüm terimlerin alfabetik listesi ve hangi bölümde geçtikleri.
+
+**Nasıl kullanılır:** Bir terimi duyduğunda buradan numarayı bul, ilgili bölüm dosyasını aç. Terimler İngilizce orijinal hâlleriyle sıralandı — konuşulan hâlleri bunlar. Türkçe karşılıkları terim kartlarının içinde.
+
+Bir terim birden fazla yerde geçiyorsa hepsi listelendi; **kalın numara** asıl tanımın olduğu yerdir.
+
+---
+
+## Sayılar ve semboller
+
+- **1:1** (one-on-one) — 18.1
+- **2FA** — 12.7
+- **8pt grid** — 5.5
+- **200 / 201 / 204** (status kodları) — 10.3
+- **301 / 302 / 304** — 10.3
+- **400 / 401 / 403 / 404 / 409 / 422 / 429** — 10.3
+- **404 page** — **7.9**, 10.3
+- **500 / 502 / 503 / 504** — 10.3
+- **500 page** — 7.9
+
+## A
+
+- **A record** — 16.7
+- **A/B test** — **4.10**, 16.8
+- **ABAC** — 12.9
+- **Above the fold** — 1.4
+- **Acceptance criteria** — **2.6**, 19.5
+- **Accessibility (a11y)** — **6.1**, Bölüm 6
+- **Accessibility overlay** — 6.9
+- **Accessible name** — 6.4
+- **Accessible Authentication** (SC 3.3.8) — 6.2, 12.6
+- **Accordion** — **7.5**, 4.6
+- **Account linking** — 12.5
+- **ACID** — 11.8
+- **Action item** — 18.3
+- **Active state** — 7.2
+- **Activity feed** — 7.12
+- **ADA** — 6.1
+- **Adoption** (design system) — 5.1
+- **ADR** (Architecture Decision Record) — **14.12**, 18.6
+- **Affordance** — 4.6
+- **AFAIK** — 18.1
+- **Agile** — **3.1**
+- **Agile Manifesto** — 3.1
+- **AGENTS.md** — 19.3
+- **Aggregation** — 11.8
+- **Alert banner** — 7.8
+- **Alert fatigue** — 16.10
+- **Alerting** — 16.10
+- **Alignment** — 4.8
+- **Alpha** (sürüm) — 2.11
+- **Alt text** — **6.4**, 8.13
+- **Alternating section** — 7.5
+- **AMA** — 18.1
+- **Angular** — 9.2
+- **Announcement bar** — 7.3
+- **Ant Design** — 9.5
+- **Anti-pattern** — 19.2, 19.3
+- **API** — **10.4**
+- **API gateway** — 14.5
+- **API key** — **10.9**, 13.6
+- **API route** — 10.6
+- **API versioning** — 10.4
+- **App shell** — 7.1
+- **ARIA** — 6.4
+- **aria-label / aria-labelledby / aria-describedby** — 6.4
+- **aria-live** — 6.4
+- **Argon2** — 12.8
+- **Art direction** — 5.7
+- **Artifact** (CI) — 16.2
+- **ASAP** — 18.1
+- **Aside** — 7.1
+- **Aspect ratio** — **5.7**, 8.3, 8.12
+- **Assistive technology** — 6.1
+- **Assumption** — **2.4**, 18.4
+- **Astro** — **9.3**, 8.10
+- **async / await** — 8.5
+- **Async** (çalışma biçimi) — **3.6**, 18.7
+- **Async standup** — 3.6
+- **Async-first** — 18.7
+- **Atomic Design** — 5.1
+- **Attack surface** — 13.1
+- **Attribute** (HTML) — 8.1
+- **Audit log** — **11.11**, 7.12
+- **Auth.js** — 12.10
+- **Auth0** — 12.10
+- **Authentication** — 12.1
+- **Authorization** — **12.1**, 12.9
+- **Auto layout** (Figma) — **5.10**, 8.3
+- **Autocomplete** (nitelik) — 6.7
+- **Autoscaling** — 14.6
+- **Availability** — 14.9
+- **Avatar** — 7.13
+- **Avatar stack** — 7.4
+- **Aydınlatma metni** — 13.10
+
+## B
+
+- **Back-end** — 1.6
+- **Back to top** — 7.13
+- **Backdrop** — 7.8
+- **Backlog** — 2.7
+- **Backup** — 11.11
+- **Backup code** — 12.7
+- **Badge** — 7.10
+- **Bandwidth** — **18.2**, 3.3
+- **Base UI** — 9.5
+- **Baseline** (ölçüm) — 3.7
+- **bcrypt** — 12.8
+- **BEM** — 8.4
+- **Bento grid** — **7.5**, 8.3
+- **Beta** — 2.11
+- **Better Auth** — 12.10
+- **BFF** (Backend For Frontend) — 10.6
+- **Bias for action** — 18.7
+- **Bikeshedding** — 18.2
+- **Billing toggle** — 7.6
+- **bisect** (git) — 15.6
+- **Blame** (git) — 15.6
+- **Blameless culture** — **18.7**, 16.9
+- **Blockquote** — 7.13
+- **Blocker** — **3.5**, 18.3
+- **Blue-green deployment** — 16.8
+- **Boring technology** — 9.12
+- **Bottleneck** — 3.4
+- **Bottom sheet** — 7.8
+- **Bounded context** — 14.3
+- **Box model** — 8.2
+- **Boy scout rule** — 17.9
+- **Branch** — 15.3
+- **Branch protection** — 15.5
+- **Breadcrumb** — 7.2
+- **Breaking change** — 10.4
+- **Breakpoint** — **5.8**, 8.3
+- **Brief** — 2.5
+- **Browser** — 1.1
+- **Bug report** — 17.5
+- **Build** — **16.2**, 8.11
+- **Build-Measure-Learn** — 2.2
+- **Bulk actions** — 7.10
+- **Bundle size** — 8.12
+- **Bundler** — 8.11
+- **Burndown chart** — 3.3
+- **Button vs Link** — 6.3
+
+## C
+
+- **C4 model** — 14.13
+- **Callout** — 7.5
+- **Canary deployment** — 16.8
+- **Canonical URL** — 8.13
+- **CAP theorem** — 14.10
+- **Capacity** — 3.3
+- **CAPTCHA** — **13.9**, 6.2
+- **Card** — 7.10
+- **Card sorting** — 4.3
+- **Carousel** — **7.5**, 6.8
+- **Carry over** — 3.5
+- **Cascade** (CSS) — 8.2
+- **Case study** — 7.4
+- **CD** (Continuous Delivery / Deployment) — 16.1
+- **CDN** — **10.11**, 1.5
+- **Chakra UI** — 9.5
+- **Changelog** — **15.8**, 18.6
+- **Checkbox** — 7.11
+- **Cherry-pick** — 15.3
+- **Children** (component) — 8.7
+- **Chip** — 7.10
+- **CI** (Continuous Integration) — **16.1**
+- **CI gate** — **17.7**, 15.5
+- **Circuit breaker** — 14.11
+- **Clean code** — 17.8
+- **Clerk** — 12.10
+- **Clickjacking** — 13.3
+- **Client** — 1.1
+- **Client-server model** — **1.1**, 14.3
+- **Client-side / Server-side** — 1.6
+- **Client-side routing** — 1.7
+- **Clone** — 15.4
+- **CLS** (Cumulative Layout Shift) — **8.12**, 1.4
+- **Cloudflare Pages / Workers** — 16.6
+- **CMS** — 9.10
+- **COB** — 18.1
+- **Coachmark** — 7.12
+- **Code Connect** (Figma) — 5.10
+- **Code block** — 7.13
+- **Code comments** — 17.8
+- **Code review** — **15.5**, 17.10
+- **Code smell** — 17.9
+- **Code splitting** — 8.11
+- **Cognitive load** — 4.7
+- **Cohesion** — 14.3
+- **Cold start** — 10.8
+- **Color ramp** — 5.4
+- **Combobox** — 7.11
+- **Command palette** — 7.2
+- **Commit** — 15.2
+- **Commit convention** — 15.8
+- **Comparison table** — 7.4
+- **Component** — **8.7**, 5.10
+- **Component library** — 5.1
+- **Component property** (Figma) — 5.10
+- **Component token** — 5.2
+- **Composite** (tarayıcı) — 1.4
+- **Composition** — 8.7
+- **Confirm dialog** — 7.8
+- **Conflict** (merge) — 15.3
+- **Conformance level** (WCAG) — 6.2
+- **Connection pool** — 11.9
+- **Consistency** (veri) — 14.10
+- **Constraint** — **18.4**, 14.1
+- **Constraints** (Figma) — 5.10
+- **Contact form** — 7.7
+- **Container** (CSS) — 5.5
+- **Container** (Docker) — 16.4
+- **Container query** — 5.8
+- **Content design** — 4.9
+- **Context** (React) — 9.7
+- **Context engineering** — 19.3
+- **Context menu** — 7.8
+- **Context switching** — **3.6**, 18.2
+- **Context window** — 19.1
+- **Continuous Delivery / Deployment** — 16.1
+- **Contract** (API) — 10.4
+- **Contrast** — **4.8**, 5.4
+- **Contrast ratio** — **5.4**, 6.6
+- **Controlled component** — 8.7
+- **Controller** — 10.7
+- **Conventional Commits** — 15.8
+- **Convergent thinking** — 4.2
+- **Cookie** — 12.3
+- **Cookie banner** — **7.7**, 13.10
+- **CORS** — 13.4
+- **Core Web Vitals** — 8.12
+- **Coupling** — 14.3
+- **Cron job** — 10.12
+- **Cross-functional team** — 2.1
+- **CSP** (Content Security Policy) — 13.4
+- **CSR** (Client-Side Rendering) — 8.10
+- **CSRF** — 13.3
+- **CSS custom property** — **8.2**, 5.2
+- **CSS Grid** — 8.3
+- **CSS Modules** — 8.4
+- **CSS-in-JS** — 8.4
+- **CSSOM** — 1.4
+- **CTA** (Call To Action) — 7.3
+- **CTA section** — 7.7
+- **Curb-cut effect** — 6.1
+- **Cursor pagination** — 10.10
+- **Cut line** — 2.8
+- **Cycle time** — 3.4
+- **Cypress** — 17.3
+
+## D
+
+- **Daily standup** — 3.2
+- **Dark mode** — 5.2
+- **Dark pattern** — **7.7**, 13.10
+- **Data grid** — 7.10
+- **Data retention** — 11.11
+- **Data type** — 11.4
+- **Database** — 11.1
+- **Date picker** — 7.11
+- **DDoS** — 13.9
+- **Dead end** — 4.4
+- **Dead letter queue (DLQ)** — 10.12
+- **Deadlock** — 11.9
+- **Deep work** — 3.6
+- **Defense in depth** — 13.8
+- **Definition of Done** — 2.10
+- **Definition of Ready** — 2.10
+- **Denormalization** — 11.7
+- **Density** — 5.5
+- **Dependency** (iş) — 3.5
+- **Dependency** (paket) — 8.11
+- **Deployment strategies** — 16.8
+- **Deprecation** — **2.11**, 10.4
+- **Deprioritize** — 18.2
+- **Design critique** — 4.2
+- **Design review** — **2.10**, 20.9
+- **Design sprint** — 4.2
+- **Design system** — 5.1
+- **Design Thinking** — 4.2
+- **Design token** — 5.2
+- **Dev Mode** (Figma) — 5.10
+- **Development environment** — 1.8
+- **DevOps** — **2.1**, Bölüm 16
+- **Diff** — 15.2
+- **Dialog** — 7.8
+- **Disagree and commit** — 18.7
+- **Discoverability** — 4.3
+- **Discovery** — **2.3**, 2.2
+- **Display** (CSS) — 8.2
+- **Distributed monolith** — 14.2
+- **Divergent thinking** — 4.2
+- **Divider** — 7.13
+- **DNS** — **1.2**, 16.7
+- **Docker** — 16.4
+- **Docker Compose** — 16.4
+- **Documentation-first** — 18.7
+- **Document database** — 11.2
+- **Document flow** — 8.1
+- **Dogfooding** — 2.11
+- **DOM** — 1.4
+- **Domain name** — 1.2
+- **Double Diamond** — 4.2
+- **Draft PR** — 15.5
+- **Dragging Movements** (SC 2.5.7) — 6.2
+- **Drawer** — 7.8
+- **Drift** (AI) — 19.1
+- **Drizzle ORM** — 11.10
+- **DRI** — **18.7**, 18.1
+- **DRY** — 17.8
+- **DTCG** — 5.2
+- **Dual-track** — 2.2
+- **Duration** (motion) — 5.9
+- **Dynamic route** — 8.9
+- **Dynamic site** — 1.5
+
+## E
+
+- **E2E test** — 17.2
+- **EAA** (European Accessibility Act) — 6.1
+- **Early return** — 17.8
+- **Easing** — 5.9
+- **Edge case** — 4.4
+- **Edge function** — 10.8
+- **Egress** — 16.12
+- **Element** (HTML) — 8.1
+- **Elevation** — 5.6
+- **Email verification** — 12.8
+- **Empty state** — 7.9
+- **EN 301 549** — 6.1
+- **Endpoint** — 10.4
+- **Engineering Manager** — 2.1
+- **Environment variable** — **10.1**, 16.3, 13.6
+- **EOD / EOW** — 18.1
+- **Epic** — 2.6
+- **Error budget** — 14.9
+- **Error identification** (SC 3.3.1) — 6.7
+- **Error message** — 4.9
+- **Error path** — 4.4
+- **Error state** — 7.9
+- **Error tracking** — 16.11
+- **Escalation** — **3.5**, 18.3
+- **Escaping** — 13.7
+- **Estimation** — 2.7
+- **ETA** — 18.1
+- **ETag** — 10.11
+- **Event** (JS) — 8.5
+- **Event taxonomy** — 16.11
+- **Event-driven architecture** — 14.4
+- **Eventual consistency** — 14.10
+- **Exit intent** — 7.7
+- **Exploratory testing** — 17.5
+- **Exponential backoff** — **14.11**, 10.12
+- **Eyebrow** — 7.3
+
+## F
+
+- **FAB** (Floating Action Button) — 7.13
+- **Facet** — 7.10
+- **Fail securely** — 13.8
+- **Failover** — 14.8
+- **FAQ** — 7.5
+- **Fast-forward merge** — 15.3
+- **FCP** — 8.12
+- **Feature flag** — **16.8**, 15.7
+- **Feature grid** — 7.5
+- **Feature matrix** — 7.6
+- **Feedback** (sistem) — 4.6
+- **Feedback loop** — 2.2
+- **Fetch** (JS) — 8.5
+- **Fetch** (git) — 15.4
+- **Fidelity** — 4.5
+- **FIDO2** — 12.6
+- **Figma** (terimleri) — 5.10
+- **File upload** — **7.11**, 10.14
+- **Filter** — 7.10
+- **Findability** — 4.3
+- **Fire drill** — 18.3
+- **Firebase** — 11.12
+- **Firefighting** — 18.2
+- **Fitts's Law** — 4.7
+- **Flaky test** — 17.4
+- **Flexbox** — 8.3
+- **Fluid typography** — 5.8
+- **Fly.io** — 16.6
+- **Focus** — 6.5
+- **Focus indicator / ring** — 6.5
+- **Focus management** — 6.5
+- **Focus Not Obscured** (SC 2.4.11) — 6.2
+- **Focus time** — 3.6
+- **Focus trap** — 6.5
+- **Font** — 5.3
+- **Font loading** — **8.12**, 5.3
+- **Font stack** — 5.3
+- **Font weight** — 5.3
+- **Footer** — 7.1
+- **Force push** — 15.4
+- **Foreign key** — 11.5
+- **Fork** — 15.4
+- **Form validation** — **7.11**, 13.7
+- **Formatter** — 17.7
+- **Formik** — 9.9
+- **FOUT / FOIT** — 8.12
+- **Fragment** (URL) — 1.2
+- **Frame** (Figma) — 5.10
+- **Framer Motion** → bkz. **Motion** — 9.6
+- **Framework** — 9.1
+- **Front-end** — 1.6
+- **Full-stack** — 1.6
+- **Funnel** — 4.10
+- **FYI** — 18.1
+
+## G
+
+- **GA** (General Availability) — 2.11
+- **Gallery** — 7.5
+- **Gap** (CSS) — 8.3
+- **GDPR** — 13.10
+- **Gestalt principles** — 4.8
+- **GET** — 10.2
+- **Git** — 15.1
+- **Git Flow** — 15.7
+- **Git LFS** — 15.10
+- **.gitignore** — **15.10**, 13.6
+- **GitHub** — 15.1
+- **GitHub Actions** — **15.11**, 16.2
+- **GitHub Flow** — 15.7
+- **Given/When/Then** — 2.6
+- **Gold plating** — **2.8**, 18.2
+- **Governance** — 5.1
+- **Graceful degradation** — 14.8
+- **GraphQL** — 10.5
+- **Grid** (layout) — **5.5**, 8.3
+- **Grooming** — 2.7
+- **gRPC** — 10.5
+- **GSAP** — 9.6
+- **Guerrilla testing** — 4.10
+- **Gutter** — 5.5
+
+## H
+
+- **Hallucination** — 19.1
+- **Hamburger menu** — 7.2
+- **Happy path** — 4.4
+- **Hashing** — 12.8
+- **HEAD** (git) — 15.2
+- **Header** (HTTP) — 1.3
+- **Header** (sayfa) — 7.1
+- **Headless CMS** — 9.10
+- **Headless library** — 9.5
+- **Headless UI** — 9.5
+- **Headline** — 7.3
+- **Heading hierarchy** — **6.3**, 8.13
+- **Heads-down** — 18.2
+- **Heatmap** — 4.10
+- **Hero** — 7.3
+- **Heuristic evaluation** — 4.6
+- **HEX** — 5.4
+- **Hick's Law** — 4.7
+- **Honeypot** — 13.9
+- **Hook** — 8.8
+- **Horizontal scaling** — 14.6
+- **Hosting** — **1.2**, 16.6
+- **Hotfix** — **16.9**, 15.3
+- **HSL** — 5.4
+- **HTML** — 8.1
+- **HTTP** — 1.3
+- **HTTP metodları** — 10.2
+- **httpOnly** — 12.3
+- **HTTPS** — **1.3**, 13.5
+- **Hydration** — 8.10
+- **Hypothesis** — 2.3
+
+## I
+
+- **ICE** (önceliklendirme) — 2.7
+- **ICYMI** — 18.1
+- **Icon button** — 7.13
+- **Icon set** — 5.7
+- **Ideation** — 4.2
+- **Idempotency** — **14.11**, 10.2
+- **Idempotency key** — 14.11
+- **IDOR** — 13.3
+- **Image** (Docker) — 16.4
+- **Image CDN** — 10.14
+- **Image optimization** — **8.12**, 5.7
+- **IMO / IMHO** — 18.1
+- **!important** — 8.2
+- **Inclusive design** — 6.1
+- **Increment** — 3.2
+- **Index** (veritabanı) — 11.5
+- **Infinite scroll** — 7.10
+- **Information Architecture (IA)** — 4.3
+- **Infrastructure** — 1.6
+- **Inheritance** (CSS) — 8.2
+- **Inline validation** — **7.8**, 6.7
+- **INP** — 8.12
+- **Input** (form) — 7.11
+- **Input validation** — **13.7**, 7.11
+- **Insecure Design** — 13.2
+- **Insight** — 2.4
+- **Instance** (Figma) — 5.10
+- **Integration test** — 17.2
+- **Interaction Design (IxD)** — 4.1
+- **IP address** — 1.2
+- **Islands architecture** — **8.10**, 9.3
+- **ISR** — 8.10
+- **Issue** — **15.9**, 2.7
+- **Issue template** — 15.9
+- **Iteration** — 2.2
+
+## J
+
+- **Jakob's Law** — 4.7
+- **Jest** — 17.3
+- **Jitter** — 14.11
+- **Jotai** — 9.7
+- **JSON** — 8.5
+- **JTBD** (Jobs To Be Done) — 2.3
+- **JWT** — 12.4
+
+## K
+
+- **KAMİS** — 6.1
+- **Kanban** — **3.4**
+- **Kanban board** (arayüz) — 7.12
+- **kbd** — 7.13
+- **Kerning** — 5.3
+- **Key rotation** — 13.6
+- **Key-value store** — 11.2
+- **Keyboard accessibility** — 6.5
+- **Kickoff** — 18.5
+- **Kill switch** — 16.8
+- **Knowledge cutoff** — 19.1
+- **KPI** — 3.7
+- **Kubernetes** — 16.5
+- **KVKK** — 13.10
+
+## L
+
+- **Label** (form) — **4.9**, 6.7
+- **Label** (GitHub) — 15.9
+- **Lagging indicator** — 3.7
+- **Landing page** — 1.5
+- **Landmark** — 6.3
+- **Latency** — **1.3**, 14.9
+- **Layered architecture** — 14.3
+- **Layout** (sayfa) — 7.1
+- **Layout / reflow** (tarayıcı) — 1.4
+- **Lazy loading** — **8.11**, 8.12
+- **LCP** — 8.12
+- **Lead magnet** — 7.7
+- **Lead time** — 3.4
+- **Leading indicator** — 3.7
+- **Lean** — 3.1
+- **Lenis** — 9.6
+- **Letter-spacing** — 5.3
+- **LGTM** — 18.1
+- **Library** — 9.1
+- **Lightbox** — 7.5
+- **Line-height** — 5.3
+- **Link vs Button** — 6.3
+- **Linter** — 17.7
+- **List** — 7.10
+- **Load balancer** — 14.5
+- **Load more** — 7.10
+- **Loading state** — 7.9
+- **Local / localhost** — 1.8
+- **Lock** (veritabanı) — 11.9
+- **Lockfile** — 8.11
+- **Logo cloud** — 7.4
+- **Logs** — 16.10
+- **Lottie** — 9.6
+- **Low-hanging fruit** — 18.2
+
+## M
+
+- **Magic link** — 12.6
+- **Magic number** — 17.8
+- **main** (dal) — 15.3
+- **Main** (landmark) — 7.1
+- **Mantine** — 9.5
+- **Many-to-many** — 11.6
+- **Margin** — 8.2
+- **Marquee** — **7.5**, 6.8
+- **Masonry** — 7.5
+- **Max-width** — 5.5
+- **MDX** — 9.10
+- **Measure** (satır uzunluğu) — 5.3
+- **Mega menu** — 7.2
+- **Mental model** — 4.3
+- **Merge** — 15.3
+- **Merge queue** — 15.5
+- **Message queue** — **14.4**, 10.12
+- **Meta description** — 8.13
+- **Meta-framework** — 9.1
+- **Metrics** — 16.10
+- **MFA** — 12.7
+- **Microcopy** — 4.9
+- **Micro-interaction** — 5.9
+- **Microservice** — 14.2
+- **Middleware** — 10.7
+- **Migration** — 11.10
+- **Miller's Law** — 4.7
+- **Milestone** — **2.9**, 15.9
+- **Mitigation** — 18.4
+- **Mixed content** — 13.5
+- **Mobile-first** — 5.8
+- **Mock** — 17.4
+- **Mockup** — 4.5
+- **Mockup frame / device frame** — 7.3
+- **Mode** (Figma variables) — 5.2, 5.10
+- **Modal** — 7.8
+- **Modular monolith** — 14.2
+- **MongoDB** — 11.3
+- **Monolith** — 14.2
+- **Monorepo** — 15.10
+- **Moodboard** — 4.5
+- **MoSCoW** — 2.7
+- **"Most popular" badge** — 7.6
+- **Motion** (kütüphane) — 9.6
+- **Motion design** — 5.9
+- **MPA** — 1.7
+- **MUI** (Material UI) — 9.5
+- **Multi-step form** — 7.11
+- **Multi-tenancy** — 12.9
+- **Multivariate test** — 4.10
+- **Must-have** — **18.2**, 2.7
+- **MX record** — 16.7
+- **MySQL** — 11.3
+
+## N
+
+- **N+1 problem** — **11.9**, 10.5
+- **Nameserver** — 16.7
+- **Naming** — 17.8
+- **Nav / Navigation** — 7.1, 7.2
+- **NDA** — 18.1
+- **Negative constraint** — 19.2
+- **Neon** — 11.12
+- **NestJS** — 10.13
+- **Netlify** — 16.6
+- **Neutral palette** — 5.4
+- **Newsletter signup** — 7.7
+- **Next.js** — 9.3
+- **NextAuth** — 12.10
+- **Nice-to-have** — **18.2**, 2.7
+- **Nielsen's heuristics** — 4.6
+- **nit** — 18.1
+- **Node.js** — **10.13**, 9.1
+- **Non-functional requirement (NFR)** — 2.6
+- **Normalization** — 11.7
+- **North star metric** — 3.7
+- **Notification center** — 7.12
+- **Now/Next/Later** — 2.9
+- **NPS** — 4.10
+- **Nuxt** — 9.3
+- **Nullable** — 11.4
+
+## O
+
+- **Object storage** — 10.14
+- **Observability** — 16.10
+- **Offline state** — 7.9
+- **Offset pagination** — 10.10
+- **OIDC** — 12.5
+- **OKLCH** — 5.4
+- **OKR** — 3.7
+- **On-call** — 16.9
+- **One-pager** — **2.5**, 18.6
+- **One-to-many / One-to-one** — 11.6
+- **One-way door** — 14.1
+- **Onboarding** — 7.12
+- **Onboarding checklist** — 7.12
+- **OOO** — 18.1
+- **OAuth 2.0** — 12.5
+- **Open Graph** — 8.13
+- **Optimistic UI** — 7.9
+- **Orchestration** (motion) — 5.9
+- **Orchestration** (container) — 16.5
+- **origin** (git) — 15.4
+- **ORM** — 11.10
+- **OTP** — 12.6
+- **Overlap hours** — 3.6
+- **Overlay** — 7.8
+- **Overflow** — 8.2
+- **OWASP Top 10** — 13.2
+- **Ownership** — 18.7
+
+## P
+
+- **Padding** — 8.2
+- **Pagination** — **7.10**, 10.10
+- **Pain point** — 2.4
+- **Paint** — 1.4
+- **Panda CSS** — 8.4
+- **Park** (bir konuyu) — 18.2
+- **Partial hydration** — 8.10
+- **Passkey** — 12.6
+- **Password policy** — 12.8
+- **Password reset** — 12.8
+- **PATCH** — 10.2
+- **Pattern library** — 5.1
+- **Pause, Stop, Hide** (SC 2.2.2) — 6.8
+- **Payload** — 1.3
+- **Percentile** — **14.9**, 8.12
+- **Performance budget** — **8.12**, 17.6
+- **Permission** — 12.9
+- **Persistence** — 11.1
+- **Persona** — 2.4
+- **PII** — 11.11
+- **Pipeline** — 16.2
+- **Placeholder** — 4.9
+- **Plan card** — 7.6
+- **PlanetScale** — 11.12
+- **Playwright** — 17.3
+- **Polling** — 10.5
+- **Popover** — 7.8
+- **Port** — 10.1
+- **Position** (CSS) — 8.2
+- **POST** — 10.2
+- **Postmortem** — **16.9**, 18.3
+- **PostgreSQL** — 11.3
+- **POUR** — 6.2
+- **PPR** (Partial Prerendering) — 8.10
+- **PR template** — 15.9
+- **PRD** — 2.5
+- **Pre-commit hook** — 17.7
+- **Prefetch** — 8.12
+- **prefers-reduced-motion** — **5.9**, 6.8
+- **Preload** — 8.12
+- **Preview environment** — 16.3
+- **Pricing table** — 7.6
+- **Primary key** — 11.5
+- **Primitive token** — 5.2
+- **Principle of least privilege** — 13.8
+- **Prioritization** — 2.7
+- **Prisma** — 11.10
+- **Process** — 10.1
+- **Product analytics** — 16.11
+- **Product Designer** — 2.1
+- **Product development lifecycle** — 2.2
+- **Product Engineer** — 2.1
+- **Product Manager** — 2.1
+- **Product-market fit** — 2.3
+- **Product Owner** — 2.1
+- **Product tour** — 7.12
+- **Profile** — 7.12
+- **Progress indicator** — 7.9
+- **Progressive disclosure** — 4.6
+- **Project board** — 15.9
+- **Promise** — 8.5
+- **Prop drilling** — 8.7
+- **Propagation** (DNS) — 16.7
+- **Props** — **8.7**, 5.10
+- **Prototype** — **4.5**, 2.8
+- **PTAL** — 18.1
+- **PTO** — 18.1
+- **Pub/sub** — 14.4
+- **Pull / Push** (git) — 15.4
+- **Pull request** — 15.5
+- **Punt** — 18.2
+- **PUT** — 10.2
+- **PWA** — 1.7
+
+## Q
+
+- **QA** — **2.1**, 17.5
+- **Quarter** — 2.9
+- **Query** — 11.8
+- **Query parameter / Query string** — **1.2**, 8.9
+- **Queue** — **10.12**, 14.4
+- **Quick win** — 18.2
+- **Quota** — 10.10
+
+## R
+
+- **Radio button** — 7.11
+- **Radix UI** — 9.5
+- **Railway** — 16.6
+- **Raster** — 5.7
+- **Rate limiting** — **10.10**, 13.9
+- **Rating** — 7.4
+- **RBAC** — 12.9
+- **React** — 9.2
+- **React Aria** — 9.5
+- **React Hook Form** — 9.9
+- **React Router** — 9.3
+- **React Three Fiber** — 9.6
+- **Rebase** — 15.3
+- **Redirect** — **8.9**, 8.13
+- **Redis** — 11.3
+- **Redundancy** — 14.8
+- **Redux Toolkit** — 9.7
+- **Redundant Entry** (SC 3.3.7) — 6.2
+- **Refactor** — 17.9
+- **Refinement** — 2.7
+- **Reflow** (WCAG SC 1.4.10) — 6.6
+- **Refresh token** — 12.4
+- **Region** — 10.8
+- **Regression test** — 17.2
+- **Relational database** — 11.2
+- **Release** — 15.6
+- **Release notes** — 15.8
+- **Remix** — 9.3
+- **Remote** — 15.4
+- **Render** (platform) — 16.6
+- **Render-blocking resource** — 1.4
+- **Rendering engine** — 1.1
+- **Rendering stratejileri** — 8.10
+- **Repository** (git) — 15.2
+- **Repository** (katman) — 10.7
+- **Request** — 1.3
+- **Required field** — 6.7
+- **Reset** (git) — 15.6
+- **Resize text** (SC 1.4.4) — 6.6
+- **Resource** — 10.4
+- **Response** — 1.3
+- **Response time thresholds** — 4.7
+- **Responsive design** — 5.8
+- **REST** — 10.5
+- **Restore** — 11.11
+- **Retrospective** — **3.2**, 16.9
+- **Retry** — **14.11**, 10.12
+- **Reverse proxy** — 14.5
+- **Revert** — **15.6**, 16.9
+- **RFC** — **18.6**, 14.12
+- **RGB** — 5.4
+- **RICE** — 2.7
+- **Risk** — 18.4
+- **RLS** (Row Level Security) — 11.12
+- **Roadmap** — 2.9
+- **robots.txt** — 8.13
+- **role** (ARIA) — 6.4
+- **Rollback** — **16.9**, 15.6
+- **Rolling deployment** — 16.8
+- **Round trip** — 1.3
+- **Route / Routing** — 8.9
+- **Row** — 11.4
+- **Runbook** — **16.9**, 18.6
+- **Runner** — 16.2
+- **Runtime** — 9.1
+
+## S
+
+- **SAFe** — 3.1
+- **Safe method** — 10.2
+- **Salt / Salting** — 12.8
+- **SAML** — 12.5
+- **SameSite** — 12.3
+- **Same-origin policy** — 13.4
+- **Sanitization** — 13.7
+- **Schema** — 11.4
+- **Schema drift** — 11.10
+- **Scope** (kapsam) — 2.8
+- **Scope** (OAuth) — 12.9
+- **Scope creep** — **2.8**, 18.2
+- **Screen reader** — 6.4
+- **ScrollTrigger** — 9.6
+- **Scroll indicator** — 7.13
+- **Scrollytelling** — 7.5
+- **Scrum** — 3.2
+- **Scrum Master** — 3.2
+- **Scrumban** — 3.4
+- **SDK** — 10.9
+- **Search** — 7.10
+- **Secret** — 13.6
+- **Secure** (cookie) — 12.3
+- **Section** — 7.1
+- **SEO** — 8.13
+- **Seed data** — 11.10
+- **Select** — 7.11
+- **Semantic color** — 5.4
+- **Semantic HTML** — **6.3**, 8.1
+- **Semantic token** — 5.2
+- **Semantic versioning (SemVer)** — 15.8
+- **Sentry** → bkz. **Error tracking** — 16.11
+- **Server** — 1.1
+- **Server action** — 10.6
+- **Server component (RSC)** — 8.10
+- **Server-side** — 1.6
+- **Serverless** — 10.8
+- **Service** (katman) — 10.7
+- **Service Design** — 4.1
+- **Service worker** — 1.7
+- **Session** — 12.2
+- **Session recording** — 4.10
+- **Settings** — 7.12
+- **Severity** — **17.5**, 16.9
+- **shadcn/ui** — 9.5
+- **Shadow** — 5.6
+- **Sheet** — 7.8
+- **Ship it** — 18.2
+- **Sidebar** — 7.1
+- **Sign-off** — 2.10
+- **Signed URL** — 10.14
+- **Signifier** — 4.6
+- **Single point of failure (SPOF)** — 14.8
+- **Single responsibility** — 17.8
+- **Single source of truth** — 5.1
+- **Sitemap** (tasarım) — 4.3
+- **sitemap.xml** — 8.13
+- **Skeleton** — 7.9
+- **Skip link** — 6.5
+- **SLA / SLO / SLI** — 14.9
+- **Slider** — 7.11
+- **Slow query** — 11.9
+- **Slug** — 1.2
+- **Smoke test** — **17.2**, 16.2
+- **Snackbar** — 7.8
+- **Social login** — 12.5
+- **Social proof** — 7.4
+- **Soft delete** — 11.11
+- **Soft launch** — 2.11
+- **SolidJS** — 9.2
+- **Sort** — 7.10
+- **Source map** — **8.11**, 16.11
+- **SPA** — 1.7
+- **Spacing scale** — 5.5
+- **Spec** — **2.5**, 19.2
+- **Specificity** — 8.2
+- **Spike** — **3.5**, 18.4
+- **Spinner** — 7.9
+- **Spline** — 9.6
+- **Sprint** — 3.2
+- **Sprint backlog** — 3.2
+- **Sprint goal** — 3.2
+- **Sprint planning** — 3.2
+- **Sprint review** — 3.2
+- **SQL** — 11.8
+- **SQL injection** — 13.3
+- **SQLite** — 11.3
+- **SSE** (Server-Sent Events) — 10.5
+- **SSG** — 8.10
+- **SSL certificate** — **13.5**, 16.7
+- **SSO** — 12.5
+- **SSR** — 8.10
+- **SSRF** — 13.3
+- **Stacked PR** — 15.5
+- **Staggering** — 5.9
+- **Staging area** (git) — 15.2
+- **Staging environment** — **1.8**, 16.3
+- **stale-while-revalidate** — 10.11
+- **Stakeholder** — 2.1
+- **Standup** — 3.2
+- **Stash** — 15.6
+- **Stat block** — 7.4
+- **State** — **8.7**, 9.7
+- **Stateless / Stateful** — 14.7
+- **Static site** — 1.5
+- **Status code** — 10.3
+- **Status update** — 18.6
+- **Step section** — 7.5
+- **Stepper** — 7.11
+- **Sticky CTA** — 7.7
+- **Sticky header** — 7.2
+- **Sticky scroll** — 7.5
+- **Streaming SSR** — 8.10
+- **Structured data** — 8.13
+- **Stub** — 17.4
+- **Style** (Figma) — 5.10
+- **Style Dictionary** — 5.2
+- **Style guide** — 5.1
+- **styled-components** — 8.4
+- **Subdomain** — 1.2
+- **Subheadline** — 7.3
+- **Submodule** — 15.10
+- **Success metric** — 3.7
+- **Success state** — 7.9
+- **Supabase** — 11.12
+- **Survey** — 4.10
+- **SUS** — 4.10
+- **Suspense** — 8.10
+- **Svelte** — 9.2
+- **SvelteKit** — 9.3
+- **SVG** — 5.7
+- **Swimlane** — 3.4
+- **Switch** (form) — 7.11
+- **SWR** — 9.8
+- **Sync** — **18.5**, 3.6
+- **Synthetic monitoring** — 16.10
+
+## T
+
+- **Tab bar** — 7.2
+- **tabindex** — 6.5
+- **Table** — 7.10
+- **Table** (veritabanı) — 11.4
+- **Tabs** — 7.5
+- **Tag** (arayüz) — 7.10
+- **Tag** (git) — 15.6
+- **Tailwind CSS** — **8.4**, 9.4
+- **TanStack Query** — 9.8
+- **TanStack Start** — 9.3
+- **Target size** (SC 2.5.8) — **6.6**, 4.7
+- **Task** — 2.6
+- **Task flow** — 4.4
+- **Taxonomy** — 4.3
+- **Tech Lead** — 2.1
+- **Tech stack** — 1.6
+- **Technical debt** — 17.9
+- **Template** (issue/PR) — 15.9
+- **Tenant** — 12.9
+- **Test coverage** — 17.4
+- **Test pyramid** — 17.1
+- **Testing Library** — 17.3
+- **Testimonial** — 7.4
+- **Textarea** — 7.11
+- **Theme / Initiative** — 2.9
+- **Theming** — 5.2
+- **Third-party integration** — 10.9
+- **Threat model** — 13.1
+- **Three flashes** (SC 2.3.1) — 6.8
+- **Three-tier architecture** — 14.3
+- **Three.js** — 9.6
+- **Throughput** — **3.4**, 14.9
+- **Throttling** — 10.10
+- **Ticket** — 2.7
+- **Timebox** — **3.3**, 18.4
+- **Timeline** — 7.5
+- **Timeout** — 14.11
+- **Title tag** — 8.13
+- **TLD** — 1.2
+- **TL;DR** — 18.1
+- **TLS** — 13.5
+- **Toast** — 7.8
+- **Token** (auth) — 12.2
+- **Tone of voice** — 4.9
+- **Tooltip** — 7.8
+- **TOTP** — 12.7
+- **Tracking** (tipografi) — 5.3
+- **Tracking plan** — 16.11
+- **Traces** — 16.10
+- **Trade-off** — **9.12**, 14.1, 18.4
+- **Transaction** — 11.8
+- **Transcoding** — 10.14
+- **Transition** — 5.9
+- **Transpiler** — 8.11
+- **Tree-shaking** — 8.11
+- **Tree testing** — 4.3
+- **tRPC** — 10.5
+- **Trunk-based development** — 15.7
+- **Trust badge** — 7.4
+- **T-shirt sizing** — 2.7
+- **TTFB** — 8.12
+- **TTL** — 10.11
+- **Turborepo** — 15.10
+- **Turso** — 11.12
+- **TXT record** — 16.7
+- **Type / Interface** — 8.6
+- **Type check** — 17.7
+- **Type scale** — 5.3
+- **Typeface** — 5.3
+- **Typeahead** — 7.10
+- **TypeScript** — 8.6
+- **Two-way door** — 14.1
+
+## U
+
+- **UI** — 4.1
+- **Undo** — 4.6
+- **Uncontrolled component** — 8.7
+- **Unique constraint** — 11.5
+- **Unit test** — 17.2
+- **Uptime monitoring** — 16.10
+- **upstream** — 15.4
+- **URL** — 1.2
+- **Usability** — 4.6
+- **Usability test** — 4.10
+- **Usage-based billing** — 16.12
+- **Use of color** (SC 1.4.1) — 6.6
+- **User agent** — 1.1
+- **User enumeration** — 12.8
+- **User flow** — 4.4
+- **User journey** — 2.4
+- **User research** — 2.4
+- **User story** — 2.6
+- **Utility-first CSS** — 8.4
+- **UX** — 4.1
+- **UX writing** — 4.9
+
+## V
+
+- **Validation** (doğrulama, ürün) — 2.3
+- **Vanilla CSS** — 8.4
+- **vanilla-extract** — 8.4
+- **Vanity metric** — 3.7
+- **Variable** (Figma) — 5.10
+- **Variable font** — 5.3
+- **Variant** (Figma) — 5.10
+- **Vector database** — 11.2
+- **Velocity** — 3.3
+- **Vendor lock-in** — 9.12
+- **VERBİS** — 13.10
+- **Vercel** — 16.6
+- **Version control** — 15.1
+- **Vertical rhythm** — 5.5
+- **Vertical scaling** — 14.6
+- **Viewport** — 1.4
+- **Visual Design** — 4.1
+- **Visual hierarchy** — 4.8
+- **Visual regression testing** — 17.6
+- **Vitest** — 17.3
+- **Volume** (Docker) — 16.4
+- **Vue** — 9.2
+
+## W
+
+- **WAF** — 13.9
+- **Waitlist** — **7.7**, 2.11
+- **War room** — 18.3
+- **Waterfall** — 3.1
+- **WCAG** — 6.2
+- **Web analytics** — 16.11
+- **Web application** — 1.5
+- **Web app manifest** — 1.7
+- **WebAuthn** — 12.6
+- **Webhook** — 10.9
+- **WebSocket** — 10.5
+- **WFH** — 18.1
+- **White space** — 4.8
+- **Widget** — 7.12
+- **Wireframe** — 4.5
+- **WIP** — 18.1
+- **WIP limit** — 3.4
+- **Wizard** — 7.11
+- **Worker** — 10.12
+- **Workflow** (GitHub Actions) — 15.11
+- **Working directory** — 15.2
+
+## X
+
+- **XSS** — 13.3
+
+## Y
+
+- **Yak shaving** — 18.2
+- **Yup** — 9.9
+
+## Z
+
+- **z-index** — 5.6
+- **Zod** — **9.9**, 13.7
+- **Zustand** — 9.7
+
+---
+
+**Biten bölüm:** Bölüm 22 — Alfabetik terim dizini
+**Sıradaki:** Ek A — Çalışma takvimi · Ek B — Doğrulama kaynakları

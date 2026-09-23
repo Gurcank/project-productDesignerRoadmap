@@ -1,0 +1,174 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { requireCategory } from "~/lib/content";
+import { renderInlineMarkdown } from "~/lib/inline-markdown";
+
+export async function getStaticPaths() {
+  const quizzes = await getCollection("quizzes");
+  return quizzes.map((quiz) => ({
+    params: { category: quiz.data.category },
+    props: { quiz },
+  }));
+}
+
+const { quiz } = Astro.props;
+const category = requireCategory(quiz.data.category);
+---
+
+<BaseLayout title={`${category.title} — Kendini test et`} section="roadmap">
+  <article class="quiz">
+    <header>
+      <p class="quiz__eyebrow"><a href={`/${category.slug}/`}>{category.title}</a></p>
+      <h1>Kendini test et</h1>
+      <p class="quiz__lead">
+        Cevaplara bakmadan yaz, sonra karşılaştır. Ölçüt şu: kartın tanımına bakmadan, kendi cümlenle
+        anlatabiliyorsan öğrenmişsindir.
+      </p>
+      <button type="button" class="quiz__toggle" data-quiz-toggle aria-expanded="false">Tüm cevapları göster</button>
+    </header>
+
+    <ol class="quiz__list">
+      {
+        quiz.data.items.map((item) => (
+          <li class="question">
+            <p class="question__text">
+              <span class="question__number" aria-hidden="true">
+                {item.n}
+              </span>
+              <span set:html={renderInlineMarkdown(item.question)} />
+            </p>
+            {item.answer && (
+              <details class="question__answer">
+                <summary>Cevabı göster</summary>
+                <p set:html={renderInlineMarkdown(item.answer)} />
+              </details>
+            )}
+          </li>
+        ))
+      }
+    </ol>
+
+    <p class="quiz__back">
+      <a href={`/${category.slug}/`}>← {category.title} adımlarına dön</a>
+    </p>
+  </article>
+</BaseLayout>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>("[data-quiz-toggle]");
+  const answers = Array.from(document.querySelectorAll<HTMLDetailsElement>(".question__answer"));
+
+  toggle?.addEventListener("click", () => {
+    const open = toggle.getAttribute("aria-expanded") === "true";
+    for (const answer of answers) answer.open = !open;
+    toggle.setAttribute("aria-expanded", String(!open));
+    toggle.textContent = open ? "Tüm cevapları göster" : "Tüm cevapları gizle";
+  });
+</script>
+
+<style>
+  .quiz {
+    max-width: 52rem;
+    margin-inline: auto;
+    padding: var(--spacing-8) var(--spacing-4) var(--spacing-16);
+  }
+
+  .quiz__eyebrow {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-text-muted);
+  }
+
+  .quiz__eyebrow a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    color: inherit;
+  }
+
+  .quiz h1 {
+    margin-block: var(--spacing-3) var(--spacing-3);
+    font-size: var(--text-2xl);
+  }
+
+  .quiz__lead {
+    max-width: var(--measure);
+    color: var(--c-text-secondary);
+  }
+
+  .quiz__toggle {
+    min-height: 44px;
+    margin-block-start: var(--spacing-4);
+    padding-inline: var(--spacing-4);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-full);
+    background: none;
+    color: var(--c-text);
+    font: inherit;
+    font-size: var(--text-sm);
+    cursor: pointer;
+  }
+
+  .quiz__toggle:hover {
+    background-color: var(--c-surface-raised);
+  }
+
+  .quiz__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    margin-block-start: var(--spacing-8);
+    padding: 0;
+    list-style: none;
+  }
+
+  .question {
+    padding: var(--spacing-4);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--c-surface-raised);
+  }
+
+  .question__text {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: var(--spacing-2);
+    align-items: baseline;
+  }
+
+  .question__number {
+    font-variant-numeric: tabular-nums;
+    font-size: var(--text-sm);
+    color: var(--c-text-muted);
+  }
+
+  .question__answer {
+    margin-block-start: var(--spacing-3);
+    padding-inline-start: calc(2rem + var(--spacing-2));
+  }
+
+  .question__answer summary {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    font-size: var(--text-sm);
+    color: var(--c-action);
+    cursor: pointer;
+  }
+
+  .question__answer[open] summary {
+    color: var(--c-text-muted);
+  }
+
+  .question__answer p {
+    margin-block-start: var(--spacing-2);
+    color: var(--c-text-secondary);
+  }
+
+  .quiz__back {
+    margin-block-start: var(--spacing-12);
+    font-size: var(--text-sm);
+  }
+</style>

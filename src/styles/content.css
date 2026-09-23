@@ -1,0 +1,151 @@
+/*
+ * Styles for rendered material. These are global on purpose: the markup comes
+ * from markdown at build time, so Astro's scoped styles never reach it.
+ */
+
+/* ------------------------------------------------------------- term cards */
+.term-card {
+  border: 1px solid var(--c-border);
+  background-color: var(--c-surface-raised);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-4);
+  margin-block: var(--spacing-6);
+}
+
+.term-card > h3 {
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  line-height: 1.35;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--spacing-4);
+  padding-block-end: var(--spacing-3);
+  border-bottom: 1px solid var(--c-border);
+  scroll-margin-top: 5rem;
+}
+
+.term-card__fields {
+  display: grid;
+  gap: var(--spacing-3);
+  margin: 0;
+}
+
+.term-card__field {
+  display: grid;
+  gap: var(--spacing-1);
+}
+
+.term-card__label {
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--c-text-muted);
+}
+
+.term-card__value {
+  margin: 0;
+  color: var(--c-text-secondary);
+}
+
+.term-card__value > p:first-child {
+  margin-block-start: 0;
+}
+
+.term-card__value > p + p,
+.term-card__value > ul,
+.term-card__value > ol {
+  margin-block-start: var(--spacing-2);
+}
+
+.term-card__value ul,
+.term-card__value ol {
+  padding-inline-start: var(--spacing-6);
+  list-style: disc;
+}
+
+.term-card__value ol {
+  list-style: decimal;
+}
+
+/* The definition is the line you would say out loud, so it reads at full strength. */
+.term-card__field[data-field="tanim"] .term-card__value {
+  color: var(--c-text);
+}
+
+/* The material calls this the most valuable field; give it a visible edge. */
+.term-card__field[data-field="karistirilanlar"] .term-card__value {
+  border-inline-start: 2px solid var(--c-border-strong);
+  padding-inline-start: var(--spacing-3);
+}
+
+.term-card__field[data-field="kaynak"] .term-card__value,
+.term-card__field[data-field="not"] .term-card__value {
+  font-size: var(--text-sm);
+}
+
+/* The material's own [DEĞİŞKEN BİLGİ] / [EMİN DEĞİLİM] notes. Set into the card
+   rather than coloured: this is a caveat to read, not a state to scan for, and
+   amber stays reserved for progress and focus. */
+.term-card__field[data-field="uyari"] .term-card__value {
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: var(--radius-md);
+  background-color: var(--c-surface-sunken);
+  font-size: var(--text-sm);
+}
+
+@media (min-width: 48rem) {
+  .term-card {
+    padding: var(--spacing-6);
+  }
+
+  .term-card__field {
+    grid-template-columns: 11rem minmax(0, 1fr);
+    gap: var(--spacing-4);
+    align-items: baseline;
+  }
+
+  .term-card__field[data-field="karistirilanlar"] .term-card__value {
+    margin-inline-start: calc(var(--spacing-3) * -1);
+  }
+}
+
+/* Some cards close with prose after the field list. It is not a field, so it
+   must not look like a row that lost its label: a rule separates it and it
+   keeps the card's full width at every breakpoint. */
+.term-card > *:not(h3):not(.term-card__fields) {
+  margin-block-start: var(--spacing-4);
+}
+
+.term-card__fields + *:not(.term-card__fields) {
+  padding-block-start: var(--spacing-4);
+  border-top: 1px solid var(--c-border);
+}
+
+/* ------------------------------------------------------- inline reference */
+.xref {
+  font-variant-numeric: tabular-nums;
+  text-decoration: underline dotted;
+  text-underline-offset: 0.25em;
+}
+
+/* ---------------------------------------------------------------- flags */
+.flag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: 0 var(--spacing-2);
+  border: 1px solid var(--c-border-strong);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  line-height: 1.7;
+  color: var(--c-text-secondary);
+  white-space: nowrap;
+}
+
+/* Inline code is usually a file path or a command; wrapping one mid-token hides
+   where it ends. */
+.content code:where(:not(pre code)) {
+  white-space: nowrap;
+}

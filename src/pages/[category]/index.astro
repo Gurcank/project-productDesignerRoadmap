@@ -1,0 +1,253 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import StepList from "~/components/StepList.astro";
+import { getPublishedCategories, topicMinutes, formatDuration, topicHref } from "~/lib/content";
+import { DURABILITY_LABEL, AREAS } from "~/data/categories";
+import ActivityBadge from "~/components/ui/ActivityBadge.astro";
+import ProgressBar from "~/components/ui/ProgressBar.astro";
+import WaveButton from "~/components/ui/WaveButton.astro";
+
+export async function getStaticPaths() {
+  const published = await getPublishedCategories();
+  return published.map(({ category, topics }) => ({
+    params: { category: category.slug },
+    props: { category, topics },
+  }));
+}
+
+const { category, topics } = Astro.props;
+const intro = await getEntry("categories", category.slug);
+const Intro = intro ? (await render(intro)).Content : null;
+
+const durability = DURABILITY_LABEL[category.durability];
+const area = AREAS.find((a) => a.id === category.area);
+const cards = topics.reduce((sum, topic) => sum + topic.data.cardCount, 0);
+const minutes = topics.reduce((sum, topic) => sum + topicMinutes(topic), 0);
+const firstTopic = topics[0];
+
+// Categories written for this site have no quiz; linking to one would 404.
+const quizzes = await getCollection("quizzes");
+const hasQuiz = quizzes.some((quiz) => quiz.data.category === category.slug);
+---
+
+{/* Same skeleton as a topic page: steps on the left, reading column on the
+    right. A category and its steps are the same place at different zoom, so
+    moving the rail between them made the site feel like two sites. */}
+<BaseLayout title={category.title} description={category.summary} section="roadmap">
+  <div class="category">
+    <aside class="category__rail" aria-label={`${category.title} adımları`}>
+      <a class="category__back" href="/">← Yol haritası</a>
+      <StepList
+        topics={topics}
+        categorySlug={category.slug}
+        categoryTitle={category.title}
+        quizHref={hasQuiz ? `/${category.slug}/test/` : undefined}
+      />
+    </aside>
+
+    <article class="category__main">
+      <header class="category__head">
+        <p class="category__eyebrow">{area?.title}</p>
+        <h1 class="category__title">{category.title}</h1>
+
+        {/* One line, not a four-box grid: these are four small facts, and a grid
+            of labelled boxes gave them more weight than they carry. */}
+        <p class="facts">
+          <span><b>{topics.length}</b> adım</span>
+          {cards > 0 && <span><b>{cards}</b> terim</span>}
+          <span>{formatDuration(minutes)}</span>
+          <span class="facts__life">
+            <ActivityBadge tone={category.durability} label="Bilgi ömrü:" />
+            {durability.label}
+          </span>
+        </p>
+      </header>
+
+      <div class="start" data-start={category.slug}>
+        <WaveButton
+          href={firstTopic ? topicHref(firstTopic) : "/"}
+          label="Başla"
+          detail={firstTopic?.data.title}
+          attrs={{ "data-start-link": true }}
+        />
+
+        {/* Wrapper, not a class on the component: a class passed to a child
+            component's root does not carry this page's style scope, so the
+            track was being laid out at zero width. */}
+        <div class="start__progress">
+          <ProgressBar fillAttribute="data-progress-bar" />
+        </div>
+        <p class="start__count"><span data-progress-done>0</span>/{topics.length}</p>
+      </div>
+
+      <div class="category__intro prose">
+        {Intro && <Intro />}
+      </div>
+    </article>
+  </div>
+</BaseLayout>
+
+<script>
+  import { initProgress, $progress } from "~/lib/progress";
+
+  initProgress();
+
+  const box = document.querySelector<HTMLElement>("[data-start]");
+  if (box) {
+    const link = box.querySelector<HTMLAnchorElement>("[data-start-link]")!;
+    const text = box.querySelector<HTMLElement>("[data-wave-label]")!;
+    const meta = box.querySelector<HTMLElement>("[data-wave-detail]")!;
+    // Scoped to the box: the step list renders a counter under the same
+    // attribute, and it owns that one.
+    const count = box.querySelector<HTMLElement>("[data-progress-done]")!;
+    const bar = box.querySelector<HTMLElement>("[data-progress-bar]")!;
+    const steps = Array.from(document.querySelectorAll<HTMLElement>("[data-step]"));
+
+    $progress.subscribe((progress) => {
+      const pending = steps.find((step) => !progress.topics[step.dataset.step!]?.done);
+      const done = steps.filter((step) => progress.topics[step.dataset.step!]?.done).length;
+
+      count.textContent = String(done);
+      bar.style.inlineSize = steps.length ? String((done / steps.length) * 100) + "%" : "0%";
+
+      const target = pending ?? steps[0];
+      if (!target) return;
+
+      const anchor = target.querySelector<HTMLAnchorElement>(".step__link");
+      if (anchor) {
+        link.href = anchor.getAttribute("href")!;
+        // Read the title element, not the whole link: the link also carries the
+        // step number and its reading time.
+        meta.textContent = anchor.querySelector<HTMLElement>(".step__text")?.textContent?.trim() ?? "";
+      }
+
+      text.textContent = !pending ? "Baştan geç" : done > 0 ? "Devam et" : "Başla";
+    });
+  }
+</script>
+
+<style>
+  .category {
+    display: grid;
+    gap: var(--spacing-8);
+    max-width: 90rem;
+    margin-inline: auto;
+    padding: var(--spacing-6) var(--spacing-4) var(--spacing-16);
+  }
+
+  /* Phone: content first, step list after it. Desktop: list becomes the rail. */
+  .category__main {
+    order: 1;
+    min-width: 0;
+  }
+
+  .category__rail {
+    order: 2;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+    padding-block-start: var(--spacing-6);
+    border-top: 1px solid var(--c-border);
+  }
+
+  .category__back {
+    align-self: start;
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+    text-decoration: none;
+  }
+
+  .category__back:hover {
+    color: var(--c-text);
+  }
+
+  .category__eyebrow {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-text-muted);
+  }
+
+  .category__title {
+    margin-block: var(--spacing-2) var(--spacing-6);
+    font-size: var(--text-3xl);
+    letter-spacing: -0.02em;
+  }
+
+  /* ----------------------------------------------------------------- facts */
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4);
+    margin: 0;
+  }
+
+  .facts {
+    font-size: var(--text-sm);
+    color: var(--c-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .facts b {
+    font-weight: 600;
+    color: var(--c-text);
+  }
+
+  .facts__life {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+  }
+
+  /* ----------------------------------------------------------------- start */
+  .start {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-4);
+    margin-block-start: var(--spacing-8);
+  }
+
+  .start__progress {
+    flex: 1 1 8rem;
+    min-inline-size: 8rem;
+  }
+
+  .start__count {
+    flex: 0 0 auto;
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+    color: var(--c-text-muted);
+  }
+
+  .category__intro {
+    margin-block-start: var(--spacing-8);
+  }
+
+  .category__intro :global(p:first-child) {
+    margin-block-start: 0;
+  }
+
+  @media (min-width: 64rem) {
+    .category {
+      grid-template-columns: 17rem minmax(0, 1fr);
+      gap: var(--spacing-12);
+      padding-inline: var(--spacing-6);
+      align-items: start;
+    }
+
+    .category__rail {
+      order: 0;
+      position: sticky;
+      inset-block-start: 5rem;
+      max-height: calc(100vh - 6rem);
+      overflow-y: auto;
+      padding-block-start: 0;
+      border-top: 0;
+    }
+  }
+</style>

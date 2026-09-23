@@ -1,0 +1,37 @@
+---
+import DiagramFigure from "./DiagramFigure.astro";
+---
+
+<DiagramFigure
+  label="Double Diamond şeması"
+  caption="İki elmas, dört aşama: önce problemi genişletip (keşfet) daraltırsın (tanımla), sonra çözümü genişletip (geliştir) daraltırsın (teslim et). Şemanın asıl söylediği, genişleme anlarının da işin parçası olduğudur — 'çok seçenek ürettik' bir israf değil, sürecin tasarlanmış hâlidir. Tek uyarı: gerçek projeler bu kadar düzgün ilerlemez, geri dönüşler olur."
+>
+  <svg viewBox="0 0 640 210" role="img" aria-label="Keşfet, tanımla, geliştir, teslim et aşamalarını gösteren iki elmas">
+    <title>Double Diamond</title>
+
+    {/* First diamond: problem space */}
+    <path class="dg-line dg-line--accent" d="M20 100 L160 32 L300 100 L160 168 Z"></path>
+    {/* Second diamond: solution space */}
+    <path class="dg-line dg-line--accent" d="M330 100 L470 32 L610 100 L470 168 Z"></path>
+
+    {/* The pinch point between them — the moment a problem statement is agreed */}
+    <circle class="dg-progress" cx="315" cy="100" r="5"></circle>
+
+    <text class="dg-label" x="90" y="196" text-anchor="middle">Keşfet</text>
+    <text class="dg-sub" x="90" y="16" text-anchor="middle">genişlet</text>
+
+    <text class="dg-label" x="230" y="196" text-anchor="middle">Tanımla</text>
+    <text class="dg-sub" x="230" y="16" text-anchor="middle">daralt</text>
+
+    <text class="dg-label" x="400" y="196" text-anchor="middle">Geliştir</text>
+    <text class="dg-sub" x="400" y="16" text-anchor="middle">genişlet</text>
+
+    <text class="dg-label" x="540" y="196" text-anchor="middle">Teslim et</text>
+    <text class="dg-sub" x="540" y="16" text-anchor="middle">daralt</text>
+
+    <text class="dg-sub dg-progress" x="315" y="122" text-anchor="middle">problem tanımı</text>
+
+    <text class="dg-sub" x="160" y="104" text-anchor="middle">PROBLEM ALANI</text>
+    <text class="dg-sub" x="470" y="104" text-anchor="middle">ÇÖZÜM ALANI</text>
+  </svg>
+</DiagramFigure>

@@ -1,0 +1,121 @@
+{
+  "category": "sirket-sozlugu",
+  "source": "18-sirket-ortami-sozlugu.md",
+  "items": [
+    {
+      "n": 1,
+      "question": "EOD ve COB ne demek? \"EOD'a kadar\" ifadesinin bilinen belirsizliği nedir?",
+      "answer": "**EOD** = gün sonuna kadar; **COB** = mesai bitimine kadar. Belirsizlik: **kimin günü olduğunu söylemez.** Farklı saat dilimlerinde çalışan ekiplerde gerçek gecikmeler üretir; net bir saat yazmak daha güvenlidir."
+    },
+    {
+      "n": 2,
+      "question": "FYI ve PTAL ne zaman kullanılır?",
+      "answer": "**FYI**: bilgin olsun, senden eylem beklenmiyor. **PTAL**: \"düzelttim, tekrar bakar mısın\" — kod incelemesinde yorumları uyguladıktan sonra kullanılır."
+    },
+    {
+      "n": 3,
+      "question": "`nit:` ön eki ne işe yarar ve senin için neden faydalı?",
+      "answer": "Bir inceleme yorumunun **bloke edici mi yoksa öneri mi** olduğunu tek kelimeyle belirtir. Senin için faydalı çünkü tasarım geri bildirimlerinin yanlış ağırlıkta algılanmasını önler — \"bu boşluk 16 olmalı\" ile \"bu akış çalışmıyor\" farklı ağırlıklardır."
+    },
+    {
+      "n": 4,
+      "question": "1:1'in amacı nedir? En yaygın bozulma biçimi nedir?",
+      "answer": "Engelleri konuşmak, geri bildirim alışverişi yapmak ve gelişim konularını ele almak; gündemi genelde **çalışan** belirler. En yaygın bozulma: **durum raporu toplantısına dönüşmesi** — o bilgi zaten başka kanallardan akıyor, dönüştüğünde toplantı işlevsizleşir."
+    },
+    {
+      "n": 5,
+      "question": "Punt ile park arasındaki ince fark nedir?",
+      "answer": "**Punt**, işi belirli bir sonraki döneme atar. **Park**, \"şimdi konuşmuyoruz ama unutmuyoruz\" demektir ve genelde bir bekleme listesine yazılır."
+    },
+    {
+      "n": 6,
+      "question": "Bikeshedding nedir ve tasarımcı için neden özel bir tehlike?",
+      "answer": "Asıl zor konu yerine, herkesin fikir söyleyebileceği önemsiz bir ayrıntıya saatlerce takılmak. Tasarımcı için tehlikeli çünkü **renk ve buton metni herkesin fikir söyleyebileceği konulardır; akış yapısı değildir** — toplantılar bu yüzden kolayca renk tartışmasına kayar."
+    },
+    {
+      "n": 7,
+      "question": "Bikeshedding'in panzehiri nedir?",
+      "answer": "**Tartışmayı çerçevelemek:** crit'e getirirken hedefi yazmak, karar gerektiren soruyu açıkça sormak ve önemsiz konuları timebox'lamak."
+    },
+    {
+      "n": 8,
+      "question": "Yak shaving nedir? Adlandırabilmek neden işe yarar?",
+      "answer": "Asıl işi yapmak için önce başka bir şeyi, onun için de başka bir şeyi düzeltmek zorunda kalıp zincirin sonunda asıl işten uzaklaşmak. Adlandırabilmek işe yarar çünkü **fark edip durabilmeyi** sağlar — \"yak shaving'e girdim, geçici çözümle bırakıyorum\" diyebilmek."
+    },
+    {
+      "n": 9,
+      "question": "Gold plating ile scope creep arasındaki fark nedir?",
+      "answer": "**Scope creep**: kapsam dışarıdan gelen isteklerle sessizce büyür. **Gold plating**: kimse istemediği hâlde ekip kendi kendine fazladan iş yapar (\"madem dokunuyorum, şunu da güzelleştireyim\")."
+    },
+    {
+      "n": 10,
+      "question": "Blocker ile impediment arasındaki fark nedir?",
+      "answer": "**Blocker** ilerlemeyi tamamen durdurur ve kendi başına çözülemez. **Impediment** yavaşlatır ama durdurmaz. Her zorluğa \"blocker\" demek kelimenin gücünü tüketir."
+    },
+    {
+      "n": 11,
+      "question": "Fire drill nedir ve bu kelimeyi bilmek ne kazandırır?",
+      "answer": "Gerçek aciliyeti olmayan ama acilmiş gibi yürütülen, ekibin planını bozan iş. Kelimeyi bilmek, bir işin **gerçekten acil mi yoksa birinin paniği mi** olduğunu sorgulama iznini verir."
+    },
+    {
+      "n": 12,
+      "question": "Bir \"action item\"ın taşıması gereken iki şey nedir? Eksikse ne olur?",
+      "answer": "**Sahibi ve tarihi.** Eksikse \"şuna bir bakalım\" seviyesinde kalır ve yapılmaz — retro ile postmortem'lerin işe yaramamasının bir numaralı sebebi budur."
+    },
+    {
+      "n": 13,
+      "question": "Constraint ile assumption arasındaki fark nedir? \"Bunu değiştiremeyiz\" cümlesi hangisine örnek olabilir?",
+      "answer": "**Constraint** değiştiremeyeceğin verili bir sınırdır; **assumption** doğru kabul edilen ama kanıtlanmamış bir inançtır. \"Bunu değiştiremeyiz\" cümlesi sık sık **varsayım** çıkar — sorgulandığında çözülür."
+    },
+    {
+      "n": 14,
+      "question": "Bir riski kaydetmek neden önemli?",
+      "answer": "Çünkü **kayıtlı bir risk sürpriz değildir; kayıtsız bir risk krizdir.** Adlandırmak, azaltma önlemi planlamayı mümkün kılar."
+    },
+    {
+      "n": 15,
+      "question": "Sync yapmanın faydası ve maliyeti nedir? Sync'ten sonraki kritik alışkanlık nedir?",
+      "answer": "**Faydası:** yazışmanın uzadığı durumda beş dakikalık konuşma yirmi mesajı bitirir. **Maliyeti:** herkesin odak zamanını parçalar. **Kritik alışkanlık:** sync'ten çıkan kararı yazıya dökmek — konuşulan ama yazılmayan karar, katılmayanlar için hiç alınmamış sayılır."
+    },
+    {
+      "n": 16,
+      "question": "Bir toplantının işe yarayıp yaramadığını belirleyen üç şey nedir?",
+      "answer": "(1) Gündem var mı? (2) Karar mı, bilgilendirme mi — bilgilendirmenin çoğu yazılı olabilir. (3) Çıktı ne — aksiyon maddeleri yazılmadıysa toplantı bitmemiştir."
+    },
+    {
+      "n": 17,
+      "question": "RFC ile ADR arasındaki fark nedir?",
+      "answer": "**RFC** karar **öncesi** tartışmadır: öneriyi yorum ve itiraza açar. **ADR** karar **sonrası** kayıttır: alınan kararı gerekçesi ve alternatifleriyle saklar. Biri girdi, diğeri çıktıdır."
+    },
+    {
+      "n": 18,
+      "question": "İyi bir status update'in dört parçası nedir? En yaygın hata nedir?",
+      "answer": "**Durum** (yolunda / risk altında / gecikiyor), **bu hafta ne oldu**, **sırada ne var**, **neye ihtiyacım var**. En yaygın hata: **kötü haberi geciktirmek** — erken bildirilen gecikme yönetilebilir bilgi, son anda bildirilen gecikme bir güven sorunudur."
+    },
+    {
+      "n": 19,
+      "question": "Documentation-first neden sadece bir arşivleme pratiği değildir?",
+      "answer": "Çünkü **yazmak düşünmeyi zorlar.** Bir fikri tek sayfaya sığdıramamak çoğu zaman fikrin henüz netleşmediğinin işaretidir. Ayrıca yeni katılan biri aylarca süren konuşmaları okuyarak yetişebilir."
+    },
+    {
+      "n": 20,
+      "question": "\"Disagree and commit\" ilkesinin çalışması için ön koşul nedir? Ön koşul yoksa ne anlama gelir?",
+      "answer": "Ön koşul: **itirazın gerçekten dinlenmiş olması.** Yoksa ilke \"sus ve uy\" anlamına gelir ve zararlıdır. Ayrıca itirazın kayıt altına alınması önemlidir — karar yanlış çıkarsa o itiraz süreci hızlandırır."
+    },
+    {
+      "n": 21,
+      "question": "Blameless kültür neden pratik bir gereklilik, sadece bir nezaket değil?",
+      "answer": "Çünkü **suçlama kültüründe insanlar hataları gizler**; gizlenen hata büyür ve sistem öğrenemez. Yani nezaket değil, öğrenme kapasitesi meselesidir."
+    },
+    {
+      "n": 22,
+      "question": "\"Bias for action\" ne zaman tehlikelidir?",
+      "answer": "**Tek yönlü kapı kararlarında** (geri dönüşü olmayan veya çok pahalı olan). İlke, çift yönlü kapılar için doğrudur; karar türünü ayırt etmeden uygulanırsa pahalı hatalar üretir."
+    },
+    {
+      "n": 23,
+      "question": "\"Herkesin sorumluluğu\" neden sorunlu? DRI bu sorunu nasıl çözer?",
+      "answer": "Çünkü **pratikte \"kimsenin sorumluluğu\" demektir** — herkes başkasının bakacağını varsayar. DRI, tek bir sahip atayarak takibi garanti eder; sahip işi kendisi yapmak zorunda değildir, **bitmesini sağlamakla** yükümlüdür."
+    }
+  ]
+}

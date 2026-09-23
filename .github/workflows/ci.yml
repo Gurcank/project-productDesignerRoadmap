@@ -1,0 +1,40 @@
+# Quality gates (SPEC §6, Faz 6). Every job here runs locally with the same
+# command, so a red build can always be reproduced with one npm script.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Types first: it is the cheapest gate and fails fastest.
+      - name: Tip kontrolü
+        run: npm run check
+
+      # The material is the source of truth; generated content must still match it.
+      - name: Kaynak-çıktı ayrışması
+        run: npm run import:check
+
+      # Card fields, counts, cross references, diagram bindings.
+      - name: İçerik doğrulaması
+        run: npm run validate
+
+      - name: Derleme
+        run: npm run build
+
+      # Fails the build when a page goes over the JS/CSS/HTML budget.
+      - name: Performans bütçesi
+        run: npm run budget

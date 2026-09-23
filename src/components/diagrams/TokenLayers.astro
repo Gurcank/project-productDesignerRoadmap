@@ -1,0 +1,65 @@
+---
+import DiagramFigure from "./DiagramFigure.astro";
+
+const layers = [
+  {
+    y: 24,
+    name: "Ham değer (primitive)",
+    example: "petrol-500 = oklch(0.63 0.105 215)",
+    note: "Anlamı yok, sadece değer",
+  },
+  {
+    y: 84,
+    name: "Semantik token",
+    example: "--c-action = petrol-500",
+    note: "Ne işe yaradığını söyler",
+  },
+  {
+    y: 144,
+    name: "Bileşen",
+    example: "buton zemini = --c-action",
+    note: "Yalnız semantik katmanı bilir",
+  },
+];
+---
+
+<DiagramFigure
+  label="Tasarım token katmanları şeması"
+  caption="Üç katman: ham değer, ona anlam veren semantik token, ve yalnız semantik katmanı tanıyan bileşen. Katmanların işe yaradığı an tema değiştirmektir — açık temada yalnız ortadaki satır değişir, hiçbir bileşene dokunulmaz. Bileşen doğrudan ham değere uzanırsa bu zincir kırılır ve tema değişikliği yüzlerce dosyaya yayılır."
+>
+  <svg viewBox="0 0 640 210" role="img" aria-label="Ham değerden semantik token'a, oradan bileşene giden üç katman">
+    <title>Token katmanları</title>
+
+    {
+      layers.map((layer, index) => (
+        <>
+          <rect
+            class:list={["dg-box", { "dg-box--accent": index === 1 }]}
+            x={8}
+            y={layer.y}
+            width={624}
+            height={48}
+            rx={8}
+          />
+          <text class="dg-label" x={24} y={layer.y + 21}>
+            {layer.name}
+          </text>
+          <text class="dg-sub" x={24} y={layer.y + 38}>
+            {layer.example}
+          </text>
+          <text class="dg-sub" x={616} y={layer.y + 29} text-anchor="end">
+            {layer.note}
+          </text>
+          {index < layers.length - 1 && (
+            <>
+              <path class="dg-line dg-line--accent" d={`M320 ${layer.y + 48} V ${layer.y + 60}`} />
+              <path class="dg-line dg-line--accent" d={`M314 ${layer.y + 54} l6 6 6 -6`} stroke-linejoin="round" />
+            </>
+          )}
+        </>
+      ))
+    }
+
+    <text class="dg-sub dg-progress" x="8" y="204">Tema değişince yalnız ortadaki satır değişir.</text>
+  </svg>
+</DiagramFigure>

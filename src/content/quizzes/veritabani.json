@@ -1,0 +1,106 @@
+{
+  "category": "veritabani",
+  "source": "11-veritabani-ve-veri-modeli.md",
+  "items": [
+    {
+      "n": 1,
+      "question": "Veri modeli kararları neden ekranlarla birlikte konuşulmalı?",
+      "answer": "Çünkü **veri modeli, arayüzün neyi gösterebileceğinin sınırını çizer.** \"Kullanıcı birden fazla adres kaydedebilsin\" bir tasarım tercihi gibi görünür ama bir veri modeli kararıdır ve sonradan değiştirmek, ekranı değiştirmekten kat kat pahalıdır."
+    },
+    {
+      "n": 2,
+      "question": "İlişkisel veritabanının belge veritabanına göre temel garantisi nedir?",
+      "answer": "**Tutarlılığı veri katmanında zorlar.** Olmayan bir kullanıcıya sipariş yazılamaz, aynı e-posta iki kez kaydedilemez. Bu garantiler uygulama kodunda değil veritabanında verilir — yani kimse atlayamaz. Belge veritabanı bunu garanti etmez; sorumluluk uygulama koduna düşer."
+    },
+    {
+      "n": 3,
+      "question": "Redis neden ana veritabanı olarak kullanılmaz?",
+      "answer": "Karmaşık sorgu yapamaz. Çok hızlıdır ama sadece anahtarla erişim sunar. Bu yüzden ana veritabanının **yerine** değil **yanında** kullanılır: önbellek, oturum, hız sınırı sayacı, kuyruk."
+    },
+    {
+      "n": 4,
+      "question": "Bir sütunun \"nullable\" olması tasarımcı için ne anlama gelir?",
+      "answer": "O alan **boş olabilir** demektir — yani arayüzde bir boş durum tasarlanmalıdır. Profil fotoğrafı yoksa avatar fallback, açıklama yoksa kartın nasıl duracağı, tarih yoksa ne yazacağı."
+    },
+    {
+      "n": 5,
+      "question": "Sıralı sayısal ID'leri URL'de göstermenin sakıncası nedir?",
+      "answer": "Bilgi sızdırır. Rakip, ID'lere bakarak kaç siparişin veya kaç kullanıcın olduğunu tahmin edebilir. Ayrıca ID'leri tek tek deneyerek başkasının kaydına erişmeye çalışma (IDOR, 13.3) kolaylaşır. Dışa açık kayıtlarda tahmin edilemez kimlikler tercih edilir."
+    },
+    {
+      "n": 6,
+      "question": "Foreign key'in tutarlılık garantisi nedir? \"Kullanıcı silinince siparişlerine ne olacak\" sorusu teknik mi ürün kararı mı?",
+      "answer": "Foreign key, bir kaydın **var olmayan** bir kayda bağlanmasını engeller. \"Kullanıcı silinince siparişlerine ne olacak\" sorusu bir **ürün kararıdır**: siparişler de silinsin mi, yoksa kalıp \"silinmiş kullanıcı\" mı görünsün? Genelde ikincisi doğrudur ve bunun arayüzde nasıl görüneceği tasarlanmalıdır."
+    },
+    {
+      "n": 7,
+      "question": "Index ne işe yarar ve bedeli nedir?",
+      "answer": "Bir sütundaki değerlere göre hızlı arama sağlar; indeks yoksa veritabanı tüm satırları tarar. Bedeli: **okumayı hızlandırır ama yazmayı yavaşlatır** ve yer kaplar. Her sütuna indeks koymak ayrı bir problemdir."
+    },
+    {
+      "n": 8,
+      "question": "Çoka çok ilişkide ara tabloda ek bilgi tutmak neden sık gerekir? Bir örnek ver.",
+      "answer": "Çünkü ilişkinin kendisi hakkında bilgi tutmak gerekir. Örnek: kullanıcı–ekip ilişkisinde \"bu ekibe ne zaman katıldı\" ve \"bu ekipteki rolü ne\" bilgileri ara tabloda yaşar. Bu ihtiyacı önceden fark etmezsen model sonradan değişir."
+    },
+    {
+      "n": 9,
+      "question": "Normalizasyon ile denormalizasyon arasındaki takas nedir? Denormalizasyonun arayüzdeki riski nedir?",
+      "answer": "Normalizasyon tekrarı önler, tutarlılık verir ama okumak için join gerektirir (yavaş olabilir). Denormalizasyon veriyi kopyalayarak okumayı hızlandırır ama kopyanın güncel tutulması sorumluluğunu getirir. **Arayüzdeki risk:** kopya güncellenmezse tutarsız görünür — \"12 yorum\" yazan ama 8 yorum listeleyen bir kart, kullanıcıya ürünün bozuk olduğunu düşündürür."
+    },
+    {
+      "n": 10,
+      "question": "Transaction ne garanti eder? Sipariş akışında karşılığı nedir?",
+      "answer": "Birden fazla değişikliğin **ya hep birlikte ya da hiç** uygulanmasını. Sipariş akışında karşılığı: stok düşülmesi, ödeme kaydı ve sipariş satırı hep birlikte olmalıdır; biri başarısız olursa hiçbiri olmamalıdır — böylece \"yarım kalmış sipariş\" durumu oluşmaz."
+    },
+    {
+      "n": 11,
+      "question": "N+1 problemi nedir ve hangi tasarım isteğinden doğar? Çözümü nedir?",
+      "answer": "Bir liste için 1 sorgu atılıp, sonra listedeki her öğe için ayrı birer sorgu daha atılması. **\"Listede her ürünün yazarını/son yorumunu da gösterelim\" gibi tasarım isteklerinden doğar.** Çözümü join veya ilişkileri tek seferde toplu çekmektir."
+    },
+    {
+      "n": 12,
+      "question": "Staging'de hızlı, production'da yavaş bir liste. En muhtemel iki sebep nedir?",
+      "answer": "(1) **Veri hacmi farkı** — staging'de 100 kayıt, production'da milyonlarca. (2) **Eksik indeks** — küçük veride fark edilmez, büyük veride tam tablo taramasına dönüşür."
+    },
+    {
+      "n": 13,
+      "question": "Serverless ile connection pool arasındaki çatışma nedir?",
+      "answer": "Veritabanı bağlantı sayısı sınırlıdır ve havuzlanır. Serverless'ta her işlev çağrısı yeni bir bağlantı açmaya çalışırsa havuz hızla tükenir (\"too many connections\"). Bu, serverless projelerinde sık karşılaşılan bir üretim hatasıdır; havuzlayıcı (pooler) kullanmak gerekir."
+    },
+    {
+      "n": 14,
+      "question": "ORM kullanmak SQL bilmemeyi mazur gösterir mi? Neden?",
+      "answer": "Hayır. Karmaşık sorgularda ORM'in ürettiği SQL verimsiz olabilir ve **N+1 üretmesi çok kolaydır** — tek satırlık masum görünen bir kod arka planda yüzlerce sorgu üretebilir. Ekipte kimse üretilen sorguya bakmıyorsa performans sorunu görünmez birikir."
+    },
+    {
+      "n": 15,
+      "question": "Prisma'nın serverless ortamlarda ağır olduğunu söyleyen kaynaklar neden eskimiş olabilir?",
+      "answer": "Çünkü **Prisma 7** (Kasım 2025 olarak raporlanıyor) Rust tabanlı sorgu motorunu kaldırıp TypeScript/WASM tabanlı bir derleyiciyle değiştirdi; paket boyutu yaklaşık 14MB'tan 1,6MB'a düştü ve soğuk başlangıçlar belirgin biçimde iyileşti. Eski karşılaştırmalar bu değişiklikten önce yazılmıştır."
+    },
+    {
+      "n": 16,
+      "question": "Seed verisi tasarımcıyı neden ilgilendirir? İyi seed verisi ne içerir?",
+      "answer": "Çünkü **gerçekçi seed verisi olmadan tasarımın uç durumları test edilemez.** \"Ahmet Yılmaz\" ile test edilen bir kart, gerçek veride 60 karakterlik bir şirket unvanıyla taşar. İyi seed verisi kasten uzun isimler, boş alanlar, aşırı büyük sayılar ve eksik ilişkiler içerir."
+    },
+    {
+      "n": 17,
+      "question": "\"Yedek alıyoruz\" demek yeterli mi?",
+      "answer": "Hayır. **Geri yüklemenin denenmiş olması** gerekir. Test edilmemiş yedek, yedek sayılmaz — gerçek bir olayda çalışmadığı ancak o an anlaşılır."
+    },
+    {
+      "n": 18,
+      "question": "Soft delete ne sağlar ve KVKK ile nasıl çelişebilir?",
+      "answer": "Kazayla silmeyi geri alınabilir kılar ve ilişkili kayıtların bozulmasını engeller (\"silinmiş kullanıcı\"nın siparişleri anlamlı kalır). KVKK/GDPR kapsamında kullanıcı **silinme hakkını** kullandığında ise soft delete yeterli olmayabilir; gerçek silme veya anonimleştirme gerekebilir. İkisi çelişir ve ürün kararı gerektirir."
+    },
+    {
+      "n": 19,
+      "question": "Ücretsiz veritabanı katmanları hakkında PlanetScale örneğinden çıkarılacak ders nedir?",
+      "answer": "**Ücretsiz katmanlar kalıcı değildir.** PlanetScale, ücretsiz katmanını Nisan 2024'te kaldırdı ve üzerine ürün kurmuş binlerce projeyi taşınmak zorunda bıraktı. Platform seçerken sorulacak soru \"bugün bedava mı\" değil, **\"ödemeli plana geçersek maliyeti ne olur ve çıkmak ne kadar zor\"**."
+    },
+    {
+      "n": 20,
+      "question": "RLS nedir ve neden BaaS mimarilerinde kritik bir güvenlik noktasıdır?",
+      "answer": "Hangi kullanıcının hangi **satırları** görebileceğinin veritabanı seviyesinde tanımlanmasıdır. BaaS'ta kritiktir çünkü istemci doğrudan veritabanıyla konuşur — arada yetki kontrolü yapacak bir sunucu katmanı yoktur. RLS yapılandırılmadığında veya yanlış yazıldığında veritabanı fiilen internete açık hâle gelir; BaaS ile hızlı ilerleyen projelerdeki en sık güvenlik açığı budur."
+    }
+  ]
+}

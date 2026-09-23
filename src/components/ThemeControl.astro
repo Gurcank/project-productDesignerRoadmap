@@ -1,0 +1,84 @@
+---
+/**
+ * Three-state theme control: system / light / dark, default dark (SPEC §5).
+ * Rendered as a radio group so arrow keys work without any custom key handling.
+ */
+const options = [
+  { value: "system", label: "Sistem" },
+  { value: "light", label: "Açık" },
+  { value: "dark", label: "Koyu" },
+] as const;
+---
+
+<fieldset class="theme">
+  <legend class="sr-only">Tema</legend>
+  {
+    options.map((option) => (
+      <label class="theme__option">
+        <input type="radio" name="theme" value={option.value} class="sr-only" />
+        <span>{option.label}</span>
+      </label>
+    ))
+  }
+</fieldset>
+
+<script>
+  import { applyTheme, readThemeChoice, storeThemeChoice, type ThemeChoice } from "~/lib/theme";
+
+  const inputs = document.querySelectorAll<HTMLInputElement>('input[name="theme"]');
+  const current = readThemeChoice();
+
+  for (const input of inputs) {
+    input.checked = input.value === current;
+    input.addEventListener("change", () => {
+      if (!input.checked) return;
+      const choice = input.value as ThemeChoice;
+      storeThemeChoice(choice);
+      applyTheme(choice);
+    });
+  }
+
+  // Follow the OS while the user is on "system".
+  window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => {
+    if (readThemeChoice() === "system") applyTheme("system");
+  });
+</script>
+
+<style>
+  .theme {
+    display: flex;
+    gap: var(--spacing-px);
+    padding: var(--spacing-px);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-full);
+    background-color: var(--c-surface);
+  }
+
+  .theme__option {
+    display: grid;
+    place-items: center;
+    min-height: 32px;
+    padding-inline: var(--spacing-3);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    color: var(--c-text-secondary);
+    cursor: pointer;
+    transition: color var(--dur-fast) var(--e-out), background-color var(--dur-fast) var(--e-out);
+  }
+
+  .theme__option:hover {
+    color: var(--c-text);
+  }
+
+  /* Selection is carried by contrast and a surface change, not colour alone. */
+  .theme__option:has(input:checked) {
+    background-color: var(--c-surface-overlay);
+    color: var(--c-text);
+    font-weight: 500;
+  }
+
+  .theme__option:has(input:focus-visible) {
+    outline: 2px solid var(--c-focus);
+    outline-offset: 2px;
+  }
+</style>

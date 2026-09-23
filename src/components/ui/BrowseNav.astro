@@ -1,0 +1,158 @@
+---
+/**
+ * Back / forward control — skeleton from the Framer "Browse-Navigation"
+ * component, rebuilt without React/framer-motion (ADR-013).
+ *
+ * Preserved: a direction prop, an arrow that points along that direction, a
+ * disabled state that is announced (`aria-disabled`) as well as drawn (dimmed,
+ * desaturated, not clickable), and a fallback destination when the primary one
+ * is missing.
+ *
+ * Changed — the one real departure: the original drives `history.back()` /
+ * `history.forward()`. Here the destination is a route, because on a roadmap
+ * "back" means the previous step, not whichever page you happened to visit
+ * last. That also makes the control a real link: it works with middle-click,
+ * shows its target in the status bar, and needs no script.
+ */
+interface Props {
+  direction: "back" | "forward";
+  /** Destination; when absent the control renders in its disabled state. */
+  href?: string;
+  /** Used only when `href` is missing, mirroring the original's fallback link. */
+  fallbackHref?: string;
+  /** Small line above the title, e.g. "Önceki". */
+  kicker: string;
+  title: string;
+  attrs?: Record<string, unknown>;
+}
+
+const { direction, href, fallbackHref, kicker, title, attrs = {} } = Astro.props;
+
+const target = href ?? fallbackHref;
+const disabled = !target;
+const Tag = disabled ? "span" : "a";
+---
+
+<Tag
+  class:list={["browse", `browse--${direction}`, { "browse--disabled": disabled }]}
+  href={target}
+  rel={direction === "back" ? "prev" : "next"}
+  aria-disabled={disabled ? "true" : undefined}
+  {...attrs}
+>
+  <span class="browse__arrow" aria-hidden="true">
+    <svg viewBox="0 0 24 24" focusable="false">
+      <path d="M5 12h13M12 5l7 7-7 7"></path>
+    </svg>
+  </span>
+
+  <span class="browse__text">
+    <span class="browse__kicker">{kicker}</span>
+    <span class="browse__title">{title}</span>
+  </span>
+</Tag>
+
+<style is:global>
+  .browse {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    min-height: 56px;
+    padding: var(--spacing-3);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    color: var(--c-text);
+    text-decoration: none;
+  }
+
+  a.browse:hover {
+    border-color: var(--c-border-strong);
+    background-color: var(--c-surface-raised);
+  }
+
+  /* Forward reads right-to-left: text first, then the arrow. */
+  .browse--forward {
+    flex-direction: row-reverse;
+    text-align: end;
+  }
+
+  .browse__arrow {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    inline-size: 32px;
+    block-size: 32px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--c-control-border);
+    color: var(--c-text-secondary);
+    transition: translate var(--dur) var(--e-out);
+  }
+
+  .browse__arrow svg {
+    inline-size: 16px;
+    block-size: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .browse--back .browse__arrow svg {
+    rotate: 180deg;
+  }
+
+  a.browse--back:hover .browse__arrow {
+    translate: -3px 0;
+  }
+
+  a.browse--forward:hover .browse__arrow {
+    translate: 3px 0;
+  }
+
+  a.browse:hover .browse__arrow {
+    border-color: var(--c-action);
+    color: var(--c-action);
+  }
+
+  .browse__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-px);
+    min-width: 0;
+  }
+
+  .browse__kicker {
+    font-size: var(--text-xs);
+    color: var(--c-text-muted);
+  }
+
+  .browse__title {
+    font-size: var(--text-sm);
+  }
+
+  /* The original dims and desaturates a disabled control. Desaturating is safe
+     here because nothing inside carries meaning by colour — but the dimming is
+     done with a muted token rather than `opacity`, which would change the
+     rendered contrast of the text underneath it. */
+  .browse--disabled {
+    border-style: dashed;
+    cursor: default;
+  }
+
+  .browse--disabled .browse__title,
+  .browse--disabled .browse__kicker,
+  .browse--disabled .browse__arrow {
+    color: var(--c-text-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .browse__arrow {
+      transition: none;
+    }
+
+    a.browse:hover .browse__arrow {
+      translate: none;
+    }
+  }
+</style>

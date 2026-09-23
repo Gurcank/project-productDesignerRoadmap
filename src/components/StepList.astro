@@ -1,0 +1,215 @@
+---
+import { topicMinutes, topicHref, topicId, type TopicEntry } from "~/lib/content";
+import Checkbox from "~/components/ui/Checkbox.astro";
+
+interface Props {
+  topics: TopicEntry[];
+  /** Progress id of the topic currently open, if any. */
+  activeId?: string;
+  categorySlug: string;
+  categoryTitle: string;
+  quizHref?: string;
+}
+
+const { topics, activeId, categorySlug, categoryTitle, quizHref } = Astro.props;
+---
+
+<nav class="steps" aria-labelledby={`steps-${categorySlug}`} data-steps={categorySlug}>
+  <div class="steps__head">
+    <h2 id={`steps-${categorySlug}`} class="steps__title">Adımlar</h2>
+    <p class="steps__count" data-progress-summary={categorySlug}>
+      <span data-progress-done>0</span>/<span data-progress-total>{topics.length}</span>
+    </p>
+  </div>
+
+  <ol class="steps__list">
+    {
+      topics.map((topic, index) => {
+        const id = topicId(topic);
+        return (
+          <li class="step" data-step={id}>
+            <Checkbox
+              class="step__check"
+              id={`check-${id}`}
+              value={id}
+              label={`${topic.data.title} — tamamlandı olarak işaretle`}
+              hideLabel
+            />
+            <a class="step__link" href={topicHref(topic)} aria-current={activeId === id ? "page" : undefined}>
+              <span class="step__index" aria-hidden="true">
+                {index + 1}
+              </span>
+              <span class="step__text">{topic.data.title}</span>
+              <span class="step__time">{topicMinutes(topic)} dk</span>
+            </a>
+          </li>
+        );
+      })
+    }
+  </ol>
+
+  {
+    quizHref && (
+      <a class="steps__quiz" href={quizHref}>
+        Kendini test et
+        <span class="steps__quiz-note">{categoryTitle} soruları</span>
+      </a>
+    )
+  }
+</nav>
+
+<script>
+  import { initProgress, $progress, setDone, summarise } from "~/lib/progress";
+
+  initProgress();
+
+  const container = document.querySelector<HTMLElement>("[data-steps]");
+  if (container) {
+    const checks = Array.from(container.querySelectorAll<HTMLInputElement>("[data-topic-check]"));
+    const ids = checks.map((input) => input.dataset.topicCheck!).filter(Boolean);
+    const doneEl = container.querySelector<HTMLElement>("[data-progress-done]");
+
+    const render = () => {
+      const progress = $progress.get();
+      for (const input of checks) {
+        const id = input.dataset.topicCheck!;
+        const done = progress.topics[id]?.done === true;
+        input.checked = done;
+        input.closest(".step")?.classList.toggle("is-done", done);
+      }
+      if (doneEl) doneEl.textContent = String(summarise(ids, progress).done);
+    };
+
+    for (const input of checks) {
+      input.addEventListener("change", () => setDone(input.dataset.topicCheck!, input.checked));
+    }
+
+    $progress.subscribe(render);
+  }
+</script>
+
+<style>
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+  }
+
+  .steps__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--spacing-3);
+  }
+
+  .steps__title {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-text-muted);
+  }
+
+  .steps__count {
+    font-size: var(--text-xs);
+    color: var(--c-text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .steps__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+
+  .step {
+    display: flex;
+    align-items: stretch;
+    gap: var(--spacing-1);
+  }
+
+  /* The tick is its own 40px target next to the link, not inside it. */
+  .step__check {
+    flex: 0 0 auto;
+  }
+
+  .step__link {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-2);
+    flex: 1 1 auto;
+    min-height: 40px;
+    padding: var(--spacing-2) var(--spacing-2);
+    border-radius: var(--radius-md);
+    color: var(--c-text-secondary);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    line-height: 1.45;
+  }
+
+  .step__link:hover {
+    background-color: var(--c-surface-raised);
+    color: var(--c-text);
+  }
+
+  .step__link[aria-current="page"] {
+    background-color: var(--c-surface-raised);
+    color: var(--c-text);
+    font-weight: 500;
+    box-shadow: inset 2px 0 0 var(--c-action);
+  }
+
+  .step__index {
+    flex: 0 0 auto;
+    inline-size: 1.4em;
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--c-text-muted);
+  }
+
+  .step__text {
+    flex: 1 1 auto;
+  }
+
+  /* Reading time earns its place by making the commitment legible before the
+     click: a 3 dk step and a 15 dk step are different decisions. */
+  .step__time {
+    flex: 0 0 auto;
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--c-text-muted);
+  }
+
+  /* Completion is never colour-only: the tick plus a muted label carries it. */
+  .step.is-done .step__text {
+    color: var(--c-text-muted);
+  }
+
+  .steps__quiz {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-px);
+    margin-block-start: var(--spacing-3);
+    padding: var(--spacing-3);
+    border: 1px dashed var(--c-border-strong);
+    border-radius: var(--radius-md);
+    color: var(--c-text);
+    text-decoration: none;
+    font-size: var(--text-sm);
+  }
+
+  .steps__quiz:hover {
+    border-style: solid;
+    background-color: var(--c-surface-raised);
+  }
+
+  .steps__quiz-note {
+    color: var(--c-text-muted);
+    font-size: var(--text-xs);
+  }
+</style>

@@ -1,0 +1,142 @@
+---
+/**
+ * Link button with a wave that reveals on hover — skeleton from the Framer
+ * "Wave Reveal Button" component, rebuilt without React/framer-motion
+ * (ADR-013).
+ *
+ * Preserved: a link that fills from the bottom with a wave-topped shape on
+ * hover, a label that flips to the contrasting colour as the fill passes it,
+ * and an arrow that moves in the reading direction.
+ *
+ * Changed: the original animates an SVG wave with framer-motion. Here the wave
+ * is a single inline SVG used as a mask edge on a pseudo-element, moved with a
+ * transform — one composited property, no library, and it stops dead under
+ * prefers-reduced-motion.
+ */
+interface Props {
+  href: string;
+  label: string;
+  /**
+   * Second line, e.g. which step the button leads to. Pass an empty string to
+   * reserve the line for a script to fill after hydration.
+   */
+  detail?: string;
+  class?: string;
+  attrs?: Record<string, unknown>;
+}
+
+const { href, label, detail, class: className, attrs = {} } = Astro.props;
+---
+
+<a class:list={["wave", className]} href={href} {...attrs}>
+  <span class="wave__fill" aria-hidden="true"></span>
+
+  <span class="wave__text">
+    <span class="wave__label" data-wave-label>{label}</span>
+    {detail !== undefined && <span class="wave__detail" data-wave-detail>{detail}</span>}
+  </span>
+
+  <svg class="wave__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M5 12h13M12 5l7 7-7 7" />
+  </svg>
+</a>
+
+<style is:global>
+  .wave {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    min-height: 52px;
+    padding: var(--spacing-2) var(--spacing-4);
+    border: 1px solid var(--c-action-surface);
+    border-radius: var(--radius-md);
+    background-color: transparent;
+    color: var(--c-text);
+    text-decoration: none;
+    overflow: hidden;
+  }
+
+  /* `display` is set above, so it has to be undone for `hidden` to hold. */
+  .wave[hidden] {
+    display: none;
+  }
+
+  /* The wave: a rectangle whose top edge is a wave, parked below the button and
+     lifted into place on hover. */
+  .wave__fill {
+    position: absolute;
+    inset-inline: -2px;
+    inset-block-end: 0;
+    block-size: 160%;
+    z-index: -1;
+    background-color: var(--c-action-surface);
+    translate: 0 100%;
+    transition: translate var(--dur-slow) var(--e-out);
+    -webkit-mask-image: var(--wave-mask);
+    mask-image: var(--wave-mask);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+
+  :root {
+    /* One wave crest across the top, the rest solid. */
+    --wave-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60' preserveAspectRatio='none'%3E%3Cpath d='M0 12 C 20 0, 32 0, 50 10 S 80 22, 100 10 L100 60 L0 60 Z' fill='%23000'/%3E%3C/svg%3E");
+  }
+
+  .wave:hover .wave__fill,
+  .wave:focus-visible .wave__fill {
+    translate: 0 0;
+  }
+
+  .wave__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-px);
+    min-width: 0;
+  }
+
+  .wave__label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .wave__detail {
+    font-size: var(--text-xs);
+    color: var(--c-text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .wave__arrow {
+    flex: 0 0 auto;
+    inline-size: 18px;
+    block-size: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: translate var(--dur) var(--e-out);
+  }
+
+  .wave:hover .wave__arrow {
+    translate: 3px 0;
+  }
+
+  /* Once the fill is up, the text sits on the action surface. */
+  .wave:hover,
+  .wave:focus-visible {
+    color: var(--c-on-action);
+  }
+
+  .wave:hover .wave__detail,
+  .wave:focus-visible .wave__detail {
+    color: var(--c-on-action);
+    opacity: 0.85;
+  }
+</style>

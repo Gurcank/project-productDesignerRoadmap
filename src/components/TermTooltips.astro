@@ -1,0 +1,187 @@
+---
+/**
+ * Wikipedia-style previews for cross-reference links.
+ *
+ * Every "(15.2)" already links to the step it names; this shows what is there
+ * without leaving the page. The definitions ship as one JSON blob keyed by
+ * href, built at compile time — no request when the card opens, which also
+ * means it works offline.
+ *
+ * Hover is not available on a phone, so the same element opens on tap and on
+ * keyboard focus. The link still navigates; the preview never traps the tap.
+ */
+import { getGlossary } from "~/lib/glossary";
+
+const entries = await getGlossary();
+
+// href → the first term defined on that page, trimmed to a preview length.
+const previews: Record<string, { term: string; definition: string }> = {};
+for (const entry of entries) {
+  const page = entry.href.split("#")[0]!;
+  if (previews[page] || !entry.definition) continue;
+  previews[page] = {
+    term: entry.term,
+    definition: entry.definition.length > 190 ? `${entry.definition.slice(0, 190)}…` : entry.definition,
+  };
+}
+---
+
+<div class="term-preview" role="tooltip" data-preview hidden>
+  <p class="term-preview__term" data-preview-term></p>
+  <p class="term-preview__definition" data-preview-definition></p>
+</div>
+
+<script type="application/json" id="term-previews" set:html={JSON.stringify(previews)} />
+
+<script>
+  interface Preview {
+    term: string;
+    definition: string;
+  }
+
+  const previews: Record<string, Preview> = JSON.parse(
+    document.getElementById("term-previews")?.textContent ?? "{}",
+  );
+
+  const boxEl = document.querySelector<HTMLElement>("[data-preview]");
+  const termNode = document.querySelector<HTMLElement>("[data-preview-term]");
+  const definitionNode = document.querySelector<HTMLElement>("[data-preview-definition]");
+  if (!boxEl || !termNode || !definitionNode) throw new Error("term preview markup missing");
+
+  // Re-bound as narrowed constants: the arrow functions below close over these,
+  // and a hoisted function declaration would not see the null check above.
+  const box = boxEl;
+  const termEl = termNode;
+  const definitionEl = definitionNode;
+
+  // Pointer-driven previews are a desktop affordance; on a touch screen the
+  // same content opens on tap, handled below.
+  const hoverable = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+  let openFor: HTMLElement | null = null;
+  let timer: number | undefined;
+
+  // Two sources now: a cross-reference link carries only an href, while a term
+  // marked inside a card carries its own definition in data attributes.
+  const lookup = (el: HTMLElement): Preview | null => {
+    if (el.dataset.definition) return { term: el.dataset.term ?? el.textContent ?? "", definition: el.dataset.definition };
+    const href = (el as HTMLAnchorElement).href;
+    if (!href) return null;
+    return previews[new URL(href, location.origin).pathname] ?? null;
+  };
+
+  const place = (link: HTMLElement) => {
+    const rect = link.getBoundingClientRect();
+    box.hidden = false;
+
+    const width = box.offsetWidth;
+    const margin = 12;
+    // Keep the card inside the viewport on a narrow screen.
+    const left = Math.min(Math.max(margin, rect.left + rect.width / 2 - width / 2), window.innerWidth - width - margin);
+
+    const above = rect.top > box.offsetHeight + margin;
+    box.style.insetInlineStart = `${left}px`;
+    box.style.insetBlockStart = `${above ? rect.top - box.offsetHeight - 8 : rect.bottom + 8}px`;
+  };
+
+  const open = (link: HTMLElement) => {
+    const preview = lookup(link);
+    if (!preview) return;
+    termEl.textContent = preview.term;
+    definitionEl.textContent = preview.definition;
+    openFor = link;
+    place(link);
+  };
+
+  const close = () => {
+    box.hidden = true;
+    openFor = null;
+  };
+
+  for (const link of document.querySelectorAll<HTMLElement>("a.xref, .term-ref")) {
+    if (!lookup(link)) continue;
+    link.dataset.hasPreview = "";
+
+    link.addEventListener("pointerenter", () => {
+      if (!hoverable.matches) return;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => open(link), 220);
+    });
+
+    link.addEventListener("pointerleave", () => {
+      window.clearTimeout(timer);
+      if (openFor === link) close();
+    });
+
+    // Keyboard users get the same preview without a pointer.
+    link.addEventListener("focus", () => open(link));
+    link.addEventListener("blur", () => {
+      if (openFor === link) close();
+    });
+
+    link.addEventListener("click", (event) => {
+      if (hoverable.matches) return;
+      // First tap previews, second tap follows the link — the standard touch
+      // pattern for a link that also has something to say.
+      if (openFor !== link) {
+        event.preventDefault();
+        open(link);
+      }
+    });
+  }
+
+  document.addEventListener("click", (event) => {
+    if (!openFor) return;
+    const target = event.target as Node;
+    if (!box.contains(target) && target !== openFor) close();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") close();
+  });
+
+  window.addEventListener("scroll", () => openFor && close(), { passive: true });
+</script>
+
+<style is:global>
+  .term-preview {
+    position: fixed;
+    z-index: var(--z-overlay);
+    inline-size: min(20rem, calc(100vw - 24px));
+    padding: var(--spacing-3);
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-overlay);
+    box-shadow: var(--elev-2);
+  }
+
+  .term-preview__term {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--c-text);
+  }
+
+  .term-preview__definition {
+    margin-block-start: var(--spacing-1);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--c-text-secondary);
+  }
+
+  /* A word that previews is worth marking as such — but quietly: a card is a
+     reading surface, not a field of links. */
+  a.xref[data-has-preview] {
+    text-decoration-style: dotted;
+  }
+
+  .term-ref {
+    border-block-end: 1px dotted var(--c-control-border);
+    cursor: help;
+  }
+
+  .term-ref:hover,
+  .term-ref:focus-visible {
+    border-block-end-color: var(--c-action);
+    color: var(--c-text);
+  }
+</style>

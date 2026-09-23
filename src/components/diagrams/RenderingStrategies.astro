@@ -1,0 +1,55 @@
+---
+import DiagramFigure from "./DiagramFigure.astro";
+
+// The one axis that actually separates these: when is the HTML produced?
+const strategies = [
+  { x: 8, name: "SSG", when: "Derleme anında", ui: "Anında görünür", note: "içerik sabit" },
+  { x: 166, name: "ISR", when: "Derleme + tazeleme", ui: "Anında görünür", note: "içerik yavaş değişir" },
+  { x: 324, name: "SSR", when: "Her istekte", ui: "Sunucuyu bekler", note: "içerik kişiye özel" },
+  { x: 482, name: "CSR", when: "Tarayıcıda", ui: "Önce boş, sonra dolar", note: "uygulama benzeri" },
+];
+---
+
+<DiagramFigure
+  label="Rendering stratejileri karşılaştırma şeması"
+  caption="Dördünü ayıran tek soru şu: HTML ne zaman üretiliyor? Derleme anında üretilirse kullanıcı anında içerik görür ama içerik o anki gerçeği yansıtmayabilir; her istekte üretilirse taze olur ama kullanıcı sunucuyu bekler; tarayıcıda üretilirse önce boş bir ekran görür. Tasarım tarafındaki karşılığı doğrudan yükleniyor ve boş durum tasarımıdır."
+>
+  <svg viewBox="0 0 640 200" role="img" aria-label="SSG, ISR, SSR ve CSR stratejilerinin HTML üretim anına göre karşılaştırması">
+    <title>Rendering stratejileri</title>
+
+    <text class="dg-sub" x="8" y="16">HTML ne zaman üretiliyor?</text>
+
+    {
+      strategies.map((strategy, index) => (
+        <>
+          <rect
+            class:list={["dg-box", { "dg-box--accent": index === 0 }]}
+            x={strategy.x}
+            y={28}
+            width={150}
+            height={120}
+            rx={8}
+          />
+          <text class="dg-label" x={strategy.x + 75} y={54} text-anchor="middle">
+            {strategy.name}
+          </text>
+          <text class="dg-sub" x={strategy.x + 75} y={78} text-anchor="middle">
+            {strategy.when}
+          </text>
+          <path class="dg-line" d={`M${strategy.x + 20} 92 H${strategy.x + 130}`} stroke-dasharray="3 3" />
+          <text class="dg-sub" x={strategy.x + 75} y={112} text-anchor="middle">
+            {strategy.ui}
+          </text>
+          <text class="dg-sub" x={strategy.x + 75} y={132} text-anchor="middle">
+            {strategy.note}
+          </text>
+        </>
+      ))
+    }
+
+    <path class="dg-line dg-line--accent" d="M8 168 H632"></path>
+    <path class="dg-line dg-line--accent" d="M624 162 l10 6 -10 6" stroke-linejoin="round"></path>
+    <text class="dg-sub" x="8" y="190">erken üretim — daha hızlı ilk görüntü</text>
+    <text class="dg-sub" x="632" y="190" text-anchor="end">geç üretim — daha taze, daha kişisel</text>
+  </svg>
+</DiagramFigure>

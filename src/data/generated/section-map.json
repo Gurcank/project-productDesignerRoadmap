@@ -1,0 +1,1027 @@
+{
+  "1.1": {
+    "category": "web-temelleri",
+    "slug": "istemci-sunucu-modeli",
+    "title": "İstemci–sunucu modeli"
+  },
+  "1.2": {
+    "category": "web-temelleri",
+    "slug": "adres-ve-bulunabilirlik-url-domain-dns-hosting",
+    "title": "Adres ve bulunabilirlik: URL, domain, DNS, hosting"
+  },
+  "1.3": {
+    "category": "web-temelleri",
+    "slug": "request-response-dongusu",
+    "title": "Request / response döngüsü"
+  },
+  "1.4": {
+    "category": "web-temelleri",
+    "slug": "tarayici-bir-sayfayi-nasil-cizer",
+    "title": "Tarayıcı bir sayfayı nasıl çizer"
+  },
+  "1.5": {
+    "category": "web-temelleri",
+    "slug": "static-site-dynamic-site-web-app",
+    "title": "Static site, dynamic site, web app"
+  },
+  "1.6": {
+    "category": "web-temelleri",
+    "slug": "katmanlar-front-end-back-end-full-stack-infrastructure",
+    "title": "Katmanlar: front-end, back-end, full-stack, infrastructure"
+  },
+  "1.7": {
+    "category": "web-temelleri",
+    "slug": "spa-mpa-pwa",
+    "title": "SPA, MPA, PWA"
+  },
+  "1.8": {
+    "category": "web-temelleri",
+    "slug": "ortamlar-local-staging-production",
+    "title": "Ortamlar: local, staging, production"
+  },
+  "2.1": {
+    "category": "urun-gelistirme",
+    "slug": "ekipteki-roller",
+    "title": "Ekipteki roller"
+  },
+  "2.2": {
+    "category": "urun-gelistirme",
+    "slug": "urun-gelistirme-yasam-dongusu",
+    "title": "Ürün geliştirme yaşam döngüsü"
+  },
+  "2.3": {
+    "category": "urun-gelistirme",
+    "slug": "discovery-problemi-bulma-asamasi",
+    "title": "Discovery: problemi bulma aşaması"
+  },
+  "2.4": {
+    "category": "urun-gelistirme",
+    "slug": "arastirma-ve-kullanici-bilgisi",
+    "title": "Araştırma ve kullanıcı bilgisi"
+  },
+  "2.5": {
+    "category": "urun-gelistirme",
+    "slug": "belgeler-spec-prd-one-pager-brief",
+    "title": "Belgeler: spec, PRD, one-pager, brief"
+  },
+  "2.6": {
+    "category": "urun-gelistirme",
+    "slug": "gereksinimler-epic-user-story-acceptance-criteria",
+    "title": "Gereksinimler: epic, user story, acceptance criteria"
+  },
+  "2.7": {
+    "category": "urun-gelistirme",
+    "slug": "backlog-ve-onceliklendirme",
+    "title": "Backlog ve önceliklendirme"
+  },
+  "2.8": {
+    "category": "urun-gelistirme",
+    "slug": "kapsam-mvp-poc-scope-creep",
+    "title": "Kapsam: MVP, POC, scope creep"
+  },
+  "2.9": {
+    "category": "urun-gelistirme",
+    "slug": "roadmap-ve-planlama",
+    "title": "Roadmap ve planlama"
+  },
+  "2.10": {
+    "category": "urun-gelistirme",
+    "slug": "hazir-ve-bitmis-tanimlari-handoff",
+    "title": "Hazır ve bitmiş tanımları, handoff"
+  },
+  "2.11": {
+    "category": "urun-gelistirme",
+    "slug": "yayin-turleri",
+    "title": "Yayın türleri"
+  },
+  "3.1": {
+    "category": "calisma-bicimi",
+    "slug": "waterfall-ve-agile",
+    "title": "Waterfall ve Agile"
+  },
+  "3.2": {
+    "category": "calisma-bicimi",
+    "slug": "scrum",
+    "title": "Scrum"
+  },
+  "3.3": {
+    "category": "calisma-bicimi",
+    "slug": "tahmin-ve-olcum-story-point-velocity-capacity",
+    "title": "Tahmin ve ölçüm: story point, velocity, capacity"
+  },
+  "3.4": {
+    "category": "calisma-bicimi",
+    "slug": "kanban",
+    "title": "Kanban"
+  },
+  "3.5": {
+    "category": "calisma-bicimi",
+    "slug": "engeller-bagimliliklar-ve-belirsizlik",
+    "title": "Engeller, bağımlılıklar ve belirsizlik"
+  },
+  "3.6": {
+    "category": "calisma-bicimi",
+    "slug": "sync-async-ve-toplanti-duzeni",
+    "title": "Sync, async ve toplantı düzeni"
+  },
+  "3.7": {
+    "category": "calisma-bicimi",
+    "slug": "hedef-ve-olcum-okr-kpi-north-star",
+    "title": "Hedef ve ölçüm: OKR, KPI, north star"
+  },
+  "4.1": {
+    "category": "ux-ui-ilkeleri",
+    "slug": "disiplinlerin-ayrimi",
+    "title": "Disiplinlerin ayrımı"
+  },
+  "4.2": {
+    "category": "ux-ui-ilkeleri",
+    "slug": "tasarim-sureci",
+    "title": "Tasarım süreci"
+  },
+  "4.3": {
+    "category": "ux-ui-ilkeleri",
+    "slug": "bilgi-mimarisi-ia",
+    "title": "Bilgi mimarisi (IA)"
+  },
+  "4.4": {
+    "category": "ux-ui-ilkeleri",
+    "slug": "akislar",
+    "title": "Akışlar"
+  },
+  "4.5": {
+    "category": "ux-ui-ilkeleri",
+    "slug": "ciktilar-wireframe-mockup-prototype",
+    "title": "Çıktılar: wireframe, mockup, prototype"
+  },
+  "4.6": {
+    "category": "ux-ui-ilkeleri",
+    "slug": "kullanilabilirlik-ilkeleri",
+    "title": "Kullanılabilirlik ilkeleri"
+  },
+  "4.7": {
+    "category": "ux-ui-ilkeleri",
+    "slug": "ux-yasalari-ve-bilissel-yuk",
+    "title": "UX \"yasaları\" ve bilişsel yük"
+  },
+  "4.8": {
+    "category": "ux-ui-ilkeleri",
+    "slug": "gorsel-hiyerarsi-ve-algi",
+    "title": "Görsel hiyerarşi ve algı"
+  },
+  "4.9": {
+    "category": "ux-ui-ilkeleri",
+    "slug": "ux-writing-ve-icerik",
+    "title": "UX writing ve içerik"
+  },
+  "4.10": {
+    "category": "ux-ui-ilkeleri",
+    "slug": "degerlendirme-yontemleri",
+    "title": "Değerlendirme yöntemleri"
+  },
+  "5.1": {
+    "category": "tasarim-sistemi",
+    "slug": "sistemler-style-guide-component-library-design-system",
+    "title": "Sistemler: style guide, component library, design system"
+  },
+  "5.2": {
+    "category": "tasarim-sistemi",
+    "slug": "design-token",
+    "title": "Design token"
+  },
+  "5.3": {
+    "category": "tasarim-sistemi",
+    "slug": "tipografi",
+    "title": "Tipografi"
+  },
+  "5.4": {
+    "category": "tasarim-sistemi",
+    "slug": "renk",
+    "title": "Renk"
+  },
+  "5.5": {
+    "category": "tasarim-sistemi",
+    "slug": "grid-ve-spacing",
+    "title": "Grid ve spacing"
+  },
+  "5.6": {
+    "category": "tasarim-sistemi",
+    "slug": "yuzey-ve-derinlik",
+    "title": "Yüzey ve derinlik"
+  },
+  "5.7": {
+    "category": "tasarim-sistemi",
+    "slug": "gorsel-varliklar",
+    "title": "Görsel varlıklar"
+  },
+  "5.8": {
+    "category": "tasarim-sistemi",
+    "slug": "responsive-ve-mobile-first",
+    "title": "Responsive ve mobile-first"
+  },
+  "5.9": {
+    "category": "tasarim-sistemi",
+    "slug": "motion",
+    "title": "Motion"
+  },
+  "5.10": {
+    "category": "tasarim-sistemi",
+    "slug": "figma-dili",
+    "title": "Figma dili"
+  },
+  "6.1": {
+    "category": "erisilebilirlik",
+    "slug": "a11y-nedir-kimi-kapsar-neden-zorunlu",
+    "title": "a11y nedir, kimi kapsar, neden zorunlu"
+  },
+  "6.2": {
+    "category": "erisilebilirlik",
+    "slug": "wcag",
+    "title": "WCAG"
+  },
+  "6.3": {
+    "category": "erisilebilirlik",
+    "slug": "semantic-html-erisilebilirligin-temeli",
+    "title": "Semantic HTML: erişilebilirliğin temeli"
+  },
+  "6.4": {
+    "category": "erisilebilirlik",
+    "slug": "ekran-okuyucu-ve-aria",
+    "title": "Ekran okuyucu ve ARIA"
+  },
+  "6.5": {
+    "category": "erisilebilirlik",
+    "slug": "klavye-erisimi",
+    "title": "Klavye erişimi"
+  },
+  "6.6": {
+    "category": "erisilebilirlik",
+    "slug": "gorsel-gereklilikler",
+    "title": "Görsel gereklilikler"
+  },
+  "6.7": {
+    "category": "erisilebilirlik",
+    "slug": "form-erisilebilirligi",
+    "title": "Form erişilebilirliği"
+  },
+  "6.8": {
+    "category": "erisilebilirlik",
+    "slug": "hareket-ve-nobet-hassasiyeti",
+    "title": "Hareket ve nöbet hassasiyeti"
+  },
+  "6.9": {
+    "category": "erisilebilirlik",
+    "slug": "denetleme",
+    "title": "Denetleme"
+  },
+  "7.1": {
+    "category": "arayuz-anatomisi",
+    "slug": "sayfa-iskeleti",
+    "title": "Sayfa iskeleti"
+  },
+  "7.2": {
+    "category": "arayuz-anatomisi",
+    "slug": "navigasyon-parcalari",
+    "title": "Navigasyon parçaları"
+  },
+  "7.3": {
+    "category": "arayuz-anatomisi",
+    "slug": "hero-ve-ust-bolge",
+    "title": "Hero ve üst bölge"
+  },
+  "7.4": {
+    "category": "arayuz-anatomisi",
+    "slug": "ikna-bolumleri",
+    "title": "İkna bölümleri"
+  },
+  "7.5": {
+    "category": "arayuz-anatomisi",
+    "slug": "icerik-bolumleri",
+    "title": "İçerik bölümleri"
+  },
+  "7.6": {
+    "category": "arayuz-anatomisi",
+    "slug": "fiyatlandirma",
+    "title": "Fiyatlandırma"
+  },
+  "7.7": {
+    "category": "arayuz-anatomisi",
+    "slug": "donusum-ve-toplama",
+    "title": "Dönüşüm ve toplama"
+  },
+  "7.8": {
+    "category": "arayuz-anatomisi",
+    "slug": "geri-bildirim-katmani",
+    "title": "Geri bildirim katmanı"
+  },
+  "7.9": {
+    "category": "arayuz-anatomisi",
+    "slug": "durum-ekranlari",
+    "title": "Durum ekranları"
+  },
+  "7.10": {
+    "category": "arayuz-anatomisi",
+    "slug": "veri-gosterimi",
+    "title": "Veri gösterimi"
+  },
+  "7.11": {
+    "category": "arayuz-anatomisi",
+    "slug": "form-parcalari",
+    "title": "Form parçaları"
+  },
+  "7.12": {
+    "category": "arayuz-anatomisi",
+    "slug": "uygulama-ici-ekranlar",
+    "title": "Uygulama içi ekranlar"
+  },
+  "7.13": {
+    "category": "arayuz-anatomisi",
+    "slug": "kucuk-parcalar",
+    "title": "Küçük parçalar"
+  },
+  "8.1": {
+    "category": "front-end",
+    "slug": "html",
+    "title": "HTML"
+  },
+  "8.2": {
+    "category": "front-end",
+    "slug": "css",
+    "title": "CSS"
+  },
+  "8.3": {
+    "category": "front-end",
+    "slug": "layout",
+    "title": "Layout"
+  },
+  "8.4": {
+    "category": "front-end",
+    "slug": "css-yaklasimlari",
+    "title": "CSS yaklaşımları"
+  },
+  "8.5": {
+    "category": "front-end",
+    "slug": "javascript-kavramlari",
+    "title": "JavaScript kavramları"
+  },
+  "8.6": {
+    "category": "front-end",
+    "slug": "typescript",
+    "title": "TypeScript"
+  },
+  "8.7": {
+    "category": "front-end",
+    "slug": "component-mimarisi",
+    "title": "Component mimarisi"
+  },
+  "8.8": {
+    "category": "front-end",
+    "slug": "hook-side-effect-re-render",
+    "title": "Hook, side effect, re-render"
+  },
+  "8.9": {
+    "category": "front-end",
+    "slug": "routing",
+    "title": "Routing"
+  },
+  "8.10": {
+    "category": "front-end",
+    "slug": "rendering-stratejileri",
+    "title": "Rendering stratejileri"
+  },
+  "8.11": {
+    "category": "front-end",
+    "slug": "build-zinciri",
+    "title": "Build zinciri"
+  },
+  "8.12": {
+    "category": "front-end",
+    "slug": "performans",
+    "title": "Performans"
+  },
+  "8.13": {
+    "category": "front-end",
+    "slug": "seo-temelleri",
+    "title": "SEO temelleri"
+  },
+  "9.1": {
+    "category": "frameworkler",
+    "slug": "kategorileri-ayirmak",
+    "title": "Kategorileri ayırmak"
+  },
+  "9.2": {
+    "category": "frameworkler",
+    "slug": "ui-katmani",
+    "title": "UI katmanı"
+  },
+  "9.3": {
+    "category": "frameworkler",
+    "slug": "meta-framework",
+    "title": "Meta-framework"
+  },
+  "9.4": {
+    "category": "kutuphaneler",
+    "slug": "styling",
+    "title": "Styling"
+  },
+  "9.5": {
+    "category": "kutuphaneler",
+    "slug": "component-kutuphaneleri",
+    "title": "Component kütüphaneleri"
+  },
+  "9.6": {
+    "category": "kutuphaneler",
+    "slug": "animasyon-ve-3d",
+    "title": "Animasyon ve 3D"
+  },
+  "9.7": {
+    "category": "kutuphaneler",
+    "slug": "state-yonetimi-client-state",
+    "title": "State yönetimi (client state)"
+  },
+  "9.8": {
+    "category": "kutuphaneler",
+    "slug": "server-state",
+    "title": "Server state"
+  },
+  "9.9": {
+    "category": "kutuphaneler",
+    "slug": "form-ve-dogrulama",
+    "title": "Form ve doğrulama"
+  },
+  "9.10": {
+    "category": "kutuphaneler",
+    "slug": "icerik-yonetimi",
+    "title": "İçerik yönetimi"
+  },
+  "9.11": {
+    "category": "kutuphaneler",
+    "slug": "sik-duyulan-digerleri",
+    "title": "Sık duyulan diğerleri"
+  },
+  "9.12": {
+    "category": "frameworkler",
+    "slug": "teknoloji-secimi",
+    "title": "Teknoloji seçimi"
+  },
+  "10.1": {
+    "category": "back-end-api",
+    "slug": "sunucu-tarafinin-temel-kavramlari",
+    "title": "Sunucu tarafının temel kavramları"
+  },
+  "10.2": {
+    "category": "back-end-api",
+    "slug": "http-metodlari",
+    "title": "HTTP metodları"
+  },
+  "10.3": {
+    "category": "back-end-api",
+    "slug": "status-kodlari",
+    "title": "Status kodları"
+  },
+  "10.4": {
+    "category": "back-end-api",
+    "slug": "api-kavramlari",
+    "title": "API kavramları"
+  },
+  "10.5": {
+    "category": "back-end-api",
+    "slug": "api-stilleri",
+    "title": "API stilleri"
+  },
+  "10.6": {
+    "category": "back-end-api",
+    "slug": "server-action-api-route-bff",
+    "title": "Server action, API route, BFF"
+  },
+  "10.7": {
+    "category": "back-end-api",
+    "slug": "katmanlar",
+    "title": "Katmanlar"
+  },
+  "10.8": {
+    "category": "back-end-api",
+    "slug": "serverless-ve-edge",
+    "title": "Serverless ve edge"
+  },
+  "10.9": {
+    "category": "back-end-api",
+    "slug": "dis-dunyayla-entegrasyon",
+    "title": "Dış dünyayla entegrasyon"
+  },
+  "10.10": {
+    "category": "back-end-api",
+    "slug": "sinirlama-ve-sayfalama",
+    "title": "Sınırlama ve sayfalama"
+  },
+  "10.11": {
+    "category": "back-end-api",
+    "slug": "caching",
+    "title": "Caching"
+  },
+  "10.12": {
+    "category": "back-end-api",
+    "slug": "arka-plan-isleri",
+    "title": "Arka plan işleri"
+  },
+  "10.13": {
+    "category": "back-end-api",
+    "slug": "back-end-ekosistemleri",
+    "title": "Back-end ekosistemleri"
+  },
+  "10.14": {
+    "category": "back-end-api",
+    "slug": "dosya-ve-medya",
+    "title": "Dosya ve medya"
+  },
+  "10.15": {
+    "category": "back-end-api",
+    "slug": "sik-kullanilan-ucuncu-parti-servisler",
+    "title": "Sık kullanılan üçüncü parti servisler"
+  },
+  "11.1": {
+    "category": "veritabani",
+    "slug": "veri-neden-ayri-bir-katman",
+    "title": "Veri neden ayrı bir katman"
+  },
+  "11.2": {
+    "category": "veritabani",
+    "slug": "veritabani-turleri",
+    "title": "Veritabanı türleri"
+  },
+  "11.3": {
+    "category": "veritabani",
+    "slug": "yaygin-urunler",
+    "title": "Yaygın ürünler"
+  },
+  "11.4": {
+    "category": "veritabani",
+    "slug": "sema-temelleri",
+    "title": "Şema temelleri"
+  },
+  "11.5": {
+    "category": "veritabani",
+    "slug": "anahtarlar-kisitlar-ve-index",
+    "title": "Anahtarlar, kısıtlar ve index"
+  },
+  "11.6": {
+    "category": "veritabani",
+    "slug": "iliski-turleri",
+    "title": "İlişki türleri"
+  },
+  "11.7": {
+    "category": "veritabani",
+    "slug": "normalizasyon-ve-denormalizasyon",
+    "title": "Normalizasyon ve denormalizasyon"
+  },
+  "11.8": {
+    "category": "veritabani",
+    "slug": "sorgu-ve-islem",
+    "title": "Sorgu ve işlem"
+  },
+  "11.9": {
+    "category": "veritabani",
+    "slug": "yaygin-problemler",
+    "title": "Yaygın problemler"
+  },
+  "11.10": {
+    "category": "veritabani",
+    "slug": "orm-ve-migration",
+    "title": "ORM ve migration"
+  },
+  "11.11": {
+    "category": "veritabani",
+    "slug": "veri-yasam-dongusu",
+    "title": "Veri yaşam döngüsü"
+  },
+  "11.12": {
+    "category": "veritabani",
+    "slug": "baas-ve-yonetilen-veritabanlari",
+    "title": "BaaS ve yönetilen veritabanları"
+  },
+  "12.1": {
+    "category": "auth",
+    "slug": "authentication-vs-authorization",
+    "title": "Authentication vs authorization"
+  },
+  "12.2": {
+    "category": "auth",
+    "slug": "session-vs-token",
+    "title": "Session vs token"
+  },
+  "12.3": {
+    "category": "auth",
+    "slug": "cookie",
+    "title": "Cookie"
+  },
+  "12.4": {
+    "category": "auth",
+    "slug": "jwt-ve-token-turleri",
+    "title": "JWT ve token türleri"
+  },
+  "12.5": {
+    "category": "auth",
+    "slug": "oauth-sso-ve-dis-kimlik-saglayicilari",
+    "title": "OAuth, SSO ve dış kimlik sağlayıcıları"
+  },
+  "12.6": {
+    "category": "auth",
+    "slug": "sifresiz-yontemler",
+    "title": "Şifresiz yöntemler"
+  },
+  "12.7": {
+    "category": "auth",
+    "slug": "mfa-2fa",
+    "title": "MFA / 2FA"
+  },
+  "12.8": {
+    "category": "auth",
+    "slug": "sifre-guvenligi",
+    "title": "Şifre güvenliği"
+  },
+  "12.9": {
+    "category": "auth",
+    "slug": "yetkilendirme-modelleri",
+    "title": "Yetkilendirme modelleri"
+  },
+  "12.10": {
+    "category": "auth",
+    "slug": "hazir-cozumler",
+    "title": "Hazır çözümler"
+  },
+  "12.11": {
+    "category": "auth",
+    "slug": "authun-ux-tarafi",
+    "title": "Auth'un UX tarafı"
+  },
+  "13.1": {
+    "category": "guvenlik-ve-hukuk",
+    "slug": "guvenligi-dusunme-bicimi",
+    "title": "Güvenliği düşünme biçimi"
+  },
+  "13.2": {
+    "category": "guvenlik-ve-hukuk",
+    "slug": "owasp-top-10",
+    "title": "OWASP Top 10"
+  },
+  "13.3": {
+    "category": "guvenlik-ve-hukuk",
+    "slug": "yaygin-aciklar",
+    "title": "Yaygın açıklar"
+  },
+  "13.4": {
+    "category": "guvenlik-ve-hukuk",
+    "slug": "tarayici-guvenlik-sinirlari",
+    "title": "Tarayıcı güvenlik sınırları"
+  },
+  "13.5": {
+    "category": "guvenlik-ve-hukuk",
+    "slug": "https-ve-sertifikalar",
+    "title": "HTTPS ve sertifikalar"
+  },
+  "13.6": {
+    "category": "guvenlik-ve-hukuk",
+    "slug": "secret-yonetimi",
+    "title": "Secret yönetimi"
+  },
+  "13.7": {
+    "category": "guvenlik-ve-hukuk",
+    "slug": "dogrulama-temizleme-kacirma",
+    "title": "Doğrulama, temizleme, kaçırma"
+  },
+  "13.8": {
+    "category": "guvenlik-ve-hukuk",
+    "slug": "savunma-ilkeleri",
+    "title": "Savunma ilkeleri"
+  },
+  "13.9": {
+    "category": "guvenlik-ve-hukuk",
+    "slug": "bot-ve-kotuye-kullanim",
+    "title": "Bot ve kötüye kullanım"
+  },
+  "13.10": {
+    "category": "guvenlik-ve-hukuk",
+    "slug": "kvkk-ve-gdprin-urun-tarafina-yansimasi",
+    "title": "KVKK ve GDPR'ın ürün tarafına yansıması"
+  },
+  "13.11": {
+    "category": "guvenlik-ve-hukuk",
+    "slug": "yasal-sayfalar",
+    "title": "Yasal sayfalar"
+  },
+  "14.1": {
+    "category": "sistem-mimarisi",
+    "slug": "mimari-nedir-ve-neden-erken-karar-verilir",
+    "title": "Mimari nedir ve neden erken karar verilir"
+  },
+  "14.2": {
+    "category": "sistem-mimarisi",
+    "slug": "mimari-stiller",
+    "title": "Mimari stiller"
+  },
+  "14.3": {
+    "category": "sistem-mimarisi",
+    "slug": "katmanlar",
+    "title": "Katmanlar"
+  },
+  "14.4": {
+    "category": "sistem-mimarisi",
+    "slug": "event-driven-mimari",
+    "title": "Event-driven mimari"
+  },
+  "14.5": {
+    "category": "sistem-mimarisi",
+    "slug": "trafigi-yonetenler",
+    "title": "Trafiği yönetenler"
+  },
+  "14.6": {
+    "category": "sistem-mimarisi",
+    "slug": "olcekleme",
+    "title": "Ölçekleme"
+  },
+  "14.7": {
+    "category": "sistem-mimarisi",
+    "slug": "stateless-stateful",
+    "title": "Stateless / Stateful"
+  },
+  "14.8": {
+    "category": "sistem-mimarisi",
+    "slug": "dayaniklilik",
+    "title": "Dayanıklılık"
+  },
+  "14.9": {
+    "category": "sistem-mimarisi",
+    "slug": "olculer-ve-hedefler",
+    "title": "Ölçüler ve hedefler"
+  },
+  "14.10": {
+    "category": "sistem-mimarisi",
+    "slug": "tutarlilik",
+    "title": "Tutarlılık"
+  },
+  "14.11": {
+    "category": "sistem-mimarisi",
+    "slug": "dayaniklilik-kaliplari",
+    "title": "Dayanıklılık kalıpları"
+  },
+  "14.12": {
+    "category": "sistem-mimarisi",
+    "slug": "adr-mimari-karar-kaydi",
+    "title": "ADR — mimari karar kaydı"
+  },
+  "14.13": {
+    "category": "sistem-mimarisi",
+    "slug": "mimari-diyagrami-okumak",
+    "title": "Mimari diyagramı okumak"
+  },
+  "15.1": {
+    "category": "git-ve-github",
+    "slug": "version-control-neden-var",
+    "title": "Version control neden var"
+  },
+  "15.2": {
+    "category": "git-ve-github",
+    "slug": "temel-kavramlar",
+    "title": "Temel kavramlar"
+  },
+  "15.3": {
+    "category": "git-ve-github",
+    "slug": "dallanma-ve-birlestirme",
+    "title": "Dallanma ve birleştirme"
+  },
+  "15.4": {
+    "category": "git-ve-github",
+    "slug": "uzak-depolar",
+    "title": "Uzak depolar"
+  },
+  "15.5": {
+    "category": "git-ve-github",
+    "slug": "pull-request-ve-kod-incelemesi",
+    "title": "Pull request ve kod incelemesi"
+  },
+  "15.6": {
+    "category": "git-ve-github",
+    "slug": "geri-alma-ve-isaretleme",
+    "title": "Geri alma ve işaretleme"
+  },
+  "15.7": {
+    "category": "git-ve-github",
+    "slug": "dallanma-stratejileri",
+    "title": "Dallanma stratejileri"
+  },
+  "15.8": {
+    "category": "git-ve-github",
+    "slug": "commit-mesajlari-ve-surumleme",
+    "title": "Commit mesajları ve sürümleme"
+  },
+  "15.9": {
+    "category": "git-ve-github",
+    "slug": "issue-ve-proje-yonetimi",
+    "title": "Issue ve proje yönetimi"
+  },
+  "15.10": {
+    "category": "git-ve-github",
+    "slug": "depo-hijyeni",
+    "title": "Depo hijyeni"
+  },
+  "15.11": {
+    "category": "git-ve-github",
+    "slug": "github-actions",
+    "title": "GitHub Actions"
+  },
+  "16.1": {
+    "category": "devops-ve-yayin",
+    "slug": "ci-cd",
+    "title": "CI/CD"
+  },
+  "16.2": {
+    "category": "devops-ve-yayin",
+    "slug": "pipeline-anatomisi",
+    "title": "Pipeline anatomisi"
+  },
+  "16.3": {
+    "category": "devops-ve-yayin",
+    "slug": "ortamlar",
+    "title": "Ortamlar"
+  },
+  "16.4": {
+    "category": "devops-ve-yayin",
+    "slug": "docker",
+    "title": "Docker"
+  },
+  "16.5": {
+    "category": "devops-ve-yayin",
+    "slug": "kubernetes",
+    "title": "Kubernetes"
+  },
+  "16.6": {
+    "category": "devops-ve-yayin",
+    "slug": "hosting-ve-deploy-platformlari",
+    "title": "Hosting ve deploy platformları"
+  },
+  "16.7": {
+    "category": "devops-ve-yayin",
+    "slug": "domain-ve-dns",
+    "title": "Domain ve DNS"
+  },
+  "16.8": {
+    "category": "devops-ve-yayin",
+    "slug": "deploy-stratejileri",
+    "title": "Deploy stratejileri"
+  },
+  "16.9": {
+    "category": "devops-ve-yayin",
+    "slug": "olay-yonetimi",
+    "title": "Olay yönetimi"
+  },
+  "16.10": {
+    "category": "devops-ve-yayin",
+    "slug": "gozlemlenebilirlik",
+    "title": "Gözlemlenebilirlik"
+  },
+  "16.11": {
+    "category": "devops-ve-yayin",
+    "slug": "hata-izleme-ve-analitik",
+    "title": "Hata izleme ve analitik"
+  },
+  "16.12": {
+    "category": "devops-ve-yayin",
+    "slug": "maliyet",
+    "title": "Maliyet"
+  },
+  "17.1": {
+    "category": "test-ve-kalite",
+    "slug": "test-neden-var",
+    "title": "Test neden var"
+  },
+  "17.2": {
+    "category": "test-ve-kalite",
+    "slug": "test-turleri",
+    "title": "Test türleri"
+  },
+  "17.3": {
+    "category": "test-ve-kalite",
+    "slug": "araclar",
+    "title": "Araçlar"
+  },
+  "17.4": {
+    "category": "test-ve-kalite",
+    "slug": "test-kavramlari",
+    "title": "Test kavramları"
+  },
+  "17.5": {
+    "category": "test-ve-kalite",
+    "slug": "qa-ve-hata-raporu",
+    "title": "QA ve hata raporu"
+  },
+  "17.6": {
+    "category": "test-ve-kalite",
+    "slug": "tasarim-kalitesinin-otomatiklestirilmesi",
+    "title": "Tasarım kalitesinin otomatikleştirilmesi"
+  },
+  "17.7": {
+    "category": "test-ve-kalite",
+    "slug": "kod-sagligi-araclari",
+    "title": "Kod sağlığı araçları"
+  },
+  "17.8": {
+    "category": "test-ve-kalite",
+    "slug": "clean-code-ilkeleri",
+    "title": "Clean code ilkeleri"
+  },
+  "17.9": {
+    "category": "test-ve-kalite",
+    "slug": "teknik-borc",
+    "title": "Teknik borç"
+  },
+  "17.10": {
+    "category": "test-ve-kalite",
+    "slug": "code-review-kulturu",
+    "title": "Code review kültürü"
+  },
+  "18.1": {
+    "category": "sirket-sozlugu",
+    "slug": "kisaltmalar",
+    "title": "Kısaltmalar"
+  },
+  "18.2": {
+    "category": "sirket-sozlugu",
+    "slug": "surec-ve-karar-kaliplari",
+    "title": "Süreç ve karar kalıpları"
+  },
+  "18.3": {
+    "category": "sirket-sozlugu",
+    "slug": "risk-ve-olay-dili",
+    "title": "Risk ve olay dili"
+  },
+  "18.4": {
+    "category": "sirket-sozlugu",
+    "slug": "karar-dili",
+    "title": "Karar dili"
+  },
+  "18.5": {
+    "category": "sirket-sozlugu",
+    "slug": "toplanti-turleri",
+    "title": "Toplantı türleri"
+  },
+  "18.6": {
+    "category": "sirket-sozlugu",
+    "slug": "yazili-formatlar",
+    "title": "Yazılı formatlar"
+  },
+  "18.7": {
+    "category": "sirket-sozlugu",
+    "slug": "kultur-kaliplari",
+    "title": "Kültür kalıpları"
+  },
+  "19.1": {
+    "category": "yapay-zeka-ile-calisma",
+    "slug": "modelin-neyi-bilip-neyi-bilmedigi",
+    "title": "Modelin neyi bilip neyi bilmediği"
+  },
+  "19.2": {
+    "category": "yapay-zeka-ile-calisma",
+    "slug": "iyi-prompt-anatomisi",
+    "title": "İyi prompt anatomisi"
+  },
+  "19.3": {
+    "category": "yapay-zeka-ile-calisma",
+    "slug": "baglam-verme-yollari",
+    "title": "Bağlam verme yolları"
+  },
+  "19.4": {
+    "category": "yapay-zeka-ile-calisma",
+    "slug": "kisit-tanimlama",
+    "title": "Kısıt tanımlama"
+  },
+  "19.5": {
+    "category": "yapay-zeka-ile-calisma",
+    "slug": "kabul-kriteriyle-istemek",
+    "title": "Kabul kriteriyle istemek"
+  },
+  "19.6": {
+    "category": "yapay-zeka-ile-calisma",
+    "slug": "geri-bildirim-dongusu",
+    "title": "Geri bildirim döngüsü"
+  },
+  "19.7": {
+    "category": "yapay-zeka-ile-calisma",
+    "slug": "amator-prompt-vs-profesyonel-prompt",
+    "title": "Amatör prompt vs profesyonel prompt"
+  },
+  "19.8": {
+    "category": "yapay-zeka-ile-calisma",
+    "slug": "isi-bolme-ve-oturum-yonetimi",
+    "title": "İşi bölme ve oturum yönetimi"
+  },
+  "19.9": {
+    "category": "yapay-zeka-ile-calisma",
+    "slug": "ciktiyi-denetleme",
+    "title": "Çıktıyı denetleme"
+  },
+  "19.10": {
+    "category": "yapay-zeka-ile-calisma",
+    "slug": "tekrar-eden-tuzaklar",
+    "title": "Tekrar eden tuzaklar"
+  }
+}

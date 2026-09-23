@@ -1,0 +1,116 @@
+{
+  "category": "yapay-zeka-ile-calisma",
+  "source": "19-yapay-zeka-ile-profesyonel-calisma.md",
+  "items": [
+    {
+      "n": 1,
+      "question": "Bağlam penceresi neden \"tükenen kaynak\"? Büyük pencere \"her şeyi at\" demek midir?",
+      "answer": "Çünkü senin mesajların, modelin cevapları, okunan dosyalar ve araç çıktıları hep aynı sınırlı alanı paylaşır; dolduğunda başlangıçtaki talimatlar unutulabilir. **Hayır** — alakasız bağlam, alakalı bağlamı **seyreltir**. Doğru yaklaşım pencereyi doldurmak değil, ne göstereceğini seçmektir."
+    },
+    {
+      "n": 2,
+      "question": "Bilgi kesim tarihi senin alanında neden özel bir risk?",
+      "answer": "Çünkü senin alanındaki kütüphane manzarası hızlı değişir (Bölüm 9). Model, bakım moduna geçmiş bir kütüphaneyi veya adı değişmiş bir paketi hâlâ eski hâliyle önerebilir — ve bunu kendinden emin bir dille yapar."
+    },
+    {
+      "n": 3,
+      "question": "Uydurma neden fark edilmesi zordur? İki katmanlı savunması nedir?",
+      "answer": "Çünkü **rastgele değil, makul görünen** biçimde olur: var olmayan ama var olabilecek bir fonksiyon, inandırıcı bir istatistik. Savunma: (1) modelden emin olmadığında bunu söylemesini istemek, (2) doğrulanabilir her iddiayı **kendin kontrol etmek.** İkincisi vazgeçilmezdir."
+    },
+    {
+      "n": 4,
+      "question": "\"Drift\" nedir ve 2026'da neden ana sorun olarak anılıyor?",
+      "answer": "Üretilen çıktının istenen şeyden yavaşça uzaklaşması ama tutarlı ve inandırıcı görünmesi. Ana sorun olarak anılıyor çünkü **üretim hızı artık darboğaz değil**; darboğaz, kendinden emin ama yanlış problemi çözen çıktının yarattığı inceleme-ve-düzeltme döngüsü."
+    },
+    {
+      "n": 5,
+      "question": "İyi bir prompt'un yedi bileşeni nedir? En çok atlanan üçü hangisi?",
+      "answer": "Rol, bağlam, görev, kısıt, format, kabul kriteri, örnek/referans. En çok atlanan üçü: **kısıt, kabul kriteri ve \"neye benzemesin\".**"
+    },
+    {
+      "n": 6,
+      "question": "Negatif kısıt neden gereklidir? Yasaklamadığın varsayılan ne olur?",
+      "answer": "Çünkü model, belirtilmeyen her yerde **en yaygın kalıba** yönelir — eğitim verisinde en çok o vardır. Yasaklamadığın varsayılan **gelecektir**; \"jenerik\" çıktının sebebi budur."
+    },
+    {
+      "n": 7,
+      "question": "\"Context engineering\" ne demek ve prompt engineering'den farkı nedir?",
+      "answer": "Modele **ne gösterileceğinin** bilinçli tasarımı — sadece nasıl sorulacağının değil. Fark: aynı model, aynı soruya farklı bağlamla çok farklı cevap verir. Sorunların çoğu kötü prompt'tan değil, eksik bağlamdan doğar."
+    },
+    {
+      "n": 8,
+      "question": "\"Bağlam boşluğu\" nedir ve neden görünmezdir?",
+      "answer": "Projede **yazılı olmayan** her kuralın, model için **yok** sayılması. Görünmezdir çünkü tanımı gereği: dosya, belgelemediği şeyi belgelemez — eksikliği ancak çıktı yanlış geldiğinde fark edilir."
+    },
+    {
+      "n": 9,
+      "question": "Kalıcı talimat dosyasında senin için en önemli bölüm hangisidir ve neden?",
+      "answer": "**Kaçınılacak kalıplar (anti-patterns) bölümü**, en sonda. Çünkü tasarım yasaklarını oraya yazarsan her promptta tekrar etmen gerekmez ve jenerikleşmenin ana kaynağı baştan kapanır."
+    },
+    {
+      "n": 10,
+      "question": "Kabul kriteri yazamıyorsan bu neyin işaretidir?",
+      "answer": "**İsteğin henüz netleşmediğinin** işareti. Bu, modelin değil senin probleminin göstergesidir."
+    },
+    {
+      "n": 11,
+      "question": "Güçlü geri bildirimin üç parçası nedir?",
+      "answer": "(1) Ne yanlış — teknik terimle. (2) Neden yanlış — hangi ilkeye veya kısıta aykırı. (3) Ne olmalı — mümkünse somut."
+    },
+    {
+      "n": 12,
+      "question": "\"Karışık duruyor\" geri bildirimini nasıl güçlü hâle getirirsin?",
+      "answer": "Örnek: \"Görsel hiyerarşi yok: üç buton da dolu renkli, birincil eylem belli değil. Birini primary, ikisini ghost stile al.\" Yani izlenimi **ilkeye ve somut düzeltmeye** bağlamak."
+    },
+    {
+      "n": 13,
+      "question": "Beş düzeltme turundan sonra hâlâ yaklaşılmıyorsa ne yapmalı?",
+      "answer": "Düzeltmeye devam etmek yerine **tanımı yeniden yazıp sıfırdan başlamak.** Uzun düzeltme zincirlerinde sapma riski artar ve her tur bağlamı daha da bulandırır."
+    },
+    {
+      "n": 14,
+      "question": "Amatör ve profesyonel prompt arasındaki fark uzunluk mudur? Değilse nedir?",
+      "answer": "**Hayır, uzunluk değil.** Fark, **kaç kararın belirsiz bırakıldığıdır.** Kısa ama kısıtlı bir prompt, uzun ama belirsiz bir prompttan iyidir."
+    },
+    {
+      "n": 15,
+      "question": "İşi bölmenin dört aşaması nedir?",
+      "answer": "**Spec → plan → görevler → uygulama**, her aşamada bir insan kontrol noktasıyla."
+    },
+    {
+      "n": 16,
+      "question": "\"Tek promptla tüm siteyi yap\" yaklaşımı neden yavaş görünen yöntemden daha uzun sürer?",
+      "answer": "Çünkü belirsiz ve büyük talep, sapma için en verimli zemindir; sonuçta **geri dönüş turları** artar. Küçük parçalar yavaş görünür ama toplam süre genelde daha kısadır."
+    },
+    {
+      "n": 17,
+      "question": "Oturum hijyeninin üç kuralı nedir?",
+      "answer": "(1) Yeni iş için yeni oturum aç. (2) Uzayan oturumu özetleyip yeni bir oturuma taşı. (3) Kapsamı daralt (\"yalnızca şu dosyaya dokun\"). (Ek: kısa ve odaklı oturum, uzun ve dağınıktan iyi sonuç verir.)"
+    },
+    {
+      "n": 18,
+      "question": "Kod okumadan yapabileceğin altı arayüz kontrolü nedir?",
+      "answer": "Ölçek dışı değer var mı · durum ekranları (boş/hata/yükleme) var mı · klavye turu · %200 zoom · 375px genişlik · uzun metin (60 karakterlik başlık) testi."
+    },
+    {
+      "n": 19,
+      "question": "Her yapay zekâ oturumundan sonra yapılması önerilen tek alışkanlık nedir?",
+      "answer": "**Diff'e bakmak** — hangi dosyaların, nasıl değiştiğini görmek. Bunun prompt iyileştirmekten daha çok hata önlediği belirtiliyor."
+    },
+    {
+      "n": 20,
+      "question": "Jenerik tasarımın sebebi nedir ve dört çözümü nedir?",
+      "answer": "**Sebep:** belirtilmeyen her yerde model en yaygın kalıba yönelir; sonuç sistemsizliktir. **Çözümler:** ölçekleri ver, token'ları ver, yasakları yaz, referans ver."
+    },
+    {
+      "n": 21,
+      "question": "\"Sessiz kapsam büyümesi\" neyin yapay zekâ hâlidir? Çözümü nedir?",
+      "answer": "**Scope creep'in** (2.8) yapay zekâ hâli: bir bileşen istersin, beş dosya değişir. Çözüm: kapsam kısıtı yazmak — \"yalnızca şu dosyayı değiştir\", \"mevcut davranışı koruyarak\"."
+    },
+    {
+      "n": 22,
+      "question": "\"Yanlış problemi çözmek\" tuzağının kökü genelde nerededir?",
+      "answer": "İsteğin **çözüm dilinde** yazılmış olması (\"bize filtre lazım\"), **problem dilinde** değil (\"kullanıcı aradığını bulamıyor\"). Bu, Bölüm 2.3'teki problem tanımı ilkesinin aynısıdır."
+    }
+  ]
+}

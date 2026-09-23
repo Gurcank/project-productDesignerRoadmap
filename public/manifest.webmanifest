@@ -1,0 +1,15 @@
+{
+  "name": "Product Designer Yol Haritası",
+  "short_name": "PD Yol Haritası",
+  "description": "Kişisel öğrenme yol haritası — 23 kategori, 214 adım.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "lang": "tr",
+  "dir": "ltr",
+  "background_color": "#12100e",
+  "theme_color": "#12100e",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

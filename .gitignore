@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+*.local
+
+# Third-party Framer component sources, downloaded only to read their structure
+# while rebuilding them in this stack (ADR-013). Not ours to redistribute.
+.framer-cache/

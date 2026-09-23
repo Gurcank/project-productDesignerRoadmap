@@ -1,0 +1,301 @@
+---
+import "~/styles/global.css";
+import ThemeControl from "~/components/ThemeControl.astro";
+import MobileNav from "~/components/MobileNav.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Marks the active top-level section in the header nav. */
+  section?: "roadmap" | "sozluk" | "ara" | "araclar" | "ayarlar";
+}
+
+const { title, description = "Product Designer yol haritası — kişisel öğrenme sitesi.", section } = Astro.props;
+const fullTitle = title === "Yol haritası" ? "Product Designer Yol Haritası" : `${title} · PD Yol Haritası`;
+
+// Astro.site comes from astro.config; falls back so a preview build still works.
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href;
+
+// `ready` gates the link on the page actually existing — a link to a page that
+// is not built yet is a 404, which is worse than no link. Araçlar lands in Faz 4.
+const nav = [
+  { href: "/", label: "Yol haritası", id: "roadmap", ready: true },
+  { href: "/sozluk/", label: "Sözlük", id: "sozluk", ready: true },
+  { href: "/ara/", label: "Ara", id: "ara", ready: true },
+  { href: "/ayarlar/", label: "Ayarlar", id: "ayarlar", ready: true },
+  { href: "/araclar/", label: "Araçlar", id: "araclar", ready: false },
+] as const;
+
+const visibleNav = nav.filter((item) => item.ready);
+
+/*
+ * The service worker is registered in production only. In dev it served the
+ * previous build stale-while-revalidate, so an edit landed in the response but
+ * not on screen — indistinguishable from a fix that did not work. Dev instead
+ * tears down any worker an earlier session left behind, because declining to
+ * register does not remove one that is already installed.
+ *
+ * The body is a string, not markup: `is:inline` treats a script's children as
+ * raw text, so an expression inside the tag would be printed verbatim.
+ */
+const SERVICE_WORKER_SCRIPT = import.meta.env.PROD
+  ? `if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("/sw.js").catch(function () {
+      /* Offline is an enhancement; the site works without it. */
+    });
+  });
+}`
+  : `if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function (registrations) {
+    registrations.forEach(function (registration) {
+      registration.unregister();
+    });
+  });
+  if (window.caches) {
+    caches.keys().then(function (keys) {
+      keys.forEach(function (key) {
+        caches.delete(key);
+      });
+    });
+  }
+}`;
+---
+
+<!doctype html>
+<html lang="tr" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={canonical} />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#12100e" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    {/* Launch checklist 21.9: the link preview is what people actually see when
+        the URL is pasted into a chat, and it is invisible until it is wrong. */}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Product Designer Yol Haritası" />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+
+    {/* Applied before first paint so the theme never flashes. */}
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem("pdr.theme");
+          var choice = stored === "light" || stored === "dark" ? stored : "system";
+          var theme =
+            choice === "system"
+              ? window.matchMedia("(prefers-color-scheme: light)").matches
+                ? "light"
+                : "dark"
+              : choice;
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.dataset.themeChoice = choice;
+        } catch (error) {
+          document.documentElement.dataset.theme = "dark";
+        }
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a class="skip" href="#main">Ana içeriğe atla</a>
+
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="brand" href="/">
+          <span class="brand__mark" aria-hidden="true"></span>
+          <span class="brand__text">Product Designer<span class="brand__sub">yol haritası</span></span>
+        </a>
+
+        {
+          visibleNav.length > 1 && (
+            <nav class="site-nav" aria-label="Ana menü">
+              {visibleNav.map((item) => (
+                <a href={item.href} aria-current={section === item.id ? "page" : undefined}>
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+          )
+        }
+
+        <div class="site-header__tools">
+          <ThemeControl />
+        </div>
+      </div>
+    </header>
+
+    {/* Scroll position of the reading column. On a phone a topic page is a long
+        scroll and there is no scrollbar to read it from. */}
+    <div class="read-progress" aria-hidden="true"><span data-read-progress></span></div>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <MobileNav section={section} />
+    {/* Offline reading (ADR-012), production only — see SERVICE_WORKER_SCRIPT. */}
+    <script is:inline set:html={SERVICE_WORKER_SCRIPT} />
+
+    <script>
+      const bar = document.querySelector<HTMLElement>("[data-read-progress]");
+      if (bar) {
+        const update = () => {
+          const max = document.documentElement.scrollHeight - window.innerHeight;
+          bar.style.inlineSize = max > 0 ? `${Math.min(100, (window.scrollY / max) * 100)}%` : "0%";
+        };
+        // passive: this listener must never delay the scroll it is reporting on.
+        window.addEventListener("scroll", update, { passive: true });
+        window.addEventListener("resize", update);
+        update();
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  .skip {
+    position: absolute;
+    inset-block-start: var(--spacing-2);
+    inset-inline-start: var(--spacing-2);
+    z-index: var(--z-toast);
+    padding: var(--spacing-2) var(--spacing-4);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-overlay);
+    color: var(--c-text);
+    transform: translateY(-200%);
+  }
+
+  .skip:focus-visible {
+    transform: translateY(0);
+  }
+
+  .read-progress {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-start: 0;
+    z-index: var(--z-overlay);
+    block-size: 2px;
+    pointer-events: none;
+  }
+
+  .read-progress span {
+    display: block;
+    block-size: 100%;
+    inline-size: 0;
+    background-color: var(--c-progress);
+  }
+
+  /* Desktop has a scrollbar; this is a phone affordance. */
+  @media (min-width: 48rem) {
+    .read-progress {
+      display: none;
+    }
+  }
+
+  .site-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--z-sticky);
+    background-color: color-mix(in oklab, var(--c-surface) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--c-border);
+  }
+
+  .site-header__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-2) var(--spacing-4);
+    max-width: 90rem;
+    margin-inline: auto;
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    color: var(--c-text);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  /* A single mark, not a logo: two stops on a path — the roadmap idea in 16px. */
+  .brand__mark {
+    width: 18px;
+    height: 18px;
+    border-radius: var(--radius-full);
+    border: 2px solid var(--c-action);
+    box-shadow: 0 0 0 2px var(--c-surface), 6px 0 0 -4px var(--c-progress);
+  }
+
+  .brand__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+    font-size: var(--text-sm);
+  }
+
+  .brand__sub {
+    color: var(--c-text-muted);
+    font-weight: 400;
+    font-size: var(--text-xs);
+  }
+
+  .site-nav {
+    display: none;
+    gap: var(--spacing-1);
+    margin-inline-start: auto;
+  }
+
+  .site-nav a {
+    display: grid;
+    place-items: center;
+    min-height: 40px;
+    padding-inline: var(--spacing-3);
+    border-radius: var(--radius-md);
+    color: var(--c-text-secondary);
+    text-decoration: none;
+    font-size: var(--text-sm);
+  }
+
+  .site-nav a:hover {
+    color: var(--c-text);
+    background-color: var(--c-surface-raised);
+  }
+
+  .site-nav a[aria-current="page"] {
+    color: var(--c-text);
+    background-color: var(--c-surface-raised);
+    box-shadow: inset 0 -2px 0 var(--c-action);
+  }
+
+  /* On phones the tools drop to their own row instead of disappearing —
+     hiding the theme switch on mobile would remove a stated requirement. */
+  .site-header__tools {
+    margin-inline-start: auto;
+  }
+
+  @media (min-width: 48rem) {
+    .site-header__inner {
+      flex-wrap: nowrap;
+      padding-inline: var(--spacing-6);
+    }
+
+    .site-nav {
+      display: flex;
+      margin-inline-start: var(--spacing-8);
+    }
+  }
+</style>

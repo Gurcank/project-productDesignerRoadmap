@@ -1,0 +1,76 @@
+{
+  "category": "calisma-bicimi",
+  "source": "03-calisma-bicimi-agile-scrum-kanban.md",
+  "items": [
+    {
+      "n": 1,
+      "question": "Agile ile Scrum arasındaki fark nedir?",
+      "answer": "Agile bir zihniyet ve ilkeler bütünüdür (Agile Manifesto). Scrum, o ilkeleri uygulayan somut çerçevelerden biridir. Her Scrum ekibi agile'dır iddiası taşır, ama her agile ekip Scrum kullanmaz — Kanban da bir alternatiftir."
+    },
+    {
+      "n": 2,
+      "question": "Agile Manifesto'nun dört değerinden \"kapsamlı dokümantasyondan çok çalışan yazılım\" maddesi, dokümantasyon yazılmayacağı anlamına mı gelir? Neden?",
+      "answer": "Hayır. Metin dört değeri bir **tercih sıralaması** olarak yazar ve sağdaki maddelerin de değerli olduğunu açıkça belirtir. Anlamı: ikisi çatıştığında çalışan yazılım öncelenir; dokümantasyon terk edilmez."
+    },
+    {
+      "n": 3,
+      "question": "Sprint'in süresinin **sabit** olması neden önemli? Süre esnek olsaydı ne olurdu?",
+      "answer": "Sabit süre, iş yetişmediğinde **kapsamın** kısılmasını zorlar. Süre esnek olsaydı her sprint biraz daha uzar, tahmin anlamını yitirir ve ekip düzenli öğrenme ritmini kaybederdi."
+    },
+    {
+      "n": 4,
+      "question": "Sprint review ile retrospective arasındaki fark nedir?",
+      "answer": "Sprint review **ürünü** değerlendirir: çıktı stakeholder'lara gösterilir, geri bildirim alınır. Retrospective **süreci** değerlendirir: ekip kendi çalışma biçimini gözden geçirir ve değiştireceği şeye karar verir."
+    },
+    {
+      "n": 5,
+      "question": "Story point'i saate çevirmek (örneğin \"1 puan = 4 saat\") neden yöntemi bozar?",
+      "answer": "Story point'in tüm faydası, süre tahmini yerine **göreli büyüklük** tahmini yapmasıdır; insanlar karşılaştırmada iyi, süre kestiriminde kötüdür. Saate çevrildiği anda yöntem gizli bir saat tahminine dönüşür ve belirsizliği taşıma özelliğini kaybeder."
+    },
+    {
+      "n": 6,
+      "question": "Velocity'nin performans göstergesi olarak kullanılması neden sorun yaratır?",
+      "answer": "Velocity hedefe dönüştüğünde ekip puanları şişirir. Sayı artar ama üretilen iş artmaz; metrik ölçtüğü şeyi ölçmeyi bırakır. Ayrıca velocity ekibe özeldir, iki ekip arasında karşılaştırılamaz."
+    },
+    {
+      "n": 7,
+      "question": "Bir Trello panosu kullanmak Kanban yapmak mıdır? Eksik olan nedir?",
+      "answer": "Hayır, eksik. Pano yöntemin görünen kısmıdır; asıl yöntem **WIP limiti** ve akış ölçümüdür (cycle time, lead time, throughput). Limitsiz bir pano sadece bir liste görselleştirmesidir."
+    },
+    {
+      "n": 8,
+      "question": "WIP limiti koymak işi yavaşlatır mı? Cevabını gerekçelendir.",
+      "answer": "Hayır, tersine toplam teslim hızını artırır. Çok işe aynı anda başlamak hiçbirinin bitmemesine yol açar; yarım iş değer üretmez. Limit, insanları başlamak yerine bitirmeye zorlar ve tıkanıklığı görünür kılar."
+    },
+    {
+      "n": 9,
+      "question": "Cycle time 2 gün, lead time 3 hafta. Bu tabloda sorun nerede ve nereye bakmalısın?",
+      "answer": "Sorun geliştirmede değil, **beklemede**. Aradaki fark (yaklaşık 19 gün) işin sırada beklediği süredir. Bakılacak yer: kuyruk uzunluğu, WIP limiti, önceliklendirme sıklığı ve giriş kapısı — kaç iş aynı anda kabul ediliyor."
+    },
+    {
+      "n": 10,
+      "question": "Bir darboğazın (bottleneck) dışındaki aşamaları hızlandırmak toplam hızı artırır mı?",
+      "answer": "Hayır. Toplam hızı darboğaz belirler. Darboğaz dışını hızlandırmak sadece darboğaz önünde daha büyük bir yığın oluşturur."
+    },
+    {
+      "n": 11,
+      "question": "Key Result ile task arasındaki fark nedir? Şu ifade hangisidir: \"Onboarding akışını yeniden tasarla.\"",
+      "answer": "Key Result bir **sonucu** ölçer ve sayısaldır; task yapılacak **işi** tarif eder. \"Onboarding akışını yeniden tasarla\" bir task'tır. Key Result hâli: \"İlk oturumda proje oluşturma oranı %30'dan %55'e çıksın.\""
+    },
+    {
+      "n": 12,
+      "question": "\"Toplam kayıt sayısı 100 bin\" ifadesi neden vanity metric olabilir? Onu anlamlı hâle getirmek için ne eklersin?",
+      "answer": "Sürekli artan, hiç azalmayan ve karar değiştirmeyen bir sayı olduğu için. Anlamlı hâle getirmek için bir **zaman aralığı ve aktiflik** eklenir: \"son 7 günde en az bir kez giriş yapan kullanıcı sayısı\" veya \"kayıt olduktan sonra ilk haftada değer eylemini tamamlayan kullanıcı oranı\"."
+    },
+    {
+      "n": 13,
+      "question": "Blocker ile dependency arasındaki fark nedir?",
+      "answer": "Dependency, bir işin başka bir işe veya tarafa bağlı olmasıdır — planlanabilir ve sıralama değiştirilerek yönetilebilir. Blocker, o bağımlılığın (veya başka bir sebebin) işi **fiilen durdurduğu** durumdur ve acil müdahale gerektirir."
+    },
+    {
+      "n": 14,
+      "question": "Async-first çalışan bir ekipte overlap hours neden toplantıyla doldurulmamalı?",
+      "answer": "Overlap hours, sync iletişimin mümkün olduğu tek penceredir ve dardır. Toplantıyla doldurulursa, gerçekten aynı anda konuşulması gereken kritik kararlar için yer kalmaz. Yazıyla halledilebilecek her şey o pencerenin dışına, async'e taşınmalıdır."
+    }
+  ]
+}

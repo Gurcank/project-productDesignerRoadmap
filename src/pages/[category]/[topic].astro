@@ -1,0 +1,484 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import StepList from "~/components/StepList.astro";
+import { getPublishedCategories, topicHref, topicId, topicSlug } from "~/lib/content";
+import { DIAGRAM_BY_SECTION } from "~/components/diagrams";
+import TermTooltips from "~/components/TermTooltips.astro";
+import Checkbox from "~/components/ui/Checkbox.astro";
+import BrowseNav from "~/components/ui/BrowseNav.astro";
+
+export async function getStaticPaths() {
+  const published = await getPublishedCategories();
+  return published.flatMap(({ category, topics }) =>
+    topics.map((topic, index) => ({
+      params: { category: category.slug, topic: topicSlug(topic) },
+      props: {
+        category,
+        topics,
+        topic,
+        previous: index > 0 ? topics[index - 1] : null,
+        next: index < topics.length - 1 ? topics[index + 1] : null,
+      },
+    })),
+  );
+}
+
+const { category, topics, topic, previous, next } = Astro.props;
+const { Content, headings } = await render(topic);
+
+const id = topicId(topic);
+const cardHeadings = headings.filter((heading) => heading.depth === 3);
+
+// Categories written for this site have no quiz; linking to one would 404.
+const quizzes = await getCollection("quizzes");
+const hasQuiz = quizzes.some((quiz) => quiz.data.category === category.slug);
+
+/*
+ * The diagram sits between the section intro and the term cards: the intro says
+ * what the section is about, the drawing shows the shape of it, then the cards
+ * name the parts. Keyed by section number so the imported markdown stays
+ * untouched (ADR-002).
+ */
+const Diagram = DIAGRAM_BY_SECTION[topic.data.sectionNumber as keyof typeof DIAGRAM_BY_SECTION] ?? null;
+
+const FLAG_LABEL: Record<string, { text: string; title: string }> = {
+  degisken: {
+    text: "Değişken bilgi",
+    title: "Bu adımda hızlı eskiyen bilgi var — kullanmadan önce doğrula.",
+  },
+  "emin-degil": {
+    text: "Emin değilim",
+    title: "Kaynak, bu noktada kesin olmadığını belirtiyor.",
+  },
+};
+---
+
+<BaseLayout title={topic.data.title} description={`${category.title} · ${topic.data.title}`} section="roadmap">
+  <div class="topic">
+    <aside class="topic__nav" aria-label={`${category.title} adımları`}>
+      <a class="topic__back" href={`/${category.slug}/`}>← {category.title}</a>
+      <StepList
+        topics={topics}
+        activeId={id}
+        categorySlug={category.slug}
+        categoryTitle={category.title}
+        quizHref={hasQuiz ? `/${category.slug}/test/` : undefined}
+      />
+    </aside>
+
+    {/* Pagefind indexes only what carries data-pagefind-body, so marking the
+        article here is what keeps the header, the step rail and the pager out
+        of every search result. */}
+    <article
+      class="topic__main"
+      data-topic-page={id}
+      data-pagefind-body
+      data-pagefind-filter={`kategori:${category.title}`}
+      data-pagefind-meta={`kategori:${category.title}`}
+    >
+      <header class="topic__head">
+        <p class="topic__eyebrow">
+          <a href={`/${category.slug}/`}>{category.title}</a>
+          {topic.data.sectionNumber && <span class="topic__number">{topic.data.sectionNumber}</span>}
+        </p>
+        <h1>{topic.data.title}</h1>
+        <p class="topic__meta">
+          {topic.data.cardCount > 0 && <span>{topic.data.cardCount} terim</span>}
+          {
+            /* Pages written for this site must say so on their face — the whole
+               point of the material is that it is the user's own verified source. */
+            topic.data.origin === "new" && (
+              <span class="flag flag--new" title="Bu sayfa referans dosyasında yok; bu site için yazıldı.">
+                Materyal dışı
+              </span>
+            )
+          }
+          {
+            topic.data.flags.map((flag) => (
+              <span class="flag" title={FLAG_LABEL[flag]?.title}>
+                {FLAG_LABEL[flag]?.text ?? flag}
+              </span>
+            ))
+          }
+        </p>
+      </header>
+
+      {Diagram && <Diagram />}
+
+      <div class="prose content">
+        <Content />
+      </div>
+
+      {/* Controls and navigation live inside the indexed article; they are
+          not content, so they are excluded from the index explicitly. */}
+      {
+        topic.data.sources.length > 0 && (
+          <aside class="sources" aria-labelledby="kaynaklar">
+            <h2 id="kaynaklar" class="sources__title">
+              Kaynaklar
+            </h2>
+            <ul>
+              {topic.data.sources.map((source) => (
+                <li>
+                  <a href={source.url} rel="noreferrer">
+                    {source.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        )
+      }
+
+      <div class="topic__done" data-pagefind-ignore>
+        <Checkbox class="done" value={id} label="Bu adımı tamamladım" />
+      </div>
+
+      <nav class="pager" aria-label="Adımlar arası gezinme" data-pagefind-ignore>
+        <BrowseNav
+          direction="back"
+          href={previous ? topicHref(previous) : undefined}
+          kicker="Önceki"
+          title={previous ? previous.data.title : "Bu kategorinin ilk adımı"}
+        />
+        {
+          next ? (
+            <BrowseNav
+              direction="forward"
+              href={topicHref(next)}
+              kicker="Sonraki"
+              title={next.data.title}
+              attrs={{ "data-advance": true }}
+            />
+          ) : hasQuiz ? (
+            <BrowseNav
+              direction="forward"
+              href={`/${category.slug}/test/`}
+              kicker="Son adım"
+              title="Kendini test et"
+              attrs={{ "data-advance": true }}
+            />
+          ) : (
+            <BrowseNav
+              direction="forward"
+              href="/"
+              kicker="Son adım"
+              title="Yol haritasına dön"
+              attrs={{ "data-advance": true }}
+            />
+          )
+        }
+      </nav>
+    </article>
+
+    {
+      cardHeadings.length > 2 && (
+        <aside class="topic__toc" aria-label="Bu sayfadaki terimler">
+          <p class="topic__toc-title">Bu sayfadaki terimler</p>
+          <ol>
+            {cardHeadings.map((heading) => (
+              <li>
+                <a href={`#${heading.slug}`}>{heading.text}</a>
+              </li>
+            ))}
+          </ol>
+        </aside>
+      )
+    }
+  </div>
+
+  <TermTooltips />
+</BaseLayout>
+
+<script>
+  import { initProgress, $progress, markVisited, setDone } from "~/lib/progress";
+
+  initProgress();
+
+  const page = document.querySelector<HTMLElement>("[data-topic-page]");
+  if (page) {
+    const id = page.dataset.topicPage!;
+    markVisited(id);
+
+    /*
+     * Moving forward means you are done with this one. Reaching the next step
+     * and finding this one still unticked was the surest way for the progress
+     * count to drift from what had actually been read.
+     */
+    for (const link of document.querySelectorAll<HTMLAnchorElement>("[data-advance]")) {
+      link.addEventListener("click", () => setDone(id, true));
+    }
+
+    /*
+     * Swipe between steps, touch only. Horizontal movement must clearly beat
+     * vertical or every attempt to scroll the page would fire a navigation,
+     * and a gesture that starts inside a table or diagram belongs to that
+     * container's own horizontal scroll, not to us.
+     */
+    const prevHref = document.querySelector<HTMLAnchorElement>('.pager a[rel="prev"]')?.href;
+    const nextHref = document.querySelector<HTMLAnchorElement>("[data-advance]")?.href;
+    let startX = 0;
+    let startY = 0;
+
+    page.addEventListener(
+      "touchstart",
+      (event) => {
+        const touch = event.changedTouches[0]!;
+        startX = touch.clientX;
+        startY = touch.clientY;
+      },
+      { passive: true },
+    );
+
+    page.addEventListener(
+      "touchend",
+      (event) => {
+        const touch = event.changedTouches[0]!;
+        const dx = touch.clientX - startX;
+        const dy = touch.clientY - startY;
+        if (Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 2) return;
+        if ((event.target as Element).closest(".table-scroll, .diagram__canvas")) return;
+
+        if (dx < 0 && nextHref) {
+          setDone(id, true);
+          location.href = nextHref;
+        } else if (dx > 0 && prevHref) {
+          location.href = prevHref;
+        }
+      },
+      { passive: true },
+    );
+
+    // The in-page checkbox and the sidebar tick are two views of one value.
+    const inline = page.querySelector<HTMLInputElement>(`[data-topic-check="${CSS.escape(id)}"]`);
+    if (inline) {
+      inline.addEventListener("change", () => setDone(id, inline.checked));
+      $progress.subscribe((progress) => {
+        inline.checked = progress.topics[id]?.done === true;
+      });
+    }
+  }
+</script>
+
+<style>
+  .topic {
+    display: grid;
+    gap: var(--spacing-8);
+    max-width: 90rem;
+    margin-inline: auto;
+    padding: var(--spacing-6) var(--spacing-4) var(--spacing-16);
+  }
+
+  /* Phone: content first, step list after it. Desktop: list becomes the rail. */
+  .topic__main {
+    order: 1;
+    min-width: 0;
+  }
+
+  .topic__nav {
+    order: 2;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+    padding-block-start: var(--spacing-6);
+    border-top: 1px solid var(--c-border);
+  }
+
+  .topic__toc {
+    order: 3;
+    font-size: var(--text-sm);
+  }
+
+  /* Standalone navigation links get a 24px box (WCAG 2.2 SC 2.5.8); the inline
+     exception only covers links sitting inside a sentence. align-self keeps the
+     target on the text instead of stretching across the whole rail. */
+  .topic__back {
+    align-self: start;
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+    text-decoration: none;
+  }
+
+  .topic__back:hover {
+    color: var(--c-text);
+  }
+
+  .topic__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-text-muted);
+  }
+
+  .topic__eyebrow a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    color: inherit;
+  }
+
+  .topic__number {
+    font-variant-numeric: tabular-nums;
+    padding-inline: var(--spacing-2);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-full);
+  }
+
+  .topic__head h1 {
+    margin-block: var(--spacing-3) var(--spacing-3);
+    font-size: var(--text-2xl);
+    letter-spacing: -0.02em;
+  }
+
+  .topic__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--text-xs);
+    color: var(--c-text-muted);
+  }
+
+  .content {
+    margin-block-start: var(--spacing-8);
+  }
+
+  /* The badge that marks a page as written for this site, not imported. Amber
+     is the site's own colour, which is exactly what this flag means. */
+  .flag--new {
+    border-color: var(--c-progress);
+    color: var(--c-progress-text);
+  }
+
+  .sources {
+    margin-block-start: var(--spacing-12);
+    padding: var(--spacing-4);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-raised);
+  }
+
+  .sources__title {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-text-muted);
+  }
+
+  .sources ul {
+    margin-block-start: var(--spacing-2);
+    padding-inline-start: var(--spacing-4);
+    font-size: var(--text-sm);
+  }
+
+  .sources li + li {
+    margin-block-start: var(--spacing-1);
+  }
+
+  .topic__done {
+    margin-block-start: var(--spacing-12);
+    padding-block: var(--spacing-4);
+    border-top: 1px solid var(--c-border);
+  }
+
+  .done {
+    padding: var(--spacing-2) var(--spacing-4);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-full);
+    min-height: 44px;
+  }
+
+  .done:hover {
+    background-color: var(--c-surface-raised);
+  }
+
+  .done:has(input:checked) {
+    border-color: var(--c-progress);
+  }
+
+  .pager {
+    display: grid;
+    gap: var(--spacing-3);
+    margin-block-start: var(--spacing-8);
+  }
+
+  .topic__toc ol {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+    margin-block-start: var(--spacing-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .topic__toc a {
+    color: var(--c-text-secondary);
+    text-decoration: none;
+  }
+
+  .topic__toc a:hover {
+    color: var(--c-text);
+  }
+
+  .topic__toc-title {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-text-muted);
+  }
+
+  @media (min-width: 48rem) {
+    .pager {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .topic {
+      grid-template-columns: 17rem minmax(0, 1fr);
+      gap: var(--spacing-12);
+      padding-inline: var(--spacing-6);
+      align-items: start;
+    }
+
+    .topic__nav {
+      order: 0;
+      position: sticky;
+      inset-block-start: 5rem;
+      max-height: calc(100vh - 6rem);
+      overflow-y: auto;
+      padding-block-start: 0;
+      border-top: 0;
+    }
+
+    .topic__toc {
+      display: none;
+    }
+  }
+
+  /* The third rail only appears when the reading column can still hold its
+     measure next to it — below that, content beats convenience. */
+  @media (min-width: 87.5rem) {
+    .topic {
+      grid-template-columns: 17rem minmax(0, 1fr) 14rem;
+    }
+
+    .topic__toc {
+      display: block;
+      order: 2;
+      position: sticky;
+      inset-block-start: 5rem;
+      max-height: calc(100vh - 6rem);
+      overflow-y: auto;
+    }
+  }
+</style>

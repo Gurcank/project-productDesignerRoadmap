@@ -1,0 +1,116 @@
+{
+  "category": "sistem-mimarisi",
+  "source": "14-sistem-mimarisi.md",
+  "items": [
+    {
+      "n": 1,
+      "question": "Mimari kararlar neden erken verilir? Karar sınıflarını geri dönüş maliyetine göre sırala.",
+      "answer": "Çünkü **geri dönüşü en pahalı karar sınıfıdır.** Maliyet sırası: buton rengi (saatler) → ekran tasarımı (günler–haftalar) → veri modeli (aylar) → mimari (çoğu zaman değiştirilmez, yeniden yazılır)."
+    },
+    {
+      "n": 2,
+      "question": "Tek yönlü ve çift yönlü kapı kararları nedir? Ekiplerin bu konudaki en yaygın hatası nedir?",
+      "answer": "**Çift yönlü kapı**: yanlışsa geri dönülebilir. **Tek yönlü kapı**: geri dönüş yok veya çok pahalı. En yaygın hata **ikisini karıştırmaktır**: buton rengini saatlerce tartışıp veritabanı seçimini bir öğleden sonrada yapmak."
+    },
+    {
+      "n": 3,
+      "question": "\"Monolith eski, mikroservis modern\" ifadesi neden yanlış? Monolith'in asıl sorunu nedir?",
+      "answer": "Çünkü ikisi farklı problemleri çözer; biri diğerinin evrimleşmiş hâli değildir. Monolith'in asıl sorunu **büyüklük değil, düzensizliktir** — sınırları belirsiz, her şeyin her şeye dokunduğu bir kod tabanı. Çözümü mikroservis değil, **modüler yapıdır**."
+    },
+    {
+      "n": 4,
+      "question": "Modular monolith neyi hedefler?",
+      "answer": "Mikroservisin **disiplinli sınırlarını**, monolith'in **operasyonel basitliğiyle** birleştirmeyi. Modüller yalnızca tanımlı arayüzlerden konuşur; ileride bir modül ayrı servise çıkarılacaksa sınır zaten hazırdır."
+    },
+    {
+      "n": 5,
+      "question": "Mikroservisin asıl faydası teknik mi organizasyonel mi? Açıkla.",
+      "answer": "**Organizasyoneldir.** Çok sayıda ekip, birbirini beklemeden kendi servisini yayınlayabilir. Teknik faydalar (bağımsız ölçekleme, hata yalıtımı) gerçektir ama asıl gerekçe ekip yapısıdır — bu yüzden üç kişilik bir ekipte mikroservis genelde anlamsızdır."
+    },
+    {
+      "n": 6,
+      "question": "Distributed monolith nedir ve neden en kötü sonuçtur?",
+      "answer": "Servislerin ayrı ayrı dağıtıldığı ama birbirine sıkı bağlı olduğu, yani bağımsız yayınlanamadığı yapı. En kötü sonuçtur çünkü **mikroservisin tüm maliyetini ödersin, hiçbir faydasını almazsın.**"
+    },
+    {
+      "n": 7,
+      "question": "Amazon Prime Video vakası hakkında hangi nüansları bilmek gerekir?",
+      "answer": "Söz konusu olan **bir izleme aracıydı**, Prime Video platformunun tamamı değil. Başlangıç noktası klasik mikroservis değil, **serverless bir tasarımdı**. Ayrıca \"kuruluşların %X'i geri dönüyor\" biçimindeki yüzdelerin güvenilir bir kaynağa dayanmadığı belirtiliyor. Çıkarılacak ders nitel: **dağıtık mimari operasyonel maliyetini hak etmek zorundadır.**"
+    },
+    {
+      "n": 8,
+      "question": "\"Düşük bağlılık, yüksek uyumluluk\" ne demek? Tasarımdaki karşılığı nedir?",
+      "answer": "Parçalar **içeride sıkı, dışarıya karşı gevşek** olmalı: bir modülün içindeki şeyler birbirine ait olmalı (cohesion), modüller arasındaki bağ ise mümkün olduğunca zayıf olmalı (coupling). Tasarımdaki karşılığı, iyi bileşen tanımıyla aynıdır: kendi içinde bütün, dışarıya net bir arayüz sunan."
+    },
+    {
+      "n": 9,
+      "question": "Event-driven mimarinin kazandırdığı ve kaybettirdiği nedir?",
+      "answer": "**Kazandırır:** bağlılığı düşürür — olayı yayınlayan, kimin dinlediğini bilmek zorunda değildir; yeni dinleyici eklemek mevcut kodu değiştirmez. **Kaybettirir:** takip edilebilirlik — bir şeyin neden olduğunu izlemek zorlaşır, çünkü çağrı zinciri açık değildir."
+    },
+    {
+      "n": 10,
+      "question": "Yatay ölçeklemenin ön koşulu nedir? Oturumlar sunucu belleğinde tutulursa ne olur?",
+      "answer": "**Stateless olmak.** Oturumlar sunucu belleğinde tutulursa, ikinci bir kopya eklendiğinde kullanıcı o kopyaya düştüğünde çıkış yapmış olur. Çözüm: durumu paylaşılan bir yere (Redis, veritabanı) taşımak veya jetonda taşımak."
+    },
+    {
+      "n": 11,
+      "question": "Graceful degradation neden bir tasarım işidir? Bir örnek ver.",
+      "answer": "Çünkü \"hangi bölüm olmadan bu sayfa hâlâ işe yarar?\" bir tasarım sorusudur ve cevabı ekranlara yansır. Örnek: öneri servisi çöktüğünde ürün sayfası çökmemeli; sadece öneriler bölümü gizlenmeli veya kendi içinde bir hata kutusu göstermelidir."
+    },
+    {
+      "n": 12,
+      "question": "Ortalama yanıt süresine bakmak neden yetersiz? Hangi ölçüye bakılmalı?",
+      "answer": "Çünkü **ortalama yalan söyler.** Ortalaması 200ms olan bir sistemde kullanıcıların %5'i 4 saniye bekliyor olabilir. **p95 ve p99** gibi yüzdelik dilimlere bakılmalıdır; kötü deneyim orada saklıdır."
+    },
+    {
+      "n": 13,
+      "question": "%99,9 ve %99,99 hedefleri yıllık kaç saat/dakika kesintiye karşılık gelir?",
+      "answer": "%99,9 ≈ yılda **8,8 saat** (ayda ~43 dakika). %99,99 ≈ yılda **53 dakika** (ayda ~4,3 dakika)."
+    },
+    {
+      "n": 14,
+      "question": "SLI, SLO ve SLA arasındaki fark nedir? İç SLO neden SLA'dan sıkı tutulur?",
+      "answer": "**SLI** ölçülen göstergedir, **SLO** ekibin kendine koyduğu iç hedeftir, **SLA** müşteriye verilen ve ihlalinde yaptırımı olan sözleşmesel taahhüttür. İç SLO daha sıkı tutulur ki **söz ihlal edilmeden önce uyarı alınsın**."
+    },
+    {
+      "n": 15,
+      "question": "Error budget nedir ve neyi çözer?",
+      "answer": "SLO hedefinden artakalan kesinti payı (%99,9 → yılda ~8,8 saat). Hız ile güvenilirlik tartışmasını sayıya bağlar: bütçe tükenmediyse ekip risk alıp hızlı yayın yapabilir, tükendiyse istikrara odaklanır."
+    },
+    {
+      "n": 16,
+      "question": "Nihai tutarlılığın arayüzdeki sonucu nedir? Tasarım çözümü nedir?",
+      "answer": "Kullanıcı bir şeyi kaydeder, sayfayı yeniler ve **eski hâli görür** — sistem bozuk değildir ama kullanıcı öyle sanır. Tasarım çözümü: kullanıcının kendi değişikliğini anında göstermek (optimistic UI) ve \"güncelleniyor\" durumunu belirtmek."
+    },
+    {
+      "n": 17,
+      "question": "Idempotency key neyi engeller? Butonu devre dışı bırakmak yeterli mi?",
+      "answer": "Aynı isteğin iki kez işlenmesini — yani çift sipariş, çift ödeme. **Butonu devre dışı bırakmak yeterli değildir**: istemci tarafı bir önlemdir, ağ koptuğunda veya istemci yeniden denediğinde koruma sağlamaz. Asıl koruma sunucudadır; ikisi birlikte kullanılır."
+    },
+    {
+      "n": 18,
+      "question": "Yeniden denemelere neden jitter eklenir?",
+      "answer": "Yoksa tüm istemciler aynı anda tekrar dener ve zaten sıkışık servisi yeniden boğar (\"yeniden deneme fırtınası\"). Jitter, beklemeye rastgelelik ekleyerek denemeleri zamana yayar."
+    },
+    {
+      "n": 19,
+      "question": "Circuit breaker ne yapar ve hangi tasarım kararını gerektirir?",
+      "answer": "Sürekli hata veren bir bağımlılığa istek atmayı bir süre tamamen durdurup hızlıca hata döner; böylece hem kendi kaynaklarını korur hem çökmüş servisi daha da boğmaz. Gerektirdiği tasarım kararı: **devre kesildiğinde arayüzde ne görüneceği** (graceful degradation)."
+    },
+    {
+      "n": 20,
+      "question": "Bir ADR'de en sık atlanan iki madde nedir ve atlanınca ne olur?",
+      "answer": "**Değerlendirilen alternatifler** ve **sonuçlar**. Alternatifler yazılmazsa yeni gelen biri aynı seçeneği yeniden önerir ve tartışma sıfırdan başlar. Sonuçlar yazılmazsa kararın bedelini kimse takip etmez."
+    },
+    {
+      "n": 21,
+      "question": "Bir mimari diyagramında okun yönü neyi söyler?",
+      "answer": "**Kimin kimi çağırdığını, yani bağımlılık yönünü.** A → B ise A, B'ye bağımlıdır: B'nin çökmesi A'yı etkiler, tersi geçerli olmayabilir. Kesikli oklar genelde eş zamansız, düz oklar eş zamanlı iletişimi gösterir."
+    },
+    {
+      "n": 22,
+      "question": "Bir diyagrama bakarken sorulacak beş soru nedir?",
+      "answer": "(1) Kullanıcı isteği hangi kutulardan geçiyor? (2) Hangi kutu çökerse ne olur? (3) Hangi oklar bir sınırı geçiyor? (4) Veri nerede duruyor ve nasıl senkron kalıyor? (5) Ne eksik — izleme, önbellek, kuyruk, yedeklilik?"
+    }
+  ]
+}

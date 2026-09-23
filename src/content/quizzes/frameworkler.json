@@ -1,0 +1,106 @@
+{
+  "category": "frameworkler",
+  "source": "09-framework-ve-kutuphane-haritasi.md",
+  "items": [
+    {
+      "n": 1,
+      "question": "Library ile framework arasındaki fark nedir? React hangisidir?",
+      "answer": "Library'de kontrol sende: sen onu çağırırsın. Framework'te kontrol tersine döner: o seni çağırır ve yapıyı o belirler. React teknik olarak bir **kütüphanedir**, ama günlük konuşmada herkes framework der."
+    },
+    {
+      "n": 2,
+      "question": "Meta-framework neyi çözer? React tek başına neden yetmez?",
+      "answer": "React tek başına yalnızca arayüz çizer; yönlendirme, sunucu tarafı işleme, veri çekme, build ve deploy kararlarını çözmez. Meta-framework bunların hepsini bir arada verir."
+    },
+    {
+      "n": 3,
+      "question": "React'in \"en iyi\" olduğu için değil, hangi sebeple varsayılan seçim olduğu söylenir?",
+      "answer": "**Ekosistemi en büyük olduğu için.** Her problem için hazır çözüm, her soru için yazılmış cevap ve geniş bir geliştirici havuzu var. Bu teknik bir üstünlük değil, bir risk azaltma argümanıdır."
+    },
+    {
+      "n": 4,
+      "question": "Astro'nun temel farkı nedir? Ne zaman Next.js yerine tercih edilir, ne zaman edilmez?",
+      "answer": "Astro varsayılan olarak **sıfır JavaScript** gönderir ve islands mimarisini merkeze alır. Blog, dokümantasyon, pazarlama sitesi gibi içerik odaklı işlerde Next.js'ten daha uygundur. Yoğun etkileşimli uygulamalar (panel, editör) için tasarlanmamıştır."
+    },
+    {
+      "n": 5,
+      "question": "\"Remix\" kelimesini duyduğunda neden hangisinden bahsedildiğini sorman gerekir?",
+      "answer": "Çünkü üç farklı şeye işaret edebilir: (1) eski Remix v2 (destek dışı kaldığı raporlanıyor), (2) Remix'in devamı olan **React Router v7**, (3) sıfırdan yeniden yazılan ve beta aşamasındaki **Remix 3**. Üçü farklı şeyler."
+    },
+    {
+      "n": 6,
+      "question": "Headless ile styled component kütüphanesi arasındaki fark nedir? Kendi tasarım sistemin varsa hangisi?",
+      "answer": "Headless kütüphane **davranışı** verir (klavye, odak, ARIA, açılma mantığı), görünümü vermez. Styled kütüphane ikisini birden verir. Kendi tasarım sistemin varsa **headless** seçilir: zor kısmı hazır alır, görünümü kendin kurarsın."
+    },
+    {
+      "n": 7,
+      "question": "shadcn/ui'nin diğer kütüphanelerden yapısal farkı nedir? Bu farkın avantajı ve bedeli nedir?",
+      "answer": "shadcn/ui bir npm paketi değildir; bileşen **kodunu doğrudan projene kopyalar**. Avantajı: kodu sahiplenirsin, değiştirmek için kütüphanenin iznine ihtiyacın olmaz. Bedeli: güncellemeler otomatik gelmez, bakım senin sorumluluğundadır."
+    },
+    {
+      "n": 8,
+      "question": "Bir modalı sıfırdan yazmak yerine headless bir primitif kullanmanın erişilebilirlik gerekçesi nedir?",
+      "answer": "Çünkü odak hapsi, klavye gezinmesi, ARIA nitelikleri ve Esc davranışı sıfırdan doğru yazmak sanılandan çok zordur ve genelde eksik yazılır. Test edilmiş bir primitif bunları hazır getirir — **yani kütüphane seçimi bir erişilebilirlik kararıdır.**"
+    },
+    {
+      "n": 9,
+      "question": "Styled bir kütüphaneyi kendi tasarımına benzetmeye çalışmak neden riskli?",
+      "answer": "Çünkü kütüphanenin varsayılan görünümüne ne kadar uzaksan o kadar çok savaşırsın. Görünümü tamamen değiştirmek, headless bir temelden başlamaktan genelde daha pahalıdır."
+    },
+    {
+      "n": 10,
+      "question": "Framer Motion'a ne oldu? Paket adı ve içe aktarma yolu ne oldu?",
+      "answer": "Bağımsız bir proje hâline gelip **Motion** adını aldı. Paket `framer-motion` yerine **`motion`**, içe aktarma yolu **`motion/react`** oldu. Eski paket hâlâ çalışıyor. Ayrıca artık vanilla JavaScript ve Vue de destekliyor."
+    },
+    {
+      "n": 11,
+      "question": "GSAP'ın fiyatlandırmasında ne değişti ve bu neden önemli?",
+      "answer": "Webflow'un GreenSock'u satın almasının ardından, önceden ücretli olan tüm eklentiler dahil **GSAP'ın tamamı ticari kullanım için ücretsiz** hâle geldi (30 Nisan 2025 olarak raporlanıyor). Önemli çünkü \"GSAP pahalı\" diyen tüm eski kaynaklar geçersiz."
+    },
+    {
+      "n": 12,
+      "question": "Motion ile GSAP rakip mi? Hangisi hangi iş için?",
+      "answer": "Rakip değiller, farklı işler için araçlar. **Motion**: React arayüz hareketi — giriş/çıkış geçişleri, yerleşim animasyonları, jestler. **GSAP**: karmaşık zaman çizelgeleri, kaydırmaya bağlı anlatım, sabitleme. Aynı projede ikisi de kullanılabilir; yeter ki her öğenin sahibi net olsun."
+    },
+    {
+      "n": 13,
+      "question": "Lenis gibi yumuşak kaydırma kütüphaneleri hangi erişilebilirlik riskini taşır?",
+      "answer": "Kullanıcının beklediği kaydırma hissini değiştirir; bazı kullanıcılarda rahatsızlık ve yön kaybı yaratabilir. `prefers-reduced-motion` açıkken devre dışı kalmalıdır."
+    },
+    {
+      "n": 14,
+      "question": "Client state ile server state arasındaki fark nedir? Sunucu verisini Zustand'da tutmak neden yaygın bir hata?",
+      "answer": "Client state arayüzün kendi verisidir (menü açık mı, hangi sekme seçili). Server state sunucudaki verinin bir **kopyasıdır** ve her an eskiyebilir. Sunucu verisini Zustand/Redux'ta tutmak hatadır çünkü o araçlar önbellek geçersizleştirme, arka planda tazeleme ve yeniden deneme gibi işleri bilmez; ekip hepsini elle yazmak zorunda kalır."
+    },
+    {
+      "n": 15,
+      "question": "TanStack Query'nin tasarımcıyı ilgilendiren yanı nedir?",
+      "answer": "Yükleme, hata, boş ve \"eski veri gösterilirken tazeleniyor\" durumlarını hazır yönetir — **yani senin tasarlaman gereken durumları ortaya çıkarır** (7.9). Ayrıca optimistic UI desteği hazır gelir."
+    },
+    {
+      "n": 16,
+      "question": "TypeScript ile Zod arasındaki fark nedir? Neden ikisi birden gerekir?",
+      "answer": "TypeScript **yazarken** korur (derleme zamanı); sunucudan beklenmedik veri gelirse hiçbir şey yapmaz. Zod **çalışma zamanında** verinin şemaya uyup uymadığını kontrol eder. İkisi farklı anlarda korur ve birbirinin yerine geçmez."
+    },
+    {
+      "n": 17,
+      "question": "Headless CMS'te tasarımcının sorumluluğu nedir? Neden içerik modeli tasarımla birlikte kurulmalı?",
+      "answer": "CMS'te tanımlanan **alan yapısı**, tasarımın esnekliğini belirler. Alanlar önceden düşünülmezse editör beklenmedik uzunlukta veya biçimde içerik girer ve tasarım bozulur. Bu yüzden içerik modeli tasarımla birlikte kurulmalıdır."
+    },
+    {
+      "n": 18,
+      "question": "Bir kütüphane önerildiğinde soracağın en az beş soru say.",
+      "answer": "En az beşi: Hangi problemi çözüyor? · Eklemesek ne olur? · Bakımı sürüyor mu? · Paket boyutu ne? · Erişilebilirliği nasıl? · Ekip biliyor mu? · Vazgeçmek ne kadar zor? · Kim sahibi, satın alınırsa ne olur?"
+    },
+    {
+      "n": 19,
+      "question": "\"Vendor lock-in'den kaçınalım\" doğru bir hedef mi? Daha iyi soru nedir?",
+      "answer": "Tam olarak doğru bir hedef değil — her bağımlılık karşılığında hız ve kolaylık alırsın. Daha iyi soru: **\"Çıkmak isteseydik maliyeti ne olurdu ve bu maliyeti kabul ediyor muyuz?\"** Sorun bağımlılık değil, bağımlılığın bilinçsiz olmasıdır."
+    },
+    {
+      "n": 20,
+      "question": "\"Choose boring technology\" ilkesi yeniliğe kapalı olmak mıdır? Değilse ne demektir?",
+      "answer": "Hayır. Her yeni teknoloji bilinmeyen sorunlar getirir ve bir projede taşıyabileceğin bilinmeyen sayısı sınırlıdır. İlke, o **yenilik bütçesini asıl probleme harcamayı** söyler — araç seçimine değil."
+    }
+  ]
+}

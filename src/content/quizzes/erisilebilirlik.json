@@ -1,0 +1,96 @@
+{
+  "category": "erisilebilirlik",
+  "source": "06-erisilebilirlik-a11y.md",
+  "items": [
+    {
+      "n": 1,
+      "question": "Erişilebilirlik ile kullanılabilirlik arasındaki fark nedir?",
+      "answer": "Kullanılabilirlik herkes için kolaylık; erişilebilirlik belirli engelleri olan kişiler için **kullanılabilir olmak**. Bir ürün son derece kullanışlı ama tamamen erişilemez olabilir — örneğin klavyeyle hiç çalışmayan, çok akıcı bir arayüz."
+    },
+    {
+      "n": 2,
+      "question": "\"Engelin üç hâli\" nedir ve bu çerçeve erişilebilirliği savunurken neden işe yarar?",
+      "answer": "Kalıcı (tek kolu olmayan), geçici (kolu alçıda), duruma bağlı (bebek taşıyan). İşe yarar çünkü erişilebilirliğin \"küçük bir azınlık için\" olmadığını gösterir: aynı arayüz problemini çok daha geniş bir kitle yaşar."
+    },
+    {
+      "n": 3,
+      "question": "WCAG'in POUR ilkeleri nelerdir? \"İçerik görünüyor ama klavyeyle ulaşılamıyor\" hangi ilkeye girer?",
+      "answer": "Perceivable, Operable, Understandable, Robust. Klavyeyle ulaşılamama **Operable** ilkesine girer — içerik algılanabiliyor ama işletilemiyor."
+    },
+    {
+      "n": 4,
+      "question": "Hangi uyum seviyesi pratik ve yasal hedeftir ve neden AAA hedeflenmez?",
+      "answer": "**AA**. Düzenlemelerin neredeyse tamamı AA'yı referans alır. AAA bazı içerik türleri için tam olarak karşılanamaz (örneğin 7:1 kontrast çoğu marka rengiyle mümkün değildir) ve W3C'nin kendisi de tüm siteler için AAA hedeflenmesini önermez."
+    },
+    {
+      "n": 5,
+      "question": "Görsel olarak buton gibi görünen bir `div` neden sorunludur? En az üç kayıp say.",
+      "answer": "(1) Klavyeyle odaklanılamaz, Tab ile ulaşılamaz. (2) Enter/Space ile çalışmaz. (3) Ekran okuyucuya \"buton\" olarak tanıtılmaz. (4) Tarayıcının varsayılan odak göstergesini almaz. Hepsi elle eklenmek zorunda kalır ve genelde eksik eklenir."
+    },
+    {
+      "n": 6,
+      "question": "Link ile buton arasındaki fark nedir? \"Sepete ekle\" hangisi olmalı?",
+      "answer": "Link kullanıcıyı **bir yere götürür**, buton bir **eylem yapar**. \"Sepete ekle\" bir eylemdir → buton. Görsel olarak ikisi de buton gibi görünebilir; belirleyici olan işlevdir."
+    },
+    {
+      "n": 7,
+      "question": "Başlık seviyesi (h2, h3) neye göre seçilir? Görünüme mi yapıya mı?",
+      "answer": "**Yapıya göre.** Başlık seviyesi içeriğin hiyerarşisini yansıtır; görünüm CSS ile ayarlanır. Küçük görünmesi gereken bir h2, h4 yapılmaz — küçültülür."
+    },
+    {
+      "n": 8,
+      "question": "Dekoratif bir görselin alt metni ne olmalı ve neden?",
+      "answer": "Boş bırakılmalı (`alt=\"\"`). Bu \"unutmak\" değil, ekran okuyucuya \"bunu atla\" demektir. Her dekoratif görsele metin yazmak, dinleyen kullanıcıyı gereksiz gürültüye boğar."
+    },
+    {
+      "n": 9,
+      "question": "ARIA'nın birinci kuralı nedir? Yanlış ARIA neden hiç ARIA'dan kötü olabilir?",
+      "answer": "\"Mümkünse ARIA kullanma\" — doğru HTML elemanı varsa onu kullan. Yanlış ARIA daha kötüdür çünkü yardımcı teknolojiye **yanlış bilgi** verir: `role=\"button\"` yazılmış ama klavye desteği eklenmemiş bir `div`, artık kendini buton olarak tanıtır ama çalışmaz."
+    },
+    {
+      "n": 10,
+      "question": "Bir filtre uygulandığında \"12 sonuç bulundu\" yazısı beliriyor. Ekran okuyucu kullanıcısı bunu neden duymayabilir ve çözüm nedir?",
+      "answer": "Görsel değişim ekran okuyucuya otomatik duyurulmaz. Çözüm: o alanı **canlı bölge** (`aria-live`) olarak tanımlamak, böylece içerik değiştiğinde duyurulsun."
+    },
+    {
+      "n": 11,
+      "question": "Focus ring'i \"tasarımı bozuyor\" diye kaldırmak yerine ne yapılır?",
+      "answer": "Kaldırmak yerine **markaya uygun, yeterince görünür ve kontrast eşiğini (3:1) sağlayan** bir odak göstergesi tasarlanır. Ayrıca göstergeyi yalnızca klavye kullanımında göstermek mümkündür — fareyle tıklandığında görünmez."
+    },
+    {
+      "n": 12,
+      "question": "Modal açıldığında odakla ilgili üç şey yapılmalı. Nedir?",
+      "answer": "(1) Açılınca odak modalın içine taşınır (genelde başlığa). (2) Odak modal içinde döner, arkaya kaçmaz (focus trap). (3) Kapanınca odak, modalı açan öğeye geri döner. (Ek olarak Esc ile kapanmalı.)"
+    },
+    {
+      "n": 13,
+      "question": "SPA'da sayfa geçişinde ekran okuyucu kullanıcısı neden değişimi fark etmeyebilir?",
+      "answer": "SPA'da sayfa gerçekten yenilenmez; odak eski yerinde kalır ve tarayıcı yeni bir belge yüklemediği için ekran okuyucu bir değişim duyurmaz. Çözüm: geçişte odağı yeni sayfanın başlığına taşımak ve değişimi duyurmak (focus management)."
+    },
+    {
+      "n": 14,
+      "question": "WCAG 2.2'nin getirdiği minimum dokunma hedefi boyutu nedir? Görünen ikonu büyütmeden bu nasıl sağlanır?",
+      "answer": "**24×24 CSS pikseli** (SC 2.5.8, AA) — veya çevresinde yeterli aralık bırakmak. Görünen ikon 16px kalabilir; **tıklanabilir alan** dolgu (padding) ile büyütülür, böylece görsel yoğunluk bozulmadan kural karşılanır."
+    },
+    {
+      "n": 15,
+      "question": "Bir form alanında hata var. Kırmızı kenarlık yeterli mi? Değilse ne gerekir?",
+      "answer": "Yeterli değil. Bilgi yalnızca renkle aktarılmamalıdır (SC 1.4.1): renk körlüğü olan kullanıcı kırmızıyı ayırt edemeyebilir. Gerekenler: metinle yazılmış hata mesajı, alanın yanında ve alanla ilişkilendirilmiş; tercihen bir ikon; ve değişimin ekran okuyucuya duyurulması."
+    },
+    {
+      "n": 16,
+      "question": "Zorunlu alanları yıldızlamak yerine önerilen yaklaşım nedir ve neden?",
+      "answer": "Zorunluları yıldızlamak yerine **isteğe bağlı olanları \"(isteğe bağlı)\" diye etiketlemek**. Çoğu formda zorunlu alanlar çoğunluktadır; bu yaklaşım daha az işaret gerektirir, yıldızın anlamını açıklama ihtiyacını ortadan kaldırır ve belirsizlik bırakmaz."
+    },
+    {
+      "n": 17,
+      "question": "Otomatik erişilebilirlik araçları sorunların ne kadarını yakalar? \"Lighthouse 100 verdi\" ne anlama gelir, ne anlama gelmez?",
+      "answer": "Yaygın olarak raporlanan aralık **%30–40**. \"Lighthouse 100 verdi\" yalnızca **makinenin ölçebildiği** kontrollerin geçtiği anlamına gelir; odak sırasının mantıklı olduğu, alt metnin doğru olduğu veya hata mesajının anlaşılır olduğu anlamına **gelmez**."
+    },
+    {
+      "n": 18,
+      "question": "Erişilebilirlik overlay'leri neden eleştirilir?",
+      "answer": "Altta yatan sorunları düzeltmezler, bazı durumlarda yardımcı teknolojilerin kendi ayarlarıyla çakışırlar ve sağladıkları iddia edilen yasal koruma tartışmalıdır. Kalıcı çözüm sorunun kodda ve tasarımda düzeltilmesidir."
+    }
+  ]
+}

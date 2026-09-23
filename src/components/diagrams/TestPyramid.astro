@@ -1,0 +1,37 @@
+---
+import DiagramFigure from "./DiagramFigure.astro";
+---
+
+<DiagramFigure
+  label="Test piramidi şeması"
+  caption="Aşağı indikçe test sayısı artar, hız artar, maliyet düşer; yukarı çıktıkça testler gerçeğe yaklaşır ama yavaşlar ve kırılganlaşır. Piramidin söylediği bir oran değil, bir denge: uçtan uca test 'daha gerçek' diye her şeyi oradan test etmek, her küçük değişiklikte kırılan ve kimsenin güvenmediği bir takım üretir."
+>
+  <svg viewBox="0 0 640 230" role="img" aria-label="Alttan üste birim, entegrasyon ve uçtan uca testleri gösteren piramit">
+    <title>Test piramidi</title>
+
+    {/* Bottom: unit */}
+    <path class="dg-box" d="M60 196 L300 196 L258 140 L102 140 Z"></path>
+    <text class="dg-label" x="180" y="176" text-anchor="middle">Birim (unit)</text>
+
+    {/* Middle: integration */}
+    <path class="dg-box" d="M102 134 L258 134 L216 78 L144 78 Z"></path>
+    <text class="dg-label" x="180" y="114" text-anchor="middle">Entegrasyon</text>
+
+    {/* Top: end to end */}
+    <path class="dg-box dg-box--progress" d="M144 72 L216 72 L180 24 Z"></path>
+    <text class="dg-label" x="180" y="62" text-anchor="middle">E2E</text>
+
+    {/* Axis: what grows in each direction */}
+    <path class="dg-line" d="M350 30 V196" stroke-dasharray="4 4"></path>
+
+    <text class="dg-sub" x="366" y="46">↑ Gerçeğe daha yakın</text>
+    <text class="dg-sub" x="366" y="64">↑ Daha yavaş, daha pahalı</text>
+    <text class="dg-sub" x="366" y="82">↑ Daha kırılgan (flaky)</text>
+
+    <text class="dg-sub" x="366" y="164">↓ Daha hızlı, daha ucuz</text>
+    <text class="dg-sub" x="366" y="182">↓ Daha çok sayıda</text>
+    <text class="dg-sub" x="366" y="200">↓ Hatanın yerini net söyler</text>
+
+    <text class="dg-sub dg-progress" x="366" y="120">Denge sorusu: bu testin kırılması bana ne öğretiyor?</text>
+  </svg>
+</DiagramFigure>
