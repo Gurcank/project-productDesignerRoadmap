@@ -246,7 +246,41 @@ service worker). Artık yalnız üretimde çakışıyorlar.
 
 ---
 
-## Klasör yapısı
+## ADR-014 — Ana sayfa şeması: 64rem'de mobil rotadan farklı bir yerleşime geçer
+
+**Bağlam.** `RoadmapRoute.astro` tek bir düzen kuralı kullanıyordu: kartlar dikey bantlarda,
+genişlik arttıkça 2 sonra 4 sütuna bölünen bir ızgara. Masaüstünde bu, geniş ekranı doldurmuyordu —
+aynı belge düzeni büyütülmüş hâliydi. Kullanıcı masaüstü için **ayrı bir şema** istedi: aynı rota ve
+veri, ama gerçek bir haritaya benzeyen, dallanan/yatay akan bir görsel.
+
+**Karar.** 64rem ve üzeri için `RoadmapPath.astro`: 23 kategoriyi dört sütunluk satırlara bölüp
+satır yönünü sırayla ters çeviren (boustrophedon / "öküz sabanı" deseni) tek bir yılankavi çizgi.
+Yön tersleme, art arda gelen iki satırın birleşme kenarının **hep aynı fiziksel tarafta** kalmasını
+sağlıyor — bu yüzden dönüş bağlayıcısı eğri değil, dümdüz bir dikey çizgi (bkz. `RoadmapPath.astro`
+frontmatter yorumu). Alan adları tam genişlik başlık satırı değil, o alanın ilk istasyonuna iliştirilmiş
+bir `<h2>` — bir başlık satırı yolu yeniden segmentlere bölerdi.
+
+İki bileşen de her yüklemede aynı anda DOM'da durur; hangisinin görünür olduğunu `index.astro`'daki
+tek bir CSS medya sorgusu belirler. Yeniden render yok, yani pencere yeniden boyutlandırılırken
+"hiçbiri görünmüyor" ânı da yok. İkisi de aynı `[data-topic-ids]` / `[data-area-ids]` öznitelik
+adlarını taşıdığı için `RoadmapRoute.astro`'nun tek `<script>`'i ikisini de günceller —
+`RoadmapPath.astro`'nun kendi script'i yok.
+
+**Paylaşılan veri.** Rota sırası ve adım numarası artık `~/data/categories.ts`'te
+(`ROUTE_ORDER`, `ROUTE_POSITION`) — önceden yalnız `RoadmapRoute.astro` içinde hesaplanıyordu. İki
+görünüm aynı hesaba ihtiyaç duyunca kopyalamak yerine taşıdık; kopyalanmış bir kural, ikisinden
+biri güncellenip diğeri unutulduğunda sessizce ayrışır (bu projede `SECTION_REF_PATTERN`'de bir kez
+başa gelmişti).
+
+**Bulunan bir hata, düzeltildi.** İki şema aynı anda DOM'da durunca, ana sayfanın üstündeki genel
+sayaç (`index.astro`'nun kendi `<script>`'i) her `[data-topic-ids]` elemanını **iki kez** saydı —
+tamamlanan konu sayısı gerçek değerin iki katı görünüyordu. `Set` ile tekilleştirildi.
+
+**Ödünleşim.** Satır genişliği (4 sütun) derleme anında sabitleniyor; `repeat(auto-fill, …)` gibi
+tarayıcının satır üyeliğine karar verdiği bir CSS ızgarası kullanılmadı, çünkü dönüş bağlayıcısının
+"aynı kenarda buluşma" garantisi satır sınırlarının build-time'da bilinmesine dayanıyor. Sonuç:
+64rem–80rem arası biraz sıkışık, 100rem üstü biraz seyrek — ama `.home`'un kendi `max-width: 82rem`
+sınırı bunu zaten yumuşatıyor.
 
 ```
 ProductDesignerRoadmap/

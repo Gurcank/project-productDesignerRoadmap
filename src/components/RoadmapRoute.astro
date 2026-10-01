@@ -1,7 +1,10 @@
 ---
 /**
- * The home page's signature surface (SPEC §5): one continuous route from step 1
- * to step 23, wrapping like text so every band still reads left-to-right.
+ * The home page's signature surface below 64rem (SPEC §5): one continuous
+ * route from step 1 to step 23, wrapping like text so every band still reads
+ * left-to-right. Above 64rem, ~/components/RoadmapPath.astro takes over —
+ * same data and route order, a winding station map instead of stacked cards;
+ * see that file for why the two diverge.
  *
  * Data comes from ~/data/categories — deliberately not a second roadmap.ts.
  * Order, area and node title already live there, and a second file would be a
@@ -12,7 +15,7 @@
  * track with an arrowhead, a hover lift, and a two-line clamp on the title. Its
  * staggered scroll-reveal is the one part not carried over — see the styles.
  */
-import { AREAS, CATEGORIES, DURABILITY_LABEL } from "~/data/categories";
+import { AREAS, CATEGORIES, DURABILITY_LABEL, ROUTE_POSITION } from "~/data/categories";
 
 interface Props {
   /** Slugs that actually have imported content; the rest render as inert nodes. */
@@ -21,18 +24,6 @@ interface Props {
 }
 
 const { publishedSlugs, topicIdsByCategory } = Astro.props;
-
-/*
- * The node's number is its position along the route, not `category.order`.
- * The two agree everywhere except Şirket Sözlüğü, which is chapter 22 in the
- * material but belongs to "Ürün ve Ekip" topically — so a band would read
- * "2, 3, 22" and break the promise that this is one continuous path. The
- * material's own numbering still shows on the category and topic pages.
- */
-const routeOrder = AREAS.flatMap((area) =>
-  CATEGORIES.filter((category) => category.area === area.id).sort((a, b) => a.order - b.order),
-);
-const routePosition = new Map(routeOrder.map((category, index) => [category.slug, index + 1]));
 ---
 
 <div class="route">
@@ -75,7 +66,7 @@ const routePosition = new Map(routeOrder.map((category, index) => [category.slug
                     data-topic-ids={ids.join(" ")}
                   >
                     <span class="node__step" aria-hidden="true">
-                      {routePosition.get(category.slug)}
+                      {ROUTE_POSITION.get(category.slug)}
                     </span>
 
                     <span class="node__text">

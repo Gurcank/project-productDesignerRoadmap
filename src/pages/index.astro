@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import RoadmapRoute from "~/components/RoadmapRoute.astro";
+import RoadmapPath from "~/components/RoadmapPath.astro";
 import WaveButton from "~/components/ui/WaveButton.astro";
 import { getPublishedCategories, topicId } from "~/lib/content";
 
@@ -41,7 +42,21 @@ const totalTopics = published.reduce((sum, entry) => sum + entry.topics.length, 
       <script type="application/json" id="topic-titles" set:html={JSON.stringify(topicTitles)} />
     </header>
 
-    <RoadmapRoute publishedSlugs={publishedSlugs} topicIdsByCategory={topicIdsByCategory} />
+    {/*
+      Both mount on every load; only one is ever visible. Both target the
+      exact same `[data-topic-ids]` / `[data-area-ids]` elements, so the single
+      progress subscription below (RoadmapRoute's own script block) updates
+      whichever one CSS is showing — see RoadmapPath.astro for why it carries
+      no script of its own. A width change (resize, external display) never
+      produces a moment with neither route mounted, since there is no
+      re-render involved.
+
+      (Written as "script block", not the tag itself, spelled out: the exact
+      substring below made Vite's dependency scanner misread this comment as
+      the start of a real one and fail the whole page — see ADR-014.)
+    */}
+    <div class="roadmap roadmap--compact"><RoadmapRoute publishedSlugs={publishedSlugs} topicIdsByCategory={topicIdsByCategory} /></div>
+    <div class="roadmap roadmap--wide"><RoadmapPath publishedSlugs={publishedSlugs} topicIdsByCategory={topicIdsByCategory} /></div>
   </div>
 </BaseLayout>
 
@@ -50,8 +65,16 @@ const totalTopics = published.reduce((sum, entry) => sum + entry.topics.length, 
 
   initProgress();
 
-  const allIds = Array.from(document.querySelectorAll<HTMLElement>("[data-topic-ids]")).flatMap((node) =>
-    (node.dataset.topicIds ?? "").split(" ").filter(Boolean),
+  // Both roadmap schemes (RoadmapRoute below 64rem, RoadmapPath at and above)
+  // stay mounted at once and carry the same ids, so a topic appears twice
+  // across the two trees — deduped here, or the header count and bar would
+  // read double whichever one is hidden.
+  const allIds = Array.from(
+    new Set(
+      Array.from(document.querySelectorAll<HTMLElement>("[data-topic-ids]")).flatMap((node) =>
+        (node.dataset.topicIds ?? "").split(" ").filter(Boolean),
+      ),
+    ),
   );
 
   const doneEl = document.querySelector<HTMLElement>("[data-progress-done]");
@@ -159,6 +182,23 @@ const totalTopics = published.reduce((sum, entry) => sum + entry.topics.length, 
   @media (min-width: 48rem) {
     .home {
       padding-inline: var(--spacing-6);
+    }
+  }
+
+  /* The desktop scheme (RoadmapPath) takes over at the same 64rem breakpoint
+     the rest of the site uses for its widest layout — a rail becoming sticky,
+     a card grid going to four columns. Below it, the compact route stays. */
+  .roadmap--wide {
+    display: none;
+  }
+
+  @media (min-width: 64rem) {
+    .roadmap--compact {
+      display: none;
+    }
+
+    .roadmap--wide {
+      display: block;
     }
   }
 </style>

@@ -271,6 +271,24 @@ export function categoriesOfArea(area: AreaId): Category[] {
   return CATEGORIES.filter((c) => c.area === area).sort((a, b) => a.order - b.order);
 }
 
+/*
+ * The route's step number is the category's position along this list, not
+ * `category.order`. The two agree everywhere except Şirket Sözlüğü, which is
+ * chapter 22 in the material but belongs to "Ürün ve Ekip" topically — so a
+ * route ordered by `order` would read "2, 3, 22" and break the promise that
+ * the home page is one continuous path. The material's own chapter number
+ * still shows on the category and topic pages, unaffected.
+ *
+ * Computed once here rather than in each roadmap view: two home-page
+ * components (RoadmapRoute for narrow screens, RoadmapPath for wide ones)
+ * both need this exact order, and a rule like this drifting between two
+ * copies is how a mismatched connector or step number gets shipped unnoticed.
+ */
+export const ROUTE_ORDER: Category[] = AREAS.flatMap((area) => categoriesOfArea(area.id));
+export const ROUTE_POSITION: Map<string, number> = new Map(
+  ROUTE_ORDER.map((category, index) => [category.slug, index + 1]),
+);
+
 export const DURABILITY_LABEL: Record<Durability, { dot: string; label: string; help: string }> = {
   stable: { dot: "🟢", label: "Eskimeyen", help: "Kavramsal temel — yıllarca geçerli kalır." },
   slow: { dot: "🟡", label: "Yavaş eskiyen", help: "Sektör pratiği ve standartlar; 2-3 yılda bir gözden geçir." },
