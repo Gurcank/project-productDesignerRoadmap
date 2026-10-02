@@ -1,0 +1,64 @@
+---
+summary: "Web için doğmuş ve webin büyük kısmını hâlâ çalıştıran dil. WordPress'in dili; modern PHP (Laravel ile) tarihi itibarından çok farklı. Tasarımcı için tema ve eklenti gerçekleri."
+outcomes:
+  - "PHP'nin nerede karşına çıktığını söyleyebilirsin."
+  - "WordPress'li bir projede tasarım özgürlüğünün neden temaya bağlı olduğunu açıklayabilirsin."
+  - "Headless CMS seçeneğinin neyi çözdüğünü bilirsin."
+minutes: 5
+sources:
+  - label: "W3Techs — WordPress kullanım istatistikleri"
+    url: "https://w3techs.com/technologies/details/cm-wordpress"
+  - label: "Laravel — Dokümantasyon"
+    url: "https://laravel.com/docs"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı. WordPress'in web payı sık değişir; güncel değer için kaynağa bak."
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+PHP, web için doğmuş ve webin büyük kısmını hâlâ çalıştıran bir dildir. İtibarı geçmişteki kötü kod yüzünden zedelenmiştir; modern PHP (özellikle Laravel ile) bambaşka bir deneyimdir.
+
+## Nerede karşına çıkar
+
+- **WordPress.** Webin çok büyük bir kısmını oluşturur; içerik siteleri ve blogların varsayılanıdır.
+- **E-ticaret.** WooCommerce, Magento.
+- **Ajans işleri ve KOBİ projeleri.** Hosting'i ucuz ve her yerde bulunur.
+
+## Güçlü ve zayıf yanları
+
+**İyi yaptığı:** yayına almak çok kolaydır (en ucuz hosting bile çalıştırır); olgun içerik yönetimi sunar (içerik odaklı site için hazır çözüm yığını devasadır); Laravel modern, verimli ve iyi belgelenmiş bir framework'tür.
+
+**Kötü yaptığı:**
+
+- **Devralınan kod kalitesi çok değişkendir.** Aynı dilde çok iyi ve çok kötü kod bir arada bulunur.
+- **Gerçek zamanlı işlerde zayıftır.** Canlı bildirim, sohbet gibi ihtiyaçlar için ek altyapı ister.
+- **İşe alımda algı sorunu vardır.** Bazı geliştiriciler PHP projesine sıcak bakmaz.
+
+**Alternatifler:** özel bir uygulama yazılacaksa Node.js ya da Python; **headless CMS**, yani içerik PHP tarafında kalır, arayüz modern bir framework'te yazılır.
+
+<Callout kind="tasarimci">
+
+- **WordPress'li bir projede tasarım özgürlüğün temaya bağlıdır.** "Bu bölüm böyle olsun" isteği hazır tema yapısına uymuyorsa sandığından pahalıya gelir.
+- **Eklenti yığını bir risk yüzeyidir.** Her eklenti hem performans hem güvenlik faturası getirir.
+- **Headless seçeneği masada mı diye sor.** İçerik ekibinin alışkanlıklarını bozmadan arayüzü serbest bırakabilir.
+
+</Callout>
+
+<Summary>
+
+- PHP, WordPress ve birçok e-ticaret ve KOBİ projesinin dilidir; yayına almak kolay ve ucuzdur.
+- Modern PHP (Laravel) itibarından iyidir; ama devralınan kodun kalitesi çok değişkendir.
+- Tema yapısı tasarım özgürlüğünü sınırlar, eklentiler risk yüzeyidir; headless CMS arayüzü serbest bırakabilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="WordPress'li projede neden 'bu bölüm böyle olsun' isteği pahalı olabilir?">
+
+Tasarım özgürlüğü hazır temanın yapısına bağlıdır; tema yapısına uymayan bir bölüm özel geliştirme gerektirir.
+
+</SelfCheck>

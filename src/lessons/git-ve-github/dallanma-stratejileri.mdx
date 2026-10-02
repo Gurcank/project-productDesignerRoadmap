@@ -1,0 +1,98 @@
+---
+summary: "Ekibin dalları nasıl kullanacağına dair anlaşma: Git Flow, GitHub Flow ve trunk-based development. Tek sürümlü bir web projesi için GitHub Flow doğal başlangıçtır; Git Flow artık varsayılan değildir."
+outcomes:
+  - "Üç stratejiyi ve her birinin ön koşulunu söyleyebilirsin."
+  - "Git Flow'un sektördeki konumunun nasıl değiştiğini açıklayabilirsin."
+  - "Trunk-based'de yarım kalmış işin ana dala nasıl girdiğini (feature flag) bilirsin."
+minutes: 8
+sources:
+  - label: "GitHub Docs — GitHub Flow"
+    url: "https://docs.github.com/en/get-started/using-github/github-flow"
+  - label: "Vincent Driessen — A successful Git branching model"
+    url: "https://nvie.com/posts/a-successful-git-branching-model/"
+  - label: "Atlassian — Gitflow Workflow"
+    url: "https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow"
+  - label: "Trunk Based Development"
+    url: "https://trunkbaseddevelopment.com/"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Her ekip dalları kendi alışkanlığıyla kullanmaz; anlaşılmış bir strateji vardır. Bu derstekiler sektör eğilimidir ve zamanla değişir.
+
+## Git Flow
+
+**Git Flow**, `main`, `develop`, `feature`, `release` ve `hotfix` olmak üzere beş dal türü kullanan yapılandırılmış modeldir. Planlı sürümler, çoklu sürüm desteği ve katı denetim gereksinimleri olan ortamlarda düzen ve izlenebilirlik sağlar: sağlık, finans, kamu gibi düzenlemeye tabi sektörler. "Müşteri aynı anda iki sürümü destekliyor; Git Flow burada anlamlı."
+
+**Konumu değişti:** Git Flow'u tanımlayan Vincent Driessen'in kendisi orijinal yazısına sonradan bir not ekleyerek sürekli teslimat yapan ekiplere GitHub Flow gibi daha basit bir akış önerdiğini belirtti. Atlassian ise Git Flow'u artık "eski bir iş akışı" olarak niteliyor. **Yani Git Flow yanlış değil ama artık varsayılan değil;** dar bir bağlamda doğru kalan bir seçenek.
+
+## GitHub Flow
+
+**GitHub Flow**, tek uzun ömürlü dal (`main`) ve kısa ömürlü özellik dalları kullanan basit modeldir: dal aç → çalış → PR aç → incelet → merge et → deploy et. Web projelerinin çoğuna uygundur. **Ön koşulu, `main`'in her an yayınlanabilir durumda olmasıdır;** bu da otomatik testlerin ve CI kontrollerinin gerçekten çalışmasını gerektirir. Küçük ve orta ekiplerde, SaaS ve web ürünlerinde yaygındır; senin projeleri için doğal seçimdir. "GitHub Flow yeterli; tek sürüm destekliyoruz ve günde birkaç kez deploy ediyoruz." Aynı anda birden fazla sürüm desteklenecekse yetmez.
+
+## Trunk-based development
+
+**Trunk-based development**, herkesin tek bir ana dala (trunk) **en az günde bir kez** katkı verdiği, dalların saatler ya da bir gün ömürlü olduğu modeldir. Çakışmaları küçük tutar ve erken yakalar; sürekli entegrasyonun tam karşılığıdır. Yarım kalmış işler **feature flag** ile gizlenerek ana dala girebilir: kod canlıda ama kullanıcıya kapalıdır. Sektörde modern sürekli teslimat için en çok önerilen model olarak anılır. "Trunk-based çalışalım ama feature flag altyapısı kurmadan olmaz."
+
+Güçlü otomatik test ve feature flag altyapısı yoksa risklidir: yarım iş doğrudan ana dala girer ve bir kişinin hatası herkesi durdurur.
+
+<Compare>
+<Pane title="Git Flow">
+
+- Çoklu sürüm, katı denetim
+- Beş dal türü
+- Artık varsayılan değil
+
+</Pane>
+<Pane title="GitHub Flow">
+
+- Tek sürümlü web projesi
+- main + kısa özellik dalları
+- Ön koşul: main her an yayınlanabilir
+
+</Pane>
+<Pane title="Trunk-based">
+
+- Yüksek tempolu ekip
+- Günde en az bir katkı
+- Ön koşul: güçlü test + feature flag
+
+</Pane>
+</Compare>
+
+**Özet karar:** tek sürüm destekleyen bir web projesinde **GitHub Flow** doğal başlangıçtır. Tempo artıp ekip büyüdükçe **trunk-based**'e evrilir. **Git Flow**, yalnızca çoklu sürüm ya da katı denetim gereksinimi varsa tercih edilir.
+
+<Callout kind="tasarimci">
+
+- **Ekibin stratejisini öğren:** tasarım teslimlerinin PR akışında ne zaman girdiğini planla.
+- **Feature flag'li bir ekipte** yeni tasarımı kademeli açma (yüzde yüzde) kararını ürün tarafıyla konuş.
+- **Uzun yaşayan tasarım dalları** önermek yerine küçük adımlar öner.
+
+</Callout>
+
+<Summary>
+
+- Git Flow çoklu sürüm ve katı denetim için; artık varsayılan değil.
+- GitHub Flow tek sürümlü web projeleri için basit ve doğal başlangıçtır; main her an yayınlanabilir olmalı.
+- Trunk-based günde en az bir katkıyla çakışmayı küçültür; test ve feature flag altyapısı gerekir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Git Flow'un sektördeki konumu nasıl değişti?">
+
+Varsayılan olmaktan çıktı. Tanımlayıcısı Vincent Driessen sonradan sürekli teslimat yapan ekiplere GitHub Flow gibi daha basit bir akış önerdi; Atlassian onu "eski bir iş akışı" olarak niteliyor. Yanlış değil ama çoklu sürüm ve katı denetim gibi dar bir bağlamda doğru kalan bir seçenek.
+
+</SelfCheck>
+
+<SelfCheck question="Trunk-based development'ta yarım kalmış iş ana dala nasıl girer?">
+
+Feature flag ile gizlenerek: kod canlıdadır ama kullanıcıya kapalıdır. Güçlü otomatik test ve feature flag altyapısı bunun ön koşuludur.
+
+</SelfCheck>

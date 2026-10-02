@@ -1,0 +1,82 @@
+---
+summary: "Projenin iskeletini kuran katman: Next.js, Astro, React Router v7, SvelteKit/Nuxt, TanStack Start. Bu kararın tasarım tarafında doğrudan karşılığı var: hangi rendering stratejisi mümkün, sayfalar ne kadar hızlı açılır, SEO ne kadar kolay."
+outcomes:
+  - "Next.js ile Astro'yu ne zaman seçeceğini söyleyebilirsin."
+  - "'Remix' kelimesini duyduğunda neden hangisinden bahsedildiğini sormak gerektiğini açıklayabilirsin."
+  - "Bir meta-framework'ün olgunluğunu (1.0 öncesi, kurucu şirket, kilitlenme) değerlendirebilirsin."
+minutes: 8
+sources:
+  - label: "Next.js — Dokümantasyon"
+    url: "https://nextjs.org/docs"
+  - label: "Astro — Neden Astro?"
+    url: "https://docs.astro.build/en/concepts/why-astro/"
+  - label: "React Router — Ana sayfa"
+    url: "https://reactrouter.com/home"
+  - label: "Nuxt — Giriş"
+    url: "https://nuxt.com/docs/getting-started/introduction"
+  - label: "SvelteKit — Giriş"
+    url: "https://svelte.dev/docs/kit/introduction"
+  - label: "TanStack Start"
+    url: "https://tanstack.com/start/latest"
+flags: ["degisken"]
+skipTerms: ["beta","i̇stemci","istemci"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Meta-framework, projenin iskeletini kuran katmandır. **Bu kararın tasarım tarafında doğrudan karşılığı vardır:** hangi rendering stratejisinin mümkün olduğunu, sayfaların ne kadar hızlı açılacağını ve SEO'nun ne kadar kolay olacağını burası belirler. Aşağıdaki "güncel durum" notları materyalin Eylül 2026 tarihli doğrulamasına dayanır ve hızla eskir; kullanmadan önce doğrula.
+
+## Next.js
+
+React üzerine kurulu, en yaygın meta-framework'tür. Rendering stratejilerinin hepsini (SSG, SSR, ISR, server component, streaming) tek çatı altında sunar ve sayfa bazında seçmene izin verir; görsel optimizasyonu, yönlendirme ve metadata yönetimi hazır gelir. SaaS ürünlerinde, pazarlama sitelerinde ve e-ticarette karşına çıkar. "Next.js kullanalım; pazarlama sayfaları statik, panel dinamik olsun, ikisi aynı projede yaşasın."
+
+Sadece içerik yayınlayan bir site için gereğinden karmaşık kalabilir; orada Astro daha uygundur. App Router'ın **önbellek modeli**, ekiplerin en sık şikâyet ettiği karmaşıklık kaynağı olarak anılır. Güncel durum notları: Next.js 16 hattında Turbopack'in üretim yapıları için kararlı hâle geldiği ve PPR'ın genel kullanıma doğru ilerlediği anılır; ayrıca Vercel'e bağımlılık endişesi düzenli tartışılır. Başka yerde de barındırılabilir ama bazı özellikler Vercel'de daha sorunsuz çalışır.
+
+## Astro
+
+Varsayılan olarak **sıfır JavaScript** gönderen, içerik odaklı meta-framework'tür. Islands mimarisini merkeze alır: sayfa statik HTML olarak gider, yalnızca gerçekten etkileşimli parçalar JavaScript alır. Framework-agnostiktir; aynı projede React, Vue ve Svelte bileşenleri kullanabilirsin. Blog, dokümantasyon, pazarlama sitesi ve portfolyolarda uygundur. "İçerik sitesi için Astro; Next.js'in getirdiği karmaşıklığa gerek yok, LCP de daha iyi çıkar." Yoğun etkileşimli uygulamalar (panel, editör, gerçek zamanlı arayüz) için tasarlanmamıştır. Materyalde, Cloudflare'in Astro'yu Ocak 2026'da satın aldığı raporlanıyor; bu projenin yönünü etkileyebilir, güncel durumu kontrol et.
+
+## React Router v7 ve Remix karmaşası
+
+**React Router v7**, web standartlarına yakın durmayı ve JavaScript olmadan da çalışan sayfalar üretmeyi hedefleyen React meta-framework'üdür. Next.js App Router'ın önbellek karmaşıklığından kaçınmak isteyen React ekipleri için en düşük sürtünmeli alternatif olarak anılır. "App Router'ın cache modeliyle boğuşmak istemiyoruz; React Router v7'yi değerlendirelim."
+
+**İsim karmaşası gerçek ve bilmen gerekir:** Remix, Kasım 2024'te React Router v7'ye birleşti; yani "Remix v3 olacak şey" React Router v7 oldu. Ayrı bir proje olarak **Remix 3** ise sıfırdan yeniden yazım olarak beta aşamasında anılıyor ve üretime hazır değil; Remix v2'nin Haziran 2026'da destek dışı kaldığı raporlanıyor. "Remix" kelimesini duyduğunda **hangisinden bahsedildiğini sor.**
+
+## SvelteKit, Nuxt, TanStack Start
+
+**SvelteKit** ve **Nuxt**, Svelte ve Vue'nun resmî meta-framework'leridir; Next.js'in React için yaptığını kendi ekosistemlerinde yaparlar. Ekip zaten Svelte ya da Vue biliyorsa doğal seçimdir. "Vue ekibiyiz; Nuxt doğal seçim, React'e geçmek için sebep yok."
+
+**TanStack Start**, TanStack Router üzerine kurulu, tip güvenliğini merkeze alan yeni bir React meta-framework'üdür. İstemci öncelikli bir varsayılan ve güçlü tip güvenliği sunar. Materyalde 2026 ortası itibarıyla release candidate aşamasında olduğu ve sürümün 1.0 olmadığı anılıyor. **Ticari bir proje için bu bir risktir.**
+
+<Callout kind="tasarimci">
+
+- **Sayfa türlerini yaz:** hangisi statik, hangisi kişiye özel? Bu, meta-framework ve rendering seçimini yönlendirir.
+- **Olgunluğu sor:** 1.0 mı, kim sahibi, satın alma/yön değişikliği riski var mı?
+- **İsim karışıklığında netleş:** "Remix" gibi adlar farklı projelere işaret edebilir.
+
+</Callout>
+
+<Summary>
+
+- Meta-framework, rendering stratejisini, hızı ve SEO kolaylığını belirleyen iskelet katmanıdır.
+- Next.js hepsini tek çatıda sunar ama App Router önbelleği karmaşıktır; Astro içerik siteleri için sıfır JavaScript'li, yoğun etkileşimli uygulamalar için uygun değildir.
+- "Remix" üç farklı şeye işaret edebilir (v2, React Router v7, Remix 3); hangisini kastedildiğini sor.
+- Yeni ve 1.0 öncesi framework ticari proje için risktir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Astro'nun temel farkı nedir? Ne zaman Next.js yerine tercih edilir?">
+
+Varsayılan olarak sıfır JavaScript gönderir ve islands mimarisini merkeze alır. Blog, dokümantasyon, pazarlama sitesi gibi içerik odaklı işlerde Next.js'ten daha uygundur; yoğun etkileşimli uygulamalar (panel, editör) için tasarlanmamıştır.
+
+</SelfCheck>
+
+<SelfCheck question="'Remix' kelimesini duyduğunda neden hangisinden bahsedildiğini sormalısın?">
+
+Üç farklı şeye işaret edebilir: eski Remix v2 (destek dışı kaldığı raporlanıyor), Remix'in devamı olan React Router v7 ve sıfırdan yeniden yazılan, beta aşamasındaki Remix 3.
+
+</SelfCheck>

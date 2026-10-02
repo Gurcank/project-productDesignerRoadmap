@@ -1,0 +1,81 @@
+---
+summary: "Çıktıyı denetlemek pazarlık konusu değil. Neyi mutlaka doğrulayacağın (sürüm, API, istatistik, link, güvenlik, erişilebilirlik), kod okumadan yapabileceğin altı arayüz kontrolü ve her oturum sonunda diff'e bakma refleksi. Üretimi hızlandırabilirsin, sorumluluğu devredemezsin."
+outcomes:
+  - "Mutlaka doğrulanması gereken altı kategoriyi ve nasıl doğrulanacağını söyleyebilirsin."
+  - "Kod okumadan yapılacak altı arayüz kontrolünü sayabilirsin."
+  - "Her oturum sonunda yapılacak tek alışkanlığı bilirsin."
+minutes: 6
+sources:
+  - label: "Anthropic Docs — Hallucination'ları azaltma"
+    url: "https://docs.claude.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+  - label: "Claude Code Docs — En iyi uygulamalar"
+    url: "https://code.claude.com/docs/en/best-practices"
+  - label: "W3C WAI — Erişilebilirlik değerlendirme"
+    url: "https://www.w3.org/WAI/test-evaluate/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+**Bu ders pazarlık konusu değil.** Kod okuyabiliyorsun; bu, çıktıyı denetleyebileceğin anlamına gelir ve denetlemek zorundasın.
+
+## Neyi mutlaka doğrula
+
+| Kategori | Neden | Nasıl |
+|---|---|---|
+| **Kütüphane ve sürüm iddiaları** | Bilgi kesim tarihi | Paketin kendi sayfasına bak |
+| **API ve parametre isimleri** | Uydurma riski | Resmî dokümantasyondan kontrol et |
+| **Sayısal iddialar ve istatistikler** | Uydurma riski | Kaynağı iste, kaynağı aç |
+| **Kaynak linkleri** | Var olmayan link üretilebilir | Tıkla, gerçekten açılıyor mu |
+| **Güvenlik ve hukuk iddiaları** | Yanlışın bedeli yüksek | Birincil kaynak veya uzman |
+| **Erişilebilirlik** | Otomatik araç sorunların yalnızca bir kısmını yakalar | Manuel klavye ve zoom testi |
+
+## Kod okumadan, gözle kontrol
+
+Bir arayüz çıktısı geldiğinde yapabileceğin altı kontrol:
+
+1. **Ölçek dışı değer var mı?** `p-[18px]`, `#3B82F6`, `margin: 22px` gibi elle yazılmış değerler.
+2. **Durum ekranları var mı?** Boş, hata, yükleme. Yoksa sonradan eklenmez, unutulur.
+3. **Klavye turu.** Fareyi bırak, Tab ile geç.
+4. **%200 zoom.** İçerik kırpılıyor mu?
+5. **375px genişlik.** Taşma var mı?
+6. **Uzun metin.** 60 karakterlik bir başlık koy, ne oluyor bak.
+
+## Kod incelemesi refleksi
+
+Materyal, kaynaklarda tekrar eden bir tavsiyeyi aktarıyor: **her yapay zekâ oturumundan sonra diff'e bakmak.** Bunun prompt iyileştirmekten daha çok hata önlediği belirtiliyor. Kod okuyabildiğin için bu senin de yapabileceğin bir kontrol; hangi dosyaların değiştiğine bakmak bile başlı başına faydalıdır.
+
+**Nihai ilke:** üretimi hızlandırabilirsin ama **sorumluluğu devredemezsin.** Yayına çıkan şeyin sahibi sensin.
+
+<Callout kind="tasarimci">
+
+- **Linki tıkla, sürümü paketin sayfasından doğrula, sayının kaynağını aç.**
+- **Güvenlik ve hukuk iddialarında birincil kaynağa veya uzmana git.**
+- **Her oturum sonunda diff'e bak:** bir bileşen istedin, kaç dosya değişti?
+- **Altı kontrolü bir kontrol listesi yap** ve her arayüz çıktısında çalıştır.
+
+</Callout>
+
+<Summary>
+
+- Sürüm, API, sayısal iddia, link, güvenlik/hukuk ve erişilebilirlik iddiaları mutlaka doğrulanır.
+- Kod okumadan altı kontrol: ölçek dışı değer, durum ekranları, klavye turu, %200 zoom, 375px, uzun metin.
+- Her oturum sonunda diff'e bak.
+- Üretimi hızlandırabilirsin, sorumluluğu devredemezsin.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Kod okumadan yapabileceğin altı arayüz kontrolü nedir?">
+
+Ölçek dışı değer var mı · durum ekranları (boş/hata/yükleme) var mı · klavye turu · %200 zoom · 375px genişlik · uzun metin (60 karakterlik başlık) testi.
+
+</SelfCheck>
+
+<SelfCheck question="Her yapay zekâ oturumundan sonra yapılması önerilen tek alışkanlık nedir?">
+
+Diff'e bakmak: hangi dosyaların nasıl değiştiğini görmek. Materyal bunun prompt iyileştirmekten daha çok hata önlediğini aktarıyor.
+
+</SelfCheck>

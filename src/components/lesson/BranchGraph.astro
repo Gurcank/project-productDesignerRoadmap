@@ -1,0 +1,30 @@
+---
+import DiagramFigure from "../diagrams/DiagramFigure.astro";
+---
+
+<DiagramFigure
+  label="Bir özellik dalı ve ana dala birleşme"
+  caption="main sürekli ilerler; özellik dalı main'den ayrılır, kendi commit'lerini biriktirir ve işi bitince main'e birleşir. Dal ne kadar uzun yaşarsa, iki çizgi birbirinden o kadar uzaklaşır ve çakışma o kadar büyür."
+>
+  <svg class="dg-narrow" viewBox="0 0 360 210" role="img" aria-label="main üzerinde dört commit, aralarında ayrılan ve geri birleşen bir özellik dalı">
+    <title>Dal ve birleştirme</title>
+
+    <text class="dg-label" x="8" y="26">main</text>
+    <path class="dg-line" d="M52 22 H340"></path>
+    <circle class="dg-box dg-box--accent" cx="70" cy="22" r="8"></circle>
+    <circle class="dg-box dg-box--accent" cx="130" cy="22" r="8"></circle>
+    <circle class="dg-box dg-box--accent" cx="250" cy="22" r="8"></circle>
+    <circle class="dg-box dg-box--progress" cx="320" cy="22" r="9"></circle>
+    <text class="dg-sub" x="320" y="48" text-anchor="middle">merge</text>
+
+    <path class="dg-line" d="M130 22 C150 22 150 112 175 112 H215 C245 112 250 22 320 22"></path>
+    <text class="dg-label" x="8" y="116">özellik dalı</text>
+    <circle class="dg-box" cx="175" cy="112" r="8"></circle>
+    <circle class="dg-box" cx="215" cy="112" r="8"></circle>
+    <text class="dg-sub" x="195" y="142" text-anchor="middle">kendi commit'leri</text>
+
+    <text class="dg-sub" x="130" y="48" text-anchor="middle">dal açıldı</text>
+    <text class="dg-sub" x="250" y="48" text-anchor="middle">main ilerledi</text>
+    <text class="dg-sub" x="8" y="190">Çakışma, iki çizgi aynı satırı değiştirdiğinde çıkar.</text>
+  </svg>
+</DiagramFigure>

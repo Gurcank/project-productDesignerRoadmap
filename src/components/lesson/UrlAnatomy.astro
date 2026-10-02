@@ -1,0 +1,38 @@
+---
+import DiagramFigure from "../diagrams/DiagramFigure.astro";
+
+/** Each row: the piece as it appears in the address, then its name. */
+const parts = [
+  { piece: "https://", name: "scheme", note: "hangi kurallarla konuşulacak", tone: "plain" },
+  { piece: "blog.", name: "subdomain", note: "ana adın altında ayrı bölüm", tone: "plain" },
+  { piece: "ornek.com", name: "domain  (.com = TLD)", note: "sitenin kayıtlı adı", tone: "accent" },
+  { piece: "/yazilar/web-nedir", name: "path", note: "site içindeki konum; sonu slug", tone: "plain" },
+  { piece: "?kategori=temel&sayfa=2", name: "query string", note: "ek parametreler", tone: "plain" },
+  { piece: "#basliklar", name: "fragment", note: "sayfa içinde bir noktaya atlar", tone: "plain" },
+] as const;
+
+const ROW = 62;
+const height = 8 + parts.length * ROW;
+---
+
+<DiagramFigure
+  label="Bir web adresinin parçaları"
+  caption="Adres soldan sağa okunur: önce nasıl konuşulacağı, sonra kimle, sonra o sitenin neresi, en sonda ek ayrıntılar."
+>
+  <svg class="dg-narrow" viewBox={`0 0 360 ${height}`} role="img" aria-label="https://blog.ornek.com/yazilar/web-nedir?kategori=temel&sayfa=2#basliklar adresinin parçaları">
+    <title>URL anatomisi</title>
+    {
+      parts.map((part, index) => (
+        <>
+          <rect class={part.tone === "accent" ? "dg-box dg-box--accent" : "dg-box"} x="10" y={8 + index * ROW} width="340" height={ROW - 8} rx="8" />
+          <text class="dg-label" x="24" y={8 + index * ROW + 24} style="font-family: var(--font-mono); font-size: 13px">
+            {part.piece}
+          </text>
+          <text class="dg-sub" x="24" y={8 + index * ROW + 42}>
+            {part.name} · {part.note}
+          </text>
+        </>
+      ))
+    }
+  </svg>
+</DiagramFigure>

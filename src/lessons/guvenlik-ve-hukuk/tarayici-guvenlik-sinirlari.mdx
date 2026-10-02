@@ -1,0 +1,67 @@
+---
+summary: "Web'in temel güvenlik sınırı same-origin policy'dir; CORS onun kontrollü gevşetilmesidir ve güvenlik önlemi değildir; CSP XSS'e karşı ikinci savunma katmanıdır ve üçüncü parti bileşenlerle sürtüşür."
+outcomes:
+  - "Same-origin policy'nin neyi engellediğini söyleyebilirsin."
+  - "'CORS var, güvendeyiz' cümlesinin neden yanlış olduğunu açıklayabilirsin."
+  - "CSP'nin ne yaptığını ve tasarımda hangi sürtüşmeyi yarattığını bilirsin."
+minutes: 7
+sources:
+  - label: "MDN — Same-origin policy"
+    url: "https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy"
+  - label: "MDN — CORS"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS"
+  - label: "MDN — Content Security Policy (CSP)"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Geliştirme sırasında en sık karşılaşılan hatalardan biri: "CORS hatası alıyoruz." Bu hatanın arkasında web'in en temel güvenlik kuralı var.
+
+## Same-origin policy
+
+**Same-origin policy (aynı köken politikası)**, tarayıcının, bir sitenin başka bir sitenin verisine erişmesini varsayılan olarak engellemesidir. Web'in temel güvenlik sınırıdır. Bu kural olmasa, açık bir sekmedeki kötü niyetli site başka bir sekmedeki banka hesabını okuyabilirdi. CORS hatalarının arka planındadır. "Bu hata same-origin politikasından geliyor; API farklı bir alan adında."
+
+## CORS
+
+**CORS (Cross-Origin Resource Sharing)**, bir sunucunun, hangi başka alan adlarının kendisine erişebileceğini bildirmesidir. Same-origin politikasının **kontrollü olarak gevşetilmesidir;** ön yüz ile API farklı alan adlarındaysa gereklidir. "CORS hatası alıyoruz; API'nin izin verilen kökenler listesine bizim alan adımızı eklemek gerekiyor."
+
+**Yaygın yanlış anlama:** CORS bir güvenlik önlemi gibi görünse de aslında bir **gevşetme** mekanizmasıdır. Ayrıca CORS yalnızca tarayıcıyı bağlar; sunucudan sunucuya yapılan istekleri engellemez. "CORS var, güvendeyiz" cümlesi yanlıştır; asıl koruma yetkilendirmedir.
+
+## CSP
+
+**CSP (Content Security Policy, içerik güvenlik politikası)**, sayfanın hangi kaynaklardan kod, stil, görsel ve font yükleyebileceğini sınırlayan politikadır. XSS'e karşı ikinci savunma katmanıdır: bir açık oluşsa bile saldırganın kodu izin verilen kaynaklar listesinde olmadığı için çalışmayabilir. Güvenlik başlıklarında yer alır.
+
+**Tasarım tarafında bir sürtüşme noktasıdır:** sıkı bir CSP, gömülü analitik, harita, video oynatıcı ve font servislerini kırabilir. Bu yüzden hangi üçüncü partilerin kullanılacağı kararı, CSP kararıyla birlikte alınmalıdır. "CSP ekleyelim ama üçüncü parti gömülü bileşenlerin kırılmadığından emin olalım."
+
+<Callout kind="tasarimci">
+
+- **Üçüncü parti bileşen (analitik, harita, video, font) eklerken CSP etkisini sor.**
+- **"CORS hatası" duyduğunda güvenlik sorununu değil, kökenler arası erişim yapılandırmasını düşün.**
+- **Güvenliği yalnızca tarayıcı kurallarına bırakma;** yetki kontrolü sunucuda yapılır.
+
+</Callout>
+
+<Summary>
+
+- Same-origin policy bir sitenin başka sitenin verisine varsayılan erişimini engeller.
+- CORS bu kuralın kontrollü gevşetilmesidir; güvenlik önlemi değildir ve yalnızca tarayıcıyı bağlar.
+- CSP XSS'e karşı ikinci katmandır; üçüncü parti bileşenleri kırabilir, seçimler birlikte yapılmalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="CORS bir güvenlik önlemi midir? 'CORS var, güvendeyiz' cümlesi neden yanlış?">
+
+Hayır. CORS aslında same-origin politikasının kontrollü gevşetilmesidir ve yalnızca tarayıcıyı bağlar; sunucudan sunucuya istekleri engellemez. Asıl koruma yetkilendirmedir.
+
+</SelfCheck>
+
+<SelfCheck question="CSP ne yapar ve tasarımda hangi sürtüşmeyi yaratır?">
+
+Sayfanın hangi kaynaklardan kod, stil, görsel ve font yükleyebileceğini sınırlar; XSS'e karşı ikinci savunma katmanıdır. Sürtüşme: sıkı bir CSP gömülü analitik, harita, video oynatıcı ve font servislerini kırabilir; bu yüzden üçüncü parti seçimleri CSP kararıyla birlikte alınmalıdır.
+
+</SelfCheck>

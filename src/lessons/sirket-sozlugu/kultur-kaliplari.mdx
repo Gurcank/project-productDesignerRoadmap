@@ -1,0 +1,101 @@
+---
+summary: "Bir ekibin nasıl çalıştığını tarif eden ifadeler: async-first, documentation-first, disagree and commit, blameless culture, bias for action, ownership/DRI. İş görüşmesinde ekibin kültürünü anlamana da yarar."
+outcomes:
+  - "Altı kültür kalıbını ve her birinin bedelini söyleyebilirsin."
+  - "'Disagree and commit' ilkesinin ön koşulunu ve ön koşul yoksa ne anlama geldiğini açıklayabilirsin."
+  - "'Bias for action'ın hangi kararlarda tehlikeli olduğunu bilirsin."
+minutes: 7
+sources:
+  - label: "Amazon — 2016 Hissedar Mektubu (disagree and commit)"
+    url: "https://www.aboutamazon.com/news/company-news/2016-letter-to-shareholders"
+  - label: "Google SRE — Postmortem kültürü (blameless)"
+    url: "https://sre.google/sre-book/postmortem-culture/"
+  - label: "Atlassian — Suçlamasız postmortem"
+    url: "https://www.atlassian.com/incident-management/postmortem/blameless"
+  - label: "Wikipedia — Psychological safety"
+    url: "https://en.wikipedia.org/wiki/Psychological_safety"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir ekibin nasıl çalıştığını tarif eden ifadeler. Bunları bilmek, bir iş görüşmesinde ekibin kültürünü anlamana da yarar.
+
+## Async-first
+
+**Async-first (eş zamansız öncelikli)**: varsayılan iletişimin yazılı ve eş zamansız olduğu, toplantının istisna olduğu çalışma biçimi. Farklı saat dilimlerinde çalışmayı mümkün kılar ve kararların yazılı iz bırakmasını sağlar. **Bedeli:** karar süresi uzar ve yazma disiplini gerektirir. Uzaktan çalışan ekiplerin tanıtım metinlerinde karşına çıkar. "Async-first çalışıyoruz; toplantı yerine yazılı öneri bekliyoruz."
+
+## Documentation-first
+
+**Documentation-first (belge öncelikli)**: bir işe başlamadan önce niyetin ve kararın yazıya dökülmesi. Yazmak düşünmeyi zorlar: bir fikri tek sayfaya sığdıramamak çoğu zaman fikrin henüz netleşmediğinin işaretidir. Ayrıca yeni katılan biri aylarca süren konuşmaları okuyarak yetişebilir. Bu yüzden yalnızca bir arşivleme pratiği değildir. "Önce bir RFC yazalım; tartışmayı onun üstünden yürütelim."
+
+## Disagree and commit
+
+**Disagree and commit ("katılmıyorum ama destekliyorum")**: bir karara katılmasan bile karar alındıktan sonra ona tam destek verme ilkesi. Ekipleri iki kötü uçtan korur: **sonsuz tartışma** (herkes ikna olana kadar ilerlememek) ve **sessiz sabotaj** (karara uymuş görünüp yarım çalışmak).
+
+İlkenin çalışması için **ön koşul, itirazın gerçekten dinlenmiş olmasıdır;** aksi hâlde "sus ve uy" anlamına gelir ve zararlıdır. İtirazın **kayıt altına alınması** da önemlidir (ADR'deki alternatifler bölümü): karar yanlış çıkarsa o itiraz süreci hızlandırır. "Ben hâlâ ikinci seçeneği tercih ederdim ama karar verildi; disagree and commit, tam destek veriyorum."
+
+## Blameless culture
+
+**Blameless culture (suçlamayan kültür, psikolojik güvenlik)**: hataların kişilere değil sisteme atfedildiği, insanların sorun bildirmekten çekinmediği ortam. **Suçlama kültüründe insanlar hataları gizler;** gizlenen hata büyür ve sistem öğrenemez. Yani nezaket değil, öğrenme kapasitesi meselesidir. Postmortem'lerin "blameless" olmasının sebebi budur; aynı ilke retro ve kod incelemesi için de geçerlidir. "Soru 'kim yaptı' değil, 'bu nasıl canlıya kadar geldi ve hangi kontrol eksikti'."
+
+## Bias for action
+
+**Bias for action (eyleme meyil)**: belirsizlik varken beklemek yerine, geri alınabilir kararlarda hızlı hareket etmeyi tercih eden yaklaşım. Çift yönlü kapı kararlarında uzun tartışma israftır. Ama **tek yönlü kapılarda (geri dönüşü olmayan veya çok pahalı kararlarda) aynı refleks tehlikelidir;** bu yüzden ilke, karar türünü ayırt etmeyi gerektirir. Şirket değerleri listelerinde ve iş görüşmelerinde karşına çıkar. "Bu geri alınabilir; bias for action, deneyip ölçelim."
+
+## Ownership ve DRI
+
+**Ownership / DRI (Directly Responsible Individual, tek sorumlu)**: her işin **tek bir** sahibi olması ilkesi. "Herkesin sorumluluğu" pratikte "kimsenin sorumluluğu" demektir: herkes başkasının bakacağını varsayar. Tek bir sahip işin takip edilmesini garanti eder. Sahip işi kendisi yapmak zorunda değildir; **bitmesini sağlamakla** yükümlüdür. "Bu maddenin DRI'ı kim? Sahipsiz kalırsa yapılmaz."
+
+<Callout kind="tasarimci">
+
+- **İş görüşmesinde sor:** async mi, toplantı mı? Kararlar yazılı mı? Hata olunca ne olur?
+- **İtirazını karardan önce ve yazılı yap;** karardan sonra destek ver.
+- **Geri alınabilir tasarım kararlarında hızlı ol,** geri alınamayanlarda (marka, veri modeli) yavaşla.
+- **Her tasarım işine tek bir DRI yaz.**
+
+</Callout>
+
+<Summary>
+
+- Async-first ve documentation-first yazılı iz bırakır; bedelleri karar süresi ve yazma disiplini.
+- Disagree and commit, itiraz gerçekten dinlendiyse çalışır; yoksa "sus ve uy" olur.
+- Blameless kültür bir nezaket değil, öğrenme kapasitesi meselesidir.
+- Bias for action yalnızca geri alınabilir kararlarda; tek yönlü kapılarda tehlikelidir.
+- Her işin tek bir sahibi olmalı; herkesin sorumluluğu kimsenin sorumluluğudur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Documentation-first neden yalnızca bir arşivleme pratiği değildir?">
+
+Çünkü yazmak düşünmeyi zorlar. Bir fikri tek sayfaya sığdıramamak çoğu zaman fikrin henüz netleşmediğinin işaretidir. Ayrıca yeni katılan biri aylarca süren konuşmaları okuyarak yetişebilir.
+
+</SelfCheck>
+
+<SelfCheck question="'Disagree and commit' ilkesinin çalışması için ön koşul nedir? Yoksa ne anlama gelir?">
+
+İtirazın gerçekten dinlenmiş olması. Yoksa ilke "sus ve uy" anlamına gelir ve zararlıdır. İtirazın kayıt altına alınması da önemlidir.
+
+</SelfCheck>
+
+<SelfCheck question="Blameless kültür neden pratik bir gereklilik, yalnızca nezaket değil?">
+
+Suçlama kültüründe insanlar hataları gizler; gizlenen hata büyür ve sistem öğrenemez. Mesele öğrenme kapasitesidir.
+
+</SelfCheck>
+
+<SelfCheck question="'Bias for action' ne zaman tehlikelidir?">
+
+Tek yönlü kapı kararlarında (geri dönüşü olmayan veya çok pahalı olanlarda). İlke çift yönlü kapılar için doğrudur; karar türünü ayırt etmeden uygulanırsa pahalı hatalar üretir.
+
+</SelfCheck>
+
+<SelfCheck question="'Herkesin sorumluluğu' neden sorunlu? DRI bunu nasıl çözer?">
+
+Pratikte "kimsenin sorumluluğu" demektir: herkes başkasının bakacağını varsayar. DRI tek bir sahip atayarak takibi garanti eder; sahip işi kendisi yapmak zorunda değil, bitmesini sağlamakla yükümlüdür.
+
+</SelfCheck>

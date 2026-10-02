@@ -1,0 +1,68 @@
+---
+summary: "Otomatik testin asıl faydası hata bulmak değil, değişiklik yapabilme cesareti vermektir. Test altyapısı zayıf bir projede küçük tasarım düzeltmeleri bile 'riskli' sayılıp ertelenir. Test piramidi bir denge önerir."
+outcomes:
+  - "Testin asıl faydasını ve tasarım kalitesiyle bağlantısını söyleyebilirsin."
+  - "Test piramidini ve her şeyi E2E yapmanın sakıncasını açıklayabilirsin."
+minutes: 7
+sources:
+  - label: "Martin Fowler — Test Pyramid"
+    url: "https://martinfowler.com/bliki/TestPyramid.html"
+  - label: "Martin Fowler — Pratik Test Piramidi"
+    url: "https://martinfowler.com/articles/practical-test-pyramid.html"
+  - label: "Kent C. Dodds — The Testing Trophy"
+    url: "https://kentcdodds.com/blog/the-testing-trophy-and-testing-classifications"
+flags: ["emin-degil"]
+skipTerms: ["Validation","validation","doğrulama"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bu bölümün senin için iki net çıktısı var:
+
+1. **İyi bir hata raporu yazabilmek.** Bu, tasarımcının geliştiriciyle ilişkisini en çok etkileyen tek beceridir. Kötü bir hata raporu iki gün kaybettirir; iyi bir tanesi on dakikada kapanır.
+2. **Tasarım kalitesini otomatikleştirebilmek.** Erişilebilirlik taraması, görsel karşılaştırma ve performans bütçesi yayın hattına konabilir; "her sürümde tekrar kontrol etme" yükü insandan makineye geçer.
+
+Geri kalan kısımlar **seviye 2**: kod yazmayacaksın ama bir PR'da "testler kırıldı" ya da "bu coverage'ı düşürüyor" cümlelerini anlaman gerekiyor. Kavramlar eskimeyen, araçlar hızlı değişen kategoridedir.
+
+## Test neden var
+
+**Automated test (otomatik test)**, kodun beklendiği gibi çalıştığını insan müdahalesi olmadan ve tekrar tekrar kontrol eden koddur. **Asıl faydası hata bulmak değil, değişiklik yapabilme cesareti vermektir.** Testi olmayan bir kod tabanında her değişiklik risklidir; ekip dokunmaktan çekinir ve kod çürür. Testi olan bir kodda "bu düzeltmeyi yapalım" kararı ucuzdur. "Bu bileşeni yeniden yazmaktan çekiniyoruz çünkü testi yok; önce test yazalım."
+
+**Tasarımcı için somut sonuç:** test altyapısı zayıf bir projede küçük tasarım düzeltmeleri de "riskli" sayılıp ertelenir. Yani test dolaylı olarak tasarım kalitesini belirler.
+
+## Test piramidi
+
+**Test pyramid**, testlerin dağılımını anlatan modeldir: tabanda çok sayıda hızlı ve ucuz test (unit), ortada daha az entegrasyon testi, tepede az sayıda yavaş ama gerçekçi uçtan uca test (E2E). Bir denge önerir: E2E testler en gerçekçi olanlardır ama yavaş, kırılgan ve pahalıdır; hepsini E2E yapmak CI süresini dakikalardan saate çıkarır. Unit testler hızlıdır ama "parçalar tek tek çalışıyor, birlikte çalışmıyor" durumunu yakalayamaz. "Her şeyi E2E ile test ediyoruz; CI 25 dakika sürüyor. Piramidi dengeleyelim."
+
+Piramidin kesin oranları dogma değildir. Front-end tarafında "testing trophy" adlı bir alternatif model, entegrasyon testlerine daha fazla ağırlık verilmesini savunur; çünkü kullanıcı tek tek fonksiyonları değil, birlikte çalışan parçaları deneyimler. İki model arasındaki tartışmanın güncel durumu doğrulama gerektirir.
+
+<Callout kind="tasarimci">
+
+- **"Bu düzeltmeyi yapmak riskli" cevabını** test altyapısının durumuyla ilişkilendir; test eksikliği tasarım borcunu büyütür.
+- **Test stratejisi toplantısında** kritik kullanıcı akışlarının (kayıt, ödeme) E2E kapsamında olup olmadığını sor.
+
+</Callout>
+
+<Summary>
+
+- Testin asıl faydası değişiklik yapabilme cesaretidir; zayıf test altyapısı küçük tasarım düzeltmelerini bile erteletir.
+- Piramit: tabanda çok unit, ortada entegrasyon, tepede az E2E. Hepsini E2E yapmak CI'ı yavaşlatır.
+- Testing trophy entegrasyona daha fazla ağırlık verir; oranlar dogma değildir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Otomatik testin asıl faydası nedir? Tasarım kalitesiyle bağlantısı ne?">
+
+Asıl faydası hata bulmak değil, değişiklik yapabilme cesareti vermektir. Test altyapısı zayıf bir projede küçük tasarım düzeltmeleri de "riskli" sayılıp ertelenir.
+
+</SelfCheck>
+
+<SelfCheck question="Test piramidi neyi önerir? Her şeyi E2E ile test etmenin sakıncası nedir?">
+
+Tabanda çok sayıda hızlı unit test, ortada entegrasyon, tepede az sayıda E2E. Her şeyi E2E yapmak CI süresini dakikalardan saate çıkarır ve testler kırılgan olduğu için sürekli bakım ister.
+
+</SelfCheck>

@@ -1,0 +1,42 @@
+---
+summary: "Stateless servis istekler arasında kendi belleğinde bilgi tutmaz; yatay ölçeklemenin ön koşuludur. Oturum sunucu belleğinde duruyorsa ikinci kopya eklendiğinde kullanıcılar rastgele çıkış yapar."
+outcomes:
+  - "Stateless ile stateful farkını ve neden yatay ölçeklemenin ön koşulu olduğunu söyleyebilirsin."
+  - "Oturum bilgisinin sunucu belleğinde tutulmasının sorununu ve çözümünü açıklayabilirsin."
+minutes: 4
+sources:
+  - label: "The Twelve-Factor App — Processes"
+    url: "https://12factor.net/processes"
+  - label: "Redis — Dokümantasyon"
+    url: "https://redis.io/docs/latest/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Kullanıcılar rastgele çıkış yapıyor. Hiçbir hata yok, ama bazen oturumun düşüyor. En olası sebep: oturum bilgisi bir sunucunun belleğinde tutuluyor ve ikinci kopya eklendi.
+
+**Stateless** bir servis, istekler arasında kendi belleğinde bilgi tutmaz; her istek kendi içinde bütündür. **Stateful** olan tutar. **Stateless olmak yatay ölçeklemenin ön koşuludur.** Kullanıcının oturum bilgisi tek bir sunucunun belleğinde durursa, ikinci bir sunucu eklendiğinde o kullanıcı oraya düştüğünde çıkış yapmış olur. Çözüm: durumu paylaşılan bir yere taşımak (Redis, veritabanı) ya da jetonda taşımak. "Oturumları sunucu belleğinde tutuyoruz; ikinci kopya ekleyince kullanıcılar rastgele çıkış yapacak. Redis'e taşıyalım."
+
+<Callout kind="tasarimci">
+
+- **"Rastgele çıkış yapıyorum" şikâyetini oturum yönetimiyle ilişkilendir.**
+- **Oturum süresi ve yenileme davranışını ürün kararı olarak yaz** (ne kadar sonra çıkış, uyarı var mı?).
+
+</Callout>
+
+<Summary>
+
+- Stateless servis istekler arasında bellekte bilgi tutmaz; yatay ölçeklemenin ön koşuludur.
+- Oturum sunucu belleğinde tutulursa ikinci kopya eklendiğinde kullanıcılar çıkış yapar; durumu paylaşılan bir yere ya da jetona taşımak gerekir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Oturumlar sunucu belleğinde tutulursa ikinci kopya eklenince ne olur?">
+
+Kullanıcı ikinci kopyaya düştüğünde oturum orada olmadığı için çıkış yapmış olur. Çözüm: durumu paylaşılan bir yere (Redis, veritabanı) ya da jetona taşımak.
+
+</SelfCheck>

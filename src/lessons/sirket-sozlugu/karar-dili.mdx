@@ -1,0 +1,74 @@
+---
+summary: "Bir kararı tartışırken kullanılan çerçeve kelimeleri: constraint (kısıt), assumption (varsayım), risk ve mitigation, trade-off, spike/timebox. Bu beş kelimeyi doğru kullanmak teknik masada ciddiye alınmanın en hızlı yolu; 'değiştiremeyiz' denen kısıtların çoğu aslında varsayımdır."
+outcomes:
+  - "Constraint ile assumption arasındaki farkı ve 'bunu değiştiremeyiz' cümlesinin genelde hangisi olduğunu söyleyebilirsin."
+  - "Bir riski kaydetmenin neden önemli olduğunu açıklayabilirsin."
+  - "Trade-off ve spike/timebox'ın ne işe yaradığını bilirsin."
+minutes: 5
+sources:
+  - label: "Martin Fowler — Architecture Decision Record"
+    url: "https://martinfowler.com/bliki/ArchitectureDecisionRecord.html"
+  - label: "Atlassian — MoSCoW önceliklendirme"
+    url: "https://www.atlassian.com/agile/project-management/moscow"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir kararı tartışırken kullanılan çerçeve kelimeleri. **Bu beş kelimeyi doğru kullanmak, teknik masada ciddiye alınmanın en hızlı yoludur.**
+
+## Constraint
+
+**Constraint (kısıt)**, değiştiremeyeceğin, verili olan sınırdır: süre, bütçe, ekip büyüklüğü, mevcut teknoloji, yasal zorunluluk. Kısıtları açıkça saymak tartışmayı hayal kurmaktan çıkarır. Ayrıca kısıtlar **tasarımı kötüleştirmez, odaklar:** sınırsız zaman ve bütçe verilen projeler genelde daha iyi çıkmaz. Brief'lerde, spec'lerde ve ADR'lerde karşına çıkar. "Kısıtlarımız: altı hafta, iki kişi, mevcut tasarım sistemi. Buna göre konuşalım."
+
+Bazı "kısıtlar" aslında varsayımdır. **"Bunu değiştiremeyiz" cümlesi sorgulandığında sık sık çözülür.**
+
+## Assumption
+
+**Assumption (varsayım)**, doğru kabul edilen ama kanıtlanmamış inançtır. "Bunu varsayıyoruz" demek bir zayıflık itirafı değil, bir **risk beyanıdır:** yazıya döküldüğünde sınanabilir hâle gelir. PRD'lerde ayrı bir başlık olarak yer alır. "Varsayımımız: kullanıcıların çoğu masaüstünden giriyor. Yanlışsa tüm yerleşim değişir; bunu ölçelim."
+
+## Risk
+
+**Risk**, olması muhtemel ve olursa zarar verecek durumdur. **Mitigation (azaltma önlemi)** o riski azaltmak için önceden alınan önlemdir. Riski adlandırmak onu yönetilebilir kılar: **kayıtlı bir risk sürpriz değildir; kayıtsız bir risk krizdir.** "Risk: üçüncü parti servis lansman gününde yetişmeyebilir. Azaltma: geçici bir alternatif akış hazırlayalım."
+
+## Trade-off
+
+**Hiçbir seçenek her şeyi kazandırmaz.** Bir öneriyi savunuyorsan neyi feda ettiğini söyleyebilmelisin; söyleyemiyorsan öneriyi yeterince anlamamışsındır. (Kütüphaneler ve Sistem Mimarisi bölümlerinde ayrıntısı var.)
+
+## Spike ve timebox
+
+**Spike**, belirsizliği azaltmak için ayrılan araştırma işidir; **timebox** ona konan zaman sınırıdır. "Bilmiyoruz" cevabını "iki gün içinde öğreneceğiz"e çeviren mekanizma.
+
+<Callout kind="tasarimci">
+
+- **Önerini sunarken sınırı söyle:** ne kazandırır, neyi feda eder?
+- **"Değiştiremeyiz" duyduğunda sor:** bu kısıt mı, varsayım mı?
+- **Varsayımlarını yaz:** sınanabilir olsun.
+- **Bilmediğinde "bilmiyorum" yerine spike öner:** iki gün, şu soruyu cevaplayacak.
+
+</Callout>
+
+<Summary>
+
+- Kısıt verilidir ve odaklar; "değiştiremeyiz" denen şey çoğu zaman varsayımdır.
+- Varsayımı yazmak risk beyanıdır ve sınanabilir kılar.
+- Kayıtlı risk sürpriz değildir; kayıtsız risk krizdir.
+- Her önerinin bir trade-off'u vardır; söyleyemiyorsan anlamamışsındır.
+- Spike + timebox, "bilmiyoruz"u bir plana çevirir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Constraint ile assumption arasındaki fark nedir? 'Bunu değiştiremeyiz' cümlesi hangisine örnek olabilir?">
+
+Constraint değiştiremeyeceğin verili bir sınırdır; assumption doğru kabul edilen ama kanıtlanmamış bir inançtır. "Bunu değiştiremeyiz" cümlesi sık sık varsayım çıkar; sorgulandığında çözülür.
+
+</SelfCheck>
+
+<SelfCheck question="Bir riski kaydetmek neden önemli?">
+
+Kayıtlı bir risk sürpriz değildir; kayıtsız bir risk krizdir. Adlandırmak azaltma önlemi planlamayı mümkün kılar.
+
+</SelfCheck>

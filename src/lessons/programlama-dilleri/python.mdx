@@ -1,0 +1,64 @@
+---
+summary: "Okunaklılığı öne alan genel amaçlı dil; veri işleme, otomasyon ve yapay zekâda fiilî standart. 'Yapay zekâ ekleyelim' dendiğinde arkada neden genelde Python olduğunu öğrenirsin."
+outcomes:
+  - "Python'un en güçlü olduğu üç yeri sayabilirsin."
+  - "Yapay zekâ özelliğinin neden ayrı bir servis olduğunu ve tasarıma etkisini söyleyebilirsin."
+minutes: 5
+sources:
+  - label: "Python — Hakkında"
+    url: "https://www.python.org/about/"
+  - label: "Python — Resmî eğitim"
+    url: "https://docs.python.org/3/tutorial/index.html"
+  - label: "Stack Overflow — Developer Survey"
+    url: "https://survey.stackoverflow.co/"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Python, okunaklılığı öne alan, genel amaçlı bir dildir. Veri işleme, otomasyon ve yapay zekâda fiilî standarttır.
+
+## Nerede karşına çıkar
+
+- **Veri ve yapay zekâ.** Model eğitimi, veri temizliği, analiz: bu alanın kütüphaneleri Python'da yaşar. Bir ürüne yapay zekâ girecekse arkada büyük ihtimalle Python vardır.
+- **Otomasyon ve betikler.** Tek seferlik işler, veri taşıma, rapor üretimi.
+- **Back-end.** Django ve FastAPI gibi framework'lerle web servisleri.
+
+## Güçlü ve zayıf yanları
+
+**İyi yaptığı:** okunması kolaydır (teknik olmayan biri bile kabaca ne yaptığını takip edebilir), veri/yapay zekâ ekosistemi rakipsizdir, hızlı prototip için en kısa yoldur.
+
+**Kötü yaptığı:**
+
+- **Hız.** Aynı işi Go ya da Java'dan yavaş yapar; çoğu web işinde fark etmez, ağır hesapta eder.
+- **Tarayıcıda çalışmaz.** İstemci tarafında yeri yoktur.
+- **Paket ve sürüm yönetimi tarihsel olarak zahmetlidir;** ekip kurulumunda sürtünme yaratabilir.
+
+**Alternatifler:** ekip zaten JavaScript biliyorsa back-end için Node.js; yüksek trafikli, basit servisler için Go; yalnızca istatistik ağırlıklı analizde R.
+
+<Callout kind="tasarimci">
+
+- **"Yapay zekâ ekleyelim" dendiğinde arkada muhtemelen Python vardır** ve bu genelde **ayrı bir servis** demektir: ana uygulamayla ağ üstünden konuşur. Yani gecikme ve hata durumu tasarlanmalıdır.
+- **Model çalıştırmak yavaştır.** Saniyeler sürebilir; "yükleniyor" yerine ilerlemeli ya da arka plana atılmış bir akış tasarlaman gerekebilir.
+
+</Callout>
+
+<Summary>
+
+- Python veri, yapay zekâ ve otomasyonda güçlüdür; tarayıcıda çalışmaz.
+- Yapay zekâ özellikleri çoğunlukla Python ile yazılmış ayrı servislerdir; gecikme ve hata hâlleri tasarlanmalıdır.
+- Ağır hesapta diğer dillerden yavaştır; çoğu web işinde fark etmez.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Yapay zekâ özelliği neden genelde ayrı bir servistir ve bu tasarımı nasıl etkiler?">
+
+Bu alanın kütüphaneleri Python'da yaşar ve ana uygulamayla ağ üstünden konuşan ayrı bir servis çalışır. Bu yüzden gecikme ve hata durumları olur; model çalıştırmak saniyeler sürebildiğinden ilerleme göstergeli ya da arka plana atılmış akışlar tasarlamak gerekebilir.
+
+</SelfCheck>

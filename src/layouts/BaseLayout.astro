@@ -2,6 +2,7 @@
 import "~/styles/global.css";
 import ThemeControl from "~/components/ThemeControl.astro";
 import MobileNav from "~/components/MobileNav.astro";
+import SiteNav from "~/components/SiteNav.astro";
 
 interface Props {
   title: string;
@@ -100,6 +101,8 @@ const SERVICE_WORKER_SCRIPT = import.meta.env.PROD
               : choice;
           document.documentElement.dataset.theme = theme;
           document.documentElement.dataset.themeChoice = choice;
+          var size = localStorage.getItem("pdr.text-size");
+          if (size === "sm" || size === "lg" || size === "xl") document.documentElement.dataset.text = size;
         } catch (error) {
           document.documentElement.dataset.theme = "dark";
         }
@@ -139,6 +142,13 @@ const SERVICE_WORKER_SCRIPT = import.meta.env.PROD
         scroll and there is no scrollbar to read it from. */}
     <div class="read-progress" aria-hidden="true"><span data-read-progress></span></div>
 
+    {/* ≥64rem the menu is the left rail (ADR-016); below that, the header nav and the bottom bar. */}
+    <SiteNav items={visibleNav} section={section} />
+
+    <p class="offline-banner" role="status" data-offline-banner hidden>
+      İnternet yok — indirilmiş içerik gösteriliyor.
+    </p>
+
     <main id="main">
       <slot />
     </main>
@@ -148,6 +158,16 @@ const SERVICE_WORKER_SCRIPT = import.meta.env.PROD
     <script is:inline set:html={SERVICE_WORKER_SCRIPT} />
 
     <script>
+      // Offline is a normal state for this site (ADR-012); say so instead of
+      // letting a missing page look like a bug.
+      const banner = document.querySelector<HTMLElement>("[data-offline-banner]");
+      if (banner) {
+        const sync = () => (banner.hidden = navigator.onLine);
+        window.addEventListener("online", sync);
+        window.addEventListener("offline", sync);
+        sync();
+      }
+
       const bar = document.querySelector<HTMLElement>("[data-read-progress]");
       if (bar) {
         const update = () => {
@@ -178,6 +198,20 @@ const SERVICE_WORKER_SCRIPT = import.meta.env.PROD
 
   .skip:focus-visible {
     transform: translateY(0);
+  }
+
+  .offline-banner {
+    margin: 0;
+    padding: var(--spacing-2) var(--spacing-4);
+    border-bottom: 1px solid var(--c-border);
+    background-color: var(--c-surface-raised);
+    color: var(--c-text-secondary);
+    font-size: var(--text-sm);
+    text-align: center;
+  }
+
+  .offline-banner[hidden] {
+    display: none;
   }
 
   .read-progress {
@@ -296,6 +330,20 @@ const SERVICE_WORKER_SCRIPT = import.meta.env.PROD
     .site-nav {
       display: flex;
       margin-inline-start: var(--spacing-8);
+    }
+  }
+
+  /* The rail replaces the header links; the tools stay at the right. */
+  @media (min-width: 64rem) {
+    .site-nav {
+      display: none;
+    }
+  }
+
+  /* Room for the closed rail, so it never sits on top of a page's first column. */
+  @media (min-width: 64rem) {
+    main {
+      padding-inline-start: var(--spacing-8);
     }
   }
 </style>

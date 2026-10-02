@@ -1,0 +1,131 @@
+---
+summary: "Bölümün merkezi: amatör ile profesyonel prompt arasındaki fark uzunluk değil, kaç kararın belirsiz bırakıldığıdır. Dört örnek (bölüm isteme, hata bildirme, kod değiştirme, karar sorma) ve hepsinde ortak olan beş şey."
+outcomes:
+  - "Amatör ve profesyonel prompt arasındaki farkın uzunluk olmadığını açıklayabilirsin."
+  - "Dört örnekte ortak olan beş unsuru sayabilirsin."
+  - "Kendi belirsiz isteklerini profesyonel yapıya çevirebilirsin."
+minutes: 8
+sources:
+  - label: "Anthropic Docs — Prompt engineering genel bakış"
+    url: "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview"
+  - label: "Anthropic Docs — Açık ve doğrudan ol"
+    url: "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/be-clear-and-direct"
+  - label: "Claude Code Docs — En iyi uygulamalar"
+    url: "https://code.claude.com/docs/en/best-practices"
+skipTerms: ["Validation","Scope","role / aria-label / aria-live","Avatar stack","Eyebrow","validation","doğrulama","scope","kapsam","canlı bölge","avatar stack","eyebrow"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bölümün merkezi bu ders. Her karşılaştırmada fark **ne kadar uzun yazıldığı değil, kaç kararın belirsiz bırakıldığı.**
+
+## Örnek 1: Bir bölüm isteme
+
+**Amatör:**
+
+> "Sitem için güzel bir hero bölümü yap. Modern olsun."
+
+*Belirsiz bırakılan kararlar:* ürün ne, kime hitap ediyor, hangi eylem isteniyor, hangi teknolojide, hangi ölçeklerde, mobilde ne olacak, "modern" ne demek.
+
+**Profesyonel:**
+
+> **Bağlam:** Küçük ekipler için bir toplantı notu aracının pazarlama sitesi. Hedef kitle: 5-20 kişilik yazılım ekiplerinde çalışan proje yöneticileri.
+>
+> **Görev:** Hero bölümü. Üç soruyu cevaplamalı: bu ne, kimin için, şimdi ne yapmalıyım.
+>
+> **İçerik:** Eyebrow, tek satırlık headline, iki satırlık subheadline, tek birincil CTA ("Ücretsiz başla"), sağda ürün ekran görüntüsü için 16:9 alan. CTA'nın altında avatar stack + "340 ekip kullanıyor".
+>
+> **Stack:** Next.js App Router, TypeScript, Tailwind. Yeni bağımlılık ekleme.
+>
+> **Kısıtlar:** Spacing yalnızca 4/8/16/24/32/48/64'ten. Renkler token'dan (`--color-*`), ham hex yok. Tek accent rengi, yalnızca CTA'da. Mobile-first; 768px altında tek sütun, görsel metnin altına.
+>
+> **Yasaklar:** Sebepsiz gradient başlık yok. Stok illüstrasyon yok. İkinci bir dolu buton yok.
+>
+> **Erişilebilirlik:** Başlık `h1`. CTA gerçek `<button>` veya `<a>`, görünür focus göstergesi. Metin/arka plan kontrastı en az 4.5:1.
+>
+> **Kabul kriteri:** 375px ve 1440px'te taşma yok · klavyeyle CTA'ya ulaşılabiliyor ve focus görünüyor · tüm boşluklar ölçekten · hiçbir ham renk değeri yok.
+
+## Örnek 2: Hata bildirme
+
+**Amatör:**
+
+> "Form çalışmıyor, düzelt."
+
+**Profesyonel:**
+
+> Kayıt formunda e-posta alanı: geçersiz bir adres girip Tab ile çıkınca hata mesajı görünüyor, ama düzeltip tekrar yazınca mesaj kaybolmuyor.
+>
+> Beklenen: alan geçerli hâle gelince hata anında kalkmalı.
+> Gerçekleşen: hata, form yeniden gönderilene kadar duruyor.
+> Ortam: Chrome, staging, masaüstü.
+>
+> Doğrulama zamanlaması şöyle olsun: ilk kontrol alandan çıkınca (blur), sonrasında yazarken anında güncellensin. Hata mesajı alanla ilişkilendirilmiş ve canlı bölge olarak duyurulmuş olmalı.
+
+Bu, Test ve Kalite bölümündeki hata raporunun aynısıdır: adımlar, beklenen, gerçekleşen, ortam.
+
+## Örnek 3: Mevcut kodu değiştirme
+
+**Amatör:**
+
+> "Bu bileşeni daha iyi yap."
+
+**Profesyonel:**
+
+> Bu kart bileşeninde üç sorun var:
+> 1. Boşluklar elle yazılmış (`p-[18px]`), ölçekte yok → `p-4` veya `p-6` yap.
+> 2. Uzun başlıkta taşıyor → iki satırda kes, sonuna üç nokta, tam metni `title` olarak ver.
+> 3. Tıklanabilir ama `div` → gerçek bir bağlantı olsun, klavyeyle erişilebilsin.
+>
+> **Kapsam:** Yalnızca bu dosyayı değiştir. Görsel tasarımı değiştirme; bu bir refactor, yeni özellik değil.
+
+## Örnek 4: Karar sorma
+
+**Amatör:**
+
+> "Hangi framework'ü kullanmalıyım?"
+
+**Profesyonel:**
+
+> Bir seçim yapmam gerekiyor. Bağlam: tek kişilik bir ekip (ben), içerik ağırlıklı bir tanıtım sitesi + küçük bir yönetim paneli. Kısıtlar: altı hafta, React biliyorum, SEO kritik, bütçe minimum.
+>
+> İki-üç seçenek ver. Her biri için: ne kazandırır, neyi feda eder, ne zaman yanlış tercih olur. Sonunda bir öneri yap ve gerekçesini yaz. Kesin olmadığın yerleri belirt.
+
+## Dört örnekte ortak olan
+
+1. Bağlam verilmiş.
+2. Kısıt yazılmış.
+3. Kapsam sınırlanmış.
+4. Kabul kriteri konmuş.
+5. **Belirsizlik payı beyan edilmesi istenmiş.**
+
+<Callout kind="tasarimci">
+
+- **Göndermeden önce say:** kaç karar belirsiz kaldı? Her biri modelin tahmin edeceği bir yer.
+- **Karar sorarken seçenek, takas ve belirsizlik iste:** tek bir "cevap" değil.
+- **"Kesin olmadığın yerleri belirt" cümlesini ekle:** uydurma savunmasının birinci katmanıdır.
+
+</Callout>
+
+<Summary>
+
+- Fark uzunluk değil, kaç kararın belirsiz bırakıldığıdır; kısa ama kısıtlı prompt, uzun ama belirsizden iyidir.
+- Dört örnek: bölüm isteme, hata bildirme, mevcut kodu değiştirme, karar sorma.
+- Ortak unsurlar: bağlam, kısıt, kapsam sınırı, kabul kriteri, belirsizlik payı beyanı.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Amatör ve profesyonel prompt arasındaki fark uzunluk mudur? Değilse nedir?">
+
+Hayır. Fark, kaç kararın belirsiz bırakıldığıdır. Kısa ama kısıtlı bir prompt, uzun ama belirsiz bir prompttan iyidir.
+
+</SelfCheck>
+
+<SelfCheck question="Dört örnekte ortak olan beş unsur nedir?">
+
+Bağlam verilmiş, kısıt yazılmış, kapsam sınırlanmış, kabul kriteri konmuş ve belirsizlik payı beyan edilmesi istenmiş.
+
+</SelfCheck>

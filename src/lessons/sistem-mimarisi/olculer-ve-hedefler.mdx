@@ -1,0 +1,90 @@
+---
+summary: "Latency, throughput, yüzdelik dilimler, availability ve SLA/SLO/SLI: ortalama yalan söyler, her dokuz izin verilen kesintiyi onda birine indirir ve maliyeti katlar. Error budget hız ile güvenilirlik tartışmasını sayıya bağlar."
+outcomes:
+  - "Latency ile throughput'u ve kullanıcının hangisini hissettiğini söyleyebilirsin."
+  - "Ortalamanın neden yetersiz olduğunu ve p95/p99'un anlamını açıklayabilirsin."
+  - "%99,9 ve %99,99 hedeflerinin kesinti bütçesini tablodan okuyabilirsin."
+  - "SLI, SLO, SLA ve error budget'ı ayırabilirsin."
+minutes: 9
+sources:
+  - label: "Google SRE Kitabı — Service Level Objectives"
+    url: "https://sre.google/sre-book/service-level-objectives/"
+  - label: "Google SRE Çalışma Kitabı — SLO'ları uygulamak"
+    url: "https://sre.google/workbook/implementing-slos/"
+  - label: "web.dev — Core Web Vitals"
+    url: "https://web.dev/articles/vitals"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Sistemimiz hızlı" demek bir şey söylemez. Hızlı ne demek? Kime göre? Bu ders, mimari tartışmalarda geçen ölçülerin dilini verir.
+
+## Latency ve throughput
+
+**Latency (gecikme)** tek bir isteğin ne kadar sürdüğü; **throughput** birim zamanda kaç istek işlenebildiğidir. İkisi bağımsızdır ve karıştırılır: bir sistem çok sayıda isteği işleyebilirken (yüksek throughput) her biri yavaş olabilir (yüksek latency). **Kullanıcı latency'yi hisseder.** "Throughput yeterli ama p95 latency 3 saniye; kullanıcı bunu yavaş algılar."
+
+## Yüzdelik dilim
+
+**Percentile (yüzdelik dilim)**, ölçümlerin dağılımını tarif etme biçimidir. **p95 = 200ms**, isteklerin %95'inin 200 milisaniyenin altında tamamlandığı anlamına gelir. **Ortalama yalan söyler:** ortalama 200ms olan bir sistemde kullanıcıların %5'i 4 saniye bekliyor olabilir ve o %5 genelde en çok veri sahibi, yani en değerli kullanıcılardır. Core Web Vitals'ın 75. yüzdelik dilimi kullanması bu yüzdendir. "Ortalamaya bakmayalım; p95 ve p99'a bakalım. Kötü deneyim orada saklı."
+
+## Availability
+
+**Availability**, sistemin çalışır durumda olduğu zamanın oranıdır ve "dokuzlar"la ifade edilir. Somut bir bütçe verir: her dokuz izin verilen kesinti süresini onda birine indirir ve maliyeti katlar.
+
+| Hedef | Yıllık kesinti (yaklaşık) | Aylık kesinti (yaklaşık) |
+|---|---|---|
+| %99 (iki dokuz) | ~3,65 gün | ~7,2 saat |
+| %99,9 (üç dokuz) | ~8,8 saat | ~43 dakika |
+| %99,99 (dört dokuz) | ~53 dakika | ~4,3 dakika |
+| %99,999 (beş dokuz) | ~5 dakika | ~26 saniye |
+
+"Dört dokuz hedefliyorsak yılda 53 dakika kesinti hakkımız var; bakım pencereleri bile buna dahil." Karıştırma: **availability (çalışır olma) ≠ accessibility (erişilebilirlik).** Türkçede ikisi de aynı kelimeyle karşılanıyor; İngilizce terimi kullanmak karışıklığı önler.
+
+## SLI, SLO, SLA, error budget
+
+- **SLI:** ölçülen şey (başarılı istek oranı).
+- **SLO:** iç hedef (%99,9).
+- **SLA:** müşteriye verilen sözleşmesel taahhüt; ihlal edilirse yaptırımı vardır.
+
+SLO genelde SLA'dan **daha sıkı** tutulur ki söz ihlal edilmeden önce uyarı alınsın. "SLA'da %99,9 söz veriyoruz ama iç SLO'muz %99,95; tampon bırakalım."
+
+**Error budget** buradan çıkar: %99,9 hedef, yılda ~8,8 saatlik bir "hata bütçesi" demektir. Bütçe tükenmediyse ekip risk alıp hızlı yayın yapabilir; tükendiyse istikrara odaklanır. Hız ile güvenilirlik arasındaki tartışmayı sayıya bağlar.
+
+<Callout kind="tasarimci">
+
+- **"Hızlı" yerine bir ölçü iste:** "p95 yükleme 2 saniye altı" gibi.
+- **Hedefin maliyetini sor:** her ek dokuz maliyeti katlar; ürün için gerçekten gerekli mi?
+- **Planlı bakım pencerelerini kesinti bütçesinin parçası olarak gör** ve kullanıcıya duyurusunu tasarla.
+
+</Callout>
+
+<Summary>
+
+- Latency tek isteğin süresi, throughput birim zamandaki kapasitedir; kullanıcı latency'yi hisseder.
+- Ortalama yanıltır; p95/p99 kötü deneyimi gösterir.
+- Her ek dokuz, izin verilen kesinti süresini onda birine indirir ve maliyeti katlar.
+- SLI ölçer, SLO iç hedeftir, SLA dışa verilen sözdür; error budget hız-güvenilirlik dengesini sayıya bağlar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Ortalama yanıt süresine bakmak neden yetersizdir?">
+
+Ortalama yalan söyler: ortalaması 200ms olan bir sistemde kullanıcıların %5'i 4 saniye bekliyor olabilir. p95 ve p99 gibi yüzdelik dilimlere bakılmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="%99,9 ve %99,99 hedefleri yıllık ne kadar kesintiye karşılık gelir?">
+
+%99,9 ≈ yılda 8,8 saat (ayda ~43 dakika). %99,99 ≈ yılda 53 dakika (ayda ~4,3 dakika).
+
+</SelfCheck>
+
+<SelfCheck question="Error budget nedir ve neyi çözer?">
+
+SLO hedefinden artakalan kesinti payıdır (%99,9 → yılda ~8,8 saat). Hız ile güvenilirlik tartışmasını sayıya bağlar: bütçe tükenmediyse ekip risk alıp hızlı yayın yapabilir, tükendiyse istikrara odaklanır.
+
+</SelfCheck>

@@ -1,0 +1,97 @@
+---
+summary: "Ağaç, her öğenin bir üstü ve birden çok altı olduğu yapıdır: bilgi mimarisi bir ağaçtır. İki sabit soru: derinlik mi genişlik mi, ve bir şey birden fazla yerde olabilir mi?"
+outcomes:
+  - "Ağacın nerelerde karşına çıktığını (menü, DOM, katman paneli) söyleyebilirsin."
+  - "Sığ-geniş ile derin-dar yapıyı karşılaştırabilirsin."
+  - "'Bu ürün iki kategoride de görünsün' isteğinin neden mimariyi değiştirdiğini açıklayabilirsin."
+minutes: 8
+sources:
+  - label: "MDN — DOM'a giriş"
+    url: "https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction"
+  - label: "NN/g — Card Sorting"
+    url: "https://www.nngroup.com/articles/card-sorting-definition/"
+  - label: "NN/g — Tree Testing"
+    url: "https://www.nngroup.com/articles/tree-testing/"
+  - label: "NN/g — Flat vs. Deep Hierarchy"
+    url: "https://www.nngroup.com/articles/flat-vs-deep-hierarchy/"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+**Ağaç**, her öğenin bir üstü ve birden çok altı olduğu yapıdır. Tek bir kök vardır, dallanır, uçlarda yaprak düğümler bulunur. Döngü yoktur: bir düğüm kendi atası olamaz. Bu yapı senin işinde diğerlerinden daha fazla karşına çıkar, çünkü **bilgi mimarisi bir ağaçtır.**
+
+## Nerede karşına çıkar
+
+- **Site haritası ve menü:** ana kategoriler, alt kategoriler, sayfalar.
+- **DOM:** tarayıcının sayfayı tuttuğu yapı bir ağaçtır; `<body>` kök, her element bir düğümdür.
+- **Figma katman paneli:** frame içinde frame içinde katman.
+- **Dosya sistemi, yorum dizileri, kuruluş şeması, ürün kategorileri.**
+
+## İki sabit soru
+
+**1. Derinlik mi, genişlik mi?** Aynı sayıda sayfayı az seviyeli-çok seçenekli ya da çok seviyeli-az seçenekli düzenleyebilirsin. Klasik bir IA gerilimidir:
+
+<Compare>
+<Pane title="Sığ ve geniş">
+
+- Her adımda çok seçenek, hedefe az adım
+- Risk: karar yorgunluğu, tarama zorluğu
+- Uygun: kullanıcı ne aradığını biliyorsa
+
+</Pane>
+<Pane title="Derin ve dar">
+
+- Her adımda az seçenek, hedefe çok adım
+- Risk: kaybolma, "nerede kaldım" hissi
+- Uygun: kategoriler net ve ayrıksa
+
+</Pane>
+</Compare>
+
+Genel eğilim sığ yapıları tercih etmektir, çünkü her seviye bir karar ve bir tıklama demektir. Ama bu bir kural değil, bir denge.
+
+**2. Bir şey birden fazla yerde olabilir mi?** Ağacın tanımı gereği her düğümün **tek** üstü vardır. Gerçek ürünlerde bir ürün hem "Hediyelik" hem "Elektronik" olabilir. Bu istendiği anda yapı ağaç olmaktan çıkar; grafa ya da etiket sistemine dönüşür. Masum görünen ama mimariyi değiştiren bir istektir: breadcrumb'ın ne göstereceği, URL'in ne olacağı ve aynı sayfaya iki adresten erişilip erişilemeyeceği soruları açılır; sonuncusu doğrudan SEO sorunudur (canonical).
+
+## Ağaçta gezinme
+
+Breadcrumb, kökten mevcut düğüme giden yolu gösterir; ağaç yapısı net değilse breadcrumb da net olmaz. Ayrıca **"üst seviyeye çık"** ile **tarayıcının geri tuşu** farklı şeylerdir: biri ağaçta yukarı, diğeri geçmişte geriye gider. İkisini karıştıran arayüzler kullanıcıyı şaşırtır.
+
+## Ne kötü yapar
+
+- Çok kategorili ilişkileri temsil edemez.
+- **Yeniden düzenleme pahalıdır:** bir dalı taşımak altındaki her şeyin adresini değiştirir, eski linkler kırılır; IA değişikliği bu yüzden yönlendirme planı ister.
+- Derin ağaçta arama zayıftır; kullanıcı gezinmek yerine aramayı tercih ediyorsa ağaç yanlış çözüm olabilir.
+
+**Alternatifler:** etiket sistemi (çok boyutlu sınıflandırma), faceted search (filtreleri birleştirerek gezinme), graf (ilişkiler çok yönlüyse), düz liste + güçlü arama (kategori sayısı azsa).
+
+<Callout kind="tasarimci">
+
+- **IA'yı kart sıralama ve ağaç testiyle doğrula,** varsayımla değil.
+- **"Bir öğe birden fazla kategoride olabilir mi?" sorusunu erken sor;** cevap evet ise breadcrumb, URL ve canonical kararlarını baştan ver.
+- **IA değişikliği bir yönlendirme planıdır;** eski adresleri tasarım teslimatının parçası say.
+- **Derinliği say:** kullanıcının hedefe kaç tıklamada ulaştığı ağacın şeklinin sonucudur.
+
+</Callout>
+
+<Summary>
+
+- Ağaç tek kökten dallanır; her öğenin tek üstü vardır. Bilgi mimarisi, DOM ve katman paneli ağaçtır.
+- Sığ-geniş yapı karar yorgunluğu, derin-dar yapı kaybolma riski taşır.
+- Bir öğe birden fazla yerde olacaksa yapı ağaç olmaktan çıkar; breadcrumb, URL ve SEO kararları gerekir.
+- Dal taşımak adresleri değiştirir; yönlendirme planı şarttır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Bu ürün iki kategoride de görünsün' isteği neden masum değildir?">
+
+Ağaçta her düğümün tek üstü vardır; iki kategori istendiğinde yapı ağaç olmaktan çıkar. Breadcrumb'ın ne göstereceği, URL'in ne olacağı ve aynı sayfaya iki adresten erişilip erişilemeyeceği (SEO/canonical) soruları açılır.
+
+</SelfCheck>

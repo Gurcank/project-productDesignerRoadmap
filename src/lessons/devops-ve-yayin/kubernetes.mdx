@@ -1,0 +1,48 @@
+---
+summary: "Kubernetes çok sayıda konteyneri otomatik dağıtan, ölçekleyen ve yeniden başlatan sistemdir. Çoğu proje için gereksiz karmaşıklıktır: bir tercih değil, bir maliyettir; 'Kubernetes kullanıyoruz' bir ölçek göstergesi olmalı, üstünlük göstergesi değil."
+outcomes:
+  - "Kubernetes'in ne işe yaradığını söyleyebilirsin."
+  - "Neden çoğu proje için gereksiz olduğunu ve ne tür bir maliyet getirdiğini açıklayabilirsin."
+minutes: 4
+sources:
+  - label: "Kubernetes — Genel bakış"
+    url: "https://kubernetes.io/docs/concepts/overview/"
+  - label: "Docker — Genel bakış"
+    url: "https://docs.docker.com/get-started/docker-overview/"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+**Kubernetes (K8s)**, çok sayıda konteynerin otomatik olarak dağıtılmasını, ölçeklenmesini, izlenmesini ve çöktüğünde yeniden başlatılmasını yöneten sistemdir (orkestrasyon). Onlarca servis ve yüzlerce konteyner varsa bunları elle yönetmek imkânsızdır; Kubernetes bu işi otomatikleştirir: bir konteyner çökerse yerine yenisini açar, trafik artınca kopya sayısını artırır. Büyük ölçekli ve mikroservis mimarilerinde karşına çıkar. **Seviye 3** terimdir.
+
+## Çoğu proje için gereksiz
+
+**Çoğu proje için gereksiz karmaşıklıktır ve bunu söylemek önemlidir.** Kubernetes'in kendisi bakım gerektiren bir sistemdir; küçük bir ekip onu yönetmeye başladığında ürün geliştirmeye ayıracağı zaman azalır. Modern hosting platformları çoğu projenin ihtiyacını zaten karşılar. "Kubernetes'e ihtiyacımız yok; üç servisimiz var ve platform zaten ölçekliyor."
+
+Kubernetes bir tercih değil, bir **maliyettir:** bir uzmanlık, bir ekip yükü ve bir öğrenme eğrisi getirir. "Kubernetes kullanıyoruz" cümlesi bir üstünlük göstergesi değil, bir **ölçek** göstergesi olmalıdır.
+
+<Callout kind="tasarimci">
+
+- **"Kubernetes'e geçelim" önerisinde** kaç servis, kaç ekip, neden platform yetmiyor sorularını sor.
+- **Kubernetes'in tasarım kararlarına doğrudan etkisi yoktur;** ürün hızına etkisi vardır: ekip zamanını nereye harcıyor?
+
+</Callout>
+
+<Summary>
+
+- Kubernetes konteynerleri otomatik dağıtır, ölçekler ve yeniden başlatır.
+- Çoğu proje için gereksizdir; bakım ve uzmanlık maliyeti getirir.
+- Bir ölçek göstergesi olmalı, üstünlük göstergesi değil.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Kubernetes ne zaman gereksiz karmaşıklıktır? 'Kubernetes kullanıyoruz' ne göstergesi olmalıdır?">
+
+Onlarca servis ve gerçek bir ölçek yoksa gereksizdir; Kubernetes'in kendisi bakım gerektirir ve küçük bir ekibin ürün geliştirme zamanını yer. "Kubernetes kullanıyoruz" bir üstünlük göstergesi değil, bir ölçek göstergesi olmalıdır.
+
+</SelfCheck>

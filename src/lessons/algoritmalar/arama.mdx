@@ -1,0 +1,71 @@
+---
+summary: "Bir şeyi bulmanın iki temel yolu: doğrusal ve ikili arama. İkili arama sıralı veri ister; veritabanları bu yüzden index tutar. Otomatik tamamlamanın neden önek araması yaptığını ve debounce'un tasarım kararı olduğunu öğrenirsin."
+outcomes:
+  - "Doğrusal ve ikili aramanın farkını ve ikilinin şartını söyleyebilirsin."
+  - "Index'in hangi sorgulara yarayıp hangilerine yaramadığını tablodan okuyabilirsin."
+  - "Otomatik tamamlamada önek aramasının ve debounce'un neden bir karar olduğunu açıklayabilirsin."
+minutes: 6
+sources:
+  - label: "PostgreSQL — Index'lere giriş"
+    url: "https://www.postgresql.org/docs/current/indexes-intro.html"
+  - label: "MDN — Debounce (sözlük)"
+    url: "https://developer.mozilla.org/en-US/docs/Glossary/Debounce"
+  - label: "Use The Index, Luke"
+    url: "https://use-the-index-luke.com/"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir şeyi bulmanın iki temel yolu var ve aralarındaki fark, index kavramının neden var olduğunu açıklar.
+
+## İki yol
+
+**Doğrusal arama:** baştan başla, bulana kadar bak. Sıralı olmayan her veride tek seçenek; maliyeti öğe sayısıyla doğru orantılı.
+
+**İkili arama:** veri **sıralıysa** ortadan böl, hangi yarıda olduğuna bak, o yarıyı tekrar böl. Her adımda kalan veriyi yarıya indirir: bir milyon kayıtta yaklaşık yirmi adımda sonuç. Şartı: **veri sıralı olmalı.** Sıralamak da bedava değil (sonraki ders). Bu yüzden veritabanları veriyi sıralı tutan ayrı bir yapı kurar: **index.**
+
+## Index neyi çözer, neyi çözmez
+
+| Sorgu | Index yarar mı |
+|---|---|
+| "e-postası tam olarak şu olan" | Evet |
+| "adı `Ah` ile başlayan" | Evet |
+| "adının **içinde** `ah` geçen" | Genelde hayır |
+| "fiyatı 100–200 arası" | Evet (sıralı index) |
+| "şu kelimeyi içeren metin" | Ayrı bir tam metin index'i gerekir |
+
+Üçüncü satır tasarımı doğrudan ilgilendirir: **"içinde geçsin" araması ile "ile başlasın" araması aynı maliyette değildir.**
+
+## Arayüzde görünen sonuçlar
+
+- **Otomatik tamamlama** genelde önek araması yapar; kullanıcı kelimenin ortasını yazarsa sonuç gelmez. Bu bir hata değil, bir karardır; ama kullanıcıya belli etmek gerekir.
+- **Her tuşta sorgu atmak pahalıdır.** Bekleme süresi (**debounce**) bir tasarım kararıdır; belirtmezsen geliştirici bir değer seçer.
+- **Sonuç yokken ne göreceği** tasarlanmalı: yazım önerisi, popüler aramalar, filtreyi gevşetme.
+
+<Callout kind="tasarimci">
+
+- **Arama kutusunun neyi aradığını yaz:** başlık, gövde, etiket? "Her yerde" pahalı bir cevaptır.
+- **Önek mi, içinde mi?** Tek cümlelik bu karar arkadaki çözümü tamamen değiştirir.
+- **Boş sonuç bir eylem davetidir,** gri bir satır değil.
+
+</Callout>
+
+<Summary>
+
+- Doğrusal arama baştan bakar; ikili arama sıralı veride her adımda yarıya indirir.
+- Index sıralı yapıyı hazır tutar; önek aramasına yarar, "içinde geçen"e genelde yaramaz.
+- Debounce, önek/içinde seçimi ve boş sonuç ekranı tasarım kararlarıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="İkili aramanın şartı nedir ve bu neden index'e yol açar?">
+
+Verinin sıralı olması. Sıralamak da maliyetli olduğundan veritabanları veriyi sıralı tutan ayrı bir yapı (index) kurar.
+
+</SelfCheck>

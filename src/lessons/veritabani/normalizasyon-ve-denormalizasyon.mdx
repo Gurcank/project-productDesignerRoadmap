@@ -1,0 +1,71 @@
+---
+summary: "Normalleştirme veriyi tekrarsız tutar; denormalizasyon hız için bilerek tekrar eder. Bir takastır ve arayüzde 'tutarsız sayı' riski olarak görünür: 12 yorum yazan ama 8 yorum listeleyen kart."
+outcomes:
+  - "Normalizasyon ile denormalizasyon arasındaki takası söyleyebilirsin."
+  - "Denormalizasyonun arayüzdeki riskini (tutarsız sayılar) açıklayabilirsin."
+minutes: 5
+sources:
+  - label: "PostgreSQL — Tablolar arası ilişkiler"
+    url: "https://www.postgresql.org/docs/current/tutorial-fk.html"
+  - label: "PostgreSQL — Join'ler"
+    url: "https://www.postgresql.org/docs/current/tutorial-join.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Ürün kartında "12 yorum" yazıyor ama detay sayfasında 8 yorum var. Kullanıcı ürünün bozuk olduğunu düşünüyor. Bu tutarsızlığın en yaygın sebebi, bu dersin konusu.
+
+<Compare>
+<Pane title="Normalizasyon">
+
+- Her bilgi tek yerde
+- Değişince tek yerden değişir
+- Okumak için join gerekir (yavaş olabilir)
+
+</Pane>
+<Pane title="Denormalizasyon">
+
+- Bilerek veri tekrarı
+- Okuma hızlıdır
+- Kopyanın güncel tutulması sorumluluğu
+
+</Pane>
+</Compare>
+
+## Normalizasyon
+
+**Normalization (normalleştirme)**, verinin tekrar etmeyecek biçimde tablolara bölünmesidir. Her bilgi tek yerde tutulur; değiştiğinde tek yerden değişir. Bir şirketin adı 5000 siparişin içine kopyalanmışsa, ad değiştiğinde 5000 kaydı güncellemek gerekir ve bir kısmı kaçınılmaz olarak atlanır. Normalleştirme bunu engeller. "Şirket adını siparişe kopyalamayalım; şirket tablosuna referans verelim."
+
+## Denormalizasyon
+
+**Denormalization**, hız için bilerek veri tekrarı yapmaktır. Normalleştirilmiş veriyi okumak birçok tabloyu birleştirmeyi (join) gerektirir ve bu yavaş olabilir. Sık okunan bir bilgiyi kopyalamak okumayı hızlandırır; bedeli, kopyanın güncel tutulması sorumluluğudur. "Ürün kartında yorum sayısını her seferinde saymayalım; sayacı ürün kaydında tutalım."
+
+Bu bir **takastır:** hız kazanırsın, tutarlılık riski alırsın. Kopya güncellenmezse arayüzde tutarsız sayılar görünür: "12 yorum" yazan ama 8 yorum listeleyen bir kart, kullanıcıya ürünün bozuk olduğunu düşündürür.
+
+<Callout kind="tasarimci">
+
+- **Ekranda gösterilen her sayacın nereden geldiğini sor:** her seferinde sayılıyor mu, saklanıyor mu?
+- **Saklanan sayaçlarda tutarsızlık olasılığını kabul et** ve geliştiriciyle güncelleme akışını konuş.
+- **Raporlama sayılarında "son güncelleme" zamanını göstermeyi düşün.**
+
+</Callout>
+
+<Summary>
+
+- Normalleştirme veriyi tekrarsız tutar; değişiklik tek yerden yapılır.
+- Denormalizasyon hız için bilerek tekrar eder; kopyanın güncel tutulması gerekir.
+- Arayüzdeki riski tutarsız sayılardır ve kullanıcıda ürün bozuk izlenimi bırakır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Normalizasyon ile denormalizasyon arasındaki takas nedir? Denormalizasyonun arayüzdeki riski nedir?">
+
+Normalizasyon tekrarı önler ve tutarlılık verir ama okumak için join gerektirir (yavaş olabilir). Denormalizasyon veriyi kopyalayarak okumayı hızlandırır ama kopyanın güncel tutulması sorumluluğu getirir. Arayüzdeki risk: kopya güncellenmezse tutarsız sayılar görünür ("12 yorum" yazan ama 8 yorum listeleyen kart).
+
+</SelfCheck>

@@ -1,0 +1,72 @@
+---
+summary: "Kod yazmayacaksın ama clean code ilkeleri bir PR'ı değerlendirirken ve kendi alanındaki (tasarım sistemi) düzeni kurarken işe yarar: aynı ilkeler orada da geçerli. İsimlendirme, tek sorumluluk, DRY, magic number ve yorumlar."
+outcomes:
+  - "Clean code ilkelerinin tasarım sistemindeki üç karşılığını söyleyebilirsin."
+  - "DRY'ın nasıl aşırıya kaçırılabileceğini açıklayabilirsin."
+  - "İyi bir yorumun 'ne' değil 'neden' anlattığını bilirsin."
+minutes: 6
+sources:
+  - label: "Martin Fowler — Refactoring"
+    url: "https://refactoring.com/"
+  - label: "Martin Fowler — Code Smell"
+    url: "https://martinfowler.com/bliki/CodeSmell.html"
+  - label: "Google — Code Review: Neye bakılır"
+    url: "https://google.github.io/eng-practices/review/reviewer/looking-for.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Kod yazmayacaksın; ama bu ilkeler bir PR'ı değerlendirirken ve kendi alanındaki düzeni kurarken işe yarar, çünkü **aynı ilkeler orada da geçerli.**
+
+## Anlamlı isimlendirme
+
+Değişken, fonksiyon ve bileşen adları ne yaptıklarını açıkça söylemelidir. Kodun büyük kısmı yazılmaktan çok **okunur;** iyi isim yoruma olan ihtiyacı ortadan kaldırır. **Tasarım karşılığı doğrudan:** token adları ve bileşen adları da aynı kurala tabidir: `color-4` kötü, `color-text-danger` iyi. "Bu prop adı ne yaptığını söylemiyor; `flag` yerine `isDisabled` olsun."
+
+## Tek sorumluluk, DRY, erken return, magic number
+
+- **Tek sorumluluk:** bir parça tek bir iş yapmalı.
+- **DRY (Don't Repeat Yourself):** aynı mantık birden fazla yerde tekrarlanmamalı.
+- **Erken return:** hata ve istisna durumları başta ayıklanıp asıl mantık iç içe geçmeden yazılmalı.
+- **Magic number:** koda gömülmüş, ne anlama geldiği belirsiz sabit sayı.
+
+Hepsi aynı hedefe hizmet eder: kodun okunabilir ve değiştirilebilir kalması. **Tasarım sistemine birebir çevrilirler:** tek sorumluluk = bir bileşen tek işi yapar; DRY = aynı boşluk değeri 40 yerde tekrarlanmaz, token'dan gelir; magic number = `margin: 22px` yerine ölçekten bir değer. "Bu 22px sihirli sayı; spacing ölçeğinden bir değer kullanalım."
+
+**DRY aşırıya kaçırılabilir.** İki şey bugün aynı görünüyor diye birleştirmek, yarın farklılaştıklarında ikisini de bozan bir soyutlama üretir. "Erken soyutlama, kopyalamadan pahalıdır" yaygın bir karşı-ilkedir.
+
+## Yorumlar
+
+**İyi yorum "ne yaptığını" değil "neden öyle yaptığını" açıklar.** Ne yaptığı zaten kodda yazıyor; "neden" ise kodda görünmez: hangi kısıt yüzünden, hangi hatayı önlemek için, hangi kararın sonucu olarak. Aynı ilke commit mesajları ve ADR'ler için de geçerlidir. "Yorum 'diziyi döndürüyor' diyor; bunu zaten görüyoruz. Neden bu sırayla döndüğünü yazsın."
+
+<Callout kind="tasarimci">
+
+- **Token ve bileşen adlarını anlamlı kıl:** `color-text-danger`, `button-primary`.
+- **PR'da sihirli sayıları (ölçek dışı boşluk, renk) işaretle:** token'dan gelsin.
+- **Bileşen tanımlarında tek sorumluluğu ara:** bir bileşen birden fazla işi mi yapıyor?
+- **Soyutlamayı erken yapma:** iki bileşen benzer görünüyorsa ayrı kalmaya hakları olup olmadığını düşün.
+
+</Callout>
+
+<Summary>
+
+- İsimler ne yaptığını söylemeli; token ve bileşen adları da aynı kurala tabidir.
+- Tek sorumluluk, DRY ve magic number tasarım sisteminde bileşen sınırı, token kullanımı ve ölçek değerine çevrilir.
+- DRY aşırıya kaçarsa erken soyutlama üretir.
+- İyi yorum "neden" anlatır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Clean code ilkelerinin tasarım sistemindeki karşılıkları nelerdir? Üç örnek ver.">
+
+Tek sorumluluk = bir bileşen tek işi yapar. DRY = aynı boşluk değeri 40 yerde tekrarlanmaz, token'dan gelir. Magic number = `margin: 22px` yerine spacing ölçeğinden bir değer. (Ek: anlamlı isimlendirme = `color-4` değil `color-text-danger`.)
+
+</SelfCheck>
+
+<SelfCheck question="DRY ilkesi nasıl aşırıya kaçırılır?">
+
+İki şey bugün aynı göründüğü için birleştirilerek. Yarın farklılaştıklarında o soyutlama ikisini birden bozar; "erken soyutlama, kopyalamadan pahalıdır".
+
+</SelfCheck>

@@ -1,0 +1,122 @@
+---
+summary: "Tasarım sürecinin farklı aşamalarında üretilen çıktılar: wireframe, mockup, prototype, moodboard. Aralarındaki fark detay seviyesi ve amaçtır; karıştırmak yanlış aşamada yanlış geri bildirim almaya yol açar."
+outcomes:
+  - "Wireframe, mockup ve prototype'ın hangi üç farklı soruyu cevapladığını söyleyebilirsin."
+  - "Erken aşamada neden bilinçli olarak düşük detay göstereceğini açıklayabilirsin."
+  - "Prototipin neden atılmak üzere yapıldığını bilirsin."
+  - "Görsel yön tartışması için moodboard ya da style tile'ı ne zaman kullanacağını bilirsin."
+minutes: 9
+sources:
+  - label: "NN/g — Using Prototypes: Low vs. High Fidelity"
+    url: "https://www.nngroup.com/articles/ux-prototype-hi-lo-fidelity/"
+  - label: "NN/g — Usability Testing 101"
+    url: "https://www.nngroup.com/articles/usability-testing-101/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Müşteriye bir ekran gösteriyorsun. Sen yapıyı konuşmak istiyorsun: bölümler doğru sırada mı, hangi bilgi önde? Müşteri ise yirmi dakika boyunca "bu mavi biraz koyu olsun" diyor. Yanlış çıktıyı yanlış zamanda gösterdin.
+
+Bu ders tasarım sürecinin farklı aşamalarında üretilen çıktıları anlatıyor. Aralarındaki fark **detay seviyesi** (fidelity) ve **amaçtır;** ikisini karıştırmak yanlış aşamada yanlış geri bildirim almaya yol açar.
+
+## Fidelity: detay seviyesi geri bildirimi belirler
+
+**Fidelity** (lo-fi, hi-fi, detay/gerçeklik seviyesi), bir çıktının nihai ürüne **ne kadar benzediğidir.** Detay seviyesi, alınacak geri bildirimin türünü belirler:
+
+- Kutu ve çizgilerden oluşan bir eskiz gösterirsen **yapı** hakkında konuşulur.
+- Gerçekçi bir ekran gösterirsen **renk ve font** hakkında konuşulur; yapı tartışması kapanır.
+
+Bu yüzden erken aşamada **bilinçli olarak düşük detay** kullanılır. "Bunu hi-fi göstermeyelim; yapıyı konuşmak istiyoruz, renk tartışması başlamasın."
+
+<StepFlow
+  label="Çıktıların sırası ve cevapladıkları sorular"
+  caption="Her çıktı bir önceki aşamanın sorusunu kapatıp bir sonrakini açar. Düşükten yükseğe gidildikçe değişiklik maliyeti artar."
+  steps={[
+    { title: "Wireframe (lo-fi)", sub: "Ne nerede duracak? Hiyerarşi ne?", tone: "plain" },
+    { title: "Mockup (hi-fi, statik)", sub: "Nasıl görünecek?", tone: "accent" },
+    { title: "Prototype (etkileşimli)", sub: "Akış çalışıyor mu, kullanıcı yolunu buluyor mu?", tone: "progress" },
+  ]}
+/>
+
+## Wireframe: iskelet
+
+**Wireframe** (tel kafes, iskelet), ekranın **yapısını ve içerik yerleşimini** gösteren, görsel tasarım içermeyen taslaktır. Hızlıdır ve ucuzdur; bu yüzden çok sayıda alternatif denenebilir. Amacı **ne nerede duracak** ve **hiyerarşi ne** sorularını cevaplamaktır.
+
+Tasarımın erken aşamasında yapılır. Bazı ekipler wireframe adımını atlayıp doğrudan hi-fi'ye geçer; bu, **yapı hatalarının pahalı aşamada bulunmasına** yol açar. "Üç wireframe alternatifi çıkarayım, hangi yapının işe yaradığına birlikte karar verelim."
+
+## Mockup: görsel hâl
+
+**Mockup** (maket, görsel taslak), nihai **görsel tasarımı** gösteren ancak etkileşimi olmayan statik ekrandır. "Nasıl görünecek?" sorusunu cevaplar. Onay almak ve görsel yönü netleştirmek için kullanılır; paydaş onaylarında ve geliştiriciye teslimde karşına çıkar. "Mockup'lar hazır; prototipe bağlayıp akışı test edelim."
+
+Kelime ayrıca "ürün görselini bir cihaz çerçevesine yerleştirilmiş hâlde gösteren pazarlama görseli" anlamına da gelir. Bağlamdan ayırt et.
+
+## Prototype: denenebilen akış
+
+**Prototype** (prototip), ekranların birbirine bağlandığı, **tıklanabilen** ve akışın denenebildiği sürümdür. Statik ekranlarda görünmeyen sorunlar ancak akış denenince ortaya çıkar: adım fazlalığı, geri dönüş eksikliği, kaybolma hissi. Kullanıcı testinin girdisidir.
+
+"Prototipte kullanıcıların üçü de ikinci adımda durdu; adımı ikiye bölmemiz gerekiyor."
+
+**Prototip atılmak üzere yapılır.** "Prototip zaten çalışıyor, üzerine geliştirelim" cümlesi **teknik borcun** klasik başlangıcıdır. Tasarım prototipi gerçek ürün kodu değildir; ürünün davranışını *taklit* eder.
+
+<Compare>
+<Pane title="Wireframe">
+
+- Düşük detay
+- Yapı ve hiyerarşi
+- Çok alternatif, hızlı
+- Geri bildirim: "bu bölüm doğru yerde mi?"
+
+</Pane>
+<Pane title="Mockup">
+
+- Yüksek görsel detay
+- Renk, tipografi, boşluk
+- Statik, etkileşim yok
+- Geri bildirim: "nasıl görünüyor?"
+
+</Pane>
+</Compare>
+
+## Moodboard ve style tile: yönü ucuza seç
+
+**Moodboard** (ilham panosu), görsel yönü anlatan **referans derlemesidir.** **Style tile** (stil kartı) ise renk, tipografi ve temel bileşenlerin bir arada gösterildiği örnek karttır. Görsel yön tartışmasını **tam ekran tasarlamadan** yapmayı sağlar: yön yanlışsa üç saatlik iş kaybedilir, üç günlük değil.
+
+Proje başında, müşteriyle yön belirlerken kullanılır. "İki moodboard hazırladım; önce yönü seçelim, sonra ekranlara geçeyim."
+
+<Callout kind="tasarimci">
+
+- **Göstereceğin çıktıyı, almak istediğin geri bildirime göre seç.** Yapı konuşacaksan lo-fi, görsel konuşacaksan mockup, akış konuşacaksan prototype.
+- **Toplantıya çıktının amacını söyleyerek gir.** "Bu bir wireframe, renklere bakmayın; yapıya bakın."
+- **Wireframe adımını atlama.** Yapı hataları hi-fi aşamasında bulunursa tüm görsel emek boşa gidebilir.
+- **Prototipi ürüne çevirme.** Geliştirici için ayrı bir teslim (handoff) hazırla.
+
+</Callout>
+
+<Summary>
+
+- Detay seviyesi geri bildirimin türünü belirler: düşük detay yapı, yüksek detay görsel tartışmasını açar.
+- Wireframe yapıyı ve hiyerarşiyi, mockup görünümü, prototype akışı sınar.
+- Wireframe adımını atlamak yapı hatalarını pahalı aşamaya taşır.
+- Prototip atılmak üzere yapılır; ürün koduna dönüştürülmez.
+- Moodboard ve style tile görsel yönü tam ekran tasarlamadan seçmeyi sağlar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Erken aşamada neden bilinçli olarak düşük detaylı (lo-fi) çıktı gösterilir?">
+
+Detay seviyesi geri bildirimin türünü belirler. Gerçekçi bir ekran gösterirsen konuşma renk ve fonta kayar, yapı tartışması kapanır. Yapıyı konuşmak istiyorsan kutu ve çizgi göster.
+
+</SelfCheck>
+
+<SelfCheck question="Wireframe, mockup ve prototype hangi üç farklı soruyu cevaplar?">
+
+Wireframe: ne nerede duracak, hiyerarşi ne? Mockup: nasıl görünecek? Prototype: akış çalışıyor mu, kullanıcı yolunu bulabiliyor mu?
+
+</SelfCheck>

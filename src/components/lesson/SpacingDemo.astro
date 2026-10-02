@@ -1,0 +1,52 @@
+---
+/** A spacing scale as bars: the steps are visibly related, which is the whole argument for having one. */
+interface Props {
+  steps?: number[];
+}
+
+const { steps = [4, 8, 12, 16, 24, 32, 48, 64] } = Astro.props;
+---
+
+<ul class="spacing-demo" aria-label="Boşluk ölçeği">
+  {
+    steps.map((step) => (
+      <li class="spacing-demo__row">
+        <span class="spacing-demo__label">{step}px</span>
+        <span class="spacing-demo__bar" style={`inline-size:${step}px`}></span>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .spacing-demo {
+    display: grid;
+    gap: var(--spacing-2);
+    margin: var(--spacing-6) 0;
+    padding: var(--spacing-4);
+    list-style: none;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-raised);
+  }
+
+  .spacing-demo__row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+  }
+
+  .spacing-demo__label {
+    flex: none;
+    inline-size: 3rem;
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--c-text-muted);
+  }
+
+  .spacing-demo__bar {
+    block-size: 12px;
+    border-radius: 2px;
+    background-color: var(--c-action);
+  }
+</style>

@@ -1,0 +1,99 @@
+---
+summary: "Sistemin kaç parçaya bölüneceği: monolith, modüler monolith, mikroservis ve distributed monolith. 'Monolith eski, mikroservis modern' bir yanılgıdır; mikroservisin asıl faydası organizasyoneldir ve bedelleri ağırdır."
+outcomes:
+  - "Dört mimari stili ve ne zaman hangisinin seçildiğini söyleyebilirsin."
+  - "'Monolith eski, mikroservis modern' yanılgısını ve monolith'in asıl sorununu (düzensizlik) açıklayabilirsin."
+  - "Distributed monolith'in neden en kötü sonuç olduğunu bilirsin."
+  - "Sık alıntılanan mikroservis geri dönüş vakalarını nüansıyla anlatabilirsin."
+minutes: 10
+sources:
+  - label: "Martin Fowler — Microservice Premium"
+    url: "https://martinfowler.com/bliki/MicroservicePremium.html"
+  - label: "Martin Fowler — Monolith First"
+    url: "https://martinfowler.com/bliki/MonolithFirst.html"
+  - label: "Martin Fowler — Microservices"
+    url: "https://martinfowler.com/articles/microservices.html"
+  - label: "Prime Video Tech — İzleme servisini ölçeklemek ve maliyeti %90 düşürmek (2023)"
+    url: "https://www.primevideotech.com/video-streaming/scaling-up-the-prime-video-audio-video-monitoring-service-and-reducing-costs-by-90"
+flags: ["degisken", "emin-degil"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Üç kişilik bir ekip "mikroservise geçelim" diyor. Doğru mu? Bu ders, sistemin kaç parçaya bölüneceği ve parçaların nasıl dağıtılacağı sorusunu anlatır.
+
+## Monolith
+
+**Monolith (tek parça mimari)**, tüm uygulamanın tek bir kod tabanı ve tek bir dağıtım birimi olarak çalışmasıdır. Basittir: tek yerde çalışır, tek yerde hata ayıklanır, ağ gecikmesi yoktur, bir işlem tek bir transaction'da tutulabilir. **Küçük ve orta ekipler için neredeyse her zaman doğru başlangıçtır.** "Monolith ile başlayalım; iki kişiyiz, mikroservisin operasyon maliyetini karşılayamayız."
+
+**"Monolith eski, mikroservis modern" bir yanılgıdır.** Monolith'in sorunu **büyüklük değil, düzensizliktir:** sınırları belirsiz, her şeyin her şeye dokunduğu bir kod tabanı ("big ball of mud") bakımı zorlaştırır. Çözümü mikroservis değil, modüler yapıdır.
+
+## Modular monolith
+
+**Modular monolith (modüler tek parça)**, tek bir dağıtım birimi olarak çalışan ama içinde net modül sınırları bulunan mimaridir. **Mikroservisin disiplinli sınırlarını, monolith'in operasyonel basitliğiyle** birleştirir: modüller birbirine yalnızca tanımlı arayüzlerden dokunur; ileride bir modülü ayrı servise çıkarmak gerekirse sınır zaten hazırdır. Materyale göre 2026 itibarıyla sektördeki yaygın tavsiye budur: yeni bir ürüne modüler monolith ile başlamak, mikroservise ancak ölçülmüş bir darboğaz ve ekip yapısı gerektirdiğinde geçmek.
+
+## Microservice
+
+**Microservices**, uygulamanın birbirinden bağımsız geliştirilip dağıtılan küçük servislere bölünmesidir. Asıl faydası teknik değil **organizasyoneldir:** çok sayıda ekip birbirini beklemeden kendi servisini yayınlayabilir. Ayrıca farklı parçalar farklı ölçeklerde çalışabilir ve bir servisin çökmesi diğerlerini doğrudan durdurmaz. "Mikroservise geçmek için ekip yapımız uygun değil; üç kişiyiz, servis başına sahip yok."
+
+**Bedelleri ağırdır ve genelde hafife alınır:** ağ gecikmesi, dağıtık hata ayıklama, veri tutarlılığının zorlaşması, izleme ve dağıtım altyapısı zorunluluğu, çok daha yüksek operasyon maliyeti. Martin Fowler'ın "microservice premium" dediği bu ek maliyet, ancak belirli bir ölçek ve ekip yapısında kendini amorti eder.
+
+## Distributed monolith
+
+**Distributed monolith (dağıtık tek parça)**: servislerin ayrı ayrı dağıtıldığı ama birbirine sıkı sıkıya bağlı olduğu, yani bağımsız yayınlanamadığı yapıdır. **Mimarideki en kötü sonuçtur:** mikroservisin tüm maliyetini ödersin, hiçbir faydasını almazsın. Erken ve gerekçesiz mikroservis geçişlerinin tipik sonucudur. "Servisleri ayırdık ama hepsini birlikte deploy ediyoruz; bu bir dağıtık monolith, kazancımız yok."
+
+<Compare>
+<Pane title="Monolith / modüler monolith">
+
+- Ne zaman: küçük-orta ekip, tek ürün, belirsiz gereksinim
+- Kazandırır: basitlik, hızlı geliştirme, tek transaction
+- Kaybettirir: ekip büyüdükçe yayın koordinasyonu
+
+</Pane>
+<Pane title="Microservice">
+
+- Ne zaman: çok ekip, ölçülmüş darboğaz, farklı ölçekleme ihtiyacı
+- Kazandırır: bağımsız yayın ve ölçekleme, hata yalıtımı
+- Kaybettirir: operasyon maliyeti, gecikme, dağıtık hata ayıklama, tutarlılık
+
+</Pane>
+</Compare>
+
+## İki vaka hakkında uyarı
+
+Amazon Prime Video'nun bir ekibinin dağıtık bir tasarımı tek sürece indirip yaklaşık %90 altyapı maliyeti tasarrufu bildirdiği (2023) ve Twilio Segment'in 140'tan fazla servisi tek kod tabanına geri topladığı yaygın anlatılır. **Bu hikâyeler sıkça abartılır.** Prime Video örneğinde söz konusu olan bir **izleme aracıydı,** Prime Video platformunun tamamı değil; başlangıç noktası da klasik mikroservis değil, serverless bir tasarımdı. "Kuruluşların %X'i mikroservisten geri dönüyor" biçiminde dolaşan yüzdelerin güvenilir bir kaynağa dayanmadığı da belirtiliyor. **Bu rakamları bir tartışmada kullanma;** çıkarılacak ders niteldir: dağıtık mimari, operasyonel maliyetini hak etmek zorundadır.
+
+<Callout kind="tasarimci">
+
+- **"Mikroservise geçelim" önerisinde ekip yapısını sor:** kaç ekip, servis başına sahip var mı?
+- **"Bu ayrılabilir mi?" sorusunu modül sınırı olarak düşün;** önce modüler yapı kurulabilir.
+- **Moda argümanlarına ("modern", "Netflix kullanıyor") takas sorusuyla karşılık ver.**
+
+</Callout>
+
+<Summary>
+
+- Küçük ve orta ekipler için monolith (özellikle modüler monolith) çoğu zaman doğru başlangıçtır; sorun büyüklük değil düzensizliktir.
+- Mikroservisin asıl faydası organizasyoneldir ve operasyonel bedelleri ağırdır.
+- Distributed monolith, mikroservisin maliyetini ödeyip faydasını almamaktır.
+- Mikroservisten geri dönüş vakalarındaki rakamlar sıkça abartılır; nitel dersi al.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Monolith eski, mikroservis modern' ifadesi neden yanlış? Monolith'in asıl sorunu nedir?">
+
+İkisi farklı problemleri çözer; biri diğerinin evrimleşmiş hâli değildir. Monolith'in asıl sorunu büyüklük değil, düzensizliktir; çözümü mikroservis değil, modüler yapıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Distributed monolith nedir ve neden en kötü sonuçtur?">
+
+Servislerin ayrı dağıtıldığı ama birbirine sıkı bağlı olduğu, bağımsız yayınlanamadığı yapıdır. Mikroservisin tüm maliyetini ödersin, hiçbir faydasını almazsın.
+
+</SelfCheck>

@@ -1,0 +1,104 @@
+---
+summary: "Altı tekrar eden tuzak: jenerik tasarım, uydurma bağımlılık, eskimiş sürüm bilgisi, sessiz kapsam büyümesi, kabul edilen ilk cevap ve yanlış problemi çözmek. Her birinin belirtisi, sebebi ve çözümü."
+outcomes:
+  - "Altı tuzağı belirtisinden tanıyabilirsin."
+  - "Her tuzağın çözümünü söyleyebilirsin."
+  - "'Yanlış problemi çözmek' tuzağının kökünün çözüm dilinde yazılmış istek olduğunu açıklayabilirsin."
+minutes: 6
+sources:
+  - label: "Anthropic Docs — Hallucination'ları azaltma"
+    url: "https://docs.claude.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+  - label: "Claude Code Docs — En iyi uygulamalar"
+    url: "https://code.claude.com/docs/en/best-practices"
+skipTerms: ["Scope","scope","kapsam"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+## Jenerik tasarım
+
+**Belirti:** çıktı "AI ile üretilmiş" hissi veriyor ama nedenini söyleyemiyorsun.
+
+**Sebep:** belirtilmeyen her yerde model **en yaygın kalıba** yönelir. Sistemsizlik bunun görünen hâlidir: her bölümde farklı boşluk, gerekçesiz gradient, birbiriyle ilişkisiz griler, eşit üç sütunlu kartlar.
+
+**Çözüm:** ölçekleri ver, token'ları ver, yasakları yaz, referans ver.
+
+## Uydurma bağımlılık
+
+**Belirti:** kod var olmayan bir fonksiyonu veya paketi çağırıyor.
+
+**Sebep:** uydurma; en çok niş kütüphanelerde görülür.
+
+**Çözüm:** "Yeni bağımlılık ekleme" kısıtı koy; eklenmesi gerekiyorsa gerekçesini ve paketin adını doğrulat.
+
+## Eskimiş sürüm bilgisi
+
+**Belirti:** önerilen yaklaşım kütüphanenin eski sürümüne ait.
+
+**Sebep:** bilgi kesim tarihi.
+
+**Çözüm:** kullandığın sürümü prompt'ta belirt; değişken bilgiyi doğrulat.
+
+## Sessiz kapsam büyümesi
+
+**Belirti:** bir bileşen istedin, beş dosya değişti.
+
+**Sebep:** kapsam sınırı belirtilmedi. Bu, scope creep'in yapay zekâ hâlidir.
+
+**Çözüm:** "Yalnızca şu dosyayı değiştir", "mevcut davranışı koruyarak" gibi kapsam kısıtları.
+
+## Kabul edilen ilk cevap
+
+**Belirti:** ilk çıktı makul göründüğü için sorgulanmadan kullanıldı.
+
+**Sebep:** kendinden emin bir dille sunulan çıktı doğruluk izlenimi verir.
+
+**Çözüm:** alternatif iste ("üç yaklaşım ver ve takaslarını yaz"), kendi kabul kriterlerinle kontrol et.
+
+## Yanlış problemi çözmek
+
+**Belirti:** çıktı teknik olarak iyi ama işe yaramıyor.
+
+**Sebep:** sapma. Kökü genelde isteğin **çözüm dilinde** yazılmış olmasıdır ("bize filtre lazım"), **problem dilinde** değil ("kullanıcı aradığını bulamıyor").
+
+**Çözüm:** problem tanımıyla başla, çözümle değil. Ürün Geliştirme bölümündeki problem tanımı ilkesinin aynısıdır.
+
+<Callout kind="tasarimci">
+
+- **Belirtiyi tanı:** "AI hissi", var olmayan fonksiyon, eski API, fazla dosya değişikliği, sorgulanmamış ilk cevap, işe yaramayan çözüm.
+- **Her tuzağın çözümü bir kısıt ya da alışkanlıktır:** ölçek ve yasak ver, "yeni bağımlılık ekleme" yaz, sürümü belirt, kapsamı daralt, alternatif iste, problemle başla.
+
+</Callout>
+
+<Summary>
+
+- Jenerik tasarım: ölçek, token, yasak ve referans ver.
+- Uydurma bağımlılık: yeni bağımlılığı kısıtla, adı doğrulat.
+- Eskimiş sürüm: sürümü belirt, değişken bilgiyi doğrulat.
+- Sessiz kapsam büyümesi: kapsam kısıtı yaz.
+- Kabul edilen ilk cevap: alternatif iste, kendi kriterlerinle kontrol et.
+- Yanlış problem: problem dilinde başla.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Jenerik tasarımın sebebi nedir ve dört çözümü nedir?">
+
+Belirtilmeyen her yerde model en yaygın kalıba yönelir; sonuç sistemsizliktir. Çözümler: ölçekleri ver, token'ları ver, yasakları yaz, referans ver.
+
+</SelfCheck>
+
+<SelfCheck question="'Sessiz kapsam büyümesi' neyin yapay zekâ hâlidir? Çözümü nedir?">
+
+Scope creep'in yapay zekâ hâlidir: bir bileşen istersin, beş dosya değişir. Çözüm kapsam kısıtı yazmaktır: "yalnızca şu dosyayı değiştir", "mevcut davranışı koruyarak".
+
+</SelfCheck>
+
+<SelfCheck question="'Yanlış problemi çözmek' tuzağının kökü genelde nerededir?">
+
+İsteğin çözüm dilinde yazılmış olmasında ("bize filtre lazım"), problem dilinde değil ("kullanıcı aradığını bulamıyor"). Problem tanımıyla başlamak çözümdür.
+
+</SelfCheck>

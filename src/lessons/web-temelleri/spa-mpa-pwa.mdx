@@ -1,0 +1,162 @@
+---
+summary: "Sayfa geçişlerini yapmanın üç yolu (SPA, MPA, PWA) ve hissedilen deneyim farkı. Service worker ile web app manifest'in tasarımcıya düşen yanlarını öğren."
+outcomes:
+  - "SPA ile MPA farkını ve her birinin bedelini söyleyebilirsin."
+  - "SPA'nın tasarımcıya yüklediği ekstra sorumlulukları (URL, odak, geri tuşu) sayabilirsin."
+  - "\"Mobil uygulama mı yapalım, PWA mı?\" tartışmasında seçenekleri tartabilirsin."
+  - "Manifest dosyasındaki hangi değerlerin senin tasarım kararın olduğunu bilirsin."
+minutes: 11
+sources:
+  - label: "MDN — Progressive web apps nedir?"
+    url: "https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/What_is_a_progressive_web_app"
+  - label: "MDN — Service Worker API"
+    url: "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API"
+  - label: "MDN — Web app manifest"
+    url: "https://developer.mozilla.org/en-US/docs/Web/Manifest"
+  - label: "MDN — SPA (sözlük)"
+    url: "https://developer.mozilla.org/en-US/docs/Glossary/SPA"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+İki farklı siteyi düşün. Birinde bir bağlantıya basıyorsun, ekran bir an beyaza dönüyor ve yeni sayfa geliyor. Diğerinde basıyorsun, içerik anında değişiyor, sanki bir uygulamanın içindesin. İkisi de web sitesi. Fark, **sayfa geçişlerini nasıl yaptıklarında.**
+
+Bu fark sadece teknik değildir, doğrudan hissedilen bir deneyim farkı yaratır ve tasarımcıya yeni sorumluluklar bırakır. Bu derste üç yaklaşımı ve onlarla gelen üç kavramı öğreneceksin.
+
+## MPA: klasik yol
+
+**MPA** (Multi-Page Application, çok sayfalı uygulama), her sayfa geçişinde sunucudan **yeni bir belge** alınan klasik yapıdır. Bir bağlantıya basarsın, tarayıcı yeni sayfayı ister, gelir, ekran yenilenir.
+
+Bedeli: her geçişte kısa bir yükleme yaşanır. Ama avantajları büyüktür: basit, sağlam, SEO açısından sorunsuz. Tarayıcının geri/ileri tuşu ve adres davranışı **kutudan çıktığı gibi çalışır**; hiçbir şeyi elle kurman gerekmez.
+
+İçerik siteleri, e-ticaret, bloglar tipik örnekler. Astro gibi araçlar bu yaklaşımı bilinçli olarak geri getirdi: "İçerik ağırlıklı bir site; MPA yeterli, SPA karmaşıklığına gerek yok."
+
+## SPA: sayfayı bir kez yükle
+
+**SPA** (Single Page Application, tek sayfa uygulaması), tarayıcının sayfayı **bir kez yükleyip** sonraki tüm geçişleri sayfayı yenilemeden yaptığı yapıdır. Geçişler anlık olur, beyaz ekran flaşı yaşanmaz, uygulama hissi verir. Panel, dashboard, editör gibi ürünlerde varsayılan tercihtir.
+
+Bedeli:
+
+- **İlk açılış daha yavaş olabilir.** Uygulamanın tamamı baştan yüklenir.
+- **SEO ek özen ister.** İçerik JavaScript çalıştıktan sonra gelirse botlar görmeyebilir (4. derste DOM'dan hatırla).
+- **Geri tuşu ve URL yönetimi elle kurulmak zorundadır.** Kutudan çıkmaz.
+
+Adı yanıltıcı: **SPA ≠ tek sayfalık site.** SPA'da onlarca ekran olabilir; "tek sayfa" ifadesi, tarayıcının tek bir belge yüklemesini anlatır, içerik miktarını değil.
+
+<Compare>
+<Pane title="MPA">
+
+- Her geçişte yeni belge gelir
+- Kısa yükleme, ekran yenilenir
+- Geri tuşu, URL, SEO kendiliğinden
+- İçerik siteleri, e-ticaret, blog
+
+</Pane>
+<Pane title="SPA">
+
+- Sayfa bir kez yüklenir
+- Geçişler anlık, uygulama hissi
+- URL ve geri tuşu elle kurulur
+- Panel, dashboard, editör
+
+</Pane>
+</Compare>
+
+### Client-side routing: SPA'nın mekanizması
+
+SPA'nın anlık geçiş hissini sağlayan mekanizmaya **client-side routing** (istemci tarafı yönlendirme) denir: sayfa geçişleri sunucuya gidilmeden, tarayıcıda JavaScript ile yapılır.
+
+Burada tasarımcıyı ilgilendiren asıl nokta: geçişi JavaScript yaptığı için, kutudan çıkan şeylerin **elle yeniden kurulması** gerekir ve bunlar sık atlanır:
+
+1. **URL doğru güncellenmeli.** Aksi hâlde kullanıcı o ekranı paylaşamaz, yenileyince başa döner.
+2. **Geri tuşu çalışmalı.** "Geri tuşuna basınca yanlış yere gidiyor" tipi hataların kaynağı burasıdır.
+3. **Ekran okuyucu sayfa değiştiğini anlamalı.** Sayfa yenilenmediği için ekran okuyucu bir şey duyurmaz; geçişten sonra odağın (focus) sayfa başlığına taşınması gerekir. Bu, sık atlanan bir **erişilebilirlik kusurudur.**
+
+"Client-side routing'de sayfa değişince focus'u başlığa taşımamız lazım; yoksa ekran okuyucu kullanıcısı geçişi fark etmiyor" cümlesi, bu yüzden bir tasarım notudur.
+
+<Callout kind="tasarimci" title="SPA, tasarımcıya ne yükler?">
+
+- Her ekranın **paylaşılabilir bir adresi** olmalı mı? Çoğu zaman evet; sen söylersin.
+- Geçişte **odak nereye gidecek?** Sen belirtmezsen kimse düşünmez.
+- Yükleme, boş ve hata durumları ayrı ayrı tasarlanmalı: sayfa yenilenmediği için bunlar geçişin *içinde* yaşanır.
+
+</Callout>
+
+## PWA: web sitesi, uygulama gibi
+
+**PWA** (Progressive Web App, ilerici web uygulaması), cihaza **kurulabilen, çevrimdışı çalışabilen** ve uygulama gibi davranabilen web sitesidir. Uygulama mağazasına girmeden uygulama benzeri deneyim sunar. Tek kod tabanıyla hem web hem "kurulu uygulama" elde edilir.
+
+"Mobil uygulama yapalım mı?" tartışmasının ilk alternatifi olarak gündeme gelir: "Tam bir mobil uygulama yerine önce PWA yapalım; kurulabilir olsun, bildirim ihtiyacı çıkarsa sonra değerlendiririz."
+
+Sınırları: cihazın bazı yeteneklerine erişimi native uygulamalar kadar geniş değildir ve **platformdan platforma farklılık gösterir.** Karar vermeden önce hedef platformlarda neyin desteklendiğini kontrol et.
+
+İki ayrım yap:
+
+- **PWA ≠ native app.** PWA web teknolojileriyle yazılır, tarayıcı üzerinde çalışır.
+- **PWA ≠ responsive site.** Responsive olmak yetmez; kurulabilirlik ve çevrimdışı çalışma ayrıca kurulur.
+
+PWA iki parçayla çalışır:
+
+### Service worker: arka plandaki aracı
+
+**Service worker**, sayfanın arka planında çalışan, **ağ isteklerinin arasına girebilen** küçük bir programdır. Çevrimdışı çalışmayı ve arka plan bildirimlerini mümkün kılan bileşendir: internet yoksa daha önce kaydettiği içeriği gösterebilir.
+
+<StepFlow
+  label="Service worker çevrimdışıyken ne yapar"
+  caption="Service worker, tarayıcı ile ağ arasında durur ve her isteği karşılama şeklini kendisi seçer."
+  steps={[
+    { title: "Sayfa bir istek yapar", sub: "Örn. bir ders sayfası ister" },
+    { title: "Service worker araya girer", sub: "İsteği görür, ne yapacağına karar verir", tone: "accent" },
+    { title: "İnternet var mı?", sub: "Varsa ağdan al; yoksa kayıtlı kopyaya bak" },
+    { title: "Cevap döner", sub: "Ağdan taze içerik ya da kayıtlı kopya", tone: "progress" },
+  ]}
+/>
+
+Bir yan etkisi var: bir güncellemenin kullanıcıya neden geç ulaştığının sebebi çoğu zaman **eski service worker'ın önbelleğidir.** "Kullanıcılar hâlâ eski sürümü görüyor; service worker cache'ini temizlemeleri gerekiyor" cümlesini duyabilirsin.
+
+### Web app manifest: uygulamanın kimlik kartı
+
+**Web app manifest**, sitenin cihaza kurulduğunda **nasıl görüneceğini** tanımlayan küçük bir ayar dosyasıdır. İçinde şunlar bulunur:
+
+- Uygulama adı
+- İkon
+- Açılış ekranı rengi
+- Tema rengi
+- Ekran yönü
+
+**Buradaki değerler senin tasarım kararlarındır:** ikon setinden açılış rengine kadar. Ana ekrana eklenen ikonun ve uygulama adının nereden geldiği sorusunun cevabı bu dosyadır. "Manifest'te tema rengini marka rengiyle eşleyelim; kurulunca durum çubuğu da uyumlu görünsün" cümlesi tipik bir tasarım notudur.
+
+<Callout kind="ornek" title="Bu sitenin kendisi örnek">
+
+Şu an okuduğun site bir PWA: ana ekrana eklenebiliyor (manifest sayesinde) ve daha önce açtığın sayfaları internet olmadan açabiliyor (service worker sayesinde). Uygulama gibi tam ekran açılmasının ve çevrimdışı çalışmasının arkasında bu iki dosya var.
+
+</Callout>
+
+<Summary>
+
+- MPA her geçişte yeni belge ister; basit ve sağlam, URL/geri tuşu kendiliğinden çalışır.
+- SPA sayfayı bir kez yükler, geçişler anlıktır; URL, geri tuşu ve odak yönetimi elle kurulmak zorundadır.
+- SPA'da sık atlanan üç şey: doğru URL, çalışan geri tuşu, ekran okuyucuya geçişin bildirilmesi.
+- PWA kurulabilen, çevrimdışı çalışabilen web sitesidir; native uygulama ya da sadece responsive site değildir.
+- Service worker çevrimdışılığı sağlar; manifest ikon, ad ve renk gibi tasarım kararlarını taşır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="SPA ile MPA arasındaki fark nedir? SPA'nın tasarımcı olarak sana yüklediği iki ekstra sorumluluk say.">
+
+SPA'da sayfa bir kez yüklenir, geçişler yenilemeden yapılır; MPA'da her geçişte sunucudan yeni belge gelir. SPA'da tasarımcının ekstra sorumluluğu: (a) URL'in her ekranda doğru güncellenmesi ve paylaşılabilir olması, (b) sayfa geçişinde odak yönetimi ve ekran okuyucuya geçişin bildirilmesi. Yükleme, boş ve hata durumlarının ayrı tasarlanması da kabul edilir.
+
+</SelfCheck>
+
+<SelfCheck question="PWA ile responsive site aynı şey mi?">
+
+Hayır. Responsive olmak, sitenin farklı ekran boyutlarına uyması demektir. PWA ise ek olarak kurulabilirlik (manifest) ve çevrimdışı çalışma (service worker) sunar; bunlar ayrıca kurulur.
+
+</SelfCheck>

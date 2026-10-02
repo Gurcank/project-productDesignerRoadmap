@@ -1,0 +1,84 @@
+---
+summary: "On dört toplantı türünün amacı ve toplantı hijyeninin üç sorusu: gündem var mı, karar mı bilgilendirme mi, çıktı ne. Sync'ten çıkan karar yazıya dökülmezse katılmayanlar için alınmamış sayılır."
+outcomes:
+  - "Başlıca toplantı türlerinin amacını ayırt edebilirsin."
+  - "Sync'in faydasını, maliyetini ve ardından yapılacak kritik alışkanlığı söyleyebilirsin."
+  - "Bir toplantının işe yarayıp yaramadığını belirleyen üç şeyi bilirsin."
+minutes: 5
+sources:
+  - label: "Atlassian — Standup toplantıları"
+    url: "https://www.atlassian.com/agile/scrum/standups"
+  - label: "Google SRE — Postmortem kültürü"
+    url: "https://sre.google/sre-book/postmortem-culture/"
+skipTerms: ["Alignment","Architecture","Scope","alignment","hizalama","architecture","scope","kapsam"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+| Toplantı | Amacı |
+|---|---|
+| **Kickoff** | Projenin başlangıcı; hedef, kapsam, roller, paydaşlar netleşir |
+| **Standup** | Günlük hizalama; engelleri ortaya çıkarmak |
+| **Sprint planning** | Sprint'e ne alınacağı ve hedefin belirlenmesi |
+| **Grooming / Refinement** | Backlog'un netleştirilmesi ve tahminlenmesi |
+| **Sprint review / Demo** | Üretilen çıktının gösterilmesi ve geri bildirim |
+| **Retrospective** | Çalışma biçiminin değerlendirilmesi |
+| **Design critique** | Tasarımın hedeflere göre değerlendirilmesi |
+| **Design review** | Uygulanmış arayüzün tasarıma uygunluk kontrolü |
+| **Architecture review** | Mimari kararın tartışılması ve onaylanması |
+| **Postmortem** | Olay sonrası kök neden ve önlem |
+| **1:1** | Yönetici ile birebir |
+| **All-hands / Town hall** | Şirket geneli bilgilendirme |
+| **Sync** | Belirli bir konu için hızlı hizalama görüşmesi |
+| **Office hours** | Belirli saatlerde açık soru-cevap penceresi |
+
+Design critique ile design review'u karıştırma: ilki **tasarımı hedeflere göre** tartışır, ikincisi **uygulanmış arayüzün tasarıma uygunluğunu** kontrol eder.
+
+## Sync
+
+**Sync** (sync up, touch base, catch up, huddle), belirli bir konuyu hızlıca konuşmak için yapılan kısa, genelde plansız görüşmedir. Yazışmanın uzadığı durumlarda beş dakikalık bir konuşma yirmi mesajı bitirir. Tersi de doğrudur: her konuyu sync'e taşımak herkesin odak zamanını parçalar. Slack'te "quick sync?" mesajı olarak karşına çıkar. "Bu yazışarak uzayacak; 10 dakika sync yapalım ve kararı yazıya dökelim."
+
+**Kritik alışkanlık: sync'ten çıkan kararı yazıya dökmek.** Konuşulan ama yazılmayan karar, katılmayanlar için hiç alınmamış sayılır.
+
+## Toplantı hijyeni
+
+Bir toplantının işe yarayıp yaramadığını belirleyen üç şey:
+
+1. **Gündem var mı?** Gündemsiz toplantı, kimin ne için orada olduğunu bilmediği bir toplantıdır.
+2. **Karar mı, bilgilendirme mi?** Bilgilendirme toplantısının çoğu yazılı olabilir. Toplantı **karar ve tartışma** için ayrılmalıdır.
+3. **Çıktı ne?** Aksiyon maddeleri yazılmadıysa toplantı bitmemiştir.
+
+Yaygın bir kalıp: **"Bu toplantı bir e-posta olabilir miydi?"** Bunu sormak meşrudur ve iyi ekiplerde teşvik edilir.
+
+<Callout kind="tasarimci">
+
+- **Davet ederken gündemi ve beklenen kararı yaz.**
+- **Sync'ten sonra kararı kanala yaz,** katılmayanlar da görsün.
+- **Bilgilendirmeyi yazıya çevirmeyi öner:** toplantıyı karar için sakla.
+- **Toplantıdan çıkarken aksiyon maddelerini sahiplerle yaz.**
+
+</Callout>
+
+<Summary>
+
+- Her toplantı türünün tek bir amacı var; critique tasarımı hedeflere, review uygulamayı tasarıma göre ölçer.
+- Sync hızlı çözer ama odak zamanını parçalar; ardından kararı yazıya dök.
+- Üç hijyen sorusu: gündem, karar/bilgilendirme, çıktı.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Sync yapmanın faydası ve maliyeti nedir? Sync'ten sonraki kritik alışkanlık nedir?">
+
+Faydası: yazışmanın uzadığı durumda beş dakikalık konuşma yirmi mesajı bitirir. Maliyeti: herkesin odak zamanını parçalar. Kritik alışkanlık: sync'ten çıkan kararı yazıya dökmek; konuşulan ama yazılmayan karar katılmayanlar için alınmamış sayılır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir toplantının işe yarayıp yaramadığını belirleyen üç şey nedir?">
+
+(1) Gündem var mı? (2) Karar mı bilgilendirme mi: bilgilendirmenin çoğu yazılı olabilir. (3) Çıktı ne: aksiyon maddeleri yazılmadıysa toplantı bitmemiştir.
+
+</SelfCheck>

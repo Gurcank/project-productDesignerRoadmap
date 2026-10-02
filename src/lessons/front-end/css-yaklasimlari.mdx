@@ -1,0 +1,101 @@
+---
+summary: "Stilin nasıl organize edileceğine dair yaklaşımlar: sade CSS ve BEM, CSS Modules, Tailwind, CSS-in-JS. Proje başında verilen ve sonradan değiştirmesi pahalı bir karar."
+outcomes:
+  - "Dört CSS yaklaşımını bir cümleyle ayırt edebilirsin."
+  - "Tailwind'in tasarım sistemi açısından iki gerçek faydasını söyleyebilirsin."
+  - "styled-components'in bugünkü durumunu ve mevcut projede ne yapılacağını açıklayabilirsin."
+minutes: 8
+sources:
+  - label: "Tailwind CSS — Utility sınıflarıyla stil"
+    url: "https://tailwindcss.com/docs/styling-with-utility-classes"
+  - label: "CSS Modules"
+    url: "https://github.com/css-modules/css-modules"
+  - label: "Sanity — styled-components'ten çıkış (2025)"
+    url: "https://www.sanity.io/blog/cut-styled-components-into-pieces-this-is-our-last-resort"
+  - label: "OpenReplay — CSS-in-JS'in durumu (2026)"
+    url: "https://blog.openreplay.com/state-css-in-js-2026/"
+  - label: "vanilla-extract"
+    url: "https://vanilla-extract.style/"
+  - label: "Panda CSS"
+    url: "https://panda-css.com/"
+flags: ["degisken"]
+skipTerms: ["layout", "specificity"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir proje büyüyünce soru gelir: yüzlerce stil kuralını çakışmadan nasıl yönetiriz? Bunun dört yaygın cevabı var. Proje başında seçilir ve sonradan değiştirmesi pahalıdır; bu yüzden isimlerini ve takaslarını bilmek, toplantıda söz sahibi olmanı sağlar.
+
+<Compare>
+<Pane title="Disiplinle (Vanilla / BEM)">
+
+- Ayrı CSS dosyaları, kurallı adlandırma
+- Araca bağımlı değil
+- Disiplini herkes sürdürmeli
+
+</Pane>
+<Pane title="Araçla (CSS Modules)">
+
+- Sınıf adları otomatik benzersiz
+- Sade CSS yazmaya devam
+- Çalışma zamanı maliyeti yok
+
+</Pane>
+</Compare>
+
+## Sade CSS ve BEM
+
+**Vanilla CSS**, ayrı CSS dosyaları yazmak ve sınıf adlarını disiplinli bir kurala göre vermektir. **BEM** (Block Element Modifier), `blok__eleman--durum` biçiminde bir adlandırma sözleşmesidir. Hiçbir araca bağımlı değildir ve her yerde çalışır; amacı isim çakışmalarını ve özgüllük savaşlarını disiplinle önlemektir. Bedeli, disiplini herkesin sürdürmesi gerekmesidir. Framework kullanmayan projelerde ve eski kod tabanlarında görürsün. "Sınıf adlarını BEM'e göre verelim; şu an aynı ada sahip iki farklı stil var."
+
+## CSS Modules
+
+**CSS Modules**'te her bileşenin kendi CSS dosyası vardır ve sınıf adları derleme sırasında otomatik olarak benzersiz hâle getirilir. İsim çakışmasını **otomatik** çözer: disipline değil araca güvenirsin. Sade CSS yazmaya devam edersin ve çalışma zamanı maliyeti yoktur. React ve Next.js projelerinde yaygın ve güvenli bir varsayılandır. "CSS Modules kullanalım; sade CSS yazmaya devam ederiz ama çakışma riski kalmaz."
+
+## Utility-first (Tailwind)
+
+**Utility-first CSS**'te her biri tek bir işi yapan küçük sınıflar doğrudan HTML'e yazılır; en bilineni **Tailwind CSS**'tir. İki gerçek faydası var:
+
+1. **Tasarım sistemine uymayı kolaylaştırır:** sınıflar önceden tanımlı bir ölçekten gelir, rastgele 17px yazamazsın.
+2. **Kullanılmayan CSS birikmez:** stil bileşenin yanında durduğu için bileşeni silmek stilini de siler.
+
+shadcn/ui gibi kopyala-yapıştır bileşen yaklaşımlarının temelidir. En yaygın eleştirisi HTML'in uzun sınıf listeleriyle dolmasıdır ("class soup"). Ölçeği yapılandırmada tanımlamazsan avantajı kaybolur. "Tailwind kullanalım ve spacing ölçeğimizi config'e yazalım; ölçek dışı değer kullanılamasın." Tailwind'in sürümleri arasında yapılandırma biçimi değişir; güncel sürümü kontrol et.
+
+## CSS-in-JS
+
+**CSS-in-JS**'te stiller JavaScript dosyalarının içinde yazılır. **Runtime** sürümleri (styled-components, Emotion) stilleri tarayıcıda çalışırken üretir; **zero-runtime** sürümleri (vanilla-extract, Panda CSS) derleme sırasında üretip statik CSS çıkarır. Stili bileşenle aynı dosyada tutar ve JavaScript değerlerine göre dinamik değiştirmeyi kolaylaştırır.
+
+Bilmen gereken bir durum değişikliği var: kaynaklara göre **styled-components Mart 2025'te bakım moduna geçti** ve bakımcısı yeni projeler için önermediğini belirtti. Sebepler arasında React Server Components ile uyumsuzluk ve çalışma zamanı stil enjeksiyonunun performans maliyeti anılıyor. Kütüphane hâlâ çalışıyor; yani mevcut kodun tehlikede değil. Ama 2026'da yeni bir proje için varsayılan seçim değil. Önerilen yönler: CSS Modules, Tailwind ya da zero-runtime seçenekler. "Bu proje styled-components kullanıyor; devam edelim ama yeni bileşenleri CSS Modules'a alalım." Bu bilgi hızlı değişir; kullanmadan önce güncel durumu kontrol et.
+
+<Callout kind="tasarimci">
+
+- **Yaklaşımı sor:** ekip hangisini kullanıyor? Teslim biçimin ona uymalı (Tailwind'de ölçek adları, CSS Modules'ta bileşen sınırları).
+- **Ölçeğini kodla eşleştir:** tasarımdaki boşluk ve renk ölçeği, Tailwind yapılandırmasındaki ölçekle aynı olmalı.
+- **Eski bir projede toptan yeniden yazmayı önerme;** kademeli geçiş yeterli.
+
+</Callout>
+
+<Summary>
+
+- BEM disiplinle, CSS Modules araçla isim çakışmasını önler.
+- Tailwind, ölçekten gelen sınıflarla tasarım sistemine uymayı ve CSS birikimini engellemeyi kolaylaştırır; ölçek tanımlanmazsa avantajı kaybolur.
+- CSS-in-JS runtime ve zero-runtime olarak ikiye ayrılır; styled-components bakım modunda ama mevcut projelerde çalışmaya devam eder.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Tailwind'in tasarım sistemi açısından iki gerçek faydası nedir?">
+
+Sınıflar önceden tanımlı bir ölçekten geldiği için tasarım sistemine uymayı kolaylaştırır; ayrıca stil bileşenin yanında durduğu için bileşen silindiğinde stili de silinir, kullanılmayan CSS birikmez.
+
+</SelfCheck>
+
+<SelfCheck question="styled-components'in durumu nedir? Mevcut projede ne yapılmalı?">
+
+Mart 2025'te bakım moduna geçti ve yeni projeler için önerilmiyor; ama çalışmaya devam ediyor. Mevcut projede kademeli geçiş yapılır, yeni bileşenler CSS Modules ya da Tailwind ile yazılır; toptan yeniden yazmak için yeterli sebep değil.
+
+</SelfCheck>

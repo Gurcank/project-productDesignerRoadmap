@@ -1,0 +1,143 @@
+---
+summary: "Tasarım aracının terimleri: frame, auto layout, constraints, component ve instance, variant, variable ve style, library, Dev Mode. Sadece araç bilgisi değil, ekiple konuşurken kullanacağın kelimeler."
+outcomes:
+  - "Frame ile group'u ve neden frame tercih edildiğini söyleyebilirsin."
+  - "Auto layout'un koddaki karşılığını (Flexbox) ve neden önemli olduğunu bilirsin."
+  - "Variable ile style farkını ve style'ın hâlâ nerede kullanıldığını açıklayabilirsin."
+  - "Figma'daki variant / component property kavramının koddaki karşılığını (props) bilirsin."
+minutes: 11
+sources:
+  - label: "Figma — Variables ve style farkı"
+    url: "https://help.figma.com/hc/en-us/articles/15871097384471-The-difference-between-variables-and-styles"
+  - label: "Figma — Variables, koleksiyonlar ve modlar"
+    url: "https://help.figma.com/hc/en-us/articles/14506821864087-Overview-of-variables-collections-and-modes"
+  - label: "Figma — Auto layout özellikleri"
+    url: "https://help.figma.com/hc/en-us/articles/360040451373-Explore-auto-layout-properties"
+  - label: "Figma — Dev Mode rehberi"
+    url: "https://help.figma.com/hc/en-us/articles/15023124644247-Guide-to-Dev-Mode"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Bir geliştirici sana diyor ki: "Bunu grup değil frame yap, auto layout uygulayabileyim. Instance detach edilmiş, ana bileşene bağlayalım. Rengi variable'dan alalım, style'dan değil." Bu cümledeki her kelime bir şey ifade ediyor ve hepsini bilmen gerekiyor. Bunlar sadece araç bilgisi değil, **ekiple konuşurken kullanacağın kelimeler.**
+
+**Değişken bilgi:** Bu bölümdeki her şey bir ürün özelliğidir ve Figma sık güncellenir. Aşağıdaki bilgiler Eylül 2026 itibarıyla geçerli görünen genel yapıyı anlatır; menü konumları ve ayrıntılar değişmiş olabilir. Kavramlar daha kalıcıdır; kısmen diğer tasarım araçlarında da karşına çıkar.
+
+## Frame ve auto layout: yerleşimin temeli
+
+**Frame** (çerçeve), içine öğe alabilen, kendi boyutu ve davranış kuralları olan **kapsayıcıdır.** Figma'daki her yerleşimin temelidir: bir ekran bir frame'dir, bir kart da bir frame'dir. Kırpma, auto layout ve responsive davranış frame üzerinden çalışır. "Bunu grup değil frame yap; auto layout uygulayabilelim."
+
+**Frame ≠ group.** Group yalnızca öğeleri bir arada tutar; frame bir kapsayıcıdır ve kendi kuralları vardır. Group kullanmak neredeyse her zaman sonradan sorun çıkarır.
+
+### Auto layout
+
+**Auto layout** (otomatik yerleşim), bir frame içindeki öğelerin yön, boşluk ve hizalama kurallarına göre **otomatik dizilmesini** sağlayan özelliktir. Tasarımı statik bir resim olmaktan çıkarıp **davranışlı** hâle getirir: içerik uzayınca kutu büyür, öğe eklenince aralık korunur.
+
+**Kavramsal olarak CSS Flexbox'a karşılık gelir.** Bu yüzden auto layout ile çalışmak, geliştiricinin göreceği yapıya daha yakın bir tasarım üretir. "Kartta auto layout yok; metin uzayınca taşıyor. Gerçek içerikle test edemiyoruz."
+
+### Constraints
+
+**Constraints** (kısıtlar), bir öğenin, kapsayıcısı yeniden boyutlandığında **nasıl davranacağını** belirleyen kuraldır: sola sabit, sağa sabit, esne, ortala. Responsive davranışı tasarım dosyasında göstermenin yoludur: ekran genişliğini değiştirdiğinde tasarımın gerçekte ne yapacağını görürsün. "Butonun constraint'i sola sabit; sağ hizalı olmalı, çerçeveyi genişletince kayıyor."
+
+## Bileşenler: component, instance, variant
+
+**Component** (bileşen), ana kopyadır; **instance** (örnek) ise o ana kopyadan türetilmiş ve ona **bağlı kalan** kullanımdır. Ana bileşen değiştiğinde tüm örnekler güncellenir: 40 ekranda kullanılan bir butonun köşe yarıçapı tek yerden değişir.
+
+**Detach** (bağı koparma) bu ilişkiyi bozar ve **tutarsızlığın en yaygın kaynağıdır.** "Bu instance detach edilmiş; ana bileşene geri bağlayalım."
+
+### Variant ve component property
+
+**Variant**, aynı bileşenin farklı hâlleridir (primary / secondary, small / large, default / hover / disabled). **Component property** ise o hâllerin ve içeriklerin açılır menüden seçilebilir hâle getirilmesidir. Aynı bileşenin 12 ayrı kopyasını üretmek yerine, tek bileşende düzenlenmiş bir matris kurarsın.
+
+**Kod tarafındaki `props` kavramının doğrudan karşılığıdır;** bu eşleşme handoff'u belirgin biçimde kolaylaştırır. "Butonda üç property olsun: variant (primary / secondary / ghost), size (sm / md / lg), icon (boolean)."
+
+<StepFlow
+  label="Figma kavramlarının koddaki karşılığı"
+  caption="Bu eşleşme, tasarım ile kod arasındaki çevirinin büyük kısmını ortadan kaldırır. Aynı dili konuşmak, handoff'u kolaylaştırır."
+  steps={[
+    { title: "Auto layout", sub: "→ CSS Flexbox", tone: "accent" },
+    { title: "Component + variant property", sub: "→ bileşen + props", tone: "accent" },
+    { title: "Variable (mod ile)", sub: "→ CSS özel özelliği / token", tone: "accent" },
+    { title: "Dev Mode + code syntax", sub: "→ geliştiricinin gördüğü token adı", tone: "progress" },
+  ]}
+/>
+
+## Değişken ve stil
+
+**Variable** (Figma değişkeni), Figma'nın tasarım token'larını yerel olarak ifade etme biçimidir. Renk, sayı, metin ve boolean tipinde olabilir; **koleksiyonlar** ve **modlar** (mode) altında düzenlenir. Tema desteğinin çalıştığı yer burasıdır: bir renk değişkeninin Light ve Dark değeri olabilir ve mod değiştirildiğinde tüm dosya güncellenir.
+
+Değişkenler birbirini referans alabilir (**aliasing**); semantic token katmanı böyle kurulur. Her değişkene bir **code syntax** adı verilebilir; bu ad Dev Mode'da geliştiriciye görünür.
+
+"`color/text/primary` değişkenini `color/neutral/900`'a alias'layalım; dark mode'da hedefi değiştiririz."
+
+**Style** (stil), yeniden kullanılabilir, isimlendirilmiş bir görsel tanımdır (renk stili, metin stili, efekt stili). **Variable ≠ style.** Style tek bir sabit değeri saklar, mod desteklemez ve başka bir style'a referans veremez.
+
+<Compare>
+<Pane title="Variable">
+
+- Mod destekler (light/dark, marka A/B)
+- Başka değişkeni referans alabilir (alias)
+- Dev Mode'da code syntax adıyla görünür
+- Tek değerler için: renk, sayı, metin, boolean
+
+</Pane>
+<Pane title="Style">
+
+- Statik, tek değer
+- Mod ve alias desteklemez
+- **Bileşik** değerler için hâlâ ana araç
+- Örnek: metin stili, efekt stili
+
+</Pane>
+</Compare>
+
+Figma'nın kendi dokümantasyonu değişkenlerin style'ların yerine geçmediğini belirtiyor: **bileşik değerler** için style'lar hâlâ kullanılır. Bir metin stili aile, boyut, ağırlık, satır yüksekliği ve harf aralığını *birlikte* saklar; değişkenler bunu tek başına ifade edemez. "Metin stilleri tipografi ölçeğine göre kurulu; içlerindeki değerler değişkenlerden besleniyor."
+
+## Kütüphane ve Dev Mode
+
+**Library** (kütüphane, yayınlama), bileşen, stil ve değişkenlerin başka dosyalarda kullanılabilmesi için **yayınlanmasıdır.** Tasarım sisteminin dağıtım mekanizmasıdır. Yayınlanan bir güncelleme, kullanan dosyalara bildirim olarak gider ve orada onaylanır; yani değişiklik zorla değil, **kontrollü** yayılır. "Kütüphaneyi yayınladım; güncellemeyi kabul edip ekranları kontrol edin."
+
+**Dev Mode**, geliştiricinin tasarımı inceleyip ölçü, renk ve token adlarını görebildiği görünümdür. **Code Connect** ise bir Figma bileşenini koddaki karşılığına bağlayarak Dev Mode'da **gerçek kod parçasını** gösteren özelliktir. Handoff'u belge alışverişinden canlı bir kaynağa çevirir: değişkene verilen code syntax adı sayesinde geliştirici `#1B4DFF` yerine `--color-action-primary` görür; yani doğru olanı kopyalar.
+
+Tasarım-geliştirme aktarımında karşına çıkar. **Değişken bilgi:** Bu özelliklerin kapsamı ve fiyatlandırması değişebilir. "Dev Mode'da token adları görünüyor; ham hex kopyalamayın."
+
+<Callout kind="tasarimci">
+
+- **Group değil frame kullan.** Auto layout ve responsive davranış frame üzerinden çalışır.
+- **Her kartı gerçek içerikle dene.** Uzun başlık, kısa başlık; auto layout bozulmuyor mu?
+- **Detach etme.** Bir bileşeni değiştirmen gerekiyorsa ana bileşeni ya da variant'ı güncelle.
+- **Variable'a code syntax ver.** Geliştirici ham hex yerine token adı görsün.
+- **Bileşik değerler için style, tek değerler için variable kullan.**
+- **Kütüphane güncellemesini yayınlamadan önce etkilenen ekranları kontrol et.**
+
+</Callout>
+
+<Summary>
+
+- Frame kapsayıcıdır, group yalnızca bir arada tutar; frame + auto layout (Flexbox karşılığı) davranışlı tasarım sağlar.
+- Component ana kopya, instance ona bağlı örnektir; detach tutarsızlığın en yaygın kaynağıdır.
+- Variant ve component property kod tarafındaki props'un karşılığıdır.
+- Variable mod ve alias destekler (tema, semantic token); style bileşik değerler (metin stili) için hâlâ kullanılır.
+- Library kontrollü dağıtım sağlar; Dev Mode ve code syntax token adlarını geliştiriciye taşır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Figma'da Variable ile Style arasındaki fark nedir? Hangi durumda hâlâ Style kullanılır?">
+
+Variable dinamik ve tiplidir: modları (light/dark, marka A/B) destekler, başka bir değişkeni referans alabilir (aliasing) ve Dev Mode'da code syntax adıyla görünür. Style statik tek bir değer saklar, mod ve alias desteklemez. Style hâlâ bileşik değerler için kullanılır: özellikle metin stilleri (aile + boyut + ağırlık + satır yüksekliği) ve efektler.
+
+</SelfCheck>
+
+<SelfCheck question={"Figma'daki \"variant / component property\" kavramının kod tarafındaki karşılığı nedir?"}>
+
+Kod tarafındaki props. Bir bileşenin `variant`, `size`, `disabled` gibi özellikleri, Figma'daki component property'lerin doğrudan karşılığıdır; bu eşleşme handoff'u kolaylaştırır.
+
+</SelfCheck>

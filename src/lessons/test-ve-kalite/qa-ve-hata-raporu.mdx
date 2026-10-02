@@ -1,0 +1,101 @@
+---
+summary: "Bölümün senin için en önemli kısmı: bir hatanın çözülme süresini en çok belirleyen şey raporun kalitesidir. İyi bir hata raporunun dokuz bileşeni, severity ile priority farkı ve keşifsel testte tasarımcının avantajı."
+outcomes:
+  - "İyi bir hata raporunun bileşenlerini ve en sık atlanan üç alanı söyleyebilirsin."
+  - "Bir hata raporunun geçmesi gereken tek cümlelik testi (başkasının ekranında görülebilme) bilirsin."
+  - "Severity ile priority farkını örnekle açıklayabilirsin."
+minutes: 8
+sources:
+  - label: "Atlassian — Önem (severity) seviyeleri"
+    url: "https://www.atlassian.com/incident-management/kpis/severity-levels"
+  - label: "Martin Fowler — Exploratory Testing"
+    url: "https://martinfowler.com/bliki/ExploratoryTesting.html"
+  - label: "GitHub Docs — Issue ve PR şablonları"
+    url: "https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/about-issue-and-pull-request-templates"
+skipTerms: ["Validation","validation"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Sayfa bozuk." Bu bir hata raporu mu? Değil. Ve geliştiricinin saatlerini alacak. Bu ders, **bölümün senin için en önemli kısmı.**
+
+## QA süreci
+
+**Test case**, belirli bir durumu adım adım kontrol eden senaryodur. **Exploratory testing (keşifsel test)** ise senaryosuz, keşfederek ve kırmaya çalışarak yapılan testtir. Senaryolu test bilinen davranışları doğrular; keşifsel test **kimsenin düşünmediği durumları** bulur. İkisi farklı şeyler bulur ve ikisi de gerekir. "Senaryoları geçtik; şimdi yarım saat keşifsel test yapalım."
+
+**Tasarımcının keşifsel testte avantajı vardır:** uç durumları zaten düşünmüş olduğun için nereyi kurcalayacağını bilirsin: çok uzun isim, boş liste, yavaş bağlantı, geri tuşu, iki kez tıklama.
+
+## Hata raporu
+
+**Bug report (hata raporu)**, bir hatanın başkasının da görebileceği biçimde kaydedilmesidir. **Bir hatanın çözülme süresini en çok belirleyen şey raporun kalitesidir.** "Sayfa bozuk" raporu geliştiricinin saatlerce tahmin yürütmesine yol açar; iyi bir rapor on dakikada kapanır.
+
+| Alan | Ne yazılır |
+|---|---|
+| **Başlık** | Tek cümlede ne olduğu: "Ödeme adımında kart alanı odak alınca kayboluyor" |
+| **Ortam** | Hangi ortam (staging/production), tarayıcı ve sürümü, cihaz, ekran boyutu |
+| **Kullanıcı/veri durumu** | Giriş yapılmış mı, hangi rol, hangi veri (boş liste? 200 öğe?) |
+| **Yeniden üretme adımları** | Numaralı ve tekrarlanabilir: 1. Şu sayfaya git 2. Şuna tıkla 3. … |
+| **Beklenen sonuç** | Ne olmalıydı |
+| **Gerçekleşen sonuç** | Ne oldu |
+| **Kanıt** | Ekran görüntüsü, ekran kaydı, konsol hatası |
+| **Sıklık** | Her seferinde mi, bazen mi? Bazen ise hangi koşulda? |
+| **Etki** | Kaç kullanıcı, hangi akış, iş etkisi ne |
+
+**En sık atlanan üç alan:** ortam bilgisi, sıklık ve kullanıcı/veri durumu. Bir hata yalnızca 200 öğeli listede oluşuyorsa bu bilgi olmadan geliştirici onu hiç göremez.
+
+**Kısa kural:** Bir hata raporu, onu okuyan kişinin **senin bilgisayarına ihtiyaç duymadan** hatayı kendi ekranında görebilmesini sağlamalıdır.
+
+## Severity ve priority
+
+<Compare>
+<Pane title="Severity (önem derecesi)">
+
+- Hatanın ne kadar kötü olduğu
+- Teknik etki
+
+</Pane>
+<Pane title="Priority (öncelik)">
+
+- Ne zaman düzeltileceği
+- İş kararı
+
+</Pane>
+</Compare>
+
+İkisi bağımsızdır ve karıştırılır. **Düşük severity + yüksek priority** mümkündür: ana sayfadaki logonun yanlış olması sistemi bozmaz ama herkes görür ve hemen düzeltilir. **Yüksek severity + düşük priority** de mümkündür: nadir bir tarayıcıda veri kaybı, kullanıcı sayısı çok azsa sıraya girebilir. "Severity düşük ama priority yüksek; marka sayfasında ve herkes görüyor."
+
+<Callout kind="tasarimci">
+
+- **Her hata raporunda dokuz alanı doldur;** özellikle ortam, sıklık ve veri durumunu.
+- **Bir hata raporu şablonu hazırla** ve issue şablonuna koy.
+- **Keşifsel testte uç durum listeni kullan:** uzun isim, boş liste, yavaş bağlantı, geri tuşu, çift tıklama.
+- **Severity ve priority'yi ayrı alanlara yaz.**
+
+</Callout>
+
+<Summary>
+
+- Senaryolu test bilinen davranışı, keşifsel test kimsenin düşünmediğini bulur; tasarımcı uç durumları bildiği için keşifsel testte güçlüdür.
+- Hata raporu dokuz alandan oluşur; ortam, sıklık ve veri durumu en sık atlananlardır.
+- Test: rapor, başkasının kendi ekranında hatayı görmesini sağlamalıdır.
+- Severity teknik etkidir, priority iş kararıdır; ikisi bağımsızdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="İyi bir hata raporunda en sık atlanan üç alan nedir ve neden önemli?">
+
+Ortam bilgisi, sıklık ve kullanıcı/veri durumu. Bir hata yalnızca belirli bir tarayıcıda, belirli bir rolde ya da 200 öğeli bir listede oluşuyorsa bu bilgi olmadan geliştirici onu hiç göremez.
+
+</SelfCheck>
+
+<SelfCheck question="Severity ile priority arasındaki fark nedir? 'Düşük severity + yüksek priority' örneği ver.">
+
+Severity hatanın ne kadar kötü olduğudur (teknik etki); priority ne zaman düzeltileceğidir (iş kararı). Örnek: ana sayfadaki logonun yanlış olması sistemi bozmaz ama herkes görür, hemen düzeltilir.
+
+</SelfCheck>

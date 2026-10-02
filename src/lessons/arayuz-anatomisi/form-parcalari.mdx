@@ -1,0 +1,120 @@
+---
+summary: "Formun parçaları ve hangi kontrolün hangi işe uygun olduğu: input, textarea, select ve combobox, checkbox/radio/switch, slider, stepper, tarih seçici, dosya yükleme, çok adımlı form ve doğrulama."
+outcomes:
+  - "Checkbox, radio ve switch'i doğru işte kullanabilirsin."
+  - "Select, combobox ve radio arasında seçenek sayısına göre karar verebilirsin."
+  - "Date picker, slider ve file upload'ın erişilebilirlik tuzaklarını sayabilirsin."
+  - "Client-side ve server-side doğrulamanın neden ikisinin de gerektiğini açıklayabilirsin."
+minutes: 12
+sources:
+  - label: "W3C WAI-ARIA APG — Switch Pattern"
+    url: "https://www.w3.org/WAI/ARIA/apg/patterns/switch/"
+  - label: "W3C WAI-ARIA APG — Combobox Pattern"
+    url: "https://www.w3.org/WAI/ARIA/apg/patterns/combobox/"
+  - label: "MDN — <input type=\"email\"> ve giriş türleri"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email"
+  - label: "NN/g — Date-Input Formats"
+    url: "https://www.nngroup.com/articles/date-input/"
+  - label: "NN/g — Wizards: Definition and Design Recommendations"
+    url: "https://www.nngroup.com/articles/wizards/"
+  - label: "W3C — WCAG 2.2: Target Size (Minimum)"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html"
+  - label: "W3C — WCAG 2.2: Redundant Entry"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/redundant-entry.html"
+includeTerms: ["input", "select", "slider", "stepper", "checkbox", "radio", "switch"]
+skipTerms: ["client","server","validation","doğrulama"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import ControlsDemo from "~/components/lesson/ControlsDemo.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Formlar, dönüşümün ve erişilebilirliğin aynı anda kritik olduğu yerdir. Parçaların adlarını bilmek, hangi kontrolün hangi işe uygun olduğunu tartışabilmek demektir. Yanlış kontrol seçmek bir **beklenti hatası** üretir: kullanıcı bir şey bekler, başka bir şey olur.
+
+## Metin girişi
+
+**Input**, tek satırlık metin girişidir; formun temel yapı taşı. Türü (`email`, `tel`, `number`, `password`) belirtildiğinde mobilde doğru klavye açılır; bu küçük ama gerçek bir kullanılabilirlik kazancıdır. "Telefon alanına doğru tip verelim; mobilde harf klavyesi açılıyor." Placeholder'ın etiket yerine kullanılamayacağını hatırla.
+
+**Textarea**, uzun metin için çok satırlı alandır. Beklenen içeriğin uzunluğunu görsel olarak bildirir: küçük kutu kısa, büyük kutu uzun cevap bekler. Karakter sınırı varsa sayaç göster.
+
+## Seçim kontrolleri
+
+**Select** sabit bir listeden seçtirir; **combobox** aynı işi yapar ama kullanıcı yazarak arayabilir ve bazen kendi değerini ekleyebilir. Pratik kural: **yaklaşık 7-10 seçeneğe kadar select, üstünde combobox.** 200 ülkelik bir listede kaydırmak yerine yazmak çok daha hızlıdır. Çok az seçenek varsa (2-4) **radio** daha iyidir, çünkü hepsi görünür kalır. Özel yazılmış combobox'lar erişilebilirlik açısından risklidir; test edilmiş bir kütüphane tercih et.
+
+Üç kontrol, üç ayrı iştir:
+
+- **Checkbox:** birden fazlası seçilebilir ya da tek bir şeyin açık/kapalı olduğunu belirtir. Form gönderilince etkili olur.
+- **Radio:** birbirini dışlayan seçeneklerden **tam olarak biri** seçilir.
+- **Switch:** bir ayarı **anında** açar ya da kapatır; kaydet butonu gerektirmez.
+
+Ayar ekranında checkbox kullanırsan kullanıcı kaydet butonu arar; formda switch kullanırsan değişikliğin anında kaydedildiği izlenimi doğar. Switch'in durumu yalnızca renkle anlaşılmamalı, konum ve tercihen etiket de gerekir. Radio grupları `fieldset` ve `legend` ile gruplanır. Kendin dene:
+
+<ControlsDemo />
+
+**Slider**, bir aralıktan değer seçilen sürgüdür; çift tutamaçlı olanı **range slider**. Kesin değerin önemli olmadığı göreli ayarlarda (ses, parlaklık) iyidir. Kesin değer gerekiyorsa yanına bir sayı alanı koy: "Fiyat filtresine range slider koyalım ama yanına iki sayı alanı da ekleyelim." Sürükleme gerektirdiği için ok tuşlarıyla ya da butonlarla da ayarlanabilmelidir.
+
+**Stepper**, bir sayıyı artı/eksi butonlarıyla değiştiren kontroldür (adet, kişi sayısı). Butonlar dokunma hedefi boyutunu karşılamalı; bu kontrolde en sık ihlal edilen kural budur: "Adet stepper'ının butonları 24px'in altında; dolgu ekleyip 40×40 yapalım." Aynı kelime bir de çok adımlı formdaki *step indicator* için kullanılır: bağlamdan ayırt et.
+
+## Karmaşık girdiler
+
+**Date picker**, takvim arayüzüyle tarih seçtirir ve tarih formatı karmaşasını (GG/AA/YYYY mi, AA/GG/YYYY mi) önler. Takvim tek yol olmamalıdır: **elle yazma da mümkün olmalı.** Doğum tarihi için takvimde 30 yıl geri gitmek işkencedir. Erişilebilirlik açısından en zor bileşenlerden biridir; sıfırdan yazmak yerine test edilmiş bir kütüphane kullanmak neredeyse her zaman doğrudur.
+
+**File upload**, dosya seçme ya da sürükleyip bırakma bileşenidir. Cevaplanması gereken sorular çoktur: hangi formatlar ve maksimum boyut (hata mesajında değil **önceden** yaz), yükleme ilerlemesi, yüklenen dosyanın kaldırılması, birden fazla dosya. Sürükle-bırak tek yol olamaz; tıklayarak seçme de olmalı.
+
+**Multi-step form (sihirbaz)**, uzun bir formun adımlara bölünmesi ve ilerlemenin bir göstergeyle sunulmasıdır. Bilişsel yükü azaltır ve tamamlama oranını artırır: 20 alanlı tek sayfa korkutur, dört adımda beşer alan yönetilebilir görünür. Girilen veri adımlar arasında **kaybolmamalı**, geri dönülebilmeli ve aynı bilgi tekrar istenmemeli (Redundant Entry). Adım değişiminde odak yönetimi gerekir.
+
+## Doğrulama
+
+**Form validation**, girilen verinin kurallara uygunluğunun kontrolüdür. İkisi de gereklidir: **client-side** hızlı geri bildirim için (deneyim), **server-side** güvenlik için. Client-side doğrulama atlanabileceği için ona güvenilemez.
+
+Gönder butonunu doğrulama geçilene kadar **devre dışı bırakmak** yaygın ama tartışmalı bir kalıptır: kullanıcı neyin eksik olduğunu anlamaz. Daha iyi yaklaşım butonu aktif tutmak, basıldığında eksikleri işaretlemek ve ilk hatalı alana odaklanmaktır.
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Ayarlar sayfasındaki metin boyutu seçimi (Küçük / Normal / Büyük / Çok büyük) bastığın anda uygulanır; kaydet butonu yoktur. Tek seçimli bir gruptur ve seçili olan `aria-pressed` ile bildirilir. İlerleme içe aktarma ise tersine, dosya seçip ayrıca "İçe aktar"a bastığın bir eylemdir: anında değil, gönderince etkili olur.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Kontrolü işe göre seç:** çoklu seçim checkbox, tek seçim radio, anında ayar switch.
+- **Seçenek sayısına bak:** 2-4 radio, 7-10'a kadar select, fazlası combobox.
+- **Dokunma hedefini yaz:** stepper ve ikonlar en az 24×24, mümkünse 40×40.
+- **Her sürükleme etkileşimine sürüklemesiz alternatif ekle.**
+- **Date picker'a yazarak giriş ekle.**
+- **Dosya formatı ve boyut sınırını baştan yaz.**
+- **Gönder'i pasif yapma;** eksikleri işaretle.
+
+</Callout>
+
+<Summary>
+
+- Doğru kontrol beklenti hatasını önler: checkbox form gönderince, radio tam bir seçim, switch anında etkili olur.
+- 2-4 seçenekte radio, yaklaşık 7-10'a kadar select, üstünde combobox kullanılır.
+- Slider ve sürükle-bırak etkileşimlerinin sürüklemesiz alternatifi olmalıdır; date picker'a yazarak giriş eklenir.
+- Stepper butonları dokunma hedefi boyutunu karşılar; dosya sınırları önceden yazılır.
+- Çok adımlı formda veri kaybolmaz ve tekrar istenmez.
+- Doğrulama hem client hem server tarafında yapılır; Gönder butonu pasif bırakılmaz.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Checkbox, radio ve switch arasındaki fark nedir? Ayarlar sayfasında hangisi kullanılır?">
+
+Checkbox birden fazlası seçilebilir ya da tek bir şeyin açık/kapalı olduğunu belirtir; form gönderilince etkili olur. Radio birbirini dışlayan seçeneklerden tam birini seçtirir. Switch bir ayarı anında açar/kapatır. Ayarlar sayfasında switch kullanılır, çünkü değişiklik anında kaydedilir ve kullanıcı kaydet butonu aramaz.
+
+</SelfCheck>
+
+<SelfCheck question="Select yerine combobox ne zaman kullanılır? Çok az seçenek varsa ne tercih edilir?">
+
+Yaklaşık 7-10 seçeneğin üstünde combobox kullanılır, çünkü kullanıcı yazarak arayabilir. 2-4 seçenek varsa radio tercih edilir: hepsi görünür kalır ve tek tıkla seçilir.
+
+</SelfCheck>
+
+<SelfCheck question="Gönder butonunu doğrulama geçilene kadar devre dışı bırakmak neden tartışmalıdır?">
+
+Kullanıcı butonun neden pasif olduğunu ve neyin eksik olduğunu anlamaz. Daha iyi yaklaşım: butonu aktif tutmak, basıldığında eksik alanları işaretlemek ve ilk hatalı alana odaklanmak.
+
+</SelfCheck>

@@ -1,0 +1,56 @@
+---
+summary: "Ödeme, e-posta, SMS/OTP, arama, analitik, harita ve hata izleme: sık kullanılan üçüncü parti servis kategorileri ve her birinin tasarımı nasıl etkilediği. Ürün isimleri değişir, kategoriler kalır."
+outcomes:
+  - "Yedi servis kategorisini ve her birinin tasarım etkisini söyleyebilirsin."
+  - "Ödeme akışında nereye kadar kendi tasarımın olduğunu baştan belirlemenin neden gerektiğini açıklayabilirsin."
+minutes: 4
+sources:
+  - label: "Stripe — Dokümantasyon"
+    url: "https://docs.stripe.com/"
+  - label: "OWASP — Application Security Verification Standard"
+    url: "https://owasp.org/www-project-application-security-verification-standard/"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bu bölümdeki **kategorileri** öğren; ürün isimleri ve fiyatlandırmaları sürekli değişir. Anılan isimler bir öneri değil, kulak aşinalığı içindir.
+
+| Kategori | Ne çözer | Tasarımı nasıl etkiler |
+|---|---|---|
+| **Ödeme** (Stripe, iyzico, PayTR vb.) | Kart işleme, abonelik, fatura | Ödeme akışının bir kısmı servisin kendi ekranıdır; nereye kadar senin tasarımın olduğu baştan belirlenmeli |
+| **E-posta** (işlemsel ve pazarlama) | Şifre sıfırlama, sipariş onayı, bülten | E-posta şablonları da tasarım işidir ve web'den farklı kısıtları vardır |
+| **SMS / OTP** | Doğrulama kodu | Kod girme ekranı, tekrar gönderme sayacı ve hata durumları tasarlanmalı |
+| **Arama** (Algolia, Typesense, Meilisearch vb.) | Hızlı ve hatalı yazıma toleranslı arama | Anlık öneri, yazım düzeltme ve boş sonuç deneyimini mümkün kılar |
+| **Analitik** | Kullanım ölçümü | Olay tasarımı senin işin; KVKK uyumu gerekir |
+| **Harita** | Konum gösterimi | Ağır bir gömülü bileşendir; lazy load düşünülmeli |
+| **Hata izleme** (Sentry vb.) | Canlıdaki hataları yakalama | DevOps bölümünde işlenir |
+
+"Ödeme sayfasının hangi kısmı bizim tasarımımız, hangisi servisin ekranı? Bunu baştan netleştirelim; akış tasarımı buna bağlı."
+
+<Callout kind="tasarimci">
+
+- **Ödemede sınırı çiz:** hangi ekranlar senin, hangileri servisin. Özelleştirme seçeneklerini baştan sor.
+- **E-posta şablonlarını da tasarla;** yaygın e-posta istemcilerinin kısıtlarını (görsel, font, genişlik) dikkate al.
+- **SMS/OTP için** kod girişi, yeniden gönderme geri sayımı ve hata hâllerini çiz.
+- **Analitik olaylarını (hangi tıklama ölçülecek) tasarım aşamasında tanımla.**
+
+</Callout>
+
+<Summary>
+
+- Yedi sık kategori: ödeme, e-posta, SMS/OTP, arama, analitik, harita, hata izleme.
+- Her kategori tasarımı farklı etkiler: ödemede ekran sınırı, e-postada şablon, OTP'de kod girişi akışı, arama'da boş sonuç ve öneri.
+- Ürün adlarını değil kategorileri öğren.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Ödeme servisi kullanıldığında tasarımda neyi baştan netleştirmek gerekir?">
+
+Ödeme akışının hangi kısmının kendi tasarımın, hangisinin servisin kendi ekranı olduğunu; akış tasarımı buna bağlıdır.
+
+</SelfCheck>

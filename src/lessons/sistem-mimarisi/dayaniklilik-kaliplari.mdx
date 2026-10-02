@@ -1,0 +1,75 @@
+---
+summary: "Idempotency, retry ve jitter, circuit breaker ve timeout: dağıtık sistemlerin güvenlik ağı. Hepsinin ucunda bir tasarım kararı var: devre kesildiğinde ya da zaman aşımında kullanıcı ne görecek?"
+outcomes:
+  - "Idempotency key'in neyi engellediğini ve butonu devre dışı bırakmanın neden yetmediğini söyleyebilirsin."
+  - "Retry'a neden jitter eklendiğini açıklayabilirsin."
+  - "Circuit breaker ve timeout'un gerektirdiği tasarım kararlarını bilirsin."
+minutes: 8
+sources:
+  - label: "Stripe — Idempotent istekler"
+    url: "https://docs.stripe.com/api/idempotent_requests"
+  - label: "AWS Builders' Library — Zaman aşımı, yeniden deneme ve jitter"
+    url: "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+  - label: "Martin Fowler — Circuit Breaker"
+    url: "https://martinfowler.com/bliki/CircuitBreaker.html"
+  - label: "Microsoft — Retry kalıbı"
+    url: "https://learn.microsoft.com/en-us/azure/architecture/patterns/retry"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Ödeme isteği gitti, yanıt gelmedi. Ağ mı koptu, sunucu mu yavaş? İstemci bilemez ve tekrar dener. İşlem tekrar çalışırsa çift çekim olur mu? Dört kalıp bu sorulara cevap verir.
+
+## Idempotency
+
+**Idempotency (değişmez sonuçluluk)**, aynı işlemin birden fazla kez çalıştırılmasının bir kez çalıştırılmasıyla aynı sonucu vermesidir. **Idempotency key** istemcinin isteğe eklediği benzersiz kimliktir; sunucu aynı anahtarla ikinci bir istek gelirse tekrar işlem yapmaz. Dağıtık sistemlerin temel güvenlik ağıdır: ağ koptuğunda istemci isteğin gidip gitmediğini bilemez ve tekrar dener. İşlem idempotent değilse ikinci sipariş ya da ikinci ödeme oluşur. "Ödeme isteğine idempotency key ekleyelim; ağ koparsa çift çekim olmasın."
+
+Butonu devre dışı bırakmak istemci tarafı bir önlemdir ve **yeterli değildir;** asıl koruma sunucudadır. İkisi birlikte kullanılır.
+
+## Retry ve jitter
+
+**Retry**, başarısız isteğin her denemede daha uzun beklenerek tekrarlanmasıdır (**exponential backoff**). Geçici hatalar kendiliğinden çözülür; artan bekleme zaten sıkışık bir servisi daha da boğmayı engeller. **Jitter** beklemeye rastgelelik ekler: yoksa tüm istemciler aynı anda tekrar dener ve "yeniden deneme fırtınası" oluşur. "Yeniden denemelere jitter ekleyelim; hepsi aynı saniyede tekrar denemesin."
+
+## Circuit breaker
+
+**Circuit breaker (devre kesici)**, bir bağımlılık sürekli hata veriyorsa ona istek atmayı bir süre tamamen durdurup hızlıca hata dönme kalıbıdır; sigortanın çalışma mantığı. Çöken bir servise istek atmaya devam etmek iki zarar verir: senin kaynaklarını bekleyerek tüketir ve zaten çökmüş servisi daha da boğar. "Öneri servisi sürekli zaman aşımına uğruyor; devre kesici koyalım ve o bölümü gizleyelim."
+
+**Graceful degradation ile birlikte çalışır:** devre kesildiğinde arayüzde ne görüneceği tasarlanmalıdır.
+
+## Timeout
+
+**Timeout (zaman aşımı)**, bir isteğin ne kadar bekleneceğinin sınırlanmasıdır. Zaman aşımı olmayan bir istek sonsuza kadar bekleyebilir ve kaynakları kilitler. **Tasarım karşılığı:** zaman aşımı süresi kullanıcının ne kadar bekleyeceğini belirler ve bu süre boyunca ne göreceği tasarlanmalıdır. "Zaman aşımını 10 saniye yapalım; kullanıcı sonsuza kadar spinner izlemesin."
+
+<Callout kind="tasarimci">
+
+- **Para ve sipariş gibi eylemler için idempotency'yi gereksinim olarak yaz.**
+- **Zaman aşımı sonrası ekranı tasarla:** "tekrar dene" nedir, çift gönderim riski var mı?
+- **Devre kesildiğinde bölümün nasıl gizleneceğini ya da hata göstereceğini çiz.**
+- **Yeniden deneme gerektiren akışlarda kullanıcıya ilerleme/belirsizlik mesajı ver.**
+
+</Callout>
+
+<Summary>
+
+- Idempotency key aynı isteğin iki kez işlenmesini (çift sipariş/ödeme) engeller; buton devre dışı bırakmak tek başına yetmez.
+- Retry artan beklemeyle yapılır; jitter yeniden deneme fırtınasını önler.
+- Circuit breaker çöken bağımlılığa isteği durdurur; devre kesildiğinde arayüzün ne göstereceği tasarlanmalıdır.
+- Timeout kullanıcının bekleme süresini ve bu sürede göreceğini belirler.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Idempotency key neyi engeller? Butonu devre dışı bırakmak yeterli mi?">
+
+Aynı isteğin iki kez işlenmesini (çift sipariş, çift ödeme). Yeterli değildir: istemci tarafı bir önlemdir; ağ koptuğunda ya da istemci yeniden denediğinde koruma sağlamaz. Asıl koruma sunucudadır; ikisi birlikte kullanılır.
+
+</SelfCheck>
+
+<SelfCheck question="Yeniden denemelere neden jitter eklenir?">
+
+Yoksa tüm istemciler aynı anda tekrar dener ve sıkışık servisi yeniden boğar (yeniden deneme fırtınası). Jitter beklemeye rastgelelik ekleyerek denemeleri zamana yayar.
+
+</SelfCheck>

@@ -1,0 +1,108 @@
+---
+summary: "Asıl beceri prompt yazmak değil, bağlamı tasarlamak: modelin ne göreceğine karar vermek. Bağlam kaynakları, 'bağlam boşluğu' ve kalıcı talimat dosyası (CLAUDE.md / AGENTS.md) bu dersin konusu."
+outcomes:
+  - "Context engineering'in ne olduğunu ve prompt engineering'den farkını söyleyebilirsin."
+  - "Yedi bağlam kaynağını ve hangisinin ne zaman işe yaradığını sayabilirsin."
+  - "Bağlam boşluğunun neden görünmez olduğunu ve kalıcı talimat dosyasının yapısını bilirsin."
+minutes: 8
+sources:
+  - label: "Anthropic Engineering — Effective context engineering for AI agents"
+    url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+  - label: "Claude Code Docs — Memory (CLAUDE.md)"
+    url: "https://code.claude.com/docs/en/memory"
+  - label: "AGENTS.md"
+    url: "https://agents.md"
+flags: ["degisken", "emin-degil"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Materyal, 2026'da yaygın görüşe göre **asıl becerinin prompt yazmak değil, bağlamı tasarlamak** olduğunu aktarıyor: yani modelin ne göreceğine karar vermek. Sorunların çoğu kötü prompt'tan değil, eksik bağlamdan doğuyor.
+
+## Context engineering
+
+**Context engineering (bağlam mühendisliği)**, modele ne gösterileceğinin bilinçli olarak tasarlanmasıdır; sadece nasıl sorulacağının değil. Aynı model aynı soruya farklı bağlamla çok farklı cevap verir. Bir bileşen isterken tasarım token'larını da verdiysen çıktı ölçeğe uyar; vermediysen model kendi sayılarını uydurur ve sonuç sistemsiz görünür. "Sorun promptta değil; model tasarım sistemimizi görmüyor. Token dosyasını da verelim."
+
+<Callout kind="dikkat" title="Materyalin kendi notu">
+
+Materyal bu terimin ne kadar kalıcı olacağından emin olmadığını belirtiyor; ama altındaki fikir (bağlamın çıktıyı prompttan çok belirlediği) sağlam diyor.
+
+</Callout>
+
+## Bağlam kaynakları
+
+| Kaynak | Ne sağlar | Ne zaman |
+|---|---|---|
+| **Referans site / ekran görüntüsü** | Görsel yön, düzen kalıbı | Tasarım isteklerinde |
+| **Mevcut kod** | Proje kalıpları, adlandırma, yapı | Var olan projeye ekleme yaparken |
+| **Tasarım token'ları** | Renk, boşluk, tipografi ölçeği | Her arayüz isteğinde |
+| **Veri şeması / tip tanımı** | Hangi alanlar var, hangileri boş olabilir | Veri gösteren ekranlarda |
+| **Kullanıcı akışı** | Adımlar, dallanmalar, uç durumlar | Çok ekranlı akışlarda |
+| **Kabul kriterleri** | "Bitti" tanımı | Her ciddi istekte |
+| **Hata mesajı / konsol çıktısı** | Sorunun gerçek hâli | Hata ayıklamada |
+
+**Kritik nokta: bağlam boşluğu.** Projende yazılı olmayan her kural model için **yok** demektir. Ekibin veya senin kafandaki "biz hep şöyle yaparız" bilgisi yazılı değilse hiçbir prompt bunu telafi edemez. Bu boşluklar tanımı gereği görünmezdir: dosya, belgelemediği şeyi belgelemez; eksiklik ancak çıktı yanlış geldiğinde fark edilir.
+
+## Kalıcı talimat dosyası
+
+**Project instruction file (proje talimat dosyası)** (CLAUDE.md, AGENTS.md, rules file), projeye özgü kuralların her oturumda tekrar yazmak yerine kalıcı bir dosyada tutulmasıdır. Kuralları her prompt'ta tekrarlamak hem zaman hem bağlam penceresi israfıdır; kalıcı dosya bunu bir kez çözer. "Tasarım kurallarını talimat dosyasına yazalım; her seferinde tekrar anlatmayalım."
+
+Materyal, `AGENTS.md` adının bu iş için fiilî bir ortak standart hâline geldiğinin raporlandığını, ama araçların kendi dosya adları ve konumlarının farklı olabileceğini belirtiyor; **güncel dokümantasyona bak.**
+
+**Kaynaklarda tutarlı olarak önerilen yapı** (sırasıyla):
+
+1. **Proje özeti ve stack:** bu ne, hangi teknolojilerle.
+2. **Mimari ilkeler:** klasör yapısı, katmanlar, veri akışı.
+3. **Kurallar ve kalıplar:** adlandırma, bileşen yapısı, stil yaklaşımı.
+4. **Tasarım sistemi:** token'lar, ölçekler, bileşen kütüphanesi.
+5. **Test stratejisi.**
+6. **Komutlar:** build, test, lint nasıl çalıştırılır.
+7. **Kaçınılacak kalıplar (anti-patterns):** **en sona ve açıkça.**
+
+Yedinci madde senin için en önemlisi: **tasarım yasaklarını buraya yazarsan** her promptta tekrar etmen gerekmez.
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu projenin kökündeki `CLAUDE.md` tam olarak böyle bir dosya: dokunulmaz kuralları, faz protokolünü, bir kez düşülmüş teknik tuzakları ve stil kurallarını içerir. Yalnızca koddan okunamayan, projeye özgü gerçekler orada tutulur.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Token dosyanı, tip tanımını, kabul kriterlerini ve hata çıktısını model görsün.**
+- **"Biz hep şöyle yaparız" bilgilerini yaz;** yazılı olmayan kural yoktur.
+- **Yasak listeni talimat dosyasının sonuna koy.**
+- **Dosya adı ve konumu için aracın güncel dokümantasyonuna bak.**
+
+</Callout>
+
+<Summary>
+
+- Bağlam mühendisliği, modele ne gösterileceğinin tasarımıdır; çıktıyı çoğu zaman prompt'tan çok bağlam belirler.
+- Yedi bağlam kaynağı: referans, mevcut kod, token'lar, şema/tip, akış, kabul kriterleri, hata çıktısı.
+- Bağlam boşluğu: yazılı olmayan kural model için yoktur ve eksiklik ancak yanlış çıktıda fark edilir.
+- Kalıcı talimat dosyası kuralları bir kez çözer; yasaklar en sona açıkça yazılır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Context engineering ne demek ve prompt engineering'den farkı nedir?">
+
+Modele ne gösterileceğinin bilinçli tasarımıdır; sadece nasıl sorulacağının değil. Aynı model aynı soruya farklı bağlamla çok farklı cevap verir; sorunların çoğu kötü prompt'tan değil eksik bağlamdan doğar.
+
+</SelfCheck>
+
+<SelfCheck question="'Bağlam boşluğu' nedir ve neden görünmezdir?">
+
+Projede yazılı olmayan her kuralın model için yok sayılması. Görünmezdir çünkü dosya belgelemediği şeyi belgelemez; eksiklik ancak çıktı yanlış geldiğinde fark edilir.
+
+</SelfCheck>
+
+<SelfCheck question="Kalıcı talimat dosyasında senin için en önemli bölüm hangisidir ve neden?">
+
+Kaçınılacak kalıplar (anti-patterns) bölümü, en sonda. Tasarım yasaklarını oraya yazarsan her promptta tekrar etmen gerekmez ve jenerikleşmenin ana kaynağı baştan kapanır.
+
+</SelfCheck>

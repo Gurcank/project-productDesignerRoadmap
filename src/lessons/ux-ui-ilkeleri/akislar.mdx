@@ -1,0 +1,120 @@
+---
+summary: "Kullanıcının bir hedefe ulaşmak için attığı adımların haritası: user flow, task flow, happy path, uç durumlar, hata akışı ve çıkmaz ekranlar. Ekranlar akışın çıktısıdır, girdisi değil."
+outcomes:
+  - "User flow ile task flow'u ve user journey ile user flow'u ayırt edebilirsin."
+  - "Happy path'ten sonra hangi durumları tasarlaman gerektiğini sayabilirsin."
+  - "Bir hata mesajının cevaplaması gereken üç soruyu bilirsin."
+  - "Çıkmaz (dead end) ekranları tespit edip ileri götüren bir yol ekleyebilirsin."
+minutes: 10
+sources:
+  - label: "NN/g — User Journeys vs. User Flows"
+    url: "https://www.nngroup.com/articles/user-journeys-vs-user-flows/"
+  - label: "NN/g — Error Message Guidelines"
+    url: "https://www.nngroup.com/articles/error-message-guidelines/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import FlowExample from "~/components/lesson/FlowExample.astro";
+
+Bir kayıt ekranı tasarladın: temiz, güzel, bir de buton. Geliştirici soruyor: "E-posta zaten kayıtlıysa ne olacak? Doğrulama e-postası gelmezse? Kullanıcı sayfayı kapatırsa?" Tasarımda cevap yok. Çünkü **ekran** çizdin, ama **akış** çizmedin.
+
+Bu ders kullanıcının bir hedefe ulaşmak için attığı adımların haritasını anlatıyor. Ekran çizmeden önce yapılan iştir; **ekranlar akışın çıktısıdır, girdisi değil.**
+
+## User flow: ekranlar, kararlar, dallanmalar
+
+**User flow** (kullanıcı akışı), kullanıcının bir hedefe ulaşırken geçtiği **ekranların, kararların ve dallanmaların** şemasıdır. Eksik ekranları ve düşünülmemiş durumları önceden ortaya çıkarır. Ekran ekran tasarlarsan aradaki geçişleri ve istisnaları kaçırırsın; akış çizersen kaçıramazsın, çünkü **her dallanma bir kutu ister.**
+
+Tasarımın ilk çıktısıdır; Figma, FigJam, Whimsical gibi araçlarda çizilir. "Akışı çizince fark ettik: kullanıcı e-postasını doğrulamadan ödeme adımına geçebiliyor."
+
+<FlowExample />
+
+**User flow ≠ user journey.** Flow *ürün içindeki* adımları gösterir; journey (yolculuk haritası) ürün dışını ve duyguyu da kapsar.
+
+### Task flow
+
+**Task flow** (görev akışı), tek bir görevin, **dallanma olmadan,** doğrusal adımlarıdır. User flow karmaşıktır ve dallanır; task flow bir görevin en kısa hâlini gösterir. **Adım sayısını azaltma** çalışmalarında bu basit hâl kullanılır. "Task flow şu an 6 adım; 4'e indirebilir miyiz?"
+
+## Happy path ve sonrası
+
+**Happy path** (ideal akış), her şeyin yolunda gittiği, hata olmayan, verinin eksiksiz olduğu senaryodur. Tasarımın ve demoların başlangıç noktasıdır. Tehlikesi de budur: **çoğu ekip yalnızca happy path'i tasarlar** ve gerçek kullanımda ortaya çıkan durumlar tasarımsız kalır. Bu, tasarımcının en sık yaptığı eksikliktir. "Bu sadece happy path" bir uyarı cümlesidir.
+
+"Happy path hazır; şimdi boş, hata ve yükleme durumlarını da tasarlamamız lazım."
+
+### Edge case: uç durum
+
+**Edge case** (uç durum), nadiren oluşan ama oluştuğunda tasarımı bozan durumdur. **Nadir olması önemsiz olduğu anlamına gelmez:** o duruma düşen kullanıcı için tek gerçek odur. Tipik uç durumlar:
+
+- Çok uzun isim, tek karakterlik metin
+- 999 bildirim
+- Sıfır sonuç
+- Çok yavaş bağlantı
+- Hiç görsel yüklenmemiş
+- Çok küçük ya da çok büyük ekran
+
+"Edge case: kullanıcı adı 40 karakter olursa kart taşıyor. Kırpma kuralı belirleyelim."
+
+**Edge case ≠ bug.** Edge case *tasarlanmamış bir durumdur;* bug yanlış çalışan bir şeydir. Tasarlanmamış uç durum genelde bug'a dönüşür.
+
+### Error path: hata akışı
+
+**Error path** (hata akışı), bir şey ters gittiğinde kullanıcının izleyeceği yoldur. Kullanıcıyı çıkmazda bırakmamayı sağlar. Her hata ekranının cevaplaması gereken **üç soru** vardır:
+
+1. **Ne oldu?**
+2. **Neden oldu?**
+3. **Şimdi ne yapmalıyım?**
+
+Üçüncüsü **en sık atlananıdır ve en önemlisidir.** Form tasarımında, ödeme akışlarında, bağlantı kopmalarında karşına çıkar. "Error path'te yalnızca 'bir hata oluştu' yazıyor; kullanıcıya ne yapacağını söylemiyoruz."
+
+### Dead end: çıkmaz
+
+**Dead end** (çıkmaz), kullanıcının devam edecek **hiçbir eylem bulamadığı** ekrandır. 404 sayfaları, boş sonuç ekranları ve hata ekranları en sık çıkmaza dönüşen yerlerdir. Kural basit:
+
+> **Her ekranda ileri götüren en az bir yol olmalı.**
+
+"Arama sonucu boşsa ekran çıkmaz oluyor; öneri listesi ya da filtre temizleme butonu koyalım."
+
+| Durum | Çıkmaz hâli | İleri götüren hâli |
+|---|---|---|
+| Boş arama sonucu | "Sonuç bulunamadı." | "Sonuç bulunamadı. Filtreleri temizle veya şunlara bak: ..." |
+| 404 | "Sayfa yok." | "Bu sayfayı bulamadık. Ana sayfaya dön ya da ara." |
+| Ödeme hatası | "Hata oluştu." | "Kartın reddedildi. Başka kart dene ya da bankanla görüş." |
+
+<Callout kind="tasarimci">
+
+Bir akış çizdikten sonra her kutuya şu sorular için bir cevap yaz:
+
+- **Boşsa ne görünür?** (Henüz hiç veri yok.)
+- **Hata olursa ne olur?** (Ne oldu, neden, şimdi ne yapmalıyım.)
+- **Yüklenirken ne görünür?** (Bekleme durumu.)
+- **Çok uzun / çok kısa / çok fazla olursa?** (Uç durumlar.)
+- **Çıkmaz var mı?** (Her ekranda ileri bir yol.)
+
+Bu beş soru, kabul kriterlerinin de iskeletidir: geliştiriciye ne tasarladığını ve ne tasarlamadığını açıkça verir.
+
+</Callout>
+
+<Summary>
+
+- User flow ekranları, kararları ve dallanmaları gösterir; eksik durumları önceden ortaya çıkarır. Task flow dallanmasız en kısa hâldir.
+- Happy path ideal senaryodur; çoğu ekip yalnızca onu tasarlar, bu en sık eksikliktir.
+- Edge case nadir ama gerçek bir durumdur; tasarlanmazsa bug'a dönüşür.
+- Hata ekranı üç soruyu cevaplar: ne oldu, neden, şimdi ne yapmalıyım.
+- Her ekranda ileri götüren bir yol olmalı; aksi çıkmazdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Happy path hazır. Tasarımı bitirmek için sırada ne var?">
+
+Happy path dışındaki durumlar: boş, hata ve yükleme durumları ile uç durumlar (çok uzun metin, sıfır sonuç, yavaş bağlantı). Her ekranda ileri götüren bir yolun olduğundan emin olmak da gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir hata mesajının cevaplaması gereken üç soru nedir?">
+
+Ne oldu, neden oldu, şimdi ne yapmalıyım. En sık atlanan ve en önemli olan üçüncüsüdür.
+
+</SelfCheck>

@@ -1,0 +1,71 @@
+---
+summary: "Parçaların birbirini doğrudan çağırmak yerine 'olan biten'i duyurup ilgilenenlerin dinlemesi: olay güdümlü mimari, mesaj kuyruğu ve pub/sub. Bağlılığı düşürür; bedeli takip edilebilirliktir."
+outcomes:
+  - "Event-driven mimarinin ne kazandırıp ne kaybettirdiğini söyleyebilirsin."
+  - "Mesaj kuyruğu ile pub/sub farkını ve mesaj kuyruğunun dayanıklılığa katkısını açıklayabilirsin."
+minutes: 6
+sources:
+  - label: "Martin Fowler — What do you mean by Event-Driven?"
+    url: "https://martinfowler.com/articles/201701-event-driven.html"
+  - label: "AWS — Amazon SQS nedir?"
+    url: "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir sipariş oluştu. E-posta gitmeli, stok düşmeli, analitik kaydedilmeli. Sipariş servisi bunların hepsini tek tek çağırırsa her yeni ihtiyaçta kodu değiştirmek gerekir. Alternatif: sipariş servisi yalnızca "sipariş oluşturuldu" diye duyurur, ilgilenenler dinler.
+
+## Event-driven architecture
+
+**Event-driven architecture (olay güdümlü mimari)**, parçaların birbirini doğrudan çağırmak yerine "olan biten"i duyurup ilgilenenlerin dinlemesi üzerine kurulu yapıdır. Bağlılığı düşürür: olayı yayınlayan servis kimin dinlediğini bilmek zorunda değildir; e-posta servisi, stok servisi ve analitik ayrı ayrı dinler. Yeni bir dinleyici eklemek mevcut kodu değiştirmeyi gerektirmez. "Sipariş oluşturulduğunda bir olay yayınlayalım; bildirim ve fatura servisleri onu dinlesin."
+
+**Bedeli takip edilebilirliktir:** bir şeyin neden olduğunu izlemek zorlaşır, çünkü çağrı zinciri açık değildir. Ayrıca olayların sırası ve tekrarı yönetilmelidir (idempotency).
+
+## Mesaj kuyruğu ve pub/sub
+
+Mesajlar gönderici ile alıcı arasında bir **aracı (broker)** üzerinden taşınır.
+
+<Compare>
+<Pane title="Message queue">
+
+- Bir mesajı genelde tek alıcı işler
+- İş dağıtımı: "bu raporu birisi üretsin"
+
+</Pane>
+<Pane title="Pub/sub">
+
+- Aynı mesajı birden fazla abone alır
+- Duyuru: "sipariş oluşturuldu"
+
+</Pane>
+</Compare>
+
+Gönderici ile alıcıyı **zaman olarak ayırır:** alıcı çökmüş olsa bile mesaj kuyrukta bekler ve alıcı ayağa kalkınca işlenir. Bu dayanıklılığın temel araçlarından biridir. Kafka, RabbitMQ ve SQS yaygın adlardır (seviye 3). "E-posta servisi çökerse siparişler etkilenmesin; mesajı kuyruğa atalım."
+
+<Callout kind="tasarimci">
+
+- **Olay temelli akışlarda "işleniyor" ara durumlarını tasarla:** işlem anında bitmeyebilir.
+- **Bir olayın tetiklediği tüm sonuçları (e-posta, bildirim, rapor) akış diyagramında göster;** çağrı zinciri koddan görünmez olabilir.
+- **Tekrarlayan olaylara (aynı mesaj iki kez) karşı kullanıcıya görünen sonuçları düşün:** çift e-posta, çift bildirim.
+
+</Callout>
+
+<Summary>
+
+- Olay güdümlü mimaride yayıncı kimin dinlediğini bilmez; yeni dinleyici eklemek mevcut kodu değiştirmez.
+- Bedeli takip edilebilirliktir; olayların sırası ve tekrarı yönetilmelidir.
+- Mesaj kuyruğu tek alıcıya, pub/sub birden fazla aboneye teslim eder; ikisi de gönderici ile alıcıyı zaman olarak ayırır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Event-driven mimarinin kazandırdığı ve kaybettirdiği nedir?">
+
+Kazandırır: bağlılığı düşürür; yayıncı kimin dinlediğini bilmez, yeni dinleyici eklemek kodu değiştirmez. Kaybettirir: takip edilebilirlik; çağrı zinciri açık olmadığı için bir şeyin neden olduğunu izlemek zorlaşır.
+
+</SelfCheck>

@@ -1,0 +1,81 @@
+---
+summary: "OAuth yetkilendirme protokolüdür, OIDC onun üzerine kimlik katmanı ekler ('Google ile giriş' budur); SSO kurumsal satışta çoğu zaman şarttır; hesap birleştirme auth'un en sık yaşanan gerçek sorunlarından biridir."
+outcomes:
+  - "OAuth ile OIDC arasındaki farkı ve 'Google ile giriş'in hangisi olduğunu söyleyebilirsin."
+  - "Sosyal girişte iki tasarım tuzağını (yöntemi unutmak, çok seçenek) sayabilirsin."
+  - "SSO'nun neden satın alma şartı olabildiğini ve hangi ekranları gerektirdiğini açıklayabilirsin."
+  - "Hesap birleştirmenin neden gerektiğini ve riskini bilirsin."
+minutes: 9
+sources:
+  - label: "OAuth 2.0 — oauth.net"
+    url: "https://oauth.net/2/"
+  - label: "OpenID Connect — Nasıl çalışır?"
+    url: "https://openid.net/developers/how-connect-works/"
+  - label: "RFC 6749 — OAuth 2.0"
+    url: "https://www.rfc-editor.org/rfc/rfc6749"
+  - label: "OWASP — Authentication Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Google ile devam et", "Apple ile giriş yap", "Kurumsal hesabınla giriş". Üçü farklı protokollerin yüzü. Bu ders hangisinin ne olduğunu ve tasarıma ne istediğini anlatır.
+
+## OAuth 2.0
+
+**OAuth 2.0**, bir uygulamanın, kullanıcının şifresini görmeden başka bir servisteki kaynaklara sınırlı erişim almasını sağlayan protokoldür. Asıl amacı **yetkilendirmedir,** kimlik doğrulama değil: "bu uygulamanın Google Drive'ımdaki dosyaları okumasına izin veriyorum" gibi. Kullanıcı şifresini üçüncü tarafa vermez. "Takvim entegrasyonu için OAuth kullanacağız; kullanıcı hangi izinleri verdiğini görecek." Tasarım: izin (scope) ekranı ve verilen izinlerin yönetimi.
+
+## OIDC ve sosyal giriş
+
+**OIDC (OpenID Connect)**, OAuth 2.0'ın üzerine kurulmuş, kimlik bilgisi de taşıyan katmandır; "Google ile giriş yap" düğmesinin arkasındaki teknolojidir. Kayıt sürtünmesini ciddi biçimde azaltır: kullanıcı yeni bir şifre üretmez, e-posta doğrulaması gerekmez. "Google ve Apple ile giriş ekleyelim; kayıt tamamlama oranını artırır."
+
+İki tasarım tuzağı:
+
+1. **Kullanıcı hangi yöntemle kayıt olduğunu unutur** ve şifreyle girmeye çalışıp başarısız olur. "Bu e-posta Google ile kayıtlı" gibi bir yönlendirme gerekir.
+2. **Çok fazla giriş seçeneği karar felci yaratır.** Genelde iki-üç seçenek yeterlidir.
+
+## SSO ve SAML
+
+**SSO (Single Sign-On)**, kullanıcının kurumunun merkezî kimlik sistemiyle bir kez giriş yapıp tüm uygulamalara erişmesidir. **SAML**, kurumsal dünyada yaygın olan eski ama hâlâ baskın protokoldür. Kurumsal satışta çoğu zaman **satın alma şartıdır:** IT ekipleri çalışanların ayrı ayrı şifre yönetmesini istemez ve çalışan işten ayrıldığında tüm erişimlerin merkezî olarak kesilmesini ister. "Enterprise planda SSO şart; olmadan bu segmente satamayız."
+
+SSO kurulumu genelde müşterinin IT ekibiyle birlikte yapılır ve **kendi arayüzünü gerektirir:** yönetici panelinde SSO yapılandırma ekranı, alan adı doğrulama, "bu alan adındaki kullanıcılar SSO ile girmeli" kuralı. Bunlar tasarlanması gereken ekranlardır.
+
+## Account linking
+
+**Account linking (hesap birleştirme)**, aynı kişinin farklı giriş yöntemleriyle oluşturduğu hesapların tek hesapta birleştirilmesidir. Kullanıcı önce e-postayla kayıt olur, sonra Google ile girmeye çalışır; sistem bunu ayrı bir hesap sayarsa kullanıcı verilerini kaybetmiş gibi hisseder. Auth akışlarındaki en sık yaşanan gerçek sorunlardan biridir. "Aynı e-posta ile Google'dan gelirse mevcut hesaba bağlayalım; yeni hesap açmayalım."
+
+Otomatik birleştirme güvenlik riski taşıyabilir: doğrulanmamış bir e-posta üzerinden hesap ele geçirme. Bu yüzden birleştirme genelde doğrulama ister ve bu doğrulama akışı tasarlanmalıdır.
+
+<Callout kind="tasarimci">
+
+- **Sosyal girişte "bu e-posta başka bir yöntemle kayıtlı" mesajını tasarla.**
+- **Giriş seçeneklerini 2-3 ile sınırla.**
+- **Kurumsal planlar için SSO yönetici ekranlarını (yapılandırma, alan adı doğrulama, zorunlu SSO kuralı) önceden planla.**
+- **Hesap birleştirme akışında doğrulama adımını çiz.**
+
+</Callout>
+
+<Summary>
+
+- OAuth yetkilendirme protokolüdür; OIDC kimlik katmanı ekler ve sosyal giriş OIDC'dir.
+- Sosyal girişin tuzakları: kullanıcının yöntemi unutması ve çok seçenek.
+- SSO kurumsal satışta şarttır ve kendi arayüzünü (yapılandırma, alan adı doğrulama) gerektirir.
+- Hesap birleştirme sık yaşanan bir sorundur; otomatik birleştirme doğrulamasız riskli olabilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="OAuth ile OIDC arasındaki fark nedir? 'Google ile giriş' hangisidir?">
+
+OAuth bir yetkilendirme protokolüdür ("bu uygulama dosyalarıma erişebilir"). OIDC, OAuth'un üzerine kurulmuş ve kimlik bilgisi de taşıyan katmandır. "Google ile giriş" teknik olarak OIDC'dir.
+
+</SelfCheck>
+
+<SelfCheck question="SSO neden kurumsal satışta önemlidir ve tasarımcı için ne demektir?">
+
+Kurumsal IT ekipleri çalışanların ayrı ayrı şifre yönetmesini istemez ve çalışan ayrıldığında tüm erişimlerin merkezî olarak kesilmesini ister; bu yüzden çoğu zaman satın alma şartıdır. Tasarımcı için: yönetici panelinde SSO yapılandırma ekranı, alan adı doğrulama ve zorunlu SSO kuralı tasarlanmalıdır.
+
+</SelfCheck>

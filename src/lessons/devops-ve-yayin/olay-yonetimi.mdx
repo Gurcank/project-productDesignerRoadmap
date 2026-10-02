@@ -1,0 +1,77 @@
+---
+summary: "Bir şeyler ters gittiğinde: önce geri dön (rollback), sonra sebebi araştır. Hotfix, incident, severity, on-call, runbook ve blameless postmortem. Tasarımcının rolü: olay sırasında kullanıcıya ne gösterileceğini önceden tasarlamak."
+outcomes:
+  - "Rollback'in neden ilk refleks olduğunu ve veritabanı değişikliklerinin onu nasıl zorlaştırdığını söyleyebilirsin."
+  - "Hotfix'in riskini açıklayabilirsin."
+  - "Olay anında tasarımcının rolünü ve blameless postmortem'in önemini bilirsin."
+minutes: 8
+sources:
+  - label: "Google SRE Kitabı — Olayları yönetmek"
+    url: "https://sre.google/sre-book/managing-incidents/"
+  - label: "Google SRE Kitabı — Postmortem kültürü"
+    url: "https://sre.google/sre-book/postmortem-culture/"
+  - label: "Atlassian — Olay yönetimi"
+    url: "https://www.atlassian.com/incident-management"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Sabah 03:00, ödeme sayfası çalışmıyor. Kimin ne yapacağı o an belirlenmeyecek; önceden belirlenmiş olmalı.
+
+## Rollback
+
+**Rollback (geri alma)**: yeni sürümün geri çekilip bir önceki çalışan sürüme dönülmesi. Kriz anındaki ilk refleks: **önce geri dön, sonra sebebi araştır;** baskı altında düzeltme yazmak yeni hata üretir. "Önce rollback yapalım, kullanıcı etkisini durduralım; kök nedene sonra bakarız."
+
+**Veritabanı değişiklikleri rollback'i zorlaştırır:** kod geri alınabilir ama silinmiş bir sütun geri gelmez. Bu yüzden migration'lar geriye uyumlu planlanır: **önce ekle, sonra kullan, en son eskisini kaldır.**
+
+## Hotfix
+
+**Hotfix**, normal süreci atlayarak doğrudan canlıya çıkarılan acil düzeltmedir. Bazı sorunlar sıradaki sürümü bekleyemez; ama süreç atlandığı için risklidir: hotfix'ler yeni hata üretme eğilimindedir. "Hotfix çıkacağız ama en azından bir kişi gözden geçirsin."
+
+## Incident, severity, on-call
+
+- **Incident (olay):** kullanıcıyı etkileyen beklenmedik sorun.
+- **Severity:** etkisine göre seviyesi (sev1 en kritik).
+- **On-call (nöbet):** o an müdahaleden sorumlu kişi.
+- **Runbook:** bilinen sorunlar için adım adım müdahale talimatı.
+
+Kriz anında "kim ne yapacak" sorusunu önceden cevaplarlar. Panik anında karar vermek yerine yazılı bir plan uygulanır. "Bu sev2; kullanıcılar etkileniyor ama akış tamamen durmuş değil."
+
+**Tasarımcının rolü var:** olay sırasında kullanıcıya ne gösterileceği (bakım ekranı, durum sayfası, hata mesajı) **önceden tasarlanmış** olmalıdır. Olay anında metin yazmaya çalışmak kötü sonuç verir.
+
+## Postmortem
+
+**Postmortem (olay sonrası değerlendirme)**: bir olaydan sonra ne olduğunu, neden olduğunu ve tekrarlamaması için ne yapılacağını yazan belge. **"Blameless" olması kritiktir:** amaç suçlu bulmak değil, sistemdeki zayıflığı bulmaktır. Suçlama kültüründe insanlar hataları gizler ve sistem öğrenemez. "Postmortem yazalım; asıl soru 'kim yaptı' değil, 'bu nasıl canlıya kadar geldi'." Retrospective ile akrabadır ama farklıdır: retro düzenli ve süreç odaklı, postmortem olaya özel ve teknik odaklıdır.
+
+<Callout kind="tasarimci">
+
+- **Bakım ekranı, durum sayfası ve genel hata mesajlarını önceden tasarla** ve metinlerini yaz.
+- **Sev1/sev2 olaylarında kullanıcı iletişimini (e-posta, uygulama içi şerit) hazır şablonlarla hazırla.**
+- **Postmortem'e katıl:** kullanıcı deneyimi açısından "bu olay kullanıcıya nasıl yansıdı?" sorusunu sen sor.
+
+</Callout>
+
+<Summary>
+
+- Kriz anında önce rollback, sonra kök neden; migration'lar geriye uyumlu planlanır (ekle, kullan, kaldır).
+- Hotfix süreci atladığı için risklidir; bir göz daha gerekir.
+- Incident, severity, on-call ve runbook "kim ne yapacak" sorusunu önceden cevaplar.
+- Tasarımcı olay anında kullanıcıya gösterilecek ekranları önceden hazırlar; postmortem suçlama değil öğrenme içindir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Canlıda bir şey bozulduğunda ilk refleks ne olmalı? Veritabanı değişiklikleri bunu nasıl zorlaştırır?">
+
+Rollback: önce geri dön, kullanıcı etkisini durdur, sonra sebebi araştır. Veritabanı değişiklikleri zorlaştırır çünkü kod geri alınabilir ama silinmiş bir sütun geri gelmez; bu yüzden migration'lar geriye uyumlu planlanır (önce ekle, sonra kullan, en son eskisini kaldır).
+
+</SelfCheck>
+
+<SelfCheck question="Postmortem'in 'blameless' olması neden kritik?">
+
+Amaç suçlu bulmak değil, sistemdeki zayıflığı bulmaktır. Suçlama kültüründe insanlar hataları gizler ve sistem öğrenemez.
+
+</SelfCheck>

@@ -1,0 +1,78 @@
+---
+summary: "Algoritma, bir işi bitirmek için izlenen adımların tarifidir. 'Zor' ile 'çok iş' farklı şeylerdir; çoğu zaman zor olan hesaplama değil, kuralın tanımlanmamış olmasıdır. İsteği küçültmek, kodu hızlandırmaktan ucuzdur."
+outcomes:
+  - "Bir isteğin zor olmasının üç sebebini (çok iş, ölçek, belirsizlik) ayırt edebilirsin."
+  - "'Alakaya göre sırala'nın neden bir istek olduğunu ve algoritma olmadığını açıklayabilirsin."
+  - "Yavaş bir işlem için üç yolu (yapma, sonra yap, hızlı yap) ve hangisinin en ucuz olduğunu söyleyebilirsin."
+minutes: 6
+sources:
+  - label: "NN/g — Response Times: The 3 Important Limits"
+    url: "https://www.nngroup.com/articles/response-times-3-important-limits/"
+  - label: "MDN — Algoritma (sözlük)"
+    url: "https://developer.mozilla.org/en-US/docs/Glossary/Algorithm"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Bu özellik zor" cümlesini sık duyarsın. Zor ne demek? **Algoritma**, bir işi bitirmek için izlenen adımların tarifidir. Veri yapısı verinin **nasıl dizildiği**, algoritma o diziliş üzerinde **ne yapıldığıdır.** İkisi birlikte bir arayüzün neyi anında yapabileceğini belirler.
+
+Bu bölüm kod öğretmiyor. Amaç, bir geliştirici "bu pahalı" dediğinde **neyin pahalı olduğunu** anlamak ve isteğini ona göre yeniden çerçevelemek.
+
+## "Zor" ile "çok iş" farklı şeyler
+
+| Sebep | Belirtisi | Ne yapmalı |
+|---|---|---|
+| **Çok iş** | "İki hafta sürer" | Kapsamı böl |
+| **Ölçek** | "10 kayıtta çalışır, 100.000'de çalışmaz" | Kaç öğe olacağını netleştir |
+| **Belirsizlik** | "Neye göre sıralayacağız?" | Kararı sen ver |
+
+Üçüncüsü en sık atlananıdır. "Alakaya göre sırala" bir algoritma değil, bir **istektir;** alakanın ne olduğunu tanımlamadan kimse yazamaz.
+
+## Algoritmanın tasarımda göründüğü yer
+
+Neredeyse her yerde, ama en çok dört yerde: **arama kutusu** (ne eşleşecek, nasıl sıralanacak), **liste ve tablo** (filtreleme, sıralama, sayfalama), **öneriler** ("sana özel", "ilgili içerik"), **bildirimler** (ne zaman, hangi sırayla, kaç tane). Dördünde de zor olan kısım genelde hesaplama değil, **kuralın tanımlanmamış olmasıdır.**
+
+## Doğru cevap her zaman "daha hızlı algoritma" değil
+
+Bir işlem yavaşsa üç yol vardır ve ilki çoğu zaman en iyisidir:
+
+1. **İşi yapma.** Kullanıcı gerçekten tüm sonuçları istiyor mu, yoksa ilk 20 yeter mi?
+2. **Daha sonra yap.** Arka plana at, hazır olunca haber ver.
+3. **Daha hızlı yap.** Algoritmayı ya da veri yapısını değiştir.
+
+Tasarımcı olarak en çok etkileyebildiğin yer birincisidir: **isteği küçültmek, kodu hızlandırmaktan ucuzdur.**
+
+<Callout kind="tasarimci">
+
+- **Her sıralama ve filtre kuralını yazılı olarak tanımla.** "En alakalı" tanımsızsa sistem bir şey seçer ve kullanıcı bunu rastgelelik olarak görür.
+- **"Kaç öğe?" sorusunu her listede sor;** cevap maliyeti belirler.
+- **Bir etkileşimin anında olması gerekiyorsa söyle;** bu farklı bir çözüm demektir, sonradan hızlandırma değil.
+- **Gecikmeyi gizlemek de bir tasarım aracıdır:** iskelet ekran, iyimser güncelleme, ilerleme göstergesi.
+
+</Callout>
+
+<Summary>
+
+- Algoritma adımların tarifidir; veri yapısı üzerinde ne yapıldığını anlatır.
+- Zorluğun üç sebebi: çok iş, ölçek, belirsizlik; üçüncüsünü tasarımcı çözer.
+- Yavaş işlem için en ucuz yol, işi küçültmek ya da hiç yapmamaktır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir isteğin 'zor' olmasının üç sebebi nedir?">
+
+Çok iş (kapsamı böl), ölçek (kaç öğe olacağını netleştir) ve belirsizlik (kuralı tasarımcı tanımlar; örneğin neye göre sıralanacağı).
+
+</SelfCheck>
+
+<SelfCheck question="Yavaş bir işlem için hangi üç yol vardır ve hangisi çoğunlukla en iyisidir?">
+
+İşi yapmamak (isteği küçültmek), daha sonra yapmak (arka plana atmak) ya da daha hızlı yapmak. İlki çoğu zaman en iyisidir; isteği küçültmek kodu hızlandırmaktan ucuzdur.
+
+</SelfCheck>

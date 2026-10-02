@@ -1,0 +1,59 @@
+---
+summary: "Şema, verinin yapısının sözleşmesidir ve tasarımcı için okunabilir bir belgedir: hangi alanlar var, hangisi zorunlu, hangisi boş olabilir. Nullable her alan bir boş durum demektir."
+outcomes:
+  - "Şemayı okuyup hangi uç durumları tasarlaman gerektiğini çıkarabilirsin."
+  - "Tablo, satır ve sütunu bir Excel benzetmesiyle anlatabilirsin."
+  - "Nullable alanın arayüzde bir boş durum demek olduğunu söyleyebilirsin."
+minutes: 6
+sources:
+  - label: "PostgreSQL — Tablo temelleri"
+    url: "https://www.postgresql.org/docs/current/ddl-basics.html"
+  - label: "PostgreSQL — Kısıtlar (NOT NULL, DEFAULT)"
+    url: "https://www.postgresql.org/docs/current/ddl-constraints.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir ekranı tasarlamadan önce bakabileceğin en faydalı belge: veritabanı şeması.
+
+## Şema
+
+**Schema (şema)**, veritabanındaki tabloların, sütunların, tiplerin ve aralarındaki ilişkilerin tanımıdır. Verinin yapısının sözleşmesidir. **Tasarımcı için okunabilir bir belgedir:** hangi alanların var olduğunu, hangilerinin zorunlu, hangilerinin boş olabileceğini gösterir. Bir ekranı tasarlamadan önce şemaya bakmak, hangi uç durumları düşünmen gerektiğini söyler. "Şemaya baktım: `phone` alanı boş olabiliyor. Telefonu olmayan kullanıcı için kart nasıl görünecek?"
+
+## Tablo, satır, sütun
+
+**Table (tablo)** bir tür nesneyi tutar (kullanıcılar); her **row (satır, kayıt)** o türden bir kayıttır (bir kullanıcı); her **column (sütun, alan)** o kaydın bir özelliğidir (e-posta). Bir Excel tablosu düşün: sayfa = tablo, satır = kayıt, sütun = alan. "Kullanıcılar tablosuna `timezone` sütunu ekleyelim mi? Bildirimleri doğru saatte göndermek için lazım."
+
+## Veri tipi, nullable, varsayılan değer
+
+Her sütun ne tür veri tutacağı (metin, sayı, tarih, doğru/yanlış), **boş bırakılıp bırakılamayacağı (nullable)** ve boş bırakılırsa hangi **varsayılan değeri** alacağıyla tanımlanır.
+
+**Bu, tasarımcının en çok işine yarayan üç bilgidir.** "Nullable" olan her alan arayüzde bir boş durum demektir: profil fotoğrafı yoksa ne görünecek (avatar fallback), açıklama yoksa kart nasıl duracak, tarih yoksa ne yazacak. "Üç alan nullable; üçünün de boş hâlini tasarladım, teslimde var."
+
+Karıştırma: `NULL` (değer yok) ile boş metin (`""`) ve sıfır farklı şeylerdir. "Değer girilmemiş" ile "bilerek boş bırakılmış" ayrımı bazen ürün açısından anlamlıdır.
+
+<Callout kind="tasarimci">
+
+- **Tasarlamadan önce şemaya (ya da API yanıtına) bak,** nullable alanları listele.
+- **Her nullable alan için boş hâlini çiz** ve teslimde işaretle.
+- **Varsayılan değerlerin kullanıcıya nasıl görüneceğini sor** (örneğin varsayılan saat dilimi).
+
+</Callout>
+
+<Summary>
+
+- Şema verinin yapısının sözleşmesidir; tasarımcı için okunabilir bir belgedir.
+- Tablo bir tür nesne, satır bir kayıt, sütun bir özelliktir.
+- Nullable her alan arayüzde bir boş durum demektir; NULL, boş metin ve sıfır farklıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir sütunun 'nullable' olması tasarımcı için ne anlama gelir?">
+
+O alan boş olabilir demektir; yani arayüzde bir boş durum tasarlanmalıdır: profil fotoğrafı yoksa avatar fallback, açıklama yoksa kartın nasıl duracağı, tarih yoksa ne yazacağı.
+
+</SelfCheck>

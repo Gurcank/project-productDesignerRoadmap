@@ -1,0 +1,139 @@
+---
+summary: "Tasarımın nasıl ilerlediğine dair ortak dil: önce genişle, sonra daralt; bunu iki kez yap. Double Diamond, design thinking, design sprint, fikir üretme ve tasarım eleştirisi."
+outcomes:
+  - "Divergent ve convergent düşünmeyi ayırıp bir toplantıda doğru modu açıkça söyleyebilirsin."
+  - "Double Diamond'ın dört fazını ve iki elmasın neyi temsil ettiğini anlatabilirsin."
+  - "Design thinking ile Double Diamond'ı, design sprint ile Scrum sprint'ini karıştırmazsın."
+  - "İyi bir tasarım eleştirisinin yapısını kurabilirsin."
+minutes: 12
+sources:
+  - label: "Design Council — The Double Diamond"
+    url: "https://www.designcouncil.org.uk/resources/the-double-diamond/"
+  - label: "NN/g — Design Thinking 101"
+    url: "https://www.nngroup.com/articles/design-thinking/"
+  - label: "Google Ventures — The Design Sprint"
+    url: "https://www.gv.com/sprint/"
+flags: ["emin-degil"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Bir beyin fırtınası toplantısı. İlk fikir ortaya atılıyor, hemen biri "ama bu çalışmaz çünkü..." diyor. Bir sonraki fikir ortaya çıkmıyor. On dakika sonra masada tek bir fikir var ve o da yarım. Ne oldu? İki farklı düşünme biçimi aynı anda yarıştı.
+
+Bu ders tasarımın nasıl ilerlediğine dair **ortak dili** anlatıyor. Aşağıdaki modellerin hepsi aynı temel fikrin farklı ambalajlarıdır:
+
+> **Önce genişle, sonra daralt. Bunu iki kez yap: bir kez problem için, bir kez çözüm için.**
+
+## Genişlemek ve daralmak
+
+**Divergent thinking** (ıraksak düşünme), seçenekleri **çoğaltmaktır.** **Convergent thinking** (yakınsak düşünme) ise seçenekleri **eleyip karara varmaktır.**
+
+**İkisini aynı anda yapmak, ikisini de bozar.** Fikir üretirken eleştirmek fikirleri öldürür; karar verirken yeni fikir eklemek kararı geciktirir. Toplantıların dağılmasının en yaygın sebebi bu iki modun karışmasıdır. İyi bir kolaylaştırıcı modu açıkça söyler: "Şu an divergent moddayız, fikirleri eleştirmeyelim; elemeyi yarım saat sonra yapacağız."
+
+<Compare>
+<Pane title="Divergent (genişle)">
+
+- Seçenekleri çoğalt
+- Eleştiri yok, nicelik önemli
+- Soru: "Başka ne olabilir?"
+
+</Pane>
+<Pane title="Convergent (daralt)">
+
+- Seçenekleri ele
+- Ölçüt ve gerekçe önemli
+- Soru: "Hangisi, neden?"
+
+</Pane>
+</Compare>
+
+## Double Diamond: iki elmas
+
+**Double Diamond** (çift elmas modeli), tasarım sürecini dört faza bölen modeldir: **Discover, Define, Develop, Deliver.** İlk elmas **problem alanını,** ikinci elmas **çözüm alanını** temsil eder. Her elmas önce genişler (divergent), sonra daralır (convergent).
+
+<StepFlow
+  label="Double Diamond"
+  caption="İlk elmasın sonunda problemin ne olduğunu, ikinci elmasın sonunda nasıl çözüleceğini bilirsin. Süreç doğrusal değildir; geri dönüşler normaldir."
+  steps={[
+    { title: "Discover (keşfet)", sub: "İlk elmas, genişle: problemi geniş araştır", tone: "accent" },
+    { title: "Define (tanımla)", sub: "İlk elmas, daralt: doğru problemi seç", tone: "accent" },
+    { title: "Develop (geliştir)", sub: "İkinci elmas, genişle: çözümleri üret", tone: "progress" },
+    { title: "Deliver (teslim et)", sub: "İkinci elmas, daralt: çalışanı seç, yayınla", tone: "progress" },
+  ]}
+/>
+
+En sık yapılan tasarım hatasını engellemeyi hedefler: **doğru çözümü yanlış problem için üretmek.** Tasarım süreçlerini anlatan hemen her sunumda görürsün; ajanslarda müşteriye süreci anlatırken standart görseldir. "Henüz ilk elmastayız; çözüm konuşmak için erken, önce problemi netleştirelim."
+
+Uyarılar:
+
+- **Doğrusal bir süreç değildir.** Design Council'ın kendi açıklaması da geri dönüşlerin normal olduğunu belirtir.
+- **Double Diamond ≠ Design Thinking.** İkisi akraba modellerdir; Double Diamond problem ve çözüm ayrımını daha net vurgular.
+- **Tarih konusunda emin değilim.** British Design Council tarafından geliştirildi. Kurumun kendi anlatımı çalışmanın 2003'te başladığını söylüyor; kaynaklarda yayın yılı için farklı yıllar geçiyor ve 2019'da "Framework for Innovation" adıyla güncellenmiş bir sürümü var. Kesin yıl gerekiyorsa kaynağa bak.
+
+## Design thinking, design sprint ve fikir üretme
+
+### Design thinking
+
+**Design thinking** (tasarım odaklı düşünme), problem çözmeye **kullanıcıdan başlayan,** hızlı prototipleme ve test üzerine kurulu yaklaşımdır. Yaygın beş adımlı hâli: *empathize, define, ideate, prototype, test.*
+
+Tasarımcı olmayanlara tasarım yaklaşımını öğretmek için paketlenmiştir; bu aynı zamanda eleştirilerinin kaynağıdır: karmaşık tasarım işini beş yapışkan-not adımına indirgediği söylenir. Kurumsal atölyelerde ve yönetici eğitimlerinde çok yaygındır; tasarımcılar arasında ihtiyatla karşılanır. "Design thinking atölyesi yaptık ama çıkan fikirler test edilmedi; süreç yarım kaldı."
+
+### Design sprint
+
+**Design sprint** (tasarım sprinti), bir problemi anlama, çözüm üretme, prototipleme ve test etmeyi **birkaç güne sıkıştıran** yoğun çalışma formatıdır. Uzun süren tartışmaları kesip somut bir yanıt üretir: aylarca konuşulan bir fikir, bir hafta içinde kullanıcı karşısına çıkar. Google Ventures'ın beş günlük formatı en bilinen sürümüdür.
+
+Yeni ürün fikirlerinde ve tıkanmış tartışmalarda kullanılır. "Üç aydır bu özelliği tartışıyoruz; bir design sprint yapıp prototiple test edelim."
+
+**Design sprint ≠ Scrum sprint.** Aynı kelime, tamamen farklı şey: biri bir problem için yoğun bir hafta, diğeri bir geliştirme ritminin birimi.
+
+### Ideation
+
+**Ideation** (fikir üretme), bir problem için **çok sayıda** çözüm seçeneği üretme aşamasıdır. İlk akla gelen fikir nadiren en iyisidir; çokluk, seçim yapabilmenin ön koşuludur. **Crazy 8s** (8 dakikada 8 eskiz) gibi teknikler, niteliği değil niceliği zorlayarak alışılmış çözümün dışına çıkmayı hedefler.
+
+"Tek yön getirmeyelim; ideation'da en az üç farklı yaklaşım çıkaralım."
+
+## Design critique: yapılandırılmış eleştiri
+
+**Design critique** (crit), bir tasarımın **hedeflere göre** ekip tarafından yapılandırılmış biçimde değerlendirildiği oturumdur. Geri bildirimi "beğendim / beğenmedim"den çıkarır. İyi bir crit'te tasarımcı önce **bağlamı ve hedefi** anlatır, sonra geri bildirim o hedefe göre verilir. Bu yapı olmadan toplantı zevk tartışmasına döner. Tasarım ekiplerinin haftalık ritüelidir.
+
+"Crit'e getirirken hedefi de yaz: bu ekranın amacı kayıt oranını artırmak, estetik değil."
+
+**Critique ≠ design review.** Critique süreç içi, ekip içi ve iyileştirme amaçlıdır; design review ise uygulanan işin tasarıma uygunluk kontrolüdür.
+
+<Callout kind="tasarimci">
+
+- **Toplantı başında modu söyle:** "Şu an divergent mod" ya da "şu an karar modundayız." Bu cümle toplantının yarısını kurtarır.
+- **İlk elmasta çözüm konuşulursa nazikçe geri çevir.** "Önce problemi netleştirelim" demek gecikmek değil, hata maliyetini düşürmektir.
+- **Crit'e hedefle gel.** İlk slayta tek cümle yaz: bu ekranın amacı ne, hangi geri bildirimi istiyorum?
+- **En az üç yön çıkar.** İlk fikir genelde ortalamadır.
+
+</Callout>
+
+<Summary>
+
+- Divergent seçenekleri çoğaltır, convergent eler; ikisini karıştırmak ikisini de bozar.
+- Double Diamond: Discover, Define (problem alanı), Develop, Deliver (çözüm alanı); doğrusal değildir.
+- Design thinking atölyesi sürecin yalnızca başlangıcıdır; test edilmezse yarım kalır. Design sprint Scrum sprint'inden farklıdır.
+- Ideation çokluk üretir; ilk fikir nadiren en iyisidir.
+- Crit hedefe göre yapılandırılır; design review'dan farklıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Double Diamond'ın iki elması neyi temsil eder? Her elmasın sonunda ne bilinmiş olur?">
+
+İlk elmas problem alanını (Discover, Define), ikinci elmas çözüm alanını (Develop, Deliver) temsil eder. İlkinin sonunda problemin ne olduğu, ikincisinin sonunda nasıl çözüleceği bilinmiş olur.
+
+</SelfCheck>
+
+<SelfCheck question="Bir beyin fırtınasında fikirleri aynı anda eleştirmek neden sorun yaratır?">
+
+Divergent (çoğaltma) ve convergent (eleme) modları karışır; eleştiri henüz çıkmamış fikirleri öldürür. Üretim ve eleme ayrı fazlarda yapılmalıdır.
+
+</SelfCheck>

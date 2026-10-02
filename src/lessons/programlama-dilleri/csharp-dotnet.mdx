@@ -1,0 +1,61 @@
+---
+summary: "Microsoft'un kurumsal dili ve platformu. Java ile aynı alanlarda bulunur; hangisinin kullanıldığı çoğunlukla şirketin tarihine bağlıdır. Unity'nin dili olarak oyunlarda da karşına çıkar."
+outcomes:
+  - "C#'ın hangi alanlarda karşına çıktığını söyleyebilirsin."
+  - "Unity ile yapılan bir ürünün neden web tasarım kurallarıyla birebir ilerlemediğini açıklayabilirsin."
+minutes: 4
+sources:
+  - label: "Microsoft Learn — C# turu"
+    url: "https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/"
+  - label: "Stack Overflow — Developer Survey"
+    url: "https://survey.stackoverflow.co/"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+C# ve onun platformu .NET, Microsoft'un kurumsal dilidir. Java ile aynı işi yapar, aynı yerlerde bulunur; hangisinin kullanıldığı genelde şirketin tarihine bağlıdır.
+
+## Nerede karşına çıkar
+
+- **Kurumsal back-end,** özellikle Microsoft altyapısı kullanan şirketlerde.
+- **Windows masaüstü uygulamaları.**
+- **Oyun.** Unity'nin dili C#'tır.
+
+## Güçlü ve zayıf yanları
+
+**İyi yaptığı:** tek elden, bütünleşik bir araç seti sunar (dil, editör, sunucu ve bulut aynı yerden gelir; kurulum sürtünmesi düşüktür); olgun ve hızlıdır; Java'ya benzer güvenceleri daha az ayrıntıyla verir.
+
+**Kötü yaptığı:**
+
+- **Ekosistem merkezidir.** Çözümlerin çoğu Microsoft yolundan geçer; dışına çıkmak zorlaşabilir.
+- **Açık kaynak topluluğu JavaScript ya da Python kadar geniş değildir;** niş bir ihtiyaç için hazır paket bulmak daha zor olabilir.
+
+**Alternatifler:** aynı kurumsal alanda Java; daha hafif servisler için Node.js ya da Go.
+
+<Callout kind="tasarimci">
+
+- **Java için geçerli olan her şey burada da geçerli:** kurumsal takvim, katmanlı mimari, devralınan kısıtlar.
+- **Unity ile bir şey yapılıyorsa** o bir oyun ya da 3B arayüzdür; web tasarım kuralları oraya doğrudan taşınmaz.
+
+</Callout>
+
+<Summary>
+
+- C# ve .NET, Java'nın Microsoft dünyasındaki dengidir; kurumsal back-end, Windows ve Unity'de bulunur.
+- Bütünleşik araç seti ve olgunluk güçlü yanıdır; Microsoft merkezli ekosistem sınırıdır.
+- Unity projeleri web tasarım kurallarından farklı bir arayüz alanıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="C# hangi üç alanda karşına çıkar?">
+
+Kurumsal back-end (özellikle Microsoft altyapısında), Windows masaüstü uygulamaları ve Unity ile oyun geliştirme.
+
+</SelfCheck>

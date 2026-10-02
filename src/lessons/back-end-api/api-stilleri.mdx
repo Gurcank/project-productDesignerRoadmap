@@ -1,0 +1,111 @@
+---
+summary: "Aynı işi yapmanın farklı yolları: REST, GraphQL, tRPC, anlık veri (polling, SSE, WebSocket) ve gRPC. Bir mimari karar ve tasarımı etkiler: 'gerçek zamanlı' bedava değildir."
+outcomes:
+  - "REST'in over-fetching ve under-fetching sorunlarını ve GraphQL'in bunları nasıl çözüp ne bedel ödettiğini söyleyebilirsin."
+  - "tRPC'nin ne zaman uygun olmadığını bilirsin."
+  - "Polling, SSE ve WebSocket farkını ve 'anında gelsin' isteğinin maliyetini açıklayabilirsin."
+minutes: 10
+sources:
+  - label: "Fielding — REST mimari stili (doktora tezi)"
+    url: "https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm"
+  - label: "GraphQL — Öğren"
+    url: "https://graphql.org/learn/"
+  - label: "tRPC — Dokümantasyon"
+    url: "https://trpc.io/docs"
+  - label: "MDN — WebSockets API"
+    url: "https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API"
+  - label: "MDN — Server-sent events"
+    url: "https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events"
+  - label: "gRPC — Giriş"
+    url: "https://grpc.io/docs/what-is-grpc/introduction/"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Dışarıya açacağımız API REST olsun, ama mobil için GraphQL düşünelim." Bu cümlede bir mimari karar var ve tasarımı etkiliyor. Aynı işi yapmanın farklı yollarını ve bedellerini bil.
+
+## REST
+
+**REST**, kaynakları adreslerle temsil eden ve HTTP metotlarını doğal biçimde kullanan API yaklaşımıdır. Basit, herkesin bildiği ve her yerde çalışan bir yaklaşımdır. **En büyük avantajı önbellekleme:** her kaynağın kendi URL'i olduğu için tarayıcı ve CDN onu doğal olarak önbelleğe alabilir. Kamu API'lerinin ve üçüncü parti entegrasyonların ezici çoğunluğu REST'tir; dış geliştiricilere açılan API'ler için hâlâ fiilî standarttır.
+
+İki bilinen zayıflığı var: **over-fetching** (ihtiyacından fazla veri gelmesi) ve **under-fetching** (bir ekran için birden fazla istek atmak zorunda kalmak).
+
+## GraphQL
+
+**GraphQL**, istemcinin tam olarak hangi alanları istediğini kendisinin belirlediği API yaklaşımıdır. Over-fetching ve under-fetching sorunlarını çözer: tek istekte tam ihtiyaç duyulan alanlar alınır. Özellikle bant genişliği kısıtlı mobil uygulamalarda ve karmaşık iç içe veri yapılarında değerlidir. "Mobil ve web farklı alanlar istiyor; GraphQL bunu tek endpoint'le çözer."
+
+Bedeli: önbellekleme zorlaşır (tek endpoint, farklı sorgular), pahalı sorgulara karşı koruma gerekir, ekstra bir katman ve araç zinciri gelir. Basit CRUD uygulamalarında getirdiğinden fazlasını götürür. Kaynaklar GraphQL'in benimsenme oranında tutarsız rakamlar verir (%25 ile %61 arası); ortak nokta, REST'in hâlâ açık ara en yaygın olması ve GraphQL'in büyük, çok istemcili organizasyonlarda yoğunlaşmasıdır.
+
+## tRPC
+
+**tRPC**, ön yüz ile arka yüzün aynı TypeScript projesinde olduğu durumlarda aradaki API katmanını neredeyse görünmez kılar. Ayrı şema dili ya da kod üretimi olmadan uçtan uca tip güvenliği verir: arka yüzde bir alan adını değiştirdiğinde ön yüzde hata anında görünür. Küçük ekipler ve TypeScript monorepoları için ciddi hız kazancıdır.
+
+**Yalnızca TypeScript istemcileri için çalışır.** Dışarıya API açacaksan, Swift/Kotlin gibi başka dillerde istemcin olacaksa ya da webhook alacaksan tRPC o kısmı çözmez. Yaygın çözüm melez mimaridir: içeride tRPC, dışarıya bakan uçlarda REST.
+
+## Anlık veri
+
+Sunucudan istemciye **anlık** veri göndermenin üç yolu var:
+
+<Compare>
+<Pane title="Polling">
+
+- İstemci aralıkla "yeni bir şey var mı?" der
+- Basit ama israflı
+
+</Pane>
+<Pane title="SSE">
+
+- Sunucu tek yönlü sürekli veri gönderir
+- Bildirim ve canlı akış için yeter
+
+</Pane>
+<Pane title="WebSocket">
+
+- Çift yönlü kalıcı bağlantı
+- Sohbet, işbirlikçi düzenleme, oyun
+
+</Pane>
+</Compare>
+
+Tasarımdaki karşılığı: bir özelliğin "gerçek zamanlı" olması bedava değildir. "Bildirimler anında gelsin" isteği, altyapıda ek bir bağlantı katmanı demektir. Çoğu durumda 30 saniyelik bir tazeleme yeterlidir ve çok daha ucuzdur. "Bildirim için WebSocket'e gerek yok; SSE ya da 30 saniyelik polling yeter."
+
+## gRPC
+
+**gRPC**, servislerin birbiriyle yüksek hızda konuşması için tasarlanmış, ikili (binary) protokol kullanan yaklaşımdır. JSON'a göre çok daha hızlı serileştirme sunar. Tarayıcıdan doğrudan kullanımı sınırlıdır; asıl yeri **sunucular arası** iletişimdir (mikroservisler). Büyük ölçekli sistemlerde karşına çıkar. **Seviye 3:** adını duyduğunda kategorisini bilmen yeterli.
+
+<Callout kind="tasarimci">
+
+- **Dışarıya açılan API'de REST bekle;** iç uçlarda farklı bir stil olabilir.
+- **"Anında" isteğinin gerçek ihtiyacı sor:** 30 saniye gecikme kabul edilir mi?
+- **Ekranın çok sayıda istek attığını duyarsan** under-fetching'i, çok büyük yanıtlarda over-fetching'i hatırla.
+
+</Callout>
+
+<Summary>
+
+- REST basit ve önbelleklenebilirdir ama over-fetching ve under-fetching sorunu vardır.
+- GraphQL bu sorunları çözer; önbellekleme, sorgu koruması ve ekstra katman bedeliyle gelir.
+- tRPC yalnızca TypeScript istemcileri için çalışır.
+- Polling basit/israflı, SSE tek yönlü, WebSocket çift yönlü; gerçek zamanlı bedava değildir.
+- gRPC sunucular arası yüksek hızlı iletişim içindir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="REST'in over-fetching ve under-fetching sorunları nedir? GraphQL bunu nasıl çözer, bedeli nedir?">
+
+Over-fetching: ihtiyacından fazla veri gelir. Under-fetching: bir ekran için birden fazla istek gerekir. GraphQL, istemcinin tam istediği alanları tek istekte almasını sağlayarak ikisini de çözer. Bedeli: önbellekleme zorlaşır, pahalı sorgulara karşı koruma gerekir ve ekstra bir katman/araç zinciri gelir.
+
+</SelfCheck>
+
+<SelfCheck question="'Bildirimler anında gelsin' isteği neden bedava değildir?">
+
+Kalıcı bağlantı (WebSocket/SSE) ek bir altyapı katmanı ve maliyet demektir. Çoğu bildirim senaryosunda 30 saniyelik tazeleme yeterlidir ve çok daha ucuzdur.
+
+</SelfCheck>

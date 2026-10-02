@@ -1,0 +1,69 @@
+---
+summary: "Ruby, Swift, Kotlin ve Rust günlük işinde nadiren karar konusu olur ama adı geçtiğinde ne anlama geldiğini bilmelisin. Özellikle native mobilin web tasarımının ölçeklenmiş hâli olmadığını."
+outcomes:
+  - "Dört dilin ne için kullanıldığını bir cümleyle söyleyebilirsin."
+  - "iOS ve Android'in ayrı tasarım dilleri olduğunu ve neden tek tasarımın ikisinde de yabancı hissettirebileceğini açıklayabilirsin."
+  - "'Tek kod, iki platform' yaklaşımının bir ödünleşim olduğunu bilirsin."
+minutes: 6
+sources:
+  - label: "Ruby on Rails"
+    url: "https://rubyonrails.org/"
+  - label: "Swift — Hakkında"
+    url: "https://www.swift.org/about/"
+  - label: "Apple — Human Interface Guidelines"
+    url: "https://developer.apple.com/design/human-interface-guidelines/"
+  - label: "Android Developers — Kotlin"
+    url: "https://developer.android.com/kotlin"
+  - label: "Material Design 3"
+    url: "https://m3.material.io/"
+  - label: "Rust — Resmî site"
+    url: "https://www.rust-lang.org/"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bu dördü bir Product Designer'ın günlük işinde nadiren karar konusu olur; ama adı geçtiğinde ne anlama geldiğini bilmek gerekir. Seviye: **kulak aşinalığı.**
+
+## Ruby
+
+Geliştirici mutluluğunu öne alan, **Ruby on Rails** ile ünlenen dildir. Bir fikri çok hızlı çalışır hâle getirmekte güçlüdür; birçok bilinen ürün Rails ile başladı. Erken aşama ürünlerde ve devralınan Rails sistemlerinde karşına çıkar. Yeni proje başlangıçlarında payı azaldı ve işe alım havuzu daralıyor. Tasarımcı için: Rails'li bir üründe prototipten yayına giden yol kısadır; hızlı denemeye açık bir zemindir.
+
+## Swift
+
+Apple'ın dilidir: **iOS, iPadOS, macOS** uygulamaları burada yazılır. Native iOS uygulaması varsa karşına çıkar. iOS tasarımı web tasarımı değildir: Apple'ın kendi arayüz kuralları (Human Interface Guidelines) ve hazır bileşenleri vardır. "Web'deki gibi olsun" demek, platformun doğal davranışını bozmak anlamına gelebilir.
+
+## Kotlin
+
+**Android'in** birinci sınıf dilidir; Java'nın modern alternatifidir ve onunla aynı ekosistemde çalışır. Native Android uygulamasında, ayrıca sunucu tarafında Java'nın yerine kullanılır. Android ve iOS'un kendi tasarım dilleri ayrıdır (Material ve HIG). İki platforma tek tasarım vermek, ikisinde de yabancı hissettirebilir.
+
+## Rust
+
+Bellek güvenliğini derleme anında garanti etmeyi hedefleyen, çok hızlı bir sistem dilidir. Performansın kritik olduğu altyapıda, tarayıcı motorlarında ve WebAssembly'de görülür. Öğrenmesi zor, yazması yavaştır; sıradan bir web servisi için fazladır. Adı geçtiğinde konu genelde **performans ya da güvenliktir,** özellik değil.
+
+<Callout kind="tasarimci">
+
+- **Native mobil, webin ölçeklendirilmiş hâli değildir.** Ayrı platform kuralları, ayrı bileşenler, ayrı yayın süreci vardır; mağaza onayı günler alabilir.
+- **"Tek kod, iki platform" (React Native, Flutter) bir ödünleşimdir:** ortak kod ucuzlar, platforma özgü his zayıflar. Hangisinin daha önemli olduğu bir ürün kararıdır.
+
+</Callout>
+
+<Summary>
+
+- Ruby/Rails hızlı prototipte, Swift iOS'ta, Kotlin Android'de, Rust performans ve güvenlik gerektiren sistemlerde karşına çıkar.
+- iOS ve Android'in ayrı tasarım dilleri vardır; tek tasarım ikisinde de yabancı hissettirebilir.
+- Çapraz platform yaklaşımları maliyeti düşürür, platform hissini zayıflatır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Web'deki gibi olsun' isteği iOS uygulamasında neden sorun çıkarabilir?">
+
+iOS'un kendi arayüz kuralları ve hazır bileşenleri vardır (Human Interface Guidelines). Web davranışını birebir taşımak platformun doğal hissini bozar.
+
+</SelfCheck>

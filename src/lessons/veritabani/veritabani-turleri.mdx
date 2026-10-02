@@ -1,0 +1,75 @@
+---
+summary: "Farklı veri şekilleri farklı depolama biçimleri ister: ilişkisel, belge, anahtar-değer ve vektör veritabanı. İlişkisel varsayılandır ve öyle olmalıdır; esneklik bedava değildir."
+outcomes:
+  - "Dört veritabanı türünü ve ne zaman seçileceğini söyleyebilirsin."
+  - "İlişkisel veritabanının temel garantisini (tutarlılığı veri katmanında zorlamak) açıklayabilirsin."
+  - "Redis'in neden ana veritabanı değil, yanında bir araç olduğunu bilirsin."
+minutes: 8
+sources:
+  - label: "PostgreSQL — Kısıtlar"
+    url: "https://www.postgresql.org/docs/current/ddl-constraints.html"
+  - label: "PostgreSQL — JSON fonksiyonları"
+    url: "https://www.postgresql.org/docs/current/functions-json.html"
+  - label: "MongoDB — Manual"
+    url: "https://www.mongodb.com/docs/manual/"
+  - label: "Redis — Dokümantasyon"
+    url: "https://redis.io/docs/latest/"
+  - label: "pgvector"
+    url: "https://github.com/pgvector/pgvector"
+flags: ["degisken", "emin-degil"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Farklı veri şekilleri farklı depolama biçimleri ister. Dört türü ve ne zaman hangisinin seçildiğini bil.
+
+## İlişkisel veritabanı
+
+**Relational database (ilişkisel veritabanı)**, verinin satır ve sütunlardan oluşan tablolarda tutulduğu ve tabloların birbiriyle ilişkilendirildiği modeldir. **Varsayılan seçim budur ve öyle olmalıdır.** Yapıyı önceden tanımlaman, veritabanının tutarlılığı zorlamasını sağlar: olmayan bir kullanıcıya sipariş yazılamaz, aynı e-posta iki kez kaydedilemez. Bu garantiler uygulama kodunda değil veri katmanında verilir; yani kimse atlayamaz. "İlişkisel gidelim; siparişler, kullanıcılar ve ürünler arasında net ilişkiler var." "SQL veritabanı" ve "ilişkisel veritabanı" pratikte aynı şeyi anlatır; SQL bu veritabanlarını sorgulama dilidir.
+
+## Belge veritabanı
+
+**Document database (belge veritabanı, NoSQL)**, verinin sabit tablo yapısı yerine esnek belgeler (genelde JSON benzeri) hâlinde saklandığı modeldir. Yapının önceden bilinmediği ya da kayıttan kayda değiştiği durumlarda esneklik verir: her ürünün farklı özellik setinin olduğu bir katalog gibi. MongoDB ve Firestore örnekleridir. "Ürün özellikleri kategoriye göre çok değişiyor; o kısmı esnek tutalım."
+
+**Esneklik bedava değildir.** Veritabanı yapıyı zorlamadığı için tutarsız veri girmeyi engellemez; o iş uygulama koduna düşer ve zamanla kaçınılmaz olarak bir kısmı atlanır. Ayrıca modern ilişkisel veritabanları JSON alanlarını desteklediği için, "esneklik lazım" gerekçesi çoğu zaman ilişkisel model içinde de karşılanabilir. Bu sektörde tartışmalı bir konudur; tek doğru cevap olarak sunma.
+
+## Anahtar-değer deposu
+
+**Key-value store**, her kaydın bir anahtarla saklanıp aynı anahtarla çok hızlı geri alındığı basit yapıdır. Karmaşık sorgu yapamaz ama **çok hızlıdır.** Bu yüzden ana veritabanının yerine değil, **yanında** kullanılır: önbellek, oturum bilgisi, hız sınırı sayacı, kuyruk. En yaygın örneği Redis'tir. "Oturum bilgisini Redis'te tutalım; her istekte veritabanına gitmeyelim."
+
+## Vektör veritabanı
+
+**Vector database**, metin ya da görsellerin sayısal temsillerini (embedding) saklayıp "anlamca en benzer olanı" bulmayı sağlar. Yapay zekâ destekli arama ve öneri sistemlerinin altyapısıdır. Klasik arama kelime eşleşmesine bakar; vektör araması **anlam yakınlığına** bakar: "ucuz laptop" araması "uygun fiyatlı dizüstü bilgisayar" sonucunu getirebilir. "Anlamsal arama istiyorsak vektör aramasına ihtiyacımız var; kelime eşleşmesi yetmez." Bu alan çok hızlı değişiyor; ayrı ürünler yerine mevcut veritabanlarına eklenen özellikler de yaygınlaşıyor.
+
+<Callout kind="tasarimci">
+
+- **Tutarlılık gerektiren akışlarda (sipariş, stok, ödeme) ilişkisel veritabanı varsay.**
+- **"Esnek yapı" isteğini sorgula:** hangi alanlar gerçekten değişken?
+- **Arama deneyimini tasarlarken anlamsal aramanın gerekip gerekmediğini sor.**
+
+</Callout>
+
+<Summary>
+
+- İlişkisel veritabanı varsayılandır ve tutarlılığı veri katmanında zorlar.
+- Belge veritabanı esneklik verir ama yapıyı zorlamaz; tutarlılık uygulama koduna düşer.
+- Anahtar-değer deposu (Redis) çok hızlıdır ama basittir; ana veritabanının yanında kullanılır.
+- Vektör veritabanı anlam yakınlığına göre arama yapar; yapay zekâ özelliklerinin altyapısıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="İlişkisel veritabanının belge veritabanına göre temel garantisi nedir?">
+
+Tutarlılığı veri katmanında zorlar: olmayan bir kullanıcıya sipariş yazılamaz, aynı e-posta iki kez kaydedilemez. Bu garantiler uygulama kodunda değil veritabanında verilir, yani atlanamaz. Belge veritabanı bunu garanti etmez; sorumluluk uygulama koduna düşer.
+
+</SelfCheck>
+
+<SelfCheck question="Redis neden ana veritabanı olarak kullanılmaz?">
+
+Karmaşık sorgu yapamaz; yalnızca anahtarla çok hızlı erişim sunar. Bu yüzden ana veritabanının yanında önbellek, oturum, hız sınırı sayacı ve kuyruk için kullanılır.
+
+</SelfCheck>

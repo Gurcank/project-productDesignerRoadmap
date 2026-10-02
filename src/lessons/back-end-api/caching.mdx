@@ -1,0 +1,78 @@
+---
+summary: "Aynı işi tekrar tekrar yapmamak için sonucu saklamak: performansın en büyük tek kaldıracı. Cache, CDN, TTL/ETag, stale-while-revalidate ve 'değişikliğim neden görünmüyor' sorusunun cevabı olan cache invalidation."
+outcomes:
+  - "Önbelleğin katmanlarını sayabilirsin (tarayıcı, CDN, sunucu, veritabanı)."
+  - "stale-while-revalidate'in hangi durumun tasarlanmasını gerektirdiğini söyleyebilirsin."
+  - "'Değişikliğim sitede neden görünmüyor?' şikâyetinin en yaygın teknik sebebini bilirsin."
+minutes: 8
+sources:
+  - label: "MDN — HTTP önbellekleme"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching"
+  - label: "MDN — CDN (sözlük)"
+    url: "https://developer.mozilla.org/en-US/docs/Glossary/CDN"
+  - label: "MDN — ETag"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/ETag"
+  - label: "web.dev — stale-while-revalidate"
+    url: "https://web.dev/articles/stale-while-revalidate"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Editör bir yazıyı güncelledi; sitede hâlâ eski hâli duruyor. Ya da bir sayfa şaşırtıcı hızlı açılıyor. İkisinin de arkasında aynı şey var: **önbellek.** Caching, performansın en büyük tek kaldıracıdır.
+
+## Cache ve CDN
+
+**Cache (önbellek)**, bir sonucu, tekrar hesaplamak yerine saklayıp yeniden kullanmaktır. Katman katman çalışır: tarayıcı önbelleği, CDN, sunucu önbelleği, veritabanı önbelleği. Her katman isteğin daha derine gitmesini engeller ve gecikmeyi düşürür. "Bu veri saatte bir değişiyor; her istekte veritabanına gitmeyelim, önbelleğe alalım."
+
+**CDN (Content Delivery Network)**, statik dosyaların (görsel, CSS, JavaScript, font) dünya genelindeki sunuculara kopyalanıp kullanıcıya en yakın olandan servis edilmesidir. İki fayda: mesafeyi kısaltarak gecikmeyi düşürür ve asıl sunucunun yükünü alır. Statik siteler tamamen CDN'den servis edilebildiği için bu kadar hızlı ve ucuzdur. Modern hosting platformlarında varsayılan olarak gelir.
+
+## TTL, ETag, stale-while-revalidate
+
+- **TTL (Time To Live):** bir önbellek kaydının ne kadar süre geçerli sayılacağı.
+- **ETag:** içeriğin parmak izi; değişmemişse tarayıcı yeniden indirmez (304).
+- **stale-while-revalidate:** eski kopyayı hemen göster, arka planda yenisini getir.
+
+Sonuncusu tasarımı doğrudan ilgilendirir: kullanıcı beklemez, veriyi anında görür; güncel sürüm arka planda gelince ekran tazelenir. **"Eski veri gösteriliyor, tazeleniyor" durumunun tasarlanması gerekir.** "Liste stale-while-revalidate ile gelsin; kullanıcı anında görsün, üstte ince bir tazeleme göstergesi olsun."
+
+## Cache invalidation
+
+**Cache invalidation (önbellek geçersizleştirme)**, veri değiştiğinde önbellekteki eski kopyanın silinmesi ya da güncellenmesidir. Önbelleklemenin zor kısmı budur; yazılım dünyasının en bilinen şakalarından biridir ("bilgisayar biliminin iki zor şeyinden biri"). Kullanıcıya yansıması: **bir şeyi güncellersin ama sitede eski hâli görünmeye devam eder.** "Değişikliğim neden görünmüyor?" şikâyetlerinin en yaygın sebebidir. "İçerik güncellendiğinde ilgili sayfaların önbelleğini temizleyelim; editörler eski hâli görüyor."
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitenin çevrimdışı katmanı bir önbellek örneğidir ve invalidation'ın zorluğunu yaşar: içeriği değişen dosyalar adlarını içerikle birlikte değiştirir (hash'li), değişmeyenler ağ-öncelikli çalışır ve önbellek şekli değişince bir sürüm numarası artırılıp eski kayıtlar süpürülür. Yoksa kullanıcı eski içeriği görmeye devam ederdi.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **"Eski veri + tazeleniyor" durumu için ince bir gösterge tasarla.**
+- **Editör deneyiminde önizleme ve yayın arasında farkı anlat:** değişiklik hemen görünmeyebilir.
+- **Statik varlıkların (görsel, font) CDN'den geldiğini varsay;** boyutlarını ona göre planla.
+
+</Callout>
+
+<Summary>
+
+- Önbellek katmanlıdır: tarayıcı, CDN, sunucu, veritabanı; her katman gecikmeyi düşürür.
+- CDN statik dosyaları kullanıcıya yakın sunucudan servis eder.
+- stale-while-revalidate eski veriyi hemen gösterip arkada tazeler; "eski veri + tazeleniyor" hâli tasarlanmalıdır.
+- Güncelleme görünmüyorsa en yaygın sebep cache invalidation'ın yapılmamasıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="stale-while-revalidate nedir ve hangi durumun tasarlanmasını gerektirir?">
+
+Eski (bayat) kopyayı hemen gösterip arka planda yenisini getirmektir. "Eski veri gösteriliyor, tazeleniyor" hâlinin ve geçişin tasarlanması gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="'Değişikliğim sitede neden görünmüyor?' sorusunun en yaygın teknik sebebi nedir?">
+
+Önbellek geçersizleştirmenin yapılmaması: veri değişmiş ama tarayıcı, CDN, sunucu ya da service worker katmanlarından birinde eski kopya servis ediliyor olabilir.
+
+</SelfCheck>

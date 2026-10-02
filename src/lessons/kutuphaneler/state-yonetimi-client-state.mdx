@@ -1,0 +1,63 @@
+---
+summary: "Uygulamanın kendi verisini nerede tuttuğu: local state, context, Zustand/Jotai, Redux Toolkit. State iki türe ayrılır (client ve server) ve ikisi farklı araçlar ister."
+outcomes:
+  - "Bir veri için state yönetimi kütüphanesine gerçekten ihtiyaç olup olmadığını sorabilirsin."
+  - "Context'in sık değişen veriler için neden verimsiz olduğunu açıklayabilirsin."
+  - "Zustand, Jotai ve Redux Toolkit'i bir cümleyle ayırt edebilirsin."
+minutes: 6
+sources:
+  - label: "React — Reducer ve Context ile ölçeklemek"
+    url: "https://react.dev/learn/scaling-up-with-reducer-and-context"
+  - label: "Zustand"
+    url: "https://zustand.docs.pmnd.rs/"
+  - label: "Jotai"
+    url: "https://jotai.org/"
+  - label: "Redux Toolkit"
+    url: "https://redux-toolkit.js.org/"
+flags: ["degisken"]
+skipTerms: ["state","local","url"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Menü açık mı, hangi sekme seçili, sepette ne var? Bu verilerin nerede tutulduğu, uygulamanın nasıl yazıldığını belirler. **Önemli bir çerçeve:** state ikiye ayrılır: sunucudan gelen veri (server state, sonraki ders) ve arayüzün kendi verisi (client state). İkisi farklı araçlar ister ve karıştırmak yaygın bir hatadır.
+
+## Local state ve Context
+
+**Local state**, bileşenin kendi içinde tuttuğu veridir. **Context** ise bir veriyi ağacın tamamına prop drilling olmadan yaymanın React'e gömülü yoludur. **Çoğu proje için bunlar yeterlidir.** Bir state yönetimi kütüphanesi eklemeden önce sorulacak soru: bu veri gerçekten global mi, yoksa iki bileşen arasında mı paylaşılıyor? "Tema bilgisi için context yeter; ayrı bir kütüphaneye gerek yok."
+
+Context sık değişen veriler için verimsizdir: her değişimde onu tüketen tüm bileşenler yeniden çizilir.
+
+## Zustand ve Jotai
+
+**Zustand** ve **Jotai**, hafif ve az yapılandırma gerektiren state yönetimi kütüphaneleridir. Redux'un kalıp kodunu istemeyen ama context'ten fazlasına ihtiyaç duyan projeler içindir. Zustand tek bir merkezi depo mantığıyla, Jotai küçük bağımsız parçalar (atom) mantığıyla çalışır. Modern React projelerinde yaygındır. "Sepet durumu için Zustand kullanalım; birkaç satırla kurulur."
+
+## Redux Toolkit
+
+**Redux**, en eski ve en yaygın state yönetimi kütüphanesidir; **Redux Toolkit (RTK)** onun resmî ve sadeleştirilmiş kullanım biçimidir. Karmaşık ve çok kişili projelerde katı bir yapı dayatır: veri nasıl, kim tarafından, ne zaman değişir hepsi izlenebilirdir; geliştirici araçları (zaman yolculuğuyla hata ayıklama) güçlüdür. Büyük ve eski React projelerinde çok yaygındır. "Proje zaten Redux kullanıyor; yeni bir kütüphane eklemeyelim." Küçük projeler için ağırdır; sunucudan gelen veriyi Redux'ta tutmak da TanStack Query gibi araçların çıkmasıyla büyük ölçüde gereksizleşti.
+
+<Callout kind="tasarimci">
+
+- **Arayüz durumlarını (açık/kapalı, seçili sekme, geçici filtre) listele;** hangilerinin sayfalar arası korunması gerektiğini işaretle.
+- **"Global olsun" isteğini sorgula:** gerçekten uygulamanın her yerinde mi lazım?
+- **State'in kalıcı olup olmayacağını yaz:** yenilemede korunsun mu, URL'e yazılsın mı?
+
+</Callout>
+
+<Summary>
+
+- State ikiye ayrılır: arayüzün kendi verisi (client state) ve sunucudan gelen veri (server state); farklı araçlar ister.
+- Çoğu proje için local state ve context yeterlidir; sık değişen veride context verimsizdir.
+- Zustand ve Jotai hafiftir; Redux Toolkit karmaşık ve çok kişili projelerde izlenebilir yapı verir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir state yönetimi kütüphanesi eklemeden önce hangi soruyu sormalısın?">
+
+Bu veri gerçekten global mi, yoksa yalnızca iki bileşen arasında mı paylaşılıyor? Çoğu durumda local state ve context yeterlidir.
+
+</SelfCheck>

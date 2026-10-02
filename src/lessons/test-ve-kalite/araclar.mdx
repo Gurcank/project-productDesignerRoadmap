@@ -1,0 +1,59 @@
+---
+summary: "Test araçları: Vitest/Jest, Testing Library, Playwright/Cypress. Araç manzarası hızla değişir; ama Testing Library'nin yaklaşımı (erişilebilir ad ve rollere göre bulmak) seni doğrudan ilgilendirir: erişilebilirlik işin testleri de sağlamlaştırır."
+outcomes:
+  - "Test katmanlarına karşılık gelen yaygın araçları söyleyebilirsin."
+  - "Testing Library'nin yaklaşımının tasarımcıyı neden ilgilendirdiğini açıklayabilirsin."
+minutes: 4
+sources:
+  - label: "Vitest"
+    url: "https://vitest.dev/"
+  - label: "Jest"
+    url: "https://jestjs.io/docs/getting-started"
+  - label: "Testing Library — Temel ilkeler"
+    url: "https://testing-library.com/docs/guiding-principles/"
+  - label: "Playwright"
+    url: "https://playwright.dev/docs/intro"
+  - label: "Cypress"
+    url: "https://docs.cypress.io/"
+flags: ["degisken", "emin-degil"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+> **Araç manzarası hızlı değişir.** Aşağıdakiler materyalin Eylül 2026 tarihli kaynaklarına dayanır; kullanmadan önce güncel durumu doğrula.
+
+| Katman | Yaygın araçlar | Notlar |
+|---|---|---|
+| **Unit / integration** | Vitest, Jest | Vitest modern projelerde varsayılan hâline geldiği raporlanıyor; Jest hâlâ çok yaygın ama yeni projelerde tercih oranı düşüyor |
+| **Bileşen testi** | Testing Library | Bileşenleri kullanıcının gördüğü gibi (rol ve erişilebilir ad üzerinden) test etmeyi teşvik eder |
+| **E2E** | Playwright, Cypress | Playwright'ın öne geçtiği raporlanıyor: çapraz tarayıcı desteği ve ücretsiz paralel çalıştırma başlıca sebepler. Cypress geriliyor ama ölmüyor; mevcut test setleri geçerli kalıyor |
+
+Materyal, bir sektör anketinin (State of JS 2025) Playwright ve Cypress arasında memnuniyet açısından fark raporladığını aktarıyor; anketi okumadığı için rakam vermiyor. Biz de yazmıyoruz.
+
+## Tasarımcı için asıl not
+
+**Testing Library'nin yaklaşımı seni doğrudan ilgilendirir.** Bu kütüphane bileşenleri CSS sınıflarına göre değil **erişilebilir adlara ve rollere göre** bulmayı teşvik eder. Sonuç: erişilebilirlik için yaptığın işler testleri de sağlamlaştırır. **İyi yazılmış bir arayüz, test edilmesi kolay bir arayüzdür.**
+
+<Callout kind="tasarimci">
+
+- **Her etkileşimli öğe için erişilebilir adı ve rolünü teslimde belirt;** testler de bunlara bağlanır.
+- **Araç tartışmasına takas sorusuyla katıl:** çapraz tarayıcı desteği, hız, mevcut test seti.
+
+</Callout>
+
+<Summary>
+
+- Unit/integration için Vitest ve Jest, bileşen testi için Testing Library, E2E için Playwright ve Cypress yaygındır; manzara hızla değişir.
+- Testing Library erişilebilir ad ve rollere göre bulmayı teşvik eder; erişilebilir arayüz test edilmesi kolay arayüzdür.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Testing Library'nin yaklaşımı seni neden ilgilendirir?">
+
+Bileşenleri CSS sınıflarına göre değil erişilebilir adlara ve rollere göre bulmayı teşvik eder. Erişilebilirlik için yaptığın işler testleri de sağlamlaştırır; iyi yazılmış arayüz test edilmesi kolay bir arayüzdür.
+
+</SelfCheck>

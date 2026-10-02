@@ -1,0 +1,238 @@
+/*
+ * Lesson layer (ADR-015). Global for the same reason content.css is: the
+ * markup comes out of MDX, so Astro's scoped styles never reach it.
+ */
+
+/* Figures built for a phone keep their authored width instead of the 40rem floor
+   the older diagrams scroll at. */
+.diagram__canvas svg.dg-narrow {
+  min-inline-size: 0;
+  max-inline-size: 28rem;
+  margin-inline: auto;
+}
+
+/* ---------------------------------------------------------------- lesson */
+.lesson-lead {
+  font-size: var(--text-lg);
+  line-height: 1.55;
+  color: var(--c-text);
+}
+
+.lesson-outcomes {
+  margin-block-start: var(--spacing-6);
+  padding: var(--spacing-4);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--c-surface-raised);
+}
+
+.lesson-outcomes__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--c-text-muted);
+}
+
+.lesson-outcomes ul {
+  margin-block-start: var(--spacing-2);
+  padding-inline-start: var(--spacing-6);
+  list-style: disc;
+  color: var(--c-text-secondary);
+}
+
+.lesson-outcomes li + li {
+  margin-block-start: var(--spacing-1);
+}
+
+/* --------------------------------------------------------------- callout */
+.callout {
+  margin-block: var(--spacing-6);
+  padding: var(--spacing-4);
+  border: 1px solid var(--c-border);
+  border-inline-start-width: 4px;
+  border-radius: var(--radius-md);
+  background-color: var(--c-surface-raised);
+}
+
+.callout--tasarimci {
+  border-inline-start-color: var(--c-action);
+}
+
+.callout--dikkat {
+  border-inline-start-color: var(--c-border-strong);
+  background-color: var(--c-surface-sunken);
+}
+
+.callout--ornek {
+  border-inline-start-color: var(--c-route-line);
+}
+
+.callout__label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--c-text-secondary);
+}
+
+.callout__body {
+  margin-block-start: var(--spacing-2);
+}
+
+.callout__body > * + * {
+  margin-block-start: var(--spacing-3);
+}
+
+.callout__body ul {
+  padding-inline-start: var(--spacing-6);
+  list-style: disc;
+}
+
+.callout__body li + li {
+  margin-block-start: var(--spacing-2);
+}
+
+/* --------------------------------------------------------------- compare */
+.compare {
+  display: grid;
+  gap: var(--spacing-3);
+  margin-block: var(--spacing-6);
+}
+
+.compare__pane {
+  padding: var(--spacing-4);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  background-color: var(--c-surface-raised);
+}
+
+.compare__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--c-text);
+}
+
+.compare__body {
+  margin-block-start: var(--spacing-2);
+  color: var(--c-text-secondary);
+}
+
+.compare__body > * + * {
+  margin-block-start: var(--spacing-2);
+}
+
+@media (min-width: 48rem) {
+  .compare {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* --------------------------------------------------------------- outside */
+.outside {
+  margin-block: var(--spacing-6);
+  padding: var(--spacing-4);
+  border: 1px dashed var(--c-progress);
+  border-radius: var(--radius-md);
+}
+
+.outside__body {
+  margin-block-start: var(--spacing-2);
+}
+
+.outside__body > * + * {
+  margin-block-start: var(--spacing-3);
+}
+
+.outside__source {
+  margin-block-start: var(--spacing-3);
+  font-size: var(--text-sm);
+  color: var(--c-text-muted);
+}
+
+/* --------------------------------------------------------------- summary */
+.lesson-summary {
+  margin-block-start: var(--spacing-12);
+  padding: var(--spacing-4) var(--spacing-6);
+  border-radius: var(--radius-lg);
+  background-color: var(--c-surface-raised);
+  border: 1px solid var(--c-border);
+}
+
+.lesson-summary h2 {
+  margin-block: 0 var(--spacing-3);
+  font-size: var(--text-lg);
+}
+
+.lesson-summary ul {
+  padding-inline-start: var(--spacing-6);
+  list-style: disc;
+  color: var(--c-text-secondary);
+}
+
+.lesson-summary li + li {
+  margin-block-start: var(--spacing-2);
+}
+
+/* ------------------------------------------------------------- selfcheck */
+.selfcheck {
+  margin-block: var(--spacing-3);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  background-color: var(--c-surface-raised);
+}
+
+.selfcheck summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--spacing-3) var(--spacing-4);
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--c-text);
+}
+
+.selfcheck__a {
+  padding: 0 var(--spacing-4) var(--spacing-4);
+  color: var(--c-text-secondary);
+}
+
+.selfcheck__a > * + * {
+  margin-block-start: var(--spacing-2);
+}
+
+/* ---------------------------------------------------------------- terms */
+.lesson-terms {
+  margin-block-start: var(--spacing-8);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+}
+
+.lesson-terms summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--spacing-3) var(--spacing-4);
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.lesson-terms dl {
+  display: grid;
+  gap: var(--spacing-3);
+  margin: 0;
+  padding: 0 var(--spacing-4) var(--spacing-4);
+}
+
+.lesson-terms dt {
+  font-weight: 600;
+  color: var(--c-text);
+}
+
+.lesson-terms dd {
+  margin: 0;
+  color: var(--c-text-secondary);
+  font-size: var(--text-sm);
+}

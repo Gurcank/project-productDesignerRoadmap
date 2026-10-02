@@ -1,0 +1,115 @@
+---
+summary: "Bir ekipteki iş bölümünün adları: front-end, back-end, full-stack, infrastructure. Bir talebi kime ileteceğini ve client-side / server-side ayrımını öğren."
+outcomes:
+  - "Bir ürün talebinin hangi katmana (ön yüz, arka yüz, altyapı) ait olduğunu söyleyebilirsin."
+  - "Front-end ile tasarım arasındaki farkı ve kesişimini bilirsin."
+  - "\"Tech stack nedir?\" sorusuna doğru cevap verebilir ve yapay zekâya prompt yazarken stack'i belirtirsin."
+  - "Doğrulamanın neden hem client-side hem server-side yapılması gerektiğini açıklayabilirsin."
+minutes: 8
+sources:
+  - label: "MDN — İstemci–sunucu genel bakışı"
+    url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Client-Server_overview"
+  - label: "MDN — Sunucu tarafı web programlamaya giriş"
+    url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Introduction"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+"Buton mobilde taşıyor." "İndirim hesabı yanlış." "Site kod değişmeden çöktü." Üç farklı sorun; üçü de başka birinin kapısına gider. Bu ders, bir ekipteki iş bölümünün adlarını öğretiyor. Bunları bilmek, bir talebi **kime ileteceğini** bilmek demektir.
+
+Geçen derslerde istemci ve sunucuyu öğrendin. Ekipler de bu ayrıma göre bölünür.
+
+## Üç katman
+
+<StepFlow
+  arrows={false}
+  label="Bir web ürününün katmanları"
+  caption="Kullanıcı yalnızca en üstü görür. Ürünün doğruluğu ortadaki katmanda, çalışabilmesi en alttaki katmandadır."
+  steps={[
+    { title: "Front-end (ön yüz)", sub: "Kullanıcının gördüğü ve dokunduğu her şey", tone: "accent" },
+    { title: "Back-end (arka yüz)", sub: "Veri, iş kuralları, yetki, üçüncü parti servisler", tone: "plain" },
+    { title: "Infrastructure (altyapı)", sub: "Sunucu, ağ, veritabanı, yayın sistemi", tone: "progress" },
+  ]}
+/>
+
+### Front-end: görünen katman
+
+**Front-end** (FE, ön yüz), kullanıcının gördüğü ve etkileştiği her şeyin yazıldığı katmandır. **Tasarımı çalışan bir arayüze çevirir.** Senin çıktın en doğrudan burada karşılık bulur.
+
+Tasarım teslimi (handoff) sırasında muhatabın bir front-end geliştiricidir. Görsel bir hata ("buton mobilde taşıyor") front-end tarafına gider. "Bu bir FE bug'ı: API doğru veri dönüyor ama liste yanlış sıralanıyor" gibi cümleler, sorunun hangi katmanda olduğunu ayırmakla ilgilidir.
+
+**Front-end ≠ tasarım.** Front-end kod yazar; tasarımcı ekranı kurgular. Kesişirler ama aynı iş değildir.
+
+### Back-end: görünmeyen doğruluk
+
+**Back-end** (BE, arka yüz), sunucuda çalışan, **veriyi ve iş kurallarını** yöneten katmandır. Veriyi saklar, doğrular, yetki kontrolü yapar, üçüncü parti servislerle konuşur. Kullanıcı görmez ama **ürünün doğruluğu buradadır.**
+
+Veri gerektiren her özellik talebinde "bunu yapabilir miyiz?" sorusunun cevabı çoğu zaman back-end tarafındadır. "İndirim kuralı BE'de olmalı; FE'de yaparsak kullanıcı devre dışı bırakabilir" cümlesi, ilk dersteki fiyat hesabı örneğinin devamıdır.
+
+### Infrastructure: zemin
+
+**Infrastructure** (altyapı, kısaca *infra*), kodun üzerinde çalıştığı **sunucu, ağ, veritabanı ve yayın sisteminin bütünüdür.** Kod tek başına bir şey yapmaz; çalışacağı, yayınlanacağı ve izleneceği bir zemin gerekir. Bu zeminin kurulması ve bakımı ayrı bir uzmanlıktır.
+
+"Infra tarafında bir sorun var" demek, kodda değil, çalışma ortamında bir problem var demektir: "Site kod değişmeden çöktü; infra tarafına bakmak lazım." Vercel gibi platformlar bu işin çoğunu üstlendiği için küçük projelerde ayrı bir infra rolü gerekmez.
+
+## Full-stack: ikisini birden yapan
+
+**Full-stack**, hem ön hem arka yüzde çalışabilen geliştirici ya da yaklaşımdır. Küçük ekiplerde tek kişi tüm zinciri götürebilir; iki kişi arasında bekleme olmaz. Büyük ekiplerde ise uzmanlaşma daha verimli olabilir.
+
+İş ilanlarında en sık geçen başlıklardan biridir. Ayrıca Next.js gibi çerçeveler (framework), hem sunucu hem istemci tarafını aynı projede yazabildikleri için "full-stack framework" diye anılır. "Ekip iki kişi; ikimiz de full-stack çalışıyoruz, ayrı FE/BE ayrımı yok" demek, iş bölümünün bu kadar keskin olmadığını söyler.
+
+## Tech stack: projenin teknik kimliği
+
+**Tech stack** (teknoloji yığını), bir projede kullanılan teknolojilerin tamamıdır. Projenin teknik kimliğini tek kelimeyle anlatır. Yeni birine "stack ne?" diye sorulduğunda beklenen cevap: **dil, çerçeve (framework), veritabanı, hosting.** Örnek: "Next.js, TypeScript, Tailwind, PostgreSQL, Vercel."
+
+Proje başlangıcında ve işe alımda sorulur. Bir de pratik bilgi: yapay zekâya prompt yazarken stack'i belirtmek, çıktının doğruluğunu en çok artıran tek bilgidir.
+
+## Client-side ve server-side: iki sıfat
+
+Gün içinde en çok duyacağın iki sıfat bunlar. **Client-side**, bir işin kullanıcının cihazında; **server-side** ise sunucuda yapıldığını söyler. "Client-side validation", "server-side rendering", "client-side routing" gibi ifadelerin hepsi bu ayrımın türevidir.
+
+Aynı işlev iki yerde de yapılabilir ve sonuçları farklıdır:
+
+- **Client-side hızlıdır** (sunucuya gidip gelmek gerekmez), ama kullanıcı tarafından görülebilir ve değiştirilebilir.
+- **Server-side güvenlidir**, ama her seferinde bir gidiş-dönüş gerektirir.
+
+Bu ayrım hem güvenlik hem performans kararlarının temelidir. Örneğin form doğrulaması **hem client-side hem server-side** olmalıdır: client-side kullanıcı deneyimi için ("e-posta geçersiz" hemen görünür), server-side güvenlik için (kullanıcı tarayıcıdaki kodu atlatsa bile sunucu kontrol eder).
+
+<Callout kind="tasarimci">
+
+**Bir talep geldiğinde önce katmanını bul:**
+
+- Görsel, yerleşim, etkileşim, animasyon → **front-end**
+- Veri, kural, yetki, hesaplama → **back-end**
+- Yavaşlık, çökme, ortam, yayın → **infra** (ya da platformun kendisi)
+
+Doğru kişiye doğru soruyu sormak, günler kazandırır. Bir de sana düşen iş: ekranda gösterilen her *kural* (örneğin hata mesajı) için "bu kuralı sunucu da biliyor mu?" diye sor. Biliyorsa kullanıcı atlatamaz.
+
+</Callout>
+
+<Summary>
+
+- Front-end kullanıcının gördüğü katman; back-end veriyi ve iş kurallarını yöneten katman; infrastructure ikisinin üzerinde çalıştığı zemin.
+- Full-stack hem ön hem arka yüzde çalışabilen geliştirici ya da yaklaşım.
+- Tech stack = dil, çerçeve, veritabanı, hosting. Yapay zekâya prompt yazarken stack'i belirt.
+- Client-side hızlı ama görülebilir/değiştirilebilir; server-side güvenli ama gidiş-dönüş gerektirir. Doğrulama genelde ikisinde de yapılır.
+- Bir talep geldiğinde önce hangi katmana ait olduğunu bul.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question={"Bir geliştirici \"bu doğrulamayı client-side yapmayalım\" diyor. Gerekçesi ne olabilir?"}>
+
+Client-side'daki kod kullanıcının cihazında çalışır; kullanıcı onu görebilir ve değiştirebilir. Güvenlik veya iş kuralı gerektiren doğrulama server-side yapılmalıdır. İdeali ikisi birden: client-side deneyim için, server-side güvenlik için.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Buton mobilde taşıyor\" ve \"sipariş toplamı yanlış hesaplanıyor\" sorunları hangi katmanlara gider?"}>
+
+Buton taşıması görsel bir sorundur, front-end'e gider. Sipariş toplamının hesabı bir iş kuralıdır, back-end'e gider (hesap front-end'de yapılıyorsa, o da yanlıştır; çünkü kullanıcı değiştirebilir).
+
+</SelfCheck>

@@ -1,0 +1,130 @@
+---
+summary: "Bir fikrin yayına gidene kadar geçtiği fazlar bir çizgi değil bir döngü. Discovery ile delivery'nin paralel yürümesini ve geri bildirim döngüsünün neden ekibin öğrenme hızı olduğunu öğren."
+outcomes:
+  - "Ürün geliştirme yaşam döngüsünü ve \"hangi fazdayız?\" sorusunun neden önemli olduğunu anlatabilirsin."
+  - "Dual-track çalışmanın neden ekibin yarısını boşta bırakmadığını söyleyebilirsin."
+  - "İterasyon, geri bildirim döngüsü ve üret–ölç–öğren arasındaki bağı kurarsın."
+  - "Bir özelliğin \"hangi soruya cevap verdiğini\" sormayı alışkanlık edinirsin."
+minutes: 8
+sources:
+  - label: "The Lean Startup — İlkeler (Build–Measure–Learn)"
+    url: "https://theleanstartup.com/principles"
+  - label: "Product Talk — Continuous Discovery (Teresa Torres)"
+    url: "https://www.producttalk.org/2021/05/continuous-discovery/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Ekipten biri soruyor: "Bu butonun rengini konuşalım mı?" Bir diğeri itiraz ediyor: "Henüz bu özelliğe gerek olup olmadığını bile bilmiyoruz." İkisi de haklı olabilir, ama aynı anda değil. Hangisinin ne zaman doğru olduğunu belirleyen şey, projenin **hangi fazda** olduğu.
+
+Bu ders, bir fikrin yayına gidene kadar geçtiği fazları ve bu fazların neden bir çizgi değil bir **döngü** olduğunu anlatıyor. Fazların tek tek ayrıntılarını ileride göreceksin; burada kavramın kendisi var.
+
+## Yaşam döngüsü: ortak bir harita
+
+**Product development lifecycle** (PDLC, ürün geliştirme yaşam döngüsü), bir ürün fikrinin araştırmadan yayına ve ölçüme kadar geçtiği fazların tamamıdır. Ortak bir dil sağlar. "Hangi fazdayız?" sorusunun cevabı, o an hangi soruların açık, hangilerinin kapanmış olması gerektiğini belirler:
+
+- **Keşif (discovery)** fazında "hangi rengi kullanalım?" tartışması *erkendir.*
+- **Teslim (delivery)** fazında "acaba bu özelliğe gerek var mı?" tartışması *geçtir.*
+
+"Henüz discovery'deyiz, arayüz kararına girmek için erken" cümlesi, bir kişiyi susturmak değil, tartışmayı doğru zamana taşımaktır.
+
+<StepFlow
+  label="Ürün geliştirme yaşam döngüsü"
+  caption="Fazlar bir çizgi değil bir halka: ölçümden çıkan öğrenme, bir sonraki keşfin girdisi olur."
+  steps={[
+    { title: "Keşfet", sub: "Problemi, kullanıcıyı ve alternatifleri araştır", tone: "accent" },
+    { title: "Tanımla", sub: "Problemi ve kapsamı yaz, karar ver" },
+    { title: "Üret", sub: "Tasarla, geliştir, test et" },
+    { title: "Yayınla", sub: "Alpha, beta, genel kullanım" },
+    { title: "Ölç ve öğren", sub: "Sonuç bir sonraki keşfi besler", tone: "progress" },
+  ]}
+/>
+
+Bir ayrım: **PDLC ≠ SDLC** (Software Development Lifecycle). SDLC daha dardır: kodun yazılıp yayınlanmasıyla ilgilidir. PDLC problem tanımından ölçüme kadar geniştir.
+
+## Discovery ve delivery: iki hat, aynı anda
+
+Fazlara sırayla bakınca akla şu gelir: önce hepsini araştır, sonra hepsini üret. Bu yaklaşımın iki sorunu var:
+
+1. Araştırma sürerken **geliştiriciler boşta kalır.**
+2. Üretime geçildiğinde araştırma sonuçları **eskimiş olur.**
+
+Çözüm, iki hattı **paralel** yürütmektir. Bu çalışma biçimine **dual-track** denir: *discovery track* ne yapılacağını araştırır, *delivery track* kararlaştırılan şeyi üretir. Bu sprint'te üretilen şey, bir önceki sprint'te keşfedilmiş olur.
+
+<Compare>
+<Pane title="Sıralı çalışma">
+
+- Önce tüm araştırma, sonra tüm üretim
+- Araştırma sürerken geliştirme boşta
+- Sonuçlar üretime geldiğinde eskimiş
+
+</Pane>
+<Pane title="Dual-track">
+
+- İki hat aynı anda yürür
+- Hiç kimse boşta kalmaz
+- Üretilen her şey bir önceki turda keşfedilmiştir
+
+</Pane>
+</Compare>
+
+Tasarımcının çoğu zaman **iki hatta birden** olduğu yer burasıdır: bu sprint'in tasarımını teslim ederken, gelecek sprint'in araştırmasını yapar. "Dual-track çalışıyoruz; ben bu sprint'te sonraki özelliğin akışını çıkarıyorum, geliştirme bir önceki kararı uyguluyor."
+
+## Yineleme ve geri bildirim döngüsü
+
+**Iteration (yineleme)**, bir şeyi bitirip, tepki alıp, aldığın tepkiyle yeniden ele alma turudur. Altında şu kabul yatar: *ilk seferde doğru yapmak imkânsızdır.* Küçük ve sık turlar hatanın maliyetini düşürür: yanlış giden şey iki haftalık iş olur, altı aylık değil.
+
+"İkinci iterasyonda düzeltiriz" cümlesi bir erteleme değil, planlı bir yaklaşımdır. "İlk iterasyonda yalnızca temel akışı çıkaralım, kullanıcı tepkisine göre ikinciyi şekillendiririz."
+
+Tur ancak **geri bildirim döngüsü** (feedback loop) kapanırsa işe yarar: yapılan şeyin sonucu ölçülür ve bir sonraki kararı besler. Döngü kapanmazsa öğrenme olmaz; yayınladıktan sonra ölçmeyen bir ekip aynı hatayı tekrar eder. Burada akılda tutulması gereken cümle şu:
+
+> **Döngünün hızı, ekibin öğrenme hızıdır.**
+
+"Yayına aldık ama ölçüm koymadık; feedback loop kapanmıyor, iyileştirdik mi bilmiyoruz."
+
+### Üret – ölç – öğren
+
+**Build–Measure–Learn** (üret–ölç–öğren), Eric Ries'in *The Lean Startup* kitabıyla yaygınlaşan üç adımlı döngüdür: küçük bir şey üret, etkisini ölç, sonuçtan öğren ve tekrar başla. Amacı ürün üretmek değil, **doğrulanmış öğrenme** üretmektir. Yani üretilen her şeyin bir soruyu cevaplaması beklenir. MVP kavramının arkasındaki mantık budur.
+
+"Build-measure-learn açısından bakınca bu özellik hiçbir soruya cevap vermiyor; ölçemeyeceksek yapmayalım."
+
+<Callout kind="tasarimci">
+
+Her tasarım çıktısı için bu üç soruyu sormayı alışkanlık edin:
+
+1. **Hangi fazdayız?** (Doğru tartışmayı doğru zamanda yapmak için.)
+2. **Bu hangi soruya cevap veriyor?** (Cevabı yoksa üretmenin anlamı yok.)
+3. **Nasıl ölçeceğiz?** (Ölçemiyorsak döngü kapanmaz.)
+
+Bir de gündelik bir pratik: iki hatta birden çalışıyorsan, bu hafta hangi hatta ne kadar zaman harcadığını **görünür** tut; yoksa teslim baskısı keşfi sessizce yer.
+
+</Callout>
+
+<Summary>
+
+- Yaşam döngüsü, keşiften ölçüme kadar tüm fazların bütünü; "hangi fazdayız?" hangi tartışmanın geç ya da erken olduğunu belirler.
+- Dual-track'te discovery ve delivery paralel yürür: kimse boşta kalmaz, sonuçlar eskimeden üretime girer.
+- İterasyon ilk seferde doğru yapamama kabulüne dayanır; küçük turlar hatanın maliyetini düşürür.
+- Geri bildirim döngüsü kapanmazsa öğrenme olmaz; döngünün hızı öğrenme hızıdır.
+- Üret–ölç–öğren'de her üretimin bir soruya cevap vermesi beklenir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Discovery ve delivery'nin paralel yürütülmesine ne denir ve bu ne işe yarar?">
+
+Dual-track denir. Ekibin yarısının boşta kalmasını ve araştırma sonuçlarının üretime geldiğinde eskimesini engeller: bu sprint'te üretilen şey, bir önceki sprint'te keşfedilmiştir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir özelliği yayınladınız ama hiçbir ölçüm koymadınız. Hangi kavram eksik ve sonuç ne olur?">
+
+Geri bildirim döngüsü kapanmıyor. Ölçmeden öğrenme olmaz; ekip özelliğin işe yarayıp yaramadığını bilemez ve aynı hatayı tekrar edebilir.
+
+</SelfCheck>

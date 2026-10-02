@@ -1,0 +1,80 @@
+---
+summary: "Kullanıcı giriş yaptıktan sonra sonraki her istekte onu nasıl tanırız? Session'da bilgi sunucuda durur ve anında iptal edilebilir; token'da bilgi jetonun kendisindedir ve ölçeklenmesi kolaydır ama iptali zordur. 'Modern = JWT' bir yanılgıdır."
+outcomes:
+  - "Session ile token tabanlı yaklaşım arasındaki temel takası (iptal edilebilirlik ↔ ölçeklenebilirlik) söyleyebilirsin."
+  - "'Modern uygulamalar JWT kullanır, session eskidir' yanılgısını düzeltebilirsin."
+  - "'Tüm cihazlardan çıkış yap' özelliğinin hangi yaklaşımda kolay olduğunu bilirsin."
+minutes: 6
+sources:
+  - label: "OWASP — Session Management Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html"
+  - label: "OWASP — Authentication Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Giriş yaptın. Sonraki sayfada neden tekrar şifre sormuyor? Sunucu seni nasıl hatırlıyor? İki temel yaklaşım var.
+
+<Compare>
+<Pane title="Session (oturum)">
+
+- Bilgi sunucuda durur
+- Tarayıcı yalnızca kayıt kimliğini taşır
+- İstenildiği an iptal edilebilir
+- Bedeli: sunucu kayıt tutar ve her istekte kontrol eder
+
+</Pane>
+<Pane title="Token (jeton)">
+
+- Bilgi jetonun içindedir (imzalı)
+- Sunucu durum tutmaz
+- Kolay ölçeklenir, birden çok servis doğrulayabilir
+- Bedeli: süresi dolana kadar iptali zordur
+
+</Pane>
+</Compare>
+
+## Session
+
+Sunucunun, giriş yapan kullanıcı için bir kayıt tutması ve tarayıcıya yalnızca bu kaydın kimliğini vermesidir. Asıl bilgi sunucuda kaldığı için **oturum istenildiği an iptal edilebilir:** kullanıcı "tüm cihazlardan çıkış yap" dediğinde ya da bir hesap tehlikeye girdiğinde sunucudaki kayıt silinir ve erişim anında biter. Bedeli: sunucunun bu kayıtları saklaması ve her istekte kontrol etmesi gerekir (genelde Redis'te tutulur). "Session tabanlı gidelim; 'tüm oturumları sonlandır' özelliği istiyoruz."
+
+## Token
+
+Sunucunun, kullanıcı bilgilerini içeren **imzalı** bir belge verip artık kendi tarafında kayıt tutmamasıdır. Sunucu durum tutmaz (stateless), bu yüzden yatay ölçeklenmesi kolaydır ve birden fazla servis aynı jetonu doğrulayabilir. Mobil uygulamalarda, mikroservislerde ve API entegrasyonlarında yaygındır. Bedeli: **iptal etmek zordur;** jeton kendi kendini kanıtladığı için süresi dolana kadar geçerli kalır.
+
+**Yaygın bir yanılgı:** "modern uygulamalar JWT kullanır, session eskidir." Doğru değil. Session, tek bir web uygulaması için çoğu zaman **daha güvenli ve daha basittir;** token'ın avantajları dağıtık sistemlerde ortaya çıkar. Seçim bir takastır: iptal edilebilirlik mi, ölçeklenebilirlik mi?
+
+<Callout kind="tasarimci">
+
+- **"Tüm cihazlardan çıkış yap" gibi özellikleri baştan iste;** yaklaşımı seçerken belirleyicidir.
+- **Mobil uygulama da olacaksa** jeton tabanlı yaklaşımın gerekebileceğini ekibe sor.
+- **"JWT mi session mı?" tartışmasında takası sor:** iptal mi ölçek mi?
+
+</Callout>
+
+<Summary>
+
+- Session bilgiyi sunucuda tutar; anında iptal edilebilir ama sunucu kayıt tutmak zorundadır.
+- Token bilgiyi imzalı jetonda taşır; kolay ölçeklenir ama süresi dolana kadar iptal edilmesi zordur.
+- "Modern = JWT" bir yanılgıdır; tek web uygulaması için session çoğu zaman daha güvenli ve basittir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Session ile token tabanlı yaklaşım arasındaki temel takas nedir?">
+
+İptal edilebilirlik ile ölçeklenebilirlik arasında. Session'da bilgi sunucuda durur, anında iptal edilir ama sunucu kayıt tutar. Token'da bilgi jetonun kendisindedir, sunucu durum tutmaz ve kolay ölçeklenir ama iptal etmek zordur.
+
+</SelfCheck>
+
+<SelfCheck question="'Modern uygulamalar JWT kullanır, session eskidir' ifadesi doğru mu?">
+
+Hayır. Session, tek bir web uygulaması için çoğu zaman daha güvenli ve daha basittir. Token'ın avantajları dağıtık sistemlerde, mobil istemcilerde ve çok servisli mimarilerde ortaya çıkar; bu bir takastır, bir moda değil.
+
+</SelfCheck>

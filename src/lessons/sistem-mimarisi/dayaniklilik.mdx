@@ -1,0 +1,55 @@
+---
+summary: "Tek arıza noktası, yedeklilik ve zarif bozulma: burası çökerse ne olur? Graceful degradation bölümün tasarımcıyı en çok ilgilendiren terimi: hangi bölüm olmadan bu sayfa hâlâ işe yarar?"
+outcomes:
+  - "SPOF'u bir örnekle açıklayabilirsin."
+  - "Yedeklilik ve failover'ın SPOF'u nasıl ortadan kaldırdığını ve maliyetini söyleyebilirsin."
+  - "Graceful degradation'ı bir tasarım sorusu olarak ele alabilirsin."
+minutes: 7
+sources:
+  - label: "AWS Well-Architected — Güvenilirlik sütunu"
+    url: "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html"
+  - label: "Google SRE Kitabı — Riski kucaklamak"
+    url: "https://sre.google/sre-book/embracing-risk/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Öneri servisi çöktü. Ürün sayfası komple çöktü mü, yoksa yalnızca öneriler bölümü mü kayboldu? İkincisi tasarlanmış bir davranıştır ve **senin işin.**
+
+## Single point of failure
+
+**SPOF (Single Point of Failure, tek arıza noktası)**, çöktüğünde tüm sistemi durduran tekil bileşendir. Mimari diyagramına bakıp "burası çökerse ne olur?" diye sormanın adıdır. Tek veritabanı, tek gateway, tek ödeme sağlayıcısı hepsi birer SPOF olabilir. "Tek bir e-posta sağlayıcımız var; onlar çökerse şifre sıfırlama tamamen durur. Bu bir SPOF."
+
+## Yedeklilik ve devralma
+
+**Redundancy (yedeklilik)** aynı işi yapabilen birden fazla kopya bulundurmak, **failover (devralma)** biri çöktüğünde diğerinin devralmasıdır. SPOF'u ortadan kaldırmanın standart yoludur; bedeli maliyettir: iki kat kaynak, iki kat fatura. "Veritabanına bir replika ekleyelim; ana çökerse devralsın."
+
+## Graceful degradation
+
+**Graceful degradation (zarif bozulma)**, bir parça çöktüğünde tüm sistemin çökmesi yerine o parçanın işlevinin devre dışı kalıp geri kalanın çalışmaya devam etmesidir. **Doğrudan bir tasarım işidir ve bölümün tasarımcıyı en çok ilgilendiren terimidir.** Öneri servisi çöktüğünde ürün sayfası çökmemeli; yalnızca öneriler bölümü görünmemeli ya da bir hata kutusu göstermelidir. Yani **"hangi bölüm olmadan bu sayfa hâlâ işe yarar?"** sorusu bir tasarım sorusudur. "Yorumlar yüklenmezse yalnızca o bölüm hata göstersin, sayfanın tamamı çökmesin."
+
+<Callout kind="tasarimci">
+
+- **Her sayfa için bölümleri "kritik / değil" diye işaretle:** hangisi olmadan sayfa işe yarar?
+- **Kritik olmayan bölümler için kendi hata/gizleme hâlini tasarla.**
+- **Diyagramda SPOF'ları ekiple birlikte işaretle** ve her biri için kullanıcının göreceği hata ekranını çiz.
+
+</Callout>
+
+<Summary>
+
+- SPOF çöktüğünde tüm sistemi durduran tekil bileşendir; "burası çökerse ne olur?" sorusu onu ortaya çıkarır.
+- Yedeklilik ve failover SPOF'u kaldırır; bedeli maliyettir.
+- Graceful degradation, bölümlerin kritik olup olmadığına göre tasarlanan bir davranıştır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Graceful degradation neden bir tasarım işidir? Bir örnek ver.">
+
+Çünkü "hangi bölüm olmadan bu sayfa hâlâ işe yarar?" bir tasarım sorusudur ve cevabı ekranlara yansır. Örnek: öneri servisi çöktüğünde ürün sayfası çökmemeli; yalnızca öneriler bölümü gizlenmeli ya da kendi içinde hata kutusu göstermelidir.
+
+</SelfCheck>

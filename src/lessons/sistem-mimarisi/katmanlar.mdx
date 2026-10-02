@@ -1,0 +1,55 @@
+---
+summary: "Üç katmanlı mimari ve coupling/cohesion: iyi mimarinin tek cümlelik özeti düşük bağlılık, yüksek uyumluluk. Bu ilke bileşen kütüphanendeki iyi bileşen tanımıyla aynıdır, farklı ölçekte."
+outcomes:
+  - "Üç katmanlı mimariyi ve katmanların yalnızca komşularıyla konuşmasının faydasını söyleyebilirsin."
+  - "Coupling ile cohesion'ı ve 'düşük bağlılık, yüksek uyumluluk' ilkesini açıklayabilirsin."
+  - "Bounded context'in neden iş alanına göre çizildiğini bilirsin."
+minutes: 6
+sources:
+  - label: "Microsoft — Azure mimari stilleri"
+    url: "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/"
+  - label: "Martin Fowler — Bounded Context"
+    url: "https://martinfowler.com/bliki/BoundedContext.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir mimari diyagramında genelde üç yatay dilim görürsün: üstte arayüz, ortada iş mantığı, altta veri. Bu en klasik yapının adı katmanlı mimari. Ve arkasındaki ilke, tasarım sistemlerinde de geçerli.
+
+## Üç katmanlı mimari
+
+**Three-tier / layered architecture**, sistemin **sunum (arayüz), iş mantığı ve veri** katmanlarına ayrılmasıdır. En klasik ve en yaygın yapıdır. Her katman yalnızca komşusuyla konuşur; bu, bir katmanı değiştirmenin diğerlerini kırmamasını sağlar. Arka yüzdeki controller/service/repository ayrımı bunun kod içindeki karşılığıdır. "İş kuralını sunum katmanına yazmayalım; service katmanında dursun ki mobil de kullanabilsin."
+
+## Coupling ve cohesion
+
+**Coupling (bağlılık)**, parçaların birbirine ne kadar bağlı olduğudur; **cohesion (uyumluluk)** bir parçanın içindeki şeylerin ne kadar birbirine ait olduğudur. İyi mimarinin tek cümlelik özeti: **düşük bağlılık, yüksek uyumluluk.** Yani parçalar içeride sıkı, dışarıya karşı gevşek olmalı.
+
+**Bounded context**, bir modülün sorumluluk sınırını tanımlayan kavramdır ve bu sınır genelde iş alanına göre çizilir (sipariş, ödeme, envanter), teknik katmana göre değil. "Bu iki modül birbirinin veritabanına doğrudan yazıyor; bağlılık çok yüksek, arayüz üzerinden konuşsunlar."
+
+**Tasarımla akrabalığı var:** bir bileşen kütüphanesindeki iyi bileşen tanımı da aynıdır: kendi içinde bütün, dışarıya net bir arayüz sunan. Aynı ilke, farklı ölçekte.
+
+<Callout kind="tasarimci">
+
+- **İş kuralını sunum katmanında değil ortak yerde tut** diye iste; web ve mobil aynı kuralı kullansın.
+- **Bileşen ve modül sınırlarını iş alanına göre çiz:** sipariş, ödeme, envanter; "butonlar", "formlar" gibi teknik gruplar değil.
+- **Bir modülün başka bir modülün verisine doğrudan dokunduğunu fark edersen** bunu bağlılık sorunu olarak işaretle.
+
+</Callout>
+
+<Summary>
+
+- Katmanlı mimari sunum, iş mantığı ve veriyi ayırır; her katman yalnızca komşusuyla konuşur.
+- İyi mimari düşük bağlılık, yüksek uyumluluk demektir; parçalar içeride sıkı, dışarıya gevşek olur.
+- Bounded context iş alanına göre çizilir; iyi bileşen tanımıyla aynı ilkedir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Düşük bağlılık, yüksek uyumluluk' ne demek? Tasarımdaki karşılığı nedir?">
+
+Parçalar içeride sıkı (bir modülün içindeki şeyler birbirine ait), dışarıya karşı gevşek (modüller arası bağ zayıf) olmalıdır. Tasarımdaki karşılığı iyi bileşen tanımıdır: kendi içinde bütün, dışarıya net bir arayüz sunan.
+
+</SelfCheck>

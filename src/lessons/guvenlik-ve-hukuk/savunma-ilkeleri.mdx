@@ -1,0 +1,61 @@
+---
+summary: "Üç ilke: en az ayrıcalık (varsayılan rol bir güvenlik kararıdır), katmanlı savunma (tek korumaya güvenme) ve güvenli başarısız olma (kontrol çökerse erişimi reddet)."
+outcomes:
+  - "En az ayrıcalık ilkesinin tasarımdaki karşılığını (varsayılan rol) söyleyebilirsin."
+  - "Katmanlı savunmayı client + server + veritabanı örneğiyle açıklayabilirsin."
+  - "'Fail securely'nin ne demek olduğunu ve yetki servisi çöktüğünde ne yapılacağını bilirsin."
+minutes: 5
+sources:
+  - label: "OWASP — Authorization Cheat Sheet (least privilege, deny by default)"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html"
+  - label: "OWASP Top 10:2025 — Giriş"
+    url: "https://top10.owasp.org/2025/0x00_2025-Introduction"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Üç ilke, güvenlik kararlarının çoğunun arkasındaki düşünce biçimi.
+
+## En az ayrıcalık
+
+**Principle of least privilege**: her kullanıcıya, servise ve anahtara **yalnızca işini yapması için gereken** yetkinin verilmesi. Bir hesap ya da anahtar ele geçirildiğinde hasarı sınırlar. **Tasarım karşılığı:** varsayılan rolün ne olacağı bir güvenlik kararıdır. Yeni davet edilen bir kullanıcı varsayılan olarak yönetici mi oluyor, yoksa en dar yetkiyle mi başlıyor? "Davet edilen kullanıcı varsayılan olarak 'Member' olsun; 'Admin' bilinçli bir seçim gerektirsin."
+
+## Katmanlı savunma
+
+**Defense in depth**: tek bir korumaya güvenmek yerine birden fazla bağımsız katman kurmak. Her koruma bir gün başarısız olabilir. Client-side doğrulama + server-side doğrulama + veritabanı kısıtı üçlüsü tipik örnektir: biri atlanırsa diğerleri devrede kalır. "Yetki kontrolü hem middleware'de hem sorgu seviyesinde olsun; tek katmana güvenmeyelim."
+
+## Güvenli başarısız olma
+
+**Fail securely (fail closed)**: bir kontrol hata verdiğinde sistemin **erişimi reddedecek** biçimde davranması. Yetki servisi çöktüğünde herkesi içeri almak yerine kimseyi almamak gerekir. OWASP 2025'teki "beklenmedik durumların kötü yönetilmesi" kategorisi bu tür sorunları kapsar. "Yetki servisi yanıt vermezse erişimi kapatalım ve kullanıcıya açıklayıcı bir hata gösterelim."
+
+<Callout kind="tasarimci">
+
+- **Davet ve rol atama akışında varsayılanı en dar yetki yap;** yükseltme bilinçli bir adım olsun.
+- **Güvenlik kontrolünün başarısız olduğu durum için bir hata ekranı tasarla** (erişim reddedildi + ne yapılabilir).
+- **Her kritik eylemde birden fazla katmanın (arayüz, sunucu, veri) koruma sağladığını sor.**
+
+</Callout>
+
+<Summary>
+
+- En az ayrıcalık: yalnızca gereken yetki; varsayılan rol bir güvenlik kararıdır.
+- Katmanlı savunma: tek koruma yetmez; client, server ve veritabanı birlikte çalışır.
+- Fail securely: kontrol başarısız olursa erişimi reddet ve açıklayıcı hata göster.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="En az ayrıcalık ilkesinin tasarımdaki karşılığı nedir? Bir örnek ver.">
+
+Varsayılan rolün ne olacağı bir güvenlik kararıdır. Davet edilen kullanıcı varsayılan olarak en dar yetkiyle (Member) başlamalı, Admin bilinçli bir seçim gerektirmelidir.
+
+</SelfCheck>
+
+<SelfCheck question="'Fail securely' ne demek? Yetki servisi çökerse ne yapılmalı?">
+
+Bir kontrol hata verdiğinde sistemin erişimi reddedecek biçimde davranması. Yetki servisi çökerse herkesi içeri almak yerine erişim kapatılmalı ve kullanıcıya açıklayıcı bir hata gösterilmelidir.
+
+</SelfCheck>

@@ -1,0 +1,79 @@
+---
+summary: "Primary key, foreign key, kısıtlar ve index: kaydı benzersiz tanımlamak, ilişkileri ve kuralları en derin katmanda zorlamak ve aramayı hızlandırmak. 'Kullanıcı silinince siparişlerine ne olacak?' bir ürün kararıdır."
+outcomes:
+  - "Sıralı sayısal ID'leri URL'de göstermenin sakıncasını söyleyebilirsin."
+  - "'Kullanıcı silinince siparişlerine ne olacak?' sorusunun neden bir ürün kararı olduğunu açıklayabilirsin."
+  - "Kısıtın uygulama kodundaki kontrolden farkını ve index'in bedelini bilirsin."
+minutes: 8
+sources:
+  - label: "PostgreSQL — Kısıtlar"
+    url: "https://www.postgresql.org/docs/current/ddl-constraints.html"
+  - label: "PostgreSQL — Index'lere giriş"
+    url: "https://www.postgresql.org/docs/current/indexes-intro.html"
+  - label: "OWASP — IDOR Önleme Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html"
+  - label: "Use The Index, Luke"
+    url: "https://use-the-index-luke.com/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Aynı adı taşıyan iki kullanıcıyı sistem nasıl ayırır? Bir kullanıcı silinince siparişlerine ne olur? Liste neden 4 saniyede açılıyor? Üç sorunun cevabı bu dersin kavramlarında.
+
+## Primary key
+
+**Primary key (birincil anahtar)**, her satırı benzersiz olarak tanımlayan sütundur. Bir kaydı işaret etmenin tek güvenilir yoludur: iki kullanıcının adı aynı olabilir ama kimlikleri farklıdır. URL'lerde de görünür (`/urunler/123`). "URL'de ID yerine slug kullanalım; ID'yi göstermek hem çirkin hem bilgi sızdırıyor."
+
+**Sıralı sayısal ID'ler** (1, 2, 3…) dışarıya gösterildiğinde bilgi sızdırır: rakip, ID'lere bakarak kaç siparişin olduğunu tahmin edebilir. Ayrıca ID'leri tek tek deneyerek başkasının kaydına erişmeye çalışma (IDOR) kolaylaşır. Bu yüzden dışarıya açık kayıtlarda tahmin edilemez kimlikler (UUID benzeri) tercih edilir.
+
+## Foreign key
+
+**Foreign key (yabancı anahtar)**, bir tablodaki satırın başka bir tablodaki satıra işaret eden sütunudur. İlişkileri kuran ve **tutarlılığı zorlayan** mekanizmadır: bir sipariş var olmayan bir kullanıcıya bağlanamaz, veritabanı buna izin vermez. "Sipariş kullanıcıya foreign key ile bağlı; kullanıcıyı silersek siparişlere ne olacak?"
+
+Bu sorunun cevabı bir **ürün kararıdır,** teknik değil: kullanıcı silinince siparişleri de silinsin mi, yoksa kalıp "silinmiş kullanıcı" mı görünsün? Genelde ikincisi doğrudur (soft delete); ama bu arayüzde nasıl görüneceğini tasarlamanı gerektirir.
+
+## Kısıtlar
+
+**Constraint (kısıt)**, veritabanı seviyesinde uygulanan kurallardır: bu alan benzersiz olmalı (**unique**), bu alan boş olamaz, bu sayı negatif olamaz. Kuralı **en derin katmanda** uygular: uygulama kodundaki kontrol atlanabilir ya da bir yerde unutulabilir; veritabanı kısıtı atlanamaz. "E-posta benzersiz olmalı; kısıt veritabanında olsun, yalnızca formda kontrol etmeyelim."
+
+**Tasarım karşılığı:** benzersizlik ihlali kullanıcıya 409 olarak döner ve "bu e-posta zaten kayıtlı" mesajı gerekir. Ama dikkat: giriş ekranında bu bilgiyi vermek güvenlik açısından sakıncalı olabilir.
+
+## Index
+
+**Index (dizin)**, bir sütundaki değerlere göre hızlı arama yapmayı sağlayan yardımcı yapıdır; kitabın arkasındaki dizin gibi. İndeks yoksa veritabanı tüm satırları tek tek tarar: on bin kayıtta fark edilmez, on milyon kayıtta sayfa açılmaz. **Yavaş sayfa şikâyetlerinin en yaygın tek sebebi eksik indekstir.** "Filtreleme yaptığımız sütunda indeks var mı? Liste 4 saniyede geliyor."
+
+İndeks bedava değildir: okumayı hızlandırır ama **yazmayı yavaşlatır** ve yer kaplar. Her sütuna indeks koymak bir çözüm değil, ayrı bir problemdir.
+
+<Callout kind="tasarimci">
+
+- **URL'lerde sayısal ID yerine okunur slug ya da tahmin edilemez kimlik iste.**
+- **Silme akışlarında "ilişkili kayıtlara ne olur?" ürün kararını önceden ver** ve "silinmiş kullanıcı" gibi görünümleri tasarla.
+- **Benzersizlik hatası mesajlarını tasarla;** giriş ekranında bilgi sızdırmamaya dikkat et.
+- **Yavaş filtre/sıralama şikâyetinde "bu sütunda indeks var mı?" sor.**
+
+</Callout>
+
+<Summary>
+
+- Primary key kaydı benzersiz tanımlar; sıralı sayısal ID'ler dışarıya gösterildiğinde bilgi sızdırır.
+- Foreign key tutarlılığı zorlar; "silinince ne olur" bir ürün kararıdır.
+- Kısıtlar kuralı en derin katmanda uygular; benzersizlik ihlali 409 ve kullanıcıya mesaj demektir.
+- Index aramayı hızlandırır, yazmayı yavaşlatır; yavaş sayfaların en yaygın sebebi eksik indekstir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Foreign key'in tutarlılık garantisi nedir? 'Kullanıcı silinince siparişlerine ne olacak' sorusu teknik mi ürün kararı mı?">
+
+Bir kaydın var olmayan bir kayda bağlanmasını engeller. Cevabı bir ürün kararıdır: siparişler de silinsin mi, yoksa kalıp "silinmiş kullanıcı" mı görünsün? Genelde ikincisi doğrudur ve arayüzde nasıl görüneceği tasarlanmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Index ne işe yarar ve bedeli nedir?">
+
+Bir sütundaki değerlere göre hızlı arama sağlar; indeks yoksa veritabanı tüm satırları tarar. Bedeli: okumayı hızlandırır ama yazmayı yavaşlatır ve yer kaplar.
+
+</SelfCheck>

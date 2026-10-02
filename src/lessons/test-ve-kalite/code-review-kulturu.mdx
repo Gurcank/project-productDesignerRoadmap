@@ -1,0 +1,66 @@
+---
+summary: "Code review'un kültür tarafı ve senin de dahil olduğun bir pratik: iyi bir incelemede sırayla neye bakılır (doğru problem, kabul kriterleri, uç durumlar, tasarım, anlaşılırlık), yorum yazma biçimi ve inceleme süresi."
+outcomes:
+  - "İyi bir incelemede sırayla bakılacak beş şeyi söyleyebilirsin."
+  - "Neden biçime bakılmadığını açıklayabilirsin."
+  - "İyi yorum yazma ilkelerini (soru sor, zorunlu ile öneriyi ayır, iyiyi de söyle, sayıyı sınırla) bilirsin."
+minutes: 5
+sources:
+  - label: "Google Mühendislik Pratikleri — Code Review: Neye bakılır"
+    url: "https://google.github.io/eng-practices/review/reviewer/looking-for.html"
+  - label: "Google Mühendislik Pratikleri — Review hızı"
+    url: "https://google.github.io/eng-practices/review/reviewer/speed.html"
+  - label: "Atlassian — Code review"
+    url: "https://www.atlassian.com/agile/software-development/code-reviews"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Pull request mekaniği Git bölümünde anlatıldı. Burada **kültür tarafı** var ve bu, senin de dahil olduğun bir pratik.
+
+## Neye bakılır
+
+İyi bir incelemede sırayla:
+
+1. **Doğru problemi mi çözüyor?** En üst seviye soru. Kod kusursuz olabilir ama yanlış şeyi yapıyor olabilir.
+2. **Kabul kriterlerini karşılıyor mu?** Boş durum, hata durumu ve yükleme durumu dahil mi?
+3. **Uç durumlar düşünülmüş mü?** Çok uzun metin, boş liste, yavaş bağlantı.
+4. **Tasarıma uygun mu?** Senin alanın: ölçüler, durumlar, responsive davranış, erişilebilirlik.
+5. **Anlaşılır mı?** Altı ay sonra biri okuduğunda anlayacak mı?
+6. **Biçim:** buna bakılmaz; formatter'ın işidir.
+
+## Yorum yazma biçimi
+
+- **Soru sor, hüküm verme.** "Bu neden böyle?" yerine "Bunu şöyle yapmalıydın" demek savunmaya iter.
+- **Zorunlu ile öneriyi ayır.** Yaygın bir pratik, öneri niteliğindeki yorumları `nit:` (nitpick) ile işaretlemektir; böylece hangi yorumun bloke ettiği belli olur.
+- **İyi olanı da söyle.** İncelemeler yalnızca eleştiriden oluşursa süreç yıpratıcı hâle gelir.
+- **Yorum sayısını sınırla.** Otuz yorumlu bir inceleme, incelemeden çok yeniden yazma talebidir; o noktada yorum yazmak yerine konuşmak daha verimlidir.
+
+**Süre de bir kalite meselesidir:** günlerce bekleyen bir PR, dalın eskimesine, çakışmaya ve yazanın bağlamı unutmasına yol açar. Birçok ekip bir inceleme süresi hedefi koyar.
+
+<Callout kind="tasarimci">
+
+- **İncelemede kendi sorunu (tasarıma uygunluk) odak tut;** diğerlerini ekibe bırak.
+- **Yorumlarını soru olarak yaz ve `nit:` ile ayır.**
+- **İyi uygulanmış bir detayı da yaz;** tasarıma saygı gösteren geri bildirim kültürü kurar.
+- **İnceleme beklemesini kısa tut:** PR'ı gün içinde incele.
+
+</Callout>
+
+<Summary>
+
+- İnceleme sırası: doğru problem, kabul kriterleri, uç durumlar, tasarıma uygunluk, anlaşılırlık; biçime bakılmaz.
+- Soru sor, zorunlu ile öneriyi ayır (`nit:`), iyi olanı da söyle, yorum sayısını sınırla.
+- İnceleme süresi de bir kalite meselesidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Kod incelemesinde ilk bakılacak soru nedir? Biçime neden bakılmaz?">
+
+"Doğru problemi mi çözüyor?" Kod kusursuz olabilir ama yanlış şeyi yapıyor olabilir. Biçime bakılmaz çünkü o formatter'ın işidir; insan dikkatini oraya harcamak israftır.
+
+</SelfCheck>

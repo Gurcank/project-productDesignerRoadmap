@@ -1,0 +1,64 @@
+---
+summary: "Üç sık karıştırılan savunma: doğrulama (kabul edilebilir mi?), temizleme (tehlikeli kısmı çıkar) ve kaçırma (gösterirken kod sayılmasın). Client-side doğrulama güvenlik sağlamaz; sunucu tarafı zorunludur."
+outcomes:
+  - "Doğrulama, temizleme ve kaçırmanın farkını söyleyebilirsin."
+  - "Client-side doğrulamanın neden güvenlik sağlamadığını açıklayabilirsin."
+minutes: 5
+sources:
+  - label: "OWASP — Input Validation Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html"
+  - label: "OWASP — XSS Prevention Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Üçü sık karıştırılır ama farklı işler yapar ve farklı yerlerde uygulanır.
+
+| Savunma | Sorduğu / dediği | Örnek |
+|---|---|---|
+| **Input validation** (girdi doğrulama) | "Bu veri kabul edilebilir mi?" | E-posta biçimi, uzunluk, izin verilen değerler |
+| **Sanitization** (temizleme) | "Tehlikeli kısmı çıkar" | Zengin metinden betik etiketlerini ayıklamak |
+| **Escaping** (kaçırma) | "Gösterirken kod sayılmasın" | `<` işaretini görüntülenebilir metin olarak göstermek |
+
+## Doğrulama
+
+**Input validation**, gelen verinin beklenen kurallara uyup uymadığının kontrol edilmesidir; ilk savunma hattıdır. **Kritik kural: client-side doğrulama güvenlik sağlamaz;** atlanabilir. Sunucu tarafındaki doğrulama zorunludur; client-side yalnızca kullanıcı deneyimi içindir. Her formda ve her API ucunda gerekir. "Server action'da da doğrulama yapalım; client tarafı atlanabilir."
+
+## Temizleme ve kaçırma
+
+**Sanitization**, tehlikeli kısımların veriden çıkarılmasıdır. **Escaping** ise verinin, gösterildiği bağlamda kod olarak yorumlanmamasını sağlamaktır. XSS'e karşı asıl savunma escaping'dir ve modern framework'ler bunu varsayılan olarak yapar. Sanitization yalnızca kullanıcının HTML girmesine izin verildiğinde gerekir (zengin metin editörü gibi). "Zengin metni sunucuda temizleyelim; yalnızca izin verilen etiketler kalsın."
+
+**Üçü birbirinin yerine geçmez;** doğrulama "bu veri kabul edilebilir mi", temizleme "tehlikeli kısmı çıkar", kaçırma "gösterirken kod sayılmasın" der. Hepsi gerekir.
+
+<Callout kind="tasarimci">
+
+- **Form kurallarını (uzunluk, biçim, izin verilen değer) tasarımda yaz;** hem istemcide hem sunucuda uygulanır.
+- **Hata mesajlarını** her iki katman için de tasarla; sunucu hatası istemci hatasından farklı görünebilir.
+- **Zengin metin isteğinde izin verilen biçimleri** (kalın, liste, bağlantı) açıkça tanımla.
+
+</Callout>
+
+<Summary>
+
+- Doğrulama kabul edilebilirliği, temizleme tehlikeli kısmı, kaçırma gösterim güvenliğini sağlar; hepsi gerekir.
+- Client-side doğrulama güvenlik değil, kullanıcı deneyimi içindir; sunucu tarafı zorunludur.
+- XSS'e karşı asıl savunma escaping'dir; sanitization yalnızca HTML girişine izin verildiğinde gerekir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Input validation, sanitization ve escaping arasındaki fark nedir?">
+
+Input validation: gelen veri kurallara uyuyor mu? Sanitization: tehlikeli kısımları veriden çıkar. Escaping: gösterirken kod olarak yorumlanmasını engelle. Üçü farklı işler yapar ve birbirinin yerine geçmez.
+
+</SelfCheck>
+
+<SelfCheck question="Client-side doğrulama güvenlik sağlar mı?">
+
+Hayır. Atlanabilir; yalnızca kullanıcı deneyimi içindir. Güvenlik sunucu tarafındaki doğrulamayla sağlanır.
+
+</SelfCheck>

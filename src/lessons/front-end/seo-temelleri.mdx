@@ -1,0 +1,86 @@
+---
+summary: "Arama motorlarının siteni bulup anlamasını sağlayan temeller: title ve meta description, canonical, robots.txt ve sitemap.xml, structured data, Open Graph, favicon. Tasarımcıyı ilgilendiren kısmı sanıldığından büyük."
+outcomes:
+  - "Hangi SEO parçalarının doğrudan tasarım işi olduğunu söyleyebilirsin."
+  - "Canonical'ın hangi problemi çözdüğünü açıklayabilirsin."
+  - "Yayında sık yapılan robots.txt hatasını bilirsin."
+  - "OG görselinin neden bir tasarım işi olduğunu anlatabilirsin."
+minutes: 9
+sources:
+  - label: "Google Search Central — Title bağlantıları"
+    url: "https://developers.google.com/search/docs/appearance/title-link"
+  - label: "Google Search Central — Yinelenen URL'leri birleştirme (canonical)"
+    url: "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls"
+  - label: "Google Search Central — robots.txt'e giriş"
+    url: "https://developers.google.com/search/docs/crawling-indexing/robots/intro"
+  - label: "Google Search Central — Structured data'ya giriş"
+    url: "https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data"
+  - label: "The Open Graph protocol"
+    url: "https://ogp.me/"
+skipTerms: ["title"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir sitenin güzel olması, bulunması demek değil. Arama motorları siteni nasıl okuyor, bir bağlantı paylaşıldığında ne görünüyor? Bunun çoğu kod değil; **içerik ve tasarım kararı.**
+
+## Title ve meta description
+
+**Title (sayfa başlığı)** ve **meta description (meta açıklama)**, arama sonuçlarında görünen başlık ve altındaki açıklamadır. Arama sonucundaki **tıklanma oranını** doğrudan belirler ve içerik tasarımının parçasıdır: her sayfanın kendine özgü, o sayfayı anlatan bir başlığı olmalıdır. "Tüm ürün sayfalarının başlığı aynı; şablonu ürün adına göre dinamik yapalım."
+
+Meta description doğrudan bir sıralama faktörü değildir; etkisi tıklanma oranı üzerinden dolaylıdır, ayrıca arama motoru bazen onu yok sayıp sayfadan kendi özetini üretir. Başlık yapısı (h1, h2…) için de aynı kural geçerlidir: içeriğin yapısını yansıtmalı, görsel boyut için seçilmemelidir. Erişilebilirlik ve SEO burada aynı şeyi ister.
+
+## Canonical
+
+**Canonical URL**, aynı içeriğe birden fazla adresten ulaşılabiliyorsa "asıl olan budur" diyen işarettir. Filtre ve sıralama parametreleri yüzünden aynı liste onlarca farklı URL'de görünebilir; canonical, arama motorunun bunları ayrı sayfalar sanmasını ve değeri bölmesini engeller. "Filtre parametreli sayfalar canonical olarak ana kategori sayfasını göstersin."
+
+## robots.txt ve sitemap.xml
+
+`robots.txt` arama motoru botlarına hangi bölümlere girmemelerini söyler; `sitemap.xml` sitedeki sayfaların makine okunur listesidir. Botların siteyi verimli taramasını sağlarlar. Karıştırma: `sitemap.xml` makineler içindir; tasarım çıktısı olan *sitemap* ise sayfa hiyerarşisini gösteren, insan okunur şemadır.
+
+Klasik bir yayın hatası: **staging'deki "botları engelle" ayarının canlıya taşınması.** Site aylarca arama sonuçlarında görünmez. "Yayına çıkmadan robots.txt'i kontrol edelim; staging'de her şeyi engelliyorduk."
+
+## Structured data
+
+**Structured data (yapılandırılmış veri)**, sayfadaki içeriğin ne olduğunu makinelere açıkça söyleyen ek işaretlemedir: bu bir ürün, bu fiyatı; bu bir tarif, bu süresi. Arama sonucunda zenginleştirilmiş görünüm (yıldızlar, fiyat, SSS açılımı, breadcrumb) sağlayabilir ve tıklanmayı artırır. **Zengin sonuç garanti değildir;** arama motoru göstermeyi kendisi seçer. "SSS bölümüne structured data ekleyelim; arama sonucunda sorular açılabilir hâle gelsin."
+
+## Open Graph ve favicon
+
+**Open Graph (OG)** ve Twitter card etiketleri, bir bağlantı sosyal medyada ya da mesajlaşmada paylaşıldığında görünecek başlık, açıklama ve görseli belirler. **Bu doğrudan bir tasarım işidir:** OG görseli tanımlanmamışsa paylaşım çıplak bir bağlantı olarak görünür ve tıklanma düşer. Şablon bir OG görseli (arka plan sabit, başlık ve yazar adı değişken) her sayfa için ayrı görsel üretmeden bunu çözer.
+
+**Favicon**, tarayıcı sekmesinde ve yer imlerinde görünen küçük ikondur. Marka tanınırlığı için etkilidir ve sık unutulur. Küçük boyutta okunabilmesi için logonun sadeleştirilmiş sürümü kullanılır; tam logo 16px'te okunmaz.
+
+<Callout kind="tasarimci">
+
+- **Her sayfa türü için başlık ve açıklama şablonu yaz** (ürün adı, kategori adı…).
+- **Paylaşım görselini şablon olarak tasarla** ve oranını sabitle.
+- **Favicon için sadeleştirilmiş logo üret;** 16px'te dene.
+- **Yayın öncesi robots.txt'i kontrol listesine ekle.**
+
+</Callout>
+
+<Summary>
+
+- Title ve meta description tıklanma oranını belirler; her sayfanın kendine özgü başlığı olmalı.
+- Canonical, yinelenen URL'lerin değeri bölmesini önler; robots.txt ve sitemap.xml botları yönlendirir.
+- Staging'deki "botları engelle" ayarının canlıya taşınması klasik bir hatadır.
+- Structured data zengin sonuç şansı verir ama garanti değildir.
+- OG görseli ve favicon doğrudan tasarım işidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Canonical URL hangi problemi çözer?">
+
+Aynı içeriğe birden fazla adresten ulaşılması problemini. Filtre ve sıralama parametreleri aynı listeyi onlarca URL'de gösterir; canonical, arama motoruna "asıl olan budur" diyerek değerin bölünmesini engeller.
+
+</SelfCheck>
+
+<SelfCheck question="OG görseli neden bir tasarım işidir?">
+
+Bir bağlantı paylaşıldığında görünen görsel odur ve tıklanmayı doğrudan etkiler; tanımlanmamışsa paylaşım çıplak bir bağlantı olarak görünür. Şablon bir OG görseli tasarlamak her sayfa için ayrı görsel üretmeden bunu çözer.
+
+</SelfCheck>

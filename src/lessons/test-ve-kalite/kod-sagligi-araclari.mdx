@@ -1,0 +1,77 @@
+---
+summary: "Linter, formatter, tip kontrolü, pre-commit hook ve CI gate: kalite kontrolünü hatırlamaktan çıkarıp mekanizmaya bağlar. Formatter'ın asıl faydası tartışmayı ortadan kaldırmasıdır; kapı sayısı arttıkça yayın yavaşlar."
+outcomes:
+  - "Linter, formatter ve tip kontrolünün işini ayırabilirsin."
+  - "Pre-commit hook ile CI gate'in farkını ve asıl güvencenin hangisi olduğunu söyleyebilirsin."
+  - "Çok fazla zorunlu kapının neden ters tepebileceğini açıklayabilirsin."
+minutes: 6
+sources:
+  - label: "ESLint"
+    url: "https://eslint.org/docs/latest/"
+  - label: "Prettier"
+    url: "https://prettier.io/docs/"
+  - label: "Husky"
+    url: "https://typicode.github.io/husky/"
+  - label: "GitHub Docs — Korumalı dallar"
+    url: "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches"
+  - label: "TypeScript — Resmî site"
+    url: "https://www.typescriptlang.org/"
+skipTerms: ["Domain name","Hook","Measure","domain name","alan adı","hook","measure","satır uzunluğu"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir kod incelemesinde "burada boşluk eksik", "tırnak tek olmalı" yorumları görürsen, o ekipte araçlar eksik demektir. Bu araçlar bu tür tartışmayı baştan ortadan kaldırır.
+
+## Linter ve formatter
+
+**Linter** (ESLint) olası hataları ve kural ihlallerini yakalar. **Formatter** (Prettier) kodun biçimini (girinti, tırnak, satır uzunluğu) otomatik olarak standartlaştırır. **Formatter'ın asıl faydası estetik değil, tartışmayı ortadan kaldırmasıdır:** kod incelemelerinde biçim tartışılmaz çünkü karar araca devredilmiştir; bu insan dikkatini asıl konulara bırakır. "Biçim yorumları yapmayalım; formatter zaten hallediyor, biz mantığa bakalım." Linter kuralları erişilebilirlik kontrolü de yapabilir; eksik `alt` metni gibi sorunları yazarken yakalayan eklentiler vardır.
+
+## Type check
+
+**Type checking (tip kontrolü)**, TypeScript'in tip hatalarını derleme öncesinde yakalamasıdır. Bütün bir hata sınıfını ortadan kaldırır: yanlış alan adı, eksik alan, beklenmeyen `null`. Test yazmaya gerek kalmadan, yazarken yakalanır. Editörde anlık, CI'da kapı olarak çalışır. "Tip kontrolü CI'da zorunlu olsun; `any` ile geçiştirmeyelim."
+
+## Pre-commit hook ve CI gate
+
+**Pre-commit hook**, commit atılmadan önce yerel olarak çalışan kontroldür. **CI gate**, PR'ın birleştirilebilmesi için geçmesi zorunlu olan kontroldür. İkisi de kalite kontrolünü **hatırlamaktan çıkarıp mekanizmaya bağlar.** Pre-commit hızlı geri bildirim verir; CI gate ise atlanamaz olduğu için asıl güvencedir. "Erişilebilirlik taramasını ve performans bütçesini CI gate yapalım; uyarı olarak kalırsa kimse bakmıyor."
+
+**Kapı sayısı arttıkça yayın yavaşlar.** Her kontrolün bir maliyeti vardır; hepsini zorunlu yapmak ekibi kapıları atlatmanın yollarını aramaya iter. Zorunlu olanlar gerçekten kritik olanlarla sınırlı tutulmalıdır.
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitede de kalite kapıları ayrı komutlarla çalışır: içerik doğrulaması, tip ve şablon denetimi ve JavaScript bütçesi. Hepsi derleme sürecinin parçasıdır; biri başarısız olursa yayın hazırlığı durur.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Tasarım kalitesi kontrollerinden (erişilebilirlik, görsel fark) hangilerinin zorunlu kapı, hangilerinin uyarı olacağını ekiple belirle.**
+- **Formatter ve linter varsa kod incelemesinde biçim yorumu yazma.**
+- **Zorunlu kapı listesini kısa tut;** ekibin hızını koru.
+
+</Callout>
+
+<Summary>
+
+- Linter hata ve kural ihlallerini yakalar, formatter biçimi standartlaştırır ve tartışmayı ortadan kaldırır.
+- Tip kontrolü bir hata sınıfını yazarken yakalar.
+- Pre-commit hızlı geri bildirim verir; CI gate atlanamaz olduğu için asıl güvencedir.
+- Kapı sayısı arttıkça yayın yavaşlar; zorunlu olanlar kritiklerle sınırlı olmalı.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Formatter'ın asıl faydası estetik midir?">
+
+Hayır; asıl faydası tartışmayı ortadan kaldırmasıdır. Kod incelemelerinde biçim tartışılmaz çünkü karar araca devredilmiştir; insan dikkati asıl konulara kalır.
+
+</SelfCheck>
+
+<SelfCheck question="CI gate sayısını artırmanın sakıncası nedir?">
+
+Kapı sayısı arttıkça yayın yavaşlar ve ekip kapıları atlatmanın yollarını aramaya başlar. Zorunlu kontroller gerçekten kritik olanlarla sınırlı tutulmalıdır.
+
+</SelfCheck>

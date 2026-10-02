@@ -1,0 +1,101 @@
+---
+/**
+ * A live demonstration of why the element matters: a real <button> and a
+ * <div> dressed up to look like one, side by side. Press Tab: the button
+ * takes focus and answers Enter/Space; the div is skipped and ignores the
+ * keyboard. Everything it needs is in this file.
+ *
+ * The fake is deliberately broken, so it is hidden from nothing — and it says
+ * so in its own label, so no one tabbing to the page by accident is misled.
+ */
+---
+
+<div class="kb-demo" data-kb-demo>
+  <p class="kb-demo__hint">
+    Dene: Tab tuşuyla ilerle, odaktayken Enter ya da Space'e bas. Sayaçlara bak.
+  </p>
+
+  <div class="kb-demo__row">
+    <button type="button" class="kb-demo__real" data-kb-real>Gerçek buton: <span data-kb-real-count>0</span></button>
+    <div class="kb-demo__fake" data-kb-fake>Sahte buton (div): <span data-kb-fake-count>0</span></div>
+  </div>
+
+  <p class="kb-demo__result" role="status" data-kb-result>Henüz bir şey denemedin.</p>
+</div>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>("[data-kb-demo]")) {
+    const real = root.querySelector<HTMLElement>("[data-kb-real]")!;
+    const fake = root.querySelector<HTMLElement>("[data-kb-fake]")!;
+    const realCount = root.querySelector<HTMLElement>("[data-kb-real-count]")!;
+    const fakeCount = root.querySelector<HTMLElement>("[data-kb-fake-count]")!;
+    const result = root.querySelector<HTMLElement>("[data-kb-result]")!;
+
+    let r = 0;
+    let f = 0;
+
+    // The real button gets Enter and Space for free from the browser: a click
+    // event fires for both. Nothing is wired to the keyboard here on purpose.
+    real.addEventListener("click", () => {
+      r += 1;
+      realCount.textContent = String(r);
+      result.textContent = "Gerçek buton çalıştı: klavye ve fare aynı olayı üretir.";
+    });
+
+    // The div only answers the mouse, exactly like the bug it demonstrates.
+    fake.addEventListener("click", () => {
+      f += 1;
+      fakeCount.textContent = String(f);
+      result.textContent = "Sahte buton yalnızca fareyle çalıştı. Klavyeyle ona ulaşılamıyor.";
+    });
+  }
+</script>
+
+<style>
+  .kb-demo {
+    margin: var(--spacing-6) 0;
+    padding: var(--spacing-4);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-raised);
+  }
+
+  .kb-demo__hint {
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .kb-demo__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-3);
+    margin-block: var(--spacing-4);
+  }
+
+  /* Identical look: the point is that you cannot tell them apart by eye. */
+  .kb-demo__real,
+  .kb-demo__fake {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: var(--spacing-4);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-sunken);
+    color: var(--c-text);
+    font: inherit;
+    font-size: var(--text-sm);
+    cursor: pointer;
+  }
+
+  .kb-demo__real:hover,
+  .kb-demo__fake:hover {
+    background-color: var(--c-surface-overlay);
+  }
+
+  .kb-demo__result {
+    min-height: 1.5em;
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+</style>

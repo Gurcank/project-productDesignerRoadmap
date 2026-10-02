@@ -1,0 +1,123 @@
+---
+summary: "Bir işin sınırlarını çizme dili: MVP, POC, prototip, kapsam ve kapsam kayması. Neyin bu sürüme girdiğini, girmediğini ve neden girmediğini savunabilmeyi öğren."
+outcomes:
+  - "MVP, POC ve prototipin hangi üç farklı soruyu cevapladığını söyleyebilirsin."
+  - "\"MVP yarım üründür\" yanlışını bir örnekle düzeltebilirsin."
+  - "Scope creep ile bilinçli kapsam değişikliğini ayırt edebilirsin."
+  - "Cut line'ı süre daralmadan önce çizmenin neden önemli olduğunu açıklayabilirsin."
+minutes: 10
+sources:
+  - label: "The Lean Startup — İlkeler (MVP)"
+    url: "https://theleanstartup.com/principles"
+  - label: "Atlassian — Ürün yönetimi"
+    url: "https://www.atlassian.com/agile/product-management"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Proje bir ay sürecekti. Üçüncü haftada biri "bir de şunu ekleyelim" dedi, sonra bir başkası "şu da kolay olur" dedi. Altı hafta sonra hâlâ bitmedi ve kimse "ne zaman bu kadar büyüdü?" sorusuna cevap veremiyor.
+
+Bu ders, bir işin **sınırlarını çizme dilini** öğretiyor. Tasarımcı olarak en çok bu terimlerle savunma yapacaksın: neyin bu sürüme girdiği, neyin girmediği ve neden.
+
+## Üç deneme, üç farklı soru
+
+Üç terim sürekli karıştırılır; her biri **farklı bir soruyu** cevaplar.
+
+| Terim | Cevapladığı soru | Gerçek kullanıcıya çıkar mı? |
+|---|---|---|
+| **POC** | Bu *teknik olarak mümkün mü?* | Hayır |
+| **Prototype** | Bu *deneyim işe yarıyor mu?* | Hayır, kullanıcı testine girer |
+| **MVP** | Bu *talep var mı, pazar istiyor mu?* | Evet |
+
+### MVP
+
+**MVP** (Minimum Viable Product, asgari uygulanabilir ürün), bir fikrin işe yarayıp yaramadığını öğrenmek için gereken **en küçük gerçek üründür.** Büyük bir bahsi küçük parçaya böler. Amaç "az özellikli ürün çıkarmak" değil, **en az çabayla en çok öğrenmek**tir.
+
+Bu ayrım kritik: bir MVP kötü olabilir ama **işe yaramaz olamaz;** kullanıcının bir işi baştan sona bitirebilmesi gerekir. "MVP'de yalnızca tek ödeme yöntemi olsun; talep görürse diğerlerini ekleriz."
+
+**MVP ≠ yarım ürün.** Tek tekerlekli bir araba MVP değildir; **kaykay MVP'dir.** Çünkü kaykay, "A noktasından B noktasına gitmek" işini tamamlar. Ayrıca MVP ≠ prototype: MVP gerçek kullanıcıya çıkar, prototip çıkmaz.
+
+Terim 2001'de Frank Robinson tarafından ortaya atıldı; Steve Blank ve Eric Ries tarafından yaygınlaştırıldı. Ries'in *The Lean Startup* kitabındaki tanımı en çok atıf alan tanımdır. Neredeyse her yeni proje konuşmasında geçer ve en çok yanlış kullanılan terimlerden biridir.
+
+### POC
+
+**POC** (Proof of Concept, kavram kanıtı), bir şeyin **teknik olarak mümkün olup olmadığını** göstermek için yapılan küçük denemedir. Riski erken azaltır: "bu entegrasyon çalışır mı?" sorusunu üç ay sonra değil, üç günde cevaplar. **Atılmak üzere yazılır;** kalıcı olması beklenmez.
+
+Yeni bir teknoloji ya da üçüncü parti servis değerlendirilirken yapılır: "Önce bir POC yapalım; bu API gerçekten istediğimiz veriyi dönüyor mu görelim." En sık yapılan hata, POC kodunun "zaten çalışıyor" denip üretime alınmasıdır.
+
+### Prototip
+
+**Prototype**, gerçek ürün gibi davranan ama arkasında gerçek sistem olmayan deneme sürümüdür. Kullanıcı testini kod yazmadan mümkün kılar; tasarım kararlarının **en ucuz sınandığı** yerdir. Figma'da hazırlanır, kullanıcı testinde ya da paydaş sunumunda gösterilir. "Prototip üzerinden beş kişiyle test edelim; kodlamadan önce akıştaki tıkanmayı görürüz." (Türleri, yani düşük ve yüksek doğruluklu olanlar, tasarım bölümünde.)
+
+<StepFlow
+  arrows={false}
+  label="Üç denemenin ölçeği"
+  caption="Sorular aynı zincirde ilerler: önce mümkün mü, sonra kullanılabilir mi, sonra istenir mi. Her biri bir sonrakinin riskini azaltır."
+  steps={[
+    { title: "POC", sub: "Teknik olarak mümkün mü? Atılır.", tone: "plain" },
+    { title: "Prototip", sub: "Deneyim işe yarıyor mu? Kodsuz, test için.", tone: "accent" },
+    { title: "MVP", sub: "Pazar talebi var mı? Gerçek kullanıcıya çıkar.", tone: "progress" },
+  ]}
+/>
+
+## Kapsam: neyin içinde, neyin dışında
+
+**Scope** (kapsam), bir işe **neyin dahil olduğu ve neyin olmadığıdır.** Kapsam yazılı değilse herkesin kafasındaki kapsam farklıdır. Spec ve PRD'nin zorunlu bölümüdür; sözleşmeli işlerde hukuki karşılığı vardır.
+
+**Out of scope** (kapsam dışı) listesi, "in scope" listesi kadar önemlidir. Çoğu ekip ikincisini yazıp birincisini atlar ve sorun oradan çıkar. "Çok dilli destek bu işin kapsamı dışında; ayrı bir iş olarak planlayalım."
+
+### Scope creep: sessizce büyüyen iş
+
+**Scope creep** (kapsam kayması), iş sürerken kapsamın **küçük eklemelerle ve resmî bir karar olmadan** büyümesidir. Tehlikeli olan tek tek eklemeler değil, **hiçbirinin ayrı ayrı büyük görünmemesidir.** "Bir de şunu ekleyelim" cümlesi beş kez tekrarlandığında süre iki katına çıkar ama kimse ne zaman karar verildiğini hatırlamaz.
+
+Gecikmelerin en yaygın sebebidir; retro toplantılarında sürekli gündeme gelir.
+
+"Bu bir scope creep; eklemek istiyorsak sorun değil ama teslim tarihini de birlikte güncelleyelim."
+
+Ayrımlar:
+
+- **Scope creep ≠ kapsam değişikliği.** Değişiklik bilinçli ve kayıtlıdır, sonuçları hesaplanır. Creep sessizce olur.
+- **Gold plating** farklı bir kusurdur: kimse istemediği hâlde ekibin kendi kendine "daha iyi olsun" diye fazladan iş yapması. Tasarımcılar buna özellikle yatkındır: "bir animasyon daha ekleyeyim" gibi.
+
+### Cut line: süre daralmadan önce çizilen çizgi
+
+**Cut line** (kesme çizgisi), öncelik sırasına dizilmiş listede, "bu çizginin altındakiler bu sürüme girmiyor" diye çekilen sınırdır. Süre daralınca neyin düşeceğinin **önceden** kararlaştırılmasını sağlar. Kriz anında panikle karar vermek yerine, sakin kafayla çizilmiş bir sıraya bakılır.
+
+Yayın tarihi yaklaşırken yapılan kapsam toplantılarında kullanılır: "Cut line'ı animasyonların üstüne çekelim; gerekirse onlar düşer, akış kalır." Bu cümle tasarımcı için bir güvence: *önceden* neyin düşebileceğini söylemiş olursun, böylece son dakikada akışın kritik parçasını kaybetmezsin.
+
+<Callout kind="tasarimci">
+
+- **Önce soruyu sor:** "Bu denemeyle neyi öğreneceğiz?" Soru yoksa MVP de değil, "az özellikli ürün"dür.
+- **POC'u üretime sızdırma.** "Zaten çalışıyor" cümlesi teknik borcun başlangıcıdır.
+- **Çıktının kapsamını yaz, dışındakini de yaz.** Kapsam dışı listesini en az kapsam listesi kadar özenle hazırla.
+- **"Bir de şunu ekleyelim" dendiğinde sor:** "Bu kapsamda mı, değilse tarihi birlikte güncelleyelim mi?" Bu soru creep'i bilinçli bir kapsam değişikliğine çevirir.
+- **Cut line'ı baştan çizdir.** "Süre sıkışırsa ilk neyi atarız?" sorusunu proje başında sor.
+
+</Callout>
+
+<Summary>
+
+- POC teknik mümkünlüğü, prototip deneyimi, MVP pazar talebini sınar; üç ayrı soru.
+- MVP yarım ürün değildir: kullanıcının bir işi baştan sona bitirebilmesi gerekir (kaykay MVP'dir, tek tekerlekli araba değil).
+- Kapsam yazılmalı; kapsam dışı listesi en az kapsam listesi kadar önemlidir.
+- Scope creep resmî karar olmadan sessizce büyür; bilinçli kapsam değişikliği kayıtlıdır ve sonuçları hesaplanır.
+- Cut line süre daralmadan önce çizilir; kriz anında panik yerine sıraya bakılır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="MVP, POC ve prototype hangi üç farklı soruyu cevaplar?">
+
+POC teknik olarak mümkün olup olmadığını, prototype deneyimin işe yarayıp yaramadığını, MVP ise pazarda talep olup olmadığını sınar.
+
+</SelfCheck>
+
+<SelfCheck question="Scope creep ile bilinçli kapsam değişikliği arasındaki fark nedir?">
+
+Kapsam değişikliği bilinçlidir ve kayıtlıdır; sonuçları (süre, maliyet) hesaplanır. Scope creep ise resmî bir karar olmadan, küçük eklemelerle sessizce olur ve kimse ne zaman karar verildiğini hatırlamaz.
+
+</SelfCheck>

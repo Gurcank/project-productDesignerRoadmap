@@ -2,6 +2,7 @@ import { defineConfig } from "astro/config";
 import { unified } from "@astrojs/markdown-remark";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
+import mdx from "@astrojs/mdx";
 import { rehypeTermCards } from "./src/plugins/rehype-term-cards";
 import { rehypeCrossRefs } from "./src/plugins/rehype-cross-refs";
 import { rehypeTableScroll } from "./src/plugins/rehype-table-scroll";
@@ -18,7 +19,7 @@ export default defineConfig({
    */
   server: { port: Number(process.env.PORT) || 4321 },
   // Search engines need the map; the checklist in 21.9 asks for it at launch.
-  integrations: [sitemap()],
+  integrations: [mdx(), sitemap()],
   trailingSlash: "always",
   i18n: {
     defaultLocale: "tr",

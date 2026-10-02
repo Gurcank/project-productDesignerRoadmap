@@ -1,0 +1,57 @@
+---
+import DiagramFigure from "../diagrams/DiagramFigure.astro";
+
+// Four sections; each child column hangs from its parent by one vertical rule.
+const sections = [
+  { x: 8, name: "Ürünler", children: ["Ürün detayı", "Karşılaştır", "Kategoriler"] },
+  { x: 98, name: "Fiyatlar", children: [] as string[] },
+  { x: 188, name: "Kaynaklar", children: ["Blog", "Yardım"] },
+  { x: 278, name: "Hesap", children: ["Giriş", "Ayarlar", "Güvenlik"] },
+];
+const W = 74;
+---
+
+<DiagramFigure
+  label="Örnek bir site haritası"
+  caption="Bir site haritası kapsamı gösterir: 4 ana bölüm, toplam 13 sayfa, en fazla 3 seviye. Kaç sayfa tasarlanacağı ve hangisinin hangisinin altında durduğu, tasarıma başlamadan önce burada netleşir."
+>
+  <svg class="dg-narrow" viewBox="0 0 360 250" role="img" aria-label="Ana sayfanın altında dört bölüm ve onların alt sayfaları">
+    <title>Örnek site haritası</title>
+
+    <rect class="dg-box dg-box--accent" x="120" y="8" width="120" height="34" rx="8"></rect>
+    <text class="dg-label" x="180" y="30" text-anchor="middle">Ana sayfa</text>
+
+    <path class="dg-line" d="M180 42 V60 M45 60 H315 M45 60 V78 M135 60 V78 M225 60 V78 M315 60 V78"></path>
+
+    {
+      sections.map((section) => (
+        <>
+          {section.children.length > 0 && (
+            <path class="dg-line" d={`M${section.x + W / 2} 110 V${120 + (section.children.length - 1) * 36 + 13}`}></path>
+          )}
+          <rect class="dg-box dg-box--accent" x={section.x} y="78" width={W} height="32" rx="6"></rect>
+          <text class="dg-sub" x={section.x + W / 2} y="98" text-anchor="middle">
+            {section.name}
+          </text>
+          {section.children.map((child, index) => (
+            <>
+              <rect
+                class={child === "Güvenlik" ? "dg-box dg-box--progress" : "dg-box"}
+                x={section.x}
+                y={120 + index * 36}
+                width={W}
+                height="26"
+                rx="5"
+              ></rect>
+              <text class="dg-sub" x={section.x + W / 2} y={137 + index * 36} text-anchor="middle">
+                {child}
+              </text>
+            </>
+          ))}
+        </>
+      ))
+    }
+
+    <text class="dg-sub" x="8" y="236">Her kutu bir sayfa. Derinlik arttıkça bulunabilirlik azalır.</text>
+  </svg>
+</DiagramFigure>

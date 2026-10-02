@@ -1,0 +1,72 @@
+---
+summary: "Çerez, tarayıcının sunucudan gelen küçük bilgiyi saklayıp her istekte geri göndermesidir; oturum kimliğini taşımanın standart yolu. httpOnly, Secure ve SameSite bayrakları birlikte oturum çerezini korur. Jetonu localStorage'da tutmak XSS varsa riskli."
+outcomes:
+  - "Çerezin ne olduğunu ve otomatik gönderilmesinin hem avantajını hem riskini söyleyebilirsin."
+  - "httpOnly, Secure ve SameSite'ın her birinin neyi engellediğini açıklayabilirsin."
+  - "Jetonu localStorage'da tutmanın riskini bilirsin."
+minutes: 6
+sources:
+  - label: "MDN — HTTP çerezleri"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies"
+  - label: "MDN — Set-Cookie"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie"
+  - label: "OWASP — HTML5 Security Cheat Sheet (Web Storage)"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html"
+  - label: "OWASP — Session Management Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html"
+flags: ["emin-degil"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Siteye girdiğinde "çerezleri kabul et" bildirimi çıkar. Ama çerezin bir de görünmeyen bir yüzü var: oturumunu taşıyan şey.
+
+## Çerez
+
+**Cookie (çerez)**, tarayıcıda saklanan ve aynı siteye yapılan her istekte **otomatik olarak** gönderilen küçük veri parçasıdır. Oturum kimliğini taşımanın standart yoludur. Otomatik gönderilmesi hem avantaj (kod yazmaya gerek yok) hem risktir (CSRF). Çerez onayı ise hukuki bir konudur. "Oturum çerezini httpOnly yapalım; JavaScript erişemesin."
+
+## Güvenlik bayrakları
+
+Üç bayrak, bir çerezin nasıl korunacağını belirler:
+
+- **httpOnly:** JavaScript bu çereze erişemez. Bir XSS açığı oluşsa bile oturum çalınamaz.
+- **Secure:** çerez yalnızca HTTPS üzerinden gönderilir.
+- **SameSite:** çerezin başka sitelerden yapılan isteklerde gönderilip gönderilmeyeceğini belirler; CSRF'e karşı temel savunmadır.
+
+Üçü birlikte oturum çerezini korumanın standart yoludur. Üçü de olmayan bir oturum çerezi ciddi bir açıktır. "Çerez ayarlarını kontrol edelim: httpOnly, Secure ve SameSite üçü de olmalı."
+
+## localStorage'da jeton
+
+Erişim jetonunu çerez yerine tarayıcının yerel deposunda (`localStorage`) saklamak yaygın bir kalıptır ama **riskli** kabul edilir: `localStorage`'a JavaScript erişebilir; sayfada bir XSS açığı varsa saldırgan jetonu okuyup çalabilir. httpOnly çerez bu riski ortadan kaldırır çünkü JavaScript ona erişemez. "Token localStorage'da duruyor; httpOnly çereze taşımayı değerlendirelim." Bu konu tamamen siyah-beyaz değildir ve mimariye göre farklı yaklaşımlar savunulur; tek doğru cevap gibi sunma. Ama "XSS varsa localStorage'daki jeton okunabilir" kısmı tartışmasızdır.
+
+<Callout kind="tasarimci">
+
+- **Güvenlik denetimine çerez ayarlarını ekle:** httpOnly, Secure, SameSite.
+- **Çerez onayı ile oturum çerezini karıştırma:** zorunlu (teknik) çerezler onay istemez.
+- **Jetonun nerede saklandığını geliştiriciye sor;** localStorage ise XSS riskini konuş.
+
+</Callout>
+
+<Summary>
+
+- Çerez, her istekte otomatik gönderilen küçük veridir; oturum kimliğini taşır.
+- httpOnly JavaScript erişimini, Secure HTTP üzerinden gönderilmesini, SameSite başka sitelerden gelen isteklerde gönderilmesini engeller.
+- localStorage'daki jeton, XSS varsa okunabilir; httpOnly çerez bu riski azaltır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Oturum çerezinde bulunması gereken üç güvenlik bayrağı nedir ve her biri neyi engeller?">
+
+httpOnly (JavaScript erişemez; XSS ile oturum çalınamaz), Secure (yalnızca HTTPS üzerinden gider; ağdan dinlenemez), SameSite (başka sitelerden gelen isteklerde gönderilmez; CSRF'e karşı temel savunma).
+
+</SelfCheck>
+
+<SelfCheck question="Token'ı localStorage'da tutmanın riski nedir?">
+
+localStorage'a JavaScript erişebilir; sayfada bir XSS açığı varsa saldırgan jetonu okuyup çalabilir. httpOnly çerez bu riski ortadan kaldırır.
+
+</SelfCheck>

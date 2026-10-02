@@ -1,0 +1,92 @@
+---
+summary: "Hareketin fiziksel sonuçları: azaltılmış hareket tercihi, yanıp sönme eşiği (nöbet riski), otomatik hareket eden içeriği durdurma. Dosyadaki en ciddi sonuçlu erişilebilirlik kuralı burada."
+outcomes:
+  - "Saniyede üçten fazla yanıp sönmenin neden yasak olduğunu ve riskini söyleyebilirsin."
+  - "Otomatik dönen carousel ya da kayan şerit için durdurma ihtiyacını gerekçelendirebilirsin."
+  - "prefers-reduced-motion için doğru tepkiyi (opaklık geçişi) hatırlayabilirsin."
+minutes: 6
+sources:
+  - label: "W3C — Understanding SC 2.3.1 Three Flashes or Below Threshold"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/three-flashes-or-below-threshold.html"
+  - label: "W3C — Understanding SC 2.2.2 Pause, Stop, Hide"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html"
+  - label: "MDN — prefers-reduced-motion"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+
+Bir oyunlaştırma efekti: kullanıcı bir hedefe ulaşıyor ve ekran hızlıca yanıp sönüyor, konfeti patlıyor. Çoğu kullanıcı için eğlenceli. Ama ışığa duyarlı epilepsisi olan biri için bu **nöbet** demek olabilir. Bu derste hareketin fiziksel sonuçları var; bu yüzden kısa ama önemli.
+
+## Azaltılmış hareket
+
+Detayı hareket dersinde gördün. Özet: kullanıcı işletim sisteminde "hareketi azalt" ayarını açtığında, **büyük yer değiştirmeler, paralaks ve zoom** efektleri kaldırılmalı; yerine zararsız bir **opaklık geçişi** bırakılmalıdır. Bu bir estetik tercih değil, vestibüler rahatsızlığı olan kullanıcılar için **fiziksel bir gerekliliktir.**
+
+## Yanıp sönme eşiği
+
+**Three flashes threshold** (SC 2.3.1, yanıp sönme eşiği): içerik, **saniyede üçten fazla** yanıp sönmemelidir. Işığa duyarlı epilepsisi olan kişilerde **nöbet tetikleyebilir.** Bu, kaynaktaki **en ciddi sonuçlu** erişilebilirlik kuralıdır.
+
+Video içeriklerinde, dikkat çekme amaçlı animasyonlarda, oyunlaştırma efektlerinde karşına çıkar. "Bu kutlama animasyonu hızlı yanıp sönüyor; frekansı düşürelim."
+
+<Callout kind="dikkat" title="Neden bu kadar ciddi?">
+
+Diğer erişilebilirlik ihlalleri kullanıcıyı **dışarıda bırakır.** Yanıp sönme ise kullanıcıya **zarar verebilir.** Bu yüzden bu kuralı "sonra bakarız" listesine koyma; animasyonu tasarlarken frekansını kontrol et.
+
+</Callout>
+
+## Durdur, duraklat, gizle
+
+**Pause, Stop, Hide** (SC 2.2.2): otomatik hareket eden, kayan ya da güncellenen içerik **beş saniyeden uzun** sürüyorsa kullanıcı onu **durdurabilmelidir.** Otomatik dönen carousel, kayan duyuru şeridi (marquee) ve otomatik oynayan video, dikkat kısıtı ya da okuma güçlüğü olan kullanıcılar için **engeldir;** yavaş okuyan herkes için de sinir bozucudur.
+
+"Carousel otomatik dönüyorsa duraklat butonu koyalım; ayrıca odaklanınca dönmeyi durdursun."
+
+<Compare>
+<Pane title="Kontrolsüz otomatik içerik">
+
+- Carousel her 4 saniyede döner
+- Kullanıcı okurken slayt kayar
+- Durdurma yolu yok
+
+</Pane>
+<Pane title="Kontrollü">
+
+- Açıkça görünen duraklat düğmesi
+- Odaklanınca/üzerine gelince durur
+- Kullanıcı kendi hızında ilerler
+
+</Pane>
+</Compare>
+
+<Callout kind="tasarimci">
+
+- **Yanıp sönen şeyi saniyede üçten aşağıda tut,** ya da hiç kullanma.
+- **Otomatik dönen içeriğe duraklat düğmesi ekle.** Ya da hiç otomatik döndürme.
+- **Azaltılmış hareket için alternatif tasarla.** Hangi hareketin yerine hangi sade tepki gelir?
+
+</Callout>
+
+<Summary>
+
+- Azaltılmış hareket tercihi fiziksel bir gerekliliktir: büyük hareketi kaldır, yerine kısa solma bırak.
+- İçerik saniyede üçten fazla yanıp sönmemeli; bu nöbet tetikleyebilir ve en ciddi sonuçlu kuraldır.
+- Beş saniyeden uzun süren otomatik hareket (carousel, marquee, video) kullanıcı tarafından durdurulabilmelidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="İçerik neden saniyede üçten fazla yanıp sönmemeli?">
+
+Işığa duyarlı epilepsisi olan kişilerde nöbet tetikleyebilir. Bu, erişilebilirlik kurallarının en ciddi sonuçlu olanıdır; diğerleri kullanıcıyı dışarıda bırakır, bu ise zarar verebilir.
+
+</SelfCheck>
+
+<SelfCheck question="Otomatik dönen bir carousel için erişilebilirlik açısından ne gerekir?">
+
+Beş saniyeden uzun süren otomatik hareketi kullanıcı durdurabilmelidir: bir duraklat düğmesi (ve idealde odaklanınca ya da üzerine gelince durması). Aksi hâlde dikkat kısıtı ya da okuma güçlüğü olanlar için engeldir.
+
+</SelfCheck>

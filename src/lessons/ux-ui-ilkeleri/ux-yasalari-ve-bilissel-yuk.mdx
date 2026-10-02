@@ -1,0 +1,144 @@
+---
+summary: "Hick, Fitts, Jakob, Miller ve bilişsel yük: tasarım kararlarını gerekçelendirmekte kullanılan 'yasalar'. Hepsinin sınırı var; en sık hata, sınırlarını bilmeden uygulamak."
+outcomes:
+  - "Hick, Fitts, Jakob ve Miller'ı bir cümleyle anlatıp her birinin gerçek kullanım alanını söyleyebilirsin."
+  - "\"Menüde 7'den fazla öğe olmasın\" cümlesinin neden yanlış olduğunu ve doğru referansı bilirsin."
+  - "Bilişsel yükün üç kaynağını ve tasarımcının hangisini azalttığını söyleyebilirsin."
+  - "Yanıt süresi eşiklerine göre hangi gecikmede hangi geri bildirimin gerektiğini seçebilirsin."
+minutes: 14
+sources:
+  - label: "Laws of UX"
+    url: "https://lawsofux.com/"
+  - label: "NN/g — Minimize Cognitive Load"
+    url: "https://www.nngroup.com/articles/minimize-cognitive-load/"
+  - label: "NN/g — Response Times: The 3 Important Limits"
+    url: "https://www.nngroup.com/articles/response-times-3-important-limits/"
+  - label: "NN/g — Fitts's Law and Its Applications in UX"
+    url: "https://www.nngroup.com/articles/fitts-law/"
+additions:
+  - "Yanıt süresi eşikleri: 0,1 / 1 / 10 saniye Nielsen'e ait; 'Doherty threshold' ise 400 ms'dir (farklı bir kavram)."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Outside from "~/components/lesson/Outside.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Bir toplantıda biri "Hick yasasına göre seçenekleri azaltmalıyız" diyor, bir başkası "Miller yasası, menüde yedi öğeden fazla olmaz" diyor. Kulağa bilimsel geliyor ve tartışmayı bitiriyor. Ama yarısı yanlış.
+
+Bu bölüm psikoloji araştırmalarından türetilmiş ve tasarım kararlarını gerekçelendirmekte kullanılan kuralları anlatıyor. **Hepsinin sınırları var** ve en sık yapılan hata, sınırlarını bilmeden uygulamak. Bu bir fizik yasası listesi değil, **dikkatle kullanılacak bir araç kutusu.**
+
+## Hick yasası: seçenek arttıkça karar uzar
+
+**Hick's Law** (Hick–Hyman yasası), seçenek sayısı arttıkça **karar verme süresinin uzadığını** söyler. Menü, form ve fiyatlandırma tasarımında seçenek azaltmanın gerekçesidir. "Beş plan yerine üç plan sunalım; Hick yasası açısından karar süresi kısalır."
+
+Gerçek fayda seçenek *silmekten* çok seçenekleri **gruplamaktan** gelir: **30 seçenek, 5 grupta 6'şar seçenekten daha yorucudur.**
+
+Sınırı: yasa **tanıdık olmayan, eşit olasılıklı** seçenekler için formüle edilmiştir. Alışkanlık kazanılmış arayüzlerde ve seçenekler görünür hâldeyken etkisi zayıflar.
+
+## Fitts yasası: uzak ve küçük hedef pahalıdır
+
+**Fitts's Law**, bir hedefe ulaşma süresinin hedefin **uzaklığı arttıkça uzadığını** ve **boyutu büyüdükçe kısaldığını** söyler. Buton boyutlarının ve yerleşiminin gerekçesidir. Birincil eylemi küçük yapmak ya da ekranın uzak köşesine koymak **ölçülebilir bir maliyettir.**
+
+Mobilde başparmağın rahat ulaştığı bölge (*thumb zone*) bu yasanın pratik uygulamasıdır. Erişilebilirlikte dokunma hedefi minimum boyutlarının temeli de budur. "Silme ve kaydet butonları yan yana ve küçük; Fitts yasası gereği yanlış tıklama riski yüksek, aralarına mesafe koyalım."
+
+## Jakob yasası: kullanıcı başka sitelerde yaşıyor
+
+**Jakob's Law**, kullanıcıların zamanlarının çoğunu **başka sitelerde** geçirdiğini; bu yüzden senin sitenin de onlar gibi çalışmasını beklediğini söyler. Yaygın kalıplardan sapmanın maliyetini hatırlatır: logonun sol üstte olması, sepet ikonunun sağ üstte olması, alt çizgili metnin link olması zevk değil, **öğrenilmiş beklentidir.**
+
+Sapmak mümkündür ama **bedeli ödenebilir olmalıdır.** "Farklı bir şey yapalım" önerilerine karşı en güçlü argümandır. "Menüyü sağ tarafa almak özgün olur ama Jakob yasası diyor ki kullanıcı solda arayacak; kazancı bu maliyeti karşılamıyor."
+
+Yasa "hiç yenilik yapma" demez. Yeniliğin, **öğrenme maliyetini karşılayacak kadar değer** üretmesi gerektiğini söyler.
+
+## Miller yasası ve en sık yapılan hata
+
+**Miller's Law** ("magical number seven, plus or minus two"), insanın kısa süreli belleğinde aynı anda tutabildiği bilgi parçası sayısının **sınırlı** olduğunu söyler. Asıl değerli kısmı sayı değil, **chunking** (parçalama) fikridir: bilgi anlamlı gruplara bölündüğünde aynı sınırdan çok daha fazlası geçer. Telefon numarasının 5XX XXX XX XX diye yazılmasının sebebi budur.
+
+<Callout kind="dikkat" title="Bu, en sık yanlış uygulanan kuraldır">
+
+"Menüde 7'den fazla öğe olmasın" cümlesinin araştırmada karşılığı **yoktur.** Miller'ın 1956 tarihli çalışması **ekranda görünmeyen,** akılda tutulması gereken bilgiyle ilgilidir. Menü öğeleri ekranda durur: bu bir **tanıma** görevidir, hatırlama görevi değil.
+
+Miller'ın kendisi de sayıyı bir tesadüf olarak nitelendirmiştir ve sonraki araştırmalar (Cowan, 2001) gerçek kapasitenin **daha düşük ve malzemeye göre değişken** olduğunu göstermiştir. Menü uzunluğu için doğru referans Miller değil, **Hick yasası ve bilişsel yüktür.**
+
+</Callout>
+
+## Bilişsel yük: tasarımın asıl düşmanı
+
+**Cognitive load** (bilişsel yük), bir görevi yapmak için harcanan **zihinsel çabadır.** Tasarımın asıl düşmanıdır; yukarıdaki "yasaların" çoğu bunun türevidir.
+
+Yük üç yerden gelir:
+
+1. **Görevin kendi zorluğu** (vergi beyannamesi doldurmak zor bir iştir).
+2. **Arayüzün getirdiği gereksiz zorluk** (kötü etiket, karışık düzen).
+3. **Öğrenme çabası** (yeni bir ürünü ilk kez kullanmak).
+
+**Tasarımcının işi ikinciyi azaltmaktır:** kullanıcı işine odaklansın, arayüzü çözmeye değil. "Aynı ekranda üç farklı görev var; bilişsel yük yüksek, ayıralım."
+
+<StepFlow
+  arrows={false}
+  label="Bilişsel yükün kaynakları"
+  caption="İlk kaynak görevin doğasıdır ve sen değiştiremezsin. İkinci kaynağı azaltmak tasarımcının doğrudan işidir; üçüncüsü iyi onboarding ve tutarlılıkla hafifler."
+  steps={[
+    { title: "Görevin zorluğu", sub: "Doğal; tasarım basitleştiremez", tone: "plain" },
+    { title: "Gereksiz arayüz zorluğu", sub: "Senin işin: bunu azalt", tone: "accent" },
+    { title: "Öğrenme çabası", sub: "Tutarlılık ve ipuçlarıyla hafiflet", tone: "progress" },
+  ]}
+/>
+
+## Yanıt süresi eşikleri
+
+İnsanın bir sistemin yanıtını nasıl algıladığını belirleyen kabaca **üç eşik** vardır:
+
+| Süre | Algı | Gereken geri bildirim |
+|---|---|---|
+| ~0,1 sn | Anında hissedilir | Hiçbir şey gerekmez |
+| ~1 sn | Akış korunur ama gecikme fark edilir | Kısa bir durum işareti |
+| ~10 sn | Dikkat kopar | İlerleme göstergesi ve tahmini süre |
+
+Birkaç saniyede spinner ya da **skeleton** (içerik iskeleti) uygun olur. "İşlem ortalama 4 saniye sürüyor; skeleton koyalım, spinner tek başına yetmez."
+
+<Outside source="NN/g — Response Times: The 3 Important Limits" href="https://www.nngroup.com/articles/response-times-3-important-limits/">
+
+Materyaldeki "Doherty threshold" adı burada bir karışıklığa yol açıyor. İki ayrı kavram var:
+
+- **0,1 / 1 / 10 saniye** eşikleri, Jakob Nielsen'in "Response Times: The 3 Important Limits" yazısında özetlediği, daha eski araştırmalara (Miller 1968, Card ve diğerleri 1991) dayanan üç sınırdır.
+- **Doherty threshold** ise farklı bir kavramdır: bilgisayar ile kullanıcının birbirini beklemediği yaklaşık **400 milisaniyelik** yanıt süresini anlatır; Laws of UX'te de bu şekilde geçer.
+
+Yani 0,1 / 1 / 10 sayılarını "Doherty" diye anmak doğru değil. Sayıları da kesin değer değil **büyüklük mertebesi** olarak kullan; kaynaklara göre biraz farklı anılırlar.
+
+</Outside>
+
+<Callout kind="tasarimci">
+
+- **Bir "yasayı" gerekçe yapmadan önce sınırını kontrol et.** Miller menü uzunluğu için doğru kaynak değil.
+- **Seçenek azaltmak yerine grupla.** Hick'in gerçek faydası gruplamadadır.
+- **Birincil eylemi büyük ve ulaşılır koy.** Silme ile kaydet arasına mesafe bırak.
+- **Sapmanın bedelini hesapla.** Jakob yasası yeniliği yasaklamıyor, maliyetini hatırlatıyor.
+- **Gereksiz bilişsel yükü ara.** Aynı ekranda birden fazla görev, tutarsız etiketler, gizli seçenekler.
+
+</Callout>
+
+<Summary>
+
+- Hick: seçenek arttıkça karar uzar; fayda silmekten çok gruplamadan gelir.
+- Fitts: uzak ve küçük hedef pahalıdır; birincil eylem büyük ve erişilebilir olmalı.
+- Jakob: kullanıcı başka sitelerdeki kalıpları bekler; sapmanın bedeli ödenebilir olmalı.
+- Miller menü uzunluğu için doğru referans değildir; asıl fikri chunking'dir. Menü için Hick ve bilişsel yük.
+- Bilişsel yük üç kaynaktan gelir; tasarımcı gereksiz arayüz zorluğunu azaltır. Yanıt süresi eşikleri 0,1 / 1 / 10 saniyedir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question={"\"Menüde 7'den fazla öğe olmasın\" cümlesi neden yanlış? Doğru referans hangi kavramdır?"}>
+
+Miller'ın 1956 çalışması akılda tutulması gereken bilgiyle ilgilidir; menü öğeleri ekranda görünür durur, bu bir tanıma görevidir, hatırlama görevi değil. Miller'ın kendisi de sayıyı bir tesadüf olarak nitelendirmiştir. Menü uzunluğu için doğru referans Hick yasası ve bilişsel yüktür; ayrıca asıl fayda seçenek silmekten değil gruplamaktan gelir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir işlem ortalama 4 saniye sürüyor. Nasıl bir geri bildirim koyarsın?">
+
+Birkaç saniyelik gecikmede kullanıcıya sistemin çalıştığını gösteren bir durum işareti gerekir: skeleton ya da spinner. Süre uzadıkça ilerleme göstergesi ve tahmini süre eklenir. 1 saniyenin altında hiçbir şey gerekmez.
+
+</SelfCheck>

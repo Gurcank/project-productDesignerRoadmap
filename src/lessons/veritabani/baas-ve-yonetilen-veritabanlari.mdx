@@ -1,0 +1,82 @@
+---
+summary: "Veritabanını (ve bazen tüm arka yüzü) hazır servis olarak almak: BaaS, manzara ve Row Level Security. Ücretsiz katmanlar kalıcı değildir; RLS yapılandırılmazsa veritabanı internete açık kalabilir."
+outcomes:
+  - "BaaS'ın ne sağladığını ve ne zaman sınırlarına çarpıldığını söyleyebilirsin."
+  - "Ücretsiz katmanlar hakkındaki dersi ('çıkmak ne kadar zor?') açıklayabilirsin."
+  - "RLS'in ne olduğunu ve BaaS'ta neden kritik bir güvenlik noktası olduğunu bilirsin."
+minutes: 7
+sources:
+  - label: "Supabase — Dokümantasyon"
+    url: "https://supabase.com/docs"
+  - label: "Supabase — Row Level Security"
+    url: "https://supabase.com/docs/guides/database/postgres/row-level-security"
+  - label: "PostgreSQL — Row Security Policies"
+    url: "https://www.postgresql.org/docs/current/ddl-rowsecurity.html"
+  - label: "Neon — Giriş"
+    url: "https://neon.com/docs/introduction"
+  - label: "Firebase — Dokümantasyon"
+    url: "https://firebase.google.com/docs"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Tek başına çalışan bir tasarımcı olarak bir ürün çıkarmak istiyorsun ama arka yüz yazamıyorsun. Hazır servisler tam bunun için var. Bu ders, bu seçeneğin getirdiklerini ve risklerini anlatır.
+
+## BaaS
+
+**BaaS (Backend as a Service)**, veritabanı, kimlik doğrulama, dosya depolama ve gerçek zamanlı özellikleri hazır sunan platformdur. Küçük ekiplerin arka yüz kurmadan ürün çıkarmasını sağlar; tek başına çalışan biri için aylar kazandıran bir tercih olabilir. MVP ve küçük ekip projelerinde görürsün. "Tek başımayız; BaaS ile başlayalım, arka yüz kurmakla uğraşmayalım."
+
+Sınırları: karmaşık iş kuralları, özel performans ihtiyaçları ya da katı veri yerleşimi (data residency) gereksinimleri olan projelerde bu sınırlara çarpılır. Ayrıca bir **vendor lock-in** kararıdır.
+
+## Manzara
+
+**Bu tablo materyalin Eylül 2026 tarihli doğrulamasına dayanır, hızla eskir. Kullanmadan önce doğrula.**
+
+| Ürün | Ne | Öne çıkan |
+|---|---|---|
+| **Supabase** | Postgres + kimlik doğrulama + depolama + gerçek zamanlı + edge işlevleri | "Açık kaynak Firebase alternatifi" olarak konumlanır. Tek platformda tüm arka yüz. Ücretsiz katmanda proje bir süre kullanılmazsa duraklatılıyor |
+| **Neon** | Serverless Postgres | Sıfıra ölçeklenme ve **branching** (her PR için ayrı veritabanı kopyası). Materyale göre Databricks tarafından satın alındı (Mayıs 2025) ve bağımsız işletiliyor |
+| **Firebase** | Google'ın BaaS'ı | Gerçek zamanlı senkronizasyon ve çevrimdışı destek güçlü; mobil uygulamalarda yaygın. Google ekosistemine bağlar |
+| **PlanetScale** | Yönetilen MySQL/Vitess ve Postgres | Ücretsiz katmanını Nisan 2024'te kaldırdığı anılır; sektörde çokça konuşulan bir dönüm noktası. Şu an ödemeli ve daha kurumsal konumda |
+| **Turso / Cloudflare D1** | Edge SQLite | Kullanıcıya yakın, düşük gecikmeli okumalar |
+
+**Tablodan çıkarılacak asıl ders:** ücretsiz katmanlar kalıcı değildir. PlanetScale örneği, üzerine ürün kurulan bir ücretsiz katmanın bir gecede kalkabileceğini gösterdi. Platform seçerken sorulacak soru "bugün bedava mı" değil, **"ödemeli plana geçersek maliyeti ne olur ve çıkmak ne kadar zor?"**
+
+## Row Level Security
+
+**RLS (Row Level Security, satır seviyesinde güvenlik)**, hangi kullanıcının hangi **satırları** görebileceğinin uygulama kodunda değil **veritabanı seviyesinde** tanımlanmasıdır. BaaS mimarilerinde kritiktir: istemci doğrudan veritabanıyla konuştuğu için yetki kontrolü, arada bir sunucu katmanı olmadan yapılmalıdır. RLS bu kontrolü en derin katmana koyar. "RLS politikalarını yazmadan yayına çıkmayalım; şu an herkes her satırı okuyabilir."
+
+**Ciddi bir risk kaynağıdır:** RLS yapılandırılmadığında ya da yanlış yazıldığında veritabanı internete açık hâle gelebilir. Materyale göre BaaS ile hızlı ilerleyen projelerde en sık görülen güvenlik açığı budur.
+
+<Callout kind="tasarimci">
+
+- **BaaS tercihini "çıkış maliyeti" sorusuyla birlikte ele al:** ödemeli plana geçersek ne olur, taşınabilir mi?
+- **Yayına çıkmadan önce yetki politikalarının (RLS) yazıldığını ve test edildiğini sor.**
+- **Ücretsiz katmanın sınırlarını (duraklatma, kota) kullanıcı deneyimine etkisiyle düşün.**
+
+</Callout>
+
+<Summary>
+
+- BaaS veritabanı, kimlik doğrulama ve depolamayı hazır verir; küçük ekipler için hızlandırıcıdır ama bir vendor lock-in kararıdır.
+- Ücretsiz katmanlar kalıcı değildir; sorulacak soru "çıkmak ne kadar zor?".
+- RLS, hangi kullanıcının hangi satırı göreceğini veritabanı seviyesinde tanımlar; yapılandırılmazsa veritabanı açık kalabilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Ücretsiz veritabanı katmanları hakkında PlanetScale örneğinden çıkarılacak ders nedir?">
+
+Ücretsiz katmanlar kalıcı değildir. Platform seçerken sorulacak soru "bugün bedava mı" değil, "ödemeli plana geçersek maliyeti ne olur ve çıkmak ne kadar zor" olmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="RLS nedir ve neden BaaS mimarilerinde kritik bir güvenlik noktasıdır?">
+
+Hangi kullanıcının hangi satırları görebileceğinin veritabanı seviyesinde tanımlanmasıdır. BaaS'ta istemci doğrudan veritabanıyla konuştuğu için arada yetki kontrolü yapacak bir sunucu yoktur; RLS yapılandırılmazsa ya da yanlış yazılırsa veritabanı fiilen internete açık hâle gelir.
+
+</SelfCheck>

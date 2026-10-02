@@ -1,0 +1,75 @@
+---
+summary: "Yavaş ve hatalı sayfaların arkasındaki tekrar eden sebepler: N+1, yavaş sorgu ve eksik index, kilitler, bağlantı havuzu. N+1 doğrudan tasarım isteklerinden doğar: 'listede her ürünün yazarını da gösterelim'."
+outcomes:
+  - "N+1 problemini ve hangi tasarım isteğinden doğduğunu söyleyebilirsin."
+  - "Staging'de hızlı, production'da yavaş bir listenin iki muhtemel sebebini sayabilirsin."
+  - "Kilit sorunun tasarımdaki karşılığını ('başkası az önce aldı' ekranı) bilirsin."
+minutes: 8
+sources:
+  - label: "Rails Guides — Eager loading (N+1 çözümü)"
+    url: "https://guides.rubyonrails.org/active_record_querying.html"
+  - label: "PostgreSQL — Açık kilitleme"
+    url: "https://www.postgresql.org/docs/current/explicit-locking.html"
+  - label: "PostgreSQL — Index'lere giriş"
+    url: "https://www.postgresql.org/docs/current/indexes-intro.html"
+  - label: "Use The Index, Luke"
+    url: "https://use-the-index-luke.com/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Listede her ürünün yazarını da gösterelim." Masum bir tasarım isteği. Geliştirici "bu zor" diyor. Neden? Bu ders o cevabın arkasındaki problemleri anlatır.
+
+## N+1 problemi
+
+**N+1 query problem**, bir liste çekmek için 1 sorgu atılması, sonra listedeki her öğe için ayrı birer sorgu daha atılmasıdır. **Bu bölümdeki en önemli terim, çünkü doğrudan tasarım isteklerinden doğar.** "Listede her ürünün yazarını da gösterelim" dediğinde, kod 20 ürün için 20 ek sorgu atabilir. 1 sorgu 5 milisaniyeyse toplam 105 milisaniye olur; 100 ürünlü bir sayfada bu yarım saniyeye çıkar. Çözümü genelde join ya da toplu yüklemedir. "Bu liste N+1 yapıyor; her satır için ayrı sorgu gidiyor, ilişkileri tek seferde çekelim."
+
+ORM'ler bu sorunu kolaylaştırır: tek satırlık masum görünen bir kod arka planda yüzlerce sorgu üretebilir. Bu yüzden ORM kullanan ekiplerde N+1 daha sık görülür.
+
+## Yavaş sorgu ve eksik index
+
+**Slow query / missing index / full table scan**: bir sorgunun, indeks olmadığı için tüm tabloyu taraması ve uzun sürmesidir. Küçük veriyle test edilen bir özellik gerçek veriyle çöker. **Bu, staging ile production arasındaki en yaygın fark kaynağıdır:** staging'de 100 kayıt vardır, production'da 2 milyon. "Staging'de anında geliyor, production'da 6 saniye; veri hacmi farkı ve muhtemelen eksik indeks."
+
+## Kilit ve deadlock
+
+**Lock (kilit)**, bir kayıt üzerinde işlem yapılırken başkalarının aynı anda değiştirmesini engelleyen mekanizmadır; **deadlock** iki işlemin karşılıklı olarak birbirini beklemesidir. Aynı anda iki kişinin aynı son bileti almasını engeller; bedeli beklemeye ve yavaşlığa yol açabilmesidir. Bilet satışı, stok ve rezervasyon gibi yoğun trafikli işlemlerde karşına çıkar.
+
+**Tasarım karşılığı:** **"başkası az önce aldı"** durumunun bir ekranı olmalıdır. Rezervasyon ve bilet ürünlerinde bu, sık yaşanan ve sıkça tasarlanmayan bir durumdur.
+
+## Connection pool
+
+**Connection pool (bağlantı havuzu)**, veritabanına açılan bağlantıların sınırlı sayıda tutulup yeniden kullanılmasıdır. Her bağlantı veritabanı için maliyetlidir ve sayıları sınırlıdır. **Serverless ile bilinen bir çatışması vardır:** her işlev çağrısı yeni bir bağlantı açmaya çalışırsa havuz hızla tükenir; "too many connections" hatası serverless projelerinde sık karşılaşılan bir üretim hatasıdır. Çözüm, havuzlayıcı kullanmaktır.
+
+<Callout kind="tasarimci">
+
+- **Listeye yeni bir ilişkili alan (yazar, son yorum, sayaç) eklemeden önce maliyetini sor.**
+- **"Başkası az önce aldı" durumunu rezervasyon/stok akışlarında tasarla.**
+- **Performans testini gerçekçi veri hacmiyle iste;** staging'de hızlı olması yetmez.
+- **Trafik artışında beklenen hata ekranlarını tasarla.**
+
+</Callout>
+
+<Summary>
+
+- N+1, bir liste için 1 + N sorgu atılmasıdır ve çoğu zaman "listeye ilişkili alan ekleyelim" isteğinden doğar; çözümü join ya da toplu yüklemedir.
+- Staging'de hızlı production'da yavaş listenin iki sebebi: veri hacmi farkı ve eksik index.
+- Kilitler eşzamanlı işlemleri korur; "başkası az önce aldı" ekranı tasarlanmalıdır.
+- Serverless ve connection pool çatışması "too many connections" hatasına yol açabilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="N+1 problemi nedir ve hangi tasarım isteğinden doğar? Çözümü nedir?">
+
+Bir liste için 1 sorgu atılıp sonra her öğe için ayrı birer sorgu daha atılması. "Listede her ürünün yazarını/son yorumunu da gösterelim" gibi isteklerden doğar. Çözümü join ya da ilişkileri tek seferde toplu çekmektir.
+
+</SelfCheck>
+
+<SelfCheck question="Staging'de hızlı, production'da yavaş bir liste. En muhtemel iki sebep nedir?">
+
+Veri hacmi farkı (staging'de 100 kayıt, production'da milyonlar) ve eksik indeks (küçük veride fark edilmez, büyük veride tam tablo taramasına dönüşür).
+
+</SelfCheck>

@@ -1,0 +1,83 @@
+---
+summary: "Veri yapısı, bilginin bellekte nasıl dizildiğidir. Seçilen yapı arayüzün neyi anında yapabileceğini belirler; 'bu pahalı' cümlesinin neden pahalı olduğunu anlamak için tek soru: en sık yapılan işlem ne?"
+outcomes:
+  - "Veri yapısının neden bir tasarım meselesi olduğunu söyleyebilirsin."
+  - "Bir yapıyı değerlendirmek için sorulacak tek soruyu (en sık işlem ne?) bilirsin."
+  - "Ölçeğin neden her şeyi değiştirdiğini ve ekranda 8 satır görünmesinin arkadaki listeyi küçültmediğini açıklayabilirsin."
+minutes: 7
+sources:
+  - label: "MDN — JavaScript veri yapıları"
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures"
+  - label: "web.dev — Interaction to Next Paint (INP)"
+    url: "https://web.dev/articles/inp"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir geliştirici "bunu yapmak pahalı" dediğinde ne demek istiyor? Çoğu zaman: seçilen veri yapısı o işi kötü yapıyor. Bu bölüm kod öğretmeyecek. Amacı, **neden pahalı olduğunu** anlayabilmen ve tasarımını buna göre kurabilmen.
+
+**Veri yapısı**, bir bilginin bellekte **nasıl dizildiğidir.** Aynı veri birden fazla şekilde dizilebilir ve her diziliş bazı işleri ucuzlatır, bazılarını pahalılaştırır. Seçilen yapı, arayüzün neyi anında yapabileceğini belirler.
+
+## Neden senin işin
+
+Tasarladığın her ekran, arkada bir veri dizilişine bahis oynar:
+
+- "Listede arama kutusu olsun, yazarken filtrelensin": veriye hangi sırayla erişildiğine bağlı olarak anında ya da fark edilir derecede yavaş olur.
+- "Seçilenleri en üstte toplayalım": seçili öğeleri tutan yapı yanlışsa her tıkta tüm liste yeniden taranır.
+- "Kullanıcı geri alabilsin": geri alma, sırayı hatırlayan bir yapı ister; sonradan eklenmesi zordur.
+
+Bunların hiçbiri "kötü kod" değildir; yanlış yapı seçimidir ve genellikle **tasarım kararı netleşmeden önce** yapılmıştır.
+
+## Tek soru
+
+Bir yapının iyi mi kötü mü olduğu soyut olarak sorulamaz. Sorulacak soru şudur: **bu ekranda en sık yapılan işlem ne?** Ekleme mi, arama mı, sıralama mı, silme mi?
+
+| İşlem | Anlamı | Arayüzdeki karşılığı |
+|---|---|---|
+| Erişim | Belirli bir öğeye gitmek | "Bu kartı aç" |
+| Arama | Bir şeyi bulmak | Filtre kutusu, otomatik tamamlama |
+| Ekleme / silme | Öğe eklemek, çıkarmak | "Sepete ekle", "kaldır" |
+| Sıralama | Sırayı değiştirmek | Sütun başlığına tıklama |
+
+"Her şeyde hızlı" bir yapı yoktur; bu, mühendislikteki **trade-off** kavramının en somut hâlidir. Bir geliştirici "arama hızlı ama ekleme pahalı" dediğinde, yapının bu tablodaki dengesini anlatıyordur.
+
+## Ölçek her şeyi değiştirir
+
+10 öğede hiçbir yapı seçimi hissedilmez. 1.000 öğede fark başlar. 1.000.000 öğede yanlış yapı arayüzü kullanılamaz hâle getirir. Bu yüzden "tasarımda 8 satır gösteriyoruz, sorun olmaz" demek yanıltıcıdır: ekranda 8 satır olabilir ama **arkadaki liste** on binlerce kayıt olabilir ve filtre o listenin tamamında çalışır.
+
+Tarayıcı tarafındaki görünür karşılığı **INP** eşiğidir: bir tıklamadan sonra ekranın güncellenmesi 200 ms'yi aşarsa kullanıcı gecikmeyi fark eder. Yanlış veri yapısı bu bütçeyi tek başına tüketebilir.
+
+<Callout kind="tasarimci">
+
+- **"Bu liste kaç öğe olabilir?" sorusunu tasarım aşamasında sor.** "Bilmiyoruz" bir risktir ve boş durum, yükleniyor, sayfalama tasarımını değiştirir.
+- **Bir etkileşimin anında olmasını istiyorsan söyle.** Sonradan "biraz yavaş" demek mimariyi değiştirmek demektir.
+- **Sıralama ve filtrelemeyi bedavaymış gibi tasarlama.**
+- **"Geri alma" bir veri yapısı kararıdır;** baştan söylenirse ucuzdur.
+
+</Callout>
+
+<Summary>
+
+- Veri yapısı, bilginin bellekte dizilişidir; seçim arayüzün neyi anında yapabileceğini belirler.
+- Soru: en sık yapılan işlem ne? Her yapı bazı işleri ucuz, bazılarını pahalı yapar.
+- Ölçek farkı belirler: 10 öğede fark yok, 1.000'de başlar, 1.000.000'da yanlış yapı kullanılamaz yapar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir veri yapısını değerlendirirken sorulacak tek soru nedir?">
+
+Bu ekranda en sık yapılan işlem ne (ekleme, arama, sıralama, silme)? Her yapı bazı işlerde hızlı, bazılarında yavaştır.
+
+</SelfCheck>
+
+<SelfCheck question="Tasarımda 8 satır gösterilmesi neden liste küçük demek değildir?">
+
+Ekrandaki satır sayısı arkadaki kayıt sayısını yansıtmaz; filtre ve sıralama tüm veri üzerinde çalışır ve on binlerce kayıt olabilir.
+
+</SelfCheck>

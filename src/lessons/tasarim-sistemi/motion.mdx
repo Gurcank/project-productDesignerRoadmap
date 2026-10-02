@@ -1,0 +1,143 @@
+---
+summary: "Hareketin tasarımı: hareketin bir işi olmalı. Süre, yumuşatma eğrisi, geçiş ve animasyon, mikro etkileşim, kademeli başlatma ve azaltılmış hareket tercihi."
+outcomes:
+  - "Bir hareketin hangi üç işten birini yaptığını söyleyebilir, yapmıyorsa kaldırabilirsin."
+  - "Giren ve çıkan öğeler için doğru yumuşatma eğrisini (ease-out / ease-in) seçebilirsin."
+  - "Süre aralıklarını bağlama göre (küçük/büyük, sık/seyrek) seçebilirsin."
+  - "prefers-reduced-motion açıkken ne yapılması gerektiğini ve neyin yapılmaması gerektiğini bilirsin."
+minutes: 10
+sources:
+  - label: "Material Design 3 — Easing and duration"
+    url: "https://m3.material.io/styles/motion/easing-and-duration/applying-easing-and-duration"
+  - label: "MDN — prefers-reduced-motion"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion"
+  - label: "W3C WCAG 2.2 — Animation from Interactions"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html"
+flags: ["emin-degil"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir uygulamada bir butona basıyorsun ve ekranın yarısı salınarak kayıyor, kartlar sırayla havada uçuşarak yerine konuyor, bir ikon dönüyor. İlk üç kez "güzel" diyorsun. Onuncu kez, hızlı bir işlem yapmaya çalışırken, **sinir bozucu.** Hareket işe yaramıyor, sadece vakit alıyor.
+
+Hareketin tasarımı için kural basit: **hareketin bir işi olmalı.** İşi olmayan animasyon, kullanıcıyı yavaşlatan bir gösteriştir.
+
+## Hareketin üç işi
+
+**Motion design** (hareket tasarımı), arayüzdeki geçişlerin, animasyonların ve tepkilerin tasarımıdır. İyi hareket üç işten birini yapar:
+
+1. **Yön gösterir:** Bu panel nereden geldi, nereye gitti?
+2. **Durum bildirir:** Yükleniyor, kaydedildi, hata.
+3. **İlişki kurar:** Tıklanan kart bu detaya dönüştü.
+
+Bu üçünden birini yapmıyorsa hareket gereksizdir. Prototip ve handoff'ta karşına çıkar; genelde en son düşünülür ve bu yüzden tutarsız olur. "Bu animasyon hiçbir işe yaramıyor, sadece süslüyor; kaldıralım."
+
+## Süre
+
+**Duration** (süre), bir animasyonun ne kadar sürdüğüdür, milisaniye cinsinden. **Algılanan hızı doğrudan etkiler.** Genel yaklaşım:
+
+| Hareket | Yaklaşık süre |
+|---|---|
+| Küçük ve yakın (hover, tik, buton) | 100–200 ms |
+| Büyük ve uzak (panel, modal, sayfa) | 250–400 ms |
+
+Kullanıcının **sık tekrarladığı** bir etkileşim ne kadar hoş olursa olsun uzun sürerse rahatsız edici hâle gelir. "Hover geçişi 300ms çok yavaş; 150'ye indirelim, tekrar eden bir etkileşim."
+
+**Emin değilim:** Bu sayı aralıkları sektörde yaygın öneriler; kesin bir standart değil. Sistemine göre ayarla ve tekrar sıklığını ölçüt al.
+
+## Yumuşatma eğrisi
+
+**Easing** (timing function, yumuşatma eğrisi), animasyonun hızının süre boyunca **nasıl değiştiğidir.** Doğrusal (linear) hareket mekanik hisseder, çünkü gerçek dünyada hiçbir şey sabit hızda başlayıp durmaz. Genel yaklaşım:
+
+| Durum | Eğri | Davranış |
+|---|---|---|
+| Ekrana **giren** öğe | **ease-out** | Hızlı başlar, yavaşlayarak oturur |
+| Ekrandan **çıkan** öğe | **ease-in** | Yavaş başlar, hızlanarak gider |
+| **Yer değiştiren** öğe | **ease-in-out** | İkisini birden kullanır |
+
+"Modal açılışı ease-out olsun, kapanışı ease-in; şu an ikisi de linear ve robotik duruyor."
+
+Mantık: giren öğe dikkat çeker ve doğal biçimde yerine oturmalı; çıkan öğe kullanıcıyı bekletmeden hızlanıp gitmeli.
+
+## Geçiş ve animasyon
+
+**Transition** (geçiş), bir durumdan diğerine geçerken oluşan hareket (hover, açık/kapalı). **Animation** (animasyon) ise kendi kendine çalışan, tekrarlanabilen hareket dizisidir (yükleme dönen çemberi). Farklı işler için farklı araçlar: arayüzün büyük kısmı transition'dır; animation daha çok durum göstergelerinde kullanılır. "Buton hover'ı transition, skeleton parıltısı animation."
+
+### Mikro etkileşim
+
+**Micro-interaction** (mikro etkileşim), tek bir küçük eyleme verilen küçük görsel tepkidir: butonun basılma hissi, kalp ikonunun dolması, kopyalandı işareti. Sistemin cevap verdiğini hissettirir. En büyük kalite farkını yaratan detaylardan biridir **ve ölçülü kullanıldığında.** "Kopyala butonuna mikro etkileşim ekleyelim: ikon 1 saniye tik işaretine dönsün."
+
+### Kademeli başlatma
+
+**Staggering** (kademeli başlatma), birden çok öğenin küçük gecikmelerle **sırayla** animasyona girmesidir. **Orchestration** (koreografi) ise birden çok animasyonun birbirine göre zamanlanmasıdır. Aynı anda hareket eden 20 öğe kaotik görünür; küçük gecikmelerle sıralanınca göz takip edebilir.
+
+Ama gecikmeler toplamı büyürse kullanıcı **bekler;** özellikle sık ziyaret edilen ekranlarda risklidir. "Kart listesine 40 ms stagger verelim ama toplam 300 ms'yi geçmesin."
+
+## Azaltılmış hareket
+
+**`prefers-reduced-motion`**, kullanıcının işletim sistemi düzeyinde "hareketi azalt" ayarını açtığını bildiren CSS medya sorgusudur. Vestibüler rahatsızlığı olan kullanıcılarda **büyük hareketler baş dönmesi ve mide bulantısı** yaratabilir. Bu bir tercih değil, **erişilebilirlik gereğidir.**
+
+**Doğru uygulama animasyonları tamamen kapatmak değildir:** büyük yer değiştirmeleri ve paralaks etkilerini kaldırıp yerine **kısa bir opaklık geçişi** bırakmaktır. Hareketi yok etmek değil, rahatsız edici olanı azaltmak amaçtır.
+
+<Compare>
+<Pane title="Normal tercih">
+
+- Panel kenardan kayarak girer
+- Paralaks arka plan hareket eder
+- Liste öğeleri sırayla uçar
+
+</Pane>
+<Pane title="Hareket azaltılmış">
+
+- Panel kısa bir solma ile belirir
+- Paralaks kapalı, arka plan sabit
+- Liste öğeleri aynı anda solarak görünür
+
+</Pane>
+</Compare>
+
+"Paralaks efekti `prefers-reduced-motion` açıkken devre dışı kalsın; yalnızca solma uygulayalım."
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitede hareketin görevi durum bildirmek, süslemek değil. Süreler üç kademe: 120 ms (tik, hover), 180 ms (menü, panel), 260 ms (sayfa geçişi). Giren öğe ease-out, çıkan ease-in. Yalnızca `transform` ve `opacity` animasyonlanıyor (bunları tarayıcının çizim dersinden hatırla: akıcı olanlar bunlar). İlerleme halkası yalnızca değer değiştiğinde hareket ediyor. `prefers-reduced-motion` açıkken yer değiştirme kalkıyor, opaklık kalıyor; sol menüdeki çizgiler de bu durumda yalnızca belirip kayboluyor.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Her hareket için işini söyle:** yön mü, durum mu, ilişki mi? Cevap yoksa kaldır.
+- **Süreyi tekrar sıklığına göre seç.** Sık yapılan şey kısa olsun.
+- **Giren için ease-out, çıkan için ease-in.** Linear'ı kullanma.
+- **Motion token'ı tanımla:** süre ve eğriler isimli olsun.
+- **Azaltılmış hareketi baştan tasarla.** Hangi hareketin yerine hangi sade tepki geleceğini yaz.
+
+</Callout>
+
+<Summary>
+
+- Hareketin işi olmalı: yön göstermek, durum bildirmek ya da ilişki kurmak; aksi hâlde gösteriştir.
+- Süre bağlama göre: küçük ve sık hareketler 100–200 ms, büyük ve seyrek olanlar 250–400 ms (sektör önerisi, standart değil).
+- Giren öğe ease-out, çıkan ease-in; linear mekanik hisseder.
+- Mikro etkileşim ölçülü kullanılırsa kalite farkı yaratır; kademeli başlatmada toplam gecikme sınırlı olmalı.
+- Azaltılmış hareket tercihi erişilebilirlik gereğidir: büyük hareketi kaldır, yerine kısa solma bırak; tümünü kapatma.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Ekrana giren ve ekrandan çıkan öğeler için hangi easing türleri kullanılır ve neden?">
+
+Ekrana giren öğe ease-out (hızlı başlar, yavaşlar): dikkat çeker ve doğal biçimde yerine oturur. Ekrandan çıkan öğe ease-in (yavaş başlar, hızlanır): gidişi hızlandırır, kullanıcıyı bekletmez. Doğrusal hareket mekanik hisseder çünkü gerçek dünyada hiçbir şey sabit hızda başlayıp durmaz.
+
+</SelfCheck>
+
+<SelfCheck question="prefers-reduced-motion açıkken ne yapılmalı? Tüm animasyonları kapatmak doğru mu?">
+
+Hayır. Büyük yer değiştirmeler, paralaks ve zoom gibi vestibüler rahatsızlık yaratabilecek hareketler kaldırılır; yerine kısa bir opaklık geçişi gibi zararsız bir geri bildirim bırakılır. Amaç hareketi yok etmek değil, rahatsız edici olanı azaltmaktır.
+
+</SelfCheck>

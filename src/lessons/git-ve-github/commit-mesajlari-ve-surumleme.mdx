@@ -1,0 +1,71 @@
+---
+summary: "Commit mesajı 'ne' değil 'neden' anlatmalı; Conventional Commits geçmişi okunur ve otomatikleştirilebilir yapar; SemVer numaradan güncellemenin riskini okutur; changelog bir içerik tasarımı işidir."
+outcomes:
+  - "İyi bir commit mesajının neyi açıklaması gerektiğini söyleyebilirsin."
+  - "SemVer'de MAJOR, MINOR ve PATCH'in anlamını ve 0.x.y sürümlerini açıklayabilirsin."
+  - "Changelog'un neden kullanıcı diliyle yazılması gerektiğini bilirsin."
+minutes: 7
+sources:
+  - label: "Conventional Commits 1.0.0"
+    url: "https://www.conventionalcommits.org/en/v1.0.0/"
+  - label: "Semantic Versioning 2.0.0"
+    url: "https://semver.org/"
+  - label: "Keep a Changelog"
+    url: "https://keepachangelog.com/en/1.1.0/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir geçmişi okurken "düzeltmeler" yazan elli commit mi görmek istersin, yoksa "fix(auth): şifre sıfırlama bağlantısı süresi düzeltildi" gibi açık satırlar mı? İkincisi bir alışkanlıktır ve otomasyona bile yol açar.
+
+## Commit convention
+
+**Commit convention (Conventional Commits)**, commit mesajlarının belirli bir kalıpta yazılmasıdır: `tür(kapsam): açıklama`, örneğin `fix(auth): şifre sıfırlama bağlantısı süresi düzeltildi`. İki fayda: geçmiş okunabilir hâle gelir ve **otomatikleştirilebilir:** sürüm numarası ve değişiklik günlüğü mesajlardan üretilebilir. Yaygın türler: `feat` (yeni özellik), `fix` (hata düzeltme), `docs`, `refactor`, `test`, `chore`. "Conventional Commits kullanalım; changelog'u otomatik üretebiliriz."
+
+İyi bir commit mesajı **ne yapıldığını değil, neden yapıldığını** açıklamalıdır; ne yapıldığı zaten diff'te görünür. Aynı ilke kod yorumları için de geçerlidir.
+
+## Semantic versioning
+
+**SemVer**, sürüm numaralarının `MAJOR.MINOR.PATCH` biçiminde ve anlamlı bir kurala göre artırılmasıdır. Numaraya bakarak güncellemenin riskini anlamayı sağlar:
+
+- **PATCH** (2.1.0 → 2.1.1): hata düzeltmesi, geriye uyumlu. Güvenle güncellenir.
+- **MINOR** (2.1.0 → 2.2.0): yeni özellik, geriye uyumlu. Mevcut kullanım kırılmaz.
+- **MAJOR** (2.1.0 → 3.0.0): **kırıcı değişiklik.** Güncellemeden önce dokümantasyona bakılmalı.
+
+"Major sürüm çıkmış; kırıcı değişiklik var, güncellemeden önce sürüm notlarını okuyalım." Sıfırla başlayan sürümler (`0.x.y`) SemVer'de "kararlı değil" demektir; o aralıkta minor sürümler bile kırıcı olabilir. Kütüphanelerin hepsi bu kurala uymaz; uyduğunu varsaymak risklidir.
+
+## Changelog
+
+**Changelog (değişiklik günlüğü, sürüm notları)**, her sürümde neyin değiştiğini insan diliyle anlatan listedir. Kullanıcıya ve ekibe "ne değişti?" sorusunu cevaplar. **Bu aslında bir içerik tasarımı işidir:** commit mesajlarını olduğu gibi dökmek değil, kullanıcının anlayacağı dilde yazmak gerekir. Ürün içi "Yenilikler" bölümü bir özelliğin keşfedilmesini de sağlar. "Changelog'u kullanıcı diliyle yazalım; `refactor(core)` satırlarını kimse anlamıyor."
+
+<Callout kind="tasarimci">
+
+- **Changelog'u sen yaz ya da düzenle:** kullanıcı faydası odaklı, kısa cümleler.
+- **Ürün içi "yenilikler" yüzeyini tasarla;** her yeni özellik için kısa duyuru ve ilgili yere bağlantı.
+- **Bağımlılık güncellemelerinde MAJOR sürüm ayrımını bil;** tasarım sistemi paketinin MAJOR güncellemesi tüketen uygulamaları etkiler.
+
+</Callout>
+
+<Summary>
+
+- İyi commit mesajı "neden" anlatır; Conventional Commits geçmişi okunur ve otomatikleştirilebilir yapar.
+- SemVer: PATCH düzeltme, MINOR yeni özellik (uyumlu), MAJOR kırıcı değişiklik; 0.x.y kararlı değildir.
+- Changelog kullanıcı diliyle yazılır; bir içerik tasarımı işidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="SemVer'de major, minor ve patch farkı nedir? `0.x.y` sürümleri ne anlama gelir?">
+
+PATCH: hata düzeltmesi, geriye uyumlu. MINOR: yeni özellik, geriye uyumlu. MAJOR: kırıcı değişiklik; güncellemeden önce sürüm notları okunmalı. `0.x.y` sürümleri "kararlı değil" demektir; minor sürümler bile kırıcı olabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Changelog neden bir içerik tasarımı işidir?">
+
+Commit mesajlarını olduğu gibi dökmek işe yaramaz; kullanıcı `refactor(core)` satırını anlamaz. Changelog kullanıcının anlayacağı dilde yazılmalıdır ve ürün içinde gösterildiğinde bir özelliğin keşfedilmesini de sağlar.
+
+</SelfCheck>

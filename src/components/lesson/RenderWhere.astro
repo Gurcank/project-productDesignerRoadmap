@@ -1,0 +1,33 @@
+---
+import DiagramFigure from "../diagrams/DiagramFigure.astro";
+---
+
+<DiagramFigure
+  label="HTML nerede üretilir: derlemede, istekte, tarayıcıda"
+  caption="Rendering stratejileri bu üç yerin farklı birleşimleridir. Sağa gittikçe taze ve kişisel, sola gittikçe hızlı ve ucuz."
+>
+  <svg class="dg-narrow" viewBox="0 0 360 250" role="img" aria-label="Üç satır: SSG derlemede, SSR istekte sunucuda, CSR tarayıcıda HTML üretir">
+    <title>Rendering stratejileri</title>
+    <text class="dg-sub" x="130" y="18" text-anchor="middle">derleme</text>
+    <text class="dg-sub" x="210" y="18" text-anchor="middle">istek</text>
+    <text class="dg-sub" x="300" y="18" text-anchor="middle">tarayıcı</text>
+
+    <rect class="dg-box dg-box--progress" x="8" y="30" width="60" height="44" rx="6"></rect>
+    <text class="dg-label" x="38" y="57" text-anchor="middle">SSG</text>
+    <rect class="dg-box dg-box--progress" x="92" y="40" width="76" height="24" rx="6"></rect>
+    <text class="dg-sub" x="130" y="57" text-anchor="middle">HTML hazır</text>
+
+    <rect class="dg-box dg-box--accent" x="8" y="90" width="60" height="44" rx="6"></rect>
+    <text class="dg-label" x="38" y="117" text-anchor="middle">SSR</text>
+    <rect class="dg-box dg-box--accent" x="172" y="100" width="76" height="24" rx="6"></rect>
+    <text class="dg-sub" x="210" y="117" text-anchor="middle">her istekte</text>
+
+    <rect class="dg-box" x="8" y="150" width="60" height="44" rx="6"></rect>
+    <text class="dg-label" x="38" y="177" text-anchor="middle">CSR</text>
+    <rect class="dg-box" x="256" y="160" width="88" height="24" rx="6"></rect>
+    <text class="dg-sub" x="300" y="177" text-anchor="middle">JS üretir</text>
+
+    <text class="dg-sub" x="8" y="222">ISR: SSG gibi hazır, arka planda yenilenir.</text>
+    <text class="dg-sub" x="8" y="240">Hydration: gelen HTML'e JavaScript ile canlılık verir.</text>
+  </svg>
+</DiagramFigure>

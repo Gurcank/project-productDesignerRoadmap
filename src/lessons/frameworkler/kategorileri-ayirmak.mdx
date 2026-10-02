@@ -1,0 +1,91 @@
+---
+summary: "Library, framework, meta-framework ve runtime: bu dört terimi karıştırmak teknoloji tartışmalarını anlaşılmaz yapar. Hangisinde kontrolün kimde olduğu ana ayrımdır."
+outcomes:
+  - "Library ile framework arasındaki farkı 'kontrol kimde' sorusuyla açıklayabilirsin."
+  - "Meta-framework'ün React tek başına neyi çözmediğini tamamladığını söyleyebilirsin."
+  - "Runtime'ın ne olduğunu ve neden önemli olduğunu bilirsin."
+minutes: 6
+sources:
+  - label: "React — Resmî site"
+    url: "https://react.dev/"
+  - label: "Next.js — Dokümantasyon"
+    url: "https://nextjs.org/docs"
+  - label: "Node.js — Hakkında"
+    url: "https://nodejs.org/en/about"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+> **Bu bölüm en hızlı eskiyen bölümdür.** Buradaki bilgilerin çoğu **ürün durumudur:** hangi kütüphane bakımda, hangisi terk edildi, hangisi varsayılan hâle geldi. Bu bilgiler aylar içinde değişir. Her araçta **eskimeyen kısım** (hangi problemi çözer, ne zaman seçilir, alternatifi nedir) ile **eskiyen kısım** (güncel durumu) ayrıldı. Eskimeyen kısmı öğren; eskiyen kısmı her kullanımdan önce doğrula. Materyalin doğrulama tarihi Eylül 2026'dır.
+
+"Next.js mi Astro mu?" tartışması geçtiğinde **neyin neye takas edildiğini** anlaman ve tasarım açısından hangi seçeneğin ne getirip ne götürdüğünü söyleyebilmen yeterli. Seni bir araç uzmanı yapmak amacımız değil.
+
+Başlangıç, dört terimi ayırmak.
+
+## Library ve framework
+
+<Compare>
+<Pane title="Library (kütüphane)">
+
+- Sen onu çağırırsın
+- Kontrol sende kalır
+- Tarih biçimlendirme, grafik
+
+</Pane>
+<Pane title="Framework (çatı)">
+
+- O seni çağırır, kurallarına uyarsın
+- Kontrol tersine döner
+- Dosya yapısı, yönlendirme, veri akışı hazır
+
+</Pane>
+</Compare>
+
+**Library**, belirli bir işi yapmak için çağırdığın hazır kod paketidir. Bir tarih biçimlendirme ya da grafik kütüphanesi böyledir. "Bunun için ayrı bir kütüphane eklemeyelim; 20 satırla çözülüyor."
+
+**Framework**, projenin yapısını ve akışını belirleyen, senin onun kurallarına uyduğun sistemdir. Karşılığında dosya yapısı, yönlendirme, veri akışı gibi kararları hazır verir; her projede aynı kararları yeniden vermezsin. "Framework'ün kurallarına uyalım; kendi yapımızı kurarsak ekosistemden faydalanamayız."
+
+Not: React teknik olarak bir **kütüphanedir,** framework değil. Ama günlük konuşmada herkes framework der ve bu bir sorun değildir.
+
+## Meta-framework
+
+**Meta-framework**, bir UI kütüphanesinin (React, Vue, Svelte) üzerine kurulan ve eksik parçalarını tamamlayan üst katmandır. React tek başına yalnızca arayüz çizer; yönlendirme, sunucu tarafı işleme, veri çekme, build ve deploy kararlarını çözmez. Meta-framework bunların hepsini bir arada verir. Next.js, Nuxt, SvelteKit, Astro ve React Router v7 bu kategoridedir. Proje başlangıcının en kritik kararıdır: "React seçtik ama asıl karar meta-framework: Next.js mi React Router mı?"
+
+## Runtime
+
+**Runtime (çalışma ortamı)**, JavaScript kodunun fiilen çalıştığı ortamdır: tarayıcı, Node.js, Deno, Bun. JavaScript tarayıcı için tasarlanmıştı; Node.js onu sunucuda da çalıştırılabilir hâle getirdi ve ön yüz ile arka yüzün aynı dilde yazılabilmesini sağladı. "Edge runtime'da bazı Node API'leri çalışmıyor; o kodu ayrı bir yere alalım."
+
+<Callout kind="tasarimci">
+
+- **"React seçtik" cümlesinde asıl kararı sor:** hangi meta-framework, hangi rendering stratejisi?
+- **Önerilen şeyin library mi framework mü olduğunu ayırt et:** framework kararları senin tasarım özgürlüğünü (yapı, kalıp) doğrudan etkiler.
+
+</Callout>
+
+<Summary>
+
+- Library'yi sen çağırırsın (kontrol sende); framework seni çağırır (kontrol tersine döner).
+- React teknik olarak kütüphanedir; günlük dilde framework denmesi sorun değildir.
+- Meta-framework, UI kütüphanesinin çözmediği yönlendirme, sunucu işleme, build ve deploy'u tamamlar.
+- Runtime, kodun çalıştığı ortamdır; Node.js JavaScript'i sunucuya taşıdı.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Library ile framework arasındaki fark nedir? React hangisidir?">
+
+Library'de kontrol sendedir: sen onu çağırırsın. Framework'te kontrol tersine döner: o seni çağırır ve yapıyı o belirler. React teknik olarak bir kütüphanedir, ama günlük konuşmada herkes framework der.
+
+</SelfCheck>
+
+<SelfCheck question="Meta-framework neyi çözer? React tek başına neden yetmez?">
+
+React yalnızca arayüz çizer; yönlendirme, sunucu tarafı işleme, veri çekme, build ve deploy kararlarını çözmez. Meta-framework bunların hepsini bir arada verir.
+
+</SelfCheck>

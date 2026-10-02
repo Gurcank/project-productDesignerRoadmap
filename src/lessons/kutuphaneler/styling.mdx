@@ -1,0 +1,48 @@
+---
+summary: "Stil yaklaşımlarının karar tablosu: Tailwind, CSS Modules, vanilla-extract/Panda CSS, styled-components/Emotion. Konunun tamamı Front-end bölümündeki CSS yaklaşımları dersinde; burada seçim özeti var."
+outcomes:
+  - "Dört stil yaklaşımından birini proje durumuna göre seçebilirsin."
+  - "Yeni bir projede runtime CSS-in-JS'in neden varsayılan olmadığını söyleyebilirsin."
+minutes: 3
+sources:
+  - label: "Tailwind CSS — Utility sınıflarıyla stil"
+    url: "https://tailwindcss.com/docs/styling-with-utility-classes"
+  - label: "CSS Modules"
+    url: "https://github.com/css-modules/css-modules"
+  - label: "vanilla-extract"
+    url: "https://vanilla-extract.style/"
+  - label: "Panda CSS"
+    url: "https://panda-css.com/"
+flags: ["degisken"]
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+> Bu bölüm hızla eskir. Aşağıdaki seçim özeti, materyalin Eylül 2026 doğrulamasına dayanır; kullanmadan önce güncel durumu kontrol et.
+
+Stil yaklaşımlarının ayrıntısını Front-end bölümündeki **CSS yaklaşımları** dersinde gördün. Bu ders yalnızca bir **seçim özetidir:** hangi durumda hangisi.
+
+| Yaklaşım | Ne zaman |
+|---|---|
+| **Tailwind** | Modern React/Next.js projelerinde varsayılan; shadcn/ui ile birlikte çalışır; tasarım ölçeğini yapılandırmada zorunlu kılar |
+| **CSS Modules** | Sade CSS yazmak isteyen ekipler; sıfır çalışma zamanı maliyeti; güvenli varsayılan |
+| **vanilla-extract / Panda CSS** | CSS-in-JS ergonomisini isteyip çalışma zamanı maliyeti istemeyenler |
+| **styled-components / Emotion** | Yeni projede önerilmiyor; mevcut projeleri sürdürmek için hâlâ geçerli |
+
+Karar sorusu basit: **ekip ne biliyor ve tasarım sistemin ölçeğini kodda nasıl zorunlu kılarsın?** Tailwind ölçeği yapılandırmaya bağlar, CSS Modules çakışmayı araçla çözer. Mevcut bir styled-components projesinde toptan yeniden yazım gerekmez; yeni bileşenleri başka bir yaklaşımla yazmak yeterlidir.
+
+<Summary>
+
+- Tailwind modern projelerde varsayılan, CSS Modules güvenli ve çalışma zamanı maliyetsiz, zero-runtime seçenekler CSS-in-JS ergonomisi verir.
+- styled-components yeni projede önerilmez; mevcut projede çalışmaya devam eder.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Sade CSS yazmak isteyen ve sıfır çalışma zamanı maliyeti arayan bir ekip hangi yaklaşıma bakar?">
+
+CSS Modules: sade CSS yazılır, sınıf adları derlemede otomatik benzersiz yapılır ve çalışma zamanı maliyeti yoktur.
+
+</SelfCheck>

@@ -1,0 +1,98 @@
+---
+summary: "Şifre güvenliğinde muhtemelen bildiğinin tersi doğru: karmaşıklık kuralları ve zorunlu değiştirme artık önerilmiyor, uzunluk ve sızmış şifre kontrolü öneriliyor. Şifreler özetlenir, şifrelenmez. Sıfırlama akışı en az tasarlanan ama en çok kullanılan destek akışıdır."
+outcomes:
+  - "Güncel NIST rehberliğine göre şifre politikasının ne söylediğini (uzunluk, karmaşıklık kuralı yok, rotasyon yok, blocklist) söyleyebilirsin."
+  - "Şifrenin neden özetlendiğini (hash) ve şifrelenmediğini açıklayabilirsin."
+  - "Şifre sıfırlama akışının doğru adımlarını ve user enumeration'ı bilirsin."
+  - "E-posta doğrulamanın akışı kesmesi gerekip gerekmediğini tartışabilirsin."
+minutes: 10
+sources:
+  - label: "NIST SP 800-63B Revizyon 4 — Parola gereksinimleri"
+    url: "https://pages.nist.gov/800-63-4/sp800-63b.html"
+  - label: "OWASP — Password Storage Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html"
+  - label: "OWASP — Forgot Password Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html"
+  - label: "Have I Been Pwned — API"
+    url: "https://haveibeenpwned.com/API/v3"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bu derste muhtemelen bildiğinin tersi olan bilgiler var. Şifre politikası tavsiyeleri son yıllarda köklü biçimde değişti.
+
+## Özetleme (hashing) ve tuzlama
+
+Şifre, geri çevrilemez bir işlemle **özetlenip** saklanır (**hashing**). **Salt**, her şifreye eklenen rastgele değerdir. Veritabanı sızsa bile şifreler okunamaz. Salt olmasa, aynı şifreyi kullanan kullanıcılar aynı özeti üretir ve saldırgan hazır tablolarla toplu çözüm yapabilir. bcrypt ve Argon2 gibi algoritmalar bilerek **yavaş** tasarlanmıştır; bu, deneme saldırılarını pahalı hâle getirir.
+
+**Şifreler asla şifrelenmez, özetlenir.** Fark kritik: şifreleme geri çevrilebilir, özetleme çevrilemez. Bir servis "şifrenizi size e-posta ile gönderelim" diyorsa şifreleri geri çevrilebilir biçimde saklıyordur; bu ciddi bir kusurdur.
+
+## Şifre politikası
+
+Şifre alanının altındaki kurallar metnini sen yazıyorsun; bu doğrudan senin tasarım kararın. Yaygın uygulamaların çoğu artık güncel rehberliğe aykırı. NIST SP 800-63B Revizyon 4'e göre:
+
+- **Karmaşıklık kuralları dayatılmamalı.** "En az bir büyük harf, bir rakam ve bir sembol" gerekliliği artık önerilmiyor; kılavuz bunu açıkça yasaklayan bir dil kullanıyor ("başka bileşim kuralları dayatılmayacak"). Bu kurallar kullanıcıları tahmin edilebilir kalıplara itiyor (`Sifre1!`).
+- **Periyodik zorunlu değiştirme kaldırıldı.** 90 günde bir şifre değiştirtmek artık önerilmiyor; yalnızca ihlal şüphesi varsa.
+- **Uzunluk, karmaşıklıktan önemli.** Şifre tek doğrulayıcıysa en az 15 karakter, çok faktörlü kimlik doğrulamanın parçasıysa en az 8 karakter. En az 64 karakterlik şifrelerin kabul edilmesi önerilir.
+- **Boşluk ve tüm Unicode karakterler kabul edilmeli,** yani parola cümleleri desteklenmeli.
+- **Sızmış şifre listesine karşı kontrol:** kullanıcının seçtiği şifre bilinen ihlallerde geçiyorsa reddedilmeli.
+- **Yapıştırma engellenmemeli;** şifre yöneticisi kullanımını engellemek güvenliği düşürür.
+
+Bu değişikliklerin sebebi güvenliği gevşetmek değil, **tersine sıkılaştırmak:** karmaşıklık kuralları ve zorunlu rotasyon kullanıcıları zayıf ve tahmin edilebilir davranışlara ittiği için kaldırıldı. "Karmaşıklık kuralını kaldıralım, minimum uzunluğu artıralım ve sızmış şifre kontrolü ekleyelim. Yardımcı metin de buna göre değişsin."
+
+## Şifre sıfırlama
+
+**Password reset**, en çok kullanılan destek akışıdır ve genelde en az tasarlanan akıştır. Doğru kurgusu:
+
+1. E-posta gir.
+2. Tek kullanımlık, kısa ömürlü bağlantı gönder.
+3. Yeni şifre belirlet.
+4. **Mevcut tüm oturumları sonlandır.**
+5. Kullanıcıya "şifreniz değişti" bildirimi gönder.
+
+Güvenlik ile UX'in çeliştiği klasik nokta: "bu e-posta kayıtlı değil" demek kullanıcıya yardımcı olur ama saldırgana hangi e-postaların sistemde olduğunu söyler (**user enumeration**). Yaygın çözüm: e-posta kayıtlı olsun olmasın aynı mesajı göstermek ("Bu adres kayıtlıysa bir bağlantı gönderdik").
+
+## E-posta doğrulama
+
+**Email verification**, kullanıcının girdiği adrese gerçekten sahip olduğunun kontrol edilmesidir. Sahte kayıtları azaltır ve şifre sıfırlamanın güvenli çalışmasını sağlar. **Tasarım kararı:** doğrulama kayıt akışını kesmeli mi, arka planda mı ilerlemeli? Kesmek tamamlama oranını düşürür. Yaygın orta yol: kullanıcıyı içeri al, doğrulanmamış hesabın bazı işlemlerini kısıtla ve kalıcı bir uyarı şeridi göster. "Doğrulanana kadar yalnızca bir uyarı şeridi gösterelim."
+
+<Callout kind="tasarimci">
+
+- **Şifre alanı yardımcı metnini güncel politikaya göre yaz:** uzunluğu öne çıkar, karmaşıklık kuralı listesi koyma.
+- **Yapıştırmayı ve şifre yöneticisini engelleme.**
+- **Sıfırlama akışının beş adımını tasarla** ve e-posta kayıtlı olsun olmasın aynı mesajı göster.
+- **E-posta doğrulamada** kayıt akışını kesmeyen orta yolu (kısıtlı hesap + uyarı şeridi) değerlendir.
+
+</Callout>
+
+<Summary>
+
+- Şifreler özetlenir (bcrypt/Argon2 + salt), şifrelenmez.
+- Güncel NIST: karmaşıklık kuralı yok, periyodik değiştirme yok; uzunluk, sızmış şifre kontrolü, Unicode ve yapıştırma desteği var.
+- Sıfırlamada tüm oturumlar sonlandırılır, bildirim gönderilir ve e-postanın kayıtlı olup olmadığı sızdırılmaz.
+- E-posta doğrulaması akışı kesmek yerine kısıtlı hesapla ilerleyebilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'En az bir büyük harf, bir rakam ve bir sembol' kuralı güncel rehberliğe uygun mu? Neden?">
+
+Hayır. Güncel NIST rehberliği karmaşıklık kurallarının dayatılmamasını söyler; bu kurallar kullanıcıları tahmin edilebilir kalıplara iter (`Sifre1!`) ve gerçek güvenlik kazancı sağlamaz. Yerine uzunluk ve sızmış şifre listesine karşı kontrol önerilir.
+
+</SelfCheck>
+
+<SelfCheck question="Şifre sıfırlandıktan sonra ne yapılmalı ve neden?">
+
+Mevcut tüm oturumlar sonlandırılmalı ve kullanıcıya "şifreniz değişti" bildirimi gönderilmeli. Hesap zaten ele geçirilmişse saldırganın açık oturumu şifre değişse bile devam eder.
+
+</SelfCheck>
+
+<SelfCheck question="Şifre sıfırlamada 'bu e-posta kayıtlı değil' demek neden sakıncalı olabilir?">
+
+User enumeration: saldırgana hangi e-postaların sistemde kayıtlı olduğunu söyler. Çözüm, e-posta kayıtlı olsun olmasın aynı mesajı göstermektir ("Bu adres kayıtlıysa bir bağlantı gönderdik").
+
+</SelfCheck>

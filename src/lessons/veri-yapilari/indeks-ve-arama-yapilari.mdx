@@ -1,0 +1,94 @@
+---
+summary: "İndeks, veriyi bulmayı hızlandırmak için tutulan ikinci bir yapıdır; ters indeks tam metin aramanın temelidir. 'İçinde geçsin' ile 'ile başlasın' aynı maliyette değildir; Türkçe kökleme, yazım toleransı ve boş sonuç ekranı tasarım kararlarıdır."
+outcomes:
+  - "İndeksin faydasını ve üç bedelini (yazma, yer, her sorguya yaramaması) söyleyebilirsin."
+  - "Önek aramasıyla 'içinde geçen' aramasının neden aynı maliyette olmadığını açıklayabilirsin."
+  - "Tam metin aramanın tasarımı ilgilendiren üç özelliğini bilirsin."
+minutes: 9
+sources:
+  - label: "PostgreSQL — Tam metin arama"
+    url: "https://www.postgresql.org/docs/current/textsearch-intro.html"
+  - label: "PostgreSQL — pg_trgm (bulanık eşleşme)"
+    url: "https://www.postgresql.org/docs/current/pgtrgm.html"
+  - label: "PostgreSQL — Index'lere giriş"
+    url: "https://www.postgresql.org/docs/current/indexes-intro.html"
+  - label: "NN/g — Search: Visible and Simple"
+    url: "https://www.nngroup.com/articles/search-visible-and-simple/"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+**İndeks**, veriyi bulmayı hızlandırmak için tutulan **ikinci bir yapıdır.** Kitabın arkasındaki dizin gibi: kitabın kendisini değiştirmez ama bir kelimenin geçtiği sayfayı taramadan bulmanı sağlar. Veritabanı tarafı Veritabanı bölümünde anlatıldı; burada arayüze yansıyan sonuçları var.
+
+## Neden var, bedeli ne
+
+İndekssiz arama, tüm kayıtları baştan sona taramak demektir: 500 kayıtta fark edilmez, 5 milyon kayıtta sorgu saniyelerce sürer. İndeks taramayı doğrudan doğru yere gitmeye çevirir. Bedeli:
+
+- **Yazma yavaşlar:** her yeni kayıtta indeksin de güncellenmesi gerekir.
+- **Yer kaplar:** indeks ayrı bir yapıdır.
+- **Her sorguya yaramaz:** indeks belirli alanlar ve sorgu biçimleri için kurulur. "Adın ortasında geçen harfe göre ara" isim indeksinden faydalanamaz.
+
+Son madde tasarımı doğrudan ilgilendirir: **"içinde geçsin" araması ile "ile başlasın" araması aynı maliyette değildir.** Otomatik tamamlama tasarlarken hangisini istediğini söylemen gerekir.
+
+## Tam metin arama
+
+"İçinde şu kelime geçen kayıtlar" normal indeksin işi değildir. Bunun için **tam metin arama** kurulur: metin kelimelere ayrılır, her kelimenin hangi belgelerde geçtiği tutulur; buna **ters indeks (inverted index)** denir. Tasarımı ilgilendiren üç özelliği:
+
+**1. Kökleme (stemming).** "Bileşenlerin" yazınca "bileşen" bulunur. Bu dile özgüdür ve Türkçe için ayrıca desteklenmesi gerekir; desteklenmiyorsa kullanıcı eklerle yazdığında hiçbir şey bulamaz. Türkçe ek yapısı zengin olduğu için bu İngilizceye göre çok daha görünür bir sorundur.
+
+**2. Yazım toleransı.** "kulanıcı" yazan "kullanıcı" sonuçlarını görecek mi? Bu ayrı bir özelliktir (fuzzy matching), bedava gelmez ve yanlış eşleşme riski taşır.
+
+**3. Sıralama (relevance).** Başlıkta geçen, gövdede geçenden önce mi? Bir ürün kararıdır; belirtilmezse aracın varsayılanı kullanılır.
+
+| Arama türü | Ne bulur | Tasarım sorusu |
+|---|---|---|
+| Tam eşleşme | Birebir aynısı | Büyük/küçük harf, Türkçe karakter önemli mi? |
+| Önek (prefix) | "gi" → "git", "github" | Otomatik tamamlama için genelde yeterli |
+| İçinde geçen | Herhangi bir yerde | Pahalı; indeksten yararlanmayabilir |
+| Tam metin | Kelime bazlı, köklenmiş | Türkçe desteği var mı? |
+| Bulanık (fuzzy) | Yazım hatasına toleranslı | Yanlış eşleşmeyi kabul ediyor musun? |
+
+## Arayüzde sonuçlar
+
+- **Boş sonuç ekranı zorunludur** ve "sonuç yok" demekten fazlasını yapmalı: yazım önerisi, filtreyi gevşetme, popüler aramalar.
+- **Arama kutusunun gecikmesi tasarım kararıdır.** Her tuşta sorgu atmak pahalı ve titrek hissettirir; bekleme süresi (debounce) belirtilmezse geliştirici bir değer seçer.
+- **Sonuç sayısını göstermek her zaman ucuz değildir:** "Yaklaşık 12.000 sonuç" tam sayıdan ucuzdur.
+- **Vurgulama (highlight)** eşleşen kelimeyi göstererek sonucun neden geldiğini anlatır.
+
+**Alternatifler:** küçük veride indekssiz tarama (erken optimizasyon gerekmez), liste zaten tarayıcıdaysa istemci tarafı arama (anlık), büyük ölçekte ayrı arama motoru, ve statik arama indeksi (içerik derleme anında indekslenir, sunucu gerekmez; bu sitedeki arama bu yaklaşımla çalışır).
+
+<Callout kind="tasarimci">
+
+- **Arama kutusunun neyi aradığını yaz:** başlık, gövde, etiket? "Her yerde" pahalıdır.
+- **Türkçe kökleme desteğini sor;** yoksa arama kullanıcıların yazdığı gibi yazdığında çalışmaz (bu hata değil, eksik gereksinimdir).
+- **Boş sonuç ekranını eylem davetine çevir.**
+- **Her sütuna sıralama koymanın, her sütun için maliyet demek olduğunu hatırla.**
+
+</Callout>
+
+<Summary>
+
+- İndeks aramayı hızlandıran ikinci yapıdır; yazmayı yavaşlatır, yer kaplar, her sorguya yaramaz.
+- "İçinde geçsin" ve "ile başlasın" aynı maliyette değildir.
+- Tam metin aramada kökleme (Türkçe!), yazım toleransı ve sıralama kuralı tasarım kararıdır.
+- Boş sonuç ekranı, debounce ve sonuç sayısı gösterimi arayüz kararlarıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'İçinde geçsin' araması ile 'ile başlasın' araması neden aynı maliyette değildir?">
+
+Önek araması indeksten yararlanır; kelimenin ortasında geçen aramalar çoğu indeksten yararlanamaz ve pahalıdır. Otomatik tamamlama tasarlarken hangisini istediğini söylemek gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Türkçede kökleme desteklenmezse ne olur?">
+
+Kullanıcı eklerle (bileşenlerin, bileşenlerimizden) doğal hâliyle yazdığında hiçbir şey bulamaz ve bunu "sitede yok" diye yorumlar.
+
+</SelfCheck>

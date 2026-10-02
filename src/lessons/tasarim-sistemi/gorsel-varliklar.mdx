@@ -1,0 +1,108 @@
+---
+summary: "İkonlar, illüstrasyonlar ve fotoğraflar: varlık (asset), ikon seti, SVG ve raster, en-boy oranı, art direction. Ürünün karakterini büyük ölçüde bunlar taşır ve en çok tutarsızlık da burada oluşur."
+outcomes:
+  - "Bir ikon setini neden tek kaynaktan seçmen gerektiğini söyleyebilirsin."
+  - "SVG ile raster'ı ne zaman kullanacağını ve modern görsel formatlarını bilirsin."
+  - "En-boy oranını önceden tanımlamanın sayfa zıplamasını nasıl önlediğini açıklayabilirsin."
+  - "Art direction'ın stok fotoğraf hissini nasıl engellediğini anlatabilirsin."
+minutes: 8
+sources:
+  - label: "MDN — Görsel formatları rehberi"
+    url: "https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Formats/Image_types"
+  - label: "NN/g — Icon Usability"
+    url: "https://www.nngroup.com/articles/icon-usability/"
+  - label: "MDN — CSS aspect-ratio"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/aspect-ratio"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir ürünün ekranlarını yan yana koy: ikonların bir kısmı çizgisel, bir kısmı dolu, kalınlıkları farklı; fotoğrafların biri sıcak, biri soğuk; illüstrasyonların biri düz renk, biri gölgeli. Her biri ayrı ayrı güzel olabilir, ama birlikte **amatör** görünür. Sorun bireysel kalitede değil, tutarlılıkta.
+
+Bu ders ikonlar, illüstrasyonlar ve fotoğraflar gibi **görsel varlıkların** ürünün karakterini nasıl taşıdığını ve tutarlılığı nasıl koruyacağını anlatıyor.
+
+## Varlık ve ikon seti
+
+**Asset** (varlık, kaynak dosya), projede kullanılan görsel dosyaların genel adıdır: ikon, logo, fotoğraf, illüstrasyon, video. Handoff'un ve proje dosyasının somut çıktısıdır. Hangi formatta, hangi çözünürlükte ve hangi adla teslim edileceği kararlaştırılmazsa uygulama sırasında kayıp yaşanır. "Asset'leri SVG olarak dışa aktarıp `icons/` altında kebab-case adlarla verdim."
+
+**Icon set** (ikon seti), **aynı çizim kurallarına** göre üretilmiş ikon ailesidir. Tutarlılık için **tek bir setten** ikon kullanılmalıdır: farklı setlerden karıştırılan ikonlar (biri çizgisel, biri dolu, biri farklı kalınlıkta) arayüzü hemen amatör gösterir. Setin ortak parametreleri vardır: çizim ızgarası (genelde 24×24), çizgi kalınlığı, köşe tarzı.
+
+Lucide, Phosphor, Heroicons, Material Symbols gibi hazır setler yaygın kullanılır. **Değişken bilgi:** Set isimleri ve lisansları değişir; kullanmadan önce lisansı kontrol et. "Tek set kullanalım; şu an üç farklı kaynaktan ikon var, çizgi kalınlıkları tutmuyor."
+
+**İkon tek başına anlam taşımaz.** Yaygın olmayan bir ikonun yanına metin etiket gerekir; "hamburger menü" ve "çöp kutusu" gibi öğrenilmiş birkaç ikon istisnadır.
+
+## SVG ve raster
+
+<Compare>
+<Pane title="SVG (vektör)">
+
+- Matematiksel olarak tanımlı, her boyutta net
+- Küçük dosya
+- Rengi CSS ile değişir
+- Uygun: ikon, logo, basit illüstrasyon
+
+</Pane>
+<Pane title="Raster (PNG, JPG, WebP, AVIF)">
+
+- Piksellerden oluşur, büyütülünce bozulur
+- Fotoğraf için uygun
+- WebP ve AVIF aynı kalitede belirgin biçimde daha küçük
+- Uygun: fotoğraf, karmaşık görsel
+
+</Pane>
+</Compare>
+
+**İkon ve logo SVG olmalıdır:** küçüktür, her ekranda nettir ve rengi CSS ile değiştirilebilir. **Fotoğraf raster olmalıdır;** modern formatlar (WebP, AVIF) aynı kalitede belirgin biçimde daha küçük dosya üretir. Asset teslimi ve performans optimizasyonunda karşına çıkar. "Logoyu PNG değil SVG verelim; retina ekranda bulanık görünüyor."
+
+## En-boy oranı
+
+**Aspect ratio** (en-boy oranı), bir görselin genişlik/yükseklik oranıdır: 16:9, 4:3, 1:1, 3:2. Kart ve galeri tasarımlarında görsellerin aynı oranda olması düzeni korur. Ayrıca oran önceden tanımlanırsa tarayıcı **görsel yüklenmeden yer ayırabilir;** bu, sayfa zıplamasını (CLS) önler. (Bunu Web Temelleri'nde tarayıcının sayfa çizme dersinde görmüştün.)
+
+"Tüm kart görselleri 16:9 olsun; farklı oranlar geldiğinde ortadan kırpalım."
+
+## Art direction: stok hissini engellemek
+
+**Art direction** (sanat yönetimi), görsellerin hangi tarzda, hangi konuda ve nasıl çekileceğine dair **bütünlüklü karardır.** Stok fotoğraf hissini engelleyen şey budur: rastgele seçilmiş "ofiste gülen insanlar" fotoğrafları, ne kadar kaliteli olursa olsun ürünü jenerik gösterir. Yön belirlenirse görseller birbirini destekler. Marka ve pazarlama sitesi projelerinde karşına çıkar.
+
+"Art direction: doğal ışık, düşük doygunluk, insanlar ekrana bakmıyor. Stok seçerken bu kurallara uyalım."
+
+**Web'de art direction teknik bir anlam da taşır:** farklı ekran boyutlarında **farklı kırpılmış** görsel sunmak (yalnızca küçültmek değil). Telefonda yüzün kapandığı bir geniş fotoğraf yerine, yüze yakın kırpılmış bir sürüm.
+
+<Callout kind="tasarimci">
+
+- **Tek ikon seti seç ve dokümante et.** Boyut, kalınlık, köşe tarzı yazılı olsun.
+- **İkon + etiket kullan.** Evrensel olmayan ikon tek başına bırakılmasın.
+- **Logoyu ve ikonu SVG teslim et.** Fotoğraf için modern format iste.
+- **Görsel için oran belirle.** Kart görselleri aynı oranda olsun; oran tanımlıysa sayfa zıplamaz.
+- **Görsel yönü bir cümleyle yaz.** "Doğal ışık, düşük doygunluk" gibi; stok seçerken ölçüt olur.
+
+</Callout>
+
+<Summary>
+
+- Asset teslimi önceden kararlaştırılmalı: format, çözünürlük, adlandırma.
+- Tek bir ikon setinden ikon kullan; karışık setler amatör görünür. İkon tek başına anlam taşımaz.
+- İkon ve logo SVG, fotoğraf raster (WebP/AVIF) olmalı.
+- En-boy oranı tanımlıysa görsel yüklenmeden yer ayrılır, sayfa zıplamaz.
+- Art direction görsellerin tutarlı bir yönle seçilmesini sağlar; web'de farklı ekranlara farklı kırpma anlamına da gelir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="İkonları neden tek bir setten seçmek gerekir?">
+
+Farklı setlerden karıştırılan ikonlar (biri çizgisel, biri dolu, farklı kalınlıkta) arayüzü hemen amatör gösterir. Aynı çizim kurallarına (ızgara, çizgi kalınlığı, köşe tarzı) göre üretilmiş tek bir set tutarlılık sağlar.
+
+</SelfCheck>
+
+<SelfCheck question="Kart görsellerinin en-boy oranını önceden tanımlamak neden sayfa zıplamasını önler?">
+
+Oran önceden bilindiğinde tarayıcı görsel henüz yüklenmeden o alan için yer ayırabilir; görsel yüklenince yerleşim kaymaz (CLS düşer).
+
+</SelfCheck>

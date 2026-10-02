@@ -1,0 +1,166 @@
+---
+summary: "Bir sitenin \"nerede olduğunu\" üç katmanda anla: insanın yazdığı adres, makinenin kullandığı sayı ve ikisini eşleştiren defter. Hangi parçanın kimin kararı olduğunu öğren."
+outcomes:
+  - "Bir web adresini parçalarına ayırıp her parçanın adını söyleyebilirsin."
+  - "Domain, DNS ve hosting arasındaki farkı tek cümleyle anlatabilirsin."
+  - "\"Bu ekranın kendi adresi olsun mu?\" sorusunun neden senin kararın olduğunu bilirsin."
+  - "Yayın gününde \"site açılmıyor\" şikâyetinin en olası nedenini tahmin edebilirsin."
+minutes: 10
+sources:
+  - label: "MDN — What is a URL?"
+    url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL"
+  - label: "MDN — URL (sözlük)"
+    url: "https://developer.mozilla.org/en-US/docs/Glossary/URL"
+  - label: "MDN — DNS (sözlük)"
+    url: "https://developer.mozilla.org/en-US/docs/Glossary/DNS"
+flags: ["degisken", "emin-degil"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import UrlAnatomy from "~/components/lesson/UrlAnatomy.astro";
+
+Bir arkadaşına ürün sayfasını WhatsApp'tan gönderiyorsun. Gönderdiğin şey bir adres: karşı taraf ona dokunuyor ve aynı sayfa açılıyor. Şimdi aynı ürünü, sayfanın içinde açılan bir pencerede (modal) görüyor olsaydın ve pencerenin adresi olmasaydı? Gönderecek bir şey bulamazdın.
+
+Bu ders, bir sitenin web üzerinde **nerede durduğunu** üç ayrı katmanda anlatıyor. Bu üçünü karıştırmamak, domain satın alma ve yayın günü konuşmalarında seni doğru yere götürür.
+
+## Üç katman: ad, sayı, defter
+
+Bir sitenin yeri üç şeyle tanımlanır:
+
+1. **Adres (URL, domain):** İnsanın yazdığı, akılda tutulabilen ad. `ornek.com` gibi.
+2. **Sayı (IP adresi):** Makinenin kullandığı gerçek adres. Rakamlardan oluşur, insan için tasarlanmamıştır.
+3. **Defter (DNS):** Adı sayıya çeviren sistem.
+
+Telefon rehberini düşün: sen "Ayşe" diye arıyorsun, telefon arka planda numarayı çevirip arıyor. Ad (Ayşe) domain, numara IP adresi, rehber ise DNS'tir. Bunların üstüne dördüncü bir şey var: sitenin dosyalarının fiilen durduğu yer, yani **hosting**. Sırayla bakalım.
+
+## URL: bir şeyin tam adresi
+
+**URL**, internetteki belirli bir kaynağın (bir sayfa, bir resim, bir dosya) tam adresidir. Her sayfanın, resmin, dosyanın tek ve paylaşılabilir bir URL'i olmasını sağlar. URL'i olmayan bir şey linklenemez, paylaşılamaz, arama motoru tarafından bulunamaz.
+
+Bu bir teknik detay değil, **ürün kararıdır**. "Bu ekranın kendi URL'i olsun mu?" sorusu doğrudan senin karar alanında. Modal içinde açılan bir içeriğin URL'i yoksa kullanıcı o ekranı paylaşamaz, geri tuşuyla ona dönemez, yer imine ekleyemez.
+
+Bir URL'in parçalarına adlarıyla hâkim olmalısın, çünkü toplantılarda bu adlarla konuşulur:
+
+<UrlAnatomy />
+
+Parçalara tek tek bakalım:
+
+- **Scheme (protokol):** Adresin başındaki `https`. Hangi kurallarla konuşulacağını söyler. (Bu kuralları bir sonraki derste göreceksin.)
+- **Subdomain (alt alan adı):** `blog.ornek.com` içindeki `blog`. Ana adın önüne eklenen, ayrı bir bölüm gibi davranan parça.
+- **Domain:** `ornek.com`. Sitenin kayıtlı adı. Sağdaki `.com` kısmına **TLD** (üst düzey alan adı) denir.
+- **Path (yol):** `/yazilar/web-nedir`. Sitenin içindeki konum. Yolun son parçasına **slug** denir.
+- **Query string:** `?kategori=temel&sayfa=2`. Ek bilgiler. Her bir `ad=değer` çiftine *query parameter* denir.
+- **Fragment (hash, anchor):** `#basliklar`. Sayfanın içindeki belirli bir noktaya atlar.
+
+Query string tasarımcıyı ilgilendirir. Filtre ya da sıralama seçimlerini adrese yazarsan, kullanıcı filtrelenmiş listeyi bir link olarak gönderebilir. Yazmazsan filtre sayfa yenilenince sıfırlanır ve paylaşılamaz.
+
+Küçük bir ayrım: **URL ≠ domain**. Domain, URL'in yalnızca bir parçasıdır. Teknik literatürde URL'in daha geniş bir üst kategorisi olan URI de geçer, ama günlük konuşmada herkes URL der.
+
+<Callout kind="tasarimci" title="Tasarımcı olarak sen: adres bir tasarım malzemesidir">
+
+- Her "gerçek" ekranın (ürün, makale, profil, filtrelenmiş liste) kendi adresi olmalı mı? Çoğu zaman evet.
+- Adresin kendisi de kullanıcıya konuşur: `/yazilar/web-nedir`, `/post?id=8471`'den hem daha güven verici hem daha okunaklı.
+- Sekme geçişleri, filtreler, sayfa numarası gibi durumların adrese yansıyıp yansımayacağını geliştiriciyle sen konuş.
+
+</Callout>
+
+### Slug: adresin okunabilir sonu
+
+**Slug**, URL'in sonundaki içeriği tanımlayan okunabilir kısımdır: `/yazilar/web-nedir` içindeki `web-nedir`. `/post?id=8471` yerine `/yazilar/web-nedir` hem arama motoru hem insan için anlamlıdır ve tıklanma oranını ve güveni artırır.
+
+İçerik yönetim sistemlerinde (CMS) bir içerik oluştururken doldurduğun alan budur. İçerik editörleriyle konuşurken sık geçer. Slug ile path'i karıştırma: path tüm yol, slug o yolun son parçası.
+
+Türkçe içerikte pratik bir karar: slug'lar genelde Türkçe karakter içermeyecek şekilde otomatik üretilir (`ı`→`i`, `ş`→`s`), ama editör elle değiştirebilir olmalı.
+
+## Domain: sitenin kayıtlı adı
+
+**Domain name (alan adı)**, bir sitenin insanların akılda tutabileceği kayıtlı adıdır. Neden var? IP adreslerini ezberlemek imkânsız olduğu için. Bir de şu avantajı var: sunucu değişse bile adres sabit kalır. Makineyi taşırsın, domain aynı kalır.
+
+Proje başlangıcında ilk satın alınan şeylerden biridir. Bir **registrar** (alan adı satıcısı: GoDaddy, Namecheap, Cloudflare gibi) üzerinden alınır, ama aslında satın alınmaz, **yıllık kiralanır**. Süre dolunca yenilemezsen adres başkasına gidebilir.
+
+**Domain ≠ hosting.** Domain adres, hosting evin kendisidir. İkisi ayrı satın alınır ve farklı firmalardan olabilir.
+
+### TLD: adresin uzantısı
+
+**TLD** domainin en sağındaki uzantıdır: `.com`, `.org`, `.com.tr`, `.io`, `.dev`. Kategorileme ve ülke ayrımı için vardır; bazılarının kayıt şartları da var (`.edu.tr` yalnız eğitim kurumlarına verilir).
+
+TLD seçimi bir marka kararı olduğu kadar güven ve SEO kararıdır. Örneğin `.io` teknik bir izlenim verir, ama Türkiye'deki geniş kitleye `.com.tr` genelde daha güvenilir gelir. Bazı TLD'ler spam ile ilişkilendirildiği için kullanıcı güvenini düşürebilir.
+
+### Subdomain: ayrı bölüm gibi davranan ön ek
+
+**Subdomain**, ana domainin önüne eklenen parçadır: `blog.ornek.com`, `app.ornek.com`, `docs.ornek.com`. Farklı işlevleri birbirinden ayırır. Pazarlama sitesinin ve uygulamanın ayrı kod tabanlarında, hatta ayrı sunucularda yaşamasını mümkün kılar; biri güncellenirken diğeri bozulmaz.
+
+Klasik düzen: `www.ornek.com` pazarlama sitesi, `app.ornek.com` giriş yapılan uygulama, `docs.ornek.com` dokümantasyon.
+
+Sık sorulan bir soru: uygulamayı subdomain'e mi (`app.ornek.com`) yoksa path'e mi (`ornek.com/app`) koyalım? Subdomain olursa iki proje ayrı yayınlanabilir. Path olursa her şey tek sitenin içinde durur. SEO açısından genel eğilim, blog gibi içeriklerin path'te durmasının ana sitenin otoritesinden daha çok faydalandığı yönünde. **Ama bu konu SEO dünyasında tartışmalı; kesin bir kural gibi sunma.**
+
+## DNS ve IP: adı sayıya çeviren defter
+
+**IP adresi**, internete bağlı her cihazın sayısal adresidir. Verinin doğru makineye ulaşmasını sağlar; insan için değil makine için tasarlanmıştır.
+
+**DNS** (Domain Name System, alan adı sistemi), yazdığın domain adını sunucunun gerçek sayısal adresine (IP) çeviren sistemdir. Telefonun rehberi gibi çalışır: ismi ararsın, numarayı bulur. Bu katman olmasa her siteye IP yazarak girmen gerekirdi.
+
+Tarayıcıya `ornek.com` yazdığında, sayfayı istemeden önce şu olur:
+
+<StepFlow
+  label="DNS sorgusu adım adım"
+  caption="Sunucuyla konuşmadan önce tarayıcı adın karşılığını sorar. Cevap gelmeden istek yola çıkamaz."
+  steps={[
+    { title: "Sen ornek.com yazıyorsun", sub: "Tarayıcı bu adın sayısını bilmiyor", tone: "accent" },
+    { title: "Tarayıcı DNS'e soruyor", sub: "\"ornek.com'un adresi ne?\"" },
+    { title: "DNS IP adresini döndürüyor", sub: "Örneğin 203.0.113.7" },
+    { title: "Tarayıcı o IP'deki sunucuya gidiyor", sub: "İstek şimdi yola çıkabilir", tone: "progress" },
+  ]}
+/>
+
+Bu yüzden DNS yayın gününün baş aktörüdür. **"Site açılmıyor" şikâyetlerinin en sık nedeni eksik veya henüz yayılmamış DNS kaydıdır.** Bir domain aldığında, onu sunucuna bağlamak için domain panelinde DNS kaydı eklersin (bu iş senin de yapabileceğin kadar basittir).
+
+Kaydı değiştirdikten sonra değişikliğin dünya genelinde görünmesi zaman alır; buna **propagation** (yayılma) denir. Bu süre içinde bazı kullanıcılar hâlâ eski sunucuyu görebilir. Yayın planlarken bunu hesaba kat.
+
+Bir de güvenlik tarafında IP: istek sınırlama (rate limiting) ve engelleme genelde IP bazlıdır. Analitik araçları ziyaretçinin konumunu IP'den tahmin eder; bu **KVKK açısından kişisel veri sayılabilir**, bu yüzden "sadece IP" diye hafife alınmaz.
+
+**DNS ≠ hosting.** DNS yalnızca yönlendirme yapar, siteyi barındırmaz.
+
+## Hosting: dosyaların durduğu yer
+
+**Hosting (barındırma)**, site dosyalarını sürekli açık bir sunucuda tutup internete servis etme hizmetidir. Kendi bilgisayarını yedi gün yirmi dört saat açık tutup internete açmak zorunda kalmaman için vardır. Güvenlik, yedekleme, elektrik ve bant genişliği gibi işleri o firmaya devredersin.
+
+Proje bütçesinde sabit gider kalemidir. Bugün modern web projelerinde hosting genelde Vercel, Netlify, Cloudflare gibi platformlardan alınır; klasik cPanel'li paylaşımlı hosting daha çok WordPress dünyasında kaldı. **Platform isimleri ve fiyatlar hızlı değişir, karar vermeden önce güncel durumu kontrol et.**
+
+Statik bir site için hosting maliyeti neredeyse sıfırdır; yalnızca trafik çok artarsa bant genişliği ücreti çıkar. (Statik site kavramını 1.5'te göreceksin.)
+
+Üç şeyi birbirinden ayır: **hosting ≠ domain ≠ DNS.** Üçü ayrı hizmettir ve farklı firmalardan alınabilir.
+
+| Şey | Ne iş görür | Telefon benzetmesi |
+|---|---|---|
+| Domain | Sitenin kayıtlı adı | Kişinin adı |
+| DNS | Adı IP'ye çevirir | Rehber |
+| IP adresi | Makinenin sayısal adresi | Telefon numarası |
+| Hosting | Dosyaların durduğu sunucu | Telefonun kendisi |
+
+<Summary>
+
+- Bir sitenin yeri üç katmandır: ad (domain), sayı (IP), ikisini eşleştiren defter (DNS). Dosyaların durduğu yer ise hostingdir.
+- URL bir kaynağın tam adresidir: scheme, subdomain, domain (TLD), path (slug), query string, fragment.
+- Adresi olmayan ekran paylaşılamaz; "bu ekranın URL'i olsun mu?" senin kararın.
+- Domain kiralanır, hosting ayrı hizmettir, DNS yalnızca yönlendirir.
+- "Site açılmıyor" şikâyetinin en sık nedeni DNS kaydıdır; değişiklik yayılana kadar zaman geçer.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Domain, DNS ve hosting arasındaki farkı tek cümleyle söyle.">
+
+Domain sitenin kayıtlı adı; DNS o adı sunucunun IP adresine çeviren sistem; hosting ise dosyaların gerçekten durduğu ve servis edildiği yer. Üçü ayrı hizmettir, farklı firmalardan alınabilir.
+
+</SelfCheck>
+
+<SelfCheck question="`https://ornek.com/urunler/kirmizi-ceket?beden=m#yorumlar` adresinde `kirmizi-ceket`, `?beden=m` ve `#yorumlar` parçalarının adları nedir?">
+
+`kirmizi-ceket` slug'dır (path'in son parçası). `?beden=m` query string'dir; `beden` bir query parameter'dır. `#yorumlar` fragment'tır (anchor, hash).
+
+</SelfCheck>

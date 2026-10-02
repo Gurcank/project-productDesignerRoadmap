@@ -1,0 +1,140 @@
+---
+summary: "Bir projenin maliyetini, hızını ve ekip ihtiyacını belirleyen ilk ayrım: statik site, dinamik site ve web uygulaması. Hangisini ne zaman seçeceğini öğren."
+outcomes:
+  - "Statik ve dinamik site farkını, hangi durumda dinamiğin zorunlu olduğunu söyleyebilirsin."
+  - "Bir site ile bir web uygulamasının neden farklı tasarım disiplinleri olduğunu bilirsin."
+  - "Landing page ile ana sayfa (homepage) farkını ayırt edersin."
+  - "Yeni bir projede \"statik olabilir mi?\" sorusunu sormayı alışkanlık edinirsin."
+minutes: 8
+sources:
+  - label: "MDN — Sunucu tarafı web programlamaya giriş"
+    url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Introduction"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Yeni bir projenin ilk toplantısında biri soruyor: "Bu bir site mi, yoksa bir uygulama mı?" Cevap, projenin maliyetini, hızını, ekip ihtiyacını ve mimarisini belirleyen ilk karardır. Çoğu zaman da projenin ilk gününde verilir.
+
+Bu derste üç kategoriyi ve bir dördüncüsünü (landing page) tanıyacaksın.
+
+## Statik site: herkese aynı, hazır dosya
+
+**Statik site**, herkese aynı, **önceden hazırlanmış** dosyaların servis edildiği sitedir. İstek geldiğinde sunucu hiçbir şey hesaplamaz; hazır dosyayı verir.
+
+Bu yüzden:
+
+- **En hızlıdır.** Hazır dosyayı vermek, sayfayı üretmekten çok daha hızlıdır.
+- **En ucuzdur.** Çalışan bir sunucu programı gerekmez.
+- **En güvenlidir.** Sunucuda çalışan bir program olmadığı için saldırı yüzeyi neredeyse yoktur ve trafik arttığında site çökmez.
+
+Tanıtım siteleri, portfolyolar, dokümantasyon, bloglar tipik örnekleridir. "Statik olabilir mi?" sorusu her projede sorulmalı: cevap evetse hayat kolaylaşır. **İçerik ayda bir güncelleniyor ve kullanıcı girişi yoksa** statik yeter ve sunucu maliyeti sıfıra iner.
+
+Sık yapılan bir yanlış anlama: **statik ≠ hareketsiz.** Statik bir sitede animasyon, video, form da olabilir. Statiklik, sayfanın sunucuda *kişiye özel üretilmemesi* demektir.
+
+## Dinamik site: istek anında üretilen
+
+**Dinamik site**, sayfanın içeriğinin **istek anında**, kişiye veya duruma göre üretildiği sitedir. Kişiselleştirme, anlık veri ve kullanıcıya özel içerik gerektiğinde şarttır. E-ticaret siteleri, üyelik sistemi olan her site, panelli her yapı dinamiktir.
+
+"Stok bilgisi anlık değişiyor, sayfayı önceden hazırlayamayız" cümlesi dinamik olmanın bir nedenidir.
+
+Bedeli:
+
+- **Sunucu maliyeti.** Çalışan bir program ve genelde bir veritabanı gerekir.
+- **Daha yavaş ilk yanıt.** Sayfa her seferinde üretilir.
+- **Bakım yükü.**
+- **Güvenlik sorumluluğu.** Çalışan her program bir saldırı yüzeyidir.
+
+<Compare>
+<Pane title="Statik site">
+
+- Herkese aynı dosya
+- Önceden hazırlanmış
+- En hızlı, en ucuz, en güvenli
+- Örnek: portfolyo, blog, dokümantasyon
+
+</Pane>
+<Pane title="Dinamik site">
+
+- Sayfa istek anında üretilir
+- Kişiye/duruma göre değişir
+- Sunucu, bakım ve güvenlik maliyeti
+- Örnek: e-ticaret, üyelik, panel
+
+</Pane>
+</Compare>
+
+Gerçekte çoğu proje ikisini karıştırır: tanıtım sayfaları statik, hesap sayfaları dinamik olur. Bu karışımın nasıl kurulduğunu ileride, rendering stratejileri konusunda göreceksin.
+
+## Web uygulaması: iş yaptıran site
+
+**Web uygulaması** (web app), kullanıcının içerik **okumaktan çok iş yaptığı**, uygulama gibi davranan sitedir. Gmail, Figma, Notion bu kategoridedir. Kurulum gerektirmeden her cihazda çalışan bir uygulama sunar.
+
+Bir site ile bir uygulama tasarlamak **farklı disiplinlerdir**. Web app'te şunlar tasarımın merkezine gelir:
+
+- **Durum yönetimi:** Ekran hangi durumlarda hangi hâle geçiyor?
+- **Boş ekranlar:** Henüz hiç veri yokken kullanıcı ne görüyor?
+- **Hata ekranları:** Bir şey ters gidince kullanıcı ne yapacak?
+- **Yetki seviyeleri:** Herkes her şeyi görüyor mu?
+- **Klavye kısayolları:** Sık kullanan kullanıcı hızlanabiliyor mu?
+
+Sınır keskin değildir. Bir sitenin bir kısmı web app olabilir: `ornek.com` tanıtım sitesi, `app.ornek.com` uygulama. "Bu artık bir pazarlama sitesi değil, web app; onboarding ve boş durum ekranlarını baştan tasarlamalıyız" cümlesi, projenin türünün değiştiğini fark etmenin bir işaretidir.
+
+<StepFlow
+  arrows={false}
+  label="Site ile uygulama arasındaki yelpaze"
+  caption="Aralarındaki sınır keskin değil. Soldaki uçta okuma, sağdaki uçta iş yapma ağır basar; ürün çoğu zaman ikisinin arasında bir yerde durur."
+  steps={[
+    { title: "Statik site", sub: "Okunur. Herkese aynı.", tone: "plain" },
+    { title: "Dinamik site", sub: "Okunur. Kişiye / duruma göre değişir.", tone: "plain" },
+    { title: "Web uygulaması", sub: "Kullanılır. Durum, yetki, boş ve hata ekranları.", tone: "accent" },
+  ]}
+/>
+
+## Landing page: tek hedefe odaklı sayfa
+
+**Landing page** (iniş sayfası), tek bir hedefe (kayıt, satın alma, form doldurma) odaklanmış, genelde tek sayfadan oluşan sitedir. Dikkat dağıtan her şeyi çıkararak **dönüşüm oranını** yükseltir. Bir reklam kampanyasının varış noktası olarak ayrıca üretilir.
+
+Pazarlama ekibiyle yapılan her konuşmada karşına çıkar. Ölçütü ziyaretçi sayısı değil, **dönüşüm oranıdır**: ziyaretçilerin kaçı hedeflenen şeyi yaptı?
+
+Landing page ile ana sayfayı karıştırma. **Ana sayfa** (homepage) sitenin kapısıdır; **landing page** belirli bir kampanya için üretilmiş, genelde menüsüz, tek amaçlı sayfadır. "Bu landing page'de navigasyon menüsü olmasın; kullanıcının tek yolu birincil buton olsun" cümlesi buradan gelir.
+
+<Callout kind="tasarimci">
+
+Projenin başında bu üç soruyu sor:
+
+1. **İçerik herkese aynı mı?** Evetse statik düşün; hız, maliyet ve güvenlik avantajı büyük.
+2. **Kullanıcı giriş yapıyor veya kişiye özel bir şey görüyor mu?** Evetse dinamik.
+3. **Kullanıcı bir şey okumaktan çok bir iş mi yapıyor?** Evetse web app ve boş/hata/yetki ekranları senin işin.
+
+Üçüncüye "evet" dediğin an, işin kapsamı büyür; bunu ekibe baştan söylemek sürprizleri önler.
+
+</Callout>
+
+<Summary>
+
+- Statik site herkese aynı, hazır dosyadır: en hızlı, en ucuz, en güvenli.
+- Dinamik site istek anında, kişiye/duruma göre üretilir; sunucu, bakım ve güvenlik maliyeti getirir.
+- Web uygulaması içerik okutmaktan çok iş yaptırır; durum, boş/hata ekranı ve yetki tasarımın merkezine gelir.
+- Landing page tek hedefe odaklıdır ve dönüşüm oranıyla ölçülür; ana sayfa değildir.
+- Her projede önce sor: statik olabilir mi?
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Statik site ile dinamik site arasındaki fark nedir? Hangi durumda dinamik olmak zorunludur?">
+
+Statik sitede herkese aynı, önceden hazırlanmış dosyalar servis edilir; dinamik sitede sayfa istek anında üretilir. Kişiye özel içerik, kullanıcı girişi veya anlık değişen veri (stok, fiyat) varsa dinamik olmak zorunludur.
+
+</SelfCheck>
+
+<SelfCheck question="Bir sitenin animasyonu ve videosu var. Bu onu dinamik yapar mı?">
+
+Hayır. Statik ≠ hareketsiz. Bir sayfanın animasyonlu olması onu dinamik yapmaz; dinamiklik, sayfanın sunucuda istek anında kişiye veya duruma göre üretilmesi demektir.
+
+</SelfCheck>

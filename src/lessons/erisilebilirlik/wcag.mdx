@@ -1,0 +1,132 @@
+---
+summary: "Erişilebilirliğin uluslararası ölçütü: WCAG, POUR ilkeleri, A/AA/AAA uyum seviyeleri, başarı ölçütleri ve WCAG 2.2'nin yeni getirdikleri. Yasa değildir ama neredeyse tüm yasalar ona atıf yapar."
+outcomes:
+  - "WCAG'in dört ilkesini (POUR) ve bir sorunun hangisine girdiğini söyleyebilirsin."
+  - "A, AA, AAA seviyelerinin farkını ve neden AA'nın hedef olduğunu açıklayabilirsin."
+  - "Bir denetim raporundaki ölçüt numarasını (1.4.3 gibi) okuyup anlayabilirsin."
+  - "WCAG 2.2'nin tasarımcıyı ilgilendiren yeni ölçütlerini sayabilirsin."
+minutes: 11
+sources:
+  - label: "W3C — WCAG 2.2 Quick Reference"
+    url: "https://www.w3.org/WAI/WCAG22/quickref/"
+  - label: "W3C — What's New in WCAG 2.2"
+    url: "https://www.w3.org/WAI/standards-guidelines/wcag/new-in-22/"
+  - label: "AB Erişilebilirlik Merkezi — WCAG 2.2 resmî W3C tavsiyesi"
+    url: "https://accessible-eu-centre.ec.europa.eu/content-corner/news/wcag-22-officially-w3c-recommendation-2023-10-06_en"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Bir denetim raporu geliyor: "15 ihlal; 9'u 1.4.3, 3'ü 2.4.7, 2'si 1.1.1, 1'i 3.3.2." Rakamlar anlamsız görünüyor. Ama bu numaraları okuyabildiğinde, raporun yarısının **tek bir sorunun** (kontrast) tekrarı olduğunu görürsün. Palet düzeltmesi dokuz maddeyi birden kapatır.
+
+**WCAG** erişilebilirliğin uluslararası ölçütüdür. Yasa değildir ama neredeyse tüm yasalar ona atıf yapar. Bu ders onu okumayı öğretiyor.
+
+## WCAG nedir?
+
+**WCAG** (Web Content Accessibility Guidelines, Web İçeriği Erişilebilirlik Kılavuzu), W3C tarafından yayımlanan, web içeriğinin erişilebilir olması için sağlanması gereken **ölçütler bütünüdür.** Erişilebilirliği ölçülebilir hâle getirir: "Erişilebilir mi?" sorusu yorum gerektirir; "1.4.3'ü karşılıyor mu?" sorusu evet/hayır ile cevaplanır.
+
+Gereksinim belgelerinde, denetim raporlarında, ihale şartnamelerinde karşına çıkar. "Hedefimiz WCAG 2.2 AA; AAA'yı zorlamayalım, bazı kriterleri marka renkleriyle karşılamak mümkün değil."
+
+**Değişken bilgi:** Güncel sürüm **WCAG 2.2;** Ekim 2023'te W3C Recommendation oldu. WCAG 3 taslak aşamasında ve yıllar sürecek. Yeni bir sürüm çıkmış olabilir; w3.org üzerinden kontrol et.
+
+## POUR: dört ilke
+
+**POUR** (Perceivable, Operable, Understandable, Robust), WCAG'in dört temel ilkesidir. Tüm ölçütler bu dördünün altında toplanır. Kriter listesini ezberlemek yerine **mantığı** kavramayı sağlar:
+
+| İlke | Soru | Örnekler |
+|---|---|---|
+| **Perceivable** (algılanabilir) | Kullanıcı içeriği algılayabiliyor mu? | Alt metin, altyazı, kontrast |
+| **Operable** (işletilebilir) | Kullanıcı arayüzü çalıştırabiliyor mu? | Klavye, yeterli süre, hedef boyutu |
+| **Understandable** (anlaşılabilir) | Kullanıcı anlayabiliyor mu? | Sade dil, tutarlılık, anlaşılır hata mesajı |
+| **Robust** (sağlam) | Farklı teknolojilerle çalışıyor mu? | Doğru işaretleme, yardımcı teknoloji uyumu |
+
+Bir sorunu duyduğunda hangi ilkeye girdiğini sor: "Sorun perceivable değil operable tarafında; içerik görünüyor ama klavyeyle ulaşılamıyor."
+
+## Uyum seviyeleri: A, AA, AAA
+
+**Conformance level** (uyum seviyesi), WCAG ölçütlerinin üç zorluk kademesidir:
+
+<StepFlow
+  arrows={false}
+  label="Üç uyum seviyesi"
+  caption="Seviyeler kümülatiftir: AA demek, A'yı da karşılamak demektir. Pratik ve yasal hedef AA'dır."
+  steps={[
+    { title: "A: temel eşik", sub: "Karşılanmazsa içerik bazıları için tamamen erişilemez", tone: "plain" },
+    { title: "AA: pratik ve yasal hedef", sub: "Düzenlemelerin neredeyse tamamı bunu referans alır", tone: "progress" },
+    { title: "AAA: en yüksek", sub: "Her içerik için tam karşılanamayabilir", tone: "plain" },
+  ]}
+/>
+
+- **A** temel eşiktir; karşılanmazsa içerik bazı kullanıcılar için **tamamen erişilemezdir.**
+- **AA** pratik ve yasal hedeftir; düzenlemelerin neredeyse tamamı bunu referans alır.
+- **AAA** her içerik türü için tam olarak karşılanamayabilir; W3C'nin kendisi de tüm siteler için AAA hedeflenmesini önermez.
+
+Gereksinim yazarken doğru cümle **"WCAG 2.2 Level AA"** biçimindedir. "AA hedefliyoruz. AAA'daki 7:1 kontrast, marka rengimizle mümkün değil."
+
+## Başarı ölçütü: numaralı gereklilik
+
+**Success criterion** (SC, başarı ölçütü), **test edilebilir tek bir gereklilik;** numarayla anılır (1.4.3 Contrast Minimum gibi). Denetim raporları bu numaralarla yazılır. Numaraları ezberlemen gerekmez ama okuduğunda ne demek olduğunu anlaman gerekir.
+
+Numaranın ilk rakamı ilkeyi gösterir (1 = algılanabilir, 2 = işletilebilir, 3 = anlaşılabilir, 4 = sağlam). "Rapor 15 ihlal listelemiş; 9'u 1.4.3, yani kontrast. Palet düzeltmesiyle çoğu kapanır."
+
+## WCAG 2.2'nin getirdikleri
+
+WCAG 2.2, 2.1'in üstüne **dokuz yeni ölçüt** ekledi ve eskiyen bir ölçütü (4.1.1 Parsing) kaldırdı. Tasarımcıyı en çok ilgilendiren AA ve A seviyesindekiler:
+
+| Ölçüt | Ne ister | Tasarımdaki karşılığı |
+|---|---|---|
+| **2.4.11** Focus Not Obscured (Min.) | Odaklanan öğe tamamen gizlenmemeli | Yapışkan üst/alt bar odaktaki öğeyi kapatmamalı |
+| **2.5.7** Dragging Movements | Sürükleme gerektiren işlevin sürüklemesiz alternatifi olmalı | Slider, kart sıralama, harita için buton alternatifi |
+| **2.5.8** Target Size (Min.) | Dokunma hedefleri en az **24×24 CSS pikseli** (veya yeterli aralık) | Küçük ikon butonları, yan yana simgeler |
+| **3.3.8** Accessible Authentication (Min.) | Giriş, bilişsel test gerektirmemeli | Yapıştırmayı engelleme, bulmaca tipi doğrulama |
+| **3.2.6** Consistent Help (A) | Yardım aynı yerde bulunmalı | Destek bağlantısının konumu sayfadan sayfaya değişmemeli |
+| **3.3.7** Redundant Entry (A) | Aynı bilgi tekrar istenmemeli | Çok adımlı formda "faturaya aynısını kullan" seçeneği |
+
+## Erişilebilirlik beyanı
+
+**Accessibility statement** (erişilebilirlik beyanı), sitenin erişilebilirlik durumunu, hangi standardı hedeflediğini, **bilinen eksikleri** ve iletişim yolunu açıklayan sayfadır. Bazı düzenlemelerde zorunludur. Ayrıca dürüst bir beyandır: **"%100 erişilebilir" iddiası neredeyse her zaman yanlıştır;** bilinen eksikleri ve düzeltme planını yazmak daha güvenilirdir ve kullanıcıya sorun bildirme yolu açar. Altbilgideki yasal bağlantılar arasında bulunur.
+
+"Erişilebilirlik beyanına bilinen eksikleri ve geri bildirim e-postasını da ekleyelim."
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitenin hedefi WCAG 2.2 AA ve bu bölümün kontrol listeleri sitenin kendi kabul kriteri: tek `h1`, işaretli bölgeler (landmark), atlama bağlantısı, görünür odak halkası, kontrast hesapla doğrulanmış renkler, hedef boyutu (tek başına duran gezinme bağlantıları en az 24px). Cümle içindeki bağlantılar, standardın "satır içi" istisnasına girdiği için bu boyuta tabi tutulmuyor. Bu istisna WCAG 2.5.8'in kendi metninde var.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Hedefi yaz:** "WCAG 2.2 Level AA" bir gereksinim cümlesidir, tercih değil.
+- **Denetim raporunu ilkeye göre grupla.** Çoğu rapor birkaç kök sebebe (kontrast, etiket, klavye) dayanır.
+- **WCAG 2.2'nin yeni ölçütlerini tasarımda say:** hedef boyutu, sürükleme alternatifi, yapışkan bar odağı kapatmıyor mu?
+- **"%100 erişilebilir" deme.** Beyanda bilinen eksikleri yaz.
+
+</Callout>
+
+<Summary>
+
+- WCAG erişilebilirliği test edilebilir, numaralı ölçütlere çevirir; neredeyse tüm yasalar ona atıf yapar.
+- POUR: algılanabilir, işletilebilir, anlaşılabilir, sağlam. Bir sorun bu dördünden birine girer.
+- A temel eşik, AA pratik ve yasal hedef, AAA her içerikte tam karşılanamayabilir; seviyeler kümülatiftir.
+- Başarı ölçütü numaralıdır (ilk rakam ilkeyi gösterir); denetim raporları bu numaralarla yazılır.
+- WCAG 2.2 dokuz ölçüt ekledi; tasarımcıyı en çok ilgilendirenler hedef boyutu, sürükleme alternatifi, odak ve tutarlı yardım.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="WCAG'in POUR ilkeleri nelerdir? &quot;İçerik görünüyor ama klavyeyle ulaşılamıyor&quot; hangi ilkeye girer?">
+
+Perceivable, Operable, Understandable, Robust. Klavyeyle ulaşılamama Operable ilkesine girer: içerik algılanabiliyor ama işletilemiyor.
+
+</SelfCheck>
+
+<SelfCheck question="Hangi uyum seviyesi pratik ve yasal hedeftir ve neden AAA hedeflenmez?">
+
+AA. Düzenlemelerin neredeyse tamamı AA'yı referans alır. AAA bazı içerik türleri için tam olarak karşılanamaz (örneğin 7:1 kontrast çoğu marka rengiyle mümkün değildir) ve W3C'nin kendisi de tüm siteler için AAA hedeflenmesini önermez.
+
+</SelfCheck>

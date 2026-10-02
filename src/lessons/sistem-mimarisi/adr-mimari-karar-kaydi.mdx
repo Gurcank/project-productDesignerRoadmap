@@ -1,0 +1,67 @@
+---
+summary: "ADR, alınan bir mimari kararın gerekçesiyle ve değerlendirilen alternatifleriyle kaydedildiği kısa belgedir. Kod yazmadan da yazabilirsin ve yazmak seni teknik masada ciddiye aldırır. En sık atlanan iki madde: alternatifler ve sonuçlar."
+outcomes:
+  - "ADR'nin ne işe yaradığını ve neden kararın koşullarını kaydettiğini söyleyebilirsin."
+  - "Yedi başlıklı bir ADR iskeleti yazabilirsin."
+  - "Alternatiflerin ve sonuçların neden kritik olduğunu açıklayabilirsin."
+minutes: 7
+sources:
+  - label: "Michael Nygard — Documenting Architecture Decisions"
+    url: "https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions"
+  - label: "ADR GitHub Organizasyonu"
+    url: "https://adr.github.io/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Altı ay sonra biri "neden bunu seçmişiz?" diye soruyor. Kimse hatırlamıyor. **Bu, bölümdeki en doğrudan senin işin olan parça:** kod yazmadan da yazabilirsin ve yazmak seni teknik masada ciddiye aldırır.
+
+## ADR nedir
+
+**ADR (Architecture Decision Record, mimari karar kaydı)**, alınan bir mimari kararın gerekçesiyle ve değerlendirilen alternatifleriyle birlikte kaydedildiği kısa belgedir. Altı ay sonra "neden bunu seçmişiz?" sorusuna cevap verir. Daha önemlisi: kararın hangi **koşullar altında** alındığını kaydeder; koşullar değiştiğinde kararı yeniden değerlendirmek meşru hâle gelir. ADR olmadan eski kararlar sorgulanamaz dogmalara dönüşür. Olgun ekiplerde genellikle depoda `docs/adr/` klasöründe durur. "Bu kararı ADR olarak yazalım; altı ay sonra neden böyle yaptığımızı hatırlayalım."
+
+## Tipik iskelet
+
+Ekipten ekibe değişir ama bu başlıklar çoğunda vardır:
+
+1. **Başlık ve tarih:** "ADR-007: Oturum yönetimi için session tabanlı yaklaşım"
+2. **Durum:** önerildi / kabul edildi / reddedildi / yerine ADR-012 geçti
+3. **Bağlam:** hangi problemi çözüyoruz, hangi kısıtlar var (ekip büyüklüğü, süre, mevcut sistem)
+4. **Değerlendirilen seçenekler:** en az iki, her biri için artı ve eksiler
+5. **Karar:** ne seçildi
+6. **Gerekçe:** neden bu, neden diğerleri değil
+7. **Sonuçlar:** bu karar bize ne getiriyor, neyi zorlaştırıyor, neyi gelecekte yeniden konuşmamız gerekecek
+
+**Neden 4. ve 7. maddeler kritik:** çoğu ekip yalnızca kararı yazar. Değerlendirilen alternatifleri yazmazsan yeni gelen biri aynı alternatifi yeniden önerir ve tartışma sıfırdan başlar. Sonuçları yazmazsan kararın bedelini kimse takip etmez.
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitenin mimari kararları da ADR biçiminde kayıtlıdır: her kararın bağlamı, seçeneği ve sonucu `ARCHITECTURE.md` dosyasında numaralı ADR'ler olarak tutulur (örneğin lesson katmanı, ana menü, çevrimdışı önbellek). Böylece bir ayarın neden öyle olduğu, koşullar değiştiğinde yeniden değerlendirilebilir.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Bir tasarım sistemi ya da bileşen kararı için de ADR yaz:** neden bu kütüphane, hangi alternatifleri değerlendirdik?
+- **Her ADR'de en az iki seçenek ve gerçek bir sonuç bölümü yaz;** "zorlaştırdığı şeyler" dürüstçe listelensin.
+- **Kararın koşullarını (ekip büyüklüğü, süre) yaz;** koşullar değiştiğinde yeniden bakmak meşru olsun.
+
+</Callout>
+
+<Summary>
+
+- ADR kararı gerekçesi ve alternatifleriyle kaydeder; koşullar değiştiğinde yeniden değerlendirmeyi meşru kılar.
+- Yedi başlık: başlık/tarih, durum, bağlam, seçenekler, karar, gerekçe, sonuçlar.
+- En sık atlanan iki madde alternatifler ve sonuçlardır; atlanınca tartışma sıfırdan başlar ve bedel takip edilmez.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir ADR'de en sık atlanan iki madde nedir ve atlanınca ne olur?">
+
+Değerlendirilen alternatifler ve sonuçlar. Alternatifler yazılmazsa yeni gelen biri aynı seçeneği yeniden önerir ve tartışma sıfırdan başlar; sonuçlar yazılmazsa kararın bedelini kimse takip etmez.
+
+</SelfCheck>

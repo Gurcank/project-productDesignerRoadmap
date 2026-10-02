@@ -1,0 +1,73 @@
+---
+summary: "Hız sınırlama ve sayfalama: sınıra takılan gerçek kullanıcıya ne gösterileceği ve sayfa numaralı arayüz ile sonsuz kaydırma arasındaki teknik fark (offset ve cursor)."
+outcomes:
+  - "Rate limiting'in neden gerektiğini ve sınıra takılan kullanıcıya ne gösterileceğini söyleyebilirsin."
+  - "Offset ile cursor sayfalamanın farkını ve tasarıma etkisini açıklayabilirsin."
+minutes: 6
+sources:
+  - label: "MDN — 429 Too Many Requests"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/429"
+  - label: "Slack Engineering — API sayfalamasının evrimi"
+    url: "https://slack.engineering/evolving-api-pagination-at-slack/"
+  - label: "Stripe — API sayfalama"
+    url: "https://docs.stripe.com/api/pagination"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Giriş ekranında kullanıcı şifreyi beş kez yanlış girdi. Altıncıyı denediğinde ne olmalı? Ve bin ürünlük listede "5. sayfaya git" butonu mümkün mü? Bu iki soru bu dersin konusu.
+
+## Rate limiting
+
+**Rate limiting (hız sınırlama)**, bir kullanıcının ya da IP'nin belirli sürede atabileceği istek sayısının sınırlanmasıdır. Kötüye kullanımı, bot saldırılarını ve maliyet patlamalarını engeller; giriş ekranında şifre deneme saldırılarına karşı temel savunmadır. Giriş, arama, form gönderimi ve dış servis çağrılarında karşına çıkar. "Giriş denemesini dakikada 5 ile sınırlayalım; sonra 429 dönüp bekleme süresi gösterelim."
+
+Sınıra takılan **gerçek kullanıcıya** ne gösterileceği bir tasarım işidir. Sınır çok sıkı olursa meşru kullanımı da engeller.
+
+## Offset ve cursor
+
+<Compare>
+<Pane title="Offset">
+
+- "20. kayıttan itibaren 20 tane ver"
+- Sayfa numaralarını mümkün kılar
+- Derin sayfalarda yavaşlar; değişen listede kayıt kayabilir
+
+</Pane>
+<Pane title="Cursor">
+
+- "Şu kayıttan sonrakileri ver"
+- Daha sağlam, sonsuz kaydırmaya uygun
+- Sayfa numarası olmaz
+
+</Pane>
+</Compare>
+
+**Bu teknik ayrımın doğrudan tasarım sonucu vardır:** sayfa numaralı bir arayüz istiyorsan offset gerekir. Ama offset'in iki bilinen zayıflığı var: çok derin sayfalarda yavaşlar, ve liste sürekli değişiyorsa kayıtlar sayfalar arasında kayabilir ya da tekrarlanabilir. Cursor bu sorunları çözer ama "5. sayfaya git" özelliğini imkânsız kılar. "Sayfa numarası istiyorsak offset gerekiyor; sonsuz kaydırma yapacaksak cursor daha sağlam."
+
+<Callout kind="tasarimci">
+
+- **Hız sınırı mesajını tasarla:** neden, ne kadar bekleme, ne yapılabilir.
+- **Sayfa numaralı arayüz ile sonsuz kaydırma arasında seçim yapmadan önce geliştiriciyle konuş;** teknik seçim arayüzü kısıtlar.
+- **"Atla ve 5. sayfaya git" ihtiyacı gerçek mi?** Cursor tabanlı bir listede bunu sunamazsın.
+
+</Callout>
+
+<Summary>
+
+- Rate limiting kötüye kullanımı ve maliyeti engeller; sınıra takılan kullanıcıya bekleme süresi gösterilmelidir.
+- Offset sayfa numaralarını sağlar ama derin sayfalarda yavaşlar ve kayıt kayması yapabilir.
+- Cursor daha sağlamdır ve sonsuz kaydırmaya uygundur ama sayfa numarası veremez.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Offset ile cursor pagination arasındaki fark nedir? Sayfa numaralı arayüz için hangisi gerekir?">
+
+Offset "20. kayıttan itibaren 20 tane" der; sayfa numaralarını mümkün kılar ama derin sayfalarda yavaşlar ve değişen listede kayıt kayması olabilir. Cursor "şu kayıttan sonrakiler" der; daha sağlamdır ama sayfa numarası veremez. Sayfa numaralı arayüz için offset gerekir.
+
+</SelfCheck>

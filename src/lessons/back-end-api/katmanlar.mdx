@@ -1,0 +1,55 @@
+---
+summary: "Arka yüz kodunun organizasyonu: middleware ve controller/service/repository ayrımı. İndirim kuralı nereye yazılır? Cevap, aynı kuralı web, mobil ve arka plan işinin birlikte kullanabilmesini belirler."
+outcomes:
+  - "Middleware'in ne iş yaptığını ve neden her endpoint'te tekrar yazılmadığını söyleyebilirsin."
+  - "Controller, service ve repository'nin sorumluluklarını ayırabilirsin."
+minutes: 4
+sources:
+  - label: "Next.js — Middleware"
+    url: "https://nextjs.org/docs/app/building-your-application/routing/middleware"
+  - label: "Express — Ana sayfa"
+    url: "https://expressjs.com/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Arka yüz kodu nasıl organize edilir? Bu **seviye 2** terimlerdir: duyduğunda anlaman yeter. Ama bir kuralın nerede yaşadığı, onu kimlerin kullanabileceğini belirler.
+
+## Middleware
+
+**Middleware (ara katman)**, istek asıl işleme ulaşmadan önce ondan geçen ara koddur. Her endpoint'te tekrar edilmesi gereken işleri tek yerde toplar: kimlik kontrolü, hız sınırı, günlük kaydı, dil tespiti, yönlendirme. Bir kullanıcı giriş yapmamışsa middleware onu daha en başta durdurur. "Giriş kontrolünü middleware'e alalım; her sayfada ayrı ayrı kontrol etmeyelim."
+
+## Controller, service, repository
+
+Arka yüz kodu sorumluluklara göre bölünür:
+
+- **Controller (denetleyici):** isteği karşılar ve yanıtı döner.
+- **Service (servis):** iş kurallarını içerir.
+- **Repository (depo):** veritabanıyla konuşur.
+
+Katmanlı ayrım, bir kuralın nerede yaşadığını netleştirir ve test edilebilirliği artırır. "İndirim kuralını nereye yazacağız?" sorusunun cevabı: service katmanına; böylece hem web hem mobil hem arka plan işi aynı kuralı kullanır. "Bu hesaplama controller'da; service'e taşıyalım ki başka yerden de çağrılabilsin."
+
+<Callout kind="tasarimci">
+
+- **İş kuralını (indirim, kargo ücreti) tasarım notunda adlandır;** geliştirici onu tek yere yazsın.
+- **"Her ekranda aynı mı hesaplanıyor?" sorusunu sor:** tutarsız fiyat gösterimlerinin sık sebebi kuralın birden fazla yerde yazılmasıdır.
+
+</Callout>
+
+<Summary>
+
+- Middleware tekrar eden işleri (kimlik, hız sınırı, kayıt) tek yerde toplar.
+- Controller isteği karşılar, service iş kuralını taşır, repository veritabanıyla konuşur.
+- İş kuralı service katmanında olursa web, mobil ve arka plan işi aynı kuralı kullanır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'İndirim kuralını nereye yazacağız?' sorusunun cevabı nedir ve neden?">
+
+Service katmanına; böylece hem web hem mobil hem arka plan işi aynı kuralı kullanır ve tutarsızlık olmaz.
+
+</SelfCheck>

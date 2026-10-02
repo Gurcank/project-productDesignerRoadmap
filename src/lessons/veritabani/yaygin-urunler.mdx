@@ -1,0 +1,55 @@
+---
+summary: "PostgreSQL, MySQL, SQLite, MongoDB ve Redis: beş yaygın veritabanı ürünü ve hangisi ne zaman. Ürün seçimi seni doğrudan etkilemez; etkilediği tek yer ne garanti ettiğidir."
+outcomes:
+  - "Beş yaygın veritabanının türünü ve tipik kullanımını söyleyebilirsin."
+  - "Ürün seçiminin tasarımı hangi yerde etkilediğini (verdiği garantiler) açıklayabilirsin."
+minutes: 3
+sources:
+  - label: "PostgreSQL — Dokümantasyon"
+    url: "https://www.postgresql.org/docs/current/"
+  - label: "SQLite — Hakkında"
+    url: "https://www.sqlite.org/about.html"
+  - label: "MongoDB — Manual"
+    url: "https://www.mongodb.com/docs/manual/"
+  - label: "Redis — Dokümantasyon"
+    url: "https://redis.io/docs/latest/"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Ürün adlarını duyduğunda kategorisini bilmen yeterli. Ürün seçimi senin işini doğrudan etkilemez; etkilediği tek yer, o veritabanının **ne garanti ettiğidir.**
+
+| Ürün | Tür | Ne zaman |
+|---|---|---|
+| **PostgreSQL** | İlişkisel | Modern varsayılan. Güçlü, açık kaynak, JSON desteği var, eklentilerle genişler. Emin değilsen bu |
+| **MySQL** | İlişkisel | Çok yaygın ve olgun. WordPress ve klasik web yığınlarında baskın |
+| **SQLite** | İlişkisel (dosya tabanlı) | Tek dosyada çalışır, sunucu gerektirmez. Küçük projeler, mobil uygulamalar, yerel geliştirme |
+| **MongoDB** | Belge | Esnek yapılı veri; en yaygın belge veritabanı |
+| **Redis** | Anahtar-değer | Önbellek, oturum, kuyruk, sayaç. Ana veritabanı olarak değil, yanında |
+
+**Tasarımcı için sonuç:** ilişkisel bir veritabanı, arayüzde "bu iki kayıt tutarlı olmalı" varsayımını güvenilir kılar; belge veritabanı bunu garanti etmez.
+
+<Callout kind="tasarimci">
+
+- **Ürün adını değil, garantiyi sor:** "Bu veritabanı sipariş-stok tutarlılığını kendisi sağlıyor mu?"
+- **Offline ya da yerel çalışan uygulamalarda dosya tabanlı veritabanını (SQLite) tanı.**
+
+</Callout>
+
+<Summary>
+
+- PostgreSQL modern varsayılandır; MySQL klasik web yığınlarında yaygın; SQLite dosya tabanlı ve hafif; MongoDB belge; Redis anahtar-değer ve yan araç.
+- Ürün seçimi tasarımı yalnızca verdiği garantiler üzerinden etkiler.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Emin değilsen hangi veritabanı varsayılan seçim olarak anılır?">
+
+PostgreSQL: güçlü, açık kaynak, JSON desteği var ve eklentilerle genişler.
+
+</SelfCheck>

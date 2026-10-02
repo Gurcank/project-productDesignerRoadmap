@@ -1,0 +1,73 @@
+---
+summary: "Mimari, geri dönüşü en pahalı karar sınıfıdır. Tek yönlü ve çift yönlü kapılar, ve mimaride 'iyi' ile 'kötü' yerine farklı şeyleri optimize eden seçeneklerin olduğu: trade-off düşünmek."
+outcomes:
+  - "Mimarinin neden geri dönüşü en pahalı karar sınıfı olduğunu söyleyebilirsin."
+  - "Tek yönlü ve çift yönlü kapı kararlarını ayırıp ekiplerin en yaygın hatasını açıklayabilirsin."
+  - "Bir mimari önerisini 'neyi feda ediyoruz?' sorusuyla değerlendirebilirsin."
+minutes: 7
+sources:
+  - label: "Martin Fowler — Microservices (makale)"
+    url: "https://martinfowler.com/articles/microservices.html"
+  - label: "AWS Well-Architected — Güvenilirlik sütunu"
+    url: "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html"
+  - label: "Microsoft — Azure mimari stilleri"
+    url: "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Mimari, senin öncelik sıralamanda UI/UX'ten sonra gelen ikinci alan. Bu bölüm iki hedefle yazıldı:
+
+1. **Bir mimari tartışmasına katılabilmek.** Mimari kararların çoğu teknik değil, **takas** kararıdır; takasları tartışmak kod bilmeyi gerektirmez. "Bu bize ne kazandırıyor, karşılığında neyi kaybediyoruz?" sorusunu doğru terimlerle sorabilmek masadaki yerini belirler.
+2. **Bir mimari diyagramını okuyabilmek.** Kutular, oklar ve sınırlar bir dildir; bu dili bilmek, sistemin nasıl çalıştığını kimseye sormadan anlamanı sağlar.
+
+Bölümdeki kavramların çoğu **seviye 2**'dir: üretmen gerekmez, anlaman yeter. İki istisna doğrudan senin işin: **trade-off düşünme biçimi** ve **ADR yazmak.**
+
+## Mimari nedir
+
+**Software architecture (yazılım mimarisi)**, bir sistemin parçalarının nasıl bölündüğü, birbirleriyle nasıl konuştuğu ve nerede çalıştığına dair üst seviye kararların bütünüdür. Mimari, **geri dönüşü en pahalı karar sınıfıdır:** bir buton rengini bir günde değiştirirsin; bir ekranı bir haftada yeniden tasarlarsın; veri modelini aylarca taşırsın; mimariyi ise çoğu zaman hiç değiştirmezsin, yeniden yazarsın. "Bu bir mimari karar; şimdi konuşalım, sonra değiştirmesi pahalı olacak."
+
+## Tek yönlü ve çift yönlü kapı
+
+Kararları geri alınabilirliğine göre sınıflamak karar hızını ayarlar:
+
+- **Çift yönlü kapı:** yanlışsa geri dön. Uzun tartışmak zaman kaybıdır; dene, olmazsa değiştir.
+- **Tek yönlü kapı:** geri dönüş yok ya da çok pahalı. Burada yavaşlamak doğrudur.
+
+**Ekiplerin en yaygın hatası ikisini karıştırmaktır:** buton rengini saatlerce tartışıp veritabanı seçimini bir öğleden sonrada yapmak. "Bu çift yönlü kapı; bir hafta deneyelim, olmazsa geri alırız. Uzun tartışmaya gerek yok."
+
+## Trade-off düşünmek
+
+Mimaride **"iyi" ve "kötü" seçenek yoktur, farklı şeyleri optimize eden seçenekler vardır.** Bir mimari önerisini değerlendirmenin tek dürüst yolu neyi feda ettiğini sormaktır: mikroservis ölçeklenebilirlik kazandırır, basitlik kaybettirir; önbellek hız kazandırır, tazelik kaybettirir; statik üretim hız kazandırır, dinamiklik kaybettirir. "Bunun takası ne? Neyi kaybediyoruz karşılığında?"
+
+<Callout kind="tasarimci">
+
+- **Her büyük özellik isteğinde "bu tek yönlü mü çift yönlü mü?" sor.** Veri modeli ve mimari tek yönlüdür; görsel kararlar çoğunlukla çift yönlüdür.
+- **Bir mimari öneriyi "ne kazanıyoruz, neyi kaybediyoruz?" sorusuyla ilk toplantıda sor.**
+- **Tek yönlü kararlarda tasarımcı olarak erken söz al;** sonradan değiştirmek yeniden yazmaktır.
+
+</Callout>
+
+<Summary>
+
+- Mimari parçaların bölünmesi, konuşması ve çalıştığı yer hakkında üst seviye kararlardır; geri dönüşü en pahalı karar sınıfıdır.
+- Çift yönlü kapılar hızla denenir, tek yönlü kapılar yavaşça düşünülür; ikisini karıştırmak yaygın hatadır.
+- Mimaride "iyi/kötü" yoktur; her seçenek bir şeyi kazandırıp bir şeyi kaybettirir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Mimari kararlar neden erken verilir? Karar sınıflarını geri dönüş maliyetine göre sırala.">
+
+Mimari geri dönüşü en pahalı karar sınıfıdır. Maliyet sırası: buton rengi (saatler) → ekran tasarımı (günler–haftalar) → veri modeli (aylar) → mimari (çoğu zaman değiştirilmez, yeniden yazılır).
+
+</SelfCheck>
+
+<SelfCheck question="Tek yönlü ve çift yönlü kapı kararlarında ekiplerin en yaygın hatası nedir?">
+
+İkisini karıştırmak: buton rengini saatlerce tartışıp veritabanı seçimini bir öğleden sonrada yapmak.
+
+</SelfCheck>

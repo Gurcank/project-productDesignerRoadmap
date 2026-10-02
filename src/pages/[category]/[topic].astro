@@ -4,6 +4,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import StepList from "~/components/StepList.astro";
 import { getPublishedCategories, topicHref, topicId, topicSlug } from "~/lib/content";
 import { DIAGRAM_BY_SECTION } from "~/components/diagrams";
+import { getGlossary } from "~/lib/glossary";
 import TermTooltips from "~/components/TermTooltips.astro";
 import Checkbox from "~/components/ui/Checkbox.astro";
 import BrowseNav from "~/components/ui/BrowseNav.astro";
@@ -25,10 +26,24 @@ export async function getStaticPaths() {
 }
 
 const { category, topics, topic, previous, next } = Astro.props;
-const { Content, headings } = await render(topic);
-
 const id = topicId(topic);
-const cardHeadings = headings.filter((heading) => heading.depth === 3);
+
+/*
+ * A hand-written lesson replaces the term-card view of its step (ADR-015). The
+ * imported topic stays the source of the glossary and of the step order, so
+ * progress keys, URLs and search anchors do not move.
+ */
+const lesson = (await getCollection("lessons")).find((entry) => entry.id === id);
+const { Content, headings } = await render(lesson ?? topic);
+const cardHeadings = lesson
+  ? headings.filter((heading) => heading.depth === 2 && heading.slug !== "ozet")
+  : headings.filter((heading) => heading.depth === 3);
+
+const lessonTerms = lesson
+  ? (await getGlossary()).filter((entry) => entry.href.startsWith(`/${id}/`))
+  : [];
+const lessonSources = lesson?.data.sources ?? topic.data.sources;
+const lessonFlags = lesson ? lesson.data.flags : topic.data.flags;
 
 // Categories written for this site have no quiz; linking to one would 404.
 const quizzes = await getCollection("quizzes");
@@ -40,7 +55,7 @@ const hasQuiz = quizzes.some((quiz) => quiz.data.category === category.slug);
  * name the parts. Keyed by section number so the imported markdown stays
  * untouched (ADR-002).
  */
-const Diagram = DIAGRAM_BY_SECTION[topic.data.sectionNumber as keyof typeof DIAGRAM_BY_SECTION] ?? null;
+const Diagram = lesson ? null : (DIAGRAM_BY_SECTION[topic.data.sectionNumber as keyof typeof DIAGRAM_BY_SECTION] ?? null);
 
 const FLAG_LABEL: Record<string, { text: string; title: string }> = {
   degisken: {
@@ -83,8 +98,21 @@ const FLAG_LABEL: Record<string, { text: string; title: string }> = {
           {topic.data.sectionNumber && <span class="topic__number">{topic.data.sectionNumber}</span>}
         </p>
         <h1>{topic.data.title}</h1>
+        {lesson && <p class="lesson-lead">{lesson.data.summary}</p>}
+        {
+          lesson && lesson.data.outcomes.length > 0 && (
+            <div class="lesson-outcomes">
+              <p class="lesson-outcomes__title">Bu derste öğreneceklerin</p>
+              <ul>
+                {lesson.data.outcomes.map((outcome) => (
+                  <li>{outcome}</li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
         <p class="topic__meta">
-          {topic.data.cardCount > 0 && <span>{topic.data.cardCount} terim</span>}
+          {lesson ? <span>~{lesson.data.minutes ?? 8} dk ders</span> : topic.data.cardCount > 0 && <span>{topic.data.cardCount} terim</span>}
           {
             /* Pages written for this site must say so on their face — the whole
                point of the material is that it is the user's own verified source. */
@@ -95,7 +123,7 @@ const FLAG_LABEL: Record<string, { text: string; title: string }> = {
             )
           }
           {
-            topic.data.flags.map((flag) => (
+            lessonFlags.map((flag) => (
               <span class="flag" title={FLAG_LABEL[flag]?.title}>
                 {FLAG_LABEL[flag]?.text ?? flag}
               </span>
@@ -110,16 +138,32 @@ const FLAG_LABEL: Record<string, { text: string; title: string }> = {
         <Content />
       </div>
 
+      {
+        lessonTerms.length > 0 && (
+          <details class="lesson-terms" data-pagefind-ignore>
+            <summary>Bu derste geçen terimler ({lessonTerms.length})</summary>
+            <dl>
+              {lessonTerms.map((entry) => (
+                <div>
+                  <dt>{entry.term}</dt>
+                  <dd>{entry.definition}</dd>
+                </div>
+              ))}
+            </dl>
+          </details>
+        )
+      }
+
       {/* Controls and navigation live inside the indexed article; they are
           not content, so they are excluded from the index explicitly. */}
       {
-        topic.data.sources.length > 0 && (
+        lessonSources.length > 0 && (
           <aside class="sources" aria-labelledby="kaynaklar">
             <h2 id="kaynaklar" class="sources__title">
               Kaynaklar
             </h2>
             <ul>
-              {topic.data.sources.map((source) => (
+              {lessonSources.map((source) => (
                 <li>
                   <a href={source.url} rel="noreferrer">
                     {source.label}
@@ -174,8 +218,8 @@ const FLAG_LABEL: Record<string, { text: string; title: string }> = {
 
     {
       cardHeadings.length > 2 && (
-        <aside class="topic__toc" aria-label="Bu sayfadaki terimler">
-          <p class="topic__toc-title">Bu sayfadaki terimler</p>
+        <aside class="topic__toc" aria-label={lesson ? "Bu dersin bölümleri" : "Bu sayfadaki terimler"}>
+          <p class="topic__toc-title">{lesson ? "Bu derste" : "Bu sayfadaki terimler"}</p>
           <ol>
             {cardHeadings.map((heading) => (
               <li>
@@ -188,11 +232,19 @@ const FLAG_LABEL: Record<string, { text: string; title: string }> = {
     }
   </div>
 
+  <div class="resume" data-resume hidden>
+    <button type="button" class="resume__go" data-resume-go>
+      Kaldığın yerden devam et · %<span data-resume-pct></span>
+    </button>
+    <button type="button" class="resume__close" data-resume-close aria-label="Kapat">×</button>
+  </div>
+
   <TermTooltips />
 </BaseLayout>
 
 <script>
   import { initProgress, $progress, markVisited, setDone } from "~/lib/progress";
+  import { getPosition, savePosition } from "~/lib/reading-position";
 
   initProgress();
 
@@ -200,6 +252,44 @@ const FLAG_LABEL: Record<string, { text: string; title: string }> = {
   if (page) {
     const id = page.dataset.topicPage!;
     markVisited(id);
+
+    /*
+     * Remember where you stopped, offer to go back (never jump on our own: an
+     * unrequested scroll on load is disorienting), and drop the offer as soon as
+     * you start reading somewhere else.
+     */
+    const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
+    const resume = document.querySelector<HTMLElement>("[data-resume]");
+    const saved = getPosition(id);
+
+    if (resume && saved > 0.05 && saved < 0.96 && !location.hash && window.scrollY < 80) {
+      resume.querySelector<HTMLElement>("[data-resume-pct]")!.textContent = String(Math.round(saved * 100));
+      resume.hidden = false;
+      const hide = () => (resume.hidden = true);
+      resume.querySelector("[data-resume-go]")?.addEventListener("click", () => {
+        window.scrollTo({ top: saved * maxScroll(), behavior: "smooth" });
+        hide();
+      });
+      resume.querySelector("[data-resume-close]")?.addEventListener("click", hide);
+      window.setTimeout(hide, 12000);
+    }
+
+    let saveTimer: number | undefined;
+    const save = () => {
+      const max = maxScroll();
+      if (max > 0) savePosition(id, window.scrollY / max);
+    };
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (resume && !resume.hidden && window.scrollY > 400) resume.hidden = true;
+        window.clearTimeout(saveTimer);
+        saveTimer = window.setTimeout(save, 600);
+      },
+      { passive: true },
+    );
+    document.addEventListener("visibilitychange", () => document.visibilityState === "hidden" && save());
+    window.addEventListener("pagehide", save);
 
     /*
      * Moving forward means you are done with this one. Reaching the next step
@@ -403,6 +493,52 @@ const FLAG_LABEL: Record<string, { text: string; title: string }> = {
 
   .done:has(input:checked) {
     border-color: var(--c-progress);
+  }
+
+  /* Floats above the bottom bar on a phone; on desktop there is no bar to clear. */
+  .resume {
+    position: fixed;
+    inset-inline: var(--spacing-4);
+    inset-block-end: calc(56px + env(safe-area-inset-bottom, 0px) + var(--spacing-4));
+    z-index: var(--z-overlay);
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-1);
+    pointer-events: none;
+  }
+
+  .resume[hidden] {
+    display: none;
+  }
+
+  .resume__go,
+  .resume__close {
+    pointer-events: auto;
+    min-height: 44px;
+    border: 1px solid var(--c-border-strong);
+    background-color: var(--c-surface-overlay);
+    color: var(--c-text);
+    font: inherit;
+    font-size: var(--text-sm);
+    box-shadow: var(--elev-2);
+    cursor: pointer;
+  }
+
+  .resume__go {
+    padding-inline: var(--spacing-4);
+    border-radius: var(--radius-full) 0 0 var(--radius-full);
+  }
+
+  .resume__close {
+    min-inline-size: 44px;
+    border-radius: 0 var(--radius-full) var(--radius-full) 0;
+    border-inline-start: 0;
+  }
+
+  @media (min-width: 48rem) {
+    .resume {
+      inset-block-end: var(--spacing-6);
+    }
   }
 
   .pager {

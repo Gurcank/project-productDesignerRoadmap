@@ -1,0 +1,144 @@
+---
+summary: "En kolay test edilen ve en sık ihlal edilen alan: klavye erişimi. Odak, odak göstergesi, sekme sırası, odak hapsi, atlama bağlantısı ve odak yönetimi."
+outcomes:
+  - "Odak göstergesini neden kaldırmak yerine tasarlaman gerektiğini ve özelliklerini söyleyebilirsin."
+  - "Görsel sıra ile kod sırasının neden uyumlu olması gerektiğini açıklayabilirsin."
+  - "Modal açıldığında odağın nasıl davranması gerektiğini (üç adım) bilirsin."
+  - "SPA geçişlerinde odağın neden yönetilmesi gerektiğini anlatabilirsin."
+minutes: 12
+sources:
+  - label: "MDN — :focus-visible"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible"
+  - label: "W3C — Understanding SC 2.4.11 Focus Not Obscured (Minimum)"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html"
+  - label: "W3C — WAI-ARIA Authoring Practices Guide: Dialog (Modal)"
+    url: "https://www.w3.org/WAI/ARIA/apg/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Farenizi bırakın. Yalnızca **Tab, Enter, Space ve ok tuşlarıyla** kendi sitenizi kullanmayı deneyin. Sorunların çoğu ilk beş dakikada ortaya çıkar: odak nerede? Menü açılıyor ama kapatılamıyor, modal açılınca odak arkaya kaçıyor, butonlara ulaşılamıyor.
+
+Klavye erişimi, en kolay test edilen ve **en sık ihlal edilen** alandır.
+
+## Klavye erişilebilirliği
+
+**Keyboard accessibility** (klavye erişilebilirliği), tüm işlevlerin **yalnızca klavyeyle** kullanılabilmesidir. Yalnızca görme engelli kullanıcılar için değil: motor beceri kısıtı olanlar, titremesi olanlar, ekran okuyucu kullananlar ve hız isteyen uzman kullanıcılar da klavyeyle gezer. **Fareyle yapılabilen her şeyin klavyeyle de yapılabilmesi gerekir.** Manuel testin ilk adımıdır.
+
+"Klavyeyle test ettim: filtre menüsü Tab ile açılıyor ama ok tuşlarıyla gezilemiyor."
+
+## Odak ve odak göstergesi
+
+**Focus** (odak), klavye girdisinin o an **hangi öğeye gittiğidir.** Klavye kullanıcısının "imleci" budur. Odağın nerede olduğu görünmüyorsa kullanıcı kaybolur. Her etkileşimli bileşende vardır; **tasarım tesliminde odak durumu da verilmelidir** (hover ve active gibi). "Handoff'a odak durumunu da ekledim; yalnızca hover vermek yetmiyor."
+
+**Focus indicator / focus ring** (odak göstergesi), odaklanan öğenin etrafında görünen **çerçeve ya da vurgudur.** Klavye kullanıcısının nerede olduğunu gösteren tek işarettir.
+
+Tarayıcının varsayılan halkası bazen tasarımla uyumsuz görünür ve **kaldırılır.** Bu, en yaygın ve en zararlı erişilebilirlik hatalarından biridir. Doğru yaklaşım kaldırmak değil, **markaya uygun ve yeterince görünür** bir gösterge tasarlamaktır. WCAG'e göre odak göstergesi de kontrast eşiğini (3:1) sağlamalıdır.
+
+<Compare>
+<Pane title="Kaldırmak (yanlış)">
+
+- `outline: none`
+- Klavye kullanıcısı odağı göremez
+- Ürün klavyeyle kullanılamaz
+
+</Pane>
+<Pane title="Tasarlamak (doğru)">
+
+- 2px kalınlık, marka renginde, 2px offset
+- Arka plana karşı en az 3:1
+- Tasarım sisteminde ayrı bir token
+
+</Pane>
+</Compare>
+
+"Odak halkasını kaldırmayalım; 2px kalınlıkta, marka renginde ve 2px offsetli bir halka tanımlayalım."
+
+Makul bir ara çözüm: odak göstergesini **yalnızca klavye kullanımında göstermek** mümkündür (`:focus-visible`): fareyle tıklandığında görünmez. Bu, "tasarımı bozuyor" itirazının makul çözümüdür; tamamen kaldırmak değil.
+
+## Sekme sırası
+
+**Tab order** (sekme sırası), Tab tuşuna basıldığında odağın **hangi sırayla ilerlediğidir.** Sıra, **kodun sırasını** takip eder, görsel yerleşimi değil. CSS ile görsel olarak yeri değiştirilmiş bir öğe klavyede beklenmedik bir yerde çıkar. Bu yüzden görsel sıra ile kod sırasının uyumlu olması gerekir.
+
+Karmaşık yerleşimlerde ve responsive düzen değişimlerinde karşına çıkar. "Mobilde birincil buton görsel olarak üstte ama Tab sırasında en sonda; kod sırasını düzeltelim."
+
+`tabindex` ile sıra elle değiştirilebilir ama **pozitif değerler kullanmak neredeyse her zaman hatadır** ve bakımı imkânsızlaştırır.
+
+## Odak hapsi
+
+**Focus trap** (odak hapsi), bir modal ya da çekmece açıkken **odağın o alanın içinde tutulmasıdır.** Modal açıkken Tab'a basınca odağın arkadaki sayfaya kaçması, klavye kullanıcısı için ürünü kullanılamaz hâle getirir: kullanıcı göremediği öğeler arasında dolaşır.
+
+Doğru davranış üç adım:
+
+<StepFlow
+  label="Modal açılırken ve kapanırken odak"
+  caption="Odak modalın içine gider, içeride döner, kapanınca modalı açan öğeye geri döner. Bunlara ek olarak Esc tuşuyla kapanabilmelidir."
+  steps={[
+    { title: "Açılınca", sub: "Odak modalın içine, genelde başlığa taşınır", tone: "accent" },
+    { title: "Açıkken", sub: "Odak içeride döner, arkaya kaçmaz", tone: "plain" },
+    { title: "Kapanınca", sub: "Odak modalı açan öğeye geri döner", tone: "progress" },
+  ]}
+/>
+
+**Kasıtlı** odak hapsi (modal içinde) iyidir; **kasıtsız** odak hapsi (kullanıcının bir öğeden çıkamaması) ciddi bir ihlaldir. "Modal açılınca odak başlığa gitsin, içeride dönsün, kapanınca butona geri dönsün."
+
+## Atlama bağlantısı
+
+**Skip link** (atlama bağlantısı), sayfanın en başında bulunan, tekrar eden navigasyonu atlayıp **doğrudan ana içeriğe** götüren bağlantıdır. Klavye kullanıcısı her sayfada 30 menü öğesini tek tek geçmek zorunda kalmasın diye vardır. Genelde görünmezdir ve **yalnızca odaklandığında** görünür hâle gelir. Sayfa iskeletinin ilk öğesidir. "Atlama bağlantısı ekleyelim; odaklanınca sol üstte görünsün, ana içeriğe gitsin."
+
+## Odak yönetimi
+
+**Focus management** (odak yönetimi), sayfa ya da ekran değiştiğinde odağın **bilinçli olarak doğru yere taşınmasıdır.** Tek sayfa uygulamalarında sayfa gerçekten yenilenmediği için odak eski yerinde kalır ve ekran okuyucu kullanıcısı **sayfanın değiştiğini fark etmez.** (Web Temelleri'nde SPA dersinde bunu görmüştün.)
+
+Doğru davranış: geçişte odağı yeni sayfanın başlığına taşımak ve değişimi duyurmak. İstemci tarafı yönlendirmede, modal açılış ve kapanışında, adım geçişlerinde karşına çıkar. "Adım değişince odağı yeni adımın başlığına taşıyalım; şu an kullanıcı hâlâ eski butonda."
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitede hiçbir yerde odak halkası kaldırılmadı: iki piksel kalınlığında, iki piksel boşluklu bir halka var ve link renginden ayırt edilebilsin diye kehribar tonunda. Bu bir ayrı token (`--c-focus`) olarak tanımlı. Terim tanımları klavyeyle odaklanınca açılıyor ve Escape ile kapanıyor. Sayfanın başında "Ana içeriğe atla" bağlantısı var ve yalnızca odaklanınca görünüyor. Sol kenardaki menü klavyeyle odaklanınca açılıyor.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Odak durumunu her bileşen için tasarla.** Hover ile aynı değil.
+- **Odak halkası tokenını tanımla.** Kalınlık, renk, boşluk; en az 3:1 kontrast.
+- **Sekme sırasını tasarımda göster.** Özellikle mobilde sıra değişiyorsa not düş.
+- **Modal için üç davranışı yaz:** açılışta odak, açıkken tuzak, kapanışta geri dönüş.
+- **Kendi tasarımını klavyeyle gez.** Eksik odak, ulaşılamayan buton, kaybolan odak ilk dakikalarda görünür.
+
+</Callout>
+
+<Summary>
+
+- Klavye erişimi: fareyle yapılabilen her şey klavyeyle de yapılabilmeli; manuel testin ilk adımı.
+- Odak göstergesi klavye kullanıcısının tek işaretidir; kaldırılmaz, markaya uygun ve en az 3:1 kontrastla tasarlanır.
+- Sekme sırası kodun sırasını izler; görsel sıra ile uyumlu olmalı, pozitif tabindex kullanılmamalı.
+- Modalda odak içeri taşınır, içeride döner, kapanınca açan öğeye döner; atlama bağlantısı tekrar eden menüyü geçirir.
+- SPA geçişlerinde odağı yeni başlığa taşımak ve değişimi duyurmak gerekir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question={"Odak halkasını \"tasarımı bozuyor\" diye kaldırmak yerine ne yapılır?"}>
+
+Kaldırmak yerine markaya uygun, yeterince görünür ve kontrast eşiğini (3:1) sağlayan bir odak göstergesi tasarlanır. Ayrıca göstergeyi yalnızca klavye kullanımında göstermek mümkündür; fareyle tıklandığında görünmez.
+
+</SelfCheck>
+
+<SelfCheck question="Modal açıldığında odakla ilgili üç şey yapılmalı. Nedir?">
+
+(1) Açılınca odak modalın içine taşınır (genelde başlığa). (2) Odak modal içinde döner, arkaya kaçmaz (odak hapsi). (3) Kapanınca odak, modalı açan öğeye geri döner. Ek olarak Esc ile kapanmalı.
+
+</SelfCheck>
+
+<SelfCheck question="SPA'da sayfa geçişinde ekran okuyucu kullanıcısı neden değişimi fark etmeyebilir?">
+
+Sayfa gerçekten yenilenmez; odak eski yerinde kalır ve tarayıcı yeni bir belge yüklemediği için ekran okuyucu bir değişim duyurmaz. Çözüm: geçişte odağı yeni sayfanın başlığına taşımak ve değişimi duyurmak (odak yönetimi).
+
+</SelfCheck>

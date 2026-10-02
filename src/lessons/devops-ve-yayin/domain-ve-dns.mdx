@@ -1,0 +1,71 @@
+---
+summary: "DNS kayıtları alan adının nereye işaret ettiğini söyler: A, AAAA, CNAME, TXT, MX, nameserver. Yayın gününün en sık takıldığı yer burası; nameserver'ı değiştirip e-posta kayıtlarını taşımazsan şirketin e-postası durur. Propagation 'bende açılmıyor'un en yaygın sebebidir."
+outcomes:
+  - "Beş DNS kayıt türünü ve işini söyleyebilirsin."
+  - "Nameserver değiştirirken e-posta kayıtlarına neden dikkat edilmesi gerektiğini açıklayabilirsin."
+  - "DNS propagation'ın 'bende açılmıyor' şikâyetlerindeki rolünü bilirsin."
+minutes: 6
+sources:
+  - label: "MDN — DNS (sözlük)"
+    url: "https://developer.mozilla.org/en-US/docs/Glossary/DNS"
+  - label: "MDN — Alan adı (sözlük)"
+    url: "https://developer.mozilla.org/en-US/docs/Glossary/Domain_name"
+  - label: "Cloudflare DNS — Dokümantasyon"
+    url: "https://developers.cloudflare.com/dns/"
+  - label: "DMARC.org"
+    url: "https://dmarc.org/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Yayın günü. Site hazır, alan adı satın alındı. Peki alan adı siteye nasıl bağlanıyor? DNS kayıtlarıyla. Kavramlar Web Temelleri bölümündeydi; burada pratik tarafı var.
+
+## DNS kayıt türleri
+
+Alan adının nereye işaret ettiğini tanımlayan kayıtlar:
+
+- **A:** bir IPv4 adresine işaret eder (**AAAA**, IPv6 karşılığı).
+- **CNAME:** başka bir alan adına işaret eder; hosting platformları genelde bunu ister.
+- **TXT:** serbest metin; alan adı sahipliği doğrulaması ve e-posta güvenliği (SPF, DKIM, DMARC) için kullanılır.
+- **MX:** e-postanın hangi sunucuya gideceğini belirler.
+- **Nameserver:** alan adının DNS kayıtlarını kimin yönettiğini belirler.
+
+Yayın gününün en sık takıldığı yer burasıdır. Kayıtları eklemek, senin de yapabileceğin bir iştir. "Platform bir CNAME istiyor; alan adı panelinden ekleyelim."
+
+**E-posta kayıtlarına (MX, TXT) dikkat:** nameserver'ı değiştirirsen ve eski kayıtları taşımazsan **şirketin e-postası çalışmayı bırakır.** Yayın günü yaşanan en kötü sürprizlerden biridir.
+
+## Propagation
+
+**DNS propagation (yayılma süresi)**, bir DNS değişikliğinin dünya genelinde geçerli hâle gelmesi için geçen süredir. Değişiklik anında olmaz; bazı kullanıcılar bir süre eski adresi görür. Bu, **yayın gününde "bende açılmıyor" şikâyetlerinin en yaygın sebebidir** ve genelde bir hata değildir. "Geçiş öncesi TTL'i düşürelim; değişiklik daha hızlı yayılsın."
+
+<Callout kind="tasarimci">
+
+- **Yayın günü kontrol listesine DNS adımlarını ekle:** CNAME/A kayıtları, e-posta kayıtlarının taşınması, TTL.
+- **"Bende açılmıyor" şikâyetinde önce propagation'ı düşün.**
+- **Alan adı e-posta kayıtlarını (MX, SPF, DKIM, DMARC) yayın öncesi kaydet.**
+
+</Callout>
+
+<Summary>
+
+- A/AAAA IP'ye, CNAME başka alan adına, TXT doğrulamaya ve e-posta güvenliğine, MX e-postaya, nameserver kayıtları yönetene işaret eder.
+- Nameserver değişirken eski e-posta kayıtları taşınmazsa şirket e-postası durur.
+- DNS değişikliği anında yayılmaz; "bende açılmıyor"un en yaygın sebebi budur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Nameserver değiştirirken en kritik dikkat noktası nedir?">
+
+E-posta kayıtları (MX, TXT). Nameserver değiştirip eski kayıtları taşımazsan şirketin e-postası çalışmayı bırakır.
+
+</SelfCheck>
+
+<SelfCheck question="Yayın gününde 'bende açılmıyor' şikâyetlerinin en yaygın sebebi nedir?">
+
+DNS propagation: değişiklik anında geçerli olmaz, bazı kullanıcılar bir süre eski adresi görür. Genelde bir hata değildir; geçiş öncesi TTL düşürülerek süre kısaltılabilir.
+
+</SelfCheck>

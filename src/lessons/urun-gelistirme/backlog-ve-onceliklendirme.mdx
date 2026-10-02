@@ -1,0 +1,136 @@
+---
+summary: "Yapılacak işlerin biriktiği backlog'u ve hangisinin önce yapılacağına karar verme yöntemlerini (RICE, ICE, MoSCoW, tahminleme) öğren. Öncelik tartışmasını zevkten çıkarıp karşılaştırılabilir bir zemine taşı."
+outcomes:
+  - "Backlog, ticket ve grooming'in ne işe yaradığını anlatabilirsin."
+  - "Basit bir RICE puanı hesaplayabilir, Confidence'ın neden en değerli parça olduğunu söyleyebilirsin."
+  - "MoSCoW'un \"Won't have\" kutusunun neden en değerli olduğunu açıklayabilirsin."
+  - "Tahminin neden bir söz olmadığını bilirsin."
+minutes: 12
+sources:
+  - label: "Intercom — RICE: Simple prioritization for product managers"
+    url: "https://www.intercom.com/blog/rice-simple-prioritization-for-product-managers/"
+  - label: "ProductPlan — MoSCoW prioritization"
+    url: "https://www.productplan.com/glossary/moscow-prioritization/"
+  - label: "Atlassian — Agile tahminleme"
+    url: "https://www.atlassian.com/agile/project-management/estimation"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Üç özellik var: bir yeni onboarding akışı, ödeme sayfasında küçük bir düzeltme ve bir karanlık mod. Üçü de değerli, ama aynı anda yapamazsınız. Hangisi önce? Bu, ürün ekiplerinin en sık verdiği ve **en çok tartıştığı** karar.
+
+Bu ders, işlerin biriktiği yeri (backlog) ve sıralama kararını *zevk tartışması olmaktan çıkaran* yöntemleri anlatıyor.
+
+## Backlog: dürüst bir liste
+
+**Backlog**, yapılması düşünülen tüm işlerin öncelik sırasıyla durduğu listedir. Jira, Linear, Notion, GitHub Issues gibi araçlarda yaşar. Fikirlerin kaybolmasını engeller, ama daha önemlisi **"bu ne zaman yapılacak?" sorusuna dürüst bir cevap verir:** listenin 40. sırasındaki iş, pratikte yapılmayacak iştir. Backlog bu gerçeği görünür kılar.
+
+"Fikri backlog'a ekleyelim ama şunu net söyleyeyim: mevcut önceliklerle bu çeyrek sıraya girmez."
+
+Backlog bir çöp kutusu değildir. Sürekli büyüyen ve hiç temizlenmeyen bir backlog işlevsizdir.
+
+### Ticket ve grooming
+
+**Ticket** (issue, card), tek bir işi temsil eden, takip edilebilir kayıttır. İşin sahibi, durumu, tanımı ve tartışması tek yerde toplanır. Bir konuşma sonucunda karar alındıysa ve ticket açılmadıysa, o karar birkaç gün içinde kaybolur. "Bunu burada konuşmayalım, ticket açalım da kaybolmasın" cümlesi her gün duyacağın bir cümledir.
+
+**Grooming (refinement)**, backlog'daki işlerin gözden geçirildiği, netleştirildiği, tahmin edildiği ve gereksizlerin silindiği düzenli toplantıdır. Planlamaya hazır olmayan işlerin gelmesini engeller; belirsiz bir iş planlama toplantısında tartışılırsa toplantı uzar ve tahmin yanlış çıkar. Tasarımcı olarak orada bulunmak, "bu iş tasarım gerektiriyor" uyarısını **erken** verebilmen açısından değerlidir. "Grooming'de bu story'yi ikiye böldük; tek parça olarak sprint'e sığmıyordu."
+
+## Önceliklendirme: çerçeveler doğru cevabı vermez
+
+**Prioritization** (önceliklendirme), sınırlı zamanla hangi işin önce yapılacağına karar verme sürecidir. Temel gerçek şu: *her şey önemliyse hiçbir şey önemli değildir.*
+
+RICE, ICE ve MoSCoW gibi çerçeveler **doğru cevabı vermez.** Tartışmayı zevkten çıkarıp karşılaştırılabilir bir zemine taşırlar; asıl faydaları budur. Çeyrek planlamada ve sprint başında kullanılır.
+
+### RICE
+
+**RICE**, dört tahmini tek bir puana indirir:
+
+> **(Reach × Impact × Confidence) ÷ Effort**
+
+| Harf | Soru | Örnek ölçü |
+|---|---|---|
+| **R**each | Kaç kullanıcıya dokunuyor (dönemde)? | Çeyrekte 4.000 kullanıcı |
+| **I**mpact | Dokunduğu kişide ne kadar etki yapıyor? | 0,25 – 3 arası ölçek |
+| **C**onfidence | Tahminlerine ne kadar güveniyorsun? | %50, %80, %100 |
+| **E**ffort | Ne kadar çaba gerektiriyor? | Kişi-ay |
+
+Bir örnek:
+
+| Fikir | Reach | Impact | Confidence | Effort | Puan |
+|---|---|---|---|---|---|
+| Ödeme sayfası düzeltmesi | 4.000 | 1 | %80 | 1 | **3.200** |
+| Yeni onboarding | 1.000 | 2 | %50 | 3 | **333** |
+
+"RICE'a göre küçük düzeltme büyük özelliğin önüne geçti; çok daha fazla kullanıcıya dokunuyor." Büyük özellik ilgi çekici ama hem daha az kişiye dokunuyor, hem güven düşük, hem pahalı.
+
+**En değerli parça Confidence'tır.** "Etki" gibi tek bir bulanık tahmin yerine, üzerine ayrı ayrı sayı konulabilen dört küçük tahmin kullanır ve tahminlerine ne kadar güvendiğini *beyan etmeni zorunlu kılar.* Düşük güven, fikrin ölmesi değil, **önce araştırma gerektiği** anlamına gelir.
+
+Dikkat: puan mutlak bir gerçek değildir. Yalnızca **aynı listede, aynı yöntemle** puanlanmış fikirler karşılaştırılabilir; iki farklı listenin RICE puanlarını yan yana koymak anlamsızdır. Yöntem Intercom'da Sean McBride tarafından geliştirildi (2016).
+
+### ICE
+
+**ICE** (Impact, Confidence, Ease), RICE'ın daha hafif hâlidir: üç faktörle hızlı puanlama. Reach hesaplayacak veri yoksa ya da karar küçükse RICE fazla ağır kalır. Büyüme (growth) ve deney listelerinde yaygındır; Sean Ellis tarafından geliştirildi. "Deney listesi için ICE yeter, RICE'a girmeyelim."
+
+### MoSCoW
+
+**MoSCoW**, işleri dört zorunluluk seviyesine ayırır: **M**ust have (olmazsa olmaz), **S**hould have (olmalı), **C**ould have (olabilir), **W**on't have (bu turda yok). Puan hesaplamadan hızlı bir kapsam kararı verdirir. Ajans ve müşteri projelerinde, teslim kapsamı belirlenirken çok yaygındır.
+
+**En değerli kutusu Won't have'dir.** Bu turda *yapılmayacakların* açıkça yazılması, sonradan gelen "ama bu da olacaktı" tartışmasını bitirir. "Çok dilli destek bu sürümde 'won't have'; yazıya geçirelim ki sonradan sürpriz olmasın."
+
+Klasik başarısızlık biçimi, herkesin her şeyi "must have" işaretlemesidir. Pratik kural: must have'ler toplam işin yarısını geçmemelidir.
+
+<StepFlow
+  arrows={false}
+  label="MoSCoW kutuları"
+  caption="Kutuların boyutu önemli: must have çok büyürse yöntem çalışmaz. Won't have kutusu boş bırakılırsa, kapsam tartışması sonraya kalır."
+  steps={[
+    { title: "Must have", sub: "Olmazsa ürün çalışmaz. Toplamın yarısını geçmemeli", tone: "accent" },
+    { title: "Should have", sub: "Önemli ama olmadan da çıkılabilir" },
+    { title: "Could have", sub: "Zaman kalırsa" },
+    { title: "Won't have", sub: "Bu turda yok. Yazılı olması gerekir", tone: "progress" },
+  ]}
+/>
+
+## Tahminleme: sahte hassasiyet olmadan
+
+**Estimation** (tahminleme), bir işin ne kadar çaba gerektireceğine dair **kaba** tahmindir. Planlama için gereklidir ama kesinlik iddiası taşımaz. **T-shirt sizing** (S, M, L, XL) tam da bu yüzden kullanılır: "5 gün" der gibi görünen sahte hassasiyeti engeller.
+
+Grooming ve planlama toplantılarında yapılır. "Tasarım tarafı M, geliştirme tarafı L; tek sprint'e sığmayabilir."
+
+**Tahmin bir söz değildir.** Tahminin taahhüde dönüştüğü ekiplerde geliştiriciler tahminleri şişirir ve sistem bozulur. Tasarımcı olarak kendi tahminlerini verirken de şunu bil: "M" demek, "bu hafta biter" demek değildir; belirsizliği taşıyan bir aralıktır.
+
+<Callout kind="tasarimci">
+
+- **Önceliği kendi zevkinle savunma.** "Bence bu önemli" yerine "bu 3.200 puan aldı, çünkü 4.000 kişiye dokunuyor" demek tartışmayı yapıcı kılar.
+- **Düşük Confidence'ı bir fırsata çevir.** "Bu fikre güvenimiz %50; önce beş görüşme yapalım" önerisi, seni araştırma hattına sokar.
+- **Won't have listesini yazdır.** Bir tasarım kapsamını teslim ederken neyin dışarıda kaldığını yazmak, sonradan gelecek "bu da olacaktı" talebini baştan karşılar.
+- **Grooming'e katıl.** Tasarım gerektiren bir işi sprint'e girmeden önce görmen, "tasarım hazır değil" krizini önler.
+
+</Callout>
+
+<Summary>
+
+- Backlog öncelik sıralı iş listesidir ve "ne zaman yapılacak?" sorusuna dürüst cevap verir; grooming onu temiz tutar.
+- Ticket işin tek kayıt yeridir; kararı kaybetmemek için açılır.
+- RICE = (Reach × Impact × Confidence) ÷ Effort; en değerli parçası, güven beyanı zorunluluğudur.
+- ICE hafif hâlidir; MoSCoW'un en değerli kutusu "Won't have"dir.
+- Tahmin bir söz değildir; T-shirt boyutları sahte hassasiyeti engeller.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="MoSCoW yönteminin en değerli kutusu hangisidir ve neden?">
+
+Won't have. Bu turda yapılmayacakların açıkça yazılması, sonradan gelen "ama bu da olacaktı" tartışmasını bitirir ve sürprizleri önler.
+
+</SelfCheck>
+
+<SelfCheck question="RICE'ta Confidence neden önemli? Düşük Confidence ne anlama gelir?">
+
+Confidence, tahminlerine ne kadar güvendiğini beyan etmeni zorunlu kılar. Düşük güven fikrin ölmesi değil, önce araştırma ya da doğrulama gerektiği anlamına gelir.
+
+</SelfCheck>

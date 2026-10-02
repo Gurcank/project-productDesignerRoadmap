@@ -1,0 +1,30 @@
+---
+import DiagramFigure from "../diagrams/DiagramFigure.astro";
+---
+
+<DiagramFigure
+  label="Görüntü alanı ve katlama çizgisi"
+  caption="Görüntü alanı (viewport) ekranda şu an görünen penceredir. Katlama çizgisinin üstündeki kısım, kaydırmadan görülen alandır; çizginin yeri cihaza göre değişir, sabit bir piksel değeri yoktur."
+>
+  <svg class="dg-narrow" viewBox="0 0 360 300" role="img" aria-label="Bir sayfanın görünen kısmı ve kaydırınca görünen kısmı">
+    <title>Viewport ve above the fold</title>
+
+    <rect class="dg-box dg-box--accent" x="90" y="8" width="180" height="170" rx="10"></rect>
+    <text class="dg-label" x="104" y="32">Başlık + ana mesaj</text>
+    <rect class="dg-box" x="104" y="44" width="152" height="10" rx="3"></rect>
+    <rect class="dg-box" x="104" y="60" width="110" height="10" rx="3"></rect>
+    <rect class="dg-box dg-box--progress" x="104" y="84" width="96" height="30" rx="6"></rect>
+    <text class="dg-sub" x="152" y="103" text-anchor="middle">Birincil buton</text>
+    <rect class="dg-box" x="104" y="126" width="152" height="40" rx="6"></rect>
+
+    <path class="dg-line" d="M30 178 H330" stroke-dasharray="6 5"></path>
+    <text class="dg-sub" x="30" y="170">Katlama çizgisi</text>
+    <text class="dg-sub" x="300" y="196" text-anchor="end">kaydırınca görünür</text>
+
+    <rect class="dg-box" x="90" y="178" width="180" height="114" rx="10" stroke-dasharray="4 4"></rect>
+    <rect class="dg-box" x="104" y="194" width="152" height="24" rx="4"></rect>
+    <rect class="dg-box" x="104" y="226" width="152" height="24" rx="4"></rect>
+
+    <text class="dg-sub" x="6" y="100" transform="rotate(-90 14 100)" text-anchor="middle">above the fold</text>
+  </svg>
+</DiagramFigure>

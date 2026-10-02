@@ -1,0 +1,69 @@
+---
+summary: "Öğelerin sayfada nasıl dizildiği: Flexbox tek eksende, CSS Grid iki eksende; gap ve aspect-ratio. Niyetini tasarım tesliminde net anlatmanın yolu."
+outcomes:
+  - "Flexbox ile Grid'in farkını söyleyip bir bileşen için doğrusunu seçebilirsin."
+  - "Bento grid'in neden Grid ile kurulduğunu açıklayabilirsin."
+  - "Gap'in margin'e göre avantajını bilirsin."
+  - "Aspect ratio'nun yerleşim kaymasını nasıl önlediğini söyleyebilirsin."
+minutes: 6
+sources:
+  - label: "MDN — Flexbox"
+    url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Flexbox"
+  - label: "MDN — Grid"
+    url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Grids"
+  - label: "MDN — gap"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/gap"
+  - label: "MDN — aspect-ratio"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/aspect-ratio"
+skipTerms: ["layout","grid","header"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import LayoutAxes from "~/components/lesson/LayoutAxes.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Header'da logo solda, menü sağda olsun" ile "ana kart iki sütun iki satır kaplasın" iki ayrı yerleşim isteğidir ve iki farklı araçla kurulur. Hangisinin hangisi olduğunu bilmek, tasarım tesliminde niyetini net anlatmanı sağlar.
+
+<LayoutAxes />
+
+## Flexbox: tek eksen
+
+**Flexbox**, öğeleri **tek bir eksende** (yatay ya da dikey) dizen yerleşim sistemidir. Tek sıra ya da tek sütun hâlindeki her şeyin doğal seçimidir: buton grupları, navigasyon çubuğu, kart içi öğe dizilimi, form satırları. **Figma'daki auto layout ile kavramsal olarak aynıdır;** auto layout ile çalışmak, geliştiricinin göreceği yapıya yakın tasarım üretir. "Header'ı flex yapalım: logo solda, menü sağda, aralarında boşluk otomatik dağılsın."
+
+## Grid: iki eksen
+
+**CSS Grid**, öğeleri **iki eksende** (satır ve sütun) aynı anda dizer. Sayfa düzeni, kart ızgaraları ve bento grid gibi iki boyutlu yerleşimlerin doğru aracıdır; bir öğenin kaç sütun ve satır kaplayacağı doğrudan tanımlanır. Bento grid tam olarak bununla kurulur. "Ana kart iki sütun iki satır kaplasın."
+
+Karıştırma: *CSS Grid* bir kod tekniğidir; tasarım dosyandaki *layout grid* (sütun ızgarası) bir tasarım kararıdır. İkincisini ilkiyle uygularsın.
+
+## Gap ve aspect-ratio
+
+**gap**, flex ya da grid içindeki öğeler **arasındaki** boşluktur. Margin ile boşluk vermenin eski ve sorunlu yöntemini ortadan kaldırır: yalnızca aralara boşluk koyar, ilk ve son öğenin dışına koymaz. Tasarımdaki "kartlar arası 24px" ifadesinin doğrudan karşılığıdır. "Kartlar arası gap 24, kart içi padding 20 olsun."
+
+**aspect-ratio**, bir kutunun en-boy oranını sabitler. Görsel yüklenmeden önce yer ayrılmasını sağlar; böylece içerik geldiğinde yerleşim kaymaz (performans dersindeki CLS).
+
+<Callout kind="tasarimci">
+
+- **Her yerleşim kararına bir ad ver:** "bu sıra flex, bu bölüm grid".
+- **Boşlukları "kartlar arası gap, kart içi padding" diye ayır.**
+- **Görsellere oran tanımla** (16:9, 4:3); geliştirici yer ayırabilsin.
+
+</Callout>
+
+<Summary>
+
+- Flexbox tek eksende, Grid iki eksende dizer. Bento grid Grid ile kurulur.
+- Figma'daki auto layout, Flexbox ile kavramsal olarak aynıdır.
+- Gap yalnızca aralara boşluk koyar; kart içi boşluk padding'dir.
+- Aspect ratio yer ayırarak yerleşim kaymasını önler.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Flexbox ile CSS Grid arasındaki temel fark nedir? Bento grid hangisiyle kurulur?">
+
+Flexbox tek eksende (satır ya da sütun), Grid iki eksende aynı anda dizer. Bento grid, farklı boyutlarda kutuların iki boyutlu yerleşimi olduğu için CSS Grid ile kurulur.
+
+</SelfCheck>

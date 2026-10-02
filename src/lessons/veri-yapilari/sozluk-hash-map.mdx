@@ -1,0 +1,70 @@
+---
+summary: "Sözlük (hash map) veriyi sırayla değil anahtarla tutar: 'şu id'li kaydı getir' hiç yavaşlamaz. Tasarıma yansıyan tuzak: sessizce üzerine yazan anahtar çakışması."
+outcomes:
+  - "Sözlüğün neden anahtarla erişimde anlık olduğunu söyleyebilirsin."
+  - "Sıra numarasının anahtar olarak kullanılmasının neden bir hata olduğunu ve belirtisini (filtreleyince yanlış satır seçili) bilirsin."
+  - "Sıralama ve aralık sorgularının neden sözlüğün işi olmadığını açıklayabilirsin."
+minutes: 7
+sources:
+  - label: "MDN — Map"
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map"
+  - label: "MDN — JavaScript veri yapıları"
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"3. öğe" diye değil, "`kullanici_42` diye kaydı getir" diye erişmek: **sözlük** (hash map, dictionary; JavaScript'te `Map` ve nesne) veriyi sırayla değil **anahtarla** tutar. Gerçek sözlükle benzerlik isabetlidir: kelimeyi baştan aramazsın, harfinden doğrudan sayfaya gidersin.
+
+## Neden anlık
+
+Sözlük, anahtarı bir hesaba sokup **verinin nerede durduğunu doğrudan bulur.** Listenin uzunluğu bu hesabı değiştirmez: 10 kayıtta da 10 milyon kayıtta da aynı iş yapılır. Dizideki aramanın liste büyüdükçe yavaşlamasının, sözlükte olmamasının sebebi budur. Arayüzde anlamı: **"bu id'ye ait kaydı göster" hiçbir zaman yavaşlamaz.**
+
+| | Dizi | Sözlük |
+|---|---|---|
+| "3. öğe" | Anlık | Yok; sıra kavramı zayıf |
+| "Şu id'li öğe" | Liste uzunluğuyla orantılı | **Anlık** |
+| Aynı anahtar iki kez | — | Mümkün değil; ikincisi birincinin üstüne yazar |
+
+## Ne kötü yapar
+
+- **Sıralama ve aralık sorgusu.** "Fiyatı 100–200 arasındakiler" sözlüğün cevaplayabileceği bir soru değildir; sıralı bir yapı ya da index gerekir.
+- **"Hepsini göster" sıralı gelmeyebilir.** Sırayı garanti etmek istiyorsan ayrıca sıralamak zorundasın.
+- **Anahtar seçimi kalıcı bir karardır.** Anahtar değişirse kayıt "kaybolur".
+
+## Arayüzde nerede
+
+**Seçim durumu:** "hangi satırlar seçili?" sözlükle tutulursa bir satıra tıklamak anlıktır. Dizi ile tutulursa her tıkta tüm seçim taranır ve 500 satırlık tabloda "tümünü seç" yavaşlar. **Form durumu:** alan adı anahtar, hata mesajı değerdir; bir alanın hatasını göstermek/gizlemek anlıktır. **Çeviri sözlükleri:** arayüz metinleri anahtar-değer tutulur; "bu metni değiştir" isteği bu yüzden ucuzdur.
+
+## Tuzak: anahtar çakışması
+
+Sözlükte aynı anahtar iki kez olamaz; ikinci yazma birincinin üstüne yazar ve hata vermez, **sessizce.** Arayüzdeki karşılığı: bir listede öğeleri ayırt etmek için kullanılan anahtar gerçekten tekil değilse öğeler kaybolur ya da karışır. En sık hâli, liste öğelerine anahtar olarak **sıra numarası** verilmesidir; liste sıralanınca ya da filtrelenince yanlış satır güncellenir. Tasarımda fark edebilirsin: **filtreledikten sonra yanlış satırın seçili görünmesi** neredeyse her zaman bu hatadır.
+
+<Callout kind="tasarimci">
+
+- **Her liste öğesinin kalıcı bir kimliği olduğundan emin ol:** "Bu satırı neyle ayırt ediyoruz?" Cevap "sırasıyla" ise hata kapıda.
+- **"Şu kaydı aç" hiç yavaş olmamalı;** yavaşsa sebep veri yapısı değil ağ ya da sorgudur.
+- **"Fiyata göre sırala" ile "şu ürünü aç" iki farklı yapı ister;** ikisini aynı anda ucuza isteyemezsin.
+- **Çok dilli arayüz planlıyorsan metinleri baştan anahtarla.**
+
+</Callout>
+
+<Summary>
+
+- Sözlük anahtarla anlık erişim verir; liste büyüse de hız değişmez.
+- Sıralama ve aralık sorguları sözlüğün işi değildir.
+- Sıra numarasını anahtar yapmak, filtre/sıralama sonrası yanlış satır güncellenmesine yol açar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Filtreledikten sonra yanlış satırın seçili görünmesi hangi hatanın işaretidir?">
+
+Liste öğelerini sıra numarasıyla ayırt etmek: anahtar gerçekten tekil ve kalıcı olmadığı için, liste sıralanınca ya da filtrelenince yanlış satır güncellenir.
+
+</SelfCheck>

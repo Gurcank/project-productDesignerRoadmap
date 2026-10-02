@@ -1,0 +1,69 @@
+---
+summary: "'Kullanıcı ne yazarsa yazsın bulsun' isteği arkada birkaç ayrı mekanizmadır: normalizasyon, kökleme, yazım toleransı, eş anlamlı. Türkçede I/ı/İ/i ve ek yapısı tuzakları; sıralama kuralı ve vurgulama tasarım kararlarıdır."
+outcomes:
+  - "Metin eşleştirmenin katmanlarını ve her birinin riskini söyleyebilirsin."
+  - "Türkçe aramada kökleme ve I/ı/İ/i neden ayrı bir mesele olduğunu açıklayabilirsin."
+  - "Sonuç sıralaması kuralını neden yazılı tanımlaman gerektiğini bilirsin."
+minutes: 6
+sources:
+  - label: "MDN — String.prototype.toLocaleLowerCase"
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLocaleLowerCase"
+  - label: "PostgreSQL — Tam metin arama"
+    url: "https://www.postgresql.org/docs/current/textsearch-intro.html"
+  - label: "Snowball — Stemming algoritmaları"
+    url: "https://snowballstem.org/"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir arama kutusu "kullanıcı ne yazarsa yazsın bulsun" ister. Arkada bu birkaç ayrı mekanizmadır ve her biri ayrı maliyet ve ayrı yanlış-eşleşme riski taşır.
+
+## Katmanlar
+
+| Katman | Ne yapar | Riski |
+|---|---|---|
+| Tam eşleşme | Birebir aynısını bulur | Kullanıcı nadiren birebir yazar |
+| Büyük/küçük ve aksan normalizasyonu | "İSTANBUL" = "istanbul" | Türkçede `I/ı/İ/i` tuzağı |
+| **Kökleme (stemming)** | "bileşenlerin" → "bileşen" | Dile özgü; yanlış kök yanlış sonuç |
+| Yazım toleransı (fuzzy) | "kulanıcı" → "kullanıcı" | Alakasız sonuçlar getirebilir |
+| Eş anlamlı | "giriş" = "login" | Elle bakım ister |
+
+## Türkçe neden ayrı bir mesele
+
+Türkçe eklerle çalışır: *bileşen, bileşenler, bileşenlerin, bileşenlerimizden.* Kökleme desteklenmiyorsa kullanıcı doğal hâliyle yazdığında **hiçbir şey bulamaz** ve bunu bir hata değil "sitede yok" diye yorumlar. İki tuzak daha:
+
+- **`I/ı/İ/i`.** Türkçe küçültme kuralı İngilizceden farklıdır; yanlış yapılırsa "İstanbul" araması "istanbul"u bulmaz.
+- **İngilizce terimler Türkçe köklenince bozulabilir.** Türkçe köklü bir indekste "Social" gibi bir kelime Türkçe bir kökün altına düşüp alakasız sonuçlarla eşleşebilir.
+
+## Sıralama: hangi sonuç önce
+
+Eşleşme bulmak yarısıdır; **hangisinin önce geleceği** diğer yarısı. Tipik ağırlıklar: başlıkta geçen > gövdede geçen, tam kelime > kısmi, yeni > eski. Bu bir ürün kararıdır; belirtilmezse aracın varsayılanı kullanılır ve kimse neden o sıralamanın çıktığını açıklayamaz.
+
+<Callout kind="tasarimci">
+
+- **Türkçe kökleme desteğini açıkça sor.**
+- **Yazım toleransı isteyip istemediğine karar ver:** yanlış eşleşmeyi kabul ediyor musun?
+- **Sonuç sıralamasının kuralını yaz;** "alakaya göre" tanımsız bir ifadedir.
+- **Eşleşen kelimeyi vurgula;** kullanıcı sonucun neden geldiğini görmeli, bu güveni doğrudan etkiler.
+
+</Callout>
+
+<Summary>
+
+- Metin eşleştirme katmanlıdır: tam eşleşme, normalizasyon, kökleme, yazım toleransı, eş anlamlı.
+- Türkçede ek yapısı ve I/ı/İ/i ayrı sorun alanlarıdır; kökleme yoksa arama kullanıcının yazdığı gibi çalışmaz.
+- Sıralama kuralı ürün kararıdır; eşleşen kelime vurgulanmalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Türkçe aramada kökleme olmazsa ne olur?">
+
+Kullanıcı ekli kelimeleri doğal hâliyle yazdığında hiçbir şey bulamaz ve bunu "sitede yok" diye yorumlar.
+
+</SelfCheck>

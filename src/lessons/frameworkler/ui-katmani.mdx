@@ -1,0 +1,77 @@
+---
+summary: "Arayüzü çizen temel kütüphaneler: React, Vue, Svelte, Angular, Solid. Doğru cevabı olmayan bir karar: hepsi çalışır, farklar takas noktalarındadır."
+outcomes:
+  - "React'in neden 'en iyi' olduğu için değil ekosistemi büyük olduğu için varsayılan olduğunu söyleyebilirsin."
+  - "Vue, Svelte, Angular ve Solid'in her birinin hangi takası sunduğunu bir cümleyle anlatabilirsin."
+minutes: 7
+sources:
+  - label: "React — Resmî site"
+    url: "https://react.dev/"
+  - label: "Vue — Giriş"
+    url: "https://vuejs.org/guide/introduction.html"
+  - label: "Svelte — Genel bakış"
+    url: "https://svelte.dev/docs/svelte/overview"
+  - label: "Angular — Genel bakış"
+    url: "https://angular.dev/overview"
+  - label: "SolidJS"
+    url: "https://www.solidjs.com/"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Arayüzü çizen kütüphaneler arasındaki seçim, **doğru cevabı olmayan** bir karardır. Hepsi çalışır; farklılıklar takas noktalarındadır. Bu ders her birinin hangi takası sunduğunu anlatır.
+
+## React
+
+Arayüzü bileşenlere bölerek kuran, en yaygın kullanılan UI kütüphanesidir. **Kendi başına en iyisi olduğu için değil, ekosistemi en büyük olduğu için** varsayılan seçimdir: her problem için hazır kütüphane, her soru için yazılmış cevap, her şehirde bulunabilir geliştirici. Bu teknik bir üstünlükten çok bir **risk azaltma** argümanıdır. "React seçelim; ekip zaten biliyor ve ihtiyacımız olan her bileşen için hazır çözüm var."
+
+React tek başına yeterli değildir: yönlendirme, veri çekme ve sunucu tarafı için ya bir meta-framework ya da bir sürü ayrı kütüphane gerekir. "React öğrendim" demek, projeyi kurabilmek anlamına gelmez. Basit bir tanıtım sitesi için gereksiz ağırlıktır; statik bir site üreteci ya da sade HTML ve CSS daha uygundur.
+
+## Vue
+
+React'e alternatif, öğrenme eğrisi daha yumuşak kabul edilen bir UI framework'üdür. HTML'e daha yakın bir yazım biçimi sunar ve resmî araçları (yönlendirme, state) tek elden gelir; yani React'teki "hangi kütüphaneyi seçeyim" kararlarının çoğunu ortadan kaldırır. Nuxt ile birlikte ve Laravel ekosisteminde yaygındır. "Ekip Vue biliyor; React'e geçmenin bize somut faydası yok." İş ilanı havuzu ve üçüncü parti bileşen çeşitliliği React kadar geniş değildir.
+
+## Svelte
+
+Kodun büyük kısmını **derleme anında** işleyip tarayıcıya çok az JavaScript gönderen framework'tür. Daha az kod yazdırır ve daha küçük paket üretir; geliştirici memnuniyeti anketlerinde üst sıralarda yer alır. Svelte 5 ile "runes" adlı yeni bir reaktivite sistemi geldiği için eski kaynaklar eskimiş olabilir. "Svelte küçük ve hızlı ama ekipte kimse bilmiyor; öğrenme maliyetini hesaba katalım." Ekosistemi React'ten belirgin biçimde küçüktür.
+
+## Angular
+
+Google tarafından geliştirilen, her şeyi kutudan çıkaran kapsamlı framework'tür. Kurumsal ortamlarda güçlüdür çünkü **kararları senin yerine verir:** yönlendirme, form, HTTP, test hepsi resmî ve tek biçimlidir. 50 kişilik bir ekipte bu tutarlılık değerlidir. Bankalar, sigorta şirketleri ve büyük kurumsal projelerde görürsün. Küçük projeler ve hızlı prototipler için ağır kalır ve öğrenme eğrisi diğerlerinden diktir.
+
+## Solid
+
+React'e benzer yazım biçimi olan ama farklı bir reaktivite modeliyle çalışan kütüphanedir. **İnce taneli reaktivite** kullanır: bir değer değiştiğinde tüm bileşeni değil, yalnızca o değeri kullanan parçayı günceller; gereksiz yeniden çizimleri ortadan kaldırır. Ekosistemi küçüktür ve ticari projelerde risk oluşturabilir. Bu bir **seviye 3** terimdir: adını bilmen yeterli.
+
+<Callout kind="tasarimci">
+
+- **Ekibin hangisini bildiğini öğren;** tasarım araçlarını ve bileşen kitini ona göre seç.
+- **React dışı bir tercihte ekosistem sorusunu sor:** ihtiyacımız olan hazır bileşen ve entegrasyonlar var mı?
+- **"Daha hızlı/daha yeni" argümanını kendi ürününün ihtiyacıyla tart.**
+
+</Callout>
+
+<Summary>
+
+- React ekosisteminin büyüklüğü yüzünden varsayılandır, teknik üstünlüğü yüzünden değil.
+- Vue yumuşak öğrenme eğrisi ve tek elden gelen araçlar sunar; Svelte küçük paket ve az kod; Angular kapsamlı ve tutarlı kurumsal çözüm; Solid ince taneli reaktivite.
+- Her seçimin bedeli ekosistem büyüklüğü, öğrenme maliyeti ya da ağırlıktır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="React hangi sebeple varsayılan seçim olarak anılır?">
+
+Ekosistemi en büyük olduğu için: her problem için hazır çözüm, her soru için yazılmış cevap ve geniş bir geliştirici havuzu var. Bu teknik bir üstünlük değil, bir risk azaltma argümanıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Angular neden kurumsal ortamlarda tercih edilir?">
+
+Kararları senin yerine verir: yönlendirme, form, HTTP, test hepsi resmî ve tek biçimlidir. Büyük ekiplerde bu tutarlılık ve ekip devri kolaylığı değerlidir.
+
+</SelfCheck>

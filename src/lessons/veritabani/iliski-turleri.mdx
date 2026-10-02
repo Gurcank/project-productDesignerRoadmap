@@ -1,0 +1,57 @@
+---
+summary: "Tabloların birbirine nasıl bağlandığı: bire bir, bire çok, çoka çok. Bu bir tasarım toplantısı konusudur çünkü doğrudan arayüzü belirler: liste, çoklu seçim, 'bu kullanıcı hangi ekiplerde'."
+outcomes:
+  - "Üç ilişki türünü örnekle ayırabilirsin."
+  - "Bire çok ilişkinin arayüzdeki karşılığını (liste, boş durum, sayfalama) söyleyebilirsin."
+  - "Çoka çok ilişkide ara tabloda neden ek bilgi tutulduğunu açıklayabilirsin."
+minutes: 6
+sources:
+  - label: "PostgreSQL — Yabancı anahtarlar (öğretici)"
+    url: "https://www.postgresql.org/docs/current/tutorial-fk.html"
+  - label: "PostgreSQL — Join'ler (öğretici)"
+    url: "https://www.postgresql.org/docs/current/tutorial-join.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Kullanıcı birden fazla ekipte olabilir mi?" Bu soru bir tasarım sorusu gibi duruyor ama bir **ilişki türü** sorusu: ve cevabı arayüzü doğrudan belirliyor. Bu bir tasarım toplantısında konuşulması gereken bir konudur.
+
+## Bire bir
+
+**One-to-one (1:1)**: bir kaydın karşılığında en fazla bir kayıt olması; bir kullanıcının bir profil kaydı gibi. Nadiren gerekir; genelde ayrı tabloya bölmenin sebebi hassas verinin ayrılması ya da nadiren kullanılan alanların ayrı tutulmasıdır. "Kullanıcının bir tane fatura adresi mi olacak, birden fazla mı? Bu şimdi karar verilmeli."
+
+## Bire çok
+
+**One-to-many (1:N)**: bir kaydın birden fazla kayda sahip olması; bir kullanıcının birçok siparişi. En yaygın ilişki türüdür. Arayüzdeki karşılığı bir **listedir** ve liste demek, boş durum, sıralama, sayfalama ve "kaç tane gösterilecek" kararı demektir. "Kullanıcı → siparişler bire çok; sipariş listesinin boş hâlini ve sayfalamasını da tasarlayalım."
+
+## Çoka çok
+
+**Many-to-many (N:M)**: her iki tarafın da birden fazla karşılığı olması; bir ürünün birden fazla etiketi, bir etiketin birden fazla ürünü. Bu ilişki bir **ara tablo (join table)** ile kurulur. Etiketleme, üyelik, izin ve favori gibi özelliklerin temelidir. **Tasarım karşılığı:** çoklu seçim arayüzleri (chip'ler), çoklu filtreler ve "bu kullanıcı hangi ekiplerde" tipi görünümler. "Kullanıcı birden fazla ekipte olabiliyor mu? Öyleyse çoka çok; rol seçimi ekip başına ayrı olmalı."
+
+Ara tabloda **ek bilgi** de tutulabilir ve bu çoğu zaman gerekir: "kullanıcı bu ekibe ne zaman katıldı", "bu ekipteki rolü ne". Bu ihtiyacı önceden fark etmezsen model sonradan değişir.
+
+<Callout kind="tasarimci">
+
+- **Her ilişki için sayıyı sor:** bir tane mi, birden fazla mı? Cevap ekranın tek alan mı liste mi olacağını belirler.
+- **Bire çok ilişkilerde liste, boş durum ve sayfalama tasarla.**
+- **Çoka çok ilişkide ilişkinin kendi bilgisini (rol, tarih) tasarıma kat.**
+
+</Callout>
+
+<Summary>
+
+- Bire bir nadirdir (kullanıcı–profil); bire çok en yaygındır (kullanıcı–siparişler) ve arayüzde liste demektir.
+- Çoka çok ara tabloyla kurulur ve çoklu seçim, çoklu filtre arayüzlerinin temelidir.
+- İlişkinin kendisi bilgi taşıyabilir (rol, katılma tarihi); ihtiyaç önceden fark edilmeli.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Çoka çok ilişkide ara tabloda ek bilgi tutmak neden sık gerekir? Bir örnek ver.">
+
+İlişkinin kendisi hakkında bilgi tutmak gerekir. Örnek: kullanıcı–ekip ilişkisinde "bu ekibe ne zaman katıldı" ve "bu ekipteki rolü ne". Bu ihtiyaç önceden fark edilmezse model sonradan değişir.
+
+</SelfCheck>

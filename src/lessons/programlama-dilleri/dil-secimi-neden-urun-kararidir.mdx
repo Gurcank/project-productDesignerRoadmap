@@ -1,0 +1,85 @@
+---
+summary: "Dil seçimi teknik bir zevk gibi görünür ama sonuçları ürüne yansır: işe alım, çıkış hızı, hazır parçalar. Kararı belirleyen dilin kendisi değil, ekosistem, ekip, çalışma ortamı ve devralınan koddur."
+outcomes:
+  - "Bir dil seçimini belirleyen dört etkeni sayabilirsin."
+  - "Dil, runtime ve framework'ü birbirinden ayırabilirsin."
+  - "'Şunu Go'ya taşıyalım' cümlesinin bir özellik değil mimari karar olduğunu açıklayabilirsin."
+minutes: 6
+sources:
+  - label: "Stack Overflow — Developer Survey"
+    url: "https://survey.stackoverflow.co/"
+  - label: "MDN — JavaScript"
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı. Dil profillerindeki olgusal iddialar ilgili dilin resmî sitesine dayanır."
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Ekipte biri "bunu Go'ya taşısak mı?" diyor, bir başkası "bu iş için Python daha uygun" diye karşılık veriyor. Bu bölüm sana dil öğretmeyecek. Amacı şu: böyle bir tartışmada **konunun ne olduğunu** anlayabilmen.
+
+Dil seçimi teknik bir zevk meselesi gibi görünür; ama sonuçlarının çoğu ürün tarafına düşer: ne kadar hızlı işe alım yapılabileceği, bir özelliğin ne kadar sürede çıkacağı, hangi hazır parçaların bedavaya geleceği.
+
+## Seçimi dilin kendisi belirlemez
+
+Bir dil nadiren "daha iyi" olduğu için seçilir. Kararı genelde şu dört etken belirler:
+
+- **Ekosistem.** O iş için hazır kütüphane var mı? Görüntü işleme ve yapay zekâ Python'da, mobil arayüz Swift ya da Kotlin'de hazır gelir.
+- **Ekip.** Şirkette o dili bilen kaç kişi var, işe alım ne kadar kolay? En iyi dil, ekibin bakabildiği dildir.
+- **Çalışma ortamı.** Tarayıcıda yalnızca JavaScript çalışır. iOS'ta Swift, Android'de Kotlin birinci sınıftır. Bu bir tercih değil, **kısıttır.**
+- **Devralınan kod.** Var olan sistem hangi dildeyse, yeni iş de büyük ihtimalle orada yazılır.
+
+## Tasarımı etkileyen üç yer
+
+**1. Hazır olan ucuz, olmayan pahalı.** Bir ekosistemde standart olan bir bileşen (tarih seçici, grafik, zengin metin editörü) başka bir ekosistemde sıfırdan yazılır. "Basit bir takvim" isteği, dile göre iki gün ya da iki hafta olabilir.
+
+**2. Tip sistemi ve hata yakalama.** Tipli diller bazı hataları kod yazılırken yakalar, tipsizler çalışırken. Bu, tasarladığın hata durumlarının ne kadarının kullanıcıya ulaşacağını etkiler.
+
+**3. Performans profili.** Bazı diller hız için, bazıları yazma kolaylığı için tasarlanmıştır. "Bu ekran neden yavaş" sorusunun cevabı bazen dildedir; çoğu zaman veritabanı sorgusunda ya da ağdadır. Dile atmak genelde yanlış adrestir.
+
+## Dil, runtime, framework
+
+Üçü sık karıştırılır:
+
+| Kavram | Ne | Örnek |
+|---|---|---|
+| Dil | Yazım kuralları ve anlam | JavaScript, Python |
+| Runtime | Dili çalıştıran ortam | Tarayıcı, Node.js |
+| Framework | Dille yazılmış iskelet | Next.js, Django |
+
+"Next.js'e geçelim" bir framework kararıdır, dil kararı değil. İkisini ayırmak, tartışmanın ne kadar büyük olduğunu anlamanı sağlar.
+
+<Callout kind="tasarimci">
+
+- **"Hangi dilde yazılacak?" senin sorun değil; "bu ekosistemde hazır var mı?" senin sorun.** İkincisi tasarım kapsamını doğrudan değiştirir.
+- **Dil değişikliği bir mimari karardır,** özellik değil. "Şunu Go'ya taşıyalım" dendiğinde takvim aylarla ölçülür.
+- **Tarayıcıda ne istediğine dikkat et:** "bunu tarayıcıda yapalım" otomatik olarak JavaScript/TypeScript demektir.
+- **Dilin "modern" olması ürün için argüman değildir.** Ekibin bakabildiği, işe alabildiği, hazır parçası olan dil kazanır.
+
+</Callout>
+
+<Summary>
+
+- Dili ekosistem, ekip, çalışma ortamı ve devralınan kod seçtirir; dilin kendisi nadiren.
+- Dil tasarımı üç yerde etkiler: hazır parçaların maliyeti, hata yakalama zamanı, performans profili.
+- Dil, runtime ve framework farklı şeylerdir.
+- Dil değiştirmek mimari iştir; kullanıcı tarafında çoğu zaman görünmez.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Dil seçimini belirleyen dört etken nedir?">
+
+Ekosistem (hazır kütüphaneler), ekip (kim bilir, işe alım), çalışma ortamı (tarayıcıda JS, iOS'ta Swift gibi kısıtlar) ve devralınan kod.
+
+</SelfCheck>
+
+<SelfCheck question="'Next.js'e geçelim' bir dil kararı mıdır?">
+
+Hayır, bir framework kararıdır. Dil (JavaScript/TypeScript) aynı kalır; framework dille yazılmış iskelettir.
+
+</SelfCheck>

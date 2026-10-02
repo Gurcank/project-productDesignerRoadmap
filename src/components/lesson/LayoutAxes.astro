@@ -1,0 +1,27 @@
+---
+import DiagramFigure from "../diagrams/DiagramFigure.astro";
+---
+
+<DiagramFigure
+  label="Flexbox tek eksende, Grid iki eksende dizer"
+  caption="Tek sıra ya da tek sütun için flexbox; satır ve sütunu birlikte yöneten yerleşim için grid. Bento grid ikinci türdendir."
+>
+  <svg class="dg-narrow" viewBox="0 0 360 230" role="img" aria-label="Solda tek sırada üç kutu, sağda iki satır iki sütunlu ızgara ve bir kutu iki sütun kaplıyor">
+    <title>Flexbox ve Grid</title>
+    <text class="dg-label" x="8" y="20">Flexbox</text>
+    <rect class="dg-box dg-box--accent" x="8" y="34" width="46" height="46" rx="6"></rect>
+    <rect class="dg-box dg-box--accent" x="62" y="34" width="46" height="46" rx="6"></rect>
+    <rect class="dg-box dg-box--accent" x="116" y="34" width="46" height="46" rx="6"></rect>
+    <path class="dg-line" d="M8 100 H162 M156 95 L162 100 L156 105"></path>
+    <text class="dg-sub" x="8" y="122">tek eksen (satır ya da sütun)</text>
+
+    <text class="dg-label" x="196" y="20">Grid</text>
+    <rect class="dg-box dg-box--progress" x="196" y="34" width="148" height="46" rx="6"></rect>
+    <text class="dg-sub" x="270" y="62" text-anchor="middle">2 sütun kaplar</text>
+    <rect class="dg-box" x="196" y="88" width="72" height="46" rx="6"></rect>
+    <rect class="dg-box" x="276" y="88" width="68" height="46" rx="6"></rect>
+    <rect class="dg-box" x="196" y="142" width="72" height="46" rx="6"></rect>
+    <rect class="dg-box" x="276" y="142" width="68" height="46" rx="6"></rect>
+    <text class="dg-sub" x="196" y="212">iki eksen (satır + sütun)</text>
+  </svg>
+</DiagramFigure>

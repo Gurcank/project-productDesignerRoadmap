@@ -1,0 +1,51 @@
+---
+summary: "İstekleri kopyalar arasında dağıtan load balancer ve isteklerin uygulamaya ulaşmadan geçtiği reverse proxy/API gateway. İkisi de mimari diyagramlarında sürekli karşına çıkar; gateway kendisi tek arıza noktası olabilir."
+outcomes:
+  - "Load balancer'ın iki işini söyleyebilirsin."
+  - "Reverse proxy ile API gateway'in farkını ve gateway'in neden tek arıza noktası olabileceğini açıklayabilirsin."
+minutes: 4
+sources:
+  - label: "AWS — Load balancing nedir? (Elastic Load Balancing)"
+    url: "https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/what-is-load-balancing.html"
+  - label: "Microsoft — Microservices mimarisi (API gateway)"
+    url: "https://learn.microsoft.com/en-us/azure/architecture/microservices/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir mimari diyagramında kullanıcı ile uygulama arasında iki kutu görürsün: biri yükü dağıtır, biri isteği karşılar ve yönlendirir. İkisi de trafiği yöneten katmanlardır.
+
+## Load balancer
+
+**Load balancer (yük dengeleyici)**, gelen istekleri aynı uygulamanın birden fazla kopyası arasında dağıtan katmandır. İki iş görür: yükü paylaştırır ve çöken bir kopyayı devre dışı bırakarak sistemin ayakta kalmasını sağlar. Yatay ölçeklemenin ön koşuludur. "Load balancer arkasında üç kopya çalışıyor; biri çökerse trafiği diğer ikisi alır."
+
+## Reverse proxy ve API gateway
+
+**Reverse proxy (ters vekil sunucu)**, isteklerin uygulamaya ulaşmadan önce geçtiği ara katmandır. **API gateway**, bunun API'ye özel ve daha yetenekli hâlidir: kimlik doğrulama, hız sınırı, yönlendirme ve günlük kaydını tek yerde toplar. Her serviste tekrarlanacak işleri tek noktaya çeker ve dışarıya tek bir adres sunarak iç yapıyı gizler. "Hız sınırını gateway'de uygulayalım; her serviste ayrı ayrı yazmayalım."
+
+Gateway bir **tek arıza noktası** hâline gelebilir; kendisi de yedekli kurulmalıdır.
+
+<Callout kind="tasarimci">
+
+- **Diyagramda bu kutuları gördüğünde "çökerse ne olur?" sor.**
+- **Hız sınırı ve kimlik doğrulama hatalarının hangi katmandan döneceğini öğren;** kullanıcıya gösterilecek ekran buna bağlı.
+
+</Callout>
+
+<Summary>
+
+- Load balancer isteği kopyalar arasında dağıtır ve çöken kopyayı devre dışı bırakır.
+- API gateway kimlik, hız sınırı, yönlendirme ve günlüğü tek yerde toplar ve iç yapıyı gizler.
+- Gateway tek arıza noktası olabilir; yedekli kurulmalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Load balancer hangi iki işi görür?">
+
+Yükü kopyalar arasında paylaştırır ve çöken bir kopyayı devre dışı bırakarak sistemin ayakta kalmasını sağlar.
+
+</SelfCheck>

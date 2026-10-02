@@ -1,0 +1,76 @@
+---
+summary: "Bu bölümdeki tek eskimeyen içerik: bir kütüphane ya da framework önerildiğinde sorulacak sorular. Trade-off, vendor lock-in ve boring technology kavramlarıyla kod bilmeden teknik masada söz sahibi olmak."
+outcomes:
+  - "Teknoloji önerildiğinde sorulacak en az beş soruyu sayabilirsin."
+  - "'Vendor lock-in'den kaçınalım' hedefinin neden eksik olduğunu ve daha iyi sorunun ne olduğunu söyleyebilirsin."
+  - "'Choose boring technology' ilkesini yenilik bütçesi olarak açıklayabilirsin."
+minutes: 7
+sources:
+  - label: "Choose Boring Technology — Dan McKinley"
+    url: "https://boringtechnology.club/"
+  - label: "Next.js — Dokümantasyon (barındırma seçenekleri)"
+    url: "https://nextjs.org/docs"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bu alt bölüm bir terim listesi değil, bir **karar çerçevesi.** Bu bölümde eskimeyen tek içerik burasıdır. Kod bilmeden de sorabileceğin sorular, teknik masada ciddiye alınmanın en hızlı yoludur.
+
+## Trade-off
+
+**Trade-off (takas, ödünleşim)**, bir şeyi kazanmak için başka bir şeyden vazgeçmektir. **Teknoloji seçiminde "en iyi" diye bir cevap yoktur; yalnızca takaslar vardır.** Bir kütüphane hız kazandırır, esneklik kaybettirir; bir framework kararı azaltır, kilitlenme yaratır. Bir seçeneği savunurken neyi feda ettiğini söyleyemiyorsan seçeneği yeterince anlamamışsındır. "MUI hızlandırır ama tasarım özgünlüğünden ödün veririz; takas bu. Bizim için özgünlük mü hız mı öncelikli?"
+
+## Sekiz soru
+
+Bir kütüphane ya da framework önerildiğinde sorulacak sorular. Hepsi meşrudur:
+
+1. **Hangi problemi çözüyor?** Cevap "modern olduğu için" ise problem yok demektir.
+2. **Bunu eklemesek ne olur?** Bazen 30 satır kod, 40KB'lık bir bağımlılıktan ucuzdur.
+3. **Bakımı sürüyor mu?** Son sürüm ne zaman çıktı, kaç kişi bakıyor, açık sorunlar birikmiş mi?
+4. **Paket boyutu ne?** Kullanıcıya ne kadar ek JavaScript gidiyor?
+5. **Erişilebilirliği nasıl?** Özellikle etkileşimli bileşenlerde bu, sonradan düzeltilemeyecek bir karardır.
+6. **Ekip biliyor mu?** Öğrenme süresi gerçek bir maliyettir.
+7. **Vazgeçmek ne kadar zor?** Yarın değiştirmek istesek kaç dosyaya dokunmamız gerekir?
+8. **Kim sahibi?** Tek kişilik bir proje mi, şirket destekli mi? Satın alınırsa ne olur?
+
+## Vendor lock-in
+
+**Vendor lock-in (sağlayıcıya bağımlılık)**, bir sağlayıcının araçlarına o kadar bağlanmaktır ki çıkmak pratikte imkânsız hâle gelir. Her bağımlılık kötü değildir: karşılığında hız ve kolaylık alırsın. Sorun, bunun **bilinçsiz** olmasıdır. Doğru soru "bağımlı olalım mı?" değil, **"çıkmak isteseydik maliyeti ne olurdu ve bunu kabul ediyor muyuz?"** "Vercel'e bağımlılığı kabul ediyoruz ama veritabanını taşınabilir tutalım; ikisi birden kilitlenmesin."
+
+## Boring technology
+
+**"Choose boring technology" (sıkıcı teknoloji seç)**, yeni ve heyecan verici olan yerine olgun ve öngörülebilir olanı seçme ilkesidir. Her yeni teknoloji bilinmeyen sorunlar getirir; bir projede taşıyabileceğin bilinmeyen sayısı sınırlıdır. Bu bütçeyi asıl probleme harcamak, araç seçimine harcamaktan iyidir. **Bu, "yeniliğe kapalı olmak" değil, yenilik bütçesini bilinçli harcamaktır.** "Bu projede yeni bir framework denemeyelim; asıl risk zaten teslim tarihinde."
+
+<Callout kind="tasarimci">
+
+- **Önerinin takasını sor:** ne kazanıyoruz, neyi feda ediyoruz?
+- **Sekiz sorudan en az üçünü her teknoloji önerisinde sor.**
+- **Kilitlenmeyi bilinçli kabul et** ve çıkış maliyetini yazılı hâle getir.
+
+</Callout>
+
+<Summary>
+
+- Teknoloji seçiminde "en iyi" yoktur, takaslar vardır; neyi feda ettiğini söyleyemiyorsan seçeneği anlamamışsındır.
+- Sekiz soru: problem, ek maliyet, bakım, boyut, erişilebilirlik, ekip, çıkış maliyeti, sahip.
+- Vendor lock-in kötü değil, bilinçsiz olması kötüdür; çıkış maliyetini sor.
+- Boring technology, yenilik bütçesini asıl probleme harcamaktır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir kütüphane önerildiğinde soracağın en az beş soru say.">
+
+Hangi problemi çözüyor? Eklemesek ne olur? Bakımı sürüyor mu? Paket boyutu ne? Erişilebilirliği nasıl? Ekip biliyor mu? Vazgeçmek ne kadar zor? Kim sahibi, satın alınırsa ne olur?
+
+</SelfCheck>
+
+<SelfCheck question="'Vendor lock-in'den kaçınalım' doğru bir hedef mi? Daha iyi soru nedir?">
+
+Tam olarak değil: her bağımlılık karşılığında hız ve kolaylık sağlar. Daha iyi soru: "Çıkmak isteseydik maliyeti ne olurdu ve bunu kabul ediyor muyuz?" Sorun bağımlılık değil, bilinçsiz bağımlılıktır.
+
+</SelfCheck>

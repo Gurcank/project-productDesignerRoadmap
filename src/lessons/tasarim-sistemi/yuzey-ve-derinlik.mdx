@@ -1,0 +1,126 @@
+---
+summary: "Öğelerin birbirinin üstünde durduğu hissini üreten kararlar: elevation, gölge, köşe yuvarlaklığı ve katman sırası (z-index). Derinliği bir sistem olarak kurmayı öğren."
+outcomes:
+  - "Elevation sisteminin neden birkaç sabit seviyeden oluştuğunu açıklayabilirsin."
+  - "Koyu temada derinliğin neden gölgeyle değil yüzey açıklığıyla verildiğini söyleyebilirsin."
+  - "İç içe kutularda köşe yarıçaplarını doğru ilişkilendirebilirsin."
+  - "z-index kaosunun neden bir katman ölçeğiyle önlendiğini bilirsin."
+minutes: 8
+sources:
+  - label: "Material Design 3 — Elevation"
+    url: "https://m3.material.io/styles/elevation/overview"
+  - label: "MDN — CSS box-shadow"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+
+Bir sayfada bir menü açılıyor ve ekranın geri kalanı üzerinde "yüzüyor". Bir modal açılıyor, arkası kararıyor. Bir kart hafifçe yükseliyor. Hepsinde ortak olan şey: **katman ilişkisi.** Bu ders o ilişkiyi tutarlı bir sistem olarak nasıl kurduğunu anlatıyor.
+
+## Elevation: katman seviyeleri
+
+**Elevation** (yükseklik, kot), bir yüzeyin diğerlerinin ne kadar **"üstünde"** olduğunu ifade eden seviye sistemidir. Katman ilişkisini tutarlı hâle getirir: her bileşenin kendi gölgesini uydurması yerine, sistem **4–5 seviye** tanımlar (yüzey, kart, açılır menü, modal, bildirim) ve her seviyenin gölgesi ya da rengi bellidir.
+
+<StepFlow
+  arrows={false}
+  label="Örnek elevation seviyeleri"
+  caption="Her seviyenin kullanım yeri sabittir. Aralarına bir seviye daha uydurmak, sistemi bozar."
+  steps={[
+    { title: "0. Yüzey", sub: "Sayfanın zemini", tone: "plain" },
+    { title: "1. Kart", sub: "Zeminden hafifçe yükselmiş içerik", tone: "plain" },
+    { title: "2. Açılır menü", sub: "Tıklamayla açılır, kartın üstünde", tone: "accent" },
+    { title: "3. Modal", sub: "Tüm sayfanın üstü, arkası karartılmış", tone: "accent" },
+    { title: "4. Bildirim", sub: "En üstte, geçici", tone: "progress" },
+  ]}
+/>
+
+"Dropdown elevation-2, modal elevation-3. Aralarında bir seviye daha uydurmayalım."
+
+**Koyu temada gölge çalışmaz;** derinlik **yüzey açıklığını artırarak** verilir: yukarıdaki katman, aşağıdakinden biraz daha açık olur. Yani elevation sistemi tema başına farklı biçimde ifade edilir. (Dark mode ile bu bağlantıyı tema dersinde görmüştün.)
+
+## Gölge
+
+**Shadow** (box shadow, gölge), bir öğenin arkasına düşen, derinlik hissi veren efekttir; elevation'ın görsel ifadesidir. Gerçekçi görünmesi için genelde tek bir gölge yetmez: **yakın-sert ve uzak-yumuşak iki katmanın birleşimi** daha doğal durur. Ayrıca gölge rengi saf siyah yerine, arka planın koyu bir tonu olduğunda daha temiz görünür. "Gölge çok sert; iki katmanlı yumuşak bir gölgeye geçelim ve rengini nötr rampadan alalım."
+
+İki uyarı:
+
+- **Gölge ölçülü kullanılmalıdır.** Her öğenin gölgesi varsa hiçbir şey öne çıkmaz.
+- **Gölge tek başına kenarlık işi görmez.** Düşük kontrastlı ekranlarda sınırın görünmesi için ince bir kenarlık gerekebilir.
+
+<Compare>
+<Pane title="Açık tema">
+
+- Derinlik iki katmanlı yumuşak gölgeyle
+- Gölge rengi nötr rampadan
+- Üst katman daha belirgin gölge
+
+</Pane>
+<Pane title="Koyu tema">
+
+- Derinlik yüzey açıklığıyla
+- Gölge neredeyse görünmez
+- Üst katman daha açık renk
+
+</Pane>
+</Compare>
+
+## Köşe yuvarlaklığı
+
+**Border radius** (köşe yuvarlaklığı), köşelerin ne kadar yuvarlatıldığıdır. **Ürünün karakterini en hızlı belirleyen tek değerdir:** keskin köşe ciddi ve teknik, yumuşak köşe samimi ve erişilebilir hisseder. Sistem olarak birkaç değer tanımlanır (küçük, orta, büyük, tam yuvarlak) ve rastgele değer kullanılmaz. "Radius ölçeği 4 / 8 / 12 / 999. Kartlar 12, butonlar 8, avatar 999."
+
+Sık gözden kaçan bir detay: **iç içe geçen kutularda dıştaki radius, içtekinden büyük olmalıdır.** Kabaca:
+
+> **dış radius = iç radius + aradaki boşluk**
+
+Aksi hâlde köşeler optik olarak bozuk görünür: dış çerçevenin köşesi içtekinden daha keskin kalır ve aradaki mesafe köşelerde eşitsiz algılanır.
+
+## Katman sırası: z-index
+
+**z-index / stacking** (katman sırası), üst üste gelen öğelerden **hangisinin önde görüneceğini** belirleyen sayıdır. Modal, dropdown, tooltip ve sticky header sürekli çakışır. Sistemde bir **katman ölçeği** tanımlanmazsa geliştiriciler `z-index: 9999` yazmaya başlar ve düzen kontrolden çıkar.
+
+"Dropdown modalın arkasında kalıyor" tipi hatalarda karşına çıkar. Çözüm token'dır: "z-index token'ları tanımlayalım: dropdown 100, sticky 200, modal 300, toast 400."
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitede derinlik **dört yüzey seviyesiyle** (koyu temada açıklıkla), açık temada ise iki katmanlı yumuşak gölgeyle veriliyor. Hiçbir yerde tek başına gölgeye güvenilmiyor: kartların ince bir kenarlığı da var. Katman sırası da (yapışkan üst menü, kaplama, bildirim) isimli bir ölçekte tanımlı; `9999` yazmak yerine bu adlardan biri seçiliyor.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Elevation seviyelerini tanımla ve kullan.** Yeni bir bileşen "hangi seviyede?" sorusunu cevaplasın.
+- **Koyu tema için derinliği ayrıca tasarla.** Gölge yerine yüzey açıklığı.
+- **Radius ölçeğini sınırla.** Üç dört değer yeter.
+- **İç içe kutuda radius'u hesapla:** dış = iç + boşluk.
+- **Katman için ad iste.** "Modal" katmanı, `z-index: 300` token'ı.
+
+</Callout>
+
+<Summary>
+
+- Elevation birkaç sabit katman seviyesidir; her seviyenin gölgesi ya da rengi belirlidir.
+- Koyu temada derinlik gölgeyle değil yüzey açıklığıyla verilir.
+- Gerçekçi gölge iki katmanlıdır (yakın-sert, uzak-yumuşak) ve ölçülü kullanılır; tek başına kenarlık yerine geçmez.
+- Köşe yuvarlaklığı ürünün karakterini belirler; iç içe kutuda dış radius = iç radius + boşluk.
+- z-index'i katman ölçeğiyle yönet; `9999` bir sistem hatasıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="İç içe iki kutuda köşe yarıçapları nasıl ilişkilendirilmeli?">
+
+Dıştaki radius, içtekinden büyük olmalıdır: kabaca dış radius = iç radius + aradaki boşluk. Aksi hâlde köşeler optik olarak yanlış hizalanmış görünür.
+
+</SelfCheck>
+
+<SelfCheck question="Koyu temada derinlik nasıl verilir ve neden?">
+
+Gölge koyu zeminde neredeyse görünmez olduğu için derinlik yüzey açıklığı artırılarak verilir: üstteki katman alttakinden biraz daha açık olur.
+
+</SelfCheck>

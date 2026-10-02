@@ -1,0 +1,157 @@
+---
+summary: "Scrum işi zamana böler, Kanban akışa göre yönetir. Pano, WIP limiti, lead/cycle time, throughput ve darboğaz kavramlarıyla işin neden tıkandığını görmeyi öğren."
+outcomes:
+  - "Scrum ile Kanban'ın temel farkını (zaman ve akış) anlatabilirsin."
+  - "Bir Trello panosunun neden tek başına Kanban olmadığını açıklayabilirsin."
+  - "WIP limitinin neden toplam hızı artırdığını söyleyebilirsin."
+  - "Lead time ile cycle time farkından bekleme süresini bulabilirsin."
+  - "Darboğazı bulmadan yapılan hızlandırmanın neden işe yaramadığını bilirsin."
+minutes: 12
+sources:
+  - label: "Atlassian — Kanban"
+    url: "https://www.atlassian.com/agile/kanban"
+  - label: "Kanban Guide"
+    url: "https://kanbanguides.org/english/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Destek ekibinde çalışıyorsun. İşler her an geliyor: acil bir hata, bir tasarım talebi, bir içerik düzeltmesi. İki haftalık sprint'e sığdırmak imkânsız, çünkü ne gelecek bilemezsin. Böyle bir ekipte Scrum zorlanır, ama başka bir yaklaşım uyar: **Kanban.**
+
+**Kanban**, Scrum'a alternatif bir **akış yönetimi** yaklaşımıdır. Temel fark şu: Scrum işi *zamana* böler (sprint), Kanban işi *akışa* göre yönetir. Sürekli devam eder, sabit dönemler yoktur.
+
+Kökeni Toyota üretim sistemidir; Taiichi Ohno'nun 1940–50'lerde geliştirdiği kart tabanlı çekme sistemine dayanır. Bilgi işine ve yazılıma uyarlanması 2000'li yıllarda David J. Anderson tarafından yapılmıştır. (Adı Japonca "görsel sinyal" ya da "pano" anlamına gelir.)
+
+<Compare>
+<Pane title="Scrum">
+
+- İşi zamana böler (sprint)
+- Sabit toplantılar, sabit roller
+- İş sprint'e girer, ortada eklenmez
+- Uygun: planlı ürün geliştirme
+
+</Pane>
+<Pane title="Kanban">
+
+- İşi akışa göre yönetir
+- Sürekli, sabit dönem yok
+- Yeni iş her an girebilir
+- Uygun: destek, hata düzeltme, içerik, tasarım talepleri
+
+</Pane>
+</Compare>
+
+Kanban mevcut sürecin üzerine uygulanabilir: kimsenin işini ya da unvanını değiştirmez, bu yüzden benimsenmesi kolaydır. Destek ve operasyon ekiplerinde, ajans iş akışlarında, tek kişilik projelerde karşına çıkar.
+
+"Sprint'e uymuyoruz çünkü işler her an geliyor; Kanban'a geçelim, WIP limiti koyalım."
+
+**Kanban ≠ Trello panosu kullanmak.** Pano yöntemin yalnızca *görünen* kısmıdır. Asıl yöntem **WIP limiti** ve akış ölçümüdür. Limitsiz bir pano, Kanban değil, bir liste görselleştirmesidir.
+
+## Pano: işin nerede olduğunu göstermek
+
+**Board (pano), column (sütun), swimlane (kulvar), card (kart):** İşlerin kart olarak durduğu, aşamalara göre sütunlara ayrılan ve gerektiğinde yatay kulvarlara bölünen görsel düzen. İşin nerede olduğunu tek bakışta gösterir. Jira, Linear, Trello ve GitHub Projects'te görürsün.
+
+**Sütunlar gerçek süreci yansıtmalıdır.** "To Do / Doing / Done" çoğu ekip için fazla kaba kalır ve **tıkanmanın nerede olduğunu gizler.** "Panoya 'design review' sütunu ekleyelim; şu an tasarım kontrolü 'in progress' içinde kayboluyor." Bu bir tasarımcı için doğrudan işe yarar bir cümle.
+
+<StepFlow
+  arrows={false}
+  label="Bir Kanban panosunun sütunları"
+  caption="Sütun başlığındaki sayı o aşamadaki WIP limitidir. Sayı dolduğunda yeni iş başlatılmaz; önce önündekini bitirmek gerekir."
+  steps={[
+    { title: "Backlog", sub: "Bekleyen işler. Limit yok.", tone: "plain" },
+    { title: "Tasarım (limit 2)", sub: "Üzerinde çalışılan tasarım işleri", tone: "accent" },
+    { title: "Geliştirme (limit 3)", sub: "Kodlanan işler", tone: "accent" },
+    { title: "Review (limit 2)", sub: "Kod ve tasarım incelemesi", tone: "accent" },
+    { title: "Bitti", sub: "Yayına hazır / yayında", tone: "progress" },
+  ]}
+/>
+
+## WIP limit: başlamak yerine bitirmek
+
+**WIP limit** (Work In Progress limit, devam eden iş sınırı), bir sütunda aynı anda en fazla kaç iş bulunabileceğini belirleyen sayıdır. **Kanban'ın en önemli parçasıdır.**
+
+Neden? Aynı anda çok işe başlamak, hiçbirinin bitmemesine yol açar; yarım kalan iş değer üretmez. Limit dolduğunda yeni iş başlatmak **yasaktır.** Bu kural insanları *başlamak yerine bitirmeye* zorlar ve tıkanıklığın nerede olduğunu anında görünür kılar.
+
+Pano sütun başlıklarında sayı olarak görünür: "In Progress (3)". "In progress limiti dolu; yeni işe başlamak yerine review'da bekleyen kartı bitirelim."
+
+İki nokta:
+
+- WIP limiti bir *hedef* değil, bir **tavan sınırdır.**
+- **Sezgiye aykırıdır:** limit koymak işi yavaşlatmaz, tersine toplam teslim hızını artırır.
+
+## Akışı ölçmek: lead time, cycle time, throughput
+
+**Lead time** talebin girmesinden teslimine kadar geçen **toplam süredir.** **Cycle time** ise iş üzerinde *çalışılmaya başlandıktan* teslimine kadar geçen süredir.
+
+İkisi arasındaki fark **bekleme süresidir** ve genelde toplamın büyük kısmıdır. "Neden bu kadar uzun sürüyor?" sorusunun cevabı çoğunlukla çalışılan sürede değil, **sırada bekleme süresindedir.** Bu ölçümler müşteriye gerçekçi süre söylemeyi de mümkün kılar.
+
+> "Cycle time 2 gün ama lead time 3 hafta; sorun geliştirmede değil, işin sırada beklemesinde."
+
+Yani 3 haftanın yaklaşık 19 günü beklemekle geçiyor. Geliştiriciyi hızlandırmak bu tabloda çok az fayda sağlar.
+
+<StepFlow
+  label="Lead time ve cycle time"
+  caption="Lead time müşterinin bekleme süresi, cycle time ekibin fiilen çalıştığı süredir. İkisi arasındaki fark, iş kuyrukta durduğu süredir."
+  steps={[
+    { title: "Talep girer", sub: "Lead time başlar", tone: "plain" },
+    { title: "Sırada bekler", sub: "Çoğu zaman en uzun kısım: ~19 gün", tone: "plain" },
+    { title: "Çalışılmaya başlanır", sub: "Cycle time başlar", tone: "accent" },
+    { title: "Teslim edilir", sub: "Cycle time ~2 gün, lead time ~3 hafta", tone: "progress" },
+  ]}
+/>
+
+**Throughput** (iş çıkarma oranı), birim zamanda tamamlanan **iş sayısıdır.** Velocity'nin Kanban'daki karşılığı sayılabilir, ama puan yerine *adet* sayar. Tahmin yapmak için yeterlidir ve tahminleme toplantısı gerektirmez; bazı ekipler bu yüzden story point'i tamamen bırakır. "Haftada ortalama 7 kart bitiriyoruz; 21 kartlık bu iş yaklaşık 3 hafta demek."
+
+## Darboğaz: toplam hızı belirleyen yer
+
+**Bottleneck** (darboğaz), akışın en yavaş ilerlediği ve işlerin biriktiği aşamadır. **Bir sistemin toplam hızını darboğaz belirler.** Darboğaz dışındaki aşamaları hızlandırmak toplam hızı değiştirmez; yalnızca darboğaz önünde daha büyük bir yığın oluşturur. Bu, süreç iyileştirmedeki en sık yapılan hatadır.
+
+Pano üzerinde bir sütunun sürekli dolu olmasıyla kendini gösterir. "Darboğaz code review; geliştirme hızlanınca yalnızca review kuyruğu büyüyor."
+
+## Scrumban: gerçek hayatın adı
+
+**Scrumban**, Scrum'ın ritüellerini (planning, retro) Kanban'ın akış yönetimiyle (WIP limit, sürekli akış) birleştiren **melez yaklaşımdır.** Gerçek ekiplerin çoğu saf Scrum ya da saf Kanban uygulamaz; bu terim o gerçeği adlandırır. "Sprint'imiz var ama panoda WIP limiti de var; teknik olarak Scrumban."
+
+<Callout kind="tasarimci">
+
+- **Tasarım talepleri için Kanban iyi bir seçimdir.** Bir tasarım ekibine sürekli talep geliyorsa, pano ve WIP limiti öncelikleri görünür kılar.
+- **Tasarım aşamalarını panoya ayrı sütun yap.** "Tasarım", "design review" ve "tasarım onayı" ayrı görünürse, takıldığın yer belli olur.
+- **Hız sorununda önce kuyruğa bak.** "Tasarım neden geç?" sorusunun cevabı çoğu zaman çalışma süresi değil, bekleme süresidir.
+- **Yeni işe başlamadan önce yarım işi bitir.** WIP limiti tasarımcı için de geçerli: aynı anda beş akış açık tutmak hepsini yavaşlatır.
+
+</Callout>
+
+<Summary>
+
+- Scrum zamana, Kanban akışa göre çalışır; Kanban sürekli ve öngörülemez işler için uygundur.
+- Pano Kanban'ın görünen kısmıdır; asıl yöntem WIP limiti ve akış ölçümüdür.
+- WIP limiti toplam hızı artırır: başlamak yerine bitirmeye zorlar, tıkanıklığı görünür kılar.
+- Lead time ile cycle time farkı bekleme süresidir ve genelde toplamın büyük kısmıdır.
+- Darboğaz toplam hızı belirler; darboğaz dışını hızlandırmak yalnızca yığın oluşturur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir Trello panosu kullanmak Kanban yapmak mıdır? Eksik olan nedir?">
+
+Hayır. Pano yöntemin görünen kısmıdır; asıl yöntem WIP limiti ve akış ölçümüdür (cycle time, lead time, throughput). Limitsiz bir pano yalnızca bir liste görselleştirmesidir.
+
+</SelfCheck>
+
+<SelfCheck question="Cycle time 2 gün, lead time 3 hafta. Bu tabloda sorun nerede ve nereye bakmalısın?">
+
+Sorun geliştirmede değil, beklemede. Aradaki fark (yaklaşık 19 gün) işin sırada beklediği süredir. Bakılacak yer: kuyruk uzunluğu, WIP limiti, önceliklendirme sıklığı ve giriş kapısı (kaç iş aynı anda kabul ediliyor).
+
+</SelfCheck>
+
+<SelfCheck question="Bir darboğazın dışındaki aşamaları hızlandırmak toplam hızı artırır mı?">
+
+Hayır. Toplam hızı darboğaz belirler. Darboğaz dışını hızlandırmak yalnızca darboğaz önünde daha büyük bir yığın oluşturur.
+
+</SelfCheck>

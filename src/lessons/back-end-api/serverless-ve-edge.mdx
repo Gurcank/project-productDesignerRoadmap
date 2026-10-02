@@ -1,0 +1,68 @@
+---
+summary: "Sunucu yönetmeden sunucu kodu çalıştırmanın yolları: serverless, cold start ve edge function. İsim yanıltıcıdır, sunucu vardır; bedeli ilk istekteki gecikme ve uzak veritabanıdır."
+outcomes:
+  - "Serverless'ta sunucunun olduğunu ve neden ucuz/ölçeklenebilir olduğunu açıklayabilirsin."
+  - "Cold start'ın kullanıcıya nasıl yansıdığını söyleyebilirsin."
+  - "Edge function'ın ne kazandırdığını ve veritabanı uzaktaysa neden kazancın kaybolabileceğini bilirsin."
+minutes: 7
+sources:
+  - label: "AWS — Serverless nedir?"
+    url: "https://aws.amazon.com/what-is/serverless-computing/"
+  - label: "AWS Lambda — Çalışma ortamı yaşam döngüsü"
+    url: "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtime-environment.html"
+  - label: "Cloudflare Workers"
+    url: "https://developers.cloudflare.com/workers/"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Gece kimsenin girmediği bir siteye sabah ilk giren kişi diğerlerinden yavaş bir deneyim yaşayabilir. Sebebi çoğu zaman sunucunun kendisi değil, onu çalıştırma biçimidir.
+
+## Serverless
+
+**Serverless (sunucusuz)**, kodun, sürekli açık bir sunucu yerine, yalnızca istek geldiğinde çalıştırılıp sonra kapatılan işlevler hâlinde barındırılmasıdır. Sunucu yönetimini ortadan kaldırır ve **kullandığın kadar ödeme** modeli sunar. Trafiği düzensiz projeler için ekonomiktir: gece kimse kullanmıyorsa hiçbir şey ödemezsin. Ölçeklenme otomatiktir. Vercel, Netlify ve bulut sağlayıcılarının varsayılan modelidir. "Trafik dalgalı; serverless mantıklı, sabit sunucu maliyeti taşımayalım."
+
+**İsim yanıltıcıdır: sunucu vardır,** sadece sen yönetmezsin. Sınırları da vardır: uzun süren işler için uygun değildir (bunlar kuyruğa gider), veritabanı bağlantılarını yönetmek ek özen ister ve çok yüksek sabit trafikte klasik sunucudan pahalı olabilir.
+
+## Cold start
+
+**Cold start (soğuk başlangıç)**, bir serverless işlevin uzun süre çağrılmadıktan sonra ilk çağrıda yaşadığı ek başlangıç gecikmesidir. Serverless'ın bilinen bedelidir. Kullanıcı açısından: gece kimsenin girmediği bir siteye sabah ilk giren kişi diğerlerinden yavaş bir deneyim yaşayabilir. Performans şikâyetlerinin gizli sebeplerinden biridir. "İlk istek 2 saniye, sonrakiler 200ms; cold start'a benziyor."
+
+## Edge function
+
+**Edge function (uç işlev)**, kodun tek bir merkezî veri merkezi yerine kullanıcıya coğrafi olarak yakın sunucularda çalıştırılmasıdır. Gecikmeyi düşürür: kullanıcı İstanbul'daysa ve kod uzak bir veri merkezi yerine yakın bir noktada çalışıyorsa fark milisaniyelerle ölçülür. Yönlendirme, A/B test dağıtımı, kişiselleştirme ve dil tespiti gibi hafif işler için idealdir. "Dil tespitini edge'de yapalım; kullanıcı doğru dile hemen yönlensin."
+
+Edge ortamı sınırlıdır: bazı Node API'leri çalışmaz ve **veritabanı uzaktaysa kazanç kaybolabilir;** kod kullanıcıya yakın olsa da veri hâlâ uzaktadır.
+
+<Callout kind="tasarimci">
+
+- **"İlk yükleme yavaş" geri bildiriminde cold start'ı da düşün;** sürekli düzgün çalışan sayfalarda ilk isteğin yavaş olması bunun işareti olabilir.
+- **Düzensiz trafikli yeni özellikler için serverless'ın bedeli ve faydasını sor.**
+- **Edge'in veri kaynağına uzaklığını göz önünde tut;** yalnızca kod yakınlığı yetmez.
+
+</Callout>
+
+<Summary>
+
+- Serverless'ta sunucu vardır ama sen yönetmezsin; kullandığın kadar ödersin ve otomatik ölçeklenir.
+- Cold start, uzun süre çağrılmamış işlevin ilk çağrıdaki ek gecikmesidir.
+- Edge function kodu kullanıcıya yakın çalıştırıp gecikmeyi düşürür; veritabanı uzaktaysa kazanç kaybolabilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Serverless'ta 'sunucu yok' mudur? Cold start nedir ve kullanıcıya nasıl yansır?">
+
+Sunucu vardır, sadece sen yönetmezsin. Cold start, işlev uzun süre çağrılmadıktan sonraki ilk çağrıda yaşanan ek başlangıç gecikmesidir; gece kimsenin girmediği bir siteye sabah ilk giren kişi daha yavaş bir deneyim yaşar.
+
+</SelfCheck>
+
+<SelfCheck question="Edge function ne kazandırır? Sınırı nedir?">
+
+Kodu kullanıcıya coğrafi olarak yakın çalıştırarak gecikmeyi düşürür. Sınırı: bazı Node API'leri çalışmaz ve veritabanı uzaktaysa kazanç kaybolabilir.
+
+</SelfCheck>

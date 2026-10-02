@@ -1,0 +1,86 @@
+---
+summary: "Platform seçiminde fiyattan önce uygulamanın şekli, önizleme ortamı, fatura davranışı, harcama sınırı ve çıkış maliyeti sorulur. Platform konumlandırmaları hızla eskir; kullanıma dayalı faturalamada bot trafiği faturayı şişirebilir."
+outcomes:
+  - "Yedi platform türünün ne için güçlü olduğunu karşılaştırabilirsin."
+  - "Platform seçiminde fiyattan önce sorulacak beş soruyu sayabilirsin."
+  - "Kullanıma dayalı faturalamanın bilinen riskini ve savunmasını bilirsin."
+minutes: 8
+sources:
+  - label: "Vercel — Dokümantasyon"
+    url: "https://vercel.com/docs"
+  - label: "Netlify — Dokümantasyon"
+    url: "https://docs.netlify.com/"
+  - label: "Cloudflare Pages"
+    url: "https://developers.cloudflare.com/pages/"
+  - label: "Railway"
+    url: "https://railway.com/"
+  - label: "Render — Dokümantasyon"
+    url: "https://render.com/docs"
+  - label: "Fly.io — Dokümantasyon"
+    url: "https://fly.io/docs/"
+  - label: "Coolify — Dokümantasyon"
+    url: "https://coolify.io/docs"
+flags: ["degisken", "emin-degil"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+> **Bu ders dosyadaki en hızlı eskiyen içeriklerden biri.** Aşağıdaki konumlandırmalar materyalin Eylül 2026 tarihli ikincil kaynaklarına dayanır. **Fiyatları karar vermeden önce platformun kendi sayfasından doğrula.**
+
+## Platform manzarası
+
+| Platform | Ne için güçlü | Dikkat edilecek |
+|---|---|---|
+| **Vercel** | Next.js için en iyi geliştirici deneyimi; ISR, görsel optimizasyonu ve önizleme ortamları kutudan çıkar | Kullanıma dayalı faturalama maliyet sürprizi yapabilir. Ücretsiz (Hobby) katmanının ticari kullanıma kapalı olduğu belirtiliyor |
+| **Netlify** | Geniş framework desteği, form yönetimi, A/B bölme testi; Astro ve statik siteler için güçlü | Kredi tabanlı bir fiyatlandırmaya geçtiği raporlanıyor |
+| **Cloudflare Pages / Workers** | Uç ağda çalışır, cömert ücretsiz katman, ölçekte en ucuz seçeneklerden | Öğrenme eğrisi en dik olanı; Next.js için bir uyarlama katmanı gerekebilir |
+| **Railway** | Sürekli çalışan süreçler (API, worker, WebSocket) ve yanında veritabanı; koltuk başına ücret yok | Kullanıma dayalı fatura; kaynak boyutlandırması yanlışsa tahmin zorlaşır |
+| **Render** | Kalıcı konteyner, soğuk başlangıç yok, tahmin edilebilir aylık ücret | Uç ağ avantajı yok |
+| **Fly.io** | Docker şeklinde, bölge kontrolü, alt uçta en ucuz | En çok operasyon bilgisi isteyen seçenek; ücretsiz katmanını daralttığı raporlanıyor |
+| **Kendi sunucun (VPS + Coolify vb.)** | En düşük maliyet; tam kontrol | Operasyon disiplini gerektirir: güncelleme, yedek, güvenlik, izleme senin sorumluluğunda |
+
+## Karar çerçevesi
+
+Fiyattan önce şu sorular:
+
+1. **Uygulama hangi şekilde?** İstek bazlı fonksiyonlar mı (Vercel, Netlify, Cloudflare), yoksa sürekli çalışan süreçler mi (Railway, Render, Fly)? WebSocket, arka plan worker'ı ya da uzun süren iş varsa serverless tek başına yetmez.
+2. **Önizleme ortamı var mı?** Senin iş akışın için en değerli özellik bu.
+3. **Fatura nasıl davranıyor?** Kullanıma dayalı mı, sabit mi? Ani trafik artışında ne olur?
+4. **Harcama sınırı koyabiliyor muyum?** Bir sonraki başlıktaki tuzağın tek gerçek savunması.
+5. **Çıkış maliyeti ne?** Vendor lock-in bilinçli bir karar olmalı.
+
+## Maliyet tuzağı
+
+Kullanıma dayalı faturalamanın bilinen bir riski var: **bot ve tarayıcı trafiği faturayı şişirebilir.** Yayınlanmamış bir projenin, yapay zekâ botlarının taraması yüzünden dört haneli bir fatura ürettiğine dair vaka anlatımları var; bu belirli vakayı doğrulamadım ama risk yapısal olarak gerçektir. Savunma: **harcama sınırı ve uyarı kurmak,** bot trafiğini engellemek (WAF) ve hız sınırı uygulamak. Bir projeyi yayına almadan önce bunları kurmak, sonradan faturayı tartışmaktan kolaydır.
+
+<Callout kind="tasarimci">
+
+- **Önizleme ortamını platform seçiminin ilk kriterlerinden biri yap.**
+- **Ücretsiz katmanın ticari kullanım koşulunu** müşteri projesi için kontrol et.
+- **Yayından önce harcama sınırını ve uyarıyı kurduğundan emin ol.**
+
+</Callout>
+
+<Summary>
+
+- Platformlar uygulamanın şekline göre ayrışır: fonksiyon tabanlı (Vercel, Netlify, Cloudflare) ve sürekli çalışan süreç tabanlı (Railway, Render, Fly).
+- Fiyattan önce sor: uygulama şekli, önizleme ortamı, fatura davranışı, harcama sınırı, çıkış maliyeti.
+- Bot trafiği kullanıma dayalı faturayı şişirebilir; harcama sınırı ve uyarı kurulmalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Serverless tek başına hangi durumlarda yetmez?">
+
+Sürekli çalışan süreçler gerektiğinde: WebSocket sunucusu, arka plan worker'ı, uzun süren işler ve kalıcı görevler. Bunlar için kalıcı konteyner çalıştıran platformlar gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Kullanıma dayalı faturalamanın bilinen riski nedir ve savunması ne?">
+
+Bot ve tarayıcı trafiği faturayı şişirebilir. Savunma: harcama sınırı ve uyarı kurmak, bot trafiğini engellemek (WAF) ve hız sınırı uygulamak; bunlar yayından önce kurulmalıdır.
+
+</SelfCheck>

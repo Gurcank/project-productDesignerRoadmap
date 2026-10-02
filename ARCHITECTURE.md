@@ -246,6 +246,32 @@ service worker). Artık yalnız üretimde çakışıyorlar.
 
 ---
 
+### ADR-012 eki — "Çevrimdışı için indir" (Faz D)
+
+Önceden yalnız açılmış sayfalar çevrimdışı açılıyordu. Şimdi `npm run build` son adımda
+[`scripts/offline-manifest.ts`](scripts/offline-manifest.ts) ile `dist/offline-manifest.json` yazar
+(Pagefind'den **sonra**: indeks parçalarının adları ancak o zaman belli). Ayarlar'daki "Tüm siteyi indir" ve
+kategori sayfasındaki "Bu bölümü çevrimdışı indir" düğmesi listeyi service worker'a yollar; worker 6'lı
+paralellikle çeker, ilerlemeyi geri bildirir. `VERSION` → `pdr-v5`.
+
+Canlı denemede (sunucu kapatılıp) yakalanan iki hata, ikisi de yalnız **toplu indirilmiş, elle açılmamış**
+dosyalarda görünüyordu ve bu yüzden dev'de/elle gezerek asla çıkmazdı:
+
+- Sunucu `Vary: Origin` döner; toplu `fetch(url)` Origin başlıksız kaydedilir, modül betiği ve yazı tipi ise
+  Origin'li ister → önbellek ıska, sayfa betiksiz ve fontsuz açılırdı. Çözüm: `ignoreVary`.
+- Pagefind dizin dosyalarını `?ts=…` sorgusuyla ister → ıska → arama "Aranıyor…"da takılırdı. Çözüm:
+  `ignoreSearch`.
+
+Düğme, hangi sürümün indirildiğini `localStorage`'da `build` karmasıyla tutar; yeni derlemede "Yeni sürüm var"
+der. `navigator.storage.persist()` istenir (en iyi çaba). Okuma konumu (`pdr.scroll.v1`) ilerleme modelinden
+ayrıdır: yedeğe/Zod şemasına/`updatedAt`'a girmez, çünkü ders düzenlenince eskir.
+
+**Ödünleşim.** İndirme ~19 MB (sıkıştırılmamış üst sınır). Hepsini indirmek mobil veriyi harcar, bu yüzden
+otomatik değil, kullanıcı tetikler. Yeni derlemede kullanıcı elle güncellemezse eski kopyayı görür; sayfalar yine
+arka planda tazelenir.
+
+---
+
 ## ADR-014 — Ana sayfa şeması: 64rem'de mobil rotadan farklı bir yerleşime geçer
 
 **Bağlam.** `RoadmapRoute.astro` tek bir düzen kuralı kullanıyordu: kartlar dikey bantlarda,
@@ -281,6 +307,45 @@ tarayıcının satır üyeliğine karar verdiği bir CSS ızgarası kullanılmad
 "aynı kenarda buluşma" garantisi satır sınırlarının build-time'da bilinmesine dayanıyor. Sonuç:
 64rem–80rem arası biraz sıkışık, 100rem üstü biraz seyrek — ama `.home`'un kendi `max-width: 82rem`
 sınırı bunu zaten yumuşatıyor.
+
+## ADR-015 — Ders katmanı: terim kartlarının yerine elle yazılmış dersler
+
+**Bağlam.** Kartlar sözlük olarak değerli ama bir konuyu *öğretmiyor*. Kullanıcı her adımın ders gibi
+anlatılmasını, terimlerin metin içinde hover/dokunma ile açıklanmasını istedi.
+
+**Karar.** `src/lessons/<kategori>/<adim-slug>.mdx` (`@astrojs/mdx`). `src/content/` üretilmiş ve
+korumalı olduğu için dersler dışarıda durur; dosya adı adımın slug'ıyla eşleşir, o adımın kart görünümünün
+yerine geçer — slug, URL ve ilerleme anahtarı değişmez. Ders yoksa eski kart görünümü çalışmaya devam eder.
+`rehype-term-refs` ders dosyalarında belge kapsamlı çalışır (terim başına ilk geçiş);
+`src/data/term-aliases.json` Türkçe yüzeyleri ("istemci") ve yok sayılacak sıradan kelimeleri tutar;
+`term-lookup.json` içe aktarıcıdan gelir ve kartların dışarıda bıraktığı kısa terimleri (URL, DNS) içerir —
+akronimler yalnız tam yazımla eşleşir. Dokunmatikte tanım alttan açılan sayfa olarak görünür.
+`validate` her dersin var olan bir adıma karşılık geldiğini ve kaynak taşıdığını denetler.
+
+**Ödünleşim.** Aynı bilgi iki yerde: kart (sözlük) ve ders (anlatım). Materyal güncellenirse ders elle
+gözden geçirilmeli. Sözlük bağlantıları kart çıpasına gider; derste çıpa yok, sayfa başına iner.
+
+## ADR-016 — Ana menü: sol kenarda açılan çizgi sütunu (≥64rem)
+
+**Bağlam.** Kullanıcı Framer "Table of Content" bileşenini ana menü olarak istedi: kapalıyken kısa dikey
+çizgiler, üzerine gelince etiketler açılıyor, üzerinde durulan çizgi uzuyor, komşuları yarı uzuyor.
+
+**Karar.** Bileşen React + framer-motion; projede React yok (ADR-003). Aynı davranış
+[`SiteNav.astro`](src/components/SiteNav.astro) içinde saf HTML/CSS: `:hover` / `:focus-within` ile açılır,
+komşu çizgiler `:has()` ile, yay hissi CSS `linear()` easing ile (~400 ms). Betik yok. Geist Mono
+eklenmedi (üçüncü yazı tipi ailesi yok, SPEC §5): büyük harf Plex Sans, harf aralıklı. Açılınca etiketlerin
+altına yarı saydam olmayan bir panel gelir; kapalı hâlde mevcut sayfanın çizgisi uzun ve eylem renginde.
+
+≥64rem: sol sütun; üst bardaki bağlantılar kalkar, `main` sola 2rem boşluk alır. 48–64rem: üst bar
+bağlantıları, <48rem: alt gezinme çubuğu (ADR-012) — dokunmatikte üzerine gelme yok, bu yüzden sütun
+yalnız geniş ekranda.
+
+**Doğrulama.** Kontrast hesapla: çizgi/arka plan koyu 4,78 açık 3,87 (UI ≥3); etiket/panel koyu 5,63
+açık 9,36 (metin ≥4,5). İlk denemede etiket `--c-text-muted` idi ve koyu temada 4,34 çıktı → ikincil
+metin rengine alındı.
+
+**Ödünleşim.** Etiketler hover/odakta görünür; keşfedilebilirlik için kapalı hâlde yalnız çizgiler var.
+Dört bağlantı olduğu için kabul edildi; menü büyürse etiketlerin sürekli görünmesi yeniden düşünülmeli.
 
 ```
 ProductDesignerRoadmap/

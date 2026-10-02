@@ -1,0 +1,73 @@
+---
+summary: "İlk çıktı nadiren son çıktıdır; önemli olan düzeltme turunun ne kadar bilgi taşıdığı. Güçlü geri bildirim üç parçalıdır: ne yanlış (teknik terimle), neden yanlış, ne olmalı. Beş turdan sonra yaklaşılmıyorsa tanımı yeniden yazıp sıfırdan başla."
+outcomes:
+  - "Güçlü geri bildirimin üç parçasını söyleyebilirsin."
+  - "Zayıf bir geri bildirimi (karışık duruyor, boşluklar tuhaf) güçlüye çevirebilirsin."
+  - "Beş turdan sonra ne yapılacağını bilirsin."
+minutes: 5
+sources:
+  - label: "Claude Code Docs — En iyi uygulamalar"
+    url: "https://code.claude.com/docs/en/best-practices"
+  - label: "Anthropic Docs — Açık ve doğrudan ol"
+    url: "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/be-clear-and-direct"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+İlk çıktı nadiren son çıktıdır. Önemli olan, düzeltme turunun **ne kadar bilgi taşıdığı.**
+
+**Zayıf geri bildirim:** "Beğenmedim, bir daha dene." Model neyi değiştireceğini bilmez; rastgele başka bir yöne gider.
+
+**Güçlü geri bildirim üç parçadan oluşur:**
+
+1. **Ne yanlış:** teknik terimle. Bu yol haritasının asıl faydası burada.
+2. **Neden yanlış:** hangi ilkeye veya kısıta aykırı.
+3. **Ne olmalı:** mümkünse somut.
+
+| Zayıf | Güçlü |
+|---|---|
+| "Karışık duruyor" | "Görsel hiyerarşi yok: üç buton da dolu renkli, birincil eylem belli değil. Birini primary, ikisini ghost yap." |
+| "Boşluklar tuhaf" | "Başlık üstü ve altı boşluk eşit; Gestalt yakınlık gereği başlık altındaki metne ait okunmalı. Üstü 48, altı 16 olsun." |
+| "Mobilde bozuk" | "375px'te kart üçlüsü sıkışıyor. 768px'in altında tek sütuna düşsün." |
+| "Erişilebilir değil" | "İkon butonların erişilebilir adı yok ve tıklama alanı 24×24'ün altında. Ad ekle, padding ile hedefi büyüt." |
+| "Çok yavaş" | "Hero görseli LCP öğesi ve 1,2MB PNG. WebP'ye çevir ve öncelikli yükle." |
+
+**Dikkat:** uzun bir düzeltme zincirinde sapma riski artar. Beş turdan sonra hâlâ yaklaşılmıyorsa düzeltmeye devam etmek yerine **tanımı yeniden yazıp sıfırdan başlamak** genelde daha hızlıdır.
+
+<Callout kind="tasarimci">
+
+- **İzlenimi ilkeye bağla:** "karışık" yerine "hiyerarşi yok".
+- **Ölçü ver:** 375px, 24×24, 48/16.
+- **Beşinci turda dur,** tanımı yeniden yaz.
+
+</Callout>
+
+<Summary>
+
+- Zayıf geri bildirim yön vermez; model rastgele başka bir yöne gider.
+- Güçlü geri bildirim: ne yanlış (terimle), neden yanlış (ilke/kısıt), ne olmalı (somut).
+- Beş turdan sonra yaklaşılmıyorsa tanımı yeniden yazıp sıfırdan başla.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Güçlü geri bildirimin üç parçası nedir?">
+
+(1) Ne yanlış, teknik terimle. (2) Neden yanlış, hangi ilkeye veya kısıta aykırı. (3) Ne olmalı, mümkünse somut.
+
+</SelfCheck>
+
+<SelfCheck question="'Karışık duruyor' geri bildirimini nasıl güçlü hâle getirirsin?">
+
+İzlenimi ilkeye ve somut düzeltmeye bağlayarak: "Görsel hiyerarşi yok: üç buton da dolu renkli, birincil eylem belli değil. Birini primary, ikisini ghost stile al."
+
+</SelfCheck>
+
+<SelfCheck question="Beş düzeltme turundan sonra hâlâ yaklaşılmıyorsa ne yapmalı?">
+
+Düzeltmeye devam etmek yerine tanımı yeniden yazıp sıfırdan başlamak. Uzun düzeltme zincirlerinde sapma riski artar ve her tur bağlamı daha da bulandırır.
+
+</SelfCheck>

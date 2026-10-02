@@ -1,0 +1,59 @@
+---
+summary: "CAPTCHA ve honeypot spam ile otomatik kötüye kullanımı azaltır; CAPTCHA bir erişilebilirlik sorunudur ve son çare olmalıdır. WAF ve DDoS koruması ilk savunma hattıdır ama koddaki açığı kapatmaz."
+outcomes:
+  - "CAPTCHA'nın neden son çare olması gerektiğini ve alternatiflerini (honeypot, hız sınırı) söyleyebilirsin."
+  - "WAF'ın bir yama olmadığını açıklayabilirsin."
+minutes: 5
+sources:
+  - label: "W3C — WCAG 2.2: Accessible Authentication (Minimum)"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html"
+  - label: "OWASP — Authentication Cheat Sheet (kaba kuvvet ve otomasyon)"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+İletişim formun spam'le doldu. İlk refleks: "CAPTCHA ekleyelim." Ama bu çoğu zaman ilk değil, son seçenek olmalı.
+
+## CAPTCHA ve honeypot
+
+**CAPTCHA**, kullanıcının insan olduğunu kanıtlatan testtir. **Honeypot**, insanların göremediği ama botların doldurduğu gizli bir form alanıdır. İkisi de spam'i ve otomatik kötüye kullanımı azaltır; honeypot'un avantajı kullanıcıya hiçbir yük bindirmemesidir. "Önce honeypot ve hız sınırı deneyelim; yetmezse CAPTCHA ekleriz."
+
+**CAPTCHA bir erişilebilirlik sorunudur:** görsel bulmacalar görme engelli kullanıcılar için engel oluşturur ve bilişsel yük ekler. WCAG 2.2'nin **Accessible Authentication** ölçütü, bilişsel işlev testi gerektiren kimlik doğrulama adımlarını sınırlar. Bu yüzden CAPTCHA son çare olmalı, ilk refleks değil.
+
+## WAF ve DDoS koruması
+
+**WAF (Web Application Firewall)**, kötü niyetli görünen istekleri uygulamaya ulaşmadan filtreleyen katmandır. **DDoS koruması**, sistemi çökertmeyi amaçlayan yoğun trafiği emen altyapıdır. İlk savunma hattı olarak çalışırlar; modern CDN sağlayıcıları bunları genelde birlikte sunar. "CDN'in WAF'ını açalım; bilinen saldırı kalıplarını en azından baştan filtrelesin."
+
+**WAF bir yama değildir:** koddaki açığı kapatmaz, yalnızca bazı saldırıları engeller. "WAF var" cümlesi bir güvenlik açığını mazur göstermez.
+
+<Callout kind="tasarimci">
+
+- **Spam sorununda sırayı izle:** honeypot ve hız sınırı → gerekirse CAPTCHA.
+- **CAPTCHA kullanılacaksa erişilebilir alternatifini** (ses, mantık dışı yöntemler, güvenilir cihaz) planla.
+- **Hız sınırına takılan gerçek kullanıcı için mesajı tasarla** (429 durumu).
+
+</Callout>
+
+<Summary>
+
+- Honeypot kullanıcıya yük bindirmez; CAPTCHA erişilebilirlik sorunudur ve son çare olmalıdır.
+- WAF ve DDoS koruması ilk savunma hattıdır; WAF koddaki açığı kapatmaz.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="CAPTCHA neden son çare olmalı?">
+
+Bir erişilebilirlik sorunudur: görsel bulmacalar görme engelli kullanıcılar için engel oluşturur ve bilişsel yük ekler; WCAG 2.2 Accessible Authentication ölçütü bilişsel test gerektiren doğrulamaları sınırlar. Önce honeypot ve hız sınırı gibi kullanıcıya yük bindirmeyen yöntemler denenmelidir.
+
+</SelfCheck>
+
+<SelfCheck question="WAF, koddaki bir açığı kapatır mı?">
+
+Hayır. Bazı saldırıları filtreler ama açığı kapatmaz. "WAF var" cümlesi bir güvenlik açığını mazur göstermez.
+
+</SelfCheck>

@@ -1,0 +1,117 @@
+---
+summary: "Kararların yazıya döküldüğü dört belge: spec, PRD, one-pager ve brief. Hangisinin hangi soruya cevap verdiğini ve neden yazılmamış kararın karar sayılmadığını öğren."
+outcomes:
+  - "Spec, PRD, one-pager ve brief arasındaki farkı tek cümleyle söyleyebilirsin."
+  - "Tipik bir PRD'nin hangi başlıklardan oluştuğunu bilirsin."
+  - "\"Bu belgede ne eksik?\" sorusuna somut bir cevap verebilirsin."
+  - "Bir müşteri ya da ekip arkadaşından iş alırken ilk hangi belgeyi isteyeceğini bilirsin."
+minutes: 8
+sources:
+  - label: "Atlassian — Ürün yönetimi (PRD ve belge türleri)"
+    url: "https://www.atlassian.com/agile/product-management"
+  - label: "Silicon Valley Product Group — Product Discovery"
+    url: "https://www.svpg.com/product-discovery/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Toplantıda bir karar aldınız: "kayıt formunda telefon numarası zorunlu olmayacak." Herkes başını salladı. İki hafta sonra geliştirici zorunlu yapmış; "ben öyle anlamıştım" diyor. Kimse haksız değil: karar sözlüydü ve beş kişi beş farklı şey hatırlıyor.
+
+Bu yüzden ürün ekipleri kararları **yazıya döker.** Yazılmamış karar, karar değildir: hatırlanma biçimi kişiden kişiye değişir ve tartışma sonradan yeniden açılır. Bu derste kararların yazıldığı dört belgeyi tanıyacaksın.
+
+<StepFlow
+  label="Belgelerin zincirdeki yeri"
+  caption="Fikir küçük bir belgeyle başlar, onaylandıkça ayrıntılanır. Brief ise tasarım ve içerik işleri için ayrı bir kapıdır."
+  steps={[
+    { title: "One-pager", sub: "Fikir, tek sayfada: ön onay", tone: "accent" },
+    { title: "PRD", sub: "Neden, kimin için, ne kapsamda" },
+    { title: "Spec", sub: "Tam olarak ne olacak, hangi durumda" },
+    { title: "Brief", sub: "Bir tasarım/içerik işinin hedefi ve sınırı", tone: "progress" },
+  ]}
+/>
+
+## Spec: kuralı yazan belge
+
+**Spec** (specification), yapılacak şeyin *ne olduğunu*, neyi kapsayıp neyi kapsamadığını yazan belgedir. Herkesin aynı şeyi anlamasını sağlar. Sözlü anlatımda beş kişi beş farklı şey anlar ve fark, iş bittiğinde ortaya çıkar. Spec bu farkı **en ucuz aşamada**, yazarken yakalar.
+
+Geliştirme başlamadan önce yazılır. Yapay zekâya iş yaptırırken de aynı işlevi görür: iyi bir istem (prompt) aslında bir spec'tir. "Spec'te bu durumun ne olacağı yazmıyor; şimdi karar vermemiz gerekiyor."
+
+**Spec ≠ tasarım dosyası.** Figma dosyası *ekranı* gösterir; spec *kuralı* yazar: hangi durumda ne olacağı, hangi verinin nereden geleceği, hangi hâlin kapsam dışı olduğu. Tasarımcı olarak ikisini birbirinin yerine koyma: ekran güzel olabilir ama boş durumda ne olacağı hiçbir yerde yazmıyorsa karar yoktur.
+
+## PRD: neden ve ne
+
+**PRD** (Product Requirements Document, ürün gereksinim belgesi), bir ürün ya da özelliğin *neden* yapıldığını, *kimin için* yapıldığını ve *neyi kapsadığını* anlatan ana belgedir. Spec'ten geniştir: problemi, hedefi, başarı ölçütünü ve kapsam dışını da içerir. Ekibe **tek bir referans noktası** verir.
+
+Genelde PM yazar; tasarımcı ve geliştirici yorum ekler. Büyük şirketlerde PRD onaylanmadan iş başlamaz. "PRD'de başarı ölçütü yazılmamış; bu iş bittiğinde başarılı olup olmadığını nasıl anlayacağız?"
+
+**PRD ≠ spec.** PRD *neden* ve *ne* sorularına, spec daha çok *ne tam olarak* sorusuna cevap verir. Bazı ekipler ikisini tek belgede birleştirir.
+
+**Tipik PRD iskeleti** (ekipten ekibe değişir, ama bu başlıklar çoğunda vardır):
+
+1. **Problem ve bağlam:** Hangi sorunu çözüyoruz?
+2. **Hedef ve başarı ölçütü:** Başardığımızı nasıl anlarız?
+3. **Hedef kullanıcı:** Kimin için?
+4. **Kapsam ve kapsam dışı:** Neler dahil, neler kesinlikle değil?
+5. **Kullanıcı akışları ve gereksinimler:** Kullanıcı ne yapacak?
+6. **Kabul kriterleri:** İş ne zaman bitmiş sayılır?
+7. **Varsayımlar, riskler, bağımlılıklar:** Neye güveniyoruz, neler ters gidebilir?
+8. **Açık sorular:** Henüz cevabı olmayanlar.
+
+Bu iskeletin ilk iki maddesi tasarımcı için en değerli olanlardır: problemi ve başarı ölçütünü yazmayan bir belge, tasarım kararlarını *neye göre* vereceğini söylemez.
+
+## One-pager: düşünme disiplini
+
+**One-pager**, bir fikri **tek sayfada** anlatan kısa belgedir. Karar vericinin zamanı sınırlıdır. Fikri tek sayfaya sığdıramamak çoğu zaman fikrin **henüz netleşmediğinin** işaretidir; bu yüzden format aynı zamanda bir düşünme disiplinidir.
+
+Yeni bir fikri yönetime sunarken kullanılır; PRD yazmadan önceki ilk adımdır. "Tam PRD yazmadan önce bir one-pager çıkarıp yönetimden ön onay alalım." Böylece büyük bir belgeye saatler harcamadan önce fikrin kapıdan geçip geçmeyeceğini öğrenirsin.
+
+## Brief: işin hedefi ve sınırı
+
+**Brief** (design brief, creative brief), bir tasarım ya da içerik işine başlamadan önce **hedefi, hedef kitleyi, kısıtları ve teslim edilecekleri** tanımlayan kısa metindir. Tasarımcının doğru sorunun peşine düşmesini sağlar. Brief'siz başlayan işlerde revizyon sayısı artar, çünkü hedef en baştan ortak değildir.
+
+Ajans işlerinde ve serbest çalışmada standarttır. Bir müşteriden iş alırken **ilk isteyeceğin belge budur;** yoksa sen yazıp onaylatırsın. "Brief'te marka tonu yazmıyor; üç yön hazırlayıp müşteriye seçtirelim."
+
+**Brief ≠ spec.** Brief hedefi ve kısıtı verir, çözümü tarif etmez; spec çözümü tarif eder.
+
+| Belge | Cevap verdiği soru | Kim yazar? | Ne zaman? |
+|---|---|---|---|
+| One-pager | Bu fikir değer mi? | Fikir sahibi (çoğu zaman PM) | PRD'den önce |
+| PRD | Neden, kimin için, ne kapsamda? | PM | Geliştirmeden önce |
+| Spec | Tam olarak ne olacak? | PM, tasarımcı, geliştirici | Geliştirmeden önce |
+| Brief | Bu tasarım/içerik işinin hedefi ve sınırı ne? | Müşteri ya da PM; yoksa tasarımcı | İşe başlamadan önce |
+
+<Callout kind="tasarimci">
+
+- **Yazılmamış kararı yazıya dök.** Toplantı biter bitmez üç satırlık bir özet gönder: ne karar verdik, kim sorumlu, neyi sonraya bıraktık.
+- **Belgede eksik olanı sor.** "Boş durumda ne olacak?", "hata olursa ne görecek?", "kapsam dışı ne?" Bu üç soru çoğu belgenin açığını yakalar.
+- **Brief yoksa sen yaz.** İş alırken müşteriden brief gelmediyse, hedefi ve kısıtı kendin yazıp onaylat. Bu hem seni korur hem kapsamı çizer.
+- **Spec'i tasarım dosyasının yanına koy.** Figma'nın yanında "kurallar" belgesi yoksa, tasarım ve kural birbirinden ayrılır.
+
+</Callout>
+
+<Summary>
+
+- Yazılmamış karar, karar değildir; belgeler beş kişi beş farklı şey anlamasını engeller.
+- Spec kuralı (ne tam olarak), PRD neden ve neyi, one-pager fikrin ön onayını, brief işin hedef ve sınırını yazar.
+- PRD'nin tipik iskeleti: problem, hedef, kullanıcı, kapsam, akışlar, kabul kriteri, risk, açık sorular.
+- Spec bir tasarım dosyası değildir; ekran gösterir, spec kuralı yazar.
+- Müşteriden iş alırken ilk istenecek belge brief'tir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="PRD ile spec arasındaki fark nedir?">
+
+PRD *neden* ve *ne* sorularına cevap verir (problem, hedef, kullanıcı, kapsam, başarı ölçütü). Spec daha çok *ne tam olarak* sorusuna cevap verir (hangi durumda ne olacağı, hangi veri nereden gelecek). Bazı ekipler ikisini tek belgede birleştirir.
+
+</SelfCheck>
+
+<SelfCheck question="Brief ile spec'in farkı nedir?">
+
+Brief hedefi, hedef kitleyi, kısıtları ve teslim edilecekleri verir, çözümü tarif etmez. Spec ise çözümü tarif eder.
+
+</SelfCheck>

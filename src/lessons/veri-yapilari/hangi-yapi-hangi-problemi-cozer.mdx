@@ -1,0 +1,82 @@
+---
+summary: "Bölümün özeti: istediğin şey ile arkadaki yapı arasındaki eşleşme tablosu, tasarım aşamasında sorulacak beş soru ve 'bu pahalı' dendiğinde ne anlaman gerektiği."
+outcomes:
+  - "Bir arayüz isteğinin hangi veri yapısına karşılık geldiğini tablodan bulabilirsin."
+  - "Tasarım aşamasında beş soruyu (kaç öğe, en sık işlem, sıra, kimlik, geri alma) sorabilirsin."
+  - "'Bu pahalı' cümlesinin üç anlamını ayırt edebilirsin."
+minutes: 6
+sources:
+  - label: "MDN — JavaScript veri yapıları"
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures"
+  - label: "web.dev — Interaction to Next Paint (INP)"
+    url: "https://web.dev/articles/inp"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bu bölümün özeti. Amaç ezberlemek değil; bir tasarım kararı verirken **hangi soruyu sorman gerektiğini** bilmek.
+
+## Karar tablosu
+
+| İstediğin şey | Arkadaki yapı | Nelere dikkat |
+|---|---|---|
+| Sıralı bir liste göstermek | Dizi | Sıranın kuralını sen belirt; belirtmezsen değişir |
+| "Şu kaydı aç" | Sözlük | Her öğenin kalıcı bir kimliği olmalı |
+| Çoklu seçim, filtre işaretleri | Küme | "Tümünü seç" hangi "tüm"? |
+| Geri alma / ileri alma | Yığın | Kaç adım? Yeni işlem ileri almayı siler |
+| Arka planda iş ("raporun hazırlanıyor") | Kuyruk | Kabul + durum + başarısızlık, üç ekran |
+| Menü, kategori, site haritası | Ağaç | Bir öğe iki yerde olabilir mi? |
+| Etiketler, izinler, "ilgili içerik" | Graf | Döngü olursa ne olacak? |
+| Arama kutusu | İndeks / ters indeks | Türkçe kökleme var mı? Boş sonuç ekranı ne diyor? |
+| "Kaç tane var" sayacı | Duruma göre | Tam sayı pahalı olabilir; "1000+" ucuzdur |
+
+## Beş soru
+
+Bu beş soru tablonun tamamının yerine geçer. Bir ekran tasarlarken sorarsan doğru yapı kendiliğinden belirlenir.
+
+1. **Bu listede en fazla kaç öğe olabilir?** "Bilmiyoruz" bir risktir; sayfalama, sanallaştırma, boş durum ve yükleniyor tasarımı buna bağlıdır.
+2. **En sık yapılan işlem ne?** Yapı, en sık işlemi ucuzlatacak şekilde seçilir; diğerleri pahalılaşır.
+3. **Sıra anlam taşıyor mu?** Taşıyorsa kuralını yaz. Taşımıyorsa, kullanıcı yine de bir sıra görecek ve hangisi olduğunu söylemezsen sistem söyler.
+4. **Bu öğeyi neyle ayırt ediyoruz?** Kalıcı kimlik yoksa filtre ve sıralama sonrası yanlış satır güncellenir; arayüzlerde en sık görülen sessiz hata.
+5. **Bu işlem geri alınabilir mi?** Geri alma bir veri yapısı kararıdır; sonradan eklemek pahalı, baştan istemek ucuzdur.
+
+## "Bu pahalı" dendiğinde
+
+Üç şeyden biri kastedilir:
+
+- **Yapı uygun değil:** istenen işlem, seçilen yapının kötü yaptığı işlem. Çözüm: yapıyı ya da isteği değiştirmek.
+- **Ölçek sorunu:** küçük veride ucuz, büyükte pahalı. "Kaç öğe?" cevabı kararı belirler.
+- **Yeni bir altyapı gerekiyor:** arama motoru, kuyruk sistemi, geri alma altyapısı. Bu özellik değil, proje boyutunda bir iştir.
+
+Üçünün cevabı farklıdır; hangisi olduğunu sormak tartışmayı "olur mu olmaz mı"dan "neyi feda ediyoruz"a, yani bir **trade-off** konuşmasına taşır.
+
+> Arayüzde "anında" olan her şey, arkada birinin o işlemi ucuzlatan bir yapı seçmiş olmasıdır; o seçim, senin ne istediğini bilmesine bağlıdır.
+
+Bu yüzden veri yapısı bilgisi bir Product Designer için kod bilgisi değil, **isteğini doğru tarif etme** becerisidir.
+
+<Callout kind="tasarimci">
+
+- **Beş soruyu bir tasarım kontrol listesine koy** ve her liste/arama/seçim ekranında sor.
+- **"Bu pahalı" cevabını üç türden birine bağla** ve ona göre karşılık ver: isteği değiştir, ölçeği netleştir ya da proje olarak planla.
+
+</Callout>
+
+<Summary>
+
+- Her arayüz isteği bir yapıya karşılık gelir: liste dizi, "şu kaydı aç" sözlük, çoklu seçim küme, geri alma yığın, arka plan işi kuyruk, menü ağaç, ilişkiler graf, arama indeks.
+- Beş soru: kaç öğe, en sık işlem, sıra, kimlik, geri alma.
+- "Bu pahalı": yapı uyumsuz, ölçek sorunu ya da yeni altyapı.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Bu pahalı' dendiğinde kastedilen üç şey nedir?">
+
+Yapı uygun değil (istenen işlem yapının kötü yaptığı işlem), ölçek sorunu (küçük veride ucuz, büyükte pahalı) ya da yeni bir altyapı gerekiyor (arama motoru, kuyruk, geri alma altyapısı).
+
+</SelfCheck>

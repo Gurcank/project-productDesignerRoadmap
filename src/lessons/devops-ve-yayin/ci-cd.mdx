@@ -1,0 +1,78 @@
+---
+summary: "Kodun bilgisayardan çıkıp kullanıcıya ulaştığı süreç: yayın hızı tasarım kalitesini belirler. CI, Continuous Delivery ve Continuous Deployment üç ayrı şeydir; 'CD yapıyoruz' cümlesi hangisini kastettiğini söylemez."
+outcomes:
+  - "CI'ın ne olduğunu ve neden sık birleşmenin çakışmayı küçülttüğünü söyleyebilirsin."
+  - "Continuous Delivery ile Continuous Deployment arasındaki farkı açıklayabilirsin."
+  - "Yayın hızının tasarım kalitesini nasıl etkilediğini bilirsin."
+minutes: 7
+sources:
+  - label: "Martin Fowler — Continuous Integration"
+    url: "https://martinfowler.com/articles/continuousIntegration.html"
+  - label: "Martin Fowler — Continuous Delivery"
+    url: "https://martinfowler.com/bliki/ContinuousDelivery.html"
+  - label: "Atlassian — CI vs. CD vs. Deployment"
+    url: "https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bu bölüm, kodun bilgisayardan çıkıp kullanıcıya ulaştığı ve orada yaşadığı süreci anlatıyor. Tasarımcı için üç somut bağlantısı var:
+
+1. **Yayın hızı, tasarım kalitesini belirler.** Deploy zorsa küçük düzeltmeler birikir ve "sonraki sürümde" diye ertelenir; kolaysa boşluk değerini düzeltmek beş dakikalık bir iştir. CI/CD dolaylı olarak senin işini etkiler.
+2. **Kalite kontrolü otomatikleştirilebilir.** Erişilebilirlik taraması, performans bütçesi ve görsel karşılaştırma testleri yayın hattına konabilir; kontrol insan hafızasına değil sürece bağlanır.
+3. **Canlıda ne olduğunu görmek.** Analitik olaylarını tasarlamak senin işin; bir hata canlıda yaşandığında kullanıcının gördüğü de senin tasarladığın ekrandır.
+
+Bölümdeki kavramlar eskimeyen, **ürün ve fiyat bilgileri hızlı eskiyen** türdendir.
+
+## Continuous Integration
+
+**CI (Continuous Integration, sürekli entegrasyon)**: herkesin değişikliklerini sık sık (en az günde bir) ortak dala katması ve her katmada otomatik testlerin çalışmasıdır. Entegrasyon sorunlarını erken ve küçükken yakalar. Bir hafta ayrı çalışılan iki dal birleştiğinde büyük bir çakışma çıkar; günlük birleşmede çakışma küçük olur. **Trunk-based development'ın tam karşılığıdır.** Her PR'da çalışan kontroller olarak karşına çıkar. "CI kırıldı; testlerden biri geçmiyor, merge edemeyiz."
+
+## Delivery ve Deployment
+
+<Compare>
+<Pane title="Continuous Delivery">
+
+- Her değişiklik yayına **hazır** hâle gelir
+- Yayın kararını insan verir
+- "Her şey hazır; düğmeye biz basıyoruz"
+
+</Pane>
+<Pane title="Continuous Deployment">
+
+- Testleri geçen her değişiklik **otomatik** canlıya çıkar
+- İnsan onayı yoktur
+- Güçlü test, feature flag ve hızlı geri alma gerektirir
+
+</Pane>
+</Compare>
+
+İkisinin farkı bir kültür meselesidir. Continuous Deployment günde onlarca yayın demektir ve ancak güçlü test altyapısı, feature flag ve hızlı geri alma varsa güvenlidir. **"CD yapıyoruz" cümlesi hangisini kastettiğini söylemez; sorulmalıdır.** "CI/CD" kısaltması üç kavramı tek torbaya koyar; çoğu ekip aslında CI + Continuous Delivery yapar, Continuous Deployment değil.
+
+<Callout kind="tasarimci">
+
+- **Yayın hızını tasarım kalitesinin bir parçası olarak gör:** küçük düzeltmeler kolay yayınlanıyorsa ince detaylar düzelir.
+- **Kalite kontrollerini (erişilebilirlik, görsel fark, performans bütçesi) hatta koyma önerisini getir.**
+- **"CD" duyduğunda hangisini kastettiğini sor.**
+
+</Callout>
+
+<Summary>
+
+- CI sık birleşme ve her seferinde otomatik test demektir; çakışmaları küçük tutar.
+- Continuous Delivery'de yayın kararını insan verir; Continuous Deployment'ta otomatik çıkar.
+- Yayın hızı tasarım kalitesini etkiler ve kalite kontrolleri hatta otomatikleştirilebilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Continuous Delivery ile Continuous Deployment arasındaki fark nedir?">
+
+Continuous Delivery: her değişiklik yayına çıkmaya hazır hâle gelir ama yayın kararını insan verir. Continuous Deployment: testleri geçen her değişiklik otomatik olarak canlıya çıkar. Çoğu ekip "CD yapıyoruz" derken aslında birincisini kastediyor.
+
+</SelfCheck>

@@ -1,0 +1,76 @@
+---
+summary: "Unit, integration, E2E, smoke ve regression testleri: her biri farklı bir hata türünü yakalar. E2E tasarımcıyı en çok ilgilendirenidir ve yalnızca kritik akışlar için yazılır; regression testi her hata düzeltmesinin yanına eklenen test disiplininden doğar."
+outcomes:
+  - "Beş test türünü ve yakaladıkları hataları söyleyebilirsin."
+  - "E2E testlerin neden kırılgan olduğunu ve nasıl sağlamlaştırıldığını (erişilebilir ad ve roller) açıklayabilirsin."
+  - "Regression testin hangi disiplinden doğduğunu bilirsin."
+minutes: 8
+sources:
+  - label: "Martin Fowler — Pratik Test Piramidi"
+    url: "https://martinfowler.com/articles/practical-test-pyramid.html"
+  - label: "Testing Library — Sorgular hakkında"
+    url: "https://testing-library.com/docs/queries/about/"
+  - label: "Playwright — Giriş"
+    url: "https://playwright.dev/docs/intro"
+skipTerms: ["Domain name","Validation","domain name","alan adı","validation","doğrulama"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Test dendiğinde tek bir şey akla gelir; ama farklı testler farklı hataları yakalar.
+
+## Unit test
+
+**Unit test (birim testi)**: tek bir fonksiyonun ya da küçük bir parçanın dış dünyadan yalıtılmış olarak test edilmesi. Çok hızlıdır (milisaniyeler) ve hata olduğunda **tam olarak nerede olduğunu** söyler. İş kuralları için idealdir: indirim hesabı, tarih dönüşümü, doğrulama kuralı. Her projede en kalabalık test grubudur. "İndirim hesabı için unit test yazalım; kurallar karmaşık ve elle test etmesi zor."
+
+## Integration test
+
+**Integration test (entegrasyon testi)**: birden fazla parçanın birlikte doğru çalışıp çalışmadığının test edilmesi; örneğin bir API ucunun veritabanıyla birlikte. Gerçek hataların çoğu parçaların **arasında** olur, içinde değil: yanlış alan adı, eksik kontrol, uyumsuz veri tipi. Unit testler bunları göremez. "Unit testler geçiyor ama entegrasyonda patlıyor; API'nin dönüşü şemayla uyuşmuyor."
+
+## E2E test
+
+**E2E (End-to-End, uçtan uca) test**: gerçek bir tarayıcıda, gerçek bir kullanıcının yapacağı adımların baştan sona otomatik yürütülmesi. Kullanıcının deneyimine en yakın testtir. **Tasarımcıyı en çok ilgilendiren tür budur:** bir kullanıcı akışının gerçekten çalıştığını doğrular. Ama yavaş ve kırılgandır; bu yüzden yalnızca **kritik akışlar** için yazılır: kayıt, giriş, ödeme, ana iş akışı. "E2E testleri para kazandıran akışlara ayıralım. Her butonu test etmeyelim."
+
+E2E testlerin kırılganlığı gerçek bir sorundur; tasarım değişince testler kırılır. Bu yüzden testler görsel detaylara değil, **erişilebilir adlara ve rollere** bağlanır. Bu, semantic HTML'in bir yan faydasıdır.
+
+## Smoke ve regression test
+
+**Smoke test (duman testi)**: yayından hemen sonra "en temel şeyler çalışıyor mu?" kontrolü; bozuk bir yayını dakikalar içinde yakalar. **Regression test (gerileme testi)**: daha önce düzeltilmiş bir hatanın geri gelmediğini doğrulayan test. **Her hata düzeltmesinin yanına bir test eklenmesi** disiplininden doğar: aynı hata bir daha sessizce dönemez. "Bu hatayı düzelttik; yanına bir regression testi ekleyelim ki tekrar etmesin."
+
+<Callout kind="tasarimci">
+
+- **E2E kapsamına alınacak kritik akışları sen öner:** kayıt, giriş, ödeme, arama.
+- **Arayüzü erişilebilir adlarla ve rollerle tasarla;** hem erişilebilirlik hem test kararlılığı kazanır.
+- **Bir hata düzeltildiğinde "regression testi var mı?" diye sor.**
+
+</Callout>
+
+<Summary>
+
+- Unit tek parçayı hızlı test eder; integration parçalar arasındaki hataları yakalar.
+- E2E gerçek tarayıcıda akışı baştan sona test eder; yalnızca kritik akışlar için yazılır ve erişilebilir adlara/rollere bağlanarak sağlamlaştırılır.
+- Smoke yayın sonrası temel kontroldür; regression test her hata düzeltmesinin yanına eklenir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Unit test ile integration test hangi farklı hataları yakalar?">
+
+Unit test bir parçanın içindeki hataları yakalar (yanlış hesap, yanlış koşul). Integration test parçaların arasındaki hataları yakalar (yanlış alan adı, uyumsuz veri tipi, eksik kontrol); gerçek hataların çoğu buradadır.
+
+</SelfCheck>
+
+<SelfCheck question="E2E testler neden kırılgandır ve bu kırılganlık nasıl azaltılır?">
+
+Gerçek bir tarayıcıda çalıştıkları için tasarım ya da yapı değişince kırılırlar. Azaltmanın yolu: testleri görsel detaylara değil erişilebilir adlara ve rollere bağlamak.
+
+</SelfCheck>
+
+<SelfCheck question="Regression test hangi disiplinden doğar?">
+
+Her hata düzeltmesinin yanına bir test eklenmesi disiplininden; böylece aynı hata sessizce geri dönemez.
+
+</SelfCheck>

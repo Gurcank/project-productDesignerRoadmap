@@ -10,7 +10,7 @@
  * what is cached changes, not on every deploy: a new build produces new hashed
  * asset URLs anyway, and old ones are swept below.
  */
-const VERSION = "pdr-v2";
+const VERSION = "pdr-v5";
 const PAGES = `${VERSION}-pages`;
 const ASSETS = `${VERSION}-assets`;
 
@@ -73,7 +73,7 @@ self.addEventListener("fetch", (event) => {
           }
           return response;
         })
-        .catch(() => caches.match(request)),
+        .catch(() => caches.match(request, { ignoreVary: true, ignoreSearch: true })),
     );
     return;
   }
@@ -82,7 +82,15 @@ self.addEventListener("fetch", (event) => {
   // correct and the network is only a fallback.
   if (isHashedAsset(url)) {
     event.respondWith(
-      caches.match(request).then(
+      /*
+       * ignoreVary: the static host answers "Vary: Origin". A file fetched by the
+       * bulk download carries no Origin header, but a module script or a font asks
+       * with one, so without this flag a downloaded file is a cache miss and the
+       * page loads with no script and no fonts — only offline, only for files the
+       * reader never opened by hand. ignoreSearch: Pagefind asks for its index files
+       * with a cache-busting query string; the file itself is the same.
+       */
+      caches.match(request, { ignoreVary: true, ignoreSearch: true }).then(
         (hit) =>
           hit ??
           fetch(request).then((response) => {
@@ -100,7 +108,8 @@ self.addEventListener("fetch", (event) => {
   // Pages: show the cached copy immediately, refresh it in the background.
   if (request.mode === "navigate") {
     event.respondWith(
-      caches.match(request).then((hit) => {
+      // ignoreSearch: "/ara/?q=dns" is the cached "/ara/" page; the query is read client-side.
+      caches.match(request, { ignoreSearch: true }).then((hit) => {
         const network = fetch(request)
           .then((response) => {
             if (response.ok) {
@@ -116,3 +125,57 @@ self.addEventListener("fetch", (event) => {
     );
   }
 });
+
+/*
+ * "Çevrimdışı için indir" (ADR-012). The page sends the list of URLs from
+ * /offline-manifest.json; the worker fetches them and reports progress back.
+ *
+ * Pages go to the page cache, everything else to the asset cache — the same
+ * split the fetch handler uses, so a downloaded file is found by the same
+ * lookup that would have found it had it been opened by hand. Files that are
+ * already cached and hashed are skipped: their name is their content.
+ */
+const CONCURRENCY = 6;
+
+self.addEventListener("message", (event) => {
+  const data = event.data;
+  if (!data || data.type !== "download" || !Array.isArray(data.urls)) return;
+  const client = event.source;
+  event.waitUntil(downloadAll(data.urls, client));
+});
+
+async function downloadAll(urls, client) {
+  const pages = await caches.open(PAGES);
+  const assets = await caches.open(ASSETS);
+  const total = urls.length;
+  let done = 0;
+  let failed = 0;
+  let next = 0;
+
+  const report = (type) => client && client.postMessage({ type, done, total, failed });
+
+  async function one(url) {
+    const isPage = url.endsWith("/");
+    const target = isPage ? pages : assets;
+    try {
+      if (!isPage && isHashedAsset(new URL(url, self.location.origin)) && (await target.match(url))) return;
+      const response = await fetch(url, { cache: "reload" });
+      if (!response.ok) throw new Error(String(response.status));
+      await target.put(url, response);
+    } catch (error) {
+      failed += 1;
+    }
+  }
+
+  async function worker() {
+    while (next < urls.length) {
+      const url = urls[next++];
+      await one(url);
+      done += 1;
+      if (done % 5 === 0 || done === total) report("progress");
+    }
+  }
+
+  await Promise.all(Array.from({ length: CONCURRENCY }, worker));
+  report("done");
+}

@@ -1,0 +1,58 @@
+---
+summary: "Arka yüzün hangi dille yazıldığı: Node.js, Python, Go, PHP, Ruby, Java/C#. Seviye 3: adını duyduğunda kategorisini bilmen yeterli. Dil seçimi nadiren işini etkiler; etkilediği yer o ekosistemin hazır çözümleridir."
+outcomes:
+  - "Altı ekosistemin hangi iş için tipik olduğunu tablodan söyleyebilirsin."
+  - "Dil seçiminin tasarımı etkilediği tek yerin hazır çözümler olduğunu açıklayabilirsin."
+minutes: 3
+sources:
+  - label: "Node.js — Öğren"
+    url: "https://nodejs.org/en/learn"
+  - label: "Django"
+    url: "https://www.djangoproject.com/"
+  - label: "FastAPI"
+    url: "https://fastapi.tiangolo.com/"
+  - label: "Laravel"
+    url: "https://laravel.com/"
+  - label: "Ruby on Rails"
+    url: "https://rubyonrails.org/"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Arka yüzün hangi dille yazıldığı **seviye 3** bir bilgidir: adını duyduğunda kategorisini bilmen yeterli. Diller ayrıntılı olarak Programlama Dilleri bölümünde işlendi; burada back-end ekosistemlerinin kısa haritası var.
+
+| Ekosistem | Kısaca | Ne zaman |
+|---|---|---|
+| **Node.js** (Express, Fastify, NestJS) | JavaScript'i sunucuda çalıştırır | Ön yüzle aynı dil; küçük ekipte tek dil avantajı. NestJS kurumsal projelerde yapı dayatır |
+| **Python** (Django, FastAPI) | Okunabilir, geniş kütüphane havuzu | Veri, yapay zekâ ve bilimsel işlerin doğal dili. Django "her şey dahil", FastAPI hafif ve hızlı |
+| **Go** | Hızlı, sade, düşük kaynak tüketimi | Yüksek trafikli servisler ve altyapı araçları |
+| **PHP** (Laravel) | Web'in en yaygın dillerinden | Klasik web uygulamaları; Laravel olgun ve verimli bir çerçeve |
+| **Ruby** (Rails) | Hızlı geliştirme, güçlü sözleşmeler | Startup MVP'leri; Shopify ve GitHub gibi büyük örnekleri var |
+| **Java / C#** | Kurumsal standart | Bankalar, sigorta, büyük kurumlar |
+
+**Tasarımcı için sonuç:** dil seçimi senin işini nadiren etkiler. Etkilediği tek yer, o ekosistemin hazır çözümleridir; örneğin Django kutudan çıkan bir yönetim paneli getirir ve bu tasarım kapsamını değiştirir.
+
+<Callout kind="tasarimci">
+
+- **Dil yerine hazır çözümü sor:** yönetim paneli, kimlik doğrulama, form yönetimi kutudan geliyor mu?
+- **Hazır gelen arayüzü (örneğin Django admin) tasarlamadan önce ekibe sor;** özel tasarım gerekmeyebilir.
+
+</Callout>
+
+<Summary>
+
+- Node.js, Python, Go, PHP, Ruby ve Java/C# altı yaygın back-end ekosistemidir; her birinin tipik bir kullanım alanı vardır.
+- Dil seçimi tasarımı nadiren etkiler; etkilediği tek yer ekosistemin hazır çözümleridir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Back-end dil seçimi tasarımcıyı hangi tek yerde etkiler?">
+
+O ekosistemin hazır çözümleri: örneğin Django'nun kutudan çıkan yönetim paneli tasarım kapsamını değiştirir.
+
+</SelfCheck>

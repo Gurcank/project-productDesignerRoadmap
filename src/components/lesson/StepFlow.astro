@@ -1,0 +1,58 @@
+---
+/**
+ * A vertical chain of boxes, one per step, built for a 360px-wide phone: the
+ * viewBox is the phone width, so labels stay at their authored size instead of
+ * scaling down. Used for anything that is a sequence (DNS lookup, rendering
+ * path, environments) or a stack (layers, with arrows turned off).
+ */
+import DiagramFigure from "../diagrams/DiagramFigure.astro";
+
+interface Step {
+  title: string;
+  sub?: string;
+  tone?: "plain" | "accent" | "progress";
+}
+
+interface Props {
+  label: string;
+  caption: string;
+  steps: Step[];
+  arrows?: boolean;
+}
+
+const { label, caption, steps, arrows = true } = Astro.props;
+
+const BOX = 52;
+const GAP = arrows ? 24 : 8;
+const rows = steps.map((step, index) => ({ ...step, y: 8 + index * (BOX + GAP) }));
+const height = 8 + steps.length * (BOX + GAP) - GAP + 8;
+const toneClass = (tone: Step["tone"]) => (tone === "accent" ? "dg-box dg-box--accent" : tone === "progress" ? "dg-box dg-box--progress" : "dg-box");
+---
+
+<DiagramFigure label={label} caption={caption}>
+  <svg class="dg-narrow" viewBox={`0 0 360 ${height}`} role="img" aria-label={label}>
+    <title>{label}</title>
+    {
+      rows.map((row, index) => (
+        <>
+          <rect class={toneClass(row.tone)} x="10" y={row.y} width="340" height={BOX} rx="8" />
+          <text class="dg-label" x="24" y={row.y + (row.sub ? 22 : 31)}>
+            {arrows ? `${index + 1}. ` : ""}
+            {row.title}
+          </text>
+          {row.sub && (
+            <text class="dg-sub" x="24" y={row.y + 40}>
+              {row.sub}
+            </text>
+          )}
+          {arrows && index < rows.length - 1 && (
+            <>
+              <path class="dg-line dg-line--accent" d={`M180 ${row.y + BOX} V${row.y + BOX + GAP - 2}`} />
+              <path class="dg-line dg-line--accent" d={`M174 ${row.y + BOX + GAP - 9} l6 8 6 -8`} stroke-linejoin="round" />
+            </>
+          )}
+        </>
+      ))
+    }
+  </svg>
+</DiagramFigure>

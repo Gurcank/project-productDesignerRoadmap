@@ -1,0 +1,163 @@
+---
+summary: "Tasarım kararlarının hem tasarım aracının hem kodun okuyabileceği isimli değerlere dönüşmüş hâli. Üç token katmanını, tema ve koyu modu, token'ların kod tarafına nasıl aktığını öğren."
+outcomes:
+  - "Primitive, semantic ve component token katmanlarını ve her birinin neyi çözdüğünü açıklayabilirsin."
+  - "Bir bileşenin neden doğrudan primitive token kullanmaması gerektiğini söyleyebilirsin."
+  - "Dark mode'un neden \"renkleri ters çevirmek\" olmadığını üç gerekçeyle anlatabilirsin."
+  - "Token'ların tasarım aracından koda nasıl taşındığını (DTCG, Style Dictionary) bilirsin."
+minutes: 12
+sources:
+  - label: "Design Tokens Community Group"
+    url: "https://www.designtokens.org/"
+  - label: "Style Dictionary"
+    url: "https://styledictionary.com/"
+  - label: "MDN — CSS özel özellikleri (custom properties)"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_variables"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Marka rengi değişti. Yönetici soruyor: "Kaç yerde değişecek?" Geliştirici cevaplıyor: "İki yüz yirmi dört yerde." Bu cevap bir sistem sorunudur. Aynı değer 224 kez yazılmışsa her biri unutulabilir, yanlış yazılabilir, biri kaçabilir.
+
+**Design token'lar** bu sorunun çözümü: tasarım kararlarını ham değer yerine **isimle** saklarsın. Modern tasarım sisteminin temeli budur.
+
+## Token nedir?
+
+**Design token**, bir tasarım kararının, ham değer yerine **isimle** saklanan hâlidir: `#1B4DFF` yerine `color-brand-primary`.
+
+İki faydası var:
+
+1. **İsim, değeri değiştirilebilir kılar.** Değeri 200 yerde tekrarlarsan marka rengi değiştiğinde 200 yeri bulman gerekir; token kullanırsan tek yeri değiştirirsin.
+2. **İsim bir niyet taşır.** `color-text-danger`, `#D92D20`'den daha fazla bilgi verir: bu renk *ne için* var?
+
+Figma variables, CSS özel özellikleri (custom properties), Tailwind yapılandırması ve Style Dictionary çıktılarında görürsün. "Rengi doğrudan yazmayalım; `color-surface-raised` token'ını kullanalım ki dark mode'da otomatik değişsin."
+
+## Üç katman: ham, anlamsal, bileşen
+
+Token'lar **üç katmanda** düşünülür. Bu ayrım tasarım sistemlerinin en çok işe yarayan tek fikridir.
+
+<StepFlow
+  label="Token katmanları"
+  caption="Her katman bir üsttekine referans verir. Tema değişimi yalnızca ortadaki katmanda olur; bileşenlere dokunulmaz."
+  steps={[
+    { title: "Primitive (ham)", sub: "blue-600 = #1B4DFF  ·  anlam yok, sadece değer", tone: "plain" },
+    { title: "Semantic (anlamsal)", sub: "color-action-primary → blue-600  ·  niyet", tone: "accent" },
+    { title: "Component (bileşen)", sub: "button-primary-background → color-action-primary", tone: "progress" },
+  ]}
+/>
+
+| Katman | Ne saklar | Örnek isim | Örnek değer |
+|---|---|---|---|
+| **Primitive** (global, base) | Ham değer, anlam yok | `blue-600` | `#1B4DFF` |
+| **Semantic** (alias) | Kullanım niyeti | `color-action-primary` | → `blue-600` |
+| **Component** | Belirli bir bileşene özel | `button-primary-background` | → `color-action-primary` |
+
+### Primitive token
+
+**Primitive token** (temel token), ham değerin isimlendirilmiş hâlidir; nerede kullanılacağına dair bilgi taşımaz. **Paletin kendisidir:** `gray-100`'den `gray-900`'a kadar bir rampa, kullanılabilir ham malzemeyi tanımlar. Token dosyasının en alt katmanıdır. "Primitive katmanda 11 basamaklı nötr rampa var; semantic katman bunlardan seçiyor."
+
+**Primitive token'ı doğrudan bileşenlerde kullanmak yaygın bir hatadır;** tema değiştirmeyi imkânsız hâle getirir. Bileşen `gray-900` değil `color-text-primary` kullanmalıdır.
+
+### Semantic token
+
+**Semantic token** (anlamsal token), bir primitive token'a **işaret eden,** kullanım amacını adlandıran token'dır. **Temanın çalıştığı katman burasıdır:** `color-text-primary` açık temada `gray-900`'a, koyu temada `gray-50`'ye işaret eder; bileşen hiçbir şey bilmeden ikisinde de doğru görünür. Bileşenlerin gerçekten kullandığı katmandır.
+
+"Yeni bir renk eklemeyelim; `color-border-subtle` zaten var, onu kullanalım."
+
+<Compare>
+<Pane title="Doğrudan primitive (yanlış)">
+
+- Buton zemini: `blue-600`
+- Koyu temada hâlâ `blue-600`
+- Tema değiştirmek her bileşene dokunur
+
+</Pane>
+<Pane title="Semantic üzerinden (doğru)">
+
+- Buton zemini: `color-action-primary`
+- Koyu temada başka primitive'e işaret eder
+- Bileşene dokunmadan tema değişir
+
+</Pane>
+</Compare>
+
+## Tema ve koyu mod
+
+**Theming / mode** (tema, mod), aynı semantic token setinin **farklı değer kümeleriyle** çalışmasıdır: açık/koyu tema, marka A / marka B, yoğun / geniş yerleşim. Tek bir arayüzü tek bir kod tabanıyla birden fazla görünümde çalıştırır. Figma'da bu "modes" ile, CSS'te genelde bir üst sınıf ya da `prefers-color-scheme` ile yapılır.
+
+"Modu değiştirdiğimizde bozulan yerler var; demek ki bazı bileşenler primitive token'a doğrudan bağlı."
+
+### Dark mode
+
+**Dark mode** (koyu tema), arayüzün koyu zeminli sürümüdür: kullanıcı tercihi ve düşük ışıkta konfor. **Renkleri ters çevirmek yeterli değildir.** Dört sebep:
+
+1. **Saf beyaz metin koyu zeminde göz yorar;** genelde biraz kırılmış beyaz kullanılır.
+2. **Gölgeler işe yaramaz;** derinlik yüzey açıklığıyla verilir.
+3. **Doygun renkler koyu zeminde titrer;** doygunluk düşürülür.
+4. **Kontrast oranları yeniden hesaplanmalıdır:** açık temada geçen bir renk çifti koyu temada kalabilir.
+
+Dark mode bir "renk filtresi" değil, ayrı bir tasarım kararları setidir. Otomatik dönüştürme neredeyse her zaman kötü sonuç verir. "Dark mode'da kartları gölgeyle değil, yüzey açıklık farkıyla ayıralım."
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitenin koyu teması varsayılan. Zemin saf siyah, metin saf beyaz değil; kartlar gölgeyle değil, **yüzey açıklığıyla** ayrılıyor (dört seviye). Açık temada ise aynı derinlik iki katmanlı yumuşak gölgeyle veriliyor. Tema değişince bileşenlerin hiçbirine dokunulmuyor: yalnızca semantik token'ların işaret ettiği değerler değişiyor. Ayrıca doldurulmuş butonun zemini temaya göre ters yönde kayıyor: koyu temada etiket koyu olduğu için dolgu açılıyor, açık temada etiket açık olduğu için dolgu koyulaşıyor.
+
+</Callout>
+
+## Token'lar kod tarafına nasıl geçer?
+
+**DTCG** (Design Tokens Community Group), token'ların standart bir JSON biçiminde yazılması için tanımlanan ortak formattır. **Style Dictionary** ise bu token'ları CSS, iOS, Android gibi farklı hedeflere dönüştüren araçtır. Tasarım aracı ile kod arasındaki köprüyü otomatikleştirir: Figma'da değişen bir token, bir hat üzerinden bir CSS değişkenine dönüşebilir.
+
+<StepFlow
+  label="Token hattı"
+  caption="Değer tek yerde değişir, hat boyunca her hedefe yayılır. Bu, tek doğru kaynak ilkesinin otomatik hâlidir."
+  steps={[
+    { title: "Figma variables", sub: "Tasarımcı değeri günceller", tone: "accent" },
+    { title: "DTCG JSON", sub: "Standart biçimde dışa aktarılır" },
+    { title: "Style Dictionary", sub: "CSS, iOS, Android için dönüştürür" },
+    { title: "Kod", sub: "CSS değişkeni, tema, bileşen", tone: "progress" },
+  ]}
+/>
+
+Olgun tasarım sistemlerinin altyapısında karşına çıkar. **Değişken bilgi:** Bu alan hızlı değişiyor. Format (DTCG) kendi ilk kararlı sürümünü 2025'te yayımladı (2025.10); araç isimleri ve format sürümleri güncel olarak kontrol edilmeli.
+
+"Token'ları DTCG formatında dışa aktarıp Style Dictionary ile CSS değişkenlerine çevirelim."
+
+<Callout kind="tasarimci">
+
+- **Ham değer yazma, token kullan.** Figma'da bir rengi seçerken doğrudan hex yerine değişkeni seç.
+- **Adı niyetle koy.** `blue-600` değil `color-action-primary`.
+- **Tema testini yap:** modu değiştir. Bozulan yer varsa o bileşen primitive'e bağlıdır.
+- **Handoff'ta token adını ver.** Geliştirici `#1B4DFF` yerine `--color-action-primary` görsün.
+- **Dark mode'u ayrı bir tasarım işi say.** Renkleri ters çevirmek yetmez; kontrastı yeniden hesapla.
+
+</Callout>
+
+<Summary>
+
+- Token bir kararı ham değer yerine isimle saklar; değer tek yerde değişir ve isim niyeti taşır.
+- Üç katman: primitive (ham), semantic (niyet), component (bileşene özel). Bileşen primitive'e doğrudan bağlanmamalı.
+- Tema aynı semantic token setinin farklı değerlerle çalışmasıdır; dark mode renk ters çevirme değildir (beyaz, gölge, doygunluk, kontrast).
+- DTCG standart token formatıdır, Style Dictionary onu CSS/iOS/Android'e çevirir; alan hızlı değişiyor.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Primitive, semantic ve component token katmanları neyi çözer? Bir bileşenin doğrudan primitive token kullanması neden sorunludur?">
+
+Katmanlar, değeri kullanım niyetinden ayırır. Primitive ham değeri (`blue-600`), semantic niyeti (`color-action-primary`), component bileşene özel kullanımı saklar. Bileşen doğrudan primitive kullanırsa tema değişimi imkânsız hâle gelir: `gray-900` koyu temada da `gray-900` kalır, oysa `color-text-primary` hedefini değiştirebilir.
+
+</SelfCheck>
+
+<SelfCheck question="Dark mode neden &quot;renkleri ters çevirmek&quot; değildir? En az üç sebep say.">
+
+(1) Saf beyaz metin koyu zeminde göz yorar, kırılmış beyaz gerekir. (2) Gölge koyu zeminde işe yaramaz; derinlik yüzey açıklık farkıyla verilir. (3) Doygun renkler koyu zeminde titrer, doygunluk düşürülmelidir. (4) Kontrast oranları yeniden hesaplanmalıdır; açık temada geçen bir çift koyu temada kalabilir.
+
+</SelfCheck>

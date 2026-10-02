@@ -1,0 +1,84 @@
+---
+summary: "Giriş yapmış kullanıcının gördüğü ekranların kalıpları: dashboard, widget, onboarding, ürün turu, checklist, ayarlar, profil ve hesap, bildirim merkezi, etkinlik akışı, kanban."
+outcomes:
+  - "İyi bir dashboard'un neyi göstermediğini söyleyebilirsin."
+  - "Widget'ların neden kendi yükleme, boş ve hata durumunu taşıdığını açıklayabilirsin."
+  - "Onboarding'in ürünü anlatmak yerine ilk işi yaptırması gerektiğini anlatabilirsin."
+  - "Profil ile hesabın farkını ve ayarların gruplama sorununu bilirsin."
+minutes: 9
+sources:
+  - label: "NN/g — Onboarding Tutorials vs. Contextual Help"
+    url: "https://www.nngroup.com/articles/onboarding-tutorials/"
+  - label: "W3C — WCAG 2.2: Dragging Movements"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html"
+  - label: "W3C WAI-ARIA APG — Switch Pattern"
+    url: "https://www.w3.org/WAI/ARIA/apg/patterns/switch/"
+includeTerms: ["widget", "settings", "profile", "account", "card", "list"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Pazarlama sayfası kullanıcıyı ikna eder. Giriş yaptıktan sonra ise iş başlar: kullanıcı ürünü **kullanır**. Bu derste o ekranların kalıplarını göreceksin.
+
+## Ana ekran
+
+**Dashboard (kontrol paneli)**, önemli bilgilerin ve kısayolların bir arada özetlendiği ana ekrandır ve kullanıcının "durum ne?" sorusuna hızlı cevap verir. En sık hata, her şeyi göstermeye çalışmaktır: iyi bir dashboard **karar değiştirecek** birkaç şeyi gösterir, elde olan tüm veriyi değil. Boş durum burada özellikle önemlidir; yeni kullanıcı boş bir dashboard görür. "Dashboard'da 12 kart var; üçe indirip gerisini ilgili sayfalara taşıyalım."
+
+**Widget**, dashboard'daki tek bir bilgi bloğudur: bir sayı, bir grafik, bir mini liste. Dashboard'ı parçalara ayırır ve her parçanın **kendi yükleme, boş ve hata durumu** olmasını sağlar; biri başarısız olduğunda tüm ekran çökmesin diye. "Her widget'ın kendi skeleton ve hata durumu olsun."
+
+## İlk kullanım
+
+**Onboarding**, yeni kullanıcının ürünü ilk kez kullanmaya başladığı süreçtir. Amaç, kullanıcının **ilk değeri** görmesine kadar geçen süreyi kısaltmaktır; bu süre uzarsa kullanıcı geri dönmez. En iyi onboarding ürünü anlatan değil, kullanıcıya **ilk gerçek işini yaptıran** onboarding'dir: "Beş slaytlık tanıtım yerine 'ilk projeni oluştur' akışı."
+
+**Product tour / coachmark.** Product tour, arayüzdeki öğelerin üzerine sırayla açılan ipucu balonlarıyla yapılan tanıtımdır; **coachmark** tek bir öğeyi işaret eden ipucudur. Yeni özellikleri duyurmak için kullanılır ama sınırlıdır: kullanıcı genelde hepsini atlar, atlamayanlar da unutur. **Bağlama gömülü ipuçları** (kullanıcı o özelliğe geldiğinde tek ipucu) daha etkilidir. Turlar modal davranışı gösterir; odak yönetimi ve atlanabilirlik gerekir.
+
+**Onboarding checklist**, yeni kullanıcının tamamlaması gereken adımların ilerleme göstergeli listesidir. Tamamlanmamış işleri görünür tutar ve tamamlama isteği yaratır. Ürün turundan daha etkilidir, çünkü kullanıcı kendi hızında ilerler ve her adım gerçek bir iş yaptırır. "Dashboard'a dört adımlık checklist koyalım; tamamlanınca kaybolsun."
+
+## Kullanıcıya ait ekranlar
+
+**Settings (ayarlar)**, kullanıcının ürünü kendine göre yapılandırdığı ekrandır. Zorluk **gruplamadır**: hesap, profil, bildirimler, güvenlik, faturalama, ekip, entegrasyonlar. Çoğu ayar anında kaydedilir (switch) ve bu durumda kaydedildiğinin bildirilmesi gerekir. "Ayarları yedi sekmeye bölelim; şu an tek sayfada 40 kontrol var."
+
+**Profile / Account.** Profile, kullanıcının başkalarına görünen bilgileridir; account, kimlik, güvenlik ve faturalama gibi kişisel yönetim bilgileri. İkisinin ayrılması, kullanıcının "bu bilgi görünüyor mu?" endişesini giderir; hangi alanın kime görünür olduğu açıkça belirtilmelidir.
+
+**Notification center**, kullanıcıya gelen bildirimlerin toplandığı paneldir, genelde zil ikonu ve sayaç rozetiyle. Kararlar: okundu/okunmadı ayrımı, gruplama, "tümünü okundu işaretle", boş durumu ve bildirim tercihlerine bağlantı.
+
+**Activity feed**, bir kaynakta ya da hesapta olan biteni kronolojik listeleyen akıştır: "kim ne zaman ne yaptı". Ekip ürünlerinde güven ve şeffaflık üretir; kurumsal ürünlerde denetim (audit) gerekliliğidir.
+
+**Kanban board**, öğelerin durumlarına göre sütunlara dizildiği ve sürüklenerek taşınabildiği görünümdür. Aynı verinin liste ve takvim görünümleri de sunulabilir. Sürükle-bırak tek yol olamaz: durumu değiştirmenin sürüklemesiz bir yolu da bulunmalıdır.
+
+<Callout kind="tasarimci">
+
+- **Dashboard'a üç şey seç:** karar değiştirecek olanları. Gerisi ilgili sayfalarda.
+- **Her widget için dört hâl çiz:** yükleniyor, boş, hata, dolu.
+- **Onboarding'i "ilk gerçek iş" olarak kur;** tanıtım slaytı değil.
+- **Ayarları gruplarken kullanıcının sorusundan başla:** "bildirimleri nerede kapatırım?"
+- **Profil ve hesap bilgilerinin görünürlüğünü yaz.**
+- **Kanban'a sürüklemesiz bir taşıma yolu ekle.**
+
+</Callout>
+
+<Summary>
+
+- Dashboard karar değiştirecek birkaç şeyi gösterir; her widget'ın kendi yükleme, boş ve hata durumu vardır.
+- İyi onboarding ürünü anlatmaz, kullanıcıya ilk gerçek işini yaptırır. Ürün turu sınırlıdır; bağlama gömülü ipucu ve checklist daha etkilidir.
+- Ayarların asıl zorluğu gruplamadır; anında kaydedilen ayarlarda kaydedildiği bildirilir.
+- Profil başkalarına görünen, hesap kişisel yönetim bilgisidir; görünürlük açıkça yazılır.
+- Bildirim merkezi okundu durumunu ve tercihleri, etkinlik akışı kim-ne-zaman bilgisini taşır; kanban'da sürüklemesiz alternatif şarttır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="İyi bir onboarding'in, ürünü anlatan bir turdan farkı nedir?">
+
+İyi onboarding ürünü anlatmaz, kullanıcıya ilk gerçek işini yaptırır. Beş slaytlık tanıtım genelde atlanır ve unutulur; "ilk projeni oluştur" akışı ise kullanıcıyı ilk değere ulaştırır.
+
+</SelfCheck>
+
+<SelfCheck question="Widget'ların neden kendi yükleme, boş ve hata durumu olur?">
+
+Dashboard parçalara ayrılır ve biri başarısız olduğunda tüm ekran çökmesin diye. Her widget kendi durumunu yönetir.
+
+</SelfCheck>

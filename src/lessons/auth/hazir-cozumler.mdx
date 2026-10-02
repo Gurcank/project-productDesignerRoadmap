@@ -1,0 +1,72 @@
+---
+summary: "Genel kabul: auth'u sıfırdan yazma. Better Auth, Auth.js, Clerk, Supabase Auth ve Auth0 arasındaki takaslar; tasarımcı için asıl soru hazır çözümün kendi ekranlarını mı yoksa yalnızca arka ucunu mu kullanacağın. Bu bilgi hızla eskir."
+outcomes:
+  - "Auth'u neden sıfırdan yazmamak gerektiğini söyleyebilirsin."
+  - "Beş hazır çözümün takaslarını (veri sahipliği, hız, maliyet, kilitlenme) karşılaştırabilirsin."
+  - "Hazır ekran mı kendi ekranın mı kararının neden proje başında verilmesi gerektiğini açıklayabilirsin."
+minutes: 6
+sources:
+  - label: "Better Auth"
+    url: "https://www.better-auth.com/docs"
+  - label: "Auth.js"
+    url: "https://authjs.dev/"
+  - label: "Clerk"
+    url: "https://clerk.com/docs"
+  - label: "Supabase Auth"
+    url: "https://supabase.com/docs/guides/auth"
+  - label: "Auth0"
+    url: "https://auth0.com/docs"
+  - label: "OWASP — Authentication Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+> **Bu ders hızla eskir.** Aşağıdaki bilgiler materyalin Eylül 2026 tarihli doğrulamasına dayanır; kullanmadan önce her projenin kendi sitesinden doğrula.
+
+## Kendin yazmak mı, hazır çözüm mü
+
+**Genel kabul: auth'u sıfırdan yazma.** Doğru yapılması gereken çok sayıda detay var (özetleme, oturum yönetimi, jeton yenileme, hız sınırı, hesap kurtarma, kullanıcı sayımı sızıntısı) ve her biri sessizce yanlış yapılabilir. Hazır çözümler bunları test edilmiş biçimde getirir. "Auth'u kendimiz yazmayalım; bir kütüphane alıp üstüne kendi ekranlarımızı koyalım."
+
+## Manzara
+
+| Çözüm | Ne | Trade-off |
+|---|---|---|
+| **Better Auth** | TypeScript kütüphanesi; kendi veritabanında çalışır, harici servis yok. Eklenti mimarisiyle 2FA, passkey, organizasyon, magic link desteği | Kullanıcı verisi sende kalır, maliyet öngörülebilir; karşılığında arayüzü ve operasyonu sen yönetirsin. 2024'te çıktı; genç bir proje |
+| **Auth.js (eski adı NextAuth)** | React ekosisteminin en yerleşik açık kaynak auth kütüphanesi | Sosyal giriş için olgun; 2FA, passkey ve RBAC gibi ileri özellikler kutudan çıkmaz. Yeni projelerde tercih edilme oranı düştü |
+| **Clerk** | Barındırılan servis; hazır giriş/kayıt ekranları ve yönetim paneli getirir | En hızlı yol; karşılığında aylık aktif kullanıcı başına ödeme ve kullanıcı verisinin dışarıda tutulması |
+| **Supabase Auth** | Supabase platformunun parçası | Zaten Supabase kullanıyorsan doğal seçim; RLS ile yetkilendirmenin bir kısmını veri katmanına indirir |
+| **Auth0** | Kurumsal kimlik platformu | Kurumsal özellikler ve destek güçlü; maliyet ve bağımlılık yüksek |
+
+Materyalde ekosistemde iki hareket raporlanıyor: Auth.js'in Better Auth ile birleştiği yönünde bir duyuru (Eylül 2025) ve Lucia Auth'un kullanımdan kaldırıldığı. Bu bilgiler birincil kaynaktan doğrulanmadı; karar vermeden önce projelerin kendi sitelerine bak.
+
+## Tasarımcı için asıl soru
+
+Hazır çözümün **kendi ekranlarını mı** kullanacaksın, yoksa yalnızca arka ucunu alıp arayüzü kendin mi tasarlayacaksın? Bu, marka tutarlılığı ile hız arasındaki takastır ve **proje başında karara bağlanmalıdır;** sonradan değiştirmek pahalıdır.
+
+<Callout kind="tasarimci">
+
+- **Proje başında sor:** hazır ekran mı, özel ekran mı? Özelleştirme sınırı nerede?
+- **Hazır ekran kullanılacaksa** marka uyumunu (renk, tipografi, metinler) hangi seviyede değiştirebildiğini test et.
+- **Çözümün hangi akışları (magic link, passkey, MFA, hesap birleştirme) kutudan verdiğini** ve hangilerini senin tasarlaman gerektiğini listele.
+
+</Callout>
+
+<Summary>
+
+- Auth'u sıfırdan yazmamak genel kabuldür; detayların çoğu sessizce yanlış yapılabilir.
+- Beş çözüm farklı takaslar sunar: veri sahipliği, hız, maliyet, kilitlenme, olgunluk.
+- Hazır ekran mı özel ekran mı kararı proje başında verilmelidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Auth'u neden sıfırdan yazmamak gerekir?">
+
+Doğru yapılması gereken çok sayıda detay var (özetleme, oturum yönetimi, jeton yenileme, hız sınırı, hesap kurtarma, kullanıcı sayımı sızıntısı) ve her biri sessizce yanlış yapılabilir. Hazır çözümler bunları test edilmiş biçimde getirir.
+
+</SelfCheck>

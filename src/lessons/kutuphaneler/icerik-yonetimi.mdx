@@ -1,0 +1,65 @@
+---
+summary: "İçeriğin sahipliğini pazarlama ekibine devreden sistemler: CMS, headless CMS ve MDX. Tasarımcının sorumluluğu: CMS'te tanımlanan alan yapısı tasarımın esnekliğini belirler."
+outcomes:
+  - "Klasik CMS ile headless CMS arasındaki farkı söyleyebilirsin."
+  - "İçerik modelinin neden tasarımla birlikte kurulması gerektiğini açıklayabilirsin."
+  - "MDX'in ne işe yaradığını ve nerede karşına çıkacağını bilirsin."
+minutes: 5
+sources:
+  - label: "Sanity — Dokümantasyon"
+    url: "https://www.sanity.io/docs"
+  - label: "Strapi — Dokümantasyon"
+    url: "https://docs.strapi.io/"
+  - label: "Payload — Dokümantasyon"
+    url: "https://payloadcms.com/docs"
+  - label: "MDX"
+    url: "https://mdxjs.com/"
+flags: ["degisken"]
+skipTerms: ["payload"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Blogda bir yazı yayınlamak için geliştiriciye mi yazman gerekiyor? İçerik ekibi kendi içeriğini kendi yönetebiliyorsa, arkada bir içerik yönetim sistemi var demektir.
+
+## CMS ve headless CMS
+
+**CMS (Content Management System)**, içerik editörlerinin geliştiriciye ihtiyaç duymadan içerik girmesini sağlayan sistemdir. İçeriğin sahipliğini pazarlama ekibine devreder. **Klasik CMS** (WordPress gibi) içerik ve görünümü birlikte yönetir; **headless CMS** içeriği yalnızca veri olarak sunar ve görünümü senin ön yüzün belirler. Böylece aynı içerik web, mobil ve başka kanallarda kullanılabilir. "Blog içeriğini headless CMS'e alalım; her yazı için deploy beklemesinler." Sanity, Strapi, Payload yaygın adlardır; ürün isimleri, fiyatlandırma ve özellikler sık değişir.
+
+**Tasarımcı için önemli:** CMS'te tanımlanan **alan yapısı**, tasarımın esnekliğini belirler. Alanları önceden düşünmezsen editör beklenmedik uzunlukta ya da biçimde içerik girer ve tasarım bozulur. Bu yüzden **içerik modeli tasarımla birlikte kurulmalıdır.**
+
+## MDX
+
+**MDX**, Markdown içeriğin içine etkileşimli bileşen gömülebilmesini sağlayan formattır. Dokümantasyon ve teknik blog için idealdir: metin akışının içine canlı bir demo, bir uyarı kutusu ya da bir grafik konabilir. "Dokümantasyonu MDX ile yazalım; kod örneklerinin yanına çalışan demo koyabilelim."
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitedeki dersler MDX ile yazılmıştır: metnin içinde "Tasarımcı olarak sen" kutuları, karşılaştırmalar ve canlı demolar bileşen olarak yer alır. İçerik şeması da tasarımla birlikte kurulmuştur: bir ders kaynak bağlantısı olmadan yayınlanamaz.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **İçerik modelini tasarımla birlikte kur:** her alan için uzunluk sınırı, zorunluluk ve boş durum.
+- **Beklenmedik içeriği tasarla:** çok uzun başlık, görseli olmayan kart, eksik alan.
+- **Headless CMS'in masada olup olmadığını sor** (örneğin PHP/WordPress içerik ekibi varsa).
+
+</Callout>
+
+<Summary>
+
+- CMS içeriğin sahipliğini içerik ekibine verir; headless CMS içeriği yalnızca veri olarak sunar, görünüm ön yüzde belirlenir.
+- CMS alan yapısı tasarımın esnekliğini belirler; içerik modeli tasarımla birlikte kurulmalıdır.
+- MDX, Markdown içine etkileşimli bileşen gömmeyi sağlar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Headless CMS'te tasarımcının sorumluluğu nedir? İçerik modeli neden tasarımla birlikte kurulmalı?">
+
+CMS'te tanımlanan alan yapısı tasarımın esnekliğini belirler. Alanlar önceden düşünülmezse editör beklenmedik uzunlukta ya da biçimde içerik girer ve tasarım bozulur.
+
+</SelfCheck>

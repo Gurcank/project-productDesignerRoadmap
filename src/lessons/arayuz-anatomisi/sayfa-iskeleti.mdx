@@ -1,0 +1,103 @@
+---
+summary: "Her sayfa aynı birkaç bölgeden kurulur: header, nav, main, aside, footer. Adlarını bilmek hem tasarımı hem de ekran okuyucu kullanıcısının gezinmesini belirler."
+outcomes:
+  - "Bir sayfanın ana bölgelerini adlarıyla gösterebilirsin."
+  - "Header ile hero'nun, layout ile app shell'in farkını açıklayabilirsin."
+  - "Bir sitedeki dört nav türünü ayırt edebilirsin."
+  - "Bölge adlarının neden aynı zamanda erişilebilirlik yapısı olduğunu söyleyebilirsin."
+minutes: 8
+sources:
+  - label: "W3C WAI-ARIA APG — Landmark Regions"
+    url: "https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/"
+  - label: "MDN — <main>"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/main"
+  - label: "MDN — <nav>"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/nav"
+includeTerms: ["main", "nav", "footer", "section", "layout"]
+skipTerms: ["header","local"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import PageWire from "~/components/lesson/PageWire.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Şuraya, ürün görselinin altına, ince ince akan bir şeritte müşteri logoları koyalım." Bu cümle anlaşılır ama uzun. "Hero'nun altına logo cloud ekleyelim, marquee olsun" aynı şeyi üç saniyede, yanlış anlaşılmadan söyler. Üstelik yapay zekâya aynı cümleyi verirsen tek seferde doğru çıktı alırsın.
+
+Bu bölümün hedefi bu: bir arayüz parçasını **göstererek değil, adını söyleyerek** isteyebilmek. Başlangıç noktası, her sayfanın ortak iskeleti.
+
+> **Bir uyarı:** Bu bölümdeki isimlerin çoğu resmî standart değil, sektör alışkanlığıdır. Aynı parçaya iki ekipte iki farklı isim verilebilir. Amaç ezber değil, **ortak bir dil kurmak** ve karşındaki farklı bir isim kullandığında neyi kastettiğini anlamak.
+
+## Beş bölge
+
+<PageWire />
+
+Sayfa yukarıdan aşağıya şu bölgelerden oluşur. Bunlar yalnızca görsel parçalar değil, aynı zamanda HTML **landmark**'larıdır: ekran okuyucu kullanıcıları bölgeler arasında doğrudan atlayarak gezer. Yani adlandırma kararın aynı zamanda gezinme yapısıdır.
+
+**Header (üst bölüm).** Sayfanın en üstündeki, genelde logo ve ana navigasyonu taşıyan şerit. Kullanıcıya nerede olduğunu ve nereye gidebileceğini söyler; her sayfada tutarlı olduğu için bir sabit noktadır. "Header'ı sadeleştirelim: şu an logo, 7 menü öğesi, arama, dil seçici ve iki buton var." İki karışıklığa dikkat: bu *site header*, HTTP isteklerindeki *header* değildir (aynı kelime, başka şey); ayrıca header, bir sonraki derste göreceğin **hero** da değildir. Header üstteki ince şerittir, hero onun altındaki büyük tanıtım alanı.
+
+**Nav (gezinme).** Site içindeki bağlantı grubu; bilgi mimarisinin görünen yüzü. Bir sitede birden fazla nav bulunur ve her birinin adı vardır:
+
+- **Global nav:** her sayfada aynı olan ana menü.
+- **Local nav:** bir bölümün içindeki alt menü.
+- **Utility nav:** giriş, dil, arama gibi yardımcı bağlantılar.
+- **Footer nav:** en alttaki geniş bağlantı listesi.
+
+"Global nav'da 5 öğe kalsın, geri kalanı footer nav'a insin."
+
+**Main (ana içerik).** O sayfaya özgü, asıl içerik. Header ve footer her sayfada tekrar eder; main tekrar etmeyen kısımdır. Sayfada **tek bir** main olur. Atlama bağlantısı (skip link) klavye kullanıcısını doğrudan buraya götürür: "Skip link `#main`'e gitsin; şu an ilk kartın üstüne düşüyor."
+
+**Aside / sidebar (yan alan).** Ana içeriğin yanında duran destekleyici alan. İki ayrı iş görür: içerik sitelerinde içindekiler veya ilgili yazılar; uygulamalarda ise ana navigasyon. İkincisine **app sidebar** ya da **navigation rail** denir ve genelde daraltılabilir olur. Mobilde sidebar çoğunlukla bir **drawer**'a dönüşür; ikisi aynı içeriğin farklı sunumudur.
+
+**Footer (alt bölüm).** En alttaki, ikincil bağlantıları ve yasal bilgileri taşıyan alan. İki işi var: kullanıcı aradığını yukarıda bulamazsa son çare olarak buraya bakar; ayrıca gizlilik politikası, kullanım şartları, iletişim ve şirket unvanı gibi yasal zorunlulukların durduğu yerdir.
+
+## Bölümler ve şablonlar
+
+Bölge adları sayfanın dışını anlatır. İçini ise **section** (bölüm) dilimler: kendi başlığı ve amacı olan, yatay bir dilim. Uzun sayfalar bölümlerden oluşur ve tasarım konuşması bölüm bazında yapılır. Tipik bir landing page şöyle adlandırılır:
+
+> hero → logo cloud → feature grid → testimonial → pricing → FAQ → CTA section → footer
+
+"Üçüncü section'ı çıkaralım; feature grid ile bento grid aynı şeyi iki kez anlatıyor." Bu cümledeki her ad, sıradaki derslerde açılacak.
+
+Aynı iskeleti her sayfada baştan çizmemek için **layout** (yerleşim, şablon) kullanılır: birden fazla sayfanın paylaştığı ortak çerçeve. Header ve footer'ı bir kez tanımlarsın, içerik içine yerleşir. Bir sitede genelde birkaç layout olur: pazarlama layout'u, uygulama layout'u, giriş ekranı layout'u. "Giriş ekranları ayrı layout kullansın; header ve sidebar orada olmasın."
+
+Uygulamalarda bunun daha güçlü bir türü var: **app shell** (uygulama kabuğu). Üst bar, yan menü ve ana içerik alanından oluşan çerçeve, içerik değişse de sabit kalır. Sayfa geçişinde kabuk yeniden yüklenmez, yalnızca içerik değişir. Bu, "uygulama hissini" veren şeydir ve algılanan hızı artırır. "App shell sabit kalsın, sadece içerik alanı değişsin; sidebar her geçişte yeniden çizilmesin."
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sayfa da aynı iskeleti taşır: üstte yapışkan bir header, geniş ekranda solda gezinme (nav), telefonda altta sekme çubuğu ve ortada ana içerik (main). Klavyeyle Tab'a ilk bastığında çıkan "Ana içeriğe atla" bağlantısı seni doğrudan main'e götürür. Bu sitede footer yok; bir sitede olması şart değil, ama yasal bağlantıları taşıyan bir ürün sitesinde olmalı.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Her bölgeye bir ad ver** ve tasarım dosyasında o adla etiketle: "Header", "Main", "Footer".
+- **Hangi layout'ların olduğunu baştan listele:** pazarlama, uygulama, giriş. Her ekran bunlardan birine ait olmalı.
+- **Footer'ı boş bırakma.** Yasal bağlantıları (gizlilik, KVKK aydınlatma, erişilebilirlik beyanı) tasarla.
+- **Nav türlerini ayır.** Hangi bağlantının global, hangisinin utility olduğu kararı bilgi mimarisinin parçasıdır.
+
+</Callout>
+
+<Summary>
+
+- Sayfa beş ana bölgeden kurulur: header, nav, main, aside ve footer. Bunlar aynı zamanda ekran okuyucunun gezindiği landmark'lardır.
+- Header üstteki ince şerittir, hero onun altındaki tanıtım alanıdır; site header ile HTTP header farklı şeylerdir.
+- Bir sitede dört nav türü olur: global, local, utility ve footer nav.
+- Sayfada tek main bulunur; skip link oraya atlar.
+- Section içeriği dilimler, layout ortak iskeleti paylaştırır, app shell uygulamada çerçeveyi sabit tutar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Header ile hero arasındaki fark nedir?">
+
+Header, sayfanın en üstündeki, logo ve navigasyonu taşıyan ince şerittir. Hero, onun altındaki, ana mesajı ve birincil eylemi taşıyan büyük tanıtım alanıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir sitede kaç farklı nav olabilir? En az üçünü adlandır.">
+
+Birden fazla. Global nav (her sayfada aynı ana menü), local nav (bir bölümün alt menüsü), utility nav (giriş, dil, arama gibi yardımcı bağlantılar) ve footer nav (alttaki geniş bağlantı listesi).
+
+</SelfCheck>

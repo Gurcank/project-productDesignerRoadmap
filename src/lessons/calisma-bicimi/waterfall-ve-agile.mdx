@@ -1,0 +1,145 @@
+---
+summary: "Yazılım geliştirmenin iki ana çalışma felsefesi: waterfall ve agile. Aralarındaki fark bir teknik tercih değil, belirsizlikle nasıl baş edileceğine dair bir duruş farkı."
+outcomes:
+  - "Waterfall ile agile'ın farkını \"belirsizlik\" üzerinden anlatabilirsin."
+  - "\"Agile plansız çalışmaktır\" yanlışını düzeltebilirsin."
+  - "Agile Manifesto'nun dört değerini ve bunların bir tercih sıralaması olduğunu bilirsin."
+  - "Lean ve SAFe'in ne olduğunu, hangi bağlamda karşına çıkacağını bilirsin."
+minutes: 9
+sources:
+  - label: "Agile Manifesto"
+    url: "https://agilemanifesto.org"
+  - label: "Agile Manifesto — Tarihçe"
+    url: "https://agilemanifesto.org/history.html"
+  - label: "Atlassian — Agile"
+    url: "https://www.atlassian.com/agile"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+İlk hafta bir toplantıda biri "biz agile çalışıyoruz" diyor, bir başkası "bu sözleşme waterfall mantığında yazılmış" diyor. İkisi de aynı projeden bahsediyor ve çelişkili görünüyor. Bu ders, iki kelimenin ne anlama geldiğini ve neden aynı projede birlikte karşına çıkabildiğini anlatıyor.
+
+Önceki bölüm "hangi belge, hangi karar" sorusunu cevapladı. Bu bölüm o kararların **hangi ritimle** alındığını anlatıyor: ekip haftayı nasıl bölüyor, hangi toplantıda ne konuşuluyor, ilerleme neyle ölçülüyor. Bu bölümün terimleri her gün duyacağın terimler: "standup'ta söylersin", "bu sprint'e sığmaz", "velocity düştü", "bu bir blocker". Bunları bilmemek seni ilk günden yavaşlatır.
+
+**Önemli bir uyarı:** Bu bölümdeki çerçevelerin (Scrum, Kanban) *resmî tanımı* ile şirketlerdeki *uygulaması* çoğu zaman aynı değildir. Derslerde önce resmî tanımı, sonra gerçekte ne olduğunu göreceksin. İkisini ayırt edebilmek, "biz Scrum yapıyoruz" diyen bir ekipte gerçekte ne olduğunu anlamanı sağlar.
+
+## İki felsefe, bir soru: belirsizlikle ne yapacağız?
+
+Waterfall ve agile arasındaki fark bir teknik tercih değil, **belirsizlikle nasıl baş edileceğine** dair bir duruş farkıdır.
+
+<StepFlow
+  label="Waterfall: fazlar sırayla, geri dönüş yok"
+  caption="Her faz bir öncekinin bitmesini bekler. Bir hata ancak sonraki fazlarda fark edilirse, geri dönmek pahalıdır."
+  steps={[
+    { title: "Gereksinimler", sub: "Hepsi baştan yazılır" },
+    { title: "Tasarım", sub: "Hepsi baştan tasarlanır" },
+    { title: "Kodlama", sub: "Hepsi yazılır" },
+    { title: "Test", sub: "Sonunda denenir" },
+    { title: "Yayın", sub: "Kullanıcı ilk kez burada görür", tone: "progress" },
+  ]}
+/>
+
+### Waterfall: önce hepsi, sonra hepsi
+
+**Waterfall** (şelale modeli), fazların sırayla ve **geri dönülmeden** ilerlediği geliştirme yaklaşımıdır: önce tüm gereksinimler, sonra tüm tasarım, sonra tüm kodlama, sonra test, sonra yayın.
+
+Mantıklı olduğu yerler var: gereksinimlerin gerçekten baştan bilindiği ve değişmeyeceği işler. İnşaat, donanım üretimi, katı düzenlemeye tabi projeler. Yazılımda ise sorun çıkarır, çünkü **kullanıcı ürünü ancak gördükten sonra ne istediğini anlar** ve o noktada geri dönüş pahalıdır.
+
+Kamu ihalelerinde, kurumsal projelerde ve ajans sözleşmelerinde hâlâ yaygındır. Genelde olumsuz bir anlam yüklenerek kullanılır ("bu waterfall'a döndü"). "Sözleşme waterfall mantığında yazılmış; kapsamı önden dondurmamız gerekiyor."
+
+Waterfall her koşulda kötü değildir. **Kötü olan, belirsizliğin yüksek olduğu bir işte waterfall uygulamaktır.**
+
+### Agile: küçük parça, sık teslim
+
+**Agile** (çevik), işi küçük parçalara bölüp **sık teslim ederek**, plana değil **geri bildirime** göre yön belirleyen çalışma yaklaşımıdır. Belirsizliği kabul eder. Baştan doğru planın imkânsız olduğunu varsayar ve bunun yerine **hatayı erken bulmayı** hedefler. Bir şey iki hafta sonra yanlış çıkarsa iki haftalık iş kaybedilir; altı ay sonra çıkarsa altı ay.
+
+<Compare>
+<Pane title="Waterfall">
+
+- Her şey baştan planlanır
+- Kullanıcı en sonda görür
+- Değişiklik pahalı
+- Uygun: gereksinimler sabit işler
+
+</Pane>
+<Pane title="Agile">
+
+- Küçük parçalar, sık teslim
+- Her turda geri bildirim
+- Değişiklik beklenir
+- Uygun: belirsizliği yüksek işler
+
+</Pane>
+</Compare>
+
+Neredeyse her yazılım ekibinde bir biçimde karşına çıkar. "Agile çalışıyoruz" cümlesi çok geniş bir yelpazeyi kapsar; **ne kastedildiğini sormak gerekir.** "Agile çalışıyoruz ama iki haftalık sprint'lerimiz var, Kanban değil Scrum uyguluyoruz."
+
+İki yaygın karıştırma:
+
+- **Agile ≠ Scrum.** Agile bir zihniyet ve ilkeler bütünü; Scrum onu uygulayan bir çerçevedir.
+- **Agile ≠ plansız çalışmak.** En yaygın yanlış anlama budur. Agile plan yapmamak değil, **planı sık güncellemektir.**
+
+## Agile Manifesto: agile'ın referans noktası
+
+**Agile Manifesto** (Çevik Yazılım Geliştirme Bildirisi), 2001'de yazılan, çevik yaklaşımın dört değerini ve on iki ilkesini tanımlayan kısa metindir. 11–13 Şubat 2001'de Snowbird'de (Utah) toplanan 17 kişi tarafından yazıldı ve o günden beri revize edilmedi.
+
+Dört değerin her biri bir **tercih sıralamasıdır:** sağdakini reddetmez, soldakini *daha değerli bulur.*
+
+| Soldakine daha çok değer veriyoruz | Sağdakinden |
+|---|---|
+| **Bireyler ve etkileşim** | Süreç ve araçlardan |
+| **Çalışan yazılım** | Kapsamlı dokümantasyondan |
+| **Müşteriyle iş birliği** | Sözleşme pazarlığından |
+| **Değişime uyum** | Plana bağlı kalmaktan |
+
+Burada sık yapılan hata: "dokümantasyondan çok çalışan yazılım" maddesi, **dokümantasyon yazılmayacağı** anlamına gelmez. Metin bunu açıkça belirtir: sağdakinin de değeri vardır. İkisi çatıştığında çalışan yazılım öncelenir; dokümantasyon terk edilmez.
+
+Süreç tartışmalarında referans olarak kullanılır. Bir örnek: "Bu toplantı yapısı manifestonun ilk değeriyle çelişiyor: aracın raporlamasına insanların konuşmasından daha çok zaman ayırıyoruz."
+
+Manifesto çok da eleştirilir. "Agile industrial complex" ifadesi, manifestonun sertifikasyon ve danışmanlık sektörüne dönüşmesine yönelik eleştiriyi anlatır. Yani bir yaklaşımın adının kullanılması, onun *ruhunun* uygulandığı anlamına gelmez.
+
+## Lean ve SAFe: iki ilgili kavram
+
+**Lean** (yalın), Toyota üretim sisteminden gelen, **değer üretmeyen her şeyi israf** sayan ve akışı düzgünleştirmeye odaklanan yaklaşımdır. İsrafın türlerini görünür kılar: yarım kalmış iş, gereksiz özellik, beklemeler, gereksiz aktarımlar. Kanban'ın ve Lean Startup'ın ortak atası bu düşüncedir. "Lean" kelimesi hem üretim hem startup bağlamında geçer; hangisi olduğunu bağlamdan çıkar. "Yarım kalmış beş özellik var; lean açısından bu envanter, değer değil."
+
+**SAFe** (Scaled Agile Framework), agile'ı çok sayıda ekibin bulunduğu **büyük organizasyonlarda** uygulamak için tasarlanmış, katmanlı ve ayrıntılı bir çerçevedir. Onlarca ekibin koordinasyonunu düzenlemeye çalışır. Tartışmalıdır: eleştirmenler agile'ın basitliğini kaybettiğini ve bürokrasi ürettiğini söyler; savunucular büyük ölçekte alternatifin kaos olduğunu. Büyük kurumsal şirketlerde ve bankalarda karşına çıkar; küçük ekiplerde karşına çıkarsa bu bir **uyarı işaretidir.** "Şirket SAFe'e geçti; artık çeyreklik büyük planlama toplantıları var."
+
+SAFe senin için **seviye 3** bir terim: adını duyduğunda hangi kategoride olduğunu bilmen yeterli, detayını öğrenmen gerekmiyor.
+
+<Callout kind="tasarimci">
+
+- **"Agile çalışıyoruz" duyduğunda sor:** "Sprint var mı? Retro yapılıyor mu? Kimin önceliği belirliyor?" Cevap sana gerçek çalışma biçimini gösterir.
+- **Sözleşme waterfall, çalışma agile olabilir.** Bir müşteri projesinde kapsam sözleşmeyle dondurulmuşsa, değişiklik taleplerini baştan nasıl yöneteceğini konuş.
+- **Agile'ı bahane yapma.** "Agile'ız, plan yok" dersen, karşındakiler kapsamı ve süreyi göremez. Planı sık güncelle ama yaz.
+- **Dokümantasyonu bırakma.** Özellikle tasarım kararlarının gerekçesi sonradan bulunamaz hâle gelir.
+
+</Callout>
+
+<Summary>
+
+- Waterfall fazları sırayla ve geri dönmeden ilerletir; gereksinimleri sabit işlerde uygundur, belirsiz işlerde pahalıdır.
+- Agile küçük parçalar ve sık teslimle hatayı erken bulmayı hedefler; plansızlık değil, planı sık güncellemektir.
+- Agile bir zihniyet, Scrum onu uygulayan çerçevelerden biridir.
+- Agile Manifesto'nun dört değeri bir tercih sıralamasıdır; sağdakini reddetmez.
+- Lean israfı azaltmaya odaklanır; SAFe büyük organizasyonlar içindir ve tartışmalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Agile ile Scrum arasındaki fark nedir?">
+
+Agile bir zihniyet ve ilkeler bütünüdür (Agile Manifesto). Scrum, o ilkeleri uygulayan somut çerçevelerden biridir. Her Scrum ekibi agile olduğunu iddia eder ama her agile ekip Scrum kullanmaz; Kanban da bir alternatiftir.
+
+</SelfCheck>
+
+<SelfCheck question={"Agile Manifesto'daki \"kapsamlı dokümantasyondan çok çalışan yazılım\" maddesi, dokümantasyon yazılmayacağı anlamına mı gelir?"}>
+
+Hayır. Metin dört değeri bir tercih sıralaması olarak yazar ve sağdaki maddelerin de değerli olduğunu açıkça belirtir. Anlamı: ikisi çatıştığında çalışan yazılım öncelenir; dokümantasyon terk edilmez.
+
+</SelfCheck>

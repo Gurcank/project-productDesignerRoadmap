@@ -1,0 +1,73 @@
+---
+summary: "MFA girişte birden fazla kanıt ister ve hesap ele geçirmelere karşı en etkili tek önlem kabul edilir. Yöntemler eşit güçte değildir (passkey > TOTP > SMS); yedek kodlar zorunludur ve kurulum akışı dört parçadan oluşur."
+outcomes:
+  - "MFA'nın üç faktörünü ve yöntemlerin güvenlik sıralamasını söyleyebilirsin."
+  - "Yedek kodların neden zorunlu olduğunu açıklayabilirsin."
+  - "MFA kurulum akışının dört gerekli parçasını sayabilirsin."
+minutes: 6
+sources:
+  - label: "OWASP — Multifactor Authentication Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html"
+  - label: "RFC 6238 — TOTP"
+    url: "https://datatracker.ietf.org/doc/html/rfc6238"
+  - label: "NIST SP 800-63B Revizyon 4"
+    url: "https://pages.nist.gov/800-63-4/sp800-63b.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Şifren sızdı. Ama hesabına hâlâ kimse giremiyor, çünkü telefonundaki kod da gerekiyor. Bu, MFA'nın işi.
+
+## MFA
+
+**MFA (Multi-Factor Authentication, çok faktörlü kimlik doğrulama)**, girişte birden fazla kanıt istenmesidir: **bildiğin bir şey** (şifre), **sahip olduğun bir şey** (telefon, güvenlik anahtarı), **olduğun bir şey** (parmak izi). Şifre çalınsa bile hesabı korur ve hesap ele geçirmelere karşı en etkili tek önlem olarak kabul edilir. "MFA'yı isteğe bağlı sunalım ama yönetici hesapları için zorunlu olsun."
+
+**Yöntemler eşit güvenlikte değildir.** Genel sıralama: **FIDO2/passkey en güçlü, ardından kimlik doğrulayıcı uygulama (TOTP), en sonda SMS.** SMS hiç yoktan iyidir ama kimlik avına dayanıklı sayılmaz.
+
+## TOTP ve yedek kodlar
+
+**TOTP (Time-based One-Time Password)**, kimlik doğrulayıcı uygulamanın ürettiği, 30 saniyede bir değişen koddur. SMS'e göre daha güvenlidir çünkü telefon numarasına değil cihaza bağlıdır. **Yedek kodlar (backup/recovery codes)** ise cihaz kaybedildiğinde kullanılmak üzere önceden verilen tek kullanımlık kodlardır.
+
+**Yedek kodlar zorunludur:** MFA'yı yedek yol olmadan sunmak, kullanıcıları hesaplarından kalıcı olarak kilitleme riski yaratır. "MFA kurulumunda yedek kodları göster ve indirmeye zorla; kullanıcı geçemeden devam edemesin."
+
+**Kurulum akışı tasarımı kritiktir:** dört parça da gerekir:
+
+1. **QR kod**
+2. **Elle giriş alternatifi** (QR okutamayanlar için)
+3. **Doğrulama adımı** (kod gerçekten çalışıyor mu?)
+4. **Yedek kodların gösterilmesi**
+
+Kullanıcı yedek kodları kaydetmeden akışı bitirebiliyorsa destek yükü ve hesap kaybı kaçınılmazdır.
+
+<Callout kind="tasarimci">
+
+- **MFA'yı kademeli sun:** isteğe bağlı, yönetici hesaplarında zorunlu.
+- **Yöntem listesinde güçlü olanı öne çıkar,** SMS'i son seçenek yap.
+- **Kurulum akışının dört parçasını çiz;** yedek kodları kaydetmeden devam edilmesini engelle.
+- **Cihaz kaybı senaryosunu (yedek kod ile giriş, destek yolu) ayrıca tasarla.**
+
+</Callout>
+
+<Summary>
+
+- MFA, bildiğin/sahip olduğun/olduğun faktörlerinden birden fazlasını ister ve hesap ele geçirmeye karşı en etkili önlemdir.
+- Güvenlik sıralaması: passkey > TOTP > SMS.
+- Yedek kodlar zorunludur; kurulum QR kod, elle giriş, doğrulama adımı ve yedek kodlardan oluşur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="MFA yöntemleri güvenlik açısından nasıl sıralanır?">
+
+En güçlüden zayıfa: FIDO2/passkey → kimlik doğrulayıcı uygulama (TOTP) → SMS. SMS hiç yoktan iyidir ama SIM değiştirme saldırılarına açıktır ve kimlik avına dayanıklı sayılmaz.
+
+</SelfCheck>
+
+<SelfCheck question="Yedek kodlar neden zorunludur?">
+
+MFA'yı yedek yol olmadan sunmak, cihaz kaybolduğunda başka giriş yolu bırakmaz ve kullanıcıları hesaplarından kalıcı olarak kilitleme riski yaratır.
+
+</SelfCheck>

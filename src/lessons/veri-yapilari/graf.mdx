@@ -1,0 +1,93 @@
+---
+summary: "Graf, düğümler ve aralarındaki bağlantılardan oluşur; ağaçtan farkı kısıt olmamasıdır. Etiketler, izinler, öneriler ve bağımlılıklar graftır. Döngü kuralı, 'kaç adım uzakta' maliyeti ve dürüst öneri etiketi tasarımcının işidir."
+outcomes:
+  - "Ağaç ile graf arasındaki farkı tek bir soruyla ayırt edebilirsin."
+  - "Grafın tasarıma çıkardığı üç zorluğu (döngü, mesafe, gösterim) sayabilirsin."
+  - "Öneri etiketlerinin neden mekanizmayı dürüstçe söylemesi gerektiğini açıklayabilirsin."
+minutes: 8
+sources:
+  - label: "PostgreSQL — Yabancı anahtarlar ve ilişkiler"
+    url: "https://www.postgresql.org/docs/current/tutorial-fk.html"
+  - label: "Google — Öneri sistemi türleri"
+    url: "https://developers.google.com/machine-learning/recommendation/overview/types"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+**Graf**, düğümler ve aralarındaki bağlantılardan oluşur. Ağaçtan farkı, **kısıt olmamasıdır:** bir düğümün birden çok üstü olabilir, döngü olabilir, her şey her şeye bağlanabilir. Sosyal ağlar, "bunu alanlar şunu da aldı", yol tarifi, bağımlılık haritaları hep graftır.
+
+## Ağaç mı graf mı
+
+Tek ayırt edici soru: **bir öğeye birden fazla yoldan ulaşılabiliyor mu?** Cevap evet ise elindeki şey ağaç değil graftır. Önceki dersteki "ürün iki kategoride birden" sorununun teknik adıdır. Veritabanı karşılığı **çoktan çoğa ilişkidir** ve pratikte bir birleştirme (ara) tablosu ile kurulur. Geliştirici "bunun için ara tablo gerekiyor" dediğinde tasarımın bir grafa dönüştüğünü söylüyordur.
+
+<Compare>
+<Pane title="Ağaç">
+
+- Üst sayısı: bir
+- Döngü yok
+- Menü, breadcrumb, katman paneli
+
+</Pane>
+<Pane title="Graf">
+
+- Üst sayısı: çok
+- Döngü mümkün, genelde istenmez
+- Liste, "ilgili", öneri; nadiren diyagram
+
+</Pane>
+</Compare>
+
+## Arayüzde nerede
+
+Etiket sistemleri (bir yazı birçok etikete bağlıdır), izin ve rol yapıları (kullanıcı → rol → izin), "ilgili içerik" ve öneriler, görev bağımlılıkları (A, B bitmeden başlayamaz), sosyal bağlantılar (takip, arkadaşlık).
+
+## Üç zorluk
+
+**1. Döngü mümkündür ve genelde bir hatadır.** "Görev A, B'yi bekliyor; B de A'yı bekliyor": kimse başlayamaz. Bağımlılık, kategori hiyerarşisi ya da organizasyon şeması tasarlıyorsan **döngü oluştuğunda ne olacağını** tanımla: engellenecek mi, uyarı mı verilecek, nasıl gösterilecek? Belirtilmezse sistem sessizce kilitlenir.
+
+**2. "Kaç adım uzakta" pahalıdır.** Ağaçta derinlik bellidir; grafta iki düğüm arası mesafeyi bulmak gezinme gerektirir. "2. dereceden bağlantılar" gibi özellikler ucuz görünür ama derinlik arttıkça maliyet hızla büyür; çoğu ürün bunu 1-2 seviyeyle sınırlar.
+
+**3. Gösterimi zordur.** Graf iki boyuta doğal oturmaz. "Bağlantıları görselleştirelim" isteği çoğu zaman okunamayan bir "kıl yumağı" üretir. İşe yarayan gösterimler grafın kendisi değil, **ondan türetilmiş listelerdir:** "en çok bağlantılı 10 öğe", "seninle ortak 3 kişi".
+
+## Öneri: "önerilen" belirsiz bir etikettir
+
+Graf tabanlı öneriler ("bunu alanlar şunu da aldı") istatistiksel bir çıkarımdır, bir vaat değildir. "Senin için seçtik" yazmak sistemin yapabileceğinden fazlasını iddia eder. Daha dürüst etiketler neye baktığını söyler: "Bu kategoride popüler", "Birlikte sık alınanlar", "Benzer etiketlere sahip". Bu hem beklentiyi doğru kurar hem öneri zayıf olduğunda güveni daha az zedeler.
+
+**Alternatifler:** ilişki gerçekten tek yönlü hiyerarşiyse ağaç; etiket + filtre (grafın hafif hâli); elle seçim/küratörlük (ölçeklenmez ama kalitesi öngörülebilir, küçük kataloglarda otomatik öneriden iyidir).
+
+<Callout kind="tasarimci">
+
+- **"Birden çok yoldan ulaşılabilir mi?" sorusunu sor;** cevabı arkadaki veri modelini ve breadcrumb/URL kararlarını belirler.
+- **Döngü kuralını ve hata mesajını tanımla.**
+- **Graf görselleştirmesinden önce sor:** kullanıcı bu diyagramla hangi kararı verecek? Cevap yoksa liste daha iyidir.
+- **Öneri etiketini mekanizmaya göre yaz.**
+
+</Callout>
+
+<Summary>
+
+- Graf, birden çok üstü ve döngüsü olabilen bağlantı yapısıdır; "birden çok yoldan ulaşılabilir mi?" sorusu ağaçtan ayırır.
+- Üç zorluk: döngü kuralı, mesafe maliyeti ve gösterim zorluğu (türetilmiş listeler çalışır).
+- Öneri etiketi mekanizmayı dürüstçe söylemeli.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Ağaç ile graf arasındaki farkı ayırt eden tek soru nedir?">
+
+Bir öğeye birden fazla yoldan ulaşılabiliyor mu? Evetse elindeki şey graftır.
+
+</SelfCheck>
+
+<SelfCheck question="Bağımlılık tasarlarken döngü için ne tanımlamalısın?">
+
+Döngü oluştuğunda ne olacağını: engellenecek mi, uyarı mı verilecek, nasıl gösterilecek. Belirtilmezse sistem sessizce kilitlenir.
+
+</SelfCheck>

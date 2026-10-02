@@ -1,0 +1,61 @@
+---
+summary: "Sunucudan gelen veri senin verin değil, sunucudaki verinin eskiyebilen bir kopyasıdır. TanStack Query ve SWR bu gerçeği yönetir ve tasarlaman gereken durumları ortaya çıkarır."
+outcomes:
+  - "Server state ile client state farkını açıklayabilirsin."
+  - "Sunucu verisini Zustand ya da Redux'ta tutmanın neden yaygın bir hata olduğunu söyleyebilirsin."
+  - "TanStack Query'nin tasarımcıyı ilgilendiren yanını (hazır durumlar) bilirsin."
+minutes: 5
+sources:
+  - label: "TanStack Query"
+    url: "https://tanstack.com/query/latest"
+  - label: "SWR"
+    url: "https://swr.vercel.app/"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Sunucudan gelen verinin yönetimi, bu bölümde bilmenin seni teknik konuşmalarda ayırdığı ayrımlardan biridir.
+
+## Server state nedir
+
+Sunucudan gelen veri **senin verin değildir:** sunucudaki verinin bir **kopyasıdır** ve her an eskiyebilir. **TanStack Query** (eski adıyla React Query) ve **SWR** bu gerçeği yönetir: veriyi önbelleğe alır, arka planda tazeler, aynı isteği iki kez atmaz, hata durumunda yeniden dener. "Server state'i TanStack Query yönetsin, Zustand'da sadece arayüz durumu kalsın."
+
+**En yaygın mimari hata, sunucu verisini Redux ya da Zustand gibi client state araçlarında tutmaktır.** O araçlar önbellek geçersizleştirme, tazeleme ve yeniden deneme gibi işleri bilmez; ekip bunları elle yazmak zorunda kalır.
+
+## Tasarımcıyı ilgilendiren yanı
+
+Bu araçlar yükleme, hata, boş ve **"eski veri gösterilirken tazeleniyor"** durumlarını hazır olarak yönetir. Yani **senin tasarlaman gereken durumları ortaya çıkarırlar.** Optimistic UI desteği de hazır gelir. Dördüncü bir durumun varlığını (eski veri + tazeleme) bilmek, durum ekranlarını tasarlarken ekstra bir hâli akla getirir.
+
+<Callout kind="tasarimci">
+
+- **Her veri çeken ekran için dört hâli çiz:** yükleniyor, boş, hata ve "eski veri + tazeleniyor".
+- **Tazeleme sırasında ne gösterileceğini belirt:** eski veri soluk mu, ince bir ilerleme çizgisi mi?
+- **Optimistic UI kullanılacaksa hata durumunda geri dönüşü tasarla.**
+
+</Callout>
+
+<Summary>
+
+- Sunucu verisi, sunucudaki verinin eskiyebilen bir kopyasıdır.
+- TanStack Query/SWR önbellek, arka planda tazeleme ve yeniden deneme gibi işleri yönetir.
+- Sunucu verisini client state araçlarında tutmak yaygın bir hatadır.
+- Bu araçlar yükleme, hata, boş ve tazeleniyor durumlarını ortaya çıkarır; hepsi tasarlanmalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Client state ile server state arasındaki fark nedir? Sunucu verisini Zustand'da tutmak neden hatadır?">
+
+Client state arayüzün kendi verisidir (menü açık mı, hangi sekme seçili). Server state sunucudaki verinin bir kopyasıdır ve her an eskiyebilir. Zustand/Redux önbellek geçersizleştirme, arka planda tazeleme ve yeniden deneme gibi işleri bilmez; ekip hepsini elle yazmak zorunda kalır.
+
+</SelfCheck>
+
+<SelfCheck question="TanStack Query'nin tasarımcıyı ilgilendiren yanı nedir?">
+
+Yükleme, hata, boş ve "eski veri gösterilirken tazeleniyor" durumlarını hazır yönetir; yani tasarlaman gereken durumları ortaya çıkarır. Ayrıca optimistic UI desteği hazır gelir.
+
+</SelfCheck>

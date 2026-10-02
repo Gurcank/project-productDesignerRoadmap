@@ -1,0 +1,77 @@
+---
+summary: "Auth hem en çok kullanılan hem en az tasarlanan akıştır. Bölümün temeli iki soru: 'sen kimsin?' (kimlik doğrulama) ve 'ne yapabilirsin?' (yetkilendirme). İkisini karıştırmak güvenlik açıklarının en yaygın kavramsal kaynağıdır."
+outcomes:
+  - "Authentication ile authorization'ı iki soruyla ayırabilirsin."
+  - "401 ve 403'ün hangisine karşılık geldiğini ve neden farklı tasarım gerektirdiğini söyleyebilirsin."
+  - "Yetkisi olmayan eylemi gizleme/pasif gösterme kararını bir tasarım kararı olarak görebilirsin."
+minutes: 7
+sources:
+  - label: "OWASP — Authentication Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  - label: "OWASP — Authorization Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html"
+  - label: "MDN — 403 Forbidden"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/403"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Auth, bir üründe **hem en çok kullanılan hem en az tasarlanan** akıştır. Herkes kayıt olur, herkes giriş yapar, herkes şifresini unutur; ama bu ekranlar genelde en sona bırakılır ve varsayılan hâlleriyle kalır.
+
+Bu bölümün iki hedefi var:
+
+1. **Teknik tarafı anlamak.** Session, token, OAuth, JWT gibi terimler her auth konuşmasında geçer ve karıştırılmaları güvenlik açığına yol açar.
+2. **Tasarım sorumluluğunu görmek.** Auth akışındaki kararların çoğu senin işin: hangi yöntemler sunulacak, hata mesajı ne diyecek, oturum ne kadar sürecek, hesabını kaybeden kullanıcı ne yapacak.
+
+Bölümdeki kavramlar eskimeyen kategoride. Değişken olanlar: hazır çözümler ve şifre politikası tavsiyeleri; ikincisi son yıllarda ciddi biçimde değişti ve muhtemelen bildiğinin tersi.
+
+## İki soru
+
+<Compare>
+<Pane title="Authentication (AuthN)">
+
+- "Sen kimsin?"
+- Kimlik doğrulama
+- Şifre, doğrulama kodu, biyometri, kimlik sağlayıcı
+
+</Pane>
+<Pane title="Authorization (AuthZ)">
+
+- "Ne yapabilirsin?"
+- Yetkilendirme
+- Rol, izin, ekip erişimi
+
+</Pane>
+</Compare>
+
+**Authentication**, kullanıcının iddia ettiği kişi olduğunu kanıtlar. Giriş ekranında karşına çıkar. **Authorization**, kimliği doğrulanmış bir kullanıcının hangi kaynaklara erişebileceğini ve hangi işlemleri yapabileceğini belirler. Rol, izin ve ekip özelliklerinde karşına çıkar. "Kimlik doğrulama geçti ama bu sayfaya yetkisi yok."
+
+Bu ayrım tasarımda somutlaşır: **401** kimlik doğrulama sorunudur (giriş ekranına yönlendir), **403** yetkilendirme sorunudur (giriş ekranı işe yaramaz, ayrı bir ekran gerekir). "Kullanıcı giriş yapmış ama düzenleme yetkisi yok; butonu gizleyelim mi, pasif mi gösterelim?" sorusu da bir yetkilendirme tasarım sorusudur.
+
+<Callout kind="tasarimci">
+
+- **Her kısıtlı ekran için iki durum çiz:** giriş yapılmamış (401) ve giriş yapılmış ama yetki yok (403).
+- **Yetkisiz eylem için karar ver:** gizle mi, pasif göster mi, "neden yapamıyorsun?" açıklaması ver mi?
+- **Auth ekranlarını en sona bırakma;** akışın kendisi bir ürün parçasıdır.
+
+</Callout>
+
+<Summary>
+
+- Authentication "sen kimsin?", authorization "ne yapabilirsin?" sorusunun cevabıdır.
+- 401 giriş yapılmamış, 403 giriş yapılmış ama yetki yok demektir; ikisi farklı ekran ister.
+- Yetkisiz eylemi gizleme/pasif gösterme bir tasarım kararıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Authentication ile authorization arasındaki fark nedir? 401 ve 403 hangisine karşılık gelir?">
+
+Authentication "sen kimsin?" (kimlik doğrulama), authorization "ne yapabilirsin?" (yetkilendirme). 401 authentication sorunudur (giriş yapılmamış), 403 authorization sorunudur (giriş yapılmış ama yetki yok).
+
+</SelfCheck>

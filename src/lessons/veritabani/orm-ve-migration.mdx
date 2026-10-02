@@ -1,0 +1,75 @@
+---
+summary: "ORM SQL yerine kodla veri erişimi sağlar (Prisma, Drizzle); migration şema değişikliğini tekrarlanabilir kılar; seed verisi uç durumları test etmeni sağlar. Veri modelini değiştirmek ekranı değiştirmekten pahalıdır."
+outcomes:
+  - "ORM'in faydasını ve SQL bilmemeyi neden mazur göstermediğini söyleyebilirsin."
+  - "Migration'ın ne olduğunu ve veri modeli kararlarının neden erken verilmesi gerektiğini açıklayabilirsin."
+  - "Seed verisinin tasarımcı için değerini ve iyi bir seed'in içeriğini bilirsin."
+minutes: 8
+sources:
+  - label: "Prisma — Dokümantasyon"
+    url: "https://www.prisma.io/docs"
+  - label: "Drizzle ORM — Genel bakış"
+    url: "https://orm.drizzle.team/docs/overview"
+  - label: "OWASP — SQL Injection"
+    url: "https://owasp.org/www-community/attacks/SQL_Injection"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Şema nasıl değişir? Geliştirici veritabanıyla nasıl konuşur? Test verisi neden önemli? Üç sorunun üç cevabı: migration, ORM ve seed.
+
+## ORM
+
+**ORM (Object-Relational Mapping)**, veritabanı satırlarını kodda nesne olarak kullanmayı sağlayan katmandır; SQL yazmak yerine kod yazılır. Geliştirme hızını artırır ve tip güvenliği sağlar: şemadaki bir alanı değiştirdiğinde kodda hata görünür. SQL injection riskini de büyük ölçüde azaltır. Modern TypeScript projelerinin çoğunda bulunur. "ORM kullanalım; şema değişince tipler otomatik güncellensin."
+
+**ORM, SQL bilmemeyi mazur göstermez.** Karmaşık sorgularda ürettiği SQL verimsiz olabilir ve N+1 üretmesi kolaydır. Ekipte kimse üretilen sorguya bakmıyorsa performans sorunu görünmez birikir.
+
+## Prisma ve Drizzle
+
+TypeScript ekosisteminin iki yaygın ORM'i: **Prisma** kendi şema dilini kullanır ve daha soyut, üst seviye bir API sunar; **Drizzle** şemayı doğrudan TypeScript'te tanımlar ve SQL'e çok yakın bir yazım biçimi kullanır. Seçim, ekibin SQL'e ne kadar yakın durmak istediğine bağlıdır. Prisma daha az SQL bilgisiyle daha hızlı ilerletir ve görsel bir veri tarayıcısı (Prisma Studio) sunar; Drizzle daha şeffaftır (hangi SQL'in çalışacağını görürsün) ve çok daha küçüktür. "Ekip SQL'e hâkim; Drizzle ile gidelim, ürettiğimiz sorguyu görmek istiyoruz."
+
+**Değişken bilgi:** materyale göre Prisma 7 (Kasım 2025 olarak raporlanıyor) Rust tabanlı sorgu motorunu kaldırıp yerine TypeScript/WASM tabanlı bir derleyici koydu; paket boyutunun yaklaşık 14MB'tan 1,6MB'a düştüğü ve serverless soğuk başlangıçlarının iyileştiği anılıyor. Bu, Prisma'nın serverless ortamlarda ağır olduğunu söyleyen eski kaynakları geçersiz kılabilir. Kullanmadan önce güncel sürüm notlarını kontrol et.
+
+## Migration
+
+**Migration (şema değişikliği)**, veritabanı şemasında yapılan değişikliğin sürüm kontrolüne alınmış ve tekrarlanabilir bir adım olarak kaydedilmesidir. Şema değişikliğinin her ortamda (local, staging, production) aynı biçimde uygulanmasını sağlar; geri alınabilir olmayı hedefler. "Yeni alanı migration ile ekleyelim; staging'de deneyip sonra production'a alalım."
+
+**Tasarımcı için önemli sonuç:** veri modelini değiştirmek ekran değiştirmekten pahalıdır. Yeni bir alan eklemek görece kolaydır; var olan bir alanın anlamını değiştirmek ya da bir ilişkiyi bire çoktan çoka çoğa çevirmek mevcut verinin de dönüştürülmesini gerektirir. Bu yüzden model kararları erken verilmelidir.
+
+## Seed ve schema drift
+
+**Seed**, geliştirme ortamını gerçekçi örnek veriyle doldurmaktır; **schema drift** ise bir ortamdaki şemanın diğerlerinden farklılaşmasıdır. Seed doğrudan senin işine yarar: **gerçekçi seed verisi olmadan tasarımın uç durumları test edilemez.** "Ahmet Yılmaz" ile test edilen bir kart, gerçek veride 60 karakterlik bir şirket unvanıyla karşılaşınca taşar. İyi seed verisi kasten uzun isimler, boş alanlar, aşırı büyük sayılar ve eksik ilişkiler içerir. "Seed verisine çok uzun isimler ve boş açıklamalar da koyalım; tasarımı gerçek koşulda görelim."
+
+<Callout kind="tasarimci">
+
+- **Seed verisi için uç durum listesi hazırla:** uzun isim, boş alan, çok büyük sayı, yabancı karakter, eksik ilişki.
+- **Veri modeli değişikliklerini erken iste;** sonradan pahalıdır.
+- **ORM kullanan bir projede yavaş listeleri incelerken üretilen sorguya bakılmasını iste.**
+
+</Callout>
+
+<Summary>
+
+- ORM kodla veri erişimi ve tip güvenliği verir; SQL bilmemeyi mazur göstermez, N+1 üretmesi kolaydır.
+- Prisma üst seviye ve soyut, Drizzle SQL'e yakın ve şeffaftır; Prisma 7 sonrası eski karşılaştırmalar eskimiş olabilir.
+- Migration şema değişikliğini tekrarlanabilir ve sürümlü kılar; veri modeli kararları erken verilmelidir.
+- Gerçekçi seed verisi uç durumları test etmeyi sağlar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="ORM kullanmak SQL bilmemeyi mazur gösterir mi? Neden?">
+
+Hayır. Karmaşık sorgularda ORM'in ürettiği SQL verimsiz olabilir ve N+1 üretmesi çok kolaydır; tek satırlık masum görünen kod arka planda yüzlerce sorgu üretebilir. Kimse üretilen sorguya bakmıyorsa performans sorunu görünmez birikir.
+
+</SelfCheck>
+
+<SelfCheck question="Seed verisi tasarımcıyı neden ilgilendirir? İyi seed verisi ne içerir?">
+
+Gerçekçi seed verisi olmadan tasarımın uç durumları test edilemez. İyi seed verisi kasten uzun isimler, boş alanlar, aşırı büyük sayılar ve eksik ilişkiler içerir.
+
+</SelfCheck>

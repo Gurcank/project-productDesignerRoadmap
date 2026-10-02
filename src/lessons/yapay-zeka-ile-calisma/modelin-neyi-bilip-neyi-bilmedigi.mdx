@@ -1,0 +1,103 @@
+---
+summary: "Prompt yazmanın ön koşulu modelin sınırlarını bilmek: bağlam penceresi tükenen bir kaynaktır, bilgi kesim tarihi senin alanında doğrudan risktir, uydurma makul göründüğü için zor fark edilir ve sapma tutarlı görünen yanlıştır."
+outcomes:
+  - "Bağlam penceresinin neden 'tükenen kaynak' olduğunu ve büyük pencerenin neden 'her şeyi at' demek olmadığını açıklayabilirsin."
+  - "Bilgi kesim tarihinin front-end alanında neden özel bir risk olduğunu söyleyebilirsin."
+  - "Uydurmanın iki katmanlı savunmasını ve sapmanın (drift) ne olduğunu bilirsin."
+minutes: 7
+sources:
+  - label: "Anthropic Docs — Context windows"
+    url: "https://docs.claude.com/en/docs/build-with-claude/context-windows"
+  - label: "Anthropic Docs — Hallucination'ları azaltma"
+    url: "https://docs.claude.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+  - label: "Anthropic Engineering — Effective context engineering for AI agents"
+    url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+flags: ["degisken"]
+skipTerms: ["Bottleneck","bottleneck","darboğaz"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bu bölüm senin orijinal hedeflerinden biriydi: yapay zekâya profesyonel seviyede prompt yazabilmek. Bölümün tezi tek cümle: **iyi bir prompt bir spec'tir.** Bağlam, kısıt, kabul kriteri ve format; dördü de önceki bölümlerde zaten var. Yani prompt yazmayı öğrenmek ayrı bir beceri değil, **önceki bölümlerde öğrendiğin dili kullanmak.**
+
+"Modern ve şık olsun" bir talimat değildir; içinde doğrulanabilir tek bir kısıt yok. "8px tabanlı spacing ölçeği, tek accent rengi, kartlar arası gap 24, boş durum ve hata durumu dahil" bir talimattır.
+
+<Callout kind="dikkat" title="Bir uyarı">
+
+Materyalin bu bölümünü yazan da bir yapay zekâ. Sistemlerin nasıl çalıştığına dair anlatılanlar genel ve kavramsaldır; belirli bir ürünün belirli bir sürümünün davranışı hakkında kesin iddia içermez. Sürüm ve ürün özellikleri için resmî dokümana bak.
+
+</Callout>
+
+Önce sınırları bilmek gerekiyor.
+
+## Context window: tükenen kaynak
+
+**Context window (bağlam penceresi)**, modelin bir seferde "görebildiği" metnin toplam miktarıdır: senin mesajların, onun cevapları, okuduğu dosyalar ve araç çıktıları hepsi aynı sınırlı alanı paylaşır. **Bu pencere sınırlı ve tükenen bir kaynaktır.** Uzun bir oturumda pencere dolduğunda model başlangıçtaki talimatları unutmaya veya tutarsız kararlar vermeye başlayabilir. "Başta söylediğimi neden yapmıyor?" sorusunun en yaygın teknik cevabı budur.
+
+Büyük bir pencere "her şeyi at içine" demek değildir: **alakasız bağlam, alakalı bağlamı seyreltir.** Doğru yaklaşım pencereyi doldurmak değil, ne göstereceğini seçmektir (sonraki derste). "Oturum çok uzadı ve kararlar tutarsızlaşmaya başladı; özetleyip yeni bir oturum açalım."
+
+## Knowledge cutoff: senin alanında doğrudan risk
+
+**Knowledge cutoff (bilgi kesim tarihi)**, modelin eğitim verisinin bittiği tarihtir; o tarihten sonrasını kendiliğinden bilmez. **Senin alanında bu doğrudan bir risktir:** kütüphane manzarası hızlı değişir. Model bakım moduna geçmiş bir kütüphaneyi veya adı değişmiş bir paketi hâlâ eski hâliyle önerebilir.
+
+Model, bilmediği bir şeyin bilmediğini her zaman fark etmez; eski bilgiyi güvenle sunar. **Değişken bilgi türlerini (sürüm, fiyat, API davranışı) her zaman doğrulat.** "Bu kütüphanenin güncel durumunu doğrula; bilgi kesim tarihinden sonra değişmiş olabilir."
+
+## Hallucination: makul görünen uydurma
+
+**Hallucination (uydurma)**, modelin doğru olmayan bir bilgiyi doğruymuş gibi, kendinden emin bir dille üretmesidir. Bilmen gereken en önemli sınır budur. Uydurma rastgele değil, **makul görünen** biçimde olur: var olmayan bir kütüphane fonksiyonu, var olmayan bir CSS özelliği, var olmayan bir kaynak, yanlış bir istatistik. Tam da makul göründüğü için fark etmesi zordur. Özellikle niş kütüphanelerde, sayısal iddialarda ve kaynak taleplerinde görülür.
+
+**Savunma iki katmanlıdır:**
+
+1. Modelden emin olmadığında bunu söylemesini istemek.
+2. Doğrulanabilir her iddiayı kendin kontrol etmek.
+
+İkincisi vazgeçilmezdir; birincisi yardımcıdır ama garanti değildir. "Bu API'nin gerçekten böyle bir parametresi var mı? Dokümantasyondan doğrulayalım."
+
+## Drift: tutarlı görünen yanlış
+
+**Drift (sapma)**, üretilen çıktının istenen şeyden yavaş yavaş uzaklaşması ve bunu yaparken tutarlı ve inandırıcı görünmesidir. Materyal, 2026 itibarıyla yapay zekâ destekli geliştirmenin ana sorununun üretim hızı değil sapma olduğunu aktarıyor: hızlı üretilmiş, kendinden emin ama **yanlış problemi çözen** çıktı. Panzehir, üretimden önce net bir tanım (spec) koymaktır. Uzun oturumlarda ve belirsiz taleplerde karşına çıkar. "Çıktı güzel ama biz bunu istememiştik; sapma var. Tanıma geri dönelim."
+
+<Callout kind="tasarimci">
+
+- **Sürüm, fiyat ve API davranışını doğrulamadan kullanma;** paketin kendi sayfasına bak.
+- **Uzayan oturumu özetleyip yenile;** pencereyi doldurmaya çalışma.
+- **Çıktı güzel görünüyor diye doğru sayma:** sapma tam da böyle görünür.
+- **Önce tanım yaz, sonra üret.**
+
+</Callout>
+
+<Summary>
+
+- Bağlam penceresi sınırlı ve tükenen bir kaynaktır; alakasız bağlam alakalıyı seyreltir.
+- Bilgi kesim tarihi sürüm, fiyat ve API önerilerinde risk yaratır; değişken bilgiyi doğrulat.
+- Uydurma makul göründüğü için zor fark edilir; savunma iki katmanlıdır ve kendi kontrolün vazgeçilmezdir.
+- Sapma, tutarlı görünen ama yanlış problemi çözen çıktıdır; panzehiri üretimden önce net tanımdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bağlam penceresi neden 'tükenen kaynak'? Büyük pencere 'her şeyi at' demek midir?">
+
+Senin mesajların, modelin cevapları, okunan dosyalar ve araç çıktıları aynı sınırlı alanı paylaşır; dolduğunda başlangıçtaki talimatlar unutulabilir. Hayır: alakasız bağlam alakalı bağlamı seyreltir. Doğru yaklaşım pencereyi doldurmak değil, ne göstereceğini seçmektir.
+
+</SelfCheck>
+
+<SelfCheck question="Bilgi kesim tarihi senin alanında neden özel bir risk?">
+
+Kütüphane manzarası hızlı değişir. Model, bakım moduna geçmiş veya adı değişmiş bir paketi hâlâ eski hâliyle önerebilir ve bunu kendinden emin bir dille yapar.
+
+</SelfCheck>
+
+<SelfCheck question="Uydurma neden fark edilmesi zordur? İki katmanlı savunması nedir?">
+
+Rastgele değil, makul görünen biçimde olur: var olmayan ama var olabilecek bir fonksiyon, inandırıcı bir istatistik. Savunma: (1) modelden emin olmadığında söylemesini istemek, (2) doğrulanabilir her iddiayı kendin kontrol etmek. İkincisi vazgeçilmezdir.
+</SelfCheck>
+
+<SelfCheck question="Drift nedir ve neden ana sorun olarak anılır?">
+
+Çıktının istenen şeyden yavaşça uzaklaşması ama tutarlı ve inandırıcı görünmesi. Üretim hızı artık darboğaz olmadığı için sorun, kendinden emin ama yanlış problemi çözen çıktının yarattığı inceleme ve düzeltme döngüsüdür.
+
+</SelfCheck>

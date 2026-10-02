@@ -1,0 +1,17 @@
+---
+/**
+ * A fact that is not in the reference material (CLAUDE.md rule 4): badge plus a
+ * primary source, always together.
+ */
+interface Props {
+  source: string;
+  href: string;
+}
+const { source, href } = Astro.props;
+---
+
+<aside class="outside">
+  <p class="outside__label"><span class="flag flag--new">Materyal dışı</span></p>
+  <div class="outside__body"><slot /></div>
+  <p class="outside__source">Kaynak: <a href={href} rel="noreferrer">{source}</a></p>
+</aside>

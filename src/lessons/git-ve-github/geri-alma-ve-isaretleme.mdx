@@ -1,0 +1,88 @@
+---
+summary: "Canlıda bir şey bozulduğunda doğru refleks revert'tir. Tag ve release 'hangi kod canlıda?' sorusunu cevaplar; blame 'bu değer neden böyle?' sorusunu bağlama bağlar."
+outcomes:
+  - "Revert ile reset'in farkını ve neden kriz anında revert tercih edildiğini söyleyebilirsin."
+  - "Tag ve release'in ne işe yaradığını açıklayabilirsin."
+  - "Git blame'i bağlam bulmak için nasıl kullanacağını bilirsin."
+minutes: 6
+sources:
+  - label: "Pro Git — Geri almak"
+    url: "https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things"
+  - label: "Pro Git — Etiketleme"
+    url: "https://git-scm.com/book/en/v2/Git-Basics-Tagging"
+  - label: "Git — blame"
+    url: "https://git-scm.com/docs/git-blame"
+  - label: "Git — bisect"
+    url: "https://git-scm.com/docs/git-bisect"
+  - label: "GitHub Docs — Release'ler hakkında"
+    url: "https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Deploy'dan sonra site bozuldu. Ne yapılır? Panikle düzeltmeye mi çalışılır, yoksa geri mi alınır? Bu derste doğru refleksi ve geçmişi okumanın yollarını göreceksin.
+
+## Revert ve reset
+
+<Compare>
+<Pane title="Revert">
+
+- Bir commit'in etkisini iptal eden **yeni bir commit** oluşturur
+- Geçmiş korunur
+- Güvenli, ne olduğunun kaydını bırakır
+
+</Pane>
+<Pane title="Reset">
+
+- Geçmişi geriye alır
+- Commit'ler geçmişten çıkabilir
+- Paylaşılmış geçmişte tehlikeli
+
+</Pane>
+</Compare>
+
+**Canlıda bir şey bozulduğunda doğru refleks revert'tir,** reset değil. "Fix forward" (ileri doğru düzeltme) yerine revert etmek kriz anında neredeyse her zaman doğrudur; panikle yazılan düzeltme yeni hata üretir. "Deploy sonrası site bozuldu; baskı altında düzeltmeye çalışmayalım, önce revert edip sonra sakin kafayla bakalım."
+
+## Tag ve release
+
+**Tag (etiket)**, geçmişteki belirli bir noktanın kalıcı olarak işaretlenmesidir (`v2.1.0` gibi). **Release (sürüm)**, GitHub'da o etiketin etrafına sürüm notları ve dosyalar eklenerek yayınlanmasıdır. **"Hangi kod canlıda?"** sorusunun cevabıdır ve bir sorun çıktığında tam olarak hangi sürüme geri dönüleceğini belirler. "v2.1.0 etiketine geri dönelim; sorun ondan sonra girmiş."
+
+## Stash, blame, bisect
+
+**Stash**, yarım kalmış işi geçici olarak kenara koyup temiz bir duruma dönmektir. **Blame**, bir dosyadaki her satırın hangi commit ve kim tarafından yazıldığını gösterir. **Bisect**, bir hatanın hangi commit'te girdiğini ikili aramayla bulur.
+
+**Blame senin için faydalıdır:** "bu boşluk değeri neden 22px?" sorusunu, ilgili satırın hangi commit ve hangi PR ile geldiğine bakarak cevaplayabilirsin ve o PR'daki tartışmayı okuyabilirsin. "Blame'e baktım; bu değer altı ay önce bir hotfix'te elle girilmiş, token'dan gelmiyor." Adı talihsizdir; amaç suçlu bulmak değil, **bağlamı bulmaktır.**
+
+<Callout kind="tasarimci">
+
+- **Olay anında "önce revert" refleksini ekiple konuş;** tasarım olarak geri dönüş mesajını (bakım ekranı) hazırla.
+- **Sürüm notlarını (release) ve etiketleri izle:** "hangi sürümde ne değişti?" sorusunu kendin cevapla.
+- **Bir değerin nedenini bulmak için blame'e bak;** PR tartışmasında bağlam çıkar.
+
+</Callout>
+
+<Summary>
+
+- Revert yeni bir commit ile değişikliği iptal eder ve geçmişi korur; kriz anında reset ve panik düzeltmesinden güvenlidir.
+- Tag geçmişte bir noktayı işaretler; release onu sürüm notlarıyla yayınlar.
+- Blame bir satırın hangi commit ve PR ile geldiğini gösterir; amaç suçlu bulmak değil bağlamı bulmaktır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Canlıda bir şey bozulduğunda revert mi, 'fix forward' mı? Neden?">
+
+Revert. Güvenlidir, paylaşılmış geçmişi bozmaz ve ne olduğunun kaydını bırakır. Baskı altında yazılan "ileri doğru düzeltme" genelde yeni hata üretir; önce revert edip sonra sakin kafayla bakmak doğrudur.
+
+</SelfCheck>
+
+<SelfCheck question="Git blame senin için nasıl faydalı olabilir?">
+
+"Bu boşluk değeri neden 22px?" gibi sorularda ilgili satırın hangi commit ve hangi PR ile geldiğini gösterir; sen de o PR'daki tartışmayı okuyup bağlamı öğrenirsin.
+
+</SelfCheck>

@@ -1,0 +1,51 @@
+---
+summary: "TLS trafiğin yolda okunamamasını ve karşı tarafın gerçekten iddia ettiği site olmasını sağlar; modern hosting sertifikayı otomatik yeniler. Süresi dolan sertifika büyük bir tarayıcı uyarısı demektir. Mixed content sayfayı bozar."
+outcomes:
+  - "TLS sertifikasının iki işini söyleyebilirsin."
+  - "Süresi dolan sertifikanın kullanıcıya etkisini açıklayabilirsin."
+  - "Mixed content'in belirtisini ve çözümünü bilirsin."
+minutes: 4
+sources:
+  - label: "Let's Encrypt — Nasıl çalışır?"
+    url: "https://letsencrypt.org/how-it-works/"
+  - label: "MDN — Mixed content"
+    url: "https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Adres çubuğundaki kilit simgesi, ya da kırmızı bir uyarı sayfası. İkisinin arkasında TLS sertifikası var.
+
+## TLS ve sertifika
+
+**TLS (Transport Layer Security)**, HTTPS'in altındaki şifreleme teknolojisidir; **sertifika** ise sunucunun kimliğini kanıtlayan belgedir. İki şey sağlar: trafiğin yolda okunamaması ve karşı tarafın gerçekten iddia ettiği site olması. Modern hosting platformları sertifikayı otomatik alır ve yeniler. Yayın sürecinde ve alan adı yapılandırmasında karşına çıkar. "Sertifika otomatik yenileniyor mu? Süresi dolarsa tarayıcı büyük bir uyarı gösterir ve kullanıcı kaçar."
+
+## Mixed content
+
+**Mixed content (karışık içerik)**, HTTPS bir sayfada HTTP üzerinden yüklenen kaynakların bulunmasıdır. Sayfanın güvenlik garantisini bozar; tarayıcı bu kaynakları engelleyebilir ya da uyarı gösterebilir. Sonuç: görseller yüklenmez, stiller bozulur. Eski siteler HTTPS'e geçirilirken sık görülür. "Bazı görseller yüklenmiyor; mixed content uyarısı var, adresleri HTTPS'e çevirelim."
+
+<Callout kind="tasarimci">
+
+- **Yayın kontrol listesine "sertifika otomatik yenileniyor mu?" maddesini ekle.**
+- **Görsellerin ya da gömülü bileşenlerin HTTPS adresinden geldiğini doğrulat;** tasarım dosyasından gelen dış adreslere dikkat.
+- **Sertifika uyarısı ekranını kullanıcıya göstermeden önce önlemeyi hedefle;** o ekran senin kontrolünde değildir.
+
+</Callout>
+
+<Summary>
+
+- TLS trafiği okunamaz yapar ve sunucunun kimliğini kanıtlar; modern hosting sertifikayı otomatik yeniler.
+- Süresi dolan sertifika tarayıcıda büyük bir uyarıya yol açar.
+- Mixed content HTTPS sayfada HTTP kaynağı demektir; görseller ve stiller bozulur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="TLS sertifikası hangi iki şeyi sağlar?">
+
+Trafiğin yolda okunamamasını ve karşı tarafın gerçekten iddia ettiği site olmasını.
+
+</SelfCheck>

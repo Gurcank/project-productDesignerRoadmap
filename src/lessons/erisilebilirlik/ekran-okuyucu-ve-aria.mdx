@@ -1,0 +1,160 @@
+---
+summary: "Görme engelli kullanıcıların arayüzü nasıl deneyimlediği ve arayüzün onlara nasıl anlatıldığı: ekran okuyucu, alternatif metin, erişilebilir ad, ARIA ve canlı bölgeler."
+outcomes:
+  - "Bir görselin alt metnini içeriğe göre doğru yazabilir, dekoratif görsel için boş bırakabilirsin."
+  - "İkon butonlara erişilebilir ad verilmesi gerektiğini ve nedenini açıklayabilirsin."
+  - "ARIA'nın birinci kuralını ve yanlış ARIA'nın neden hiç ARIA'dan kötü olabileceğini söyleyebilirsin."
+  - "Ekranda beliren bir bildirimin ekran okuyucuya neden duyurulmadığını ve çözümünü bilirsin."
+minutes: 12
+sources:
+  - label: "W3C — WAI-ARIA Authoring Practices Guide"
+    url: "https://www.w3.org/WAI/ARIA/apg/"
+  - label: "W3C — Using ARIA (ilk kural)"
+    url: "https://www.w3.org/TR/using-aria/"
+  - label: "W3C — Alt text karar ağacı"
+    url: "https://www.w3.org/WAI/tutorials/images/decision-tree/"
+  - label: "MDN — ARIA canlı bölgeleri"
+    url: "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Guides/Live_regions"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Bir filtre uyguluyorsun ve ekranda "12 sonuç bulundu" yazısı beliriyor. Görme yeteneği olan herkes bunu anında görüyor. Ama ekran okuyucu kullanan biri **hiçbir şey duymuyor;** sayfada bir şey değiştiğini bilmiyor. Bu, en sık atlanan erişilebilirlik ayrıntılarından biri.
+
+Bu ders görme engelli kullanıcıların arayüzü nasıl deneyimlediğini ve arayüzün onlara nasıl **anlatıldığını** öğretiyor.
+
+## Ekran okuyucu
+
+**Screen reader** (ekran okuyucu), ekrandaki içeriği **sesli okuyan** ya da braille ekrana aktaran yazılımdır. Kullanıcı sayfayı **doğrusal olarak** dinler ya da başlık, link, landmark listeleri üzerinden **atlayarak** gezer. Bu yüzden görsel düzenin anlamlı olması yetmez; **kodun sırası da anlamlı olmalıdır.**
+
+Yaygın olanlar: **NVDA ve JAWS** (Windows), **VoiceOver** (macOS / iOS), **TalkBack** (Android).
+
+**En az bir kez kendi sitende deneyimlemen, bu bölümün tamamından daha öğreticidir.** "VoiceOver'la denedim: buton 'düğme' diye okunuyor ama ne yaptığı söylenmiyor; erişilebilir adı yok."
+
+## Alternatif metin
+
+**Alt text** (alternatif metin), bir görselin, göremeyen kullanıcıya **ne anlattığını** aktaran metindir.
+
+> **Amaç görseli tarif etmek değil, işlevini aktarmaktır.**
+
+Aynı fotoğraf farklı bağlamlarda farklı alt metin gerektirir: bir haber sayfasında olayı anlatır, bir ürün sayfasında ürünün rengini ve açısını. İçerik girişinde ve CMS alanlarında karşına çıkar; alt metin yazmak genelde tasarımcı ya da içerik editörünün işidir.
+
+| Görsel | Kötü alt metin | İyi alt metin |
+|---|---|---|
+| Satış grafiği | "grafik" | "Satışlar Ocak'tan Mart'a %40 arttı" |
+| Ürün fotoğrafı | "resim" | "Kırmızı yün ceket, önden görünüm" |
+| Dekoratif çizgi | "süs" | `alt=""` (boş) |
+
+Üç kural:
+
+1. **Dekoratif görsellerin alt metni boş bırakılmalıdır** (`alt=""`). Boş bırakmak "unutmak" değildir; ekran okuyucuya **"bunu atla"** demektir. Her görsele metin yazmak dinleyen kullanıcıyı gereksiz gürültüye boğar.
+2. **"Resim" ya da "görsel" yazma.** Ekran okuyucu zaten bir görsel olduğunu söyler.
+3. **Grafikte bulguyu yaz.** "Grafik" olamaz; asıl mesajı bir cümleyle.
+
+## Erişilebilir ad
+
+**Accessible name** (erişilebilir ad), bir öğenin **yardımcı teknolojiye tanıtılan adıdır.** Yalnızca ikon içeren bir butonun görünen metni yoktur; erişilebilir adı verilmezse ekran okuyucu **"düğme"** der ve kullanıcı ne yaptığını bilemez. Ad, görünen etiketten, `aria-label`'dan ya da ilişkilendirilmiş bir etiketten gelir.
+
+İkon butonlarında, arama alanlarında, kapatma (×) düğmelerinde karşına çıkar; erişilebilirlik denetimlerinin **en sık bulgusudur.** "Kapatma butonuna erişilebilir ad verelim: 'Diyaloğu kapat'."
+
+<Compare>
+<Pane title="Ad yok">
+
+- Buton: yalnızca × ikonu
+- Ekran okuyucu: "düğme"
+- Kullanıcı ne yaptığını bilmiyor
+
+</Pane>
+<Pane title="Ad var">
+
+- Buton: × ikonu + ad "Diyaloğu kapat"
+- Ekran okuyucu: "Diyaloğu kapat, düğme"
+- Kullanıcı ne yapacağını biliyor
+
+</Pane>
+</Compare>
+
+## ARIA: HTML'in doldurmadığı boşluk
+
+**ARIA** (Accessible Rich Internet Applications), HTML'in tek başına ifade edemediği **rol, durum ve ilişkileri** yardımcı teknolojilere bildiren ek nitelikler kümesidir. Sekmeler, açılır menüler ve karmaşık bileşenler için HTML'de hazır eleman yoktur; ARIA bu boşluğu doldurur.
+
+Özel bileşen geliştirmede karşına çıkar. Hazır ve erişilebilirliği test edilmiş kütüphaneler bunun büyük kısmını halleder; bu, **kütüphane seçiminin bir erişilebilirlik kararı olduğunu** gösterir. "Bu açılır menüyü sıfırdan yazmayalım; erişilebilir bir headless bileşen kullanalım."
+
+<Callout kind="dikkat" title="ARIA'nın birinci kuralı">
+
+**Mümkünse ARIA kullanma.** Doğru HTML elemanı varsa onu kullan.
+
+**Yanlış kullanılan ARIA, hiç ARIA kullanmamaktan daha zararlıdır,** çünkü yardımcı teknolojiye **yanlış bilgi** verir. `role="button"` yazılmış bir `div`, klavye desteği eklenmediyse hâlâ çalışmaz ama artık **kendini buton olarak tanıtır.**
+
+</Callout>
+
+### role, aria-label, aria-live
+
+Sık göreceğin nitelikler:
+
+| Nitelik | Ne yapar |
+|---|---|
+| `role` | Öğenin ne olduğunu söyler |
+| `aria-label` | Görünmeyen bir ad verir |
+| `aria-labelledby` | Sayfadaki başka bir metni ad olarak kullanır |
+| `aria-describedby` | Ek açıklama bağlar |
+| `aria-live` | İçerik değişince ekran okuyucunun duyurmasını sağlar |
+
+**`aria-live` tasarımcıyı doğrudan ilgilendirir:** görsel bir bildirim (toast, hata mesajı, "3 sonuç bulundu") ekranda belirdiğinde, ekran okuyucu kullanıcısının bundan **haberi olmaz;** canlı bölge tanımlanmadıkça.
+
+<StepFlow
+  label="Sessiz değişim ve canlı bölge"
+  caption="Canlı bölge, içeriği değişince ekran okuyucuya haber verir. Toast, form doğrulama ve canlı arama sonuçlarında kullanılır."
+  steps={[
+    { title: "Kullanıcı filtre uygular", sub: "Ekranda 12 sonuç belirir", tone: "plain" },
+    { title: "Canlı bölge yoksa", sub: "Ekran okuyucu sessiz kalır, kullanıcı fark etmez", tone: "plain" },
+    { title: "Canlı bölge varsa", sub: "\"12 sonuç bulundu\" duyurulur", tone: "progress" },
+  ]}
+/>
+
+"Filtre uygulanınca 'X sonuç bulundu' metnini canlı bölge yapalım; sessiz değişim olmasın."
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitedeki arama sayfasında sonuç sayısı canlı bölgede duyuruluyor ("3 sonuç bulundu"); çevrimdışı şeridi ve ilerleme durumu da öyle. Terim tanımı açıkken (telefonda alttan çıkan sayfa) kapatma düğmesinin metni var. İkon düğmeleri etiketli (örneğin alt çubuktaki simgelerin yanında yazı var).
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Her görselin amacını sor:** bilgi mi taşıyor, süs mü? Bilgi taşıyorsa işlevini yaz, süsse boş bırak.
+- **İkon butonlarına ad yaz.** Teslimde "× → Diyaloğu kapat" gibi.
+- **Hazır, test edilmiş bileşenleri tercih et.** Karmaşık etkileşimi sıfırdan yazmak ARIA hatasına açık kapı.
+- **Ekranda beliren her bildirimi sor:** ekran okuyucu duyuyor mu?
+- **Bir kez ekran okuyucuyla kendi tasarımına dinle.** İlk beş dakikada çoğu eksik ortaya çıkar.
+
+</Callout>
+
+<Summary>
+
+- Ekran okuyucu içeriği doğrusal ya da başlık/link/landmark listeleriyle gezdirir; kodun sırası anlamlı olmalıdır.
+- Alt metin görseli tarif etmez, işlevini aktarır; dekoratif görselde boş (`alt=""`) bırakılır.
+- İkon butonların erişilebilir adı olmalı; yoksa ekran okuyucu yalnızca "düğme" der.
+- ARIA'nın birinci kuralı: mümkünse kullanma; yanlış ARIA yanlış bilgi verir ve hiç ARIA'dan kötüdür.
+- Ekranda beliren dinamik değişiklikler `aria-live` ile duyurulmazsa ekran okuyucu kullanıcısı fark etmez.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Dekoratif bir görselin alt metni ne olmalı ve neden?">
+
+Boş bırakılmalı (`alt=""`). Bu "unutmak" değil, ekran okuyucuya "bunu atla" demektir. Her dekoratif görsele metin yazmak, dinleyen kullanıcıyı gereksiz gürültüye boğar.
+
+</SelfCheck>
+
+<SelfCheck question="Bir filtre uygulandığında &quot;12 sonuç bulundu&quot; yazısı beliriyor. Ekran okuyucu kullanıcısı bunu neden duymayabilir ve çözüm nedir?">
+
+Görsel değişim ekran okuyucuya otomatik duyurulmaz. Çözüm: o alanı canlı bölge (`aria-live`) olarak tanımlamak, böylece içerik değiştiğinde duyurulur.
+
+</SelfCheck>

@@ -1,0 +1,173 @@
+---
+summary: "Tasarımın işe yarayıp yaramadığını ölçme yolları: kullanılabilirlik testi, A/B test, funnel, ısı haritası, anket. Nitel yöntemler 'neden'i, nicel yöntemler 'ne kadar'ı cevaplar; biri diğerinin yerine geçmez."
+outcomes:
+  - "Hangi araştırma sorusu için hangi yöntemi (test, anket, A/B, funnel) seçeceğini bilirsin."
+  - "Beş kullanıcı kuralının üç sınırını söyleyebilirsin."
+  - "A/B testin ön koşullarını ve düşük trafikte neden yanıltıcı olduğunu açıklayabilirsin."
+  - "Kullanıcıya \"beğendin mi?\" diye sormanın neden yöntem hatası olduğunu bilirsin."
+minutes: 14
+sources:
+  - label: "NN/g — Usability Testing 101"
+    url: "https://www.nngroup.com/articles/usability-testing-101/"
+  - label: "NN/g — Why You Only Need to Test with 5 Users"
+    url: "https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/"
+  - label: "NN/g — A/B Testing 101"
+    url: "https://www.nngroup.com/articles/ab-testing-and-ux-research/"
+  - label: "Faulkner, L. (2003). Beyond the five-user assumption. Behavior Research Methods, Instruments, & Computers 35(3)"
+    url: "https://link.springer.com/article/10.3758/BF03195514"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+"Yeni tasarım daha iyi mi?" Bu soruya cevap vermenin birkaç yolu var ve her biri başka bir şeyi ölçüyor. Kullanıcıya sorabilirsin, onu izleyebilirsin, iki sürümü yarıştırabilirsin ya da analitiğe bakabilirsin. Yanlış yöntemi seçersen, doğru görünen yanlış bir cevap alırsın.
+
+Bu ders tasarımın işe yarayıp yaramadığını ölçme yollarını anlatıyor. Yöntemler ikiye ayrılır: **nitel** yöntemler *neden* sorusunu, **nicel** yöntemler *ne kadar* sorusunu cevaplar. Biri diğerinin yerine geçmez.
+
+<Compare>
+<Pane title="Nitel: neden?">
+
+- Kullanılabilirlik testi
+- Guerrilla testing
+- Oturum kaydı izleme
+- Birebir görüşme
+
+</Pane>
+<Pane title="Nicel: ne kadar?">
+
+- A/B test
+- Funnel analizi
+- Anket (SUS, NPS)
+- Isı haritası (yoğunluk)
+
+</Pane>
+</Compare>
+
+## Kullanılabilirlik testi
+
+**Usability test** (kullanılabilirlik testi), gerçek kullanıcılara **belirli görevler verip,** yaparken izleyerek sorunları tespit etme yöntemidir. Ekibin göremediği şeyi gösterir: ekip ürünü zaten bildiği için sorunlara kör olur.
+
+İki türü vardır:
+
+- **Moderated:** Biri yönetir, soru sorabilir.
+- **Unmoderated:** Kullanıcı tek başına yapar, kayıt izlenir.
+
+Katılımcıdan **yüksek sesle düşünmesi** istenir (*think-aloud*), çünkü nerede duraksadığı kadar **neden** duraksadığı da önemlidir. Prototip aşamasında ve yayın sonrası iyileştirmede yapılır. "Beş kişiyle moderated test yapalım; görev, kayıt olup ilk projeyi oluşturmak olsun."
+
+**Kullanıcıya "bunu beğendin mi?" diye sormak test değildir.** Test, **görev verip davranışı gözlemlemektir;** beyan edilen tercih ile gerçek davranış sık sık ayrışır. Kullanıcı nezaketen "kolaydı" diyebilirken görevi tamamlayamamış olabilir.
+
+### Kaç kullanıcıyla test edilir?
+
+**Beş kullanıcı kuralı**, kullanılabilirlik testinde beş kullanıcının sorunların büyük kısmını ortaya çıkardığını söyleyen yaygın kuraldır. Test yapmanın önündeki "yeterli katılımcı bulamayız" bahanesini kaldırır. Nielsen'in önerisi aslında **tek büyük test yerine küçük ve sık testler** yapmaktır: "Tek seferde 15 kişi yerine, üç turda beşer kişiyle test edip arada düzeltelim."
+
+**Kuralın sınırları, kuralın kendisinden daha önemlidir.** Üç kayıt:
+
+1. **Farklı kullanıcı grupları:** Nielsen'in kendi yazısı, birbirinden belirgin biçimde farklı kullanıcı grupları varsa her grup için ayrı test gerektiğini söyler.
+2. **Varsayımlı model:** Rakam, Nielsen ve Landauer'in 1993'te kurduğu bir modelden gelir ve sabit bir problem bulma oranı varsayar. Ölçüm değil tahmindir.
+3. **Faulkner'in çalışması (2003):** 60 kullanıcı test edilip rastgele beşerli gruplar örneklendiğinde, bazı beşli gruplar sorunların %99'unu, bazıları yalnızca %55'ini bulmuştur. 10 kullanıcıda en kötü sonuç %80'e, 20 kullanıcıda %95'e yükselmiştir.
+
+Yani **beş kişi ortalama iyi sonuç verir, garanti vermez.**
+
+### Guerrilla testing
+
+**Guerrilla testing** (hallway testing), resmî bir kurulum olmadan, eldeki insanlarla **hızlıca** yapılan enformel testtir. Sıfır teste kıyasla muazzam bir kazançtır; bariz sorunlar birkaç dakikada ortaya çıkar. Küçük ekiplerde ve bütçesiz projelerde kullanılır. "Resmî test için vaktimiz yok; ofiste üç kişiye 10 dakika gösterip bariz sorunları yakalayalım."
+
+Sınırı: katılımcılar hedef kullanıcı değilse sonuçlar yanıltıcı olabilir; özellikle alan bilgisi gerektiren ürünlerde.
+
+## Davranışı ölçmek: A/B, funnel, ısı haritası
+
+### A/B test
+
+**A/B test** (split test), kullanıcıların bir kısmına A sürümünü, bir kısmına B sürümünü göstererek **hangisinin daha iyi sonuç verdiğini** ölçme yöntemidir. Tartışmayı veriyle bitirir. Ama ön koşulları vardır:
+
+- **Yeterli trafik**
+- **Önceden belirlenmiş tek bir başarı metriği**
+- **İstatistiksel olarak anlamlı sonuç**
+
+**Düşük trafikte A/B test yapmak, gürültüyü sonuç sanmaya yol açar.** Dönüşüm optimizasyonunda, landing page ve fiyatlandırma denemelerinde kullanılır. "Buton metnini A/B test edelim ama önce hipotezi ve metriği yazalım; sonuca bakıp yorum uydurmayalım."
+
+**A/B test ≠ multivariate test.** A/B testte iki bütün sürüm karşılaştırılır; multivariate testte birden fazla değişkenin kombinasyonları test edilir ve çok daha fazla trafik gerektirir.
+
+### Funnel
+
+**Funnel** (dönüşüm hunisi), kullanıcının bir hedefe ulaşırken geçtiği adımların, **her adımda kaç kişinin kaldığını** gösteren analizdir. Kaybın **nerede** olduğunu gösterir. "Dönüşüm düşük" bilgisi işe yaramaz; "kayıp %60 ikinci adımda" bilgisi doğrudan bir tasarım işine dönüşür.
+
+<StepFlow
+  label="Örnek bir dönüşüm hunisi"
+  caption="Her adımda bir kısım kullanıcı kaybolur. En büyük düşüş hangi adımdaysa, tasarım çalışması orada başlar."
+  steps={[
+    { title: "Ürün sayfası: 1000 kişi", sub: "Başlangıç", tone: "plain" },
+    { title: "Sepete ekleyen: 400 kişi", sub: "%60 kayıp burada", tone: "accent" },
+    { title: "Ödeme adımı: 250 kişi", sub: "%37 kayıp", tone: "plain" },
+    { title: "Satın alma: 120 kişi", sub: "Sonuç", tone: "progress" },
+  ]}
+/>
+
+"Funnel'da en büyük kayıp kart bilgisi adımında; oraya güven işaretleri ve iptal politikası bilgisi ekleyelim."
+
+### Isı haritası ve oturum kaydı
+
+**Heatmap** tıklama ve kaydırma yoğunluğunun renkli görselleştirmesidir; **session recording** gerçek kullanıcı oturumlarının anonim tekrar izlenmesidir. Nicel veri *nerede* der, bu araçlar *nasıl* der: tıklanamayan bir öğeye yapılan tıklamalar, sayfanın hiç aşağı kaydırılmaması gibi bulgular buradan çıkar.
+
+Hotjar, Microsoft Clarity benzeri araçlarda görürsün; **araç isimleri ve fiyatlandırmaları değişir.** "Heatmap'te kullanıcılar başlığa tıklıyor; tıklanabilir sanıyorlar, ya link yapalım ya görünümünü değiştirelim."
+
+Bu araçlar kişisel veri toplayabilir; KVKK ve GDPR açısından form alanlarının maskelenmesi ve aydınlatma gereklidir.
+
+## Anket: SUS ve NPS
+
+**Survey** (anket), kullanıcıya doğrudan soru sorarak veri toplama yöntemidir. İki yaygın ölçek:
+
+- **SUS** (System Usability Scale): standart 10 soruluk bir kullanılabilirlik ölçeği.
+- **NPS** (Net Promoter Score): tek soruyla tavsiye etme eğilimini ölçer.
+
+Zaman içinde karşılaştırılabilir bir sayı üretir. Standart ölçekler (SUS gibi) kendi ürününün geçmişiyle karşılaştırma imkânı verir. "Yeniden tasarımdan önce ve sonra SUS uygulayalım; öznel değerlendirmenin değişip değişmediğini görelim."
+
+**Anketler beyanı ölçer, davranışı değil.** Kullanıcı "kolaydı" diyebilir ama testte görevi tamamlayamamış olabilir. NPS ayrıca çokça eleştirilir: tek sayıya indirgemesi nedeniyle nedenini açıklamaz.
+
+| Yöntem | Cevapladığı soru | Ne zaman |
+|---|---|---|
+| Kullanılabilirlik testi | Kullanıcı neden zorlanıyor? | Prototip, yayın sonrası |
+| A/B test | Hangi sürüm daha iyi? | Yeterli trafik varsa |
+| Funnel | Kayıp nerede? | Dönüşüm çalışmaları |
+| Isı haritası / kayıt | Kullanıcı sayfada ne yapıyor? | Davranış sorusu |
+| Anket | Kullanıcı ne düşündüğünü söylüyor? | Karşılaştırma, memnuniyet |
+
+<Callout kind="tasarimci">
+
+- **Soruya göre yöntem seç.** "Neden?" için test, "ne kadar?" için analitik.
+- **Davranışı gözle, beyana güvenme.** "Kolaydı" demesi yetmez; görevi tamamladı mı?
+- **A/B testten önce hipotezi ve metriği yaz.** Düşük trafikte A/B test yapma.
+- **Funnel'da en büyük düşüşü bul.** Tasarım çalışmanı oraya yönelt.
+- **Kullanıcı verisi topluyorsan gizliliği düşün.** Isı haritası ve kayıtlarda form alanlarını maskele.
+- **Sıfır testten kaçın.** Üç kişiye gösterilen bir ekran, hiç gösterilmeyen ekrandan her zaman iyidir.
+
+</Callout>
+
+<Summary>
+
+- Nitel yöntemler "neden"i, nicel yöntemler "ne kadar"ı cevaplar; biri diğerinin yerine geçmez.
+- Kullanılabilirlik testi görev verip davranışı gözlemler; "beğendin mi?" diye sormak test değildir.
+- Beş kullanıcı kuralı ortalama iyi sonuç verir, garanti vermez; farklı gruplar, varsayımlı model ve Faulkner'in bulguları üç sınırıdır.
+- A/B test yeterli trafik, tek metrik ve istatistiksel anlamlılık ister.
+- Funnel kaybın nerede olduğunu, ısı haritası kullanıcının sayfada ne yaptığını, anket beyanı ölçer.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Funnel analizi &quot;dönüşüm düşük&quot; bilgisinden neden daha kullanışlıdır?">
+
+Kaybın nerede olduğunu söyler. "Dönüşüm düşük" bir durum tespitidir ve eyleme dönüşmez; "kayıp %60 kart bilgisi adımında" doğrudan hangi ekranın çalışılacağını gösterir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir kullanıcı testinde &quot;bunu beğendiniz mi?&quot; diye sormak neden yöntem hatasıdır?">
+
+Çünkü beyan edilen tercih ile gerçek davranış sık sık ayrışır. Test, görev verip davranışı gözlemlemektir; kullanıcı nezaketen ya da kendini suçlamamak için "kolaydı" diyebilirken görevi tamamlayamamış olabilir.
+
+</SelfCheck>

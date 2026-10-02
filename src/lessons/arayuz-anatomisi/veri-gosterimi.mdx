@@ -1,0 +1,132 @@
+---
+summary: "Listelerin, tabloların ve filtrelerin dili: tablo, liste, kart, badge/chip/tag, sayfalama, sonsuz kaydırma, filtre, sıralama, arama ve toplu işlemler."
+outcomes:
+  - "Tablo, liste ve kart arasında içeriğe ve ekrana göre seçim yapabilirsin."
+  - "Badge, chip ve tag'i ayırt edebilirsin; uygulanmış filtrenin hangisi olduğunu söylersin."
+  - "Pagination ile infinite scroll arasındaki takası ve erişilebilirlik sorununu açıklayabilirsin."
+  - "İyi bir filtre tasarımının kurallarını sayabilirsin."
+minutes: 12
+sources:
+  - label: "W3C WAI — Tables Tutorial"
+    url: "https://www.w3.org/WAI/tutorials/tables/"
+  - label: "NN/g — Mobile Tables"
+    url: "https://www.nngroup.com/articles/mobile-tables/"
+  - label: "NN/g — Infinite Scrolling: When to Use It, When to Avoid It"
+    url: "https://www.nngroup.com/articles/infinite-scrolling-tips/"
+  - label: "W3C WAI-ARIA APG — Combobox Pattern (arama önerileri)"
+    url: "https://www.w3.org/WAI/ARIA/apg/patterns/combobox/"
+includeTerms: ["table", "list", "card", "tag", "chip", "badge", "filter", "facet", "sort", "search", "load more"]
+skipTerms: ["beta","grid"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir yönetim panelinde on bin sipariş var. Kullanıcı bunlardan birini bulmak, hepsini görmek istemiyor. Veri gösterimi, çok sayıda kaydı **bulunabilir, karşılaştırılabilir ve işlenebilir** yapma işidir. Panel arayüzlerinin ana malzemesidir.
+
+## Tablo, liste, kart
+
+**Table**, satır ve sütunlardan oluşan veri gösterimidir; **data grid** onun gelişmiş hâlidir: sıralama, filtreleme, sütun yeniden boyutlandırma, satır içi düzenleme, sabit sütunlar, sanal kaydırma. Çok sayıda kaydı karşılaştırılabilir biçimde gösterir. Tasarım kararları: sabit başlık satırı, satır yoğunluğu, hangi sütunların önemli olduğu, satır eylemlerinin nerede duracağı. "Tabloda başlık satırı sabit kalsın, ilk sütun da yatay kaydırmada sabitlensin."
+
+Tablo mobilde en çok bozulan bileşendir. Üç strateji var: **yatay kaydırma, kart görünümüne dönüşme, sütun gizleme.** Hangisinin seçileceği baştan kararlaştırılmalı. Ayrıca yalnızca yerleşim için tablo kullanmak erişilebilirlik hatasıdır.
+
+**List**, öğelerin alt alta dizildiği gösterimdir. Tablodan daha esnektir: her satırda farklı yapıda içerik olabilir (avatar, başlık, alt metin, rozet, eylem). Mobilde tablodan çok daha iyi çalışır: "Mobilde tabloyu listeye çevirelim; her satır kart gibi görünsün."
+
+**Card**, tek bir nesneyi temsil eden, kendi sınırı olan kutudur. Gestalt'ın "ortak bölge" ilkesiyle grupları ayırır ve her nesneyi bağımsız olarak taranabilir yapar. Kartın tamamı tıklanabilir olabilir; ama o zaman içinde ayrı bir buton olması sorun çıkarır (iç içe tıklanabilir alanlar). "Kartın tamamı tıklanabilir olsun ama içindeki 'Favorilere ekle' butonu ayrı çalışsın." Ekran okuyucu için tek ve anlamlı bir bağlantı adı gerekir; her metin parçasını ayrı link yapmak kullanıcıyı boğar.
+
+## Badge, chip, tag
+
+Üçü de küçük, yuvarlatılmış etiketlerdir ama işleri farklıdır:
+
+- **Badge** bir durumu ya da sayıyı **gösterir**, tıklanmaz: "Yeni", "Beta", bildirim sayacı "3".
+- **Chip** kullanıcının **seçtiği ya da kaldırabildiği** öğedir, genelde × içerir: uygulanmış filtreler, seçilmiş alıcılar.
+- **Tag** içeriği **sınıflandırır**, genelde tıklanınca o etikete ait içeriğe götürür: blog etiketleri.
+
+Görsel olarak çok benzedikleri için karışırlar; ama davranışları farklıdır ve bu tasarımda ayırt edilmelidir: chip kaldırılabilir görünmeli, badge tıklanabilir görünmemelidir. "Uygulanan filtreleri chip olarak gösterelim; her birinde × ve 'Tümünü temizle' olsun."
+
+<Compare>
+<Pane title="Badge">
+
+- Durum ya da sayı gösterir
+- Tıklanmaz
+- "Yeni", "3"
+
+</Pane>
+<Pane title="Chip">
+
+- Seçilen, kaldırılabilen öğe
+- × içerir
+- Uygulanmış filtre
+
+</Pane>
+<Pane title="Tag">
+
+- İçeriği sınıflandırır
+- Tıklanınca ilgili içeriğe gider
+- Blog etiketi
+
+</Pane>
+</Compare>
+
+## Çok kayıtla başa çıkmak
+
+**Pagination (sayfalama)**, uzun listenin numaralı sayfalara bölünmesidir. Kullanıcıya konum duygusu ve kontrol verir: kaç sayfa var, neredeyim, geri dönebilir miyim. Ayrıca her sayfanın bir URL'si olduğu için paylaşılabilir ve arama motoru tarafından taranabilir.
+
+**Infinite scroll**, kaydırdıkça yeni içeriğin otomatik yüklenmesidir; **load more** ise bir butonla elle yüklenmesi. Keşif akışlarında (sosyal medya, görsel galeri) doğal hisseder. Bedelleri: footer'a ulaşmak imkânsızlaşır, konum duygusu kaybolur, geri dönünce yer kaybedilir ve performans zamanla bozulur. Load more ikisinin arasında kalan çözümdür: kullanıcı kontrolü korunur, footer erişilebilir kalır. **Erişilebilirlik sorunu ciddidir:** klavye kullanıcısı sayfanın sonuna asla ulaşamaz ve yeni içeriğin geldiği ekran okuyucuya bildirilmelidir.
+
+**Filter / facet.** Filtre listeyi belirli kriterlere göre daraltır; **facet**, filtrelenebilir bir özellik boyutudur (marka, beden, fiyat aralığı). İyi filtre tasarımının kuralları:
+
+- Uygulanmış filtreler görünür olsun (chip olarak).
+- Her seçeneğin kaç sonuç vereceği gösterilsin.
+- Sıfır sonuç veren seçenekler devre dışı bırakılsın.
+- **Filtreler URL'e yazılsın** ki liste paylaşılabilsin.
+
+**Sort (sıralama)** filtreden farklıdır: filtre listeyi **daraltır**, sıralama **düzenler**. İkisi arayüzde ayrı gösterilmelidir. Varsayılan sıralamanın ne olduğu bilinçli bir karardır: "Varsayılan 'En yeni' olsun; 'Önerilen' belirsiz ve kullanıcı neye göre sıralandığını anlamıyor."
+
+**Search**, kullanıcının metin yazarak içerik bulduğu alandır; **typeahead / autocomplete** yazarken öneri gösteren davranıştır. Navigasyonun alternatifi, bazı sitelerde ana yoludur. Kritik kararlar: sonuç yoksa ne gösterilecek (öneri, yazım düzeltmesi), yakın eşleşmeler gösterilecek mi, son aramalar hatırlanacak mı. Öneri listesi klavyeyle gezilebilmeli ve seçim ekran okuyucuya duyurulmalı; arama alanının erişilebilir bir etiketi olmalı, yalnızca büyüteç ikonu yetmez.
+
+**Bulk actions (toplu işlemler)**, birden fazla satır seçip hepsine birden işlem yapmaktır; **row actions** tek satıra özel eylemlerdir. Tasarım kararları: seçim yapılınca eylem çubuğunun nerede belireceği, kaç öğenin seçildiği, "tümünü seç"in yalnızca bu sayfayı mı yoksa tüm sonuçları mı kapsadığının açıkça yazılması. "Seçim yapılınca altta bir eylem çubuğu belirsin: '12 öğe seçildi — Sil, Taşı, Dışa aktar'." Toplu silme geri alınamazsa onay gerekir; tek satırda geri al daha uygundur.
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitenin Ara sayfası bir arama alanıdır: etiketli, sonuç sayısı duyurulan. Sözlük sayfası ise yüzlerce terimi listeleyen bir **liste** örneğidir. Kategorilerdeki adım listesi, her satırda ilerleme durumunu taşıyan esnek bir liste: tablo olsaydı mobilde bozulurdu.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Tabloyu mobilde nasıl göstereceğini baştan seç:** kaydırma, kart ya da sütun gizleme.
+- **Etiketleri doğru türde çiz:** durum badge, seçim chip, sınıflandırma tag.
+- **Filtreyi URL'e yazdır** ve geliştiriciye iste.
+- **Sonsuz kaydırma yerine load more düşün;** footer'a erişim gerekiyorsa.
+- **Her aramanın boş sonuç hâlini tasarla.**
+- **Toplu işlemde "tümünü seç"in kapsamını yaz.**
+
+</Callout>
+
+<Summary>
+
+- Tablo karşılaştırma için, liste esnek içerik ve mobil için, kart bağımsız nesneler içindir. Tablonun mobil stratejisi baştan seçilir.
+- Badge gösterir, chip kaldırılabilir seçimdir, tag sınıflandırır. Uygulanmış filtreler chip'tir.
+- Pagination konum ve paylaşılabilir URL verir; infinite scroll footer'ı ve klavye kullanıcısını dışarıda bırakır. Load more orta yoldur.
+- Filtre daraltır, sıralama düzenler; filtreler URL'e yazılır.
+- Aramada boş sonuç, klavye ve ekran okuyucu davranışı tasarlanır. Toplu işlemlerde seçimin kapsamı açık yazılır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Badge, chip ve tag arasındaki fark nedir? Uygulanmış filtreler hangisi olmalı?">
+
+Badge durumu ya da sayıyı gösterir, tıklanmaz. Chip kullanıcının seçtiği, kaldırabildiği öğedir ve × içerir. Tag içeriği sınıflandırır ve tıklanınca o etikete ait içeriğe götürür. Uygulanmış filtreler chip olmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Pagination ile infinite scroll arasındaki takas nedir? Infinite scroll'un erişilebilirlik sorunu nedir?">
+
+Pagination konum duygusu, kontrol ve paylaşılabilir URL verir; infinite scroll keşif akışlarında daha doğal hisseder ama footer'a ulaşmayı imkânsızlaştırır ve konum duygusunu kaybettirir. Klavye kullanıcısı sayfanın sonuna asla ulaşamaz ve yeni içerik ekran okuyucuya duyurulmalıdır.
+
+</SelfCheck>

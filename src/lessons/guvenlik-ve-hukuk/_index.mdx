@@ -1,0 +1,27 @@
+---
+summary: "Güvenliği bir uzman gibi değil, tasarım kararlarının güvenlik sonucunu görebilen biri olarak anlamak; ve kişisel veri mevzuatının tasarıma yansıyan kısımları. Hukuki tavsiye değildir."
+sources:
+  - label: "OWASP Top 10:2025"
+    url: "https://top10.owasp.org/2025/0x00_2025-Introduction"
+  - label: "6698 sayılı KVKK (mevzuat.gov.tr)"
+    url: "https://www.mevzuat.gov.tr/mevzuatmetin/1.5.6698.pdf"
+flags: ["degisken"]
+---
+
+Güvenlik, "geliştiricinin işi" sanılan ama tasarımcının sürekli içine düştüğü bir alan. Sebep basit: **güvenlik açıklarının çoğu bir tasarım kararının sonucudur.**
+
+Bu bölümün amacı seni güvenlik uzmanı yapmak değil; **kendi kararlarının güvenlik sonucunu görebilmen** ve bir güvenlik denetimi raporunu okuyabilmen.
+
+> **Hukuki uyarı:** Hukuki yükümlülüklerle ilgili derslerdeki bilgiler (KVKK/GDPR, yasal sayfalar) genel bilgilendirmedir, hukuki tavsiye değildir. Gerçek bir projede avukat görüşü almadan hareket etme.
+
+## Bu bölümü bitirdiğinde
+
+- Tehdit modeli, saldırı yüzeyi ve OWASP Top 10'u açıklayabileceksin.
+- XSS, CSRF, IDOR, SSRF gibi açıkların tasarımla bağlantısını kurabileceksin.
+- CORS, CSP, HTTPS ve secret yönetiminde yaygın yanılgıları düzeltebileceksin.
+- Doğrulama, en az ayrıcalık, katmanlı savunma ve güvenli başarısız olmayı tasarım kararlarına çevirebileceksin.
+- Aydınlatma/rıza ayrımını, veri minimizasyonunu ve yasal sayfaları tasarım diliyle tartışabileceksin.
+
+## Nasıl çalışmalı?
+
+On bir ders var. Önce **güvenliği düşünme biçimi** ve **OWASP Top 10** ile zemin kur; **yaygın açıklar** ve **savunma ilkeleri** günlük tasarım kararlarına en çok dokunanlar. Son iki ders hukuki bölümdür ve **değişken** bilgi taşır: kullanmadan önce birincil kaynağı ve avukatı doğrula.

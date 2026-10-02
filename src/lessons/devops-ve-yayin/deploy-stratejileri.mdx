@@ -1,0 +1,92 @@
+---
+summary: "Yeni sürümün kullanıcılara nasıl ulaştırılacağı: rolling, blue-green, canary ve feature flag. Hepsi aynı soruyu cevaplar: bir şey ters giderse kaç kullanıcı etkilensin? Feature flag yayını ile açılışı ayırır."
+outcomes:
+  - "Dört deploy stratejisini ve kullanıcı etkisini sınırlama biçimlerini söyleyebilirsin."
+  - "Blue-green ile canary farkını açıklayabilirsin."
+  - "Feature flag'in en önemli katkısını (deploy ile release'i ayırmak) ve dört sonucunu sayabilirsin."
+  - "Bayrakların biriktirdiği sorunu bilirsin."
+minutes: 8
+sources:
+  - label: "Martin Fowler — Blue Green Deployment"
+    url: "https://martinfowler.com/bliki/BlueGreenDeployment.html"
+  - label: "Martin Fowler — Canary Release"
+    url: "https://martinfowler.com/bliki/CanaryRelease.html"
+  - label: "Martin Fowler — Feature Toggles"
+    url: "https://martinfowler.com/articles/feature-toggles.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Yeni sürüm hazır. Bunu herkese aynı anda mı açarsın, yoksa önce küçük bir kısmına mı? Dört yaklaşım var ve hepsi aynı soruyu cevaplar: **bir şey ters giderse kaç kullanıcı etkilensin?**
+
+## Rolling
+
+**Rolling deployment (kademeli yayın)**: sunucu kopyalarının tek tek yeni sürüme geçirilmesi. Kesintisiz yayın sağlar; geçiş sırasında eski ve yeni sürüm bir süre birlikte çalışır. Bu, **API ve veritabanı uyumluluğu** gerektirir: yeni sürümün eklediği bir alan eski sürümü kırmamalıdır. "Rolling deploy yapıyoruz; kesinti olmayacak ama iki sürüm kısa süre birlikte çalışacak."
+
+## Blue-green ve canary
+
+<Compare>
+<Pane title="Blue-green">
+
+- İki tam ortam; yeni sürüm boştakine kurulur, trafik bir anda çevrilir
+- Geri dönüş anlık
+- Bedeli: iki kat altyapı
+
+</Pane>
+<Pane title="Canary">
+
+- Yeni sürüm önce küçük bir yüzdeye açılır, sorun yoksa artırılır
+- Etki alanı sınırlı (%1 yaşar, %100 değil)
+- Adı: madenlerdeki kanarya
+
+</Pane>
+</Compare>
+
+"Blue-green yapalım; sorun çıkarsa saniyeler içinde geri dönebiliriz." "Önce %5'e açalım, metrikleri bir saat izleyelim, sorun yoksa artıralım."
+
+## Feature flag
+
+**Feature flag (özellik anahtarı, toggle)**: bir özelliğin, kod yayınlandıktan sonra ayrı bir ayarla açılıp kapatılabilmesi. **Yayın (deploy) ile açılışı (release) birbirinden ayırır;** bu, bölümdeki en önemli fikirlerden biridir. Kod canlıda durur ama kullanıcıya kapalıdır. Dört sonucu:
+
+1. Yarım kalmış iş ana dala girebilir (trunk-based).
+2. Özellik pazarlama takvimine göre yeni bir yayın gerekmeden açılabilir.
+3. Sorun çıkarsa özellik saniyeler içinde kapatılabilir (**kill switch**); geri almaktan çok daha hızlıdır.
+4. A/B testi ve kademeli açılım bunun üstüne kurulur.
+
+"Yeni ödeme akışını flag arkasında yayınlayalım; önce biz kullanalım, sonra %10'a açalım."
+
+**Bayraklar birikir ve teknik borç üretir.** Kullanılmayan bayraklar kodu dallandırır ve test edilmesi gereken durum sayısını katlar. Her bayrağın bir **sahibi** ve bir **kaldırılma tarihi** olmalıdır.
+
+<Callout kind="tasarimci">
+
+- **Büyük tasarım değişikliklerini flag arkasında kademeli açmayı öner:** önce iç ekip, sonra %10, sonra herkes.
+- **Canary'de hangi metriğin izleneceğini tasarım tarafından da belirle** (dönüşüm, hata, tıklama).
+- **Kullanılmayan bayrakların kaldırılmasını takip et;** eski tasarım dalları kodda kalmasın.
+
+</Callout>
+
+<Summary>
+
+- Rolling kopyaları tek tek geçirir, blue-green trafiği bir anda çevirir (geri dönüş anlık), canary önce küçük bir yüzdeye açar.
+- Feature flag yayını ile açılışı ayırır: kill switch, kademeli açılım, A/B testi mümkün olur.
+- Bayraklar birikir; her bayrağın sahibi ve kaldırılma tarihi olmalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Blue-green ile canary arasındaki fark nedir?">
+
+Blue-green: iki tam ortam vardır, trafik bir anda yeniye çevrilir; geri dönüş anlıktır ama iki kat altyapı maliyeti vardır. Canary: yeni sürüm önce kullanıcıların küçük bir yüzdesine açılır, sorun yoksa oran kademeli artırılır; hatanın etki alanını sınırlar.
+
+</SelfCheck>
+
+<SelfCheck question="Feature flag'in en önemli katkısı nedir? Dört sonucunu say.">
+
+Yayın (deploy) ile açılışı (release) birbirinden ayırır. Sonuçlar: yarım kalmış iş ana dala girebilir; özellik yeni yayın gerekmeden pazarlama takvimine göre açılabilir; sorun çıkarsa saniyeler içinde kapatılabilir (kill switch); A/B testi ve kademeli açılım bunun üstüne kurulur.
+
+</SelfCheck>

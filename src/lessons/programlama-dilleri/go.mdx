@@ -1,0 +1,63 @@
+---
+summary: "Çok sayıda isteği aynı anda karşılayan sunucular için tasarlanmış, kasıtlı olarak küçük bir dil. 'Bu servisi Go'ya alalım' cümlesinin neden bir ölçek sorusunun cevabı olduğunu öğrenirsin."
+outcomes:
+  - "Go'nun nerelerde kullanıldığını söyleyebilirsin."
+  - "Go'ya geçişin neden kullanıcı tarafında hiçbir şeyi değiştirmediğini açıklayabilirsin."
+minutes: 4
+sources:
+  - label: "Go — Dokümantasyon"
+    url: "https://go.dev/doc/"
+  - label: "Effective Go"
+    url: "https://go.dev/doc/effective_go"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Go, Google'ın, çok sayıda isteği aynı anda karşılayan sunucular için tasarladığı bir dildir. Kasıtlı olarak küçüktür: az özellik, az yol, az tartışma.
+
+## Nerede karşına çıkar
+
+- **Yüksek trafikli servisler** ve API'ler.
+- **Altyapı yazılımı.** Docker ve Kubernetes'in kendisi Go ile yazılmıştır.
+- **Komut satırı araçları.** Tek dosya olarak dağıtılabildiği için pratiktir.
+
+## Güçlü ve zayıf yanları
+
+**İyi yaptığı:**
+
+- **Eşzamanlılık:** binlerce isteği aynı anda karşılamak dilin temel tasarım hedefidir.
+- **Hızlı ve öngörülebilir:** bellek ve gecikme davranışı istikrarlıdır.
+- **Öğrenmesi kısa:** dil küçük olduğu için yeni bir geliştirici birkaç günde üretken olabilir.
+- **Dağıtımı kolay:** tek bir çalıştırılabilir dosya çıkar.
+
+**Kötü yaptığı:** az soyutlama sunar (aynı kalıbı tekrar tekrar yazmak gerekir); veri ve yapay zekâ ekosistemi zayıftır (o işler Python'dadır); arayüz tarafında yeri yoktur.
+
+**Alternatifler:** ekip JavaScript biliyorsa benzer eşzamanlılık profiliyle Node.js; daha yüksek performans için (çok daha dik öğrenme eğrisiyle) Rust; kurumsal ekosistem gerekiyorsa Java ya da C#.
+
+<Callout kind="tasarimci">
+
+- **"Bu servisi Go'ya alalım" genelde bir ölçek sorununun cevabıdır,** bir moda değil. Sorulacak soru: hangi sayı bunu tetikledi?
+- **Go'ya geçmek kullanıcı tarafında hiçbir şeyi değiştirmez;** arayüz aynı kalır. Takvimde yer kaplayan ama tasarım çıktısı olmayan bir iştir; yol haritasında görünmez olması normaldir.
+
+</Callout>
+
+<Summary>
+
+- Go, yüksek trafikli servisler ve altyapı araçları için tasarlanmış küçük, hızlı bir dildir.
+- Gücü eşzamanlılık, basit dil ve kolay dağıtımdır; veri/yapay zekâ ve arayüzde yeri yoktur.
+- Go'ya geçiş kullanıcıya görünmeyen bir mimari iştir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Bu servisi Go'ya alalım' cümlesinde hangi soruyu sormalısın?">
+
+Hangi sayının (trafik, gecikme, maliyet) bunu tetiklediğini. Go'ya geçiş genelde bir ölçek sorununun cevabıdır ve kullanıcı tarafında bir şeyi değiştirmez.
+
+</SelfCheck>

@@ -1,0 +1,25 @@
+---
+summary: "Veri modeli arayüzün neyi gösterebileceğinin sınırını çizer: veritabanı türleri, şema, ilişkiler, sorgu, yaygın problemler ve veri yaşam döngüsü, tasarımcının gözünden."
+sources:
+  - label: "PostgreSQL — Dokümantasyon"
+    url: "https://www.postgresql.org/docs/current/"
+  - label: "Use The Index, Luke"
+    url: "https://use-the-index-luke.com/"
+---
+
+Bu bölümün tasarımcı için değeri, ilk bakışta göründüğünden büyük. Sebebi şu: **veri modeli, arayüzün neyi gösterebileceğinin sınırını çizer.**
+
+"Kullanıcı birden fazla adres kaydedebilsin" ile "kullanıcının tek bir adresi olsun" arasındaki fark bir tasarım tercihi gibi görünür; aslında bir **veri modeli kararıdır** ve sonradan değiştirmek ekranı değiştirmekten kat kat pahalıdır. İkinci değer: bir isteğin **neden zor** olduğunu tahmin edebilmek.
+
+Kavramlar **eskimeyen** türdendir (ilişkisel model elli yıllıktır). Değişken olanlar ürün ve servis isimleridir; son derste değişken bilgi uyarıları sık.
+
+## Bu bölümü bitirdiğinde
+
+- Veri modeli kararlarını ekran tasarımıyla birlikte konuşabileceksin.
+- Bir şemayı okuyup hangi boş ve uç durumları tasarlaman gerektiğini çıkarabileceksin.
+- N+1, eksik index ve kilit gibi yaygın problemlerin hangi tasarım isteklerinden doğduğunu bileceksin.
+- Silme, saklama ve yedek konularında ürün kararlarına katılabileceksin.
+
+## Nasıl çalışmalı?
+
+On iki ders var. **Şema temelleri**, **ilişki türleri** ve **yaygın problemler** tasarımına en çok dokunan derslerdir. Her derste bir **"Tasarımcı olarak sen"** kutusu var: oradaki maddeleri tasarım teslimi için bir kontrol listesi gibi kullanabilirsin.

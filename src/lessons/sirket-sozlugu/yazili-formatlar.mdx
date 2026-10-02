@@ -1,0 +1,82 @@
+---
+summary: "Kurumsal ortamda hangi belgenin ne işe yaradığı: one-pager, PRD/spec, RFC, ADR, status update, changelog, runbook, postmortem, brief. RFC karar öncesi tartışma, ADR karar sonrası kayıttır; iyi bir status update dört parçalıdır ve kötü haberi geciktirmek en yaygın hatadır."
+outcomes:
+  - "Dokuz yazılı formatın ne için kullanıldığını ayırt edebilirsin."
+  - "RFC ile ADR arasındaki farkı söyleyebilirsin."
+  - "İyi bir status update'in dört parçasını ve en yaygın hatasını bilirsin."
+minutes: 7
+sources:
+  - label: "Martin Fowler — Architecture Decision Record"
+    url: "https://martinfowler.com/bliki/ArchitectureDecisionRecord.html"
+  - label: "Google SRE — Postmortem kültürü"
+    url: "https://sre.google/sre-book/postmortem-culture/"
+  - label: "Wikipedia — Request for Comments (kavramın kökeni)"
+    url: "https://en.wikipedia.org/wiki/Request_for_Comments"
+skipTerms: ["Latency","Request","latency","gecikme","request"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+| Format | Ne için |
+|---|---|
+| **One-pager** | Bir fikri tek sayfada sunmak, ön onay almak |
+| **PRD / Spec** | Ne yapılacağını ve neden yapılacağını tanımlamak |
+| **RFC** | Bir öneriyi yorum ve itiraz için açmak |
+| **ADR** | Alınan mimari kararı gerekçesiyle kaydetmek |
+| **Status update** | İlerlemeyi paydaşlara düzenli bildirmek |
+| **Changelog / Release note** | Ne değiştiğini kullanıcıya anlatmak |
+| **Runbook** | Bilinen bir soruna adım adım müdahale talimatı |
+| **Postmortem** | Olay sonrası analiz ve önlemler |
+| **Brief** | Bir tasarım/içerik işine hedef ve kısıt vermek |
+
+## RFC
+
+**RFC (Request For Comments, görüş talebi belgesi)**, bir öneriyi karar alınmadan önce yazıya döküp ilgililerin yorum ve itirazına açmaktır. Kararı toplantıdan yazıya taşır. Faydaları: yazan kişi fikrini netleştirmek zorunda kalır, katılamayanlar da yorum yapabilir, itirazlar kayıt altına alınır ve karar alındığında herkes gerekçeyi görmüş olur. Orta ve büyük ekiplerde, önemli değişikliklerden önce karşına çıkar. "Bu değişiklik üç ekibi etkiliyor; RFC yazıp bir hafta yorum alalım."
+
+**RFC karar öncesi** tartışmadır; **ADR karar sonrası** kayıttır. Biri girdi, diğeri çıktıdır.
+
+## Status update
+
+**Status update (durum güncellemesi)**, bir işin ilerleyişini paydaşlara düzenli olarak bildiren kısa yazıdır. Yöneticilerin ve paydaşların sormasına gerek kalmadan bilgi akmasını sağlar; bu da kesintileri azaltır. İyi bir güncelleme genelde dört parçadan oluşur:
+
+1. **Durum:** yolunda / risk altında / gecikiyor.
+2. **Bu hafta ne oldu.**
+3. **Sırada ne var.**
+4. **Neye ihtiyacım var.**
+
+"Durum: risk altında. Üçüncü parti entegrasyonu gecikti; ETA'yı bir hafta kaydırmamız gerekebilir."
+
+**Kötü haberi geciktirmek en yaygın hatadır.** Erken bildirilen gecikme yönetilebilir bir bilgidir; son anda bildirilen gecikme bir güven sorunudur.
+
+<Callout kind="tasarimci">
+
+- **Büyük bir tasarım değişikliğinde RFC aç:** etkilenen herkes yorum yapabilsin.
+- **Kararı ADR olarak kaydet:** alternatifler ve gerekçeyle.
+- **Status update'ini dört parçayla yaz** ve gecikmeyi erken bildir.
+- **Brief verirken hedef ve kısıtı yaz.**
+
+</Callout>
+
+<Summary>
+
+- Her formatın bir işi var: fikir (one-pager), tanım (PRD), tartışma (RFC), kayıt (ADR), bildirim (status update), kullanıcıya anlatım (changelog), müdahale (runbook), öğrenme (postmortem), yönlendirme (brief).
+- RFC karar öncesi, ADR karar sonrasıdır.
+- Status update: durum, bu hafta, sırada ne var, ihtiyaç. Kötü haberi erken ver.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="RFC ile ADR arasındaki fark nedir?">
+
+RFC karar öncesi tartışmadır: öneriyi yorum ve itiraza açar. ADR karar sonrası kayıttır: alınan kararı gerekçesi ve alternatifleriyle saklar. Biri girdi, diğeri çıktıdır.
+
+</SelfCheck>
+
+<SelfCheck question="İyi bir status update'in dört parçası nedir? En yaygın hata nedir?">
+
+Durum (yolunda / risk altında / gecikiyor), bu hafta ne oldu, sırada ne var, neye ihtiyacım var. En yaygın hata kötü haberi geciktirmek: erken bildirilen gecikme yönetilebilir, son anda bildirilen gecikme güven sorunudur.
+
+</SelfCheck>

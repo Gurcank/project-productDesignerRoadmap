@@ -1,0 +1,69 @@
+---
+summary: "API iki yazılımın konuşma sözleşmesidir. Endpoint, contract ve sürümleme kavramları; ön yüz ile arka yüzün paralel çalışmasını ve tasarımcının boş/uç durumları öngörmesini sağlar."
+outcomes:
+  - "API, endpoint ve resource'u ayırt edebilirsin."
+  - "Sözleşmenin tasarımcı için değerini (hangi alanlar boş olabilir) söyleyebilirsin."
+  - "Kırıcı değişiklik ve sürümlemenin neden mobil uygulamalarda kritik olduğunu açıklayabilirsin."
+minutes: 7
+sources:
+  - label: "MDN — Glossary: API"
+    url: "https://developer.mozilla.org/en-US/docs/Glossary/API"
+  - label: "OpenAPI Initiative"
+    url: "https://www.openapis.org/"
+  - label: "Swagger — OpenAPI Specification hakkında"
+    url: "https://swagger.io/docs/specification/about/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Bu ekran için gereken veriyi tek bir API çağrısıyla alabilir miyiz?" Bu soruyu sorabilmen için API'nin ne olduğunu ve etrafındaki kavramları bilmelisin.
+
+## API
+
+**API (Application Programming Interface)**, iki yazılımın birbiriyle konuşma biçimini tanımlayan sözleşmedir. Ön yüz ile arka yüzü birbirinden ayırır: ikisi ayrı ekipler tarafından, ayrı hızlarda geliştirilebilir. Ayrıca aynı arka yüz, hem web hem mobil hem üçüncü partiler tarafından kullanılabilir.
+
+## Endpoint ve resource
+
+**Endpoint (uç nokta)**, API'nin belirli bir işlevine karşılık gelen adrestir (`/api/urunler/123`). **Resource (kaynak)** ise o adresin temsil ettiği şeydir (bir ürün). API'yi konuşulabilir parçalara bölerler: "şu endpoint yavaş", "bu endpoint 500 dönüyor". DevTools'un Network sekmesinde sürekli görürsün. "Liste endpoint'i her ürünün tüm açıklamasını dönüyor; kart görünümünde kullanmıyoruz."
+
+## Contract
+
+**API contract (sözleşme)**, bir endpoint'in hangi girdileri kabul ettiğini ve hangi çıktıyı döndürdüğünü tanımlayan anlaşmadır. Ön yüz ile arka yüzün **paralel çalışmasını** mümkün kılar: sözleşme belirlendikten sonra iki taraf birbirini beklemez. OpenAPI (Swagger) belgesi bunun standart biçimidir.
+
+Tasarımcı için önemi: sözleşme, hangi alanların geleceğini ve **hangilerinin boş olabileceğini** söyler; yani hangi boş ve uç durumları tasarlaman gerektiğini. "Sözleşmeye bakalım: `discount` alanı opsiyonel, o zaman indirimsiz kart görünümünü de tasarlamalıyız."
+
+## Sürümleme
+
+Sözleşmeyi habersiz değiştirmek (**breaking change**, kırıcı değişiklik) ön yüzü kırar. **API versioning**, API'nin değişirken eski kullanıcılarını kırmamasını sağlar; genelde adrese sürüm koyarak (`/api/v2/...`). Bir API'yi dışarıya açtıysan kullananları haberdar etmeden değiştiremezsin. **Mobil uygulamalar özellikle kritiktir:** kullanıcı güncellemeyi yüklemediyse eski sürümü kullanmaya devam eder. "Bu değişiklik kırıcı; v2 açalım ve v1 için altı aylık geçiş süresi verelim."
+
+<Callout kind="tasarimci">
+
+- **Tasarlamadan önce sözleşmeye (ya da gerçek yanıta) bak:** hangi alanlar zorunlu, hangisi opsiyonel?
+- **Her opsiyonel alan için boş hâlini tasarla.**
+- **Mobil uygulamalı üründe bir alanı kaldırmadan önce sor:** eski sürümler kırılır mı?
+
+</Callout>
+
+<Summary>
+
+- API iki yazılımın konuşma sözleşmesidir; endpoint onun bir adresi, resource o adresin temsil ettiği şeydir.
+- Contract, hangi alanların geleceğini ve hangilerinin boş olabileceğini söyler; ön yüz ve arka yüzün paralel çalışmasını sağlar.
+- Kırıcı değişiklikler sürümlemeyle yönetilir; mobil uygulamalarda eski sürümler uzun süre kullanımda kalır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="API contract'ın tasarımcı için değeri nedir?">
+
+Hangi alanların geleceğini ve hangilerinin boş olabileceğini söyler; yani hangi boş ve uç durumları tasarlaman gerektiğini. Ayrıca ön yüz ile arka yüzün paralel çalışmasını sağlar.
+
+</SelfCheck>
+
+<SelfCheck question="Mobil uygulamalarda API sürümlemesi neden kritiktir?">
+
+Kullanıcı güncellemeyi yüklemediyse eski sürümü kullanmaya devam eder; API habersiz değişirse eski sürümler kırılır.
+
+</SelfCheck>

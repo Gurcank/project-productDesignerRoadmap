@@ -1,0 +1,114 @@
+---
+summary: "Kapsam ve önceliklendirme dili (must-have, punt, park, descope), kapasite dili (bandwidth, heads-down, firefighting) ve dört kavram: ship it, bikeshedding, yak shaving, scope creep / gold plating. Tasarımcı için en özel tehlike bikeshedding'dir."
+outcomes:
+  - "Kapsam ve kapasite kalıplarını toplantıda doğru kullanabilirsin."
+  - "Punt ile park, scope creep ile gold plating arasındaki farkı söyleyebilirsin."
+  - "Bikeshedding'in neden tasarımcı için özel bir tehlike olduğunu ve panzehirini bilirsin."
+minutes: 8
+sources:
+  - label: "Wikipedia — Law of triviality (bikeshedding)"
+    url: "https://en.wikipedia.org/wiki/Law_of_triviality"
+  - label: "Seth Godin — Don't shave that yak!"
+    url: "https://seths.blog/2005/03/dont_shave_that/"
+  - label: "Atlassian — MoSCoW önceliklendirme"
+    url: "https://www.atlassian.com/agile/project-management/moscow"
+  - label: "Wikipedia — Scope creep"
+    url: "https://en.wikipedia.org/wiki/Scope_creep"
+skipTerms: ["Scope","scope","kapsam"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+## Kapsam ve önceliklendirme dili
+
+| Terim | Anlamı | Örnek |
+|---|---|---|
+| **Must-have** | Olmazsa olmaz (MoSCoW) | "Ödeme akışı must-have." |
+| **Nice-to-have** | İyi olur ama şart değil | "Animasyonlar nice-to-have; süre daralırsa düşer." |
+| **Quick win** | Az emekle görünür fayda | "Bu bir quick win; yarım günde biter." |
+| **Low-hanging fruit** | Kolay ulaşılabilir kazanç | "Önce low-hanging fruit'lara bakalım." |
+| **Punt** | Bir kararı veya işi ileriye atmak | "Bunu bir sonraki sprint'e punt edelim." |
+| **Park** | Şimdilik bir kenara koymak, unutmamak | "Bu konuyu park edelim, kickoff'ta dönelim." |
+| **Deprioritize** | Öncelik sırasında aşağı indirmek | "Bu epic'i deprioritize ettik." |
+| **Descope / Cut** | Kapsamdan çıkarmak | "Süreye yetişmiyoruz; iki özelliği descope edelim." |
+| **Table it** | Konuyu ertelemek, şimdi tartışmamak | "Bunu table edelim, gündemimiz dolu." |
+
+*Punt* ve *park* arasında ince bir fark var: **punt** işi belirli bir sonraki döneme atar; **park** ise "şimdi konuşmuyoruz ama unutmuyoruz" demektir ve genelde bir "parking lot" listesine yazılır.
+
+## Kapasite ve iş yükü
+
+| Terim | Anlamı | Örnek |
+|---|---|---|
+| **Bandwidth** | Kapasite, ayrılabilecek zaman | "Bu hafta bandwidth'im yok." |
+| **Capacity** | Ekibin fiilen çalışabileceği süre | "Kapasitemiz %60, iki kişi izinli." |
+| **Context switching** | Bağlam değiştirme kaybı | "Üç projeye bölünüyorum, context switching öldürüyor." |
+| **Heads-down** | Kesintisiz odaklanma modu | "Bugün heads-down çalışacağım." |
+| **Firefighting** | Sürekli acil işlerle uğraşma | "Bu hafta hep firefighting; planlı iş yapamadık." |
+
+## Ship it
+
+**Ship it (yayınla / çıkar)**, bir işin tamamlanıp kullanıcıya ulaştırılmasıdır. "Bitti" ile "yayında" arasındaki farkı vurgular: yazılım kültüründe **değer, yayına çıkana kadar üretilmiş sayılmaz;** bu yüzden "shipping" bir erdem olarak anılır. "Ship it" aynı zamanda bir onay ifadesidir. "Mükemmel değil ama ship edelim; kullanıcı geri bildirimiyle iyileştiririz."
+
+Aşırıya kaçtığında kalite bahanesine dönüşür. Karşı-kalıp: **"ship it" ile "Definition of Done" çelişiyorsa, sorun DoD'de değil acele etmededir.**
+
+## Bikeshedding
+
+**Bikeshedding (law of triviality)**: bir ekibin asıl zor ve önemli konu yerine, herkesin fikir söyleyebileceği önemsiz bir ayrıntıya saatlerce takılması. Yaygın bir Türkçe karşılığı yok; "önemsiz ayrıntıda boğulma" olarak açıklanır. Adı, bir nükleer santral tasarımı toplantısında reaktör yerine bisiklet barakasının rengini tartışan komite benzetmesinden gelir. Sebebi basit: **herkes basit konuda fikir sahibi olabilir, zor konuda olamaz;** katılım gösterme baskısı insanları kolay konuya iter.
+
+**Tasarımcı için özel bir tehlikedir:** renk ve buton metni herkesin fikir söyleyebileceği konulardır; akış yapısı değildir. Bu yüzden toplantılar kolayca renk tartışmasına kayar. "Yirmi dakikadır buton rengini tartışıyoruz; bikeshedding yapıyoruz. Asıl karar akışın kaç adım olacağı."
+
+**Panzehiri tartışmayı çerçevelemektir:** crit'e getirirken hedefi yazmak, karar gerektiren soruyu açıkça sormak ve önemsiz konuları timebox'lamak.
+
+## Yak shaving
+
+**Yak shaving**: asıl işi yapmak için önce başka bir şeyi, onun için de başka bir şeyi düzeltmek zorunda kalıp zincirin sonunda asıl işten çok uzaklaşmak. "Basit bir buton ekleyecektim, üç saattir derleme yapılandırmasıyla uğraşıyorum" durumunun adı. Adlandırabilmek, fark edip durabilmeyi sağlar. Geliştirme sırasında ve standup'ta "neden ilerlemedim" açıklamalarında karşına çıkar. "Yak shaving'e girdim; asıl işe dönmek için bunu şimdilik geçici çözümle bırakıyorum."
+
+## Scope creep ve gold plating
+
+**Scope creep** kapsamın sessizce büyümesidir. **Gold plating** ise kimsenin istemediği hâlde ekibin kendi kendine fazladan iş yapmasıdır; tasarımcılarda ve geliştiricilerde sık görülür: "madem dokunuyorum, şunu da güzelleştireyim." İlki dışarıdan gelen isteklerle, ikincisi içeriden kendiliğinden olur.
+
+<Callout kind="tasarimci">
+
+- **Toplantıda renk tartışması başladığında sor:** bu kararın akışa etkisi ne? Akış sorusunu öne çek.
+- **Crit'e hedefi ve karar sorusunu yazarak getir.**
+- **Kapsam daralınca "descope" listesini sen öner:** nice-to-have'leri baştan işaretle.
+- **Kendi gold plating'ini fark et:** bu iyileştirmeyi kimse istedi mi?
+
+</Callout>
+
+<Summary>
+
+- Kapsam dili: must-have, nice-to-have, punt (belirli döneme at), park (unutmadan beklet), descope.
+- Ship it: değer yayına çıkana kadar üretilmiş sayılmaz; acelenin kalite bahanesine dönmesine dikkat.
+- Bikeshedding tasarım toplantılarında renk ve metin tartışmasına kayma tehlikesidir; panzehiri çerçevelemek.
+- Yak shaving'i adlandırmak durabilmeyi sağlar; scope creep dışarıdan, gold plating içeriden gelen fazlalıktır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Punt ile park arasındaki ince fark nedir?">
+
+Punt işi belirli bir sonraki döneme atar. Park, "şimdi konuşmuyoruz ama unutmuyoruz" demektir ve genelde bir bekleme listesine yazılır.
+
+</SelfCheck>
+
+<SelfCheck question="Bikeshedding nedir ve tasarımcı için neden özel bir tehlike? Panzehiri nedir?">
+
+Asıl zor konu yerine herkesin fikir söyleyebileceği önemsiz bir ayrıntıya saatlerce takılmak. Tasarımcı için tehlikeli çünkü renk ve buton metni herkesin fikir söyleyebileceği konulardır; akış yapısı değildir. Panzehiri tartışmayı çerçevelemek: hedefi yazmak, karar sorusunu açıkça sormak, önemsiz konuları timebox'lamak.
+
+</SelfCheck>
+
+<SelfCheck question="Yak shaving nedir? Adlandırabilmek neden işe yarar?">
+
+Asıl işi yapmak için başka bir şeyi, onun için de başka bir şeyi düzeltmek zorunda kalıp asıl işten uzaklaşmak. Adlandırabilmek fark edip durabilmeyi sağlar.
+
+</SelfCheck>
+
+<SelfCheck question="Gold plating ile scope creep arasındaki fark nedir?">
+
+Scope creep: kapsam dışarıdan gelen isteklerle sessizce büyür. Gold plating: kimse istemediği hâlde ekip kendi kendine fazladan iş yapar.
+
+</SelfCheck>

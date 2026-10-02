@@ -1,0 +1,57 @@
+---
+summary: "Kullanıcı dosyaları sunucunun diskinde değil, ayrı bir depolama servisinde tutulur. Signed URL, görsel dönüştürme ve yükleme akışının tasarlanması gereken durumları."
+outcomes:
+  - "Object storage ve signed URL'in neyi çözdüğünü söyleyebilirsin."
+  - "Image CDN'in neden gerektiğini açıklayabilirsin."
+  - "Dosya yükleme akışının hangi durumlarının tasarlanması gerektiğini sayabilirsin."
+minutes: 5
+sources:
+  - label: "AWS — Presigned URL ile nesne paylaşmak"
+    url: "https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html"
+  - label: "Cloudflare Images"
+    url: "https://developers.cloudflare.com/images/"
+  - label: "MDN — Duyarlı görseller"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Responsive_images"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Kullanıcı profil fotoğrafı yükledi, 5MB'lık bir telefon fotoğrafı. Bu dosya nerede duruyor, listeye 5MB olarak mı gelecek, başkası onu görebilir mi? Üç sorunun cevabı bu derste.
+
+## Yükleme, nesne depolama, signed URL
+
+Kullanıcı dosyaları sunucunun diskinde değil, ayrı bir depolama servisinde (**object storage**, örneğin S3 türü servisler) tutulur. Dosyaları sunucuda tutmak ölçeklenmez ve yedeklemeyi zorlaştırır. **Signed URL (imzalı adres)**, o dosyaya sınırlı süreyle erişim veren özel adrestir: özel dosyaların (fatura, kimlik belgesi) herkese açık olmadan paylaşılmasını sağlar; adres belirli bir süre sonra geçersiz olur. "Faturaları signed URL ile verelim; adres 15 dakika sonra geçersiz olsun."
+
+Tasarım tarafında yükleme akışının tüm durumları gerekir: boyut ve format sınırı **önceden** yazılmalı, ilerleme gösterilmeli, iptal edilebilmeli, hata anlaşılır olmalıdır.
+
+## Image CDN ve transcoding
+
+**Image CDN (görsel dönüştürme servisi)**, yüklenen görsellerin otomatik olarak yeniden boyutlandırılması, formatının değiştirilmesi (WebP/AVIF) ve kırpılmasıdır; **transcoding** video için aynı işlemin adıdır. Editörün yüklediği 5MB'lık fotoğrafın kullanıcıya 5MB olarak gitmemesini sağlar. Tasarımdaki her farklı boyut (kart, liste, detay) için ayrı sürüm otomatik üretilir. İçerik yoğun sitelerde bulunur; meta-framework'lerin görsel bileşenleri bunu genelde hazır sunar. "Görselleri image CDN'den geçirelim; editörler ne yüklerse yüklesin optimize edilmiş gelsin."
+
+<Callout kind="tasarimci">
+
+- **Yükleme alanının altına kabul edilen format ve maksimum boyutu baştan yaz.**
+- **Yükleme ilerlemesini, iptali ve hatayı (boyut aşıldı, format uygun değil) tasarla.**
+- **Özel dosyalar için süreli erişim modelini** (ve süre dolunca ekranda ne göründüğünü) tasarla.
+- **Görsel boyut setlerini (kart, liste, detay) ve oranlarını teslimde belirt.**
+
+</Callout>
+
+<Summary>
+
+- Kullanıcı dosyaları ayrı depolama servisinde tutulur; signed URL özel dosyalara sınırlı süreli erişim verir.
+- Image CDN, yüklenen görselleri otomatik boyutlandırır ve formatlar; 5MB'lık fotoğraf kullanıcıya 5MB gitmez.
+- Yükleme akışının sınır, ilerleme, iptal ve hata durumları tasarlanmalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Signed URL neyi çözer?">
+
+Özel dosyalara (fatura, kimlik belgesi) herkese açık hâle getirmeden ve sınırlı süreyle erişim verilmesini. Adres belirli bir süre sonra geçersiz olur.
+
+</SelfCheck>

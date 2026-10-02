@@ -1,0 +1,86 @@
+---
+summary: "Git yalnızca kodun değil, işin de kaydıdır. Sürüm kontrolü üç problemi çözer: geri dönebilmek, birlikte çalışabilmek ve 'neden böyle?' sorusunu cevaplamak. Git bir araçtır, GitHub bir platformdur."
+outcomes:
+  - "Sürüm kontrolünün çözdüğü üç problemi söyleyebilirsin."
+  - "Git ile GitHub arasındaki farkı açıklayabilirsin."
+  - "Git'in tasarımcıya sağladığı üç faydayı (PR incelemesi, değişiklik takibi, konuşmayı anlamak) sayabilirsin."
+minutes: 6
+sources:
+  - label: "Pro Git — Git nedir?"
+    url: "https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F"
+  - label: "Git — Hakkında"
+    url: "https://www.git-scm.com/about"
+  - label: "GitHub Docs — Git hakkında"
+    url: "https://docs.github.com/en/get-started/using-git/about-git"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Rebase ettim", "conflict çıktı", "main'e merge edildi". Bu cümleler her gün geçer ve kod yazmasan bile içinde olursun. Sebep şu: **Git yalnızca kodun değil, işin de kaydıdır.** Bir özelliğin ne zaman girdiği, kimin neyi değiştirdiği, bir hatanın hangi değişiklikle geldiği: hepsi burada.
+
+Senin açından üç somut fayda var:
+
+1. **Pull request incelemesine katılabilmek.** Tasarımın uygulanmış hâlini incelemek, bir PR üzerinde yorum yapmak kod yazmayı gerektirmez.
+2. **Değişikliği takip edebilmek.** "Bu ne zaman böyle oldu?" sorusunun cevabı Git geçmişindedir.
+3. **Konuşmayı anlamak.**
+
+Bölümdeki temel kavramlar **eskimeyen** kategoridedir; Git yirmi yıldır aynı. Değişken olan, hangi iş akışının moda olduğu ve GitHub'ın ürün özellikleridir. **Söz dizimi yok:** komut adlarını yalnızca terimin kendisi oldukları için yazıyoruz ("rebase ettim" diye konuşulur), nasıl kullanılacaklarını değil.
+
+## Sürüm kontrolü
+
+**Version control system (sürüm kontrol sistemi)**, dosyalardaki değişikliklerin zaman içinde kaydedilmesini, geri alınabilmesini ve birden fazla kişinin aynı anda çalışabilmesini sağlar. Üç problemi birden çözer:
+
+- **Geri dönebilmek:** bir şey bozulduğunda eski hâle dönmek.
+- **Birlikte çalışabilmek:** iki kişinin aynı dosyayı ezmemesi.
+- **"Neden?" sorusunu cevaplamak:** bu satır neden böyle yazılmış?
+
+"Bu değişikliği geri alalım; geçmişte hangi commit'te girdiğine bakalım."
+
+## Git ve GitHub
+
+<Compare>
+<Pane title="Git">
+
+- Dağıtık sürüm kontrol sistemi (yazılım)
+- Her geliştiricide projenin tam geçmişiyle kopyası
+- İnternetsiz de çalışır
+
+</Pane>
+<Pane title="GitHub">
+
+- Git depolarını barındıran platform
+- PR, issue, Actions gibi özellikler ekler
+- Alternatifler: GitLab, Bitbucket
+
+</Pane>
+</Compare>
+
+**Git**, dağıtık bir sürüm kontrol sistemidir: her geliştiricinin bilgisayarında projenin tam geçmişiyle birlikte bir kopyası bulunur. "Dağıtık" olması internet olmadan da çalışabilmeyi ve merkezî sunucu çökse bile geçmişin kaybolmamasını sağlar. Fiilî standarttır. Git olmadan GitHub olmaz, ama GitHub olmadan Git gayet çalışır. "Depo Git'te; GitHub'da barındırıyoruz."
+
+<Callout kind="tasarimci">
+
+- **Git geçmişini bir "neden" kaynağı olarak kullan:** bir değerin ne zaman ve neden değiştiğini sor.
+- **Tasarım dosyalarının hangi depoda duracağına ekiple karar ver.**
+- **GitHub'da bir PR'ı açıp diff'e bakmayı bir kez dene;** kod bilmeden de ölçü ve metin değişikliklerini görürsün.
+
+</Callout>
+
+<Summary>
+
+- Sürüm kontrolü geri dönmeyi, birlikte çalışmayı ve "neden böyle?" sorusunu çözer.
+- Git bir araçtır (dağıtık, internetsiz çalışır), GitHub onu barındıran bir platformdur.
+- Tasarımcıya faydası: PR incelemesi, değişiklik takibi, konuşmayı anlamak.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Git ile GitHub arasındaki fark nedir?">
+
+Git bir sürüm kontrol sistemidir (yazılımın kendisi); GitHub, Git depolarını barındıran bir platformdur. Git olmadan GitHub olmaz ama GitHub olmadan Git çalışır; GitLab ve Bitbucket alternatiflerdir.
+
+</SelfCheck>

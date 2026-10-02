@@ -1,0 +1,70 @@
+---
+summary: "Kelime eşleştirmeyen arama: metinler vektörlere çevrilir, anlamca yakın olanlar bulunur. Eş anlamlıyı bedavaya çözer ama tam eşleşmeyi, açıklanabilirliği ve 'sonuç yok' dürüstlüğünü kaybettirir. Çoğu iyi arama hibrittir."
+outcomes:
+  - "Embedding'in kabaca nasıl çalıştığını söyleyebilirsin."
+  - "Anlamsal aramanın ne kazandırıp ne kaybettirdiğini sayabilirsin."
+  - "Ürün kodu aramak ile kavram aramak arasındaki farkı ve hibrit yaklaşımı açıklayabilirsin."
+minutes: 7
+sources:
+  - label: "pgvector"
+    url: "https://github.com/pgvector/pgvector"
+  - label: "OpenAI — Embeddings kılavuzu"
+    url: "https://platform.openai.com/docs/guides/embeddings"
+  - label: "PostgreSQL — Tam metin arama"
+    url: "https://www.postgresql.org/docs/current/textsearch-intro.html"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Şifremi unuttum" yazan bir kullanıcı, içinde bu kelimeler geçmeyen "Hesap kurtarma" sayfasını bulabilir mi? Kelime eşleştirmeyen aramada evet. Bu derste mekanizmayı ve bedelini göreceksin.
+
+## Nasıl çalışır, kabaca
+
+Bir metin, sayılardan oluşan uzun bir listeye (**vektör**, **embedding**) çevrilir. Anlamca yakın metinlerin vektörleri birbirine yakın düşer. Arama, kelime karşılaştırmak yerine **yakınlık** ölçer. Bu vektörler bir **vektör veritabanında** tutulur; ilişkisel bir veritabanına eklenti olarak da eklenebilir.
+
+## Ne kazandırır
+
+- **Eş anlamlıyı bedavaya çözer:** "giriş" ve "login" için ayrı liste tutmaya gerek kalmaz.
+- **Soruyla arama:** kullanıcı tam cümle yazabilir.
+- **Diller arası çalışabilir:** Türkçe soru, İngilizce içeriği bulabilir.
+
+## Ne kaybettirir
+
+- **Tam eşleşme garantisi gider.** Ürün kodu, fatura numarası, kişi adı arıyorsan anlamsal arama yanlış araçtır; birebir eşleşme ister.
+- **"Neden bu sonuç geldi" açıklanamaz.** Kelime eşleşmesinde vurgulayabilirsin; yakınlıkta gösterecek bir şey yoktur. Bu kullanıcı güveni açısından gerçek bir kayıptır.
+- **Maliyet ve gecikme.** Her metnin vektörü üretilmeli, içerik değişince yeniden üretilmeli.
+- **Sessizce alakasız sonuç verir.** Hiç sonuç vermemek yerine "en yakın" bir şey döner, yanlış olsa bile.
+
+## Pratikte: ikisi birden
+
+Çoğu iyi arama **hibrittir:** kelime eşleşmesi kesinliği, anlamsal arama kapsamı verir; sonuçlar birleştirilip sıralanır. Bu sitenin araması kelime tabanlıdır (derleme anında oluşturulmuş statik bir indeks); statik bir sitede vektör altyapısı taşımaya değmez.
+
+<Callout kind="tasarimci">
+
+- **Kullanıcı ne arıyor?** Kod/numara arıyorsa birebir eşleşme şart; kavram arıyorsa anlamsal değerli.
+- **Açıklanabilirliği kaybetmeyi göze alıyor musun?** Vurgulama yapılamayan sonuç listesi daha az güven verir.
+- **Boş sonuç yerine yanlış sonuç gelmesi daha mı iyi?** Anlamsal aramada varsayılan budur ve bazı ürünlerde kabul edilebilir olmayabilir.
+- **"Yapay zekâ araması" isteği genelde budur** ve ayrı servis, ayrı gecikme, ayrı hata durumu demektir.
+
+</Callout>
+
+<Summary>
+
+- Embedding, metni anlam yakınlığını ölçebilen sayı listesine çevirir.
+- Eş anlamlıyı ve soruyla aramayı çözer; tam eşleşmeyi, açıklanabilirliği ve "sonuç yok" dürüstlüğünü kaybettirir.
+- Çoğu iyi arama hibrittir: kelime kesinliği + anlamsal kapsam.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Anlamsal arama hangi aramalarda yanlış araçtır?">
+
+Ürün kodu, fatura numarası, kişi adı gibi birebir eşleşme gerektiren aramalarda; ayrıca "neden bu sonuç geldi" sorusuna açıklama gerektiğinde ve boş sonuç yerine yanlış sonucun kabul edilemediği durumlarda.
+
+</SelfCheck>

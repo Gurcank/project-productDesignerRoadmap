@@ -41,4 +41,30 @@ const quizzes = defineCollection({
   }),
 });
 
-export const collections = { topics, categories, quizzes };
+/**
+ * Hand-written lessons (ADR-015). They live outside src/content/ on purpose:
+ * that folder is generated and `import:check` guards it. A lesson is matched to
+ * an imported step by file path — `web-temelleri/istemci-sunucu-modeli.mdx`
+ * replaces the term-card view of that step. `_index.mdx` is the category landing.
+ */
+const lessons = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/lessons" }),
+  schema: z.object({
+    /** One-sentence promise shown under the title and in link previews. */
+    summary: z.string(),
+    /** "Bu derste öğreneceklerin" — what the reader can do afterwards. */
+    outcomes: z.array(z.string()).default([]),
+    minutes: z.number().int().positive().optional(),
+    /** Primary sources; a lesson without one does not build (CLAUDE.md rule 4). */
+    sources: z.array(z.object({ label: z.string(), url: z.string().url() })).min(1),
+    /** Facts that are not in the material — listed on the page and in the round report. */
+    additions: z.array(z.string()).default([]),
+    flags: z.array(z.enum(["degisken", "emin-degil"])).default([]),
+    /** Ordinary words this lesson means as glossary terms ("card", "table"); see rehype-term-refs. */
+    includeTerms: z.array(z.string()).default([]),
+    /** Words whose shared definition is the wrong one here ("header" in page anatomy). */
+    skipTerms: z.array(z.string()).default([]),
+  }),
+});
+
+export const collections = { topics, categories, quizzes, lessons };

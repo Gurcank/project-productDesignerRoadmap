@@ -1,0 +1,105 @@
+---
+summary: "Şifreyi ortadan kaldıran ya da ikinci plana atan yaklaşımlar: magic link, OTP ve passkey. Sektörün gittiği yön burası. SMS kodları zayıf kabul ediliyor; passkey'in tasarımdaki en zor kısmı kurtarma akışıdır."
+outcomes:
+  - "Magic link ile OTP'nin UX farkını ve mobilde hangisinin daha iyi çalıştığını söyleyebilirsin."
+  - "OTP giriş ekranının bilinen tuzaklarını sayabilirsin."
+  - "Passkey'in neden kimlik avına dayanıklı olduğunu ve kurtarma akışının neden zor olduğunu açıklayabilirsin."
+  - "SMS kodunun neden zayıf kabul edildiğini bilirsin."
+minutes: 9
+sources:
+  - label: "NIST SP 800-63B Revizyon 4"
+    url: "https://pages.nist.gov/800-63-4/sp800-63b.html"
+  - label: "passkeys.dev"
+    url: "https://passkeys.dev/"
+  - label: "MDN — Web Authentication API"
+    url: "https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API"
+  - label: "W3C — WCAG 2.2: Accessible Authentication (Minimum)"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html"
+  - label: "web.dev — SMS OTP formu en iyi uygulamaları"
+    url: "https://web.dev/articles/sms-otp-form"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Şifre unutulur, çalınır, tekrar kullanılır. Bu yüzden sektör şifreyi tamamen ortadan kaldıran ya da ikinci plana atan yöntemlere gidiyor. Üçünü bil.
+
+## Magic link
+
+**Magic link**, kullanıcının e-posta adresine gönderilen ve tıklandığında doğrudan giriş yaptıran tek kullanımlık bağlantıdır. Şifre yönetimini tamamen ortadan kaldırır; nadiren giriş yapılan ürünlerde iyi çalışır. "Magic link ekleyelim; kullanıcılarımız ayda bir giriyor, şifre hatırlamıyorlar."
+
+**Tasarım açısından zor bir akıştır:** kullanıcı sekmeyi terk edip e-postasına gider ve geri döndüğünde bağlamı kaybedebilir. E-posta gecikebilir ya da spam'e düşebilir. Bekleme ekranı, "e-postayı tekrar gönder" seçeneği ve gönderim sayacı zorunludur.
+
+## OTP
+
+**OTP (One-Time Password, tek kullanımlık kod)**, e-posta ya da SMS ile gönderilen, kısa süre geçerli sayısal koddur. Magic link'e göre avantajı, kullanıcının **aynı sekmede kalmasıdır:** kodu okuyup yazar, bağlam kopmaz. Mobilde özellikle iyi çalışır. "6 haneli OTP kullanalım; kod alanları otomatik ilerlesin ve yapıştırma çalışsın."
+
+Kod giriş ekranının bilinen tuzakları:
+
+- **Yapıştırmayı engellememek** (WCAG 2.2 Accessible Authentication ölçütü bunu ilgilendirir).
+- **Otomatik doldurmayı desteklemek.**
+- **Geri sayımlı "tekrar gönder" butonu koymak.**
+- **Yanlış kod girildiğinde alanı temizleyip odağı başa almak.**
+
+**Güvenlik notu (değişken):** SMS ile gönderilen kodlar artık zayıf kabul ediliyor. NIST'in güncel dijital kimlik kılavuzu telefon şebekesi üzerinden gönderilen (SMS/ses) doğrulamayı "kısıtlı (restricted)" doğrulayıcı olarak sınıflandırır; SIM değiştirme saldırılarına açık olduğu için kimlik avına dayanıklı sayılmaz. Mümkünse kimlik doğrulayıcı uygulama (TOTP) ya da passkey tercih edilmeli.
+
+## Passkey
+
+**Passkey (geçiş anahtarı, WebAuthn/FIDO2)**, şifre yerine cihazda saklanan bir kriptografik anahtar çiftiyle giriş yapma yöntemidir. Kullanıcı parmak izi, yüz tanıma ya da cihaz PIN'i ile anahtarı kullanmaya izin verir.
+
+<Compare>
+<Pane title="Neden güçlü">
+
+- Anahtar sitenin alan adına bağlı: sahte sayfada çalışmaz
+- Sunucuda çalınabilecek şifre yok; yalnızca genel anahtar saklanır
+- Özel anahtar cihazdan hiç çıkmaz
+
+</Pane>
+<Pane title="Neden zor">
+
+- Kurtarma akışı: cihaz kaybolursa ne olacak?
+- "Passkey" kelimesi kullanıcıya tanıdık gelmeyebilir
+- Tek yöntem yapmak riskli
+
+</Pane>
+</Compare>
+
+**Kimlik avına yapısal olarak dayanıklıdır.** Büyük platformlarda yaygınlaştı ve modern auth kütüphanelerinin çoğu destekliyor. Materyale göre NIST'in güncel kılavuzu bulut üzerinden senkronize edilen passkey'leri belirli bir güvence seviyesinde tanıyor; bu kurumsal ve kamu tarafında benimsemeyi hızlandırıyor. "Passkey ekleyelim ama şifreyi de bırakalım; kullanıcı cihazını kaybederse alternatif yolu olsun."
+
+**Tasarım tarafında en zor kısmı kurtarma akışıdır.** Passkey'i tek yöntem yapmak riskli olabilir; genelde bir yedek yöntem (e-posta OTP, yedek kod) birlikte sunulur. Arayüz metni "passkey" kavramını açıklamalıdır.
+
+<Callout kind="tasarimci">
+
+- **Magic link için** bekleme ekranı, tekrar gönder, gönderim sayacı ve "e-posta gelmediyse" yardımı tasarla.
+- **OTP ekranında** yapıştırma, otomatik doldurma, geri sayım ve hata davranışını yaz.
+- **SMS yerine mümkünse TOTP/passkey öner.**
+- **Passkey eklerken kurtarma yolunu aynı akışın parçası yap;** kavramı kısa bir cümleyle açıkla.
+
+</Callout>
+
+<Summary>
+
+- Magic link kullanıcıyı sekmeden e-postaya götürür (bağlam kaybı); OTP aynı sekmede kalır ve mobilde daha iyi çalışır.
+- OTP ekranında yapıştırma, otomatik doldurma, geri sayım ve hata davranışı doğru tasarlanmalıdır.
+- SMS kodu zayıf kabul edilir (SIM değiştirme saldırısı).
+- Passkey alan adına bağlıdır ve kimlik avına dayanıklıdır; en zor kısmı kurtarma akışıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Magic link ile OTP arasındaki UX farkı nedir? Hangisi mobilde daha iyi çalışır?">
+
+Magic link'te kullanıcı sekmeyi terk edip e-postasına gider ve dönerken bağlamı kaybedebilir. OTP'de kullanıcı aynı sekmede kalır, kodu okuyup yazar. Bu yüzden OTP mobilde daha iyi çalışır.
+
+</SelfCheck>
+
+<SelfCheck question="Passkey neden kimlik avına dayanıklıdır? Tasarımdaki en zor kısmı nedir?">
+
+Anahtar sitenin alan adına kriptografik olarak bağlıdır; sahte bir giriş sayfasında otomatik olarak çalışmaz, ayrıca özel anahtar cihazdan hiç çıkmaz ve sunucuda çalınabilecek bir şifre yoktur. En zor kısım kurtarma akışıdır: kullanıcı cihazını kaybederse ne olacak?
+
+</SelfCheck>

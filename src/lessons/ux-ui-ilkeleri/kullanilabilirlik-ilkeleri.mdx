@@ -1,0 +1,167 @@
+---
+summary: "Bir arayüzün kullanılabilir sayılmasının ölçütleri: usability, Nielsen'in 10 ilkesi, sezgisel değerlendirme, affordance ve signifier, geri bildirim, kademeli gösterim ve geri alma. Tasarım geri bildirimini gerekçelendirmenin dili."
+outcomes:
+  - "Kullanılabilirliğin ölçülebilir bir kavram olduğunu ve neleri ölçtüğünü söyleyebilirsin."
+  - "Bir tasarım sorununu Nielsen'in on ilkesinden birine bağlayıp gerekçelendirebilirsin."
+  - "Affordance ile signifier farkını bir örnekle anlatabilirsin."
+  - "Onay diyaloğuna alternatif olarak geri alınabilir bir tasarım önerebilirsin."
+minutes: 14
+sources:
+  - label: "NN/g — 10 Usability Heuristics for User Interface Design"
+    url: "https://www.nngroup.com/articles/ten-usability-heuristics/"
+  - label: "NN/g — Usability 101"
+    url: "https://www.nngroup.com/articles/usability-101-introduction-to-usability/"
+  - label: "NN/g — Progressive Disclosure"
+    url: "https://www.nngroup.com/articles/progressive-disclosure/"
+  - label: "Deceptive Design (Harry Brignull)"
+    url: "https://www.deceptive.design/"
+additions:
+  - "Aldatıcı tasarım (dark pattern): kullanıcıyı yanıltan ya da zorlayan kalıpların adları ve neden bir kullanılabilirlik sorunu olmadığı."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Outside from "~/components/lesson/Outside.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir toplantıda bir tasarımı eleştiriyorsun ve "bana biraz karışık geldi" diyorsun. Karşındaki ikna olmuyor çünkü bir izlenim, tartışılamaz. Aynı şeyi şöyle söylesen: "Dosya yüklenirken hiçbir geri bildirim yok; kullanıcı işlemin çalışıp çalışmadığını bilemiyor, bu Nielsen'in 1 numaralı ilkesine aykırı." Artık savunulabilir bir iddia var.
+
+Bu ders bir arayüzün **kullanılabilir** sayılmasının ölçütlerini anlatıyor. Bu bölümdeki terimler, tasarım geri bildirimini gerekçelendirmenin dilidir.
+
+## Usability: ölçülebilir kavram
+
+**Usability** (kullanılabilirlik), bir ürünün hedef kullanıcının işini **ne kadar kolay, hızlı ve hatasız** yapmasına izin verdiğidir. Ölçülebilir bir kavramdır: görev tamamlama oranı, süre, hata sayısı, memnuniyet. Bu yüzden "kullanılabilir değil" cümlesi bir izlenim değil, ölçülebilir bir iddia olabilir.
+
+"Kullanılabilirlik testinde görev tamamlama %40; hedefimiz en az %80'di." Test raporlarında ve tasarım savunmalarında geçer.
+
+**Usability ≠ UX.** Kullanılabilirlik deneyimin bir *bileşenidir;* bir ürün kusursuz kullanılabilir ama işe yaramaz olabilir (kimsenin ihtiyacı olmayan bir ürünü kolayca kullanmak gibi).
+
+## Nielsen'in 10 ilkesi
+
+**Nielsen's 10 usability heuristics** (Nielsen sezgisel ilkeleri), bir arayüzü **kullanıcı olmadan denetlemeye** yarayan on genel ilkedir. Kullanıcı testi zaman ve bütçe ister; bu on ilke tasarımı masa başında ve ücretsiz denetlemeyi sağlar. Ayrıca geri bildirime **ortak bir dil** verir: "bu 4 numaraya aykırı" demek, "bana ters geldi" demekten daha tartışılabilirdir.
+
+Jakob Nielsen ve Rolf Molich tarafından 1990'da geliştirildi; Nielsen 1994'te 249 gerçek kullanılabilirlik probleminin faktör analiziyle listeyi bugünkü on maddeye indirdi. Liste 1994'ten beri değişmedi. Tasarım incelemelerinde ve UX işe alım mülakatlarında karşına çıkar.
+
+| # | İlke | Pratikte ne demek |
+|---|---|---|
+| 1 | Sistem durumunun görünürlüğü | Sistem ne yapıyorsa kullanıcı bilsin: yükleniyor, kaydedildi, gönderildi |
+| 2 | Sistemle gerçek dünya uyumu | Kullanıcının dilini kullan, sistemin iç terimlerini değil |
+| 3 | Kullanıcı kontrolü ve özgürlük | Geri alma ve çıkış yolu her zaman bulunsun |
+| 4 | Tutarlılık ve standartlar | Aynı şey her yerde aynı görünsün; sektör alışkanlıklarına uy |
+| 5 | Hata önleme | Hatayı düzeltmektense oluşmasını engelle |
+| 6 | Hatırlamak yerine tanımak | Kullanıcı hatırlamak zorunda kalmasın, görsün ve tanısın |
+| 7 | Esneklik ve verimlilik | Yeni kullanıcıyı yavaşlatmadan uzmana kısayol ver |
+| 8 | Estetik ve minimalist tasarım | Her eklenen öğe, asıl olanın görünürlüğünü azaltır |
+| 9 | Hataları tanıma, teşhis ve düzeltme | Hata mesajı sade dille ne olduğunu ve çözümü söylesin |
+| 10 | Yardım ve dokümantasyon | Yardım gerekmesin; gerektiğinde de bulunabilir olsun |
+
+Örnek kullanım: "Heuristic 1'e aykırı: dosya yüklenirken hiçbir geri bildirim yok; kullanıcı işlem olup olmadığını bilmiyor."
+
+### Sezgisel değerlendirme
+
+**Heuristic evaluation** (sezgisel değerlendirme), birkaç uzmanın arayüzü belirli ilkelere göre **tek tek inceleyip** sorun listesi çıkarmasıdır. Hızlı ve ucuzdur; kullanıcı bulmayı gerektirmez. Yeni bir ürün devraldığında ya da yayına çıkmadan önceki denetimde işe yarar. "Heuristic evaluation yaptım: 14 sorun buldum, 4'ü kritik."
+
+Genelde **birden fazla değerlendiriciyle** yapılır, çünkü tek kişi sorunların bir kısmını kaçırır. Uyarılar:
+
+- **Kullanıcı testinin yerine geçmez.**
+- **Değerlendirici etkisi:** aynı arayüzü inceleyen iki kişi büyük ölçüde farklı sorunlar bulabilir.
+- "Beş değerlendirici sorunların çoğunu bulur" yaygın kuralı, Nielsen ve Landauer'in 1993'te kurduğu matematiksel bir modelden gelir. Bu bir **planlama tahminidir, doğa yasası değil;** değerlendiriciler arasındaki uyum çalışmalarda çok geniş bir aralıkta çıkmıştır.
+
+## Eylemin görünür olması
+
+### Affordance ve signifier
+
+**Affordance** (eylem imkânı), bir nesnenin kendisiyle ne yapılabileceğini fiziksel ya da görsel olarak **mümkün kılmasıdır.** Bir kapının kolu çekmeyi, düz plakası itmeyi mümkün kılar. Arayüzde de bir öğenin tıklanabilir, sürüklenebilir ya da yazılabilir olduğunun anlaşılması gerekir. Anlaşılmıyorsa kullanıcı öğeyi kullanmaz, orada olduğunu görse bile.
+
+Düz (flat) tasarım tartışmalarında sık gündeme gelir: gölge ve kenarlık kaldırıldığında butonun buton olduğu anlaşılmayabilir. "Bu kart tıklanabilir ama affordance yok; hover'da hiçbir şey değişmiyor, imleç de değişmiyor."
+
+Don Norman'ın sonraki çalışmalarında ayrım netleşir: arayüzde asıl kastedilen çoğu zaman **signifier**'dır.
+
+<Compare>
+<Pane title="Affordance">
+
+- İmkânın kendisi
+- "Bu öğe tıklanabilir"
+- Var olup görünmeyebilir
+
+</Pane>
+<Pane title="Signifier">
+
+- İmkânı görünür kılan ipucu
+- Alt çizgili metin, el imleci, tutamaç ikonu
+- Olmazsa imkân görünmez
+
+</Pane>
+</Compare>
+
+Alt çizgili mavi metin, imlecin el şekline dönmesi, sürüklenebilir bir öğedeki tutamaç işareti: hepsi signifier'dır. "Sürüklenebilir olduğunu anlamıyorlar; tutamaç ikonu koyalım, signifier eksik."
+
+### Feedback
+
+**Feedback** (geri bildirim), kullanıcının yaptığı bir eyleme sistemin verdiği **görünür yanıttır.** Yanıt yoksa kullanıcı eylemin gerçekleşip gerçekleşmediğini bilemez ve tekrar dener: **çift sipariş, çift ödeme, çift kayıt buradan çıkar.** Nielsen'in 1 numaralı ilkesi tam olarak budur.
+
+Buton tıklamalarında, form gönderimlerinde, dosya yüklemelerinde karşına çıkar. "Kaydet'e basınca hiçbir şey olmuyor gibi görünüyor; en azından buton yükleme durumuna geçmeli."
+
+## Karmaşıklığı yönetmek
+
+### Progressive disclosure
+
+**Progressive disclosure** (kademeli gösterim), bilgiyi ve seçenekleri hepsini birden değil, **ihtiyaç duyuldukça** açma yaklaşımıdır. Karmaşıklığı yok etmeden gizler: yeni kullanıcı sade bir ekran görür, ileri seviye kullanıcı gelişmiş ayarlara ulaşabilir. Accordion, "gelişmiş ayarlar" bölümü ve çok adımlı formlar bu ilkeye dayanır.
+
+Yoğun panellerde, ayar ekranlarında, uzun formlarda kullanılır. "Yirmi alanın hepsini göstermeyelim; temel altısını açık bırakıp gerisini kademeli gösterimle açalım."
+
+Gizlemek her zaman iyi değildir: sık kullanılan bir seçeneği gizlemek keşfedilebilirliği düşürür. Kural: **sıklık düşükse gizle, yüksekse gizleme.**
+
+### Undo ve affedici tasarım
+
+**Undo / forgiveness** (geri alma, affedici tasarım), kullanıcının yaptığı işlemi **geri alabilmesi** ya da hatasının kolayca düzeltilebilmesidir. Onay diyaloglarına iyi bir alternatiftir. Sürekli "emin misiniz?" sormak kullanıcıyı otomatik onaylamaya alıştırır ve koruma işlevini kaybeder; geri alınabilir bir işlem hem hızlı hem güvenlidir. Nielsen'in 3 numaralı ilkesidir.
+
+Silme işlemlerinde ve toplu düzenlemelerde karşına çıkar. "Onay diyaloğu yerine silelim ve 5 saniye geri al seçeneği olan bir toast gösterelim."
+
+<Outside source="Deceptive Design (Harry Brignull)" href="https://www.deceptive.design/">
+
+Kullanılabilirlik ilkeleri kullanıcının işini kolaylaştırmak içindir. Bunların tersi de var: kullanıcıyı **bilerek yanıltan ya da zorlayan** tasarım kalıpları. Bunlara *aldatıcı tasarım* (deceptive design, eski adıyla *dark pattern*) denir. Birkaç yaygın örnek:
+
+- **Confirmshaming:** Reddet butonuna kullanıcıyı utandıran bir metin yazmak ("Hayır, indirim istemiyorum").
+- **Roach motel:** Üye olmak tek tıkta, iptal etmek sayfalarca iş olan akışlar.
+- **Gizli maliyet:** Son adımda ortaya çıkan ek ücretler.
+
+Bu kalıplar kısa vadede metrik artırabilir ama güveni yıpratır ve bazı ülkelerde düzenleme konusu olmaya başlamıştır; yasal durum ülkeye göre değişir ve zamanla güncellenir; güncel mevzuatı kontrol et. Tasarımcı olarak bir metriği artırması istenen bir akış, bu kalıplardan birine yaklaşıyorsa bunu **açıkça söylemek** senin sorumluluğundur.
+
+</Outside>
+
+<Callout kind="tasarimci">
+
+- **Geri bildirimini ilkeye bağla.** "Karışık" yerine "1 numara: sistem durumu görünmüyor" de.
+- **Sorunun ilkesini bul, çözümü sonra düşün.** İlke hata türünü adlandırır; çözümün biçimi ayrı bir iştir.
+- **Silme için diyalog yerine geri al.** Kullanıcı hız kazanır, koruma da sürer.
+- **Etkileşimli her öğeye bir signifier ver.** Tıklanabilir olduğu belli olmayan bir öğe yoksayılır.
+- **Kullanıcıyı yanıltan akıştan uzak dur.** Kısa vadeli metrik, uzun vadeli güveni yer.
+
+</Callout>
+
+<Summary>
+
+- Kullanılabilirlik ölçülebilir: görev tamamlama, süre, hata, memnuniyet; UX'in bir bileşenidir.
+- Nielsen'in on ilkesi tasarımı masa başında denetlemeye ve geri bildirime ortak dil vermeye yarar.
+- Sezgisel değerlendirme kullanıcı testinin yerine geçmez; farklı değerlendiriciler farklı sorunlar bulur.
+- Affordance imkânın kendisi, signifier onu görünür kılan ipucudur.
+- Feedback yoksa kullanıcı tekrar dener; kademeli gösterim sık kullanılanı gizlememeli; geri alma onay diyaloğundan çoğu zaman daha iyidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Affordance ile signifier arasındaki fark nedir? Bir örnekle açıkla.">
+
+Affordance imkânın kendisidir, signifier o imkânı görünür kılan ipucudur. Örnek: bir kart tıklanabilir olabilir (affordance var), ama imleç değişmiyor ve hover'da hiçbir şey olmuyorsa signifier yoktur; kullanıcı tıklanabildiğini anlamaz.
+
+</SelfCheck>
+
+<SelfCheck question={"Silme butonuna basınca \"Emin misiniz?\" diyaloğu göstermek yerine ne yapılabilir ve bu neden daha iyi olabilir?"}>
+
+İşlemi hemen yapıp geri alınabilir bir toast göstermek ("Silindi, Geri al"). Sürekli onay sormak kullanıcıyı otomatik onaylamaya alıştırır ve diyaloğun koruma işlevi kaybolur; geri alma hem hızlı hem güvenlidir.
+
+</SelfCheck>

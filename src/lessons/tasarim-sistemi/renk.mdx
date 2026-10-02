@@ -1,0 +1,160 @@
+---
+summary: "Renk hem marka hem işlev meselesi; işlev tarafında ölçülebilir kuralları var. Renk rampası, palet yapısı, anlamsal renk, renk formatları (OKLCH) ve kontrast oranı."
+outcomes:
+  - "Bir paleti birincil, vurgu ve nötr olarak yapılandırabilir, neden çoğunlukla nötr olduğunu açıklayabilirsin."
+  - "Anlamı yalnız renkle taşımanın neden erişilebilirlik ihlali olduğunu söyleyebilirsin."
+  - "WCAG AA kontrast eşiklerini (4,5:1, 3:1, 3:1) ve hangi öğeye hangisinin uygulandığını bilirsin."
+  - "OKLCH'in HSL'e göre avantajını anlatabilirsin."
+minutes: 13
+sources:
+  - label: "W3C — Understanding SC 1.4.3 Contrast (Minimum)"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html"
+  - label: "MDN — oklch()"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/oklch"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import ContrastDemo from "~/components/lesson/ContrastDemo.astro";
+import Swatches from "~/components/lesson/Swatches.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+
+Bir arkadaşın gri bir metni açık gri zemine koymuş ve "çok şık" demiş. Sen okuyamıyorsun. O okuyor çünkü gençsin, parlak ekrana bakıyorsun, ya da zaten ne yazdığını biliyorsun. Bir yaşlı kullanıcı güneşin altında okuyamayacak. İşte **renk kararının işlev tarafı:** zevk meselesi değil, ölçülebilir bir kural.
+
+Renk kararı hem marka hem işlev meselesidir. İşlev tarafında ölçülebilir kuralları vardır; yani her renk kararı zevk tartışması değildir.
+
+## Palet: rampa ve roller
+
+### Renk rampası
+
+**Color ramp** (renk basamakları), bir rengin **açıktan koyuya** doğru numaralandırılmış basamaklarıdır: `blue-50`, `blue-100`, … `blue-900`. Rastgele ton üretmeyi engeller. Bir arka plan, bir kenarlık, bir metin rengi gerektiğinde aynı rampadan seçilir; sonuç uyumlu olur. Numaralandırma ayrıca dark mode'da tersine çevirmeyi kolaylaştırır. Her tasarım sisteminin primitive token katmanındadır; Tailwind'in 50–950 numaralandırması bu yaklaşımı yaygınlaştırdı.
+
+<Swatches swatches={[
+  { name: "gray-50", color: "#F7F6F4" },
+  { name: "gray-200", color: "#E1DED8" },
+  { name: "gray-400", color: "#A8A39A" },
+  { name: "gray-600", color: "#6B665E" },
+  { name: "gray-800", color: "#3A3732" },
+  { name: "gray-900", color: "#211F1C" },
+]} />
+
+"Kenarlık için `gray-200`, ikincil metin için `gray-500`, başlık için `gray-900`. Ara ton üretmeyelim."
+
+### Palet yapısı
+
+Paletin rol bazlı bölümleri:
+
+- **Primary (birincil):** Marka ve birincil eylem rengi.
+- **Secondary (ikincil):** Destekleyici.
+- **Accent (vurgu):** Dikkat çekmesi gereken az sayıda yer.
+- **Neutral (nötr):** Grilerin rampası; arka plan, metin ve kenarlıkların çoğu buradan gelir.
+
+**Arayüzün ezici çoğunluğu nötrdür;** renk azlıkta kullanıldığında işe yarar. Yeni başlayanların en yaygın hatası çok fazla renk kullanmaktır: sonuç, hiçbir şeyin öne çıkmadığı bir yüzeydir. "Tek bir vurgu rengi yeter; birincil eylem dışında hiçbir yerde kullanmayalım."
+
+Nötr rampanın **tamamen gri olması gerekmez.** Marka rengine hafifçe kaydırılmış nötrler (hafif mavi ya da sıcak gri) arayüzü daha bütünlüklü gösterir; saf gri çoğu zaman soğuk ve jenerik durur.
+
+### Anlamsal renk
+
+**Semantic color** (anlamsal renk, durum rengi), belirli bir durumu anlatan renklerdir: **success** (yeşil), **warning** (sarı/turuncu), **danger/error** (kırmızı), **info** (mavi). Kullanıcı bu eşleşmeleri öğrenmiştir; bozmak kafa karıştırır. Bunların da rampası olmalıdır: bir hata mesajının arka planı, kenarlığı ve metni aynı kırmızı olamaz. "Hata bileşeni `red-50` zemin, `red-200` kenarlık, `red-700` metin kullanıyor."
+
+**Anlamı yalnızca renkle taşımak erişilebilirlik ihlalidir.** Renk körlüğü olan kullanıcı kırmızı ile yeşili ayırt edemeyebilir; ikon ya da metin de gerekir.
+
+<Compare>
+<Pane title="Yalnız renk (yanlış)">
+
+- Hata: kırmızı çerçeve
+- Başarı: yeşil çerçeve
+- Renk körü kullanıcı ikisini ayıramaz
+
+</Pane>
+<Pane title="Renk + ikon + metin (doğru)">
+
+- Hata: kırmızı çerçeve, ünlem ikonu, "Şifre çok kısa"
+- Başarı: yeşil çerçeve, tik ikonu, "Kaydedildi"
+- Anlam renge bağlı değil
+
+</Pane>
+</Compare>
+
+## Renk formatları
+
+Bir rengi sayıyla ifade etmenin farklı yolları vardır:
+
+| Format | Verdiği | Örnek |
+|---|---|---|
+| **HEX** | Kırmızı-yeşil-mavi bileşenleri | `#1B4DFF` |
+| **RGB** | Aynı bileşenler, ondalık | `rgb(27 77 255)` |
+| **HSL** | Renk tonu, doygunluk, açıklık | `hsl(228 100% 55%)` |
+| **OKLCH** | Açıklık, kroma, renk tonu (algısal olarak tekdüze) | `oklch(0.52 0.23 265)` |
+
+HSL'de aynı açıklık değerine sahip iki renk gözle bakınca **farklı parlaklıkta** görünür (sarı ile mavi gibi). **OKLCH bunu düzeltir:** eşit açıklık değeri eşit algılanan parlaklık üretir. Bu yüzden rampa üretmek ve kontrast korumak için daha güvenilirdir. Modern tasarım sistemlerinde giderek yaygınlaşıyor. "Rampayı OKLCH'te kuralım; açıklık adımları gözle de eşit görünsün."
+
+**Değişken bilgi, tarayıcı desteği:** `oklch()` Chrome 111+, Firefox 113+, Safari 15.4+ sürümlerinde destekleniyor; 2026 ortası itibarıyla küresel destek yaklaşık %90 seviyesinde raporlanıyor. Eski tarayıcılar için HEX/HSL yedeği vermek hâlâ öneriliyor. Bu oranlar zamanla değişir; kullanmadan önce güncel destek durumunu kontrol et.
+
+## Kontrast oranı: okunabilirliği ölçmek
+
+**Contrast ratio** (kontrast oranı), iki rengin parlaklık farkının **1:1 ile 21:1** arasında ifade edilen ölçüsüdür. Okunabilirliği zevkten çıkarıp ölçülebilir bir eşiğe bağlar. WCAG 2.2 AA seviyesinde:
+
+| Öğe | En az |
+|---|---|
+| **Normal metin** | 4,5:1 |
+| **Büyük metin** (≈24px ya da kalınsa ≈18,66px ve üstü) | 3:1 |
+| **Metin olmayan arayüz bileşenleri ve odak göstergeleri** | 3:1 |
+
+AAA seviyesinde bu değerler 7:1 ve 4,5:1'e çıkar. Detayları bir sonraki bölümde (erişilebilirlik) göreceksin.
+
+Aşağıdaki örneklerde oranlar **hesaplanmıştır,** göz kararı değil:
+
+<ContrastDemo pairs={[
+  { fg: "#9CA3AF", bg: "#FFFFFF", label: "Açık gri metin, beyaz zemin" },
+  { fg: "#4B5563", bg: "#FFFFFF", label: "Koyu gri metin, beyaz zemin" },
+  { fg: "#FFFFFF", bg: "#1B4DFF", label: "Beyaz metin, mavi buton" },
+  { fg: "#7C8DB5", bg: "#1B2433", label: "Soluk mavi metin, koyu zemin" },
+]} />
+
+"Bu gri `#9CA3AF`, beyaz zeminde 2,5:1 civarı veriyor; gövde metni için yetmez, `gray-600`'e inelim."
+
+Eşikler **tavsiye değil, birçok ülkede yasal gerekliliğin dayanağıdır.** Devre dışı (disabled) bileşenler bu kuralın dışındadır. **Değişken bilgi:** WCAG 3 için APCA adlı yeni bir kontrast hesaplama yöntemi geliştiriliyor; henüz zorunlu değil ama gündemde. Figma'nın renk seçicisinde ve tarayıcı geliştirici araçlarında yerleşik kontrol vardır.
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitenin renk çiftleri kontrast **hesaplanarak** doğrulanıyor: gövde metni 4,5:1, arayüz öğeleri 3:1. Üstelik boş bir onay kutusu *yalnızca kenarlığından* ibaret olduğu için kenarlık rengi ayrı bir token (3:1 kuralına tabi); dekoratif kenarlıklar ise o kurala tabi değil ve ayrı bir token. Palet üç rolde: sıcak nötrler (kâğıt hissi), soğuk petrol rengi (eylem) ve kehribar (ilerleme: sitenin kendi işini tek doygun renkle işaretler). Tamamlanma durumu yalnızca renkle değil, tik ve soluk metinle birlikte taşınıyor.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Önce nötr rampayı kur.** Arayüzün çoğu nötr; renk azlıkta çalışır.
+- **Tek bir vurgu rengi seç** ve yalnızca birincil eylemde kullan.
+- **Anlamı renk + ikon + metinle taşı.** Yalnız renk yetmez.
+- **Kontrastı hesapla.** Metin 4,5:1, arayüz öğesi 3:1. Dark mode için ayrıca yeniden hesapla.
+- **Rampayı OKLCH ile kurmayı düşün,** ama eski tarayıcı yedeğini ver.
+
+</Callout>
+
+<Summary>
+
+- Renk rampası rastgele ton üretmeyi engeller; palet birincil, ikincil, vurgu ve nötr rollere bölünür ve çoğunlukla nötrdür.
+- Anlamsal renklerin de rampası olmalı; anlam yalnız renkle taşınmaz (ikon, metin de gerekir).
+- OKLCH algısal olarak tekdüzedir; HSL'de eşit açıklık eşit parlaklık vermez.
+- WCAG AA: normal metin 4,5:1, büyük metin 3:1, arayüz bileşenleri ve odak göstergeleri 3:1.
+- Kontrast göz kararıyla değil hesapla doğrulanır; eşikler birçok ülkede yasal dayanaktır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="WCAG AA seviyesinde normal metin, büyük metin ve arayüz bileşenleri için minimum kontrast oranları nedir?">
+
+Normal metin 4,5:1, büyük metin 3:1 (≈24px ya da kalınsa ≈18,66px ve üstü), metin olmayan arayüz bileşenleri ve odak göstergeleri 3:1. AAA seviyesinde 7:1 ve 4,5:1.
+
+</SelfCheck>
+
+<SelfCheck question="OKLCH'in HSL'e göre avantajı nedir?">
+
+Algısal tekdüzelik. HSL'de aynı açıklık değerine sahip iki renk (sarı ve mavi gibi) gözle farklı parlaklıkta görünür; OKLCH'te eşit açıklık değeri eşit algılanan parlaklık üretir. Bu, rampa kurmayı ve kontrast korumayı öngörülebilir hâle getirir.
+
+</SelfCheck>

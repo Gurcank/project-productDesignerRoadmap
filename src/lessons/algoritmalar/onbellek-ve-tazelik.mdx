@@ -1,0 +1,74 @@
+---
+summary: "Önbellek hız için en güçlü araç ve en sinsi hata kaynağıdır: sakladığın şey eskidiğinde kullanıcı yanlış bilgiyi görür ve sistem hata vermez. Her veri için 'ne kadar eski kabul edilebilir?' bir ürün kararıdır."
+outcomes:
+  - "Veri türüne göre kabul edilebilir yaşı (blog saatler, stok saniyeler, sepet sıfır) söyleyebilirsin."
+  - "stale-while-revalidate'in tasarım bedelini açıklayabilirsin."
+  - "'Bende eski görünüyor' şikâyetinin neden birden çok önbellek katmanından kaynaklanabileceğini bilirsin."
+minutes: 6
+sources:
+  - label: "web.dev — stale-while-revalidate"
+    url: "https://web.dev/articles/stale-while-revalidate"
+  - label: "MDN — HTTP önbellekleme"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Önbellek, bir kez hesaplanan sonucu saklayıp tekrar kullanmaktır. Hız için en güçlü araç ve aynı zamanda **en sinsi hata kaynağı:** sakladığın şey eskidiğinde kullanıcı yanlış bilgiyi görür ve sistem hata vermez. Teknik tarafı Back-end bölümündeki Caching dersinde var; burada tasarıma yansıyan kısmı.
+
+## Asıl soru: ne kadar eski kabul edilebilir
+
+Her veri için cevap farklıdır ve bu bir **ürün kararıdır,** teknik değil:
+
+| Veri | Kabul edilebilir yaş |
+|---|---|
+| Blog yazısı | Saatler |
+| Ürün fiyatı | Dakikalar |
+| Stok durumu | Saniyeler |
+| Sepet, bakiye | Sıfır; asla önbelleklenmez |
+
+Belirtmezsen geliştirici bir süre seçer ve kullanıcı bir gün yanlış fiyat görür.
+
+## Bayat veri nasıl görünür
+
+En yaygın kalıp **stale-while-revalidate:** eskisini hemen göster, arka planda yenile. Arayüz anında dolar, sonra sessizce güncellenir. Tasarım bedeli: kullanıcı bir sayıya bakarken sayı değişir. Karar vermek gerekir: sessizce mi güncellensin, yoksa "güncellendi" mi denilsin?
+
+## Önbellek katmanları
+
+Bir sayfa görünene kadar veri birkaç önbellekten geçebilir: tarayıcı, service worker, CDN, sunucu, veritabanı. Bir değişikliğin görünmemesi bunların **herhangi birinden** kaynaklanabilir; bu yüzden "bende eski görünüyor" şikâyeti tek bir yerde çözülmez.
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitenin çevrimdışı katmanı bunun canlı bir örneğidir: içeriği değişen dosyaların adı içerikle birlikte değişir (hash'li), değişmeyenler ağ-öncelikli çalışır ve önbellek şekli değişince bir sürüm numarası artırılıp eski kayıtlar süpürülür. Arama indeksinin manifest dosyası kalıcı önbelleğe alınınca bayat bir manifest arama sonuçlarını anlamsız hâle getiriyordu; hata veren bir şey yoktu, yalnızca yanlış cevaplar vardı.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Her ekran için "ne kadar taze olmalı?" sorusunu cevapla,** özellikle para, stok ve izinle ilgili olanlarda.
+- **"Yenile" eylemi gerekiyor mu?** Kullanıcıya tazeliği kontrol etme yolu vermek bazen en ucuz çözümdür.
+- **Veri güncellendiğinde ekranda ne olacağını belirle:** sessiz değişim mi, bildirim mi?
+- **"Bende eski görünüyor" şikâyetini ciddiye al;** kullanıcı için hatadan ayırt edilemez.
+
+</Callout>
+
+<Summary>
+
+- Önbellek hızlandırır ama bayat veri riski taşır; sistem hata vermez.
+- Kabul edilebilir yaş veri türüne göre değişir ve bir ürün kararıdır (sepet/bakiye asla önbelleklenmez).
+- stale-while-revalidate'te sayı kullanıcı bakarken değişebilir; davranış tasarlanmalıdır.
+- Eski görünen veri birçok katmandan birinden kaynaklanabilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Önbellek neden 'en sinsi hata kaynağı' diye anılır?">
+
+Sakladığın şey eskidiğinde kullanıcı yanlış bilgiyi görür ve sistem hata vermez; kullanıcı için bu, hatadan ayırt edilemez.
+
+</SelfCheck>

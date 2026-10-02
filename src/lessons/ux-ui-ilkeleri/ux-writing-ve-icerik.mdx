@@ -1,0 +1,132 @@
+---
+summary: "Arayüzdeki kelimeler: UX writing, içerik tasarımı, ses tonu, etiket / yardımcı metin / yer tutucu ve hata mesajı. Tasarımın en çok gözden kaçan ve en hızlı etki eden katmanı."
+outcomes:
+  - "UX writing ile copywriting'i ve UX writing ile content design'ı ayırt edebilirsin."
+  - "Placeholder'ın neden label yerine kullanılamayacağını üç gerekçeyle söyleyebilirsin."
+  - "İyi bir hata mesajı yazabilirsin: ne oldu, neden, ne yapmalı; suçlamadan, teknik kod göstermeden."
+  - "Hangi durumda hata mesajının bilinçli olarak belirsiz tutulduğunu bilirsin."
+minutes: 10
+sources:
+  - label: "NN/g — Error-Message Guidelines"
+    url: "https://www.nngroup.com/articles/error-message-guidelines/"
+  - label: "NN/g — Placeholders in Form Fields Are Harmful"
+    url: "https://www.nngroup.com/articles/form-design-placeholders/"
+  - label: "NN/g — UX Writing Study Guide"
+    url: "https://www.nngroup.com/articles/ux-writing-study-guide/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir silme ekranında iki buton var: "Tamam" ve "İptal". Kullanıcı "Tamam"a basıyor ve aboneliğini iptal ediyor. Ne yaptığını bilmiyordu: "Tamam" neyi onaylıyor? Butonu "Aboneliği iptal et" yapsan, aynı ekran bambaşka bir güven üretirdi.
+
+Arayüzdeki **kelimeler,** tasarımın en çok gözden kaçan ve en hızlı etki eden katmanıdır. Bir buton etiketini değiştirmek, ekranı yeniden tasarlamaktan çok daha ucuzdur ve bazen aynı etkiyi yapar.
+
+## UX writing ve mikro metin
+
+**UX writing / microcopy** (arayüz metni), arayüzdeki küçük metin parçalarıdır: buton etiketleri, hata mesajları, boş ekran metinleri, ipuçları, onay mesajları. Kullanıcının ne yapacağını bu kelimeler söyler. "Gönder" ile "Rezervasyonu tamamla" aynı butondur ama **farklı güven** üretir. Belirsiz etiket, kullanıcıyı duraklatır.
+
+Her ekranda karşına çıkar. Çoğu ekipte ayrı bir UX writer yoktur; iş tasarımcıya düşer. "Buton 'Tamam' değil 'Aboneliği iptal et' desin; kullanıcı neyi onayladığını bilsin."
+
+**UX writing ≠ copywriting.** Copywriting *ikna eder ve satar;* UX writing *yönlendirir ve netleştirir.* İkisi farklı beceridir.
+
+### Content design
+
+**Content design** (içerik tasarımı), kullanıcının ihtiyaç duyduğu bilginin **ne olduğuna, nasıl yapılandırılacağına ve nerede sunulacağına** karar verme disiplinidir. UX writing kelimeleri yazar; content design **hangi bilginin gerektiğine** karar verir ve bazen cevabı "bu ekran hiç olmasın" olur. Büyük kurumlarda ayrı bir rol, küçük ekiplerde tasarımcının işidir.
+
+"Content design açısından bu SSS bölümü gereksiz; sorular akışın içinde cevaplanmalı."
+
+### Ses tonu
+
+**Tone of voice** (ses tonu), ürünün kullanıcıyla konuşurken kullandığı **üsluptur.** Tutarlılık güven üretir. Ayrıca ton **duruma göre** değişmelidir: hata anında esprili olmak sinir bozar, kutlama anında kuru olmak soğuk durur. İyi bir ton rehberi bu bağlam farkını tanımlar. Marka rehberlerinde ve tasarım sistemlerinde yer alır.
+
+"Ödeme başarısız ekranında şaka yapmayalım; ton rehberimiz hata durumunda sade ve yardımcı diyor."
+
+## Form metinleri: etiket, yardımcı metin, yer tutucu
+
+Üç ayrı metin türü vardır ve karıştırılırsa sorun çıkar:
+
+| Tür | Ne | Nerede |
+|---|---|---|
+| **Label** (etiket) | Alanın **kalıcı** adı | Alanın üstünde ya da yanında |
+| **Helper text** (yardımcı metin) | Alanın altındaki açıklama | Alanın altında, kural veya örnek |
+| **Placeholder** (yer tutucu) | Alan boşken içinde görünen soluk metin | Alanın içinde |
+
+**Placeholder label yerine kullanılamaz.** Üç sebebi var:
+
+1. **Kullanıcı yazmaya başlayınca kaybolur,** o alanın ne olduğu unutulur.
+2. **Kontrastı düşüktür,** okunabilirliği zayıftır.
+3. **Ekran okuyucularda güvenilir biçimde okunmaz;** bu bir erişilebilirlik sorunudur.
+
+Ek olarak: dolu bir alanla boş bir alanı ayırt etmeyi de zorlaştırır. Her form tasarımında karşına çıkar; **en sık yapılan form hatasıdır.** "Placeholder'ı label'a çevirelim; kullanıcı yazarken alanın ne olduğunu göremiyor."
+
+<Compare>
+<Pane title="Yanlış">
+
+- Alanın içinde "E-posta" yazıyor
+- Yazmaya başlayınca etiket kayboluyor
+- Ekran okuyucu etiketi okumayabilir
+
+</Pane>
+<Pane title="Doğru">
+
+- Alanın üstünde kalıcı "E-posta" etiketi
+- Altında "ornek@alan.com biçiminde" yardımcı metin
+- Placeholder, varsa, yalnızca örnek
+
+</Pane>
+</Compare>
+
+## Hata mesajı
+
+**Error message** (hata mesajı), bir şey ters gittiğinde kullanıcıya gösterilen metindir. Üç şeyi yapmalı: **ne olduğunu söyle, sebebini açıkla, çözümü göster.** Ayrıca:
+
+- **Kullanıcıyı suçlamamalı.** "Hatalı giriş yaptınız" yerine "bu e-posta adresi kayıtlı görünmüyor."
+- **Teknik kod göstermemeli.** "Error 422" yerine "Şifre en az 8 karakter olmalı."
+
+Form doğrulamalarında, ödeme akışlarında, bağlantı hatalarında karşına çıkar. "'Error 422' yerine 'Şifre en az 8 karakter olmalı' yazalım ve kuralı alanın altında baştan gösterelim."
+
+| Kötü | İyi |
+|---|---|
+| "Hata oluştu." | "Ödeme tamamlanamadı. Kartının limiti yetersiz olabilir. Başka bir kart dene." |
+| "Geçersiz giriş." | "Şifre en az 8 karakter olmalı." |
+| "Hatalı işlem yaptınız." | "Bu dosya 10 MB'tan büyük. Daha küçük bir dosya seç." |
+
+**Güvenlik gerektiren yerlerde mesaj bilinçli olarak belirsiz tutulur:** giriş ekranında "e-posta bulunamadı" demek saldırgana hangi hesapların var olduğunu söyler. Orada "e-posta veya şifre hatalı" denir. (Kimlik doğrulama bölümünde bu ayrıntıya döneceksin.)
+
+<Callout kind="tasarimci">
+
+- **Butonu eylemle adlandır.** "Tamam" yerine kullanıcının neyi onayladığını söyle.
+- **Her alana kalıcı label ver.** Placeholder'ı yalnızca ek örnek için kullan.
+- **Hata mesajı yazarken üç soruyu cevapla** ve suçlama dilini bırak.
+- **Ton rehberi yoksa en azından hata ve başarı için ayrı ton belirle.**
+- **Metni tasarımdan sonra değil, birlikte yaz.** Gerçek metinle tasarlamak taşma ve uzunluk sorunlarını erken gösterir.
+
+</Callout>
+
+<Summary>
+
+- UX writing yönlendirir ve netleştirir; copywriting ikna eder. Content design hangi bilginin gerektiğine karar verir.
+- Ton tutarlı ama duruma göre değişmeli: hata anında espri yok.
+- Label kalıcı addır, helper text açıklamadır, placeholder yalnızca soluk bir örnektir; placeholder label yerine kullanılamaz.
+- İyi hata mesajı ne oldu, neden, ne yapmalı sorularını cevaplar; suçlamaz, teknik kod göstermez.
+- Güvenlik gerektiren yerlerde hata mesajı bilinçli olarak belirsiz tutulur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Placeholder metni label yerine kullanmanın üç sakıncasını say.">
+
+(1) Kullanıcı yazmaya başlayınca kaybolur, alanın ne olduğu unutulur. (2) Kontrastı düşüktür, okunabilirliği zayıftır. (3) Ekran okuyucularda güvenilir biçimde okunmaz, erişilebilirlik sorunu yaratır. Ek olarak dolu ve boş alan ayrımını da zorlaştırır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir hata mesajının cevaplaması gereken üç soru nedir? Hangi durumda mesaj bilinçli olarak belirsiz bırakılır?">
+
+Ne oldu, neden oldu, şimdi ne yapmalıyım. Güvenlik gerektiren yerlerde bilinçli olarak belirsiz bırakılır: giriş ekranında "bu e-posta kayıtlı değil" demek saldırgana hangi hesapların var olduğunu doğrular.
+
+</SelfCheck>

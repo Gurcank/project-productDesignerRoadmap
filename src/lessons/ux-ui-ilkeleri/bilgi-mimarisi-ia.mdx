@@ -1,0 +1,136 @@
+---
+summary: "İçeriğin nasıl düzenleneceği ve isimlendirileceği: bilgi mimarisi, site haritası, sınıflandırma, kart gruplama, ağaç testi, zihinsel model ve bulunabilirlik. Görünmez ama her şeyi belirleyen katman."
+outcomes:
+  - "Bir bulunabilirlik sorununun yapıdan mı yoksa görsel tasarımdan mı kaynaklandığını ayırt edebilirsin."
+  - "Card sorting ile tree testing'i ne zaman kullanacağını bilirsin."
+  - "Findability ile discoverability'yi ayırıp doğru çözümü seçebilirsin."
+  - "Kullanıcının zihinsel modelini araştırıp adlandırmayı ona göre değiştirebilirsin."
+minutes: 11
+sources:
+  - label: "NN/g — Card Sorting: Definition"
+    url: "https://www.nngroup.com/articles/card-sorting-definition/"
+  - label: "NN/g — Tree Testing"
+    url: "https://www.nngroup.com/articles/tree-testing/"
+  - label: "NN/g — Mental Models"
+    url: "https://www.nngroup.com/articles/mental-models/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import SitemapTree from "~/components/lesson/SitemapTree.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+"Fatura sayfasını bulamıyorum, bu site kötü." Kullanıcı böyle der. Ama sayfa var, menüde duruyor, güzel de görünüyor. Sorun menünün rengi ya da fontu değil; fatura sayfasının **yanlış yerde** olması. Bu, görünmez bir katmanın sorunu: **bilgi mimarisi.**
+
+İyi yapıldığında kimse fark etmez; kötü yapıldığında kullanıcı aradığını bulamaz ve bunu "site kötü" diye ifade eder. Bu ders içeriğin nasıl düzenleneceği ve isimlendirileceğini anlatıyor.
+
+## Bilgi mimarisi (IA)
+
+**Information Architecture** (IA, bilgi mimarisi), içeriğin nasıl gruplandığı, adlandırıldığı ve birbirine bağlandığına dair **yapıdır.** Bulunabilirliği belirler.
+
+**Görsel tasarımdan önce gelir:** yapı yanlışsa hiçbir görsel çözüm onu kurtarmaz. Bir menüyü güzelleştirmek, yanlış gruplanmış içeriği doğru yapmaz. Yeni site kurgusunda ve "kullanıcılar X'i bulamıyor" şikâyetlerinde karşına çıkar. "Sorun menü tasarımında değil, IA'da; 'Çözümler' ve 'Ürünler' başlıkları altında aynı şeyler var."
+
+### Site haritası
+
+**Sitemap** (site haritası), bir sitedeki tüm sayfaların ve aralarındaki hiyerarşinin şemasıdır. **Kapsamı görünür kılar:** kaç sayfa tasarlanacağı, hangi sayfaların hangisinin altında olduğu ve kaç seviye derinlik olduğu burada netleşir. Tasarıma başlamadan önceki ilk çıktıdır. "Sitemap'i çıkardık: 4 ana bölüm, toplam 23 sayfa, en fazla 3 seviye derinlik."
+
+<SitemapTree />
+
+Aynı isim iki farklı şeyi anlatır: `sitemap.xml`, arama motorları için üretilen makine okunur bir dosyadır. Aynı kelime, farklı şey.
+
+### Sınıflandırma
+
+**Taxonomy** (sınıflandırma), içeriğin hangi kategorilere ve etiketlere göre düzenleneceğini belirleyen sistemdir. Filtreleme, arama ve gezinme bunun üstüne kurulur. Kategoriler örtüşürse ("Elbise" ve "Yazlık" ayrı üst kategoriyse) kullanıcı hangi yoldan gideceğini bilemez.
+
+E-ticaret ve içerik yoğun sitelerde belirleyicidir; CMS'te alan yapısı kurulurken de karşına çıkar. "Taksonomiyi düzeltmeden filtre tasarlamak anlamsız; kategoriler birbirinin içine giriyor."
+
+## Yapıyı kullanıcıdan öğrenmek
+
+### Zihinsel model
+
+**Mental model** (zihinsel model), kullanıcının bir sistemin nasıl çalıştığına dair kafasındaki **tahmindir.** Kullanıcı ürünü kendi zihinsel modeline göre kullanır. Model ile gerçek arasındaki fark büyükse hata yapar ve şaşırır. İyi tasarımın işi, ya modele uymak ya da modeli açıkça değiştirmektir.
+
+Kullanıcı testlerinde en sık gözlenen şey budur: kullanıcı beklediği yerde beklediği şeyi bulamaz. "Kullanıcının zihinsel modelinde 'kaydet' kalıcı demek; bizim ürünümüzde taslak demek. Adlandırmayı değiştirelim."
+
+### Card sorting
+
+**Card sorting** (kart gruplama), kullanıcılardan içerik başlıklarını **kendi mantıklarına göre gruplamalarını** isteyen araştırma yöntemidir. IA'yı ekibin değil kullanıcının zihinsel modeline göre kurmayı sağlar. Ekip içeriği kendi organizasyon şemasına göre gruplama eğilimindedir; kullanıcı o şemayı bilmez.
+
+İki türü vardır: **open** card sorting'de kullanıcı kategori adlarını kendisi koyar; **closed**'da hazır kategorilere yerleştirir. "Card sorting'de 8 kişiden 6'sı 'Faturalar'ı 'Hesabım' altına koydu; menüyü ona göre değiştirelim."
+
+### Tree testing
+
+**Tree testing** (ağaç testi), kullanıcıya **yalnızca menü yapısını** (görsel tasarım olmadan) gösterip bir şeyi bulmasını isteyen testtir. Bulunabilirlik sorununun yapıdan mı yoksa görsel tasarımdan mı kaynaklandığını ayırır: görsel olmadan test edildiği için sonucun tek sorumlusu IA'dır.
+
+"Tree testing'de kullanıcıların %70'i iade sayfasını ilk denemede bulamadı."
+
+<StepFlow
+  label="IA araştırması: yapıyı kurmak ve doğrulamak"
+  caption="Card sorting yapıyı kurmak için önce, tree testing kurulan yapıyı doğrulamak için sonra yapılır."
+  steps={[
+    { title: "Card sorting", sub: "Kullanıcı içeriği kendi mantığıyla gruplar", tone: "accent" },
+    { title: "Yapıyı kur", sub: "Sonuçlara göre kategori ve etiket belirle" },
+    { title: "Tree testing", sub: "Görsel olmadan yapıyı sına: bulabiliyor mu?", tone: "progress" },
+  ]}
+/>
+
+## Bulunabilirlik ve keşfedilebilirlik
+
+İki kelime benzer görünür ama farklı problemleri anlatır:
+
+<Compare>
+<Pane title="Findability (bulunabilirlik)">
+
+- Aradığını bulabilme
+- Kullanıcı ne aradığını **biliyor**
+- Sorun: arama, navigasyon, etiket
+- Çözüm: IA, menü, arama
+
+</Pane>
+<Pane title="Discoverability (keşfedilebilirlik)">
+
+- Varlığından haberi olmadığını fark edebilme
+- Kullanıcı özelliğin **var olduğunu bilmiyor**
+- Sorun: tanıtım, boş ekran, onboarding
+- Çözüm: bağlamsal ipucu, duyuru
+
+</Pane>
+</Compare>
+
+Özellik kullanım oranları düşük olduğunda ekipler bunu genelde "özellik kötü" diye yorumlar; **çoğu zaman keşfedilebilirlik sorunudur.** "Özelliği kullanan %3; kullananlar memnun. Bu bir discoverability sorunu, kalite sorunu değil."
+
+<Callout kind="tasarimci">
+
+- **Önce yapıyı, sonra görseli düzelt.** "Menü kötü görünüyor" şikâyetinde önce içeriğin gruplanışını sorgula.
+- **Zihinsel modeli sor.** "Sen buna ne ad verirdin?" sorusu card sorting'in en ucuz versiyonudur.
+- **Aynı kelimeyi iki yerde kullanma.** "Çözümler" ve "Ürünler" altında aynı şeyler duruyorsa kullanıcı iki yolun farkını bilemez.
+- **Düşük kullanım oranını ayır:** kullananlar memnunsa muhtemelen discoverability, kullananlar memnun değilse kalite sorunu.
+
+</Callout>
+
+<Summary>
+
+- IA, içeriğin gruplanışı ve adlandırılışıdır; görsel tasarımdan önce gelir ve yanlışsa görsel çözüm kurtarmaz.
+- Sitemap kapsamı, taxonomy kategorileri gösterir; kategoriler örtüşürse filtre tasarımı anlamsızdır.
+- Zihinsel model kullanıcının tahminidir; fark büyükse hata çıkar.
+- Card sorting yapıyı kurar (önce), tree testing doğrular (sonra).
+- Findability aradığını bulabilmek, discoverability varlığından haberi olmadığını fark edebilmektir; çözümleri farklıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Card sorting ile tree testing arasındaki fark nedir? Hangisi ne zaman kullanılır?">
+
+Card sorting kullanıcıdan içeriği kendi mantığına göre gruplamasını ister; yapıyı kurmak için, önce kullanılır. Tree testing kurulmuş yapıyı, görsel tasarım olmadan doğrulamak için kullanılır; sonra.
+
+</SelfCheck>
+
+<SelfCheck question="Bir özelliği kullanan kullanıcı oranı %3, ama kullananlar memnun. Bu findability sorunu mu, discoverability sorunu mu? Ne yaparsın?">
+
+Discoverability sorunu: kullanıcılar özelliğin varlığını bilmiyor (kullananlar memnun olduğuna göre kalite sorunu yok). Çözüm arama ya da menü düzeltmesi değil; boş ekranda tanıtım, onboarding adımı, ilgili bağlamda ipucu ya da duyuru.
+
+</SelfCheck>

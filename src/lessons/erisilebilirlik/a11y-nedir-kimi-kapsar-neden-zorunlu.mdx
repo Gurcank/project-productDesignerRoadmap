@@ -1,0 +1,176 @@
+---
+summary: "Erişilebilirlik tasarımcının sonradan eklenemeyecek tek sorumluluğu. Kimi kapsadığını, neden azınlık için olmadığını (engelin üç hâli, kaldırım rampası etkisi) ve hukuki çerçeveyi (EAA, ADA, Türkiye) öğren."
+outcomes:
+  - "Erişilebilirlik ile kullanılabilirlik farkını ve neden birinin diğerinden bağımsız olduğunu açıklayabilirsin."
+  - "Erişilebilirliği savunurken engelin üç hâlini ve kaldırım rampası etkisini kullanabilirsin."
+  - "Erişilebilirlik uyumu ile kapsayıcı tasarım arasındaki farkı anlatabilirsin."
+  - "AB, ABD ve Türkiye'de erişilebilirliği zorunlu kılan düzenlemelerin ana hatlarını bilirsin."
+minutes: 12
+sources:
+  - label: "W3C WAI — Accessibility Fundamentals"
+    url: "https://www.w3.org/WAI/fundamentals/accessibility-intro/"
+  - label: "Microsoft — Inclusive Design"
+    url: "https://inclusive.microsoft.design/"
+  - label: "T.C. Aile ve Sosyal Hizmetler Bakanlığı — Erişilebilirlik Genelgesi"
+    url: "https://www.aile.gov.tr/eyhgm/haberler/web-siteleri-ve-mobil-uygulamalarin-erisilebilirligi-cumhurbaskanligi-genelgesi-yayimlandi/"
+  - label: "AB Komisyonu — European Accessibility Act"
+    url: "https://commission.europa.eu/strategy-and-policy/policies/justice-and-fundamental-rights/disability/union-equality-strategy-rights-persons-disabilities-2021-2030/european-accessibility-act_en"
+flags: ["degisken"]
+additions:
+  - "Türkiye Cumhurbaşkanlığı Genelgesi'nin kapsamı, izleme mekanizması ve erişilebilirlik logosu: birincil kaynaktan doğrulandı (materyal ikincil kaynaklara dayanıyordu)."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Outside from "~/components/lesson/Outside.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Bir kayıt formu tasarladın. Etiketler solukta gri, alan sınırları ince, hata mesajı kırmızı bir kenarlıktan ibaret, ve "gönder" butonu aslında bir `div`. Geliştirici bunu birebir kodladı. Şimdi ürün yayında ve bazı kullanıcılar bu formu **hiç dolduramıyor.** Bunu düzeltmek için sadece kodu değiştirmek yetmez; ekranın yeniden tasarlanması gerekir.
+
+Bu bölüm diğerlerinden kısa ama etkisi en yüksek olanlardan biri. Üç nedeni var.
+
+**Birincisi:** Erişilebilirlik, tasarımcının **sonradan eklenemeyecek** tek sorumluluğudur. Kontrastı, odak sırasını, etiket yapısını ve dokunma hedefi boyutunu tasarım aşamasında düşünmezsen, geliştirici bunu sonradan düzeltemez.
+
+**İkincisi** hukuki: erişilebilirlik artık "iyi olurdu" kategorisinden çıkıp birçok ülkede (Türkiye dahil) yasal yükümlülük hâline geldi.
+
+**Üçüncüsü** pratik: erişilebilirlik kararlarının çoğu **herkes için** daha iyi bir arayüz üretir.
+
+> **Kısaltma:** "a11y", *accessibility* kelimesinde a ile y arasındaki 11 harfin sayıyla değiştirilmesidir. Aynı mantıkla i18n = internationalization, l10n = localization.
+
+## Erişilebilirlik nedir?
+
+**Accessibility (a11y, erişilebilirlik)**, bir ürünün, engelli kullanıcılar da dahil olmak üzere **mümkün olan en geniş kitle** tarafından kullanılabilmesidir. Bir grubu dışarıda bırakmamak için vardır. Kapsamı çoğu kişinin sandığından geniştir: **görme, işitme, motor beceri, bilişsel farklılıklar ve nöbet hassasiyeti** hepsi bu başlık altındadır.
+
+Gereksinimlerde (NFR olarak), tasarım denetimlerinde, hukuk ve satın alma süreçlerinde karşına çıkar. "a11y kontrolünü bitmiş sayılma tanımına ekleyelim; sona bırakırsak hiç yapılmıyor."
+
+**Erişilebilirlik ≠ kullanılabilirlik.** Kullanılabilirlik herkes için kolaylıktır; erişilebilirlik ise belirli engelleri olan kişiler için **kullanılabilir olmaktır.** Bir ürün son derece kullanışlı ama tamamen erişilemez olabilir: klavyeyle hiç çalışmayan çok akıcı bir arayüz gibi.
+
+## Azınlık için değil: engelin üç hâli
+
+Erişilebilirliği savunurken en güçlü çerçevelerden biri, kısıtın **kalıcı olması gerekmediğidir:**
+
+<Compare>
+<Pane title="Kalıcı">
+
+- Tek kolu olmayan biri
+- Görme engelli bir kullanıcı
+
+</Pane>
+<Pane title="Geçici">
+
+- Kolu alçıda olan biri
+- Gözü ameliyat olmuş biri
+
+</Pane>
+</Compare>
+
+<Compare>
+<Pane title="Duruma bağlı">
+
+- Kucağında bebek taşıyan biri
+- Güneşte telefona bakan biri
+- Gürültülü ortamda video izleyen biri
+
+</Pane>
+<Pane title="Aynı arayüz sorunu">
+
+- Üçü de tek elle kullanmak zorunda
+- Üçü de büyük hedef ister
+- Üçü de altyazı ya da yüksek kontrastla kazanır
+
+</Pane>
+</Compare>
+
+Tek kolu olmayan biri (kalıcı), kolu alçıda olan biri (geçici) ve bebek taşıyan biri (duruma bağlı) **aynı arayüz problemini** yaşar. Erişilebilirliğin "küçük bir azınlık için" olmadığını gösteren en güçlü argümandır. "Altyazı yalnızca işitme engelliler için değil; kullanıcıların büyük kısmı videoları sessiz izliyor."
+
+### Kaldırım rampası etkisi
+
+**Curb-cut effect** (kaldırım rampası etkisi), belirli bir grup için yapılan düzenlemenin **herkese** fayda sağlamasıdır. İsmini tekerlekli sandalye için yapılan kaldırım rampalarından alır; bugün o rampaları en çok bebek arabası, valiz ve bisiklet kullananlar kullanır.
+
+Dijital karşılıkları: altyazı, sesli okuma, koyu tema, klavye kısayolları. "Klavye erişimini düzeltmek yalnızca a11y değil; güç kullanıcılar da hızlanacak." Erişilebilirlik yatırımını gerekçelendirirken kullanabileceğin bir argümandır.
+
+## Yardımcı teknoloji: kodu okuyanlar
+
+**Assistive technology** (AT, yardımcı teknoloji), kullanıcının ürüne erişmesini sağlayan araçlardır: **ekran okuyucu, ekran büyüteci, klavye alternatifleri, ses komutu, göz takip sistemleri, braille ekran.**
+
+Önemli nokta: bu araçlar senin ürününü **HTML yapısı üzerinden** okur. Yani kodun anlamlı olması bir kalite meselesi değil, **erişim meselesidir.** Görsel olarak buton gibi görünen bir `div`, ekran okuyucu için buton değildir. "Bu bileşen yardımcı teknolojiler için görünmez; yalnızca görsel olarak var."
+
+## Uyum kontrolü mü, süreç mi?
+
+**Inclusive design** (kapsayıcı tasarım), tasarımı baştan **çeşitliliği kapsayacak şekilde** yapma yaklaşımıdır. Fark şurada:
+
+- **Erişilebilirlik bir uyum kontrolüdür:** yaptığın şey kurallara uyuyor mu?
+- **Kapsayıcı tasarım bir süreçtir:** baştan kimleri düşünerek tasarlıyorsun?
+
+Uyum kontrolünü geçen ama **kullanılamayan** arayüzler mümkündür; kapsayıcı tasarım bunu engellemeyi hedefler. "Yalnızca WCAG'i geçmeyelim; ekran okuyucuyla akışı gerçekten bitirebiliyor muyuz test edelim."
+
+## Hukuki çerçeve
+
+Erişilebilirlik artık bir tercih değil. Öne çıkan düzenlemeler:
+
+- **European Accessibility Act (EAA):** Direktif (EU) 2019/882. **28 Haziran 2025'te** uygulanmaya başladı. E-ticaret, bankacılık, telekom, ulaşım, e-kitap ve görsel-işitsel medya gibi tüketiciye dönük hizmetleri kapsıyor ve **AB'ye hizmet veren AB dışı şirketleri de** kapsıyor. Teknik referansı **EN 301 549** standardıdır; bu standardın web bileşeni WCAG 2.1 AA'yı esas alır.
+- **ADA (ABD):** Mahkeme kararları ve düzenlemeler üzerinden WCAG'i fiilî ölçüt hâline getirdi.
+- **Türkiye:** Aşağıdaki kutuda.
+
+<Outside source="T.C. Aile ve Sosyal Hizmetler Bakanlığı" href="https://www.aile.gov.tr/eyhgm/haberler/web-siteleri-ve-mobil-uygulamalarin-erisilebilirligi-cumhurbaskanligi-genelgesi-yayimlandi/">
+
+Materyal Türkiye'deki düzenlemeyi ikincil kaynaklardan aktarıyor ve teyit edilmediğini söylüyor. Bakanlığın duyurusunu okudum; doğrulanabilen bilgiler şöyle:
+
+- **Cumhurbaşkanlığı Genelgesi** "Web Siteleri ve Mobil Uygulamaların Erişilebilirliği" konusunda Resmî Gazete'de yayımlandı.
+- **Kapsam** geniş: kamu kurumları, üniversiteler, belediyeler, bankalar, özel hastaneler, özel öğretim kurumları, ulaşım hizmeti sunan özel kuruluşlar, iletişim ve internet hizmet sağlayıcıları ve **6563 sayılı Kanun kapsamındaki elektronik ticaret hizmet sağlayıcıları.**
+- **İzleme:** Bakanlık bünyesinde bir **İzleme Komisyonu** kuruluyor; web siteleri ve uygulamalar her yıl yayımlanan bir plana göre izlenecek.
+- **Logo:** Erişilebilir olduğu belirlenenler **2 yıl süreyle "Erişilebilirlik Logosu"** kullanabilecek; koşulları sağlamayanların bilgileri kamuoyuyla paylaşılacak.
+- **Ölçüt:** Kurumlar kendilerini Bakanlığın "Web Siteleri ve Mobil Uygulamaların Erişilebilirliği Kontrol Listesi — A Seviyesi"ne göre değerlendirecek. Liste WCAG 2.2'yi temel alıyor ve 31 ilke, 122 sorudan oluşuyor.
+
+Dikkat: kontrol listesi **A seviyesine** göre; AA, uluslararası pratik hedef olmaya devam ediyor. Uyum süreleri ve denetim ayrıntılarını bu duyurudan değil, genelgenin kendisinden ve Bakanlığın güncel yayınlarından doğrula.
+
+</Outside>
+
+**Değişken bilgi:** Mevzuat hızlı değişiyor. EN 301 549'un WCAG 2.2'ye güncellenmesi de gündemde. "Müşteri AB'ye satış yapıyor; EAA kapsamındayız, WCAG AA hedefini gereksinimlere yazalım."
+
+<StepFlow
+  arrows={false}
+  label="Düzenlemeden ölçüte"
+  caption="Yasalar genellikle teknik ölçütü doğrudan yazmaz; bir standarda atıf yapar. O standardın merkezinde ise WCAG vardır."
+  steps={[
+    { title: "Yasa / yönetmelik", sub: "EAA, ADA, Türkiye Genelgesi", tone: "plain" },
+    { title: "Standart", sub: "EN 301 549, kontrol listesi", tone: "accent" },
+    { title: "WCAG", sub: "Test edilebilir ölçütler (bir sonraki ders)", tone: "progress" },
+  ]}
+/>
+
+<Callout kind="tasarimci">
+
+- **Erişilebilirliği tasarımın içine yaz, sona bırakma.** Kontrast, odak, etiket, hedef boyutu: tasarım aşamasında karar verilir.
+- **Gereksinime yaz:** "WCAG 2.2 AA" bir NFR olarak PRD'de ve bitmiş sayılma tanımında yer alsın.
+- **Savunurken çerçeve kur:** "Bu yalnızca bir azınlık için değil: bebek taşıyan da, güneşte okuyan da kazanır."
+- **Hukuki durumu sor:** Ürün AB'ye mi, Türkiye'de e-ticaret ya da bankacılığa mı hizmet ediyor? Bu, kapsamı belirler.
+
+</Callout>
+
+<Summary>
+
+- Erişilebilirlik tasarımcının sonradan eklenemeyecek tek sorumluluğudur; kontrast, odak, etiket, hedef boyutu tasarım aşamasında düşünülmelidir.
+- Erişilebilirlik kullanılabilirlikten farklıdır: akıcı ama klavyeyle çalışmayan bir arayüz kullanışlı ama erişilemezdir.
+- Engel kalıcı, geçici ya da duruma bağlı olabilir; kaldırım rampası etkisi gereği erişilebilir tasarım herkese yarar.
+- Yardımcı teknolojiler ürünü HTML yapısı üzerinden okur; kodun anlamlı olması erişim meselesidir.
+- Hukuki çerçeve: AB'de EAA (2025), ABD'de ADA, Türkiye'de Cumhurbaşkanlığı Genelgesi; hepsi pratikte WCAG'e dayanır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Erişilebilirlik ile kullanılabilirlik arasındaki fark nedir?">
+
+Kullanılabilirlik herkes için kolaylıktır; erişilebilirlik belirli engelleri olan kişiler için kullanılabilir olmaktır. Bir ürün son derece kullanışlı ama tamamen erişilemez olabilir, örneğin klavyeyle hiç çalışmayan çok akıcı bir arayüz.
+
+</SelfCheck>
+
+<SelfCheck question="&quot;Engelin üç hâli&quot; nedir ve bu çerçeve erişilebilirliği savunurken neden işe yarar?">
+
+Kalıcı (tek kolu olmayan), geçici (kolu alçıda), duruma bağlı (bebek taşıyan). İşe yarar çünkü erişilebilirliğin "küçük bir azınlık için" olmadığını gösterir: aynı arayüz problemini çok daha geniş bir kitle yaşar.
+
+</SelfCheck>

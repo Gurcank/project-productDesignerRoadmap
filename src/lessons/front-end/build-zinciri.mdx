@@ -1,0 +1,77 @@
+---
+summary: "Yazılan kodun tarayıcının çalıştırabileceği dosyalara dönüşme süreci: paket yöneticisi, bundler ve transpiler, tree-shaking ve code splitting, source map. Duyduğunda anlaman yeter."
+outcomes:
+  - "Lockfile'ın 'bende çalışıyor' sorununu nasıl çözdüğünü söyleyebilirsin."
+  - "Bundler ile transpiler'ın işini ayırabilirsin."
+  - "Tree-shaking, code splitting ve lazy loading'in ortak hedefini ve tasarımdaki karşılığını açıklayabilirsin."
+  - "Source map'in neden hata izleme için gerekli olduğunu bilirsin."
+minutes: 6
+sources:
+  - label: "Vite — Neden Vite?"
+    url: "https://vite.dev/guide/why.html"
+  - label: "npm — package-lock.json"
+    url: "https://docs.npmjs.com/cli/v10/configuring-npm/package-lock-json"
+  - label: "MDN — Lazy loading"
+    url: "https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Lazy_loading"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Geliştirici düzenli dosyalarla çalışır; tarayıcı ise küçük, sıkıştırılmış ve optimize edilmiş dosyalar ister. Arada bir **build zinciri** vardır. Bu ders, o zincirin duyduğun adlarını ve tasarıma dokunan sonuçlarını anlatır.
+
+## Paket yöneticisi ve bağımlılık
+
+**Package manager (paket yöneticisi)**: npm, pnpm, yarn, bun gibi araçlar, projenin kullandığı dış kütüphaneleri (**dependency**) indirir ve sürümlerini yönetir. `package.json` hangi paketlerin kullanıldığını, **lockfile** ise tam olarak hangi sürümlerin kurulduğunu kaydeder. Lockfile, "bende çalışıyor" probleminin büyük kısmını çözer: herkesin bilgisayarında ve sunucuda birebir aynı sürümler kurulur. "Lockfile'ı da commit edelim; sürüm farkından kaynaklanan hataları önler."
+
+Burada "dependency" dış kütüphane demektir; proje yönetimindeki "bağımlılık" (bir görevin başka göreve bağlılığı) farklı bir şeydir.
+
+## Bundler ve transpiler
+
+**Bundler** (Vite, webpack, Turbopack, esbuild, Rollup) onlarca kaynak dosyayı tarayıcının verimli yükleyebileceği birkaç dosyada birleştirir. **Transpiler** (Babel, SWC) modern ya da TypeScript kodunu tarayıcıların anlayacağı JavaScript'e çevirir. Bu alandaki araçlar hızla değişir; hangi aracın yaygın olduğu her yıl kayabilir. "Build 4 dakika sürüyor; bundler'ı değiştirmeyi değerlendirelim."
+
+## Gereksiz kodu göndermemek
+
+Üç teknik aynı hedefe hizmet eder: **kullanıcıya o an gerekmeyen kodu göndermemek.**
+
+- **Tree-shaking:** kullanılmayan kodu çıkarır.
+- **Code splitting:** tüm kodu tek dosyada göndermek yerine sayfa bazında böler.
+- **Lazy loading:** bir parçayı ancak gerekli olduğunda yükler.
+
+Ana sayfaya giren birinin ayarlar ekranının kodunu indirmesi gereksizdir. Tasarımdaki karşılığı: ağır bir bileşen (grafik kütüphanesi, harita, video oynatıcı) yalnızca görünür olduğunda yüklenebilir. "Harita bileşenini lazy load edelim; sayfanın altında ve çoğu kullanıcı oraya inmiyor." Bu, yüklenene kadar bir skeleton ya da yer tutucu gerektirir.
+
+## Source map
+
+**Source map**, sıkıştırılmış üretim kodunu okunabilir orijinal koda geri eşleyen dosyadır. Canlıda bir hata oluştuğunda hangi satırdan geldiğini görmeyi sağlar; hata izleme araçları buna dayanır. "Source map'leri Sentry'ye yükleyelim; yoksa hata raporları okunamaz oluyor."
+
+<Callout kind="tasarimci">
+
+- **Ağır bileşenleri işaretle** (harita, grafik, video) ve yüklenirken görünecek yer tutucuyu tasarla.
+- **Yeni bir kütüphane önerirken boyut bedelini sor;** her ek kütüphane gönderilen koda eklenir.
+
+</Callout>
+
+<Summary>
+
+- Lockfile herkesin aynı sürümleri kurmasını sağlar.
+- Bundler dosyaları birleştirir, transpiler modern kodu tarayıcının anlayacağı koda çevirir.
+- Tree-shaking, code splitting ve lazy loading'in ortak hedefi gereksiz kod göndermemektir.
+- Source map, canlıdaki hatayı orijinal koda geri eşler.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Tree-shaking, code splitting ve lazy loading'in ortak hedefi nedir?">
+
+Kullanıcıya o an gerekmeyen kodu göndermemek: kullanılmayan kodu çıkarmak, kodu sayfa bazında bölmek ve bir parçayı ancak gerektiğinde yüklemek.
+
+</SelfCheck>
+
+<SelfCheck question="Source map ne işe yarar?">
+
+Sıkıştırılmış üretim kodunu okunabilir orijinal koda geri eşler; canlıda bir hata olduğunda hangi satırdan geldiğini görmeyi sağlar ve hata izleme araçları buna dayanır.
+
+</SelfCheck>

@@ -1,0 +1,107 @@
+---
+summary: "HTML'in nerede ve ne zaman üretildiğine dair kararlar: CSR, SSR, SSG, ISR, hydration, islands, server component, streaming. Bir web projesinin hızı, SEO'su ve maliyetini belirleyen en önemli teknik karar."
+outcomes:
+  - "CSR, SSR ve SSG arasındaki farkı söyleyip bir sayfa türü için doğrusunu seçebilirsin."
+  - "Hydration'ın neden 'görünür ama tıklanmıyor' sorununa yol açtığını açıklayabilirsin."
+  - "Server component ile SSR'ın farkını ayırt edebilirsin."
+  - "Streaming'in neden bir tasarım kararı olduğunu söyleyebilirsin."
+minutes: 12
+sources:
+  - label: "web.dev — Rendering on the Web"
+    url: "https://web.dev/articles/rendering-on-the-web"
+  - label: "React — Server Components"
+    url: "https://react.dev/reference/rsc/server-components"
+  - label: "React — Suspense"
+    url: "https://react.dev/reference/react/Suspense"
+  - label: "Next.js — Server ve Client Components"
+    url: "https://nextjs.org/docs/app/getting-started/server-and-client-components"
+  - label: "Next.js — Partial Prerendering"
+    url: "https://nextjs.org/docs/app/building-your-application/rendering/partial-prerendering"
+flags: ["degisken"]
+skipTerms: ["state","yorumlar"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import RenderWhere from "~/components/lesson/RenderWhere.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Blog yazın bir kullanıcıya milisaniyeler içinde açılıyor; ürün sayfan ise önce boş bir ekran gösterip sonra doluyor. İkisi de "web sayfası" ama HTML'i farklı yerde ve farklı zamanda üretiyorlar. Bu karar, bir web projesinin **hız, SEO ve maliyetini** doğrudan belirler.
+
+Basit çerçeve: HTML üç yerde üretilebilir: **derleme anında** (build), **istek anında sunucuda** (request) ya da **tarayıcıda** (client). Aşağıdaki stratejiler bu üçünün farklı birleşimleridir.
+
+<RenderWhere />
+
+## Üç temel strateji
+
+**CSR (Client-Side Rendering).** Sunucu neredeyse boş bir HTML gönderir, içeriği tarayıcıda JavaScript üretir. Basit ve ucuzdur, sunucu tarafı gerektirmez. Panel gibi giriş yapılan, SEO gerektirmeyen uygulamalara uygundur. Bedeli: ilk açılışta boş ekran süresi ve JavaScript çalışmadan içerik olmaması. SEO ve ilk yükleme hızı açısından en zayıf seçenektir; pazarlama sayfaları için genelde uygun değildir. "İç panel CSR kalsın; SEO gerekmiyor, sunucu maliyeti de olmasın."
+
+**SSR (Server-Side Rendering).** HTML her istekte sunucuda üretilip gönderilir. İçerik ilk yanıtta hazır gelir; arama motorları ve paylaşım önizlemeleri sorunsuz çalışır. Kişiye özel ve anlık değişen içerik için gereklidir (e-ticaret ürün sayfası). Her istekte hesaplama yapıldığı için sunucu maliyeti ve ilk bayta kadar geçen süre (TTFB) statik seçeneklerden yüksektir. "Stok bilgisi anlık; bu sayfa SSR olmalı."
+
+**SSG (Static Site Generation).** HTML derleme anında bir kez üretilir; her kullanıcıya aynı hazır dosya servis edilir. **En hızlı ve en ucuz seçenek:** dosya CDN'den gelir, sunucu hesaplama yapmaz, trafik artınca çökmez. Blog, dokümantasyon ve pazarlama sayfaları için doğal tercihtir. İçerik değiştiğinde yeniden derleme gerekir; binlerce sayfalı sitelerde derleme süresi sorun olabilir. "Blog SSG olsun; içerik günde bir güncelleniyor, her istekte yeniden üretmeye gerek yok."
+
+**ISR (Incremental Static Regeneration)**, statik sayfaların belirli aralıklarla ya da bir tetikleyiciyle arka planda yeniden üretilmesidir. SSG'nin hızıyla SSR'ın tazeliğini birleştirmeye çalışır. "Ürün sayfaları ISR olsun, 5 dakikada bir tazelensin; fiyat değişimi çok sık değil."
+
+## Canlandırma
+
+**Hydration (canlandırma)**, sunucudan gelen hazır HTML'in tarayıcıda JavaScript ile etkileşimli hâle getirilmesidir. SSR ve SSG'nin eksik parçasıdır: gelen HTML görünür ama tıklanabilir değildir. **Bu ara dönem gerçek bir sorundur:** kullanıcı butonu görür, basar, hiçbir şey olmaz. Ne kadar çok JavaScript varsa bu süre o kadar uzar ve doğrudan INP'yi etkiler. "Sayfa hızlı görünüyor ama hydration bitmeden butonlar çalışmıyor; client JavaScript'i azaltmamız lazım."
+
+**Islands / partial hydration**, sayfanın tamamını değil, yalnızca gerçekten etkileşimli parçalarını canlandırmaktır. Bir blog sayfasında metnin JavaScript'e ihtiyacı yoktur; yalnızca arama kutusu ve menü vardır. Bu yaklaşım gönderilen JavaScript'i ciddi biçimde düşürür; Astro'nun temel fikridir. "İçerik sitesi için Astro düşünelim; sadece etkileşimli adalar JavaScript alsın."
+
+## Server component
+
+**Server component (RSC)**, yalnızca sunucuda çalışan ve tarayıcıya **hiç JavaScript göndermeyen** bileşenlerdir. Etkileşim gerektirenler ayrıca "client component" olarak işaretlenir. Next.js App Router'da varsayılan davranıştır: bir bileşen aksi belirtilmedikçe server component'tir. "Bu bölüm statik metin; client component yapmaya gerek yok, server'da kalsın."
+
+**Karıştırma:** server component, SSR değildir. SSR bir sayfayı sunucuda HTML'e çevirir ama o bileşenin JavaScript'i yine tarayıcıya gider. Server component'in JavaScript'i **hiç** gitmez.
+
+Durum (2026) değişken: RSC, App Router'da varsayılan hâle geldi ve önemli bundle kazançları raporlanıyor; ama yaygınlık iddialarında dikkatli ol. Bir 2026 anketine göre ekiplerin çoğu hâlâ SPA (%84) ve SSR (%61) kullanıyor; islands (%14) ve streaming SSR (%18) ana akım değil. App Router'ın önbellek modeli de ekiplerin en sık şikâyet ettiği karmaşıklıklardan biri olarak anılıyor.
+
+## Streaming, Suspense, PPR
+
+**Streaming SSR**, sayfanın tamamının hazır olmasını beklemeden, hazır olan parçaların sırayla gönderilmesidir. **PPR (Partial Prerendering)** bir adım ötesidir: sayfanın statik iskeleti anında gönderilir, dinamik "delikler" akış hâlinde doldurulur. Algılanan hızı ciddi biçimde artırır: kullanıcı yavaş bir veri kaynağını beklerken sayfanın geri kalanını görür.
+
+**Tasarımcıyı doğrudan ilgilendirir:** hangi bölümün önce geleceğine ve bekleyen bölümde ne görüneceğine (skeleton) karar vermek bir tasarım kararıdır. "Ürün bilgisi statik gelsin, yorumlar ve öneriler akışla sonra gelsin; bekleyen alanlara skeleton koyalım." PPR, Next.js 15'te deneysel olarak belgelenmişti ve üretim için önerilmiyordu; durumu değişmiş olabilir, kullanmadan önce güncel dokümana bak.
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu site bir SSG örneğidir: sayfaların tamamı derleme anında hazır HTML olarak üretilir ve içerik değişince yeniden derlenir. Terim açıklaması gibi etkileşimli parçalar yalnızca gereken sayfada küçük betikler çalışır.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Sayfa türüne göre sor:** bu sayfa herkese aynı mı (SSG), kişiye özel mi (SSR), panel mi (CSR)?
+- **Bekleyen bölümler için skeleton ve öncelik sırasını tasarla.**
+- **Etkileşimli parçaların gerçekten gerekli olup olmadığını sor;** her biri JavaScript yükü ve hydration süresi demek.
+
+</Callout>
+
+<Summary>
+
+- HTML üç yerde üretilir: derlemede, istekte sunucuda, tarayıcıda. CSR, SSR ve SSG bunların farklı birleşimleridir.
+- SSG en hızlı ve en ucuzdur (blog, dokümantasyon); SSR kişiye özel ve anlık içerik içindir; CSR giriş gerektiren paneller içindir; ISR SSG'ye tazelik katar.
+- Hydration bitene kadar sayfa görünür ama tıklanmaz; JavaScript ne kadar fazlaysa bu süre o kadar uzar.
+- Server component'in JavaScript'i hiç tarayıcıya gitmez; SSR'da gider.
+- Streaming ve PPR'da hangi bölümün önce geleceği ve bekleyen yerin görünümü tasarım kararıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="CSR, SSR ve SSG arasındaki fark nedir? Blog için hangisi doğal tercihtir?">
+
+CSR tarayıcıda, SSR her istekte sunucuda, SSG derleme anında bir kez HTML üretir. Blog için SSG doğaldır: içerik herkese aynı ve seyrek değişir; en hızlı, en ucuz ve en dayanıklı seçenektir.
+
+</SelfCheck>
+
+<SelfCheck question="Hydration nedir ve kullanıcı açısından hangi soruna yol açar?">
+
+Sunucudan gelen hazır HTML'in tarayıcıda JavaScript ile etkileşimli hâle getirilmesidir. Tamamlanana kadar kullanıcı butonu görür ama basınca hiçbir şey olmaz; JavaScript ne kadar fazlaysa bu ara dönem o kadar uzar.
+
+</SelfCheck>
+
+<SelfCheck question="Server component ile SSR arasındaki fark nedir?">
+
+SSR bileşeni sunucuda HTML'e çevirir ama bileşenin JavaScript'i yine tarayıcıya gider (hydration için). Server component'in JavaScript'i hiç gitmez; yalnızca sunucuda çalışıp sonucu gönderir.
+
+</SelfCheck>

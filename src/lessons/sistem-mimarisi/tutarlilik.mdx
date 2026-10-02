@@ -1,0 +1,71 @@
+---
+summary: "Güçlü ve nihai tutarlılık, ve CAP teoremi: nihai tutarlı bir sistemde kullanıcı kaydeder, yeniler ve eski hâli görür; sistem bozuk değildir ama kullanıcı öyle sanır. Tasarım çözümü: kendi değişikliğini anında göster."
+outcomes:
+  - "Güçlü ve nihai tutarlılığı ve arayüzdeki sonucunu söyleyebilirsin."
+  - "Nihai tutarlılıkta kullanıcı deneyimini nasıl koruyacağını (optimistic UI, güncelleniyor durumu) açıklayabilirsin."
+  - "CAP'in pratik anlamını ('ağ koptuğunda doğruluk mu cevap mı?') bilirsin."
+minutes: 6
+sources:
+  - label: "InfoQ — Eric Brewer: CAP Twelve Years Later"
+    url: "https://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed/"
+  - label: "AWS Well-Architected — Güvenilirlik sütunu"
+    url: "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html"
+flags: ["emin-degil"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Profil adını değiştirdin, "Kaydedildi" gördün, sayfayı yeniledin ve eski ad geri geldi. Sistem bozuk değil. Kullanıcı ise bozuk sanıyor. Bu, tutarlılık konusunun arayüze yansıması.
+
+<Compare>
+<Pane title="Güçlü tutarlılık">
+
+- Yazmadan sonra herkes anında yeni değeri görür
+- Bedeli: daha yavaş/pahalı olabilir
+
+</Pane>
+<Pane title="Nihai tutarlılık">
+
+- Herkes eninde sonunda yeni değeri görür
+- Kısa süre eski değer görülebilir
+
+</Pane>
+</Compare>
+
+## Arayüz sonucu
+
+**Bu ayrımın doğrudan bir arayüz sonucu vardır.** Nihai tutarlı bir sistemde kullanıcı bir şeyi kaydeder, sayfayı yeniler ve eski hâli görür. Tasarım çözümü: kullanıcının kendi değişikliğini **anında göstermek** (optimistic UI) ve "güncelleniyor" durumunu belirtmek. Dağıtık sistemlerde, önbellekli yapılarda ve çoğaltılmış veritabanlarında karşına çıkar. "Beğeni sayısı nihai tutarlı; kullanıcı kendi beğenisini anında görsün, toplam sayı biraz gecikebilir."
+
+## CAP teoremi
+
+**CAP teoremi**, dağıtık bir sistemde ağ bölünmesi yaşandığında tutarlılık (consistency) ile erişilebilirlik (availability) arasında seçim yapmak zorunda kalınacağını söyler. Kavramsal olarak bilmen yeterli (seviye 3). **Pratik anlamı:** ağ koptuğunda ya yanlış olabilecek bir cevap verirsin ya hiç cevap vermezsin. Bir banka birinciyi seçemez; bir sosyal medya akışı seçebilir. "Bu veri için tutarlılık kritik; erişilebilirlikten ödün verip hata döneriz."
+
+Sık yanlış anlaşılır: "üçünden ikisini seç" diye özetlenir ama teoremin söylediği daha dar; seçim yalnızca **bölünme anında** ortaya çıkar. Teoremin kesin formülasyonu akademik bir tartışma konusudur; günlük kullanımda kaba bir çerçeve olarak geçer.
+
+<Callout kind="tasarimci">
+
+- **Hangi veri anında doğru görünmeli, hangisi biraz gecikebilir?** Para ve stok kritik; beğeni sayısı değil.
+- **Kullanıcının kendi eylemini anında yansıt;** toplam sayıların gecikmesi tolere edilebilir.
+- **"Güncelleniyor" durumu için küçük bir gösterge tasarla.**
+
+</Callout>
+
+<Summary>
+
+- Güçlü tutarlılıkta herkes anında yeni değeri görür; nihai tutarlılıkta kısa süre eski değer görülebilir.
+- Nihai tutarlılıkta kullanıcının kendi değişikliğini anında göstermek ve "güncelleniyor" belirtmek gerekir.
+- CAP: ağ koptuğunda doğruluk ile cevap verebilirlik arasında seçim; yalnızca bölünme anında.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Nihai tutarlılığın arayüzdeki sonucu nedir? Tasarım çözümü nedir?">
+
+Kullanıcı bir şeyi kaydeder, sayfayı yeniler ve eski hâli görür; sistem bozuk değildir ama kullanıcı öyle sanır. Çözüm: kullanıcının kendi değişikliğini anında göstermek (optimistic UI) ve "güncelleniyor" durumunu belirtmek.
+
+</SelfCheck>

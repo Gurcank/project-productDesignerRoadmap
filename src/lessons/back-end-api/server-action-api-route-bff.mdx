@@ -1,0 +1,64 @@
+---
+summary: "Modern meta-framework'lerin getirdiği yaklaşımlar: API route, server action ve BFF. Kolaylık, doğrulama ve yetki kontrolünü atlamak için gerekçe değildir."
+outcomes:
+  - "API route, server action ve BFF'in işini ayırabilirsin."
+  - "Server action'ın da bir endpoint olduğunu ve doğrulama/yetki kontrolünün neden orada da zorunlu olduğunu açıklayabilirsin."
+minutes: 6
+sources:
+  - label: "Next.js — Route Handlers"
+    url: "https://nextjs.org/docs/app/getting-started/route-handlers"
+  - label: "Next.js — Veri güncelleme ve Server Actions"
+    url: "https://nextjs.org/docs/app/getting-started/mutating-data"
+  - label: "Sam Newman — Backends For Frontends"
+    url: "https://samnewman.io/patterns/architectural/bff/"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Form gönderimi için ayrı bir sunucu kurmak mı, yoksa ön yüz projesinin içinde bir sunucu işlevi yazmak mı? Modern meta-framework'ler üç yaklaşım sunar.
+
+## API route
+
+**API route (API yolu)**, ön yüz projesinin içinde tanımlanan, sunucuda çalışan endpoint'tir. Ayrı bir arka yüz projesi kurmadan sunucu tarafı kod yazmayı sağlar ve küçük/orta projelerde ayrı bir back-end ekibine olan ihtiyacı azaltır. Next.js ve benzeri meta-framework'lerde bulunur. "Form gönderimi için ayrı bir sunucu kurmayalım; API route yeter."
+
+## Server action
+
+**Server action**, ön yüz kodundan doğrudan çağrılabilen ama sunucuda çalışan işlevdir. Aradaki API katmanını yazma ihtiyacını ortadan kaldırır: form gönderimi için endpoint tanımlamak, adres yazmak ve yanıtı elle işlemek gerekmez. React Server Components ile birlikte gelen bir yaklaşımdır; modern Next.js projelerinde form ve mutasyonlarda kullanılır. "Bu formu server action ile bağlayalım; ayrı endpoint'e gerek yok."
+
+**Kolaylık, doğrulama ve yetki kontrolünü atlamak için gerekçe değildir.** Server action da bir endpoint'tir; dışarıdan çağrılabilir. **Girdi doğrulaması ve yetki kontrolü orada da zorunludur.**
+
+## BFF
+
+**BFF (Backend For Frontend)**, her istemci türü (web, mobil) için ona özel şekillendirilmiş ince bir arka yüz katmanıdır. Ön yüzün ihtiyacı olan veriyi tek yerde toplar: üç farklı iç servisten veri çekip tek yanıt hâline getirir. Böylece ön yüz üç ayrı istek atmak zorunda kalmaz (under-fetching). Mikroservis mimarilerinde ve çok istemcili ürünlerde görülür. "Ekran üç ayrı servisten veri istiyor; BFF katmanı ekleyip tek istekte toplayalım."
+
+<Callout kind="tasarimci">
+
+- **"Server action ile hallederiz" cümlesinde güvenliği hatırla:** doğrulama ve yetki yine gerekli; hata durumlarını tasarla.
+- **Ekran çok sayıda servise bağlıysa** BFF ya da tek istekte toplama önerisinin neden yapıldığını anla.
+
+</Callout>
+
+<Summary>
+
+- API route, ön yüz projesinin içinde sunucu tarafı endpoint yazmayı sağlar.
+- Server action ön yüzden doğrudan çağrılan sunucu işlevidir; endpoint olduğu için doğrulama ve yetki kontrolü zorunludur.
+- BFF, her istemci için veriyi tek yerde toplayan ince arka yüzdür; under-fetching'i çözer.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Server action kullanmak doğrulama ve yetki kontrolünü atlamak için gerekçe midir?">
+
+Hayır. Server action da bir endpoint'tir ve dışarıdan çağrılabilir; girdi doğrulaması ve yetki kontrolü orada da zorunludur.
+
+</SelfCheck>
+
+<SelfCheck question="BFF hangi problemi çözer?">
+
+Under-fetching'i: ön yüzün ihtiyacı olan veriyi birden fazla iç servisten toplayıp tek yanıt yapar, böylece ön yüz birden çok gidiş-dönüş yapmak zorunda kalmaz.
+
+</SelfCheck>

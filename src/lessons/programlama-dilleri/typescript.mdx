@@ -1,0 +1,68 @@
+---
+summary: "JavaScript'in üstüne yazılan tip katmanı: hataları kullanıcı görmeden yakalar. Bir tasarımcı için en pratik sonucu, boş olabilen alanların açıkça işaretlenmesidir."
+outcomes:
+  - "TypeScript'in ne işe yaradığını ve çalışma zamanında neden garanti vermediğini söyleyebilirsin."
+  - "'Bu alan boş olabilir mi?' sorusunun neden doğrudan koda yansıdığını açıklayabilirsin."
+minutes: 5
+sources:
+  - label: "TypeScript — Resmî site"
+    url: "https://www.typescriptlang.org/"
+  - label: "TypeScript Handbook — Temel tipler"
+    url: "https://www.typescriptlang.org/docs/handbook/2/basic-types.html"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+TypeScript, ayrı bir dil değil; JavaScript'in üstüne yazılan bir **tip katmanıdır.** Derlenince geriye sade JavaScript kalır. Kavramsal tarafı Front-end bölümünde gördün; burada dil profili var.
+
+## Ne işe yarar
+
+Bir değerin ne olduğunu **önceden** söyler: "bu alan metin", "bu alan boş olabilir", "bu fonksiyon şu şekli bekliyor". Sonuç: bir alanın adını yanlış yazmak ya da olmayan bir veriyi kullanmak kod yazılırken hata verir, kullanıcı görmeden. Yeni web projelerinin çoğunda varsayılandır. Ekip büyüdükçe ve kod yaşlandıkça faydası artar; iki günlük bir prototipte gereksiz yük olabilir.
+
+## Güçlü yanları
+
+- **Hataları erken yakalar.** Özellikle veri şekli değiştiğinde: bir API alanı yeniden adlandırıldığında onu kullanan her yer anında belli olur.
+- **Kodu kendi kendini belgeler.** "Bu fonksiyon ne bekliyor?" sorusunun cevabı koddadır.
+- **Refactor güvenliğini artırır.** Büyük bir değişiklik, neyin kırıldığı görülebildiği için daha ucuzdur.
+
+## Zayıf yanları
+
+- **Yazma maliyeti ekler.** Küçük işlerde tip yazmak ek iştir.
+- **Çalışma zamanında yoktur.** Tipler derlemede silinir; dışarıdan gelen veri (bir API, bir form, tarayıcı deposu) yine de çalışma anında doğrulanmalıdır.
+- **Yanlış güven verebilir.** "Tipli" olmak, verinin gerçekten o şekilde geleceğini garanti etmez.
+
+**Alternatifler:** küçük ve kısa ömürlü işlerde sade JavaScript; ayrı derleme adımı istemeyen hafif yol olarak JSDoc ile tip.
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu site TypeScript ile yazıldı ve içerik şeması çalışma anında da doğrulanır: ders dosyasında kaynak bağlantısı eksikse derleme durur. Tarayıcıda saklanan ilerleme verisi de dışarıdan gelen veri sayıldığı için okunurken doğrulanır.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **"Bu alan boş olabilir mi?" sorusunu netleştir:** tipli bir projede boş olabilen her alan açıkça işaretlenir; belirtmezsen geliştirici bir varsayım yapar ve boş durum tasarımın eksik kalır.
+- **API alanını yeniden adlandırmak ucuz değildir,** ama TypeScript'li bir projede en azından görünürdür: hangi ekranların etkilendiği listelenebilir.
+
+</Callout>
+
+<Summary>
+
+- TypeScript, JavaScript'e tip bilgisi ekler ve hataları yazarken yakalar; derlenince tipler silinir.
+- Dışarıdan gelen veri yine çalışma anında doğrulanmalıdır.
+- Tasarımcı için pratik sonuç: opsiyonel alanlar açıkça işaretlenir, boş durumlar tasarlanmalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Tipli olmak neden verinin doğru geleceğini garanti etmez?">
+
+Tipler derlemede silinir. Sunucudan ya da dışarıdan gelen veri çalışma anında beklenenden farklı olabilir; bunun için ayrıca doğrulama gerekir.
+
+</SelfCheck>

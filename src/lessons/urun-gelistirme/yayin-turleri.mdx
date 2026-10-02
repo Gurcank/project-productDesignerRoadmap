@@ -1,0 +1,111 @@
+---
+summary: "Bir ürünün kullanıcıya açılma biçimleri: alpha, beta, soft launch, GA, dogfooding ve kullanımdan kaldırma. Hepsi herkese aynı anda açmanın riskini azaltmanın farklı yolları."
+outcomes:
+  - "Alpha, beta, soft launch ve GA arasındaki farkı anlatabilirsin."
+  - "Closed beta ile open beta'nın farklı amaçlarını bilirsin."
+  - "Dogfooding'in neden gerçek kullanıcı araştırmasının yerini tutmadığını açıklayabilirsin."
+  - "Bir özelliğin kaldırılma sürecinde (deprecation) tasarımcıya düşen işi sayabilirsin."
+minutes: 8
+sources:
+  - label: "Atlassian — Ürün yönetimi"
+    url: "https://www.atlassian.com/agile/product-management"
+  - label: "The Lean Startup — İlkeler"
+    url: "https://theleanstartup.com/principles"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Yeni bir özelliği bir gecede herkese açtığını düşün. Bir hata çıkarsa, **herkes** o hatayı görür. Aynı özelliği önce ekibe, sonra yüz kişiye, sonra yüzde on kullanıcıya açsan, hata çıktığında etkilenen kişi sayısı çok daha küçük olur.
+
+İşte bu yüzden ürünler **kademeli** açılır. Bu ders, kullanıcıya açılma biçimlerini anlatıyor. Hepsi aynı amaca hizmet eder: aynı anda herkese açmanın riskini azaltmak.
+
+<StepFlow
+  label="Kademeli yayın"
+  caption="Her adımda kullanıcı sayısı ve beklenti artar, hata toleransı azalır. Ürün büyüdükçe kapatmak da bir tasarım konusu olur."
+  steps={[
+    { title: "Alpha", sub: "Ekip içi, eksik ve kararsız. Hata beklenir.", tone: "plain" },
+    { title: "Beta", sub: "Sınırlı (closed) ya da açık (open) kullanıcı grubu", tone: "accent" },
+    { title: "Soft launch", sub: "Duyuru yapmadan, sınırlı kitleye/bölgeye", tone: "plain" },
+    { title: "GA", sub: "Herkese açık, kararlı, desteklenen sürüm", tone: "progress" },
+    { title: "Deprecation / sunset", sub: "Artık desteklenmeyecek: kapatma süreci", tone: "plain" },
+  ]}
+/>
+
+## Alpha: ilk ve en eksik hâl
+
+**Alpha**, ürünün genelde şirket içinde ya da çok küçük bir gruba açılan **ilk, eksik ve kararsız** sürümüdür. Büyük hataları gerçek kullanıcıya ulaşmadan yakalar. Bu aşamada hata beklenir ve kusur normaldir: "Alpha'da yalnızca ekip kullanıyor; veri kaybı olabilir diye uyarı koyduk." Büyük özellik lansmanlarının ilk adımıdır.
+
+## Beta: deneme sürümü
+
+**Beta**, ürünün sınırlı ya da açık bir kullanıcı grubuna, henüz tam sürüm sayılmadan sunulmasıdır. Gerçek kullanım koşullarında test sağlar. İki türü vardır:
+
+- **Closed beta:** davetle sınırlıdır; odaklı geri bildirim verir.
+- **Open beta:** herkese açıktır; yük testi gibi çalışır.
+
+"Beta" etiketi ayrıca **kullanıcının beklentisini ayarlar:** "bu henüz bitmedi, hata görebilirsin" mesajı verir. Lansman planlarında geçer; bekleme listesi (waitlist) ve davet kodu mekanizmaları genelde bu aşamada tasarlanır. "Önce 200 kişilik closed beta, iki hafta sonra open beta."
+
+## Soft launch: sessiz açılış
+
+**Soft launch**, ürünü **duyuru yapmadan**, sınırlı bir kitleye ya da bölgeye açmaktır. Duyurunun getireceği yükü ve dikkati üstlenmeden gerçek koşulları test eder; sorun çıkarsa itibar maliyeti düşük olur. Pazarlama planlarında genelde büyük duyurudan (hard launch) önce yapılır. "Soft launch yapalım; iki hafta veriyi izleyip sorun yoksa duyuruya çıkarız."
+
+Beta ile soft launch'ın farkı: beta *kimin kullandığıyla* (davetliler), soft launch *duyurunun yapılıp yapılmadığıyla* ilgilidir.
+
+## GA: genel kullanıma açılma
+
+**GA** (General Availability), ürünün **herkese açık, kararlı ve desteklenen** tam sürümüdür. Bir eşiktir: GA sonrası kararlılık, geri uyumluluk ve destek beklentisi başlar. Deneysel değişiklikler artık serbestçe yapılamaz.
+
+Sürüm duyurularında ve kurumsal satışta geçer ("GA olmadan satın almıyoruz"). "GA'ya çıkınca API'de kırıcı değişiklik yapamayız; sözleşmemiz var."
+
+## Dogfooding: kendi ürününü kullanmak
+
+**Dogfooding** ("eating your own dog food"), ekibin kendi ürününü **günlük işinde gerçekten kullanmasıdır.** Sorunları en hızlı ortaya çıkaran yöntemdir. Bir akışı her gün kullanmak zorunda kalmak, o akıştaki rahatsızlığı raporlardan daha net gösterir. "Dogfooding'e geçtik; iki gün içinde bildirim ayarlarının yerini değiştirdik."
+
+Önemli sınır: **ekip kullanıcıyı temsil etmez.** Dogfooding gerçek kullanıcı araştırmasının yerini tutmaz; yalnızca bariz sorunları erken yakalar. Bu sitenin kendisi buna bir örnek: onu yapan kişi aynı zamanda günlük kullanıcısı, ama bu, başka kullanıcıların nasıl kullanacağını göstermez.
+
+## Deprecation ve sunset: kapatmak da tasarımdır
+
+**Deprecation / sunset**, bir özelliğin ya da sürümün artık desteklenmeyeceğinin duyurulup, belirli bir tarihte kapatılmasıdır. Ürünün büyümesi kadar **küçülmesi de yönetilmelidir.** Bir şeyi haber vermeden kapatmak güven kaybettirir; deprecation süreci kullanıcıya geçiş süresi tanır. API sürüm yönetiminde ve eski özelliklerin kaldırılmasında karşına çıkar.
+
+Bu süreçte **geçiş yolu, uyarı mesajı ve iletişim tasarımı senin işindir:**
+
+- Kullanıcı kapanışı nerede ve ne zaman öğrenecek? (Banner, e-posta, uygulama içi mesaj)
+- Eski ve yeni arasındaki geçiş nasıl olacak? (Yönlendirme, veri taşıma)
+- Kapanış sonrası ne görecekler? (Bilgilendirme sayfası, yedek)
+
+"Eski panel üç ay sonra kapanıyor; şimdiden banner koyup yeni panele yönlendirelim."
+
+<Callout kind="tasarimci">
+
+- **Her aşama için ayrı bir "beklenti" tasarla.** Alpha'da uyarı, beta'da "yeni" etiketi, GA'da sessizlik; kullanıcıya ne söyleyeceğin aşamaya göre değişir.
+- **Beta'da geri bildirim kanalı koy.** Kullanıcı sorunu nereye bildirecek? Bu tasarlanmadıysa beta'nın değeri yarıya düşer.
+- **Dogfooding'i araştırmanın yerine koyma.** Ekibin kendi gözünün kör noktası olduğunu bil.
+- **Kapatılacak bir şeyi tasarlarken kullanıcıyı koru.** Veri kaybı olmasın, geçiş yolu açık olsun, süre yeterli olsun.
+
+</Callout>
+
+<Summary>
+
+- Kademeli yayın, herkese aynı anda açmanın riskini azaltır: alpha → beta → soft launch → GA.
+- Closed beta odaklı geri bildirim, open beta yük testi verir; "beta" etiketi beklentiyi ayarlar.
+- Soft launch duyurusuz açılıştır; GA kararlılık ve destek beklentisini başlatır.
+- Dogfooding hızlıdır ama kullanıcı araştırmasının yerini tutmaz; ekip kullanıcıyı temsil etmez.
+- Deprecation'da geçiş yolu, uyarı ve iletişim tasarımı senin işindir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Closed beta ile soft launch arasındaki fark nedir?">
+
+Closed beta davetle sınırlı bir gruba, odaklı geri bildirim almak için açılır; kimin kullandığıyla ilgilidir. Soft launch ise ürünü duyuru yapmadan, sınırlı bir kitleye ya da bölgeye açmaktır; duyurunun yükünü üstlenmeden gerçek koşulları test eder.
+
+</SelfCheck>
+
+<SelfCheck question="Dogfooding neden gerçek kullanıcı araştırmasının yerini tutmaz?">
+
+Çünkü ekip kullanıcıyı temsil etmez: ürünü bilir, kısayolları bilir, farklı bir bağlamda kullanır. Dogfooding bariz sorunları erken yakalar, ama gerçek kullanıcıların ihtiyaç ve davranışını göstermez.
+
+</SelfCheck>

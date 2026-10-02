@@ -1,0 +1,67 @@
+---
+summary: "Ekibin ortak buluşma noktası: remote, clone, fork, push, pull, fetch. Fork, yazma yetkin olmayan projeye katkı vermenin yolu; force push uzaktaki geçmişi ezip başkalarının işini silebilir."
+outcomes:
+  - "Remote, origin ve upstream'in ne olduğunu söyleyebilirsin."
+  - "Clone ile fork'un farkını ve fork'un ne zaman kullanıldığını açıklayabilirsin."
+  - "Push, pull ve fetch'i ayırıp force push'un neden tehlikeli olduğunu bilirsin."
+minutes: 6
+sources:
+  - label: "Pro Git — Uzak depolarla çalışmak"
+    url: "https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes"
+  - label: "GitHub Docs — Fork bir depo"
+    url: "https://docs.github.com/en/get-started/quickstart/fork-a-repo"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Git bilgisayarında çalışır; peki ekip nerede buluşur? Uzak depoda.
+
+## Remote
+
+**Remote (uzak depo)**, projenin senin bilgisayarının dışındaki kopyasıdır. **`origin`** senin kendi uzak deponun varsayılan adıdır; **`upstream`** ise fork yaptığın asıl deponun yaygın adıdır. Ekibin ortak buluşma noktasıdır: herkes kendi bilgisayarında çalışır, işini uzak depoya gönderir. "Upstream'den güncellemeleri çekip kendi fork'una aktar."
+
+## Clone ve fork
+
+**Clone**, uzak bir depoyu kendi bilgisayarına indirmektir ve günlük çalışmanın başlangıcıdır. **Fork**, o deponun kendi hesabın altında bağımsız bir kopyasını oluşturmaktır. Fork, yazma yetkin olmayan bir projeye katkı vermenin yoludur: kendi kopyanda değişiklik yapar, sonra asıl projeye pull request açarsın. Açık kaynağın çalışma biçimi budur. "Yazma yetkin yok; fork'la, değiştir, PR aç."
+
+## Push, pull, fetch
+
+- **Push:** yerel değişiklikleri uzak depoya gönderir.
+- **Fetch:** uzaktaki değişiklikleri indirir ama birleştirmez.
+- **Pull:** ikisini birden yapar: indirir ve birleştirir.
+
+Fetch'in ayrı olması, "önce ne değişmiş bir bakayım" imkânı verir. "Push'lamadan önce pull al, yoksa reddedilir."
+
+**Force push tehlikelidir:** uzaktaki geçmişi zorla üzerine yazar ve başkalarının işini silebilir. Paylaşılan dallarda kullanılmaz; ana dalda ise genelde dal koruması ile tamamen yasaklanır.
+
+<Callout kind="tasarimci">
+
+- **Yazma yetkin yoksa fork + PR yolunu kullan;** açık kaynak katkıları böyle çalışır.
+- **"Force push" duyduğunda** nedenini ve hangi dalda yapıldığını sor.
+- **Tasarım dosyalarını (Figma dışında) depoya koyuyorsan** push/pull akışına ekibin alışkın olduğundan emin ol.
+
+</Callout>
+
+<Summary>
+
+- Remote projenin uzak kopyasıdır; origin kendi deponun, upstream fork'un asıl deposunun adıdır.
+- Clone depoyu indirir, fork kendi hesabın altında bağımsız kopya oluşturur.
+- Push gönderir, fetch indirir, pull indirir ve birleştirir; force push başkalarının işini silebilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Force push neden tehlikeli? Ana dalda nasıl engellenir?">
+
+Uzaktaki geçmişi zorla üzerine yazar ve başkalarının işini silebilir. Ana dalda branch protection ile engellenir.
+
+</SelfCheck>
+
+<SelfCheck question="Fork ne zaman kullanılır?">
+
+Yazma yetkin olmayan bir projeye katkı vermek istediğinde: kendi hesabın altında bağımsız bir kopya oluşturur, orada değişiklik yapar, sonra asıl projeye PR açarsın.
+
+</SelfCheck>

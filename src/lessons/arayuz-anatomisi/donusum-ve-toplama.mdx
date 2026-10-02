@@ -1,0 +1,107 @@
+---
+summary: "Kullanıcıdan bir eylem ya da bilgi almayı hedefleyen bileşenler: CTA bölümü, sticky CTA, bülten, lead magnet, bekleme listesi, iletişim formu, randevu, çıkış penceresi, çerez bildirimi ve dark pattern'ler."
+outcomes:
+  - "Dönüşüm bileşenlerinin ne zaman işe yaradığını ve ne zaman rahatsız ettiğini ayırt edebilirsin."
+  - "Bir bülten formunda dönüşümü belirleyen şeyin ne olduğunu söyleyebilirsin."
+  - "Çerez bildiriminde reddetmenin neden kabul etmek kadar kolay olması gerektiğini açıklayabilirsin."
+  - "Dark pattern örneklerini tanıyabilirsin."
+minutes: 10
+sources:
+  - label: "Deceptive Design (Harry Brignull)"
+    url: "https://www.deceptive.design/"
+  - label: "W3C — WCAG 2.2: Focus Not Obscured (Minimum)"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html"
+  - label: "W3C WAI-ARIA APG — Dialog (Modal) Pattern"
+    url: "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+  - label: "GDPR Recital 32 — rıza"
+    url: "https://gdpr-info.eu/recitals/no-32/"
+additions:
+  - "Önceden işaretli kutunun rıza sayılmadığı: GDPR Recital 32 (birincil metin)."
+flags: ["degisken"]
+includeTerms: ["section", "newsletter"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Outside from "~/components/lesson/Outside.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Sayfayı sonuna kadar okuyan kullanıcı en ikna olmuş kullanıcıdır. Peki ona sonra ne söyleyeceksin? Bu derste kullanıcıdan bir eylem ya da bilgi almayı hedefleyen bileşenleri, ve bu hedefin kullanıcıya zarar verdiği yeri (dark pattern) göreceksin.
+
+## Eylem bölümleri
+
+**CTA section (eylem bölümü)**, sayfanın sonunda, tek bir eyleme odaklanan bölümdür. Sayfayı sonuna kadar okuyanı footer'a bırakmak fırsat kaybıdır. Sade tutulur: kısa başlık, tek buton, dikkat dağıtacak başka öğe yok. "Footer'dan önce bir CTA section ekleyelim; tek başlık ve tek buton yeter."
+
+**Sticky CTA**, kaydırma boyunca ekranda kalan buton ya da çubuktur. Uzun sayfalarda kullanıcı istediği anda harekete geçebilir; mobil e-ticarette alt kenarda "Sepete ekle" çubuğu olarak yaygındır. "Mobilde alta sticky CTA koyalım ama hero'daki buton görünürken gizli kalsın." Ekranın altını kaplar, bu yüzden içeriğin son satırını kapatmaması için alt boşluk bırak; ayrıca klavyeyle odaklanılan öğeyi gizlememelidir (WCAG 2.2 Focus Not Obscured).
+
+## Bilgi toplayan bileşenler
+
+**Newsletter / lead capture**, e-posta ya da iletişim bilgisi toplayan küçük formdur. Henüz satın almaya hazır olmayan kullanıcıyla bağ kurar. Dönüşümü belirleyen şey, **karşılığında ne verildiğidir**: "Bültenimize abone olun" zayıf, "Haftalık tek e-posta: bu haftanın en iyi 3 aracı" güçlüdür. "Ne göndereceğimizi ve sıklığı yazalım; tek alan ve tek buton kalsın."
+
+**Lead magnet**, iletişim bilgisi karşılığında verilen ücretsiz değerdir: e-kitap, şablon, kontrol listesi, mini araç. Ne kadar somut ve hemen kullanılabilirse dönüşüm o kadar yüksek olur: "Bir Figma şablonu verelim; bülten vaadinden daha somut."
+
+**Waitlist (bekleme listesi)**, henüz yayında olmayan bir ürün için ön kayıt toplar. Ürün hazır olmadan talebi ölçer ve lansman için hazır bir kitle biriktirir; genelde sıra numarası veya davet mekanizmasıyla desteklenir.
+
+**Contact form**, kullanıcının mesaj göndermesini sağlar ve gelen talebi sınıflandırır. Tek iletişim yolu olmamalı: e-posta adresi de görünür olmalı, çünkü bazı kullanıcılar form doldurmak istemez. Spam koruması gerekir; ama CAPTCHA erişilebilirlik sorunu çıkarabilir, görünmeyen yöntemler (honeypot gibi) tercih edilebilir.
+
+**Booking widget**, tarih ve saat seçerek randevu oluşturan bileşendir; karşılıklı e-postalaşmayı ortadan kaldırır. Genelde üçüncü parti bir servis gömülür (Cal.com, Calendly benzeri). Servis isimleri ve fiyatları değişir; kullanmadan önce güncel hâlini kontrol et. Gömülü bileşenler kendi erişilebilirlik ve performans yükünü getirir.
+
+## Rıza ve zorlama
+
+**Exit intent**, kullanıcı sayfadan ayrılmak üzereyken beliren modal penceredir. Son bir teklif sunar; kısa vadede dönüşümü artırabilir ama rahatsız edicidir, marka algısına zarar verebilir ve mobilde teknik olarak güvenilir çalışmaz. Kullanacaksan oturumda bir kez gösterilsin ve kolay kapatılsın. Modal olduğu için odak yönetimi ve Esc ile kapanma kuralları geçerlidir.
+
+**Cookie banner (çerez bildirimi)**, çerez kullanımı için onay alan bildirimdir; KVKK ve GDPR yükümlülüğüdür. Tasarım açısından kritik nokta: **reddetmek, kabul etmek kadar kolay olmalıdır.** "Tümünü kabul et" büyük ve renkli, "Reddet" küçük bir bağlantıysa bu, düzenlemelere aykırı kabul edilebilen bir **dark pattern**'dir. "Kabul et ve Reddet butonları eşit ağırlıkta olsun; ayarlar bağlantısı da görünür kalsın."
+
+Zorunlu (teknik) çerezler için onay gerekmez; onay analitik ve pazarlama çerezleri içindir. Banner ekranı tamamen kilitlememeli ve klavyeyle kullanılabilmelidir.
+
+<Outside source="GDPR Recital 32" href="https://gdpr-info.eu/recitals/no-32/">
+
+Rıza konusunda birincil metin açık: "Silence, pre-ticked boxes or inactivity should not therefore constitute consent." Yani önceden işaretlenmiş onay kutusu rıza sayılmaz. Bu GDPR metnidir; Türkiye için KVKK'nın güncel rehberini ve hukuk görüşünü ayrıca doğrula.
+
+</Outside>
+
+**Dark pattern (aldatıcı tasarım)**, kullanıcıyı kendi çıkarına olmayan bir şeyi yapmaya yönelten tasarım kalıplarıdır. Bilmen, farkında olmadan uygulamamak içindir. Yaygın örnekler:
+
+- İptal etmeyi zorlaştırmak.
+- Önceden işaretli onay kutuları.
+- Sahte aciliyet sayaçları.
+- Ret butonunu gizlemek.
+- Ek ürünü sepete kendiliğinden eklemek.
+
+E-ticaret ve abonelik ürünlerinde yaygındır ve bazı düzenlemelerde yasal yaptırıma tabidir. "Bu bir dark pattern; iptal akışını üç adımda tutalım, gizlemeyelim."
+
+<Callout kind="tasarimci">
+
+- **CTA bölümünü sade tut:** tek başlık, tek buton.
+- **Bülten formuna vaat yaz:** ne alacağı ve ne sıklıkla.
+- **Çerez bildiriminde kabul ve reddi eşit ağırlıkta tasarla.**
+- **Önceden işaretli onay kutusu çizme.**
+- **Her sticky öğe için alt boşluk ve odak çakışmasını kontrol et.**
+- **Şüphe duyduğunda şunu sor:** bu kalıp kullanıcıyı mı yönlendiriyor, onun çıkarına mı hizmet ediyor?
+
+</Callout>
+
+<Summary>
+
+- CTA section sayfanın sonunda tek eyleme odaklanır; sticky CTA içeriği kapatmamalı ve odağı gizlememelidir.
+- Bülten dönüşümünü belirleyen, karşılığında ne verildiğidir; lead magnet somut ve hemen kullanılabilir olmalıdır.
+- Contact form'un yanında e-posta adresi de görünür olmalı.
+- Exit intent rahatsız edicidir; kullanılırsa oturumda bir kez ve kolay kapatılır.
+- Çerez bildiriminde reddetmek kabul etmek kadar kolay olmalı; önceden işaretli kutu rıza sayılmaz.
+- Dark pattern'ler kullanıcıyı kendi çıkarına olmayan eyleme iter; bazı düzenlemelerde yaptırıma tabidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Çerez bildirimi tasarımında en kritik kural nedir ve ihlali ne olarak adlandırılır?">
+
+Reddetmek, kabul etmek kadar kolay olmalıdır. "Tümünü kabul et" büyük ve renkli, "Reddet" küçük bir bağlantıysa bu bir dark pattern'dir ve bazı düzenlemelerde aykırı kabul edilebilir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir bülten formunda dönüşümü ne belirler?">
+
+Karşılığında ne verildiği. "Bültenimize abone olun" yerine somut bir vaat ("Haftalık tek e-posta: bu haftanın en iyi 3 aracı") dönüşümü artırır.
+
+</SelfCheck>

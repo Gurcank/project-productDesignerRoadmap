@@ -1,0 +1,18 @@
+---
+/**
+ * A boxed aside inside a lesson. The kind is carried by the label as well as
+ * the edge colour, so it still reads without colour (SPEC §6).
+ */
+interface Props {
+  kind?: "ornek" | "dikkat" | "tasarimci";
+  title?: string;
+}
+
+const LABEL = { ornek: "Örnek", dikkat: "Dikkat", tasarimci: "Tasarımcı olarak sen" } as const;
+const { kind = "ornek", title } = Astro.props;
+---
+
+<aside class={`callout callout--${kind}`}>
+  <p class="callout__label">{title ?? LABEL[kind]}</p>
+  <div class="callout__body"><slot /></div>
+</aside>

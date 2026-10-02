@@ -379,7 +379,38 @@ async function main() {
     };
   }
 
+  /*
+   * Lesson lookup (ADR-015): everything the card index above leaves out. Lessons
+   * are hand-written prose, so a mention is deliberate and the "short terms
+   * litter the page" argument does not hold — URL, DNS, DOM, SPA are exactly the
+   * words a lesson explains. Acronyms (under four letters) are flagged so the
+   * plugin can require the exact casing: "dom" inside "domates" is not the DOM.
+   * Both lower-casings are keyed because Turkish folds "I" to "ı", which would
+   * make English "index" miss "Index".
+   */
+  const termLookup: Record<string, { term: string; definition: string; href: string; acronym: boolean }> = {};
+  for (const t of terms) {
+    const entry = {
+      term: t.term,
+      definition: t.definition.length > 200 ? `${t.definition.slice(0, 200)}…` : t.definition,
+      href: `/${t.category}/${t.slug}/`,
+      acronym: t.term.length < 4,
+    };
+    for (const key of new Set([t.term.toLocaleLowerCase("tr"), t.term.toLowerCase()])) {
+      if (!(key in termLookup)) termLookup[key] = entry;
+    }
+  }
+
   await mkdir(OUT_DATA, { recursive: true });
+
+  const lookupFile = path.join(OUT_DATA, "term-lookup.json");
+  const previousLookup = existsSync(lookupFile) ? JSON.parse(await readFile(lookupFile, "utf8")) : {};
+  await writeFile(
+    lookupFile,
+    `${JSON.stringify(only ? { ...previousLookup, ...termLookup } : termLookup, null, 2)}
+`,
+    "utf8",
+  );
 
   // A partial import still has to keep the map usable, otherwise cross references
   // silently stop resolving for every other chapter.

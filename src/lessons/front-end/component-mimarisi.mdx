@@ -1,0 +1,99 @@
+---
+summary: "Modern front-end'in temel fikri: arayüzü yeniden kullanılabilir parçalara bölmek. Component, props, state, children, prop drilling ve kontrollü bileşen; Figma ile birebir eşleşen kavramlar."
+outcomes:
+  - "Props ile state'in farkını ve Figma'daki karşılığını söyleyebilirsin."
+  - "Children/composition'ın neden esneklik verdiğini açıklayabilirsin."
+  - "Prop drilling'in neden bir sorun işareti olduğunu bilirsin."
+  - "Kontrollü ve kontrolsüz form alanı ayrımını tanıyabilirsin."
+minutes: 9
+sources:
+  - label: "React — İlk bileşenin"
+    url: "https://react.dev/learn/your-first-component"
+  - label: "React — Bileşene props geçirmek"
+    url: "https://react.dev/learn/passing-props-to-a-component"
+  - label: "React — State: bileşenin belleği"
+    url: "https://react.dev/learn/state-a-components-memory"
+  - label: "React — Context ile veriyi derine geçirmek"
+    url: "https://react.dev/learn/passing-data-deeply-with-context"
+skipTerms: ["state"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Tasarım sistemini Figma'da component, variant ve property'lerle kurdun. Geliştirici aynı sistemi kodda component, props ve state ile kuruyor. İki taraf **aynı fikrin iki dili**ni konuşuyor ve iyi ekiplerde adlar ve sınırlar eşleşiyor. Bu ders o eşleşmeyi gösterir.
+
+## Component ve props
+
+**Component (bileşen)**, kendi görünümü ve davranışı olan, yeniden kullanılabilir arayüz parçasıdır. Tekrarı ortadan kaldırır ve tutarlılık üretir. **Figma'daki component ile kavramsal olarak aynıdır.** "Bu kart üç yerde tekrar ediyor; tek bir bileşene çıkaralım."
+
+**Props (properties)**, bir bileşene dışarıdan verilen, davranışını ve içeriğini belirleyen değerlerdir. Aynı bileşenin farklı hâllerde kullanılmasını sağlar: bir buton `variant="primary"` ya da `variant="ghost"` alabilir. **Figma'daki component property'nin doğrudan karşılığıdır;** bu eşleşme handoff'ta ortak dil kurar. "Butonun prop'ları: variant, size, icon, disabled, loading. Figma'daki property'lerle aynı isimlerde olsun."
+
+## State
+
+**State (durum)**, bileşenin zaman içinde değişen kendi verisidir: menü açık mı, form gönderiliyor mu, hangi sekme seçili. Props dışarıdan gelir ve bileşen onu değiştirmez; state içeride yaşar ve değişir. Arayüzün "canlı" olmasını sağlayan şey budur.
+
+<Compare>
+<Pane title="Props">
+
+- Dışarıdan gelir
+- Bileşen değiştirmez
+- Figma'da: component property
+
+</Pane>
+<Pane title="State">
+
+- İçeride yaşar
+- Zamanla değişir
+- Figma'da: bileşenin durumları
+
+</Pane>
+</Compare>
+
+Tasarımcı olarak her state'in görsel karşılığını tanımlaman gerekir: "Butonun üç state'i var: normal, loading, disabled. Üçünü de teslimde verdim." Karıştırma: bileşenin *state*'i, durum ekranlarındaki "yükleniyor/boş/hata" ile ilişkilidir ama aynı şey değildir; state değiştiğinde farklı bir ekran gösterilir.
+
+## Children ve composition
+
+**Children / composition**, bir bileşenin içine başka bileşenlerin yerleştirilebilmesidir. Esneklik üretir: bir kart bileşeni içine ne konacağını bilmek zorunda kalmaz, dışarıdan verilir. Bu, her varyasyon için ayrı bileşen yazmayı önler. "Modal bileşeni sadece çerçeveyi versin, içeriği children olarak gelsin."
+
+## Prop drilling
+
+**Prop drilling**, bir verinin, ihtiyaç duyulan derin bileşene ulaşması için aradaki tüm bileşenlerden tek tek geçirilmesidir. Bir **sorun işaretidir:** aradaki bileşenler o veriyle ilgilenmez ama taşımak zorunda kalır, kod kırılganlaşır. Çözümü genelde context ya da bir state yönetimi kütüphanesidir. "Tema bilgisi beş seviye prop drilling ile gidiyor; context'e alalım."
+
+## Kontrollü ve kontrolsüz
+
+Bir form alanının değerini kimin tuttuğuyla ilgili ayrım: kod tutuyorsa **kontrollü**, tarayıcı kendisi tutuyorsa **kontrolsüz** bileşendir. Kontrollü bileşen her tuşta değeri kodda gördüğü için anlık doğrulama ve dinamik davranış sağlar ama daha çok yeniden çizim üretir. Kontrolsüz olan daha basit ve hızlıdır. "Form uzun; kontrolsüz yaklaşımla yazalım, her tuşta tüm form yeniden çizilmesin."
+
+<Callout kind="tasarimci">
+
+- **Figma property'lerini kodun prop adlarıyla eşleştir.**
+- **Her bileşen için state listesini yaz:** normal, hover, focus, loading, disabled, error.
+- **İç içe geçen içerikler için "çerçeve + içerik" ayrımını çiz;** geliştirici bunu children olarak kurar.
+
+</Callout>
+
+<Summary>
+
+- Figma'daki component ve property, kodda component ve props'tur; adları eşleştirmek handoff'u kolaylaştırır.
+- Props dışarıdan gelir, state içeride değişir; her state'in görseli tanımlanmalı.
+- Children bileşeni esnek kılar; prop drilling bir sorun işaretidir.
+- Kontrollü bileşen anlık doğrulama verir ama daha çok yeniden çizim yapar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Props ile state arasındaki fark nedir? Figma'daki hangi kavram props'a karşılık gelir?">
+
+Props dışarıdan gelir ve bileşen onu değiştirmez; state bileşenin içinde yaşar ve değişir. Figma'daki component property (variant, size, disabled) props'a karşılık gelir.
+
+</SelfCheck>
+
+<SelfCheck question="Prop drilling neden bir sorun işaretidir?">
+
+Aradaki bileşenler o veriyle ilgilenmedikleri hâlde taşımak zorunda kalır; kod kırılganlaşır ve her değişiklik zincirin tamamına dokunmayı gerektirir. Çözüm genelde context ya da bir state yönetimi kütüphanesidir.
+
+</SelfCheck>

@@ -1,0 +1,117 @@
+---
+summary: "Yazışmalarda ve Slack'te en sık geçen kısaltmalar: zaman (EOD, ETA, OOO), iletişim (FYI, TL;DR), kod ve inceleme (PTAL, LGTM, nit) ve organizasyon (1:1, RFC, DRI). 'EOD' kimin günü olduğunu söylemez; nit ön eki tasarım geri bildirimini doğru ağırlıkta taşır."
+outcomes:
+  - "Zaman, iletişim, inceleme ve organizasyon kısaltmalarını doğru yerde okuyabilirsin."
+  - "'EOD'un saat dilimi belirsizliğini ve çözümünü söyleyebilirsin."
+  - "'nit:' ön ekinin neden işe yaradığını ve 1:1'in amacını açıklayabilirsin."
+minutes: 6
+sources:
+  - label: "Google Mühendislik Pratikleri — Review yorumları (Nit)"
+    url: "https://google.github.io/eng-practices/review/reviewer/comments.html"
+  - label: "Atlassian — Standup toplantıları"
+    url: "https://www.atlassian.com/agile/scrum/standups"
+flags: ["emin-degil"]
+skipTerms: ["Latency","Merge","Request","latency","gecikme","merge","request"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bu bölüm diğerlerinden farklı: burada öğrendiklerin teknik bilgi değil, **bir odaya girdiğinde kendini yabancı hissetmemeni sağlayan kelimeler.** Teknik bilgi eksikliği fark edilmez; sorabilirsin. Ama bir toplantıda "bunu punt edelim, şimdilik nice-to-have" cümlesini anlamamak, tartışmanın dışında kalmak demektir. Bu kelimelerin çoğu hiçbir yerde öğretilmez; insanlar onları kullanarak öğrenir.
+
+Türkiye'deki yazılım ekiplerinin çoğunda bu terimler İngilizce hâlleriyle, Türkçe konuşmanın içine gömülmüş olarak kullanılır ("bunu bir sonraki sprint'e punt edelim"). Bu yüzden terimler İngilizce hâlleriyle verilir; yaygın bir Türkçe karşılığı varsa ayrıca belirtilir.
+
+## Zaman ve takvim
+
+| Kısaltma | Açılımı | Anlamı | Örnek |
+|---|---|---|---|
+| **EOD** | End of Day | Gün sonuna kadar | "Taslağı EOD'a kadar gönderirim." |
+| **EOW** | End of Week | Hafta sonuna kadar | "EOW hedefliyoruz." |
+| **COB** | Close of Business | Mesai bitimine kadar | "COB'a kadar geri dönerim." |
+| **ETA** | Estimated Time of Arrival | Tahmini bitiş/teslim zamanı | "ETA nedir?" |
+| **ASAP** | As Soon As Possible | Mümkün olan en kısa sürede | "ASAP değil, EOD yeterli." |
+| **OOO** | Out Of Office | Ofiste/erişilebilir değil | "Yarın OOO'yum." |
+| **PTO** | Paid Time Off | Ücretli izin | "Gelecek hafta PTO aldım." |
+| **WFH** | Work From Home | Evden çalışma | "Bugün WFH'im." |
+
+**Saat dilimi tuzağı:** "EOD" kimin günü olduğunu söylemez. Farklı saat dilimlerinde çalışan ekiplerde bu belirsizlik gerçek gecikmeler üretir; net bir saat yazmak daha güvenlidir. Materyal bu konuda kendi notunda emin olmadığını işaretliyor; pratik sonuç yine de zararsız: saat yaz.
+
+## İletişim
+
+| Kısaltma | Açılımı | Anlamı | Örnek |
+|---|---|---|---|
+| **FYI** | For Your Information | Bilgin olsun; eylem beklenmiyor | "FYI: müşteri tarihi öne çekmek istiyor." |
+| **TL;DR** | Too Long; Didn't Read | Uzun metnin en başına konan özet | "TL;DR: iki hafta gecikiyoruz." |
+| **IMO / IMHO** | In My (Humble) Opinion | Bence | "IMO ikinci seçenek daha güvenli." |
+| **AFAIK** | As Far As I Know | Bildiğim kadarıyla | "AFAIK bu hâlâ deneysel." |
+| **ICYMI** | In Case You Missed It | Kaçırdıysan diye | "ICYMI: dün karar aldık." |
+| **NDA** | Non-Disclosure Agreement | Gizlilik sözleşmesi | "NDA imzalamadan detay paylaşamayız." |
+
+## Kod ve inceleme
+
+| Kısaltma | Açılımı | Anlamı | Örnek |
+|---|---|---|---|
+| **PTAL** | Please Take Another Look | Düzelttim, tekrar bakar mısın | "Yorumları uyguladım, PTAL." |
+| **LGTM** | Looks Good To Me | Bence uygun, onaylıyorum | "LGTM, merge edebilirsin." |
+| **WIP** | Work In Progress | Devam ediyor, henüz bitmedi | "WIP: henüz incelemeye hazır değil." |
+| **nit** | nitpick | Küçük öneri; bloke etmiyor | "nit: buradaki boşluk 16 olmalı." |
+| **SSIA** | Subject Says It All | Başlık her şeyi anlatıyor | (kısa PR başlıklarında) |
+
+**`nit:` ön eki senin için faydalı:** bir inceleme yorumunun bloke edici mi yoksa öneri mi olduğunu tek kelimeyle belirtir. Bunu kullanmak, tasarım geri bildirimlerinin yanlış ağırlıkta algılanmasını önler: "bu boşluk 16 olmalı" ile "bu akış çalışmıyor" aynı ağırlıkta değildir.
+
+## Toplantı ve organizasyon
+
+| Kısaltma | Açılımı | Anlamı |
+|---|---|---|
+| **1:1** | One-on-one | Yönetici ile birebir düzenli görüşme |
+| **AMA** | Ask Me Anything | Serbest soru-cevap oturumu |
+| **RFC** | Request For Comments | Yorum istenen öneri belgesi (Yazılı Formatlar dersi) |
+| **DRI** | Directly Responsible Individual | İşin tek sorumlusu |
+| **SME** | Subject Matter Expert | Konu uzmanı |
+
+**1:1 (birebir görüşme)**, bir çalışan ile yöneticisi arasındaki düzenli, genelde haftalık veya iki haftalık özel görüşmedir. **Durum raporu toplantısı değildir:** o bilgi başka kanallardan zaten akıyor. Amacı engelleri konuşmak, geri bildirim alışverişi yapmak ve kariyer/gelişim konularını ele almaktır. **Gündemi genelde çalışan belirler,** yönetici değil. 1:1'i durum raporuna çevirmek kurumların en yaygın hatasıdır; o zaman toplantı işlevsizleşir. "1:1'de konuşalım; burada uzun sürer."
+
+<Callout kind="tasarimci">
+
+- **Teslim tarihi verirken saat yaz:** "EOD" yerine "18:00 İstanbul saati".
+- **Tasarım yorumlarını `nit:` ile işaretle:** bloke etmeyeni ayır.
+- **1:1 gündemini sen hazırla:** engeller, geri bildirim, gelişim.
+- **Tanımadığın kısaltmayı sor:** sormak yabancılığı bitirir.
+
+</Callout>
+
+<Summary>
+
+- Kısaltmalar hız içindir; yalnızca ekip anladığında işe yarar.
+- "EOD" kimin günü olduğunu söylemez; net saat yazmak daha güvenlidir.
+- `nit:` yorumun bloke etmediğini bildirir ve tasarım geri bildirimini doğru ağırlıkta taşır.
+- 1:1 durum raporu değil; engel, geri bildirim ve gelişim içindir ve gündemi çalışan belirler.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="EOD ve COB ne demek? 'EOD'a kadar' ifadesinin bilinen belirsizliği nedir?">
+
+EOD gün sonuna, COB mesai bitimine kadar demektir. Belirsizlik: kimin günü olduğunu söylemez; farklı saat dilimlerinde gerçek gecikme üretir. Net bir saat yazmak daha güvenlidir.
+
+</SelfCheck>
+
+<SelfCheck question="FYI ve PTAL ne zaman kullanılır?">
+
+FYI: bilgin olsun, senden eylem beklenmiyor. PTAL: "düzelttim, tekrar bakar mısın"; kod incelemesinde yorumları uyguladıktan sonra kullanılır.
+
+</SelfCheck>
+
+<SelfCheck question="`nit:` ön eki ne işe yarar ve senin için neden faydalı?">
+
+Yorumun bloke edici mi yoksa öneri mi olduğunu tek kelimeyle belirtir. Tasarım geri bildirimlerinin yanlış ağırlıkta algılanmasını önler: "bu boşluk 16 olmalı" ile "bu akış çalışmıyor" farklı ağırlıklardır.
+
+</SelfCheck>
+
+<SelfCheck question="1:1'in amacı nedir? En yaygın bozulma biçimi nedir?">
+
+Engelleri konuşmak, geri bildirim alışverişi yapmak ve gelişim konularını ele almak; gündemi genelde çalışan belirler. En yaygın bozulma durum raporu toplantısına dönüşmesidir; o bilgi zaten başka kanallardan akar.
+
+</SelfCheck>

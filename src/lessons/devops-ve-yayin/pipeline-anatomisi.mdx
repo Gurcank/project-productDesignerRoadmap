@@ -1,0 +1,57 @@
+---
+summary: "Pipeline, kodun testten geçip yayına çıkana kadar izlediği otomatik adımlar dizisidir. Aşamalar: install, lint ve tip kontrolü, test, build, deploy, smoke test. Aynı artifact'ın tüm ortamlarda kullanılması önemli bir ilkedir."
+outcomes:
+  - "Tipik bir hattın aşamalarını sayabilirsin."
+  - "Build ve artifact'ı ve 'aynı artifact her ortamda' ilkesini açıklayabilirsin."
+minutes: 5
+sources:
+  - label: "Martin Fowler — Deployment Pipeline"
+    url: "https://martinfowler.com/bliki/DeploymentPipeline.html"
+  - label: "GitHub Docs — GitHub Actions'ı anlamak"
+    url: "https://docs.github.com/en/actions/about-github-actions/understanding-github-actions"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Elle yapılan her adım unutulabilir ya da yanlış yapılabilir. Bu yüzden yayın otomatik bir hat olarak kurulur.
+
+## Pipeline
+
+**Pipeline (yayın hattı)**, kodun testten geçip yayına çıkana kadar izlediği otomatik adımlar dizisidir. Hattın tamamı otomatikse yayın bir **karar** olur, bir operasyon değil. Her PR ve her deploy'da çalışır; GitHub Actions bunun bir uygulamasıdır. "Pipeline dört aşamalı: kurulum, test, build, deploy."
+
+| Aşama | Ne yapar |
+|---|---|
+| **Install** | Bağımlılıkları indirir |
+| **Lint & type check** | Kod standardını ve tipleri kontrol eder |
+| **Test** | Otomatik testleri çalıştırır |
+| **Build** | Üretim için optimize edilmiş çıktıyı üretir |
+| **Deploy** | Çıktıyı hedef ortama gönderir |
+| **Smoke test** | Yayından sonra temel akışların çalıştığını doğrular |
+
+## Build ve artifact
+
+**Build**, kaynak kodun çalıştırılabilir/servis edilebilir hâle getirilmesidir; **artifact** o işlemin ürettiği ve sonraki aşamalara taşınan çıktıdır. **Aynı artifact'ın tüm ortamlarda kullanılması önemli bir ilkedir:** staging'de test edilen şey ile production'a çıkan şey birebir aynı olmalıdır. Her ortam için ayrı build almak "staging'de çalışıyordu" sorununu üretir. "Staging'de test ettiğimiz artifact'ı production'a alalım; yeniden build etmeyelim."
+
+<Callout kind="tasarimci">
+
+- **Hattın hangi aşamasında senin kontrolün (erişilebilirlik, görsel fark, performans) olabileceğini sor.**
+- **Smoke test'e kritik tasarım akışlarını (giriş, sipariş) ekletmeyi öner.**
+
+</Callout>
+
+<Summary>
+
+- Pipeline otomatik adımlar dizisidir: install, lint/tip, test, build, deploy, smoke test.
+- Artifact build'in çıktısıdır; aynı artifact tüm ortamlarda kullanılmalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Aynı artifact'ın tüm ortamlarda kullanılması neden önemli?">
+
+Staging'de test edilen şey ile production'a çıkan şey birebir aynı olmalıdır. Her ortam için ayrı build almak "staging'de çalışıyordu" sorununu üretir.
+
+</SelfCheck>

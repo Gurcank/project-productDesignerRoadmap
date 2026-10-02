@@ -1,0 +1,92 @@
+---
+summary: "Senin için ikinci en önemli ders: görsel regresyon testi, otomatik erişilebilirlik testi ve performans bütçesi tasarım kalitesini insan disiplininden çıkarıp sürece bağlar. Yeşil erişilebilirlik işareti 'erişilebilir' demek değildir."
+outcomes:
+  - "Görsel regresyon testinin hangi boşluğu doldurduğunu ve bilinen sorununu (yanlış pozitif) söyleyebilirsin."
+  - "CI'daki yeşil erişilebilirlik işaretinin ne anlama gelip gelmediğini açıklayabilirsin."
+  - "Performans bütçesinin gerekçesini ve Lighthouse skorunun neyin kanıtı olmadığını bilirsin."
+minutes: 8
+sources:
+  - label: "Storybook — Görsel test"
+    url: "https://storybook.js.org/docs/writing-tests/visual-testing"
+  - label: "Chromatic — Görsel test"
+    url: "https://www.chromatic.com/docs/visual"
+  - label: "axe-core"
+    url: "https://github.com/dequelabs/axe-core"
+  - label: "Lighthouse CI"
+    url: "https://github.com/GoogleChrome/lighthouse-ci"
+  - label: "web.dev — Performans bütçeleri 101"
+    url: "https://web.dev/articles/performance-budgets-101"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Outside from "~/components/lesson/Outside.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+**Senin için ikinci en önemli ders bu.** Buradaki üç kontrol, tasarım kalitesini insan disiplininden çıkarıp sürece bağlar: "her sürümde tekrar kontrol et" yükü insandan makineye geçer.
+
+## Visual regression testing
+
+**Visual regression testing (görsel gerileme testi)**, arayüzün ekran görüntülerinin alınıp her değişiklikte öncekiyle piksel bazında karşılaştırılmasıdır. **Kod testleri görsel bozulmaları yakalayamaz:** bir CSS değişikliği başka bir sayfadaki kartı bozabilir ve hiçbir test bunu fark etmez. Görsel regresyon testi PR'da "bu 12 ekran değişti" diyerek fark listesi sunar ve sen bunun kasıtlı olup olmadığına karar verirsin. Tasarım sistemi olan ekiplerde yaygındır. "Görsel regresyon kuralım; bileşen değişikliklerinin başka yerleri bozup bozmadığını PR'da görelim."
+
+**Yanlış pozitifler sorun olur:** font yüklenme farkı, animasyon zamanlaması ve dinamik içerik sahte farklar üretir; kurulumun bir kısmı bunları sabitlemekle geçer. Araç adları ve fiyatlar değişir.
+
+## Otomatik erişilebilirlik testi
+
+**Automated accessibility testing**: erişilebilirlik ihlallerinin CI hattında otomatik taranması. Eksik alt metin, düşük kontrast ve eksik etiket gibi sorunların birikmesini engeller. **Kritik uyarı:** otomatik araçlar sorunların yalnızca bir kısmını yakalar. CI'daki yeşil işaret "erişilebilir" demek değildir; **"bilinen otomatik kontroller geçti"** demektir. "axe'ı CI'a ekleyelim; yeni ihlal eklenirse PR kırılsın. Manuel kontrolü yine de yapacağız."
+
+<Outside source="Deque — Otomatik test çalışması" href="https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/">
+
+Materyal bu aralığı %30-40 olarak anıyor. Deque'nin geniş bir çalışması ise otomatik testin sorun **hacminin** %57'sini bulduğunu bildiriyor. Fark neyin sayıldığından gelir: sorun çeşidi mi, toplam sorun sayısı mı? Hangi oranı alırsan al sonuç aynı: manuel test şarttır. Erişilebilirlik bölümündeki Denetleme dersinde ayrıntısı var.
+
+</Outside>
+
+## Performans bütçesi
+
+**Performance budget (Lighthouse CI)**: sayfanın aşmaması gereken sınırların (paket boyutu, LCP, CLS) CI hattında kontrol edilmesi. Performans zamanla bozulur çünkü her ekleme tek tek makul görünür. Bütçe bu birikimi mekanik olarak durdurur: sınır aşılırsa yapı başarısız olur. "İlk yükte 150KB JavaScript sınırı koyalım; aşan PR kırılsın."
+
+Laboratuvar ölçümü (Lighthouse) ile saha verisi (CrUX) farklıdır. CI'daki Lighthouse skoru bir **gerileme alarmıdır,** gerçek kullanıcı deneyiminin kanıtı değil.
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitede performans bütçesi bir derleme sonrası komutla denetlenir: ilk yüklemedeki JavaScript'in 60 KB altında kalması beklenir ve aşılırsa komut hata ile biter. Erişilebilirlik ve kontrast için ise otomatik tarama yetmez; kontrast oranları hesapla, odak sırası ise elle doğrulanır.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Üç kontrolü yayın hattına koymayı öner:** görsel fark, erişilebilirlik taraması, performans bütçesi.
+- **PR'daki görsel farkları sen onayla:** kasıtlı mı, kaza mı?
+- **Yeşil erişilebilirlik işaretini "tamam" sayma;** manuel kontrolü planla.
+- **Performans bütçesini tasarım kararları için de kısıt olarak kullan** (görsel boyutu, font sayısı).
+
+</Callout>
+
+<Summary>
+
+- Görsel regresyon testi kod testlerinin yakalayamadığı görsel bozulmaları gösterir; yanlış pozitifler bilinen sorunudur.
+- Otomatik erişilebilirlik testi yalnızca bir kısmını yakalar; yeşil işaret "bilinen kontroller geçti" demektir.
+- Performans bütçesi birikimi mekanik olarak durdurur; Lighthouse skoru gerileme alarmıdır, kullanıcı deneyimi kanıtı değil.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Görsel regresyon testi hangi boşluğu doldurur? Bilinen sorunu nedir?">
+
+Kod testlerinin yakalayamadığı görsel bozulmaları: bir CSS değişikliği başka bir sayfadaki kartı bozabilir. Bilinen sorunu yanlış pozitiflerdir: font yüklenme farkı, animasyon zamanlaması ve dinamik içerik sahte farklar üretir.
+
+</SelfCheck>
+
+<SelfCheck question="CI'daki yeşil erişilebilirlik işareti ne anlama gelir, ne anlama gelmez?">
+
+"Bilinen otomatik kontroller geçti" anlamına gelir. "Erişilebilir" anlamına gelmez: otomatik araçlar sorunların yalnızca bir kısmını yakalar.
+
+</SelfCheck>
+
+<SelfCheck question="Performans bütçesi neden gerekli? Lighthouse skoru neyin kanıtı değildir?">
+
+Performans zamanla bozulur; her ekleme tek tek makul görünür ve birikir. Bütçe bu birikimi mekanik olarak durdurur. Lighthouse skoru laboratuvar ölçümüdür ve gerileme alarmı olarak değerlidir; gerçek kullanıcı deneyiminin kanıtı değildir.
+
+</SelfCheck>

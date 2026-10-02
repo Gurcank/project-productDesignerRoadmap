@@ -1,0 +1,78 @@
+---
+summary: "Senin en çok temas edeceğin kısım: bir PR'a yorum yapmak için kod yazmayı bilmene gerek yok. Pull request, code review, squash merge, branch protection, draft PR ve merge queue. Büyük PR'lar incelenmez; küçük tut."
+outcomes:
+  - "Pull request'in neden hem inceleme hem kayıt alanı olduğunu söyleyebilirsin."
+  - "Tasarımcı olarak code review'daki rolünü (tasarıma uygunluk) tanımlayabilirsin."
+  - "PR boyutunun neden kritik olduğunu ve branch protection'ın neyi mekanikleştirdiğini açıklayabilirsin."
+minutes: 8
+sources:
+  - label: "GitHub Docs — Pull request'ler hakkında"
+    url: "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests"
+  - label: "GitHub Docs — Pull request incelemeleri"
+    url: "https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews"
+  - label: "GitHub Docs — Korumalı dallar"
+    url: "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches"
+  - label: "GitHub Docs — Merge queue"
+    url: "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/managing-a-merge-queue"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+**Senin en çok temas edeceğin kısım bu.** Bir pull request'a yorum yapmak için kod yazmayı bilmene gerek yok.
+
+## Pull request
+
+**Pull request (PR)**, bir daldaki değişikliklerin ana dala alınması için açılan inceleme ve tartışma alanıdır (GitLab'da merge request). Değişikliğin birleştirilmeden önce görülmesini sağlar ve aynı zamanda bir **kayıttır:** bir özelliğin neden böyle yapıldığı tartışması burada durur. Ayrıca otomatik kontrollerin (testler, linter, performans bütçesi) çalıştığı yerdir. "PR'a tasarım karşılaştırma ekran görüntüsü ekleyelim; incelemesi kolaylaşsın."
+
+## Code review
+
+**Code review (kod incelemesi)**, bir PR'daki değişikliklerin başkaları tarafından incelenmesi ve onaylanması ya da değişiklik istenmesidir. Hataları erken yakalar, bilgi paylaşır ve standartları korur. **Tasarımcı olarak buradaki rolün net:** uygulamanın tasarıma uygunluğunu kontrol etmek. Ölçüler, durumlar, responsive davranış ve erişilebilirlik notları PR üzerinden yorumlanabilir. "PR'a yorum bıraktım: focus durumu eksik ve boşluklar ölçek dışı."
+
+**PR boyutu kritiktir.** Çok büyük PR'lar gerçekten incelenmez; insanlar bakar ve onaylar. Yaygın bir başparmak kuralı, bir PR'ın birkaç yüz satırlık farkı geçmemesidir; daha büyükse bölünmelidir.
+
+## Squash merge ve branch protection
+
+**Squash merge**, bir daldaki tüm commit'leri tek bir commit hâline getirip ana dala eklemektir: bir özellik = bir commit; ana dalın geçmişini temiz tutar. **Branch protection (dal koruması)**, ana dala doğrudan yazmayı engelleyen ve PR ile belirli kontrolleri zorunlu kılan ayardır. "Kimse test edilmemiş kodu main'e itemesin" kuralını mekanikleştirir: niyete değil, **ayara** bağlar. "Main'e branch protection koyalım: en az bir onay ve testlerin geçmesi zorunlu olsun."
+
+## Draft PR, merge queue, stacked PR
+
+- **Draft PR:** "henüz hazır değil ama bakabilirsiniz" sinyali.
+- **Merge queue:** birleştirme bekleyen PR'ları sıraya alıp testleri birlikte çalıştırarak birleştiren mekanizma; "testler geçti ama başka bir PR araya girdi ve ana dal kırıldı" durumunu engeller.
+- **Stacked PR:** birbirine bağımlı küçük PR'lar zinciri.
+
+Üçü de aynı problemi çözer: PR'ları küçük tutmak ve ana dalı kırmadan hızlı ilerlemek. Bunlar platform özellikleridir ve biçimleri değişebilir. "Taslak PR açıp yönü erkenden gösterelim; hazır olunca incelemeye alırız."
+
+<Callout kind="tasarimci">
+
+- **PR'a ekran görüntüsü / karşılaştırma ekle;** incelemeyi ve tasarım onayını kolaylaştırır.
+- **İncelemede kontrol listesi kullan:** ölçüler, durumlar (hover, focus, disabled), responsive, erişilebilirlik.
+- **PR çok büyükse bölünmesini iste.**
+- **Draft PR ile erken yönü göster;** son dakikada büyük değişiklik istemekten iyidir.
+
+</Callout>
+
+<Summary>
+
+- PR hem inceleme hem kayıt alanıdır ve otomatik kontrollerin çalıştığı yerdir.
+- Tasarımcının code review rolü: uygulamanın tasarıma uygunluğunu kontrol etmek.
+- Büyük PR'lar incelenmez; birkaç yüz satırlık fark bir başparmak kuralıdır.
+- Branch protection kuralları ayara bağlar; draft PR, merge queue ve stacked PR'lar PR'ları küçük ve ana dalı sağlam tutar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="PR boyutu neden önemli? Yaygın başparmak kuralı nedir?">
+
+Çok büyük PR'lar gerçekten incelenmez; insanlar bakar ve onaylar. Yaygın başparmak kuralı, bir PR'ın birkaç yüz satırlık farkı geçmemesi, daha büyükse bölünmesidir.
+
+</SelfCheck>
+
+<SelfCheck question="Branch protection neyi mekanikleştirir?">
+
+"Kimse test edilmemiş kodu ana dala itemesin" kuralını: niyete ve disipline değil ayara bağlar (PR zorunluluğu, minimum onay sayısı, geçmesi zorunlu kontroller).
+
+</SelfCheck>

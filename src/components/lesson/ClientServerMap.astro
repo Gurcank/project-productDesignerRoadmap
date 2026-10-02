@@ -1,0 +1,32 @@
+---
+import DiagramFigure from "../diagrams/DiagramFigure.astro";
+---
+
+<DiagramFigure
+  label="İstemci ve sunucunun görev dağılımı"
+  caption="Sen cihazda ekranı görür ve dokunursun; veri, kurallar ve gizli işler internetin öbür ucundaki sunucuda durur. İkisi arasındaki her yolculuk zaman alır."
+>
+  <svg class="dg-narrow" viewBox="0 0 360 330" role="img" aria-label="Kullanıcı cihazındaki tarayıcı internet üzerinden sunucuyla konuşur">
+    <title>İstemci–sunucu haritası</title>
+
+    <rect class="dg-box dg-box--accent" x="10" y="10" width="340" height="112" rx="10"></rect>
+    <text class="dg-label" x="24" y="34">İSTEMCİ · senin cihazın</text>
+    <text class="dg-sub" x="24" y="56">Tarayıcı: HTML, CSS, JavaScript'i ekrana çevirir</text>
+    <text class="dg-sub" x="24" y="78">Burada olur: görünüm, animasyon, dokunma, form</text>
+    <text class="dg-sub" x="24" y="100">Kodu cihaza iner: herkes inceleyebilir</text>
+
+    <path class="dg-line dg-line--accent" d="M110 122 V208"></path>
+    <path class="dg-line dg-line--accent" d="M104 200 l6 10 6 -10" stroke-linejoin="round"></path>
+    <text class="dg-sub" x="122" y="150">istek</text>
+    <path class="dg-line" d="M250 208 V122"></path>
+    <path class="dg-line" d="M244 130 l6 -10 6 10" stroke-linejoin="round"></path>
+    <text class="dg-sub" x="238" y="190" text-anchor="end">yanıt</text>
+    <text class="dg-sub" x="180" y="168" text-anchor="middle">internet</text>
+
+    <rect class="dg-box dg-box--progress" x="10" y="208" width="340" height="112" rx="10"></rect>
+    <text class="dg-label" x="24" y="232">SUNUCU · uzaktaki bilgisayar</text>
+    <text class="dg-sub" x="24" y="254">Sürekli açık, istekleri karşılar</text>
+    <text class="dg-sub" x="24" y="276">Burada olur: veri, iş kuralları, şifre, ödeme</text>
+    <text class="dg-sub" x="24" y="298">Kullanıcı kodu değil, yalnız sonucu görür</text>
+  </svg>
+</DiagramFigure>

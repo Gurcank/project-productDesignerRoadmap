@@ -1,0 +1,135 @@
+---
+summary: "Tasarımın farklı ekran boyutlarında nasıl davrandığı: responsive, mobile-first, breakpoint, container query ve fluid typography. Bu artık bir 'ek özellik' değil, varsayılan gerekliliktir."
+outcomes:
+  - "Responsive ile adaptive farkını ve responsive'in 'sadece küçültmek' olmadığını anlatabilirsin."
+  - "Mobile-first'ün neden bir önceliklendirme aracı olduğunu söyleyebilirsin."
+  - "Breakpoint'i neden cihaz modeline göre değil içeriğe göre seçtiğini açıklayabilirsin."
+  - "Container query'nin breakpoint'in çözemediği hangi problemi çözdüğünü bilirsin."
+minutes: 10
+sources:
+  - label: "MDN — Responsive web design"
+    url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design"
+  - label: "MDN — CSS container queries"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries"
+  - label: "MDN — CSS clamp()"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/clamp"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Şu an bu siteyi telefonunda okuyorsun. Aynı sayfa masaüstünde farklı görünüyor: yan menü sabit, içerik sütunu ortada, sağda içindekiler. Telefonda ise menü alttaki bir çubuğa, içerik tek sütuna dönüştü. İkisi **aynı kod, aynı içerik.** Bu davranışın adı responsive.
+
+Bu ders tasarımın farklı ekran boyutlarında nasıl davranacağını anlatıyor. Bu artık bir "ek özellik" değil, **varsayılan gerekliliktir.**
+
+## Responsive: yeniden düzenlenen tasarım
+
+**Responsive design** (duyarlı tasarım), aynı tasarımın **ekran genişliğine göre kendini yeniden düzenlemesidir.** Tek kod tabanıyla tüm cihazlarda çalışır. **Sadece küçültmek değildir:** sütunlar alt alta geçer, menü hamburger olur, tablolar farklı gösterilir, bazı öğeler gizlenir ya da yeniden düzenlenir.
+
+Her web projesinde geçerlidir; tasarım teslimi en az iki üç boyutta yapılmalıdır. "Masaüstü ve mobil ekranları hazırladım; tablet için 2 sütuna düşme kuralını da yazdım."
+
+**Responsive ≠ adaptive.** Responsive akışkandır ve her genişlikte çalışır; adaptive belirli boyutlar için ayrı düzenler sunar ve aradaki genişliklerde boşluk bırakabilir.
+
+## Mobile-first: küçükten başla
+
+**Mobile-first** (önce mobil), tasarıma **en küçük ekrandan** başlayıp yukarı doğru genişletme yaklaşımıdır.
+
+**Kısıt, önceliklendirmeyi zorlar.** Küçük ekrana ancak gerçekten gerekli olan sığar; büyük ekrandan başlanınca her şey sığar ve neyin önemli olduğu kararı hiç verilmez. Ayrıca çoğu ürün için trafiğin büyük kısmı mobildir: masaüstünden başlamak, çoğunluk için yapılan tasarımı sonraya bırakmak demektir.
+
+Tasarım sürecinde ve CSS yazım sırasında (`min-width` sorguları) karşına çıkar. "Mobile-first çalışalım; mobilde neyin kesileceğine karar verirsek masaüstü zaten kolay."
+
+<Compare>
+<Pane title="Masaüstü-first">
+
+- Her şey sığar, önem kararı verilmez
+- Mobilde "ne kesilecek?" sonradan çıkar
+- Mobil, ek bir uyarlama gibi gelir
+
+</Pane>
+<Pane title="Mobile-first">
+
+- Kısıt, öncelik kararını zorlar
+- Mobilde gerekli olan belli olur
+- Büyük ekran, bir genişletmedir
+
+</Pane>
+</Compare>
+
+## Breakpoint: yerleşimin kırıldığı yer
+
+**Breakpoint** (kırılma noktası), yerleşimin değiştiği **ekran genişliği eşiğidir.** Düzen kararlarını belirli genişliklere bağlar.
+
+> **İyi bir breakpoint, cihaz modeline göre değil içeriğe göre seçilir.**
+
+Yerleşim nerede bozuluyorsa breakpoint oradadır. Cihaz boyutları sürekli değiştiği için "iPhone genişliği" gibi sabitler hızla eskir. "Kart üçlüsü 900px altında sıkışıyor; breakpoint'i oraya koyup ikiliye düşelim."
+
+<StepFlow
+  arrows={false}
+  label="İçeriğe göre breakpoint"
+  caption="Pencereyi daraltırken yerleşim nerede bozulursa, breakpoint oraya konur. Üç sütun bozulunca iki sütuna, iki sütun bozulunca tek sütuna geçilir."
+  steps={[
+    { title: "Geniş: üç sütun", sub: "Kartlar yan yana rahatça sığıyor", tone: "progress" },
+    { title: "Orta: iki sütun", sub: "Üç sütun sıkışınca breakpoint", tone: "accent" },
+    { title: "Dar: tek sütun", sub: "İki sütun da sıkışınca ikinci breakpoint", tone: "plain" },
+  ]}
+/>
+
+## Container query: ekranı değil kapsayıcıyı dinlemek
+
+**Container query** (kapsayıcı sorgusu), bir bileşenin **ekran genişliğine değil, içinde bulunduğu kapsayıcının genişliğine** göre davranmasını sağlayan CSS özelliğidir. Bileşen tabanlı tasarımın eksik parçasıydı.
+
+Sorunu şöyle düşün: aynı kart, geniş bir ana bölümde yatay, dar bir kenar çubuğunda dikey görünebilmelidir. **Ekran genişliği bu ikisi için de aynıdır,** bu yüzden breakpoint çözemez. Container query ise "ben şu an ne kadar yer kaplıyorum?" sorusuna bakar.
+
+Bileşen kütüphanelerinde giderek yaygınlaşıyor. **Değişken bilgi:** Modern tarayıcılarda destekleniyor; kullanmadan önce güncel destek durumunu kontrol et. "Kartı container query ile yazalım; hem ana alanda hem sidebar'da doğru davransın."
+
+## Akışkan tipografi
+
+**Fluid typography** (akışkan tipografi), yazı boyutunun breakpoint'te bir anda değil, **ekran genişliğiyle birlikte kademesiz** değişmesidir. Her breakpoint için ayrı boyut tanımlamayı azaltır ve ara genişliklerde daha doğal sonuç verir. CSS'te genelde `clamp()` ile yapılır: bir minimum, bir tercih edilen ve bir maksimum değer verilir.
+
+"Hero başlığını akışkan yapalım: mobilde 32, masaüstünde 64, arada kademesiz." Büyük başlıklarda özellikle işe yarar.
+
+**Sınırsız akışkanlık okunabilirliği bozabilir;** minimum ve maksimum değer mutlaka verilmelidir.
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu site mobil için tasarlandı: telefonda alt gezinme çubuğu, okuma ilerleme çubuğu ve adımlar arası kaydırma var; masaüstünde bunların yerine yan menü ve sütunlar geliyor. Kırılma noktaları cihaza değil içeriğe göre: örneğin ana sayfadaki yol haritası 64rem'de bambaşka bir yerleşime (yılankavi rota) geçiyor çünkü dar düzen geniş ekranı doldurmuyordu. Başlık boyutu da `clamp()` ile akışkan.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Mobil ekranla başla.** Neyin gerçekten gerekli olduğuna orada karar ver.
+- **Teslimde en az iki üç boyut ver** ve aradaki davranışı yaz: "900px altında iki sütun".
+- **Breakpoint'i içerikten bul.** Pencereyi sürükle, bozulduğu yeri not et.
+- **Bileşenin farklı kapsayıcılardaki hâlini çiz.** Ana alan ve kenar çubuğu.
+- **Akışkan boyuta sınır koy.** Minimum ve maksimum belirt.
+
+</Callout>
+
+<Summary>
+
+- Responsive tasarım ekrana göre yeniden düzenlenir; sadece küçültmek değildir. Adaptive ise ayrı sabit düzenler sunar.
+- Mobile-first kısıt yoluyla önceliklendirmeyi zorlar; çoğu ürün için trafiğin çoğunluğu mobildir.
+- Breakpoint cihaza değil içeriğe göre seçilir: yerleşim nerede bozuluyorsa orada.
+- Container query bileşeni kapsayıcının genişliğine göre davranır; breakpoint'in çözemediği durumu çözer.
+- Akışkan tipografi `clamp()` ile kademesiz boyut verir; minimum ve maksimum şart.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Breakpoint seçerken neden cihaz modeli referans alınmamalı?">
+
+Cihaz modelleri ve boyutları sürekli değişir; "iPhone genişliği" gibi sabitler hızla eskir. Doğru yaklaşım içeriğe göre seçmektir: yerleşim hangi genişlikte bozuluyorsa breakpoint oradadır.
+
+</SelfCheck>
+
+<SelfCheck question="Container query hangi problemi çözer, breakpoint neden yetmez?">
+
+Aynı bileşenin, ekran genişliği aynıyken farklı kapsayıcılarda farklı davranması gerektiği durumu çözer. Bir kart geniş ana bölümde yatay, dar kenar çubuğunda dikey olmalıdır; ikisi için de ekran genişliği aynı olduğundan breakpoint bunu ayırt edemez.
+
+</SelfCheck>

@@ -1,0 +1,147 @@
+---
+summary: "Discovery'nin içindeki yöntemler ve çıktılar: nitel ile nicel araştırmayı, veriden içgörüye giden yolu, persona, varsayım, sorun noktası ve yolculuk haritasını öğren."
+outcomes:
+  - "Nitel ve nicel araştırmanın hangi soruya cevap verdiğini ayırt edebilirsin."
+  - "Bir bulguyu içgörüye çevirip kararı yönlendirebilirsin."
+  - "Araştırmaya dayanan bir persona ile hayal ürünü bir personayı ayırt edebilirsin."
+  - "Journey map ile user flow farkını anlatabilirsin."
+minutes: 11
+sources:
+  - label: "NN/g — Personas Make Users Memorable for Product Team Members"
+    url: "https://www.nngroup.com/articles/persona/"
+  - label: "NN/g — Journey Mapping 101"
+    url: "https://www.nngroup.com/articles/journey-mapping-101/"
+  - label: "NN/g — Why You Only Need to Test with 5 Users"
+    url: "https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/"
+additions:
+  - "Kaç kişiyle görüşmenin yeterli olduğu: nitel kullanılabilirlik testlerinde küçük örneklem tekrarlanan sorunları bulur, ama yüzde hesabı yapılamaz (NN/g)."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Outside from "~/components/lesson/Outside.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Analitik raporuna bakıyorsun: kullanıcıların %40'ı kayıt akışının ikinci adımında çıkıyor. İyi, bir sayı elde ettin. Peki *neden* çıkıyorlar? Sayı sana bunu söylemiyor. Bunu söylemek için başka bir yöntem gerekiyor.
+
+Bu ders, discovery'nin içindeki araştırma yöntemlerini ve bu yöntemlerden çıkan çıktıların adlarını öğretiyor. Yöntemlerin ayrıntısı tasarım bölümünde; burada **kavramlar ve çıktı adları** var.
+
+## Kullanıcı araştırması: sezgiden kurtulmak
+
+**User research** (kullanıcı araştırması), kullanıcının gerçekte *ne yaptığını* ve *neye ihtiyaç duyduğunu* sistemli biçimde öğrenme çalışmasıdır. Neden gerekli? Ekibin kendi sezgisi kendi kullanım alışkanlığını yansıtır ve **ekip kullanıcı gibi değildir.** Araştırma bu boşluğu kapatır.
+
+İki türü vardır ve ikisi farklı sorulara cevap verir:
+
+<Compare>
+<Pane title="Nitel (qualitative)">
+
+- Az kişi, derin anlayış
+- **"Neden?"** sorusuna cevap verir
+- Örnek: birebir görüşme, kullanıcı testi
+
+</Pane>
+<Pane title="Nicel (quantitative)">
+
+- Çok kişi, sayısal veri
+- **"Ne kadar?"** sorusuna cevap verir
+- Örnek: analitik, anket
+
+</Pane>
+</Compare>
+
+"Nicel veri düşüşün ikinci adımda olduğunu söylüyor; nedenini anlamak için nitel görüşme yapmamız lazım." Biri diğerinin yerine geçmez. **Beş kişiyle görüşüp "kullanıcıların %60'ı" demek yöntem hatasıdır.**
+
+<Outside source="NN/g — Why You Only Need to Test with 5 Users" href="https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/">
+
+"Peki kaç kişiyle görüşmeliyim?" sorusu sık gelir. Nielsen Norman Group'un yaygın bulgusu, **nitel kullanılabilirlik testlerinde** küçük bir grubun (yaklaşık beş kişi) tekrarlanan sorunların büyük kısmını ortaya çıkardığı ve daha fazla kişinin giderek az yeni sorun getirdiğidir. Yani küçük örneklem, *sorunları bulmak* için yeterlidir.
+
+Ama bu, *oran hesabı* için yeterli değildir: beş kişiden üçünün bir şeyi yapması "%60" demek olmaz. Sorunları keşfetmek ile bir olayın ne kadar yaygın olduğunu ölçmek ayrı işlerdir; ikincisi nicel yöntem ve daha büyük örneklem ister. Hangi yöntemin ne zaman uygun olduğu tek bir kurala sığmaz; karar verirken kaynağı oku.
+
+</Outside>
+
+## Veriden içgörüye
+
+Veri tek başına karar üretmez. Üç kelimeyi ayırmak gerekir:
+
+| Kavram | Ne demek | Örnek |
+|---|---|---|
+| **Data (veri)** | Ham sayı | "Kullanıcıların %40'ı ikinci adımda çıkıyor" |
+| **Finding (bulgu)** | Gözlem | "İkinci adımda kart bilgisi isteniyor" |
+| **Insight (içgörü)** | Yorumlanmış, eyleme dönüşebilen sonuç | "Kullanıcılar ikinci adımda neden kart bilgisi istendiğini anlamıyor" |
+
+İlk ikisi "ne"yi söyler; **içgörü ne yapacağını söyler.** "Bulguları listeledik ama içgörüye dönüştürmedik; bu hâliyle karar veremeyiz" cümlesi, araştırma sunumlarında sık duyulan bir uyarıdır.
+
+<StepFlow
+  label="Veriden karara"
+  caption="Her adım bir önceki kadar önemli. Çoğu ekip veriyi toplar ama içgörü basamağında durur; karar o basamaktan sonra gelir."
+  steps={[
+    { title: "Veri toplanır", sub: "Görüşme notları, analitik, anket" },
+    { title: "Bulgu çıkar", sub: "Tekrar eden gözlemler gruplanır" },
+    { title: "İçgörü yazılır", sub: "Neden böyle? Ne yapmalıyız?", tone: "accent" },
+    { title: "Karar alınır", sub: "Tasarım, öncelik, kapsam", tone: "progress" },
+  ]}
+/>
+
+## Persona: aynı kişiyi düşünmek
+
+**Persona**, araştırmadan çıkan tipik kullanıcı davranışlarını temsil eden **kurgusal** kişi tanımıdır. Ekibin "kullanıcı" derken aynı kişiyi düşünmesini sağlar. Bir tasarım kararını tartışırken soyut "kullanıcı" yerine somut bir profil üzerinden konuşmak, tartışmayı **zevk tartışması olmaktan çıkarır.** "Bu akış ileri seviye persona için uygun ama ilk kez giren kullanıcı için fazla adım var."
+
+Önemli bir uyarı: **araştırmaya dayanmayan, hayal edilerek yazılan persona işe yaramaz;** hatta ekibin varsayımlarını resmîleştirerek zarar verir. En sık yapılan hata, personayı yaş ve meslek gibi demografiyle doldurup *davranışı* yazmamaktır. İyi bir persona şunu söyler: bu kişi ne yapmaya çalışıyor, nerede zorlanıyor, neye göre karar veriyor?
+
+## Varsayım ve sorun noktası
+
+**Assumption** (varsayım), doğru olduğu kabul edilen ama kanıtlanmamış inançtır. Her projede varsayım vardır; tehlikeli olan varsayımın *olması* değil, **görünmez** olmasıdır. Yazıya döküldüğünde sınanabilir ve tartışılabilir hâle gelir. Spec'lerde ayrı bir başlık olarak yer alır. "Bunu neden böyle yaptık?" sorusunun cevabı çoğu zaman yazılmamış bir varsayımdır.
+
+"Burada varsayımımız, kullanıcının kurumsal e-postası olduğu. Yanlışsa tüm kayıt akışı değişir."
+
+**Pain point** (sorun noktası), kullanıcının deneyim sırasında zorlandığı, sinirlendiği ya da vazgeçtiği *belirli an*dır. Genel şikâyeti belirli bir ana bağlar:
+
+- "Site kullanışsız" bir **şikâyettir.**
+- "Ödeme adımında kart bilgisi girdikten sonra sayfa başa dönüyor" bir **pain point'tir** ve çözülebilir.
+
+"En büyük pain point kayıt değil, kayıt sonrası boş ekran; kullanıcı ne yapacağını bilmiyor."
+
+## Journey map: ürünün dışını da görmek
+
+**User journey / journey map** (yolculuk haritası), kullanıcının bir hedefe ulaşırken geçtiği **tüm adımların**, duygularıyla ve sorun noktalarıyla birlikte çıkarıldığı haritadır.
+
+Ürünün dışında kalan adımları da görünür kılar: reklamı görme, arkadaşından duyma, destek ekibine yazma, e-posta bekleme. **Deneyim yalnızca ekranlarda yaşanmaz;** bu harita ekran dışını da masaya getirir. "Journey map'te en büyük kopma ürünün içinde değil, onay e-postasının 20 dakika geç gelmesinde."
+
+Ayrım: **journey ≠ user flow.** Journey daha geniş ve duygusaldır, ürün dışını da kapsar. User flow ise ürün içindeki ekran ve karar adımlarını gösterir.
+
+<Callout kind="tasarimci">
+
+- **Sayıyla başla, nedenle bitir.** Analitik sana *nerede* sorun olduğunu söyler; görüşme *neden* olduğunu.
+- **Bulguyu içgörüye çevirmeden sunma.** "Şunu gördük" yetmez; "bu yüzden şunu öneriyoruz" de.
+- **Personayı davranışla yaz,** demografiyle değil. Araştırma yoksa personayı yazma.
+- **Varsayımlarını yazıya dök.** Yazılmamış varsayım, ekibin gözünde gerçek olur.
+- **Ekran dışına bak.** En büyük kopma bazen e-postada, bazen destek hattında yaşanır.
+
+</Callout>
+
+<Summary>
+
+- Nitel araştırma "neden"i, nicel araştırma "ne kadar"ı sorar; biri diğerinin yerine geçmez.
+- Veri ham sayı, bulgu gözlem, içgörü yorumlanmış ve eyleme dönüşebilir sonuçtur.
+- Persona araştırmaya dayanmalı ve davranışı anlatmalı; hayal ürünü persona zarar verir.
+- Varsayımın tehlikesi var olması değil görünmez olmasıdır; yazıya dök.
+- Pain point belirli bir andır; journey map ürün dışını da kapsar, user flow yalnızca ürün içidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Analitik kullanıcıların %40'ının ikinci adımda çıktığını gösteriyor. Sonraki adımın ne olmalı?">
+
+Nedenini anlamak için nitel araştırma: birkaç kullanıcıyla görüşme ya da kullanılabilirlik testi. Nicel veri *nerede* sorun olduğunu söyler; *neden* olduğunu nitel yöntem açıklar. Sonra bulgular içgörüye çevrilir ve karara bağlanır.
+
+</SelfCheck>
+
+<SelfCheck question="User journey ile user flow arasındaki fark nedir?">
+
+Journey, kullanıcının bir hedefe ulaşırken geçtiği tüm adımları, duygularıyla ve sorun noktalarıyla gösterir; ürünün dışını da kapsar (reklam, e-posta bekleme, destek). User flow ise yalnızca ürün içindeki ekran ve karar adımlarını gösterir.
+
+</SelfCheck>

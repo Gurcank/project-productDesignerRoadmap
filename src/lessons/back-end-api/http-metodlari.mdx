@@ -1,0 +1,68 @@
+---
+summary: "İstemcinin sunucudan ne yapmasını istediğini bildiren beş fiil: GET, POST, PUT, PATCH, DELETE. Güvenli ve idempotent ayrımının tasarımdaki somut sonucu: çift tıklanan 'Sipariş ver' butonu."
+outcomes:
+  - "Beş HTTP metodunu ve güvenli ile idempotent olmanın ne demek olduğunu söyleyebilirsin."
+  - "POST'un idempotent olmamasının tasarımdaki sonucunu açıklayabilirsin."
+  - "Veri değiştiren bir GET'in neden ciddi hata olduğunu bilirsin."
+minutes: 6
+sources:
+  - label: "MDN — HTTP istek metotları"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods"
+  - label: "MDN — Idempotent"
+    url: "https://developer.mozilla.org/en-US/docs/Glossary/Idempotent"
+  - label: "MDN — Safe (HTTP)"
+    url: "https://developer.mozilla.org/en-US/docs/Glossary/Safe/HTTP"
+  - label: "Stripe — Idempotent istekler"
+    url: "https://docs.stripe.com/api/idempotent_requests"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Kullanıcı "Sipariş ver" butonuna iki kez bastı. İki sipariş mi oluştu? Cevap, o butonun arkasındaki HTTP metoduna bağlı.
+
+## Beş metot
+
+İstemcinin sunucudan ne yapmasını istediğini bildiren fiillerdir. Beş tanesini bilmek yeterli.
+
+| Metot | Ne yapar | Güvenli mi | Idempotent mi |
+|---|---|---|---|
+| **GET** | Veri okur, hiçbir şeyi değiştirmez | Evet | Evet |
+| **POST** | Yeni kayıt oluşturur ya da bir işlem tetikler | Hayır | Hayır |
+| **PUT** | Bir kaydı **tamamen** değiştirir | Hayır | Evet |
+| **PATCH** | Bir kaydın **bir kısmını** değiştirir | Hayır | Genelde hayır |
+| **DELETE** | Bir kaydı siler | Hayır | Evet |
+
+## Safe ve idempotent
+
+**Safe (güvenli)**, veriyi değiştirmeyip yalnızca okumak demektir. **Idempotent**, aynı isteği bir kez de gönderirsen on kez de gönderirsen sonucun aynı olması demektir.
+
+Bu ayrım hem güvenlik hem kullanıcı deneyimi kararlarını belirler. **En somut karşılığı:** POST idempotent değildir; bir kullanıcı "Sipariş ver" butonuna iki kez basarsa iki sipariş oluşabilir. Bu yüzden butonun basıldıktan sonra devre dışı kalması ve yükleme durumu göstermesi yalnızca estetik değil, **veri bütünlüğü meselesidir.** "Sipariş butonu POST atıyor ve idempotent değil; çift tıklamayı engellemeliyiz ya da sunucuya idempotency key göndermeliyiz."
+
+GET'in veri değiştirmemesi bir **kuraldır,** teknik zorunluluk değil. Veri değiştiren bir GET yazmak mümkündür ama ciddi bir hatadır: tarayıcılar ve önbellekler GET'i güvenli varsayar ve isteği kendiliğinden tekrarlayabilir.
+
+<Callout kind="tasarimci">
+
+- **Veri değiştiren her eylem için çift gönderimi tasarla:** buton basıldıktan sonra devre dışı + yükleme durumu.
+- **Geliştiriciye sor:** bu istek idempotent mi, değilse bir idempotency key var mı?
+- **Silme ve toplu işlemleri geri alınabilir tasarla;** DELETE idempotent olsa da kullanıcı için geri dönüşü zordur.
+
+</Callout>
+
+<Summary>
+
+- Beş metot: GET okur, POST yaratır/tetikler, PUT tamamen değiştirir, PATCH kısmen değiştirir, DELETE siler.
+- GET güvenli ve idempotent; POST ikisi de değil.
+- POST'un idempotent olmaması yüzünden gönder butonu basıldıktan sonra devre dışı kalmalıdır.
+- Veri değiştiren GET ciddi bir hatadır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="GET ile POST arasındaki fark nedir? Hangisi idempotent değildir ve tasarımdaki karşılığı nedir?">
+
+GET veri okur ve hiçbir şeyi değiştirmez; POST kayıt oluşturur ya da işlem tetikler. POST idempotent değildir: aynı istek iki kez giderse iki kayıt oluşabilir. Bu yüzden gönder butonunun basıldıktan sonra devre dışı kalması ve yükleme göstermesi veri bütünlüğü meselesidir.
+
+</SelfCheck>

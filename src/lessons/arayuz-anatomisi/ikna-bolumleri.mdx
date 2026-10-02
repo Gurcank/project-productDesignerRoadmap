@@ -1,0 +1,97 @@
+---
+summary: "Kullanıcının 'bu güvenilir mi?' sorusunu cevaplayan bölümler: sosyal kanıt, logolar, referanslar, rakamlar, puanlar, güven rozetleri ve karşılaştırma tablosu."
+outcomes:
+  - "Sosyal kanıtın türlerini sayabilir ve hangisinin nerede durduğunu söyleyebilirsin."
+  - "Doğrulanabilir ile uydurma görünen sosyal kanıtı ayırt edebilirsin."
+  - "Testimonial, case study ve stat block'un işini ayırabilirsin."
+  - "Puanın yanına neden değerlendirme sayısı yazıldığını açıklayabilirsin."
+minutes: 8
+sources:
+  - label: "W3C WAI — Images Tutorial (alt metin kararları)"
+    url: "https://www.w3.org/WAI/tutorials/images/"
+  - label: "W3C — WCAG 2.2: Use of Color"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html"
+  - label: "NN/g — Mobile Tables"
+    url: "https://www.nngroup.com/articles/mobile-tables/"
+additions:
+  - "Sahte yorum ve referanslara yönelik ABD FTC kuralı (Ağustos 2024)."
+flags: ["degisken"]
+includeTerms: ["rating", "table"]
+skipTerms: ["yorumlar"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Outside from "~/components/lesson/Outside.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Hero'yu okudun, ürünü anladın. Şimdi aklında başka bir soru var: "Bu gerçekten iyi mi, bana güvenilir mi?" Bir ürün sayfasının dönüşümü çoğunlukla bu soruya verdiği cevaba bağlıdır. Bu soruyu cevaplayan bölümlere **ikna bölümleri** diyoruz.
+
+## Sosyal kanıt
+
+**Social proof** (sosyal kanıt), başkalarının ürünü kullandığını ya da onayladığını gösteren her şeyin genel adıdır. İnsanlar belirsizlikte başkalarının davranışına bakar. Alt türleri: müşteri logoları, yorumlar, puanlar, kullanıcı sayısı, basında çıkanlar, vaka çalışmaları, sertifikalar. Landing page'lerde genelde hero'nun hemen altında durur: "Hero'nun altına social proof koyalım; şu an ilk kanıt sayfanın çok aşağısında."
+
+Uydurulmuş ya da belirsiz kanıt ters teper. "Binlerce mutlu müşteri" doğrulanamaz; "Trendyol ve Getir dahil 340 ekip" doğrulanabilir.
+
+<Outside source="FTC — Sahte yorum ve referans yasağı (Ağustos 2024)" href="https://www.ftc.gov/news-events/news/press-releases/2024/08/federal-trade-commission-announces-final-rule-banning-fake-reviews-testimonials">
+
+Güven sorunu bir yana, sahte yorum hukuki bir risktir. ABD'nin tüketici kurumu FTC, Ağustos 2024'te sahte ya da yapay zekâyla üretilmiş yorum ve referansların oluşturulmasını, satın alınmasını ve yayınlanmasını yasaklayan bir kural duyurdu. Bu kural ABD'ye özgüdür; Türkiye'deki karşılığını kullanmadan önce hukuk kaynağından doğrula.
+
+</Outside>
+
+## Logolar, referanslar, vakalar
+
+**Logo cloud (logo şeridi)**, müşteri ya da iş ortağı logolarının yan yana dizildiği şerittir. Tek bakışta güvenilirlik aktarır. Tasarım detayı: logolar farklı ağırlıkta olduğu için genelde **tek renge indirilir** (grileştirilir) ve tek tek **optik olarak** dengelenir. Matematiksel olarak aynı boyut, görsel olarak eşit görünmez: tam kare bir logo, ince uzun bir logodan çok daha ağır durur. "Logo cloud'daki logoları gri tonlamaya alalım ve optik olarak dengeleyelim; şu an biri diğerlerini eziyor."
+
+**Testimonial (referans)**, bir müşterinin ürüne dair sözlerinin kimliğiyle birlikte gösterildiği alıntıdır. Güçlü bir testimonial'ın üç parçası vardır: **isim, unvan/şirket ve fotoğraf**. Üçü de yoksa güvenilirlik düşer. En etkili olanlar genel övgü değil, belirli bir sonucu anlatanlardır: "kurulum 2 günden 2 saate indi".
+
+**Case study (vaka çalışması)** testimonial'ın derinleşmiş hâlidir: bir müşterinin problemi, uygulanan çözüm ve sonuç. Kurumsal satışta karar vericiyi ikna eden ana malzemedir. Genelde problem → çözüm → sayısal sonuç yapısında kurulur; her vakanın üstüne üç metrik koyarsan okumayan da sonucu görür.
+
+## Rakamlar, yüzler, puanlar
+
+**Stat block (istatistik bloğu)**, büyük puntolu sayılar ve altlarında kısa açıklamalardan oluşur: "%40 daha hızlı · 12.000 kullanıcı". Sayı cümleden hızlı okunur ve sayfaya güçlü bir ritim katar. Kaynağı belirsiz sayılar güveni azaltır; mümkünse ölçüm tarihini veya kaynağını küçük puntoyla ekle.
+
+**Avatar stack**, birbirinin üstüne binmiş dairesel profil fotoğraflarıdır, çoğu zaman sonunda "+12" gibi bir sayaçla. Az yer kaplayarak "burada insanlar var" der. Hem pazarlamada hem uygulamada (bir kaynağa erişimi olan kişiler) kullanılır. Ekran okuyucu için tek ve anlamlı bir özet gerekir: beş ayrı fotoğrafın tek tek okunması işe yaramaz.
+
+**Rating (puan)**, ürünün aldığı puanı yıldız ya da sayı olarak gösterir. Yanına **kaç değerlendirmeden geldiği** yazılmalıdır: 5,0 (2 yorum) ile 4,6 (1.200 yorum) çok farklı şeylerdir. Yıldızlar yalnızca görsel olmamalı, puan metin olarak da erişilebilir olmalıdır.
+
+## Güven rozeti ve karşılaştırma
+
+**Trust badge (güven rozeti)**, güvenlik, sertifika ya da ödeme güvencesi gösteren küçük işaretlerdir: SSL, ISO, ödeme kuruluşu logoları, iade garantisi. En etkili yerleri, kullanıcının en çok tereddüt ettiği an olan **kart bilgisi girişinin hemen yanıdır**; footer'da kimse görmez. "Trust badge'leri kart alanının hemen altına taşıyalım."
+
+**Comparison table (karşılaştırma tablosu)**, ürünü rakiplerle ya da planları birbiriyle karşılaştırır. Karar vermeyi hızlandırır; ama rakip karşılaştırmasında dürüstlük şarttır, tek taraflı ve abartılı tablolar güven kaybettirir. Tablolar mobilde en çok bozulan bileşendir; yatay kaydırma mı, kart görünümüne dönüşme mi olacağı **baştan** kararlaştırılmalıdır.
+
+<Callout kind="tasarimci">
+
+- **Kanıtı doğrulanabilir yaz:** isim, rakam, tarih. "Binlerce" yerine gerçek sayı.
+- **Testimonial'a isim, unvan ve fotoğraf iste.** Yoksa kullanma.
+- **Puanın yanına değerlendirme sayısını koy.**
+- **Güven rozetini kararın verildiği yere taşı:** ödeme alanının yanı.
+- **Logoları gri tonlamaya al ve optik olarak dengele.**
+- **Karşılaştırma tablosunun mobil stratejisini ilk taslakta çiz.**
+
+</Callout>
+
+<Summary>
+
+- Sosyal kanıt, "bu güvenilir mi?" sorusunu cevaplar; doğrulanabilir olduğu ölçüde işe yarar.
+- Logo cloud tek renge indirilir ve optik olarak dengelenir; testimonial isim, unvan ve fotoğraf taşır.
+- Case study problem → çözüm → sayısal sonuç anlatır; stat block sayıyı öne çıkarır.
+- Puanın yanına değerlendirme sayısı yazılır; avatar stack ve yıldızlar ekran okuyucu için metinle özetlenir.
+- Güven rozeti tereddüdün olduğu yerde (ödeme alanı) durur. Karşılaştırma tablosunun mobil stratejisi baştan belirlenir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Logo cloud'da logoların 'optik olarak dengelenmesi' ne demektir?">
+
+Logolar farklı biçim ve ağırlıkta olduğu için matematiksel olarak aynı boyut, görsel olarak eşit görünmez. Optik denge, her logonun görsel olarak eşit ağırlıkta durması için tek tek boyut ayarı yapmaktır (genelde tek renge indirmekle birlikte).
+
+</SelfCheck>
+
+<SelfCheck question="Neden bir puanın yanına değerlendirme sayısı yazılır?">
+
+5,0 (2 yorum) ile 4,6 (1.200 yorum) çok farklı güven düzeyleri taşır. Sayı, puanın ne kadar kişiye dayandığını gösterir; tek başına 5,0 şüphe uyandırır.
+
+</SelfCheck>

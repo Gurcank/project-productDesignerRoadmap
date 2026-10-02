@@ -1,0 +1,57 @@
+---
+summary: "Veri modeli, arayüzün neyi gösterebileceğinin sınırını çizer. Veritabanı ve kalıcılık: kullanıcı sekmeyi kapatıp geri geldiğinde ne kaybolur sorusunun teknik karşılığı."
+outcomes:
+  - "Veri modelinin neden ekranlarla birlikte konuşulması gerektiğini söyleyebilirsin."
+  - "Veritabanının neden ayrı bir katman olduğunu açıklayabilirsin."
+  - "Kalıcılık kararlarını (form, sepet, filtre) tasarımda belirtebilirsin."
+minutes: 6
+sources:
+  - label: "PostgreSQL — Veritabanı temelleri"
+    url: "https://www.postgresql.org/docs/current/ddl-basics.html"
+  - label: "SQLite — Hakkında"
+    url: "https://www.sqlite.org/about.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bu bölümün tasarımcı için değeri, ilk bakışta göründüğünden büyük. Sebebi şu: **veri modeli, arayüzün neyi gösterebileceğinin sınırını çizer.**
+
+Bir örnek: "Kullanıcı birden fazla adres kaydedebilsin" ile "kullanıcının tek bir adresi olsun" arasındaki fark bir tasarım tercihi gibi görünür. Aslında bir **veri modeli kararıdır** ve sonradan değiştirmek, ekranı değiştirmekten kat kat pahalıdır. Bu yüzden veri modeli ekranlarla birlikte konuşulmalıdır, sonrasında değil.
+
+İkinci değer: bir isteğin **neden zor** olduğunu tahmin edebilmek. "Listede her ürünün son yorumunu da gösterelim" masum görünür ama N+1 problemine dönüşüp sayfayı yavaşlatabilir. Bunu bilmek, geliştiricinin "bu zor" cevabını anlamlandırmanı ve alternatif önermeni sağlar.
+
+Bölümdeki kavramlar **eskimeyen** kategoridedir; ilişkisel model elli yıllıktır. Değişken olanlar ürün ve servis isimleridir.
+
+## Veritabanı
+
+**Database (veritabanı)**, verinin kalıcı olarak, yapılandırılmış biçimde saklandığı ve sorgulanabildiği sistemdir. Uygulama kapansa, sunucu yeniden başlasa ya da kod tamamen değişse bile verinin kalmasını sağlar; ayrıca aynı veriye birden fazla kullanıcının aynı anda, tutarlı biçimde erişebilmesine izin verir. Her dinamik projede bulunur. "Bu bilgiyi nerede saklıyoruz? Veritabanında mı, yalnızca tarayıcıda mı?"
+
+## Kalıcılık
+
+**Persistence (kalıcılık)**, verinin onu üreten süreç sona erdikten sonra da var olmaya devam etmesidir. **Tasarım açısından somut sorusu şudur:** kullanıcı sekmeyi kapatıp geri geldiğinde ne kaybolur? Yarım kalmış bir form kaybolacak mı? Sepet duruyor mu? Filtre seçimleri hatırlanıyor mu? Bunların her biri bir kalıcılık kararıdır ve tasarımda belirtilmelidir. "Uzun formu taslak olarak kaydedelim mi? Kullanıcı yanlışlıkla kapatırsa her şey gitmesin."
+
+<Callout kind="tasarimci">
+
+- **Her ekran için "bu veri nerede yaşıyor?" sor:** sunucuda mı, tarayıcıda mı, hiçbir yerde mi?
+- **Kalıcılık kararlarını yaz:** yarım form, sepet, filtre, tercih; yenilemede ve başka cihazda ne olur?
+- **Veri modeli sorusunu ekran tasarımıyla birlikte sor:** "birden fazla adres" gibi kararlar sonradan pahalıdır.
+
+</Callout>
+
+<Summary>
+
+- Veri modeli arayüzün neyi gösterebileceğinin sınırını çizer; ekranlarla birlikte konuşulmalıdır.
+- Veritabanı veriyi kalıcı ve tutarlı saklar; kod değişse de veri kalır.
+- Kalıcılık kararları (form, sepet, filtre) tasarımda açıkça belirtilmelidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Veri modeli kararları neden ekranlarla birlikte konuşulmalı?">
+
+Çünkü veri modeli arayüzün neyi gösterebileceğinin sınırını çizer. "Birden fazla adres" bir tasarım tercihi gibi görünür ama bir veri modeli kararıdır ve sonradan değiştirmek ekranı değiştirmekten kat kat pahalıdır.
+
+</SelfCheck>

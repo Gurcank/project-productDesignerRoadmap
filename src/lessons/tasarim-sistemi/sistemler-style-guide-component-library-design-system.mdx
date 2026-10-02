@@ -1,0 +1,162 @@
+---
+summary: "Style guide, pattern library, component library ve design system aynı şey değil. Kapsamlarını, atomic design'ı, governance ve adoption'ı ve 'tek doğru kaynak' ilkesini öğren."
+outcomes:
+  - "Style guide, component library ve design system arasındaki farkı tek cümleyle söyleyebilirsin."
+  - "\"Bizde design system var\" cümlesinin gerçekte ne kadarını kapsadığını sorgulayabilirsin."
+  - "Bir tasarım sisteminin neden teknik değil sahiplik ve benimseme sorunlarından öldüğünü açıklayabilirsin."
+  - "Single source of truth ilkesinin neden token yaklaşımının gerekçesi olduğunu bilirsin."
+minutes: 11
+sources:
+  - label: "NN/g — Design Systems 101"
+    url: "https://www.nngroup.com/articles/design-systems-101/"
+  - label: "Brad Frost — Atomic Design"
+    url: "https://atomicdesign.bradfrost.com/chapter-2/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Bir önceki bölüm "hangi süreçle, hangi ilkeyle" sorusunu cevapladı. Bu bölüm **"hangi değerle"** sorusunu cevaplıyor: renk, tipografi, boşluk, gölge, hareket. Yani tasarım kararlarının **sayıya ve isme** dönüştüğü katman.
+
+Bu bölüm senin için iki nedenle kritik.
+
+**Birincisi,** yapay zekâya iş yaptırırken çıktının kalitesini en çok bu terimler belirler. "Modern ve şık olsun" bir talimat değildir; "8px tabanlı boşluk ölçeği, 1.25 oranlı tipografi ölçeği, tek bir vurgu rengi ve nötr grinin 9 basamaklı rampası" bir talimattır. İlkinden jenerik çıktı gelir, ikincisinden **kontrol edilebilir** çıktı.
+
+**İkincisi,** "yapay zekâyla üretilmiş" hissini veren şey genelde renk ya da font seçimi değil, **sistemsizliktir:** her bölümde farklı boşluk değeri, gerekçesiz gradient, birbiriyle ilişkisiz üç gri tonu. Sistem kurmayı bilmek bu histen kurtulmanın yoludur.
+
+Bu sitenin kendisi de küçük bir tasarım sistemi üzerine kurulu; derslerde ara ara "bu sitede nasıl yapıldı?" notları göreceksin.
+
+## Dört kelime, dört kapsam
+
+"Bizde design system var" cümlesi bir şirkette çok farklı şeyler kastedebilir. Önce kapsamları ayır:
+
+<StepFlow
+  arrows={false}
+  label="Kapsam: dardan genişe"
+  caption="Alttaki, üstteki hepsini içerebilir. Sadece belge olan ile çalışan, güncellenen ve kullanılan bir sistem arasındaki fark, 'bizde var' cümlesinin değerini belirler."
+  steps={[
+    { title: "Style guide", sub: "Kuralları anlatan belge (PDF, sayfa)", tone: "plain" },
+    { title: "Component library", sub: "Yeniden kullanılabilir parçalar (Figma + kod)", tone: "plain" },
+    { title: "Pattern library", sub: "Tekrarlayan çözümler ve ne zaman kullanılacakları", tone: "accent" },
+    { title: "Design system", sub: "Hepsi + token + kural + süreç, yaşayan ürün", tone: "progress" },
+  ]}
+/>
+
+### Style guide
+
+**Style guide** (stil kılavuzu), marka ve görsel kuralları anlatan belgedir: logo kullanımı, renkler, tipografi, ton. **En dar kapsamdır:** kuralları *anlatır* ama uygulamaz; kimse okumazsa hiçbir şey değişmez. Genelde PDF ya da statik bir sayfadır. Marka projelerinde ve ajans tesliminde karşına çıkar.
+
+"Style guide'da logo etrafında minimum boşluk tanımlı; bu banner onu ihlal ediyor." **Style guide kuralları anlatan bir belge, design system çalışan bir üründür.** Style guide'ı olan her ekip design system'e sahip değildir.
+
+### Component library
+
+**Component library** (bileşen kütüphanesi), yeniden kullanılabilir arayüz parçalarının kod ya da tasarım dosyası olarak toplandığı yerdir. Aynı butonu her ekranda yeniden çizmeyi ve yeniden kodlamayı ortadan kaldırır. Tasarım tarafında bir Figma kütüphanesi, kod tarafında bir React bileşen paketi olarak yaşar. **İkisinin senkron olması ayrı bir iştir** ve çoğu ekipte aksayan yer burasıdır.
+
+"Bu bileşen kütüphanede yok; ya ekleyelim ya var olan kartı varyant olarak genişletelim." Component library bir design system'in **parçasıdır,** kendisi değil: yalnızca bileşen listesi olup kural, token ve dokümantasyonu olmayan bir yapı sistem değildir.
+
+### Pattern library
+
+**Pattern library** (kalıp kütüphanesi), tekrar eden arayüz çözümlerinin ve **ne zaman kullanılacaklarının** derlendiği koleksiyondur. Bileşenden bir seviye üsttedir: "buton" bir bileşendir; "silme onayı nasıl alınır", "form hataları nasıl gösterilir" bir kalıptır. Aynı problemin her ekranda farklı çözülmesini engeller. Olgun tasarım sistemlerinin dokümantasyon bölümünde yer alır.
+
+"Yıkıcı işlem kalıbımız var: silme her yerde geri alınabilir toast ile yapılır, diyalogla değil." (Bir önceki bölümde gördüğün "geri alma" ilkesi, burada bir kalıba dönüşüyor.)
+
+### Design system
+
+**Design system** (tasarım sistemi), bir ürünün tasarım **kararlarını, bileşenlerini, kurallarını ve kodunu** birlikte tutan **yaşayan** sistemdir. Tutarlılık, hız ve kalite üretir: tekrar eden kararları bir kez alıp her yerde uygular; böylece ekip enerjisini yeni problemlere ayırır.
+
+**Ürün gibi yönetilir:** sahibi, sürümü, değişiklik günlüğü ve kullanıcıları (yani ekip) vardır. Orta ve büyük ekiplerde karşına çıkar; küçük projelerde "sistem" birkaç token ve birkaç bileşenden ibaret olabilir ve **bu da geçerli bir sistemdir.**
+
+"Design system'e yeni bileşen eklemeden önce üç yerde ihtiyaç olduğunu görelim; tek kullanımlık şeyi sisteme koymayalım."
+
+**Design system bir Figma dosyası değildir.** Figma kütüphanesi + kod paketi + dokümantasyon + kullanım kuralları + bunları güncelleyen bir süreç, hep birlikte sistemi oluşturur.
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu site küçük bir sistem: renk, tipografi, boşluk ve hareket değerleri tek bir dosyada (`tokens.css`) isimle tanımlı ve bileşenler yalnızca bu isimleri kullanıyor. Tailwind yapılandırması varsayılan paletleri silip yalnızca bu ölçeği bırakıyor; yani ölçek dışı bir değer yazmak mekanik olarak mümkün değil. Küçük bir proje için bu, "sistem" demeye yetiyor.
+
+</Callout>
+
+## Atomic Design: bileşenlere ortak dil
+
+**Atomic Design** (atomik tasarım), arayüzü beş seviyeye bölen zihinsel modeldir: *atoms → molecules → organisms → templates → pages.* Bileşenleri sınıflandırmak ve iç içe geçmelerini düşünmek için ortak bir dil verir:
+
+| Seviye | Örnek |
+|---|---|
+| **Atom** | Buton, etiket, giriş alanı |
+| **Molekül** | Arama kutusu (etiket + alan + buton) |
+| **Organizma** | Üst menü, ürün kartı ızgarası |
+| **Şablon** | Sayfa iskeleti (içeriksiz) |
+| **Sayfa** | Şablonun gerçek içerikle dolmuş hâli |
+
+Tasarım sistemi klasör yapılarında ve bileşen adlandırmalarında görürsün. Sınırları net gibi görünür ama pratikte **tartışmalıdır** ve bu tartışma çoğu zaman zaman kaybıdır: "kart molekül mü organizma mı?" Model bir *düşünme aracıdır,* bir kural değil.
+
+## Governance ve adoption: sistemler neden ölür?
+
+**Governance** (yönetişim), sisteme kimin, nasıl katkı yapacağını ve neyin sisteme gireceğini belirleyen kurallardır. **Adoption** (benimseme) ise ekiplerin sistemi gerçekte **ne kadar kullandığıdır.**
+
+**Sistemlerin çoğu teknik sebeplerden değil, bu iki sebepten ölür:**
+
+- Kimse katkı yapamıyorsa sistem **eskir.**
+- Kimse kullanmıyorsa sistem gereksiz bir **bakım yüküne** dönüşür.
+
+Adoption ölçülebilir: bileşenlerin kaç yerde kullanıldığı, kaç yerde "detach" edilmiş (bağı koparılmış) kopyası olduğu. "Adoption %40; ekiplerin yarısı bileşenleri kopyalayıp değiştiriyor. Sorun bileşenlerde mi, katkı sürecinde mi bakalım." Bu, tasarım sistemi ekiplerinin en çok konuştuğu konudur.
+
+## Single source of truth: tek doğru kaynak
+
+**Single source of truth** (SSOT, tek doğru kaynak), bir bilginin **tek bir yerde** tanımlanıp diğer her yerin oraya referans vermesi ilkesidir. Aynı marka renginin Figma'da, CSS'te ve pazarlama sitesinde ayrı ayrı yazılması, üçünün zamanla ayrışmasına yol açar. **Token yaklaşımının tüm gerekçesi budur** (bir sonraki ders).
+
+"Renk değeri üç yerde ayrı yazılı; tek doğru kaynak kuralım, token'dan türetelim."
+
+<Compare>
+<Pane title="Kaynak dağınık">
+
+- Renk Figma'da, CSS'te, sitede ayrı yazılı
+- Biri güncellenir, ötekiler eskir
+- "Hangisi doğru?" sorusu çıkar
+
+</Pane>
+<Pane title="Tek doğru kaynak">
+
+- Renk tek yerde, isimle tanımlı
+- Diğer yerler oradan türer
+- Değişiklik tek noktadan yayılır
+
+</Pane>
+</Compare>
+
+<Callout kind="tasarimci">
+
+- **"Design system var" duyduğunda sor:** "Kod paketi var mı, kim sahibi, nasıl katkı yapılıyor, kullanım oranı nedir?" Cevaplar sana belgenin mi yoksa çalışan sistemin mi olduğunu söyler.
+- **Bileşeni sisteme koymadan önce üç yerde ihtiyaç olduğunu gör.** Tek kullanımlık şey sistemi şişirir.
+- **Sistemi bir ürün olarak sahiplen.** Sahibi, sürümü, değişiklik günlüğü yoksa eskir.
+- **Küçük projede küçük sistem kur.** Birkaç token ve birkaç bileşen yeterlidir; sistemin büyüklüğü değil, kullanılması değer üretir.
+
+</Callout>
+
+<Summary>
+
+- Style guide kuralı anlatır, component library parçaları toplar, pattern library çözümleri ve kullanım zamanını derler; design system hepsini ve süreci birlikte tutan yaşayan üründür.
+- Design system bir Figma dosyası değildir: Figma + kod + dokümantasyon + kurallar + güncelleme süreci.
+- Atomic design bileşenleri beş seviyede sınıflar ama sınırları tartışmalıdır; bir düşünme aracıdır.
+- Sistemler teknik değil governance ve adoption sebebiyle ölür: kimse katkı yapamıyorsa eskir, kimse kullanmıyorsa yük olur.
+- Single source of truth: bilgi tek yerde tanımlı, diğerleri referans verir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Style guide, component library ve design system arasındaki fark nedir?">
+
+Style guide kuralları anlatan bir belgedir (logo, renk, ton). Component library yeniden kullanılabilir arayüz parçalarının koleksiyonudur. Design system bunların tümünü (token, bileşen, kural, dokümantasyon, kod) ve bunları güncelleyen süreci birlikte tutan yaşayan sistemdir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir tasarım sistemi neden çoğu zaman teknik sebeplerle değil de başka sebeplerle ölür?">
+
+Çünkü kimse katkı yapamıyorsa (governance eksikliği) sistem eskir; kimse kullanmıyorsa (düşük adoption) gereksiz bir bakım yüküne dönüşür. Bunlar süreç ve sahiplik sorunlarıdır, teknik değil.
+
+</SelfCheck>

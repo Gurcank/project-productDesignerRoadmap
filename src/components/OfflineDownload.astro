@@ -1,0 +1,148 @@
+---
+/**
+ * "Çevrimdışı için indir" control (ADR-012). The download itself is the
+ * service worker's; this is the button, the progress and the honest status.
+ */
+interface Props {
+  /** "all" or a category slug. */
+  scope: string;
+  label: string;
+}
+
+const { scope, label } = Astro.props;
+---
+
+<div class="offline-dl" data-offline data-scope={scope}>
+  <button type="button" class="offline-dl__button" data-offline-button>{label}</button>
+  <progress class="offline-dl__bar" max="100" value="0" aria-label="İndirme ilerlemesi" data-offline-bar hidden></progress>
+  <p class="offline-dl__status" role="status" data-offline-status>Kontrol ediliyor…</p>
+</div>
+
+<script>
+  import { download, formatSize, isSupported, loadManifest, plan, readStored } from "~/lib/offline";
+
+  for (const root of document.querySelectorAll<HTMLElement>("[data-offline]")) {
+    const scope = root.dataset.scope!;
+    const button = root.querySelector<HTMLButtonElement>("[data-offline-button]")!;
+    const bar = root.querySelector<HTMLProgressElement>("[data-offline-bar]")!;
+    const status = root.querySelector<HTMLElement>("[data-offline-status]")!;
+    const idleLabel = button.textContent ?? "";
+
+    const say = (text: string) => (status.textContent = text);
+
+    const init = async () => {
+      // `astro dev` registers no worker and writes no manifest (ADR-012): saying so
+      // beats a button that does nothing.
+      const manifest = isSupported() ? await loadManifest() : null;
+      if (!manifest) {
+        button.disabled = true;
+        say(
+          navigator.onLine
+            ? "Çevrimdışı indirme yalnızca yayınlanmış sürümde çalışır."
+            : "Şu an internet yok. İndirmek için bağlantı gerekir; daha önce indirdiklerin açılır.",
+        );
+        return;
+      }
+
+      const { bytes } = plan(manifest, scope);
+      const stored = readStored()[scope] ?? readStored()["all"];
+
+      if (stored && stored.build === manifest.build) {
+        button.textContent = "Yeniden indir";
+        say(`İndirildi · ${new Date(stored.at).toLocaleDateString("tr-TR")} · internet olmadan açılır.`);
+      } else if (stored) {
+        button.textContent = "Güncelle";
+        say(`Yeni sürüm var · ~${formatSize(bytes)}. Kayıtlı kopyan eski kalmış olabilir.`);
+      } else {
+        say(`~${formatSize(bytes)} · Wi-Fi ile indirmen önerilir.`);
+      }
+
+      button.addEventListener("click", async () => {
+        button.disabled = true;
+        bar.hidden = false;
+        bar.value = 0;
+        say("İndiriliyor…");
+
+        try {
+          const result = await download(manifest, scope, ({ done, total }) => {
+            bar.value = total ? Math.round((done / total) * 100) : 0;
+            say(`İndiriliyor · ${done}/${total}`);
+          });
+          bar.hidden = true;
+          button.textContent = "Yeniden indir";
+          say(
+            result.failed === 0
+              ? "İndirildi · artık internet olmadan açılır."
+              : `${result.failed} dosya indirilemedi. Bağlantını kontrol edip tekrar dene.`,
+          );
+        } catch {
+          bar.hidden = true;
+          button.textContent = idleLabel;
+          say("İndirme başlatılamadı. Sayfayı yenileyip tekrar dene.");
+        } finally {
+          button.disabled = false;
+        }
+      });
+    };
+
+    void init();
+  }
+</script>
+
+<style>
+  .offline-dl {
+    display: grid;
+    gap: var(--spacing-2);
+    justify-items: start;
+  }
+
+  .offline-dl__button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: var(--spacing-4);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-md);
+    background: none;
+    color: var(--c-text);
+    font: inherit;
+    font-size: var(--text-sm);
+    cursor: pointer;
+  }
+
+  .offline-dl__button:hover:not(:disabled) {
+    background-color: var(--c-surface-raised);
+  }
+
+  .offline-dl__button:disabled {
+    cursor: default;
+    color: var(--c-text-muted);
+  }
+
+  .offline-dl__bar {
+    inline-size: min(100%, 20rem);
+    block-size: 6px;
+    appearance: none;
+    border: 0;
+    border-radius: var(--radius-full);
+    background-color: var(--c-surface-sunken);
+    overflow: hidden;
+  }
+
+  .offline-dl__bar::-webkit-progress-bar {
+    background-color: var(--c-surface-sunken);
+  }
+
+  .offline-dl__bar::-webkit-progress-value {
+    background-color: var(--c-progress);
+  }
+
+  .offline-dl__bar::-moz-progress-bar {
+    background-color: var(--c-progress);
+  }
+
+  .offline-dl__status {
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+</style>

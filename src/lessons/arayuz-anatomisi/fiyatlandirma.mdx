@@ -1,0 +1,79 @@
+---
+summary: "Fiyat sayfası bir ürün sitesinin dönüşüme en yakın sayfasıdır. Pricing table, plan kartı, faturalama anahtarı, öne çıkarılan plan ve özellik matrisi: her birinin işi ve tuzağı."
+outcomes:
+  - "Fiyat sayfasının beş bileşenini adlarıyla sayabilirsin."
+  - "Neden çoğu fiyat tablosunda üç plan bulunduğunu açıklayabilirsin."
+  - "Plan kartı ile özellik matrisinin birbirini nasıl tamamladığını söyleyebilirsin."
+  - "'En popüler' rozetinin ne zaman güven kaybettirdiğini bilirsin."
+minutes: 6
+sources:
+  - label: "W3C WAI-ARIA APG — Switch Pattern"
+    url: "https://www.w3.org/WAI/ARIA/apg/patterns/switch/"
+  - label: "W3C — WCAG 2.2: Use of Color"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html"
+  - label: "NN/g — Mobile Tables"
+    url: "https://www.nngroup.com/articles/mobile-tables/"
+includeTerms: ["table", "tier", "badge", "switch"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir ürünün sitesinde en çok ziyaret edilen ve satın almaya en yakın sayfa fiyat sayfasıdır. Burada kullanıcı bir karar verir ve karar kolaylaştıkça dönüşüm artar. Fiyat sayfasının bileşenlerinin ayrı adları vardır.
+
+## Pricing table ve plan kartı
+
+**Pricing table (fiyat tablosu)**, planların yan yana kartlar hâlinde karşılaştırıldığı bölümdür. Üç plan yaygındır çünkü karşılaştırma için yeterli, karar felcine yol açmayacak kadar azdır (Hick yasası: seçenek arttıkça karar süresi uzar). "Pricing table'da beş plan var; üçe indirip gerisini feature matrix'e alalım."
+
+Tek bir fiyat seçeneğine **tier** ya da **plan**, onu temsil eden karta **plan card** denir. Yaygın adlandırma: Free / Starter / Pro / Business / Enterprise. Standart bir plan kartı şunları taşır: plan adı, kısa hedef kitle tanımı, fiyat, faturalama periyodu, CTA ve dahil olanlar listesi. "Her plan kartının üstüne 'kimin için' satırı ekleyelim; kullanıcı hangisini seçeceğini bilmiyor."
+
+## Faturalama anahtarı
+
+**Billing toggle**, aylık ve yıllık fiyat arasında geçiş yapan anahtardır. İki fiyatı ayrı ayrı göstermek yerine tek yerde sunar; yıllık seçeneğin yanında çoğunlukla bir indirim rozeti bulunur ("2 ay bedava"). "Varsayılan olarak yıllıkta açılsın ve tasarrufu rozetle gösterelim."
+
+Anahtarın **hangi durumda olduğu net** olmalı. İki seçenekli anahtar tasarımlarında "hangisi aktif" sık karışır. Hatırla: durum yalnızca renkle anlaşılmamalı; seçili etiketi kalın yaz ya da bir işaret ekle.
+
+## Öne çıkarılmış plan
+
+**"Most popular" badge**, bir planın rozetle ve görsel vurguyla öne çıkarılmasıdır, genelde ortadaki plan. Kenarlık, hafifçe yükseltilmiş kart ve "En çok tercih edilen" rozeti kullanıcı hangi planı seçeceğini bilmediğinde varsayılan bir cevap verir. İddia **doğru olmalıdır**: "en popüler" yazıp aslında en kârlı planı işaretlemek, fark edildiğinde güven kaybettirir.
+
+## Özellik matrisi
+
+**Feature matrix**, tüm özelliklerin ve hangi planda olduğunun tik/çarpı ile gösterildiği ayrıntılı tablodur. İkisi birlikte çalışır: **kart hızlı karar, matris derin karşılaştırma** içindir. Matris fiyat sayfasının altında durur; "Tüm özellikleri karşılaştır" ile açılan varsayılan kapalı bir bölüm olabilir.
+
+İki uyarı: tik ve çarpı **yalnızca ikonla** değil, erişilebilir metinle de ifade edilmeli ("Dahil", "Dahil değil"); ve mobilde tablo stratejisi (yatay kaydırma, kart görünümü) baştan seçilmeli.
+
+<Callout kind="tasarimci">
+
+- **Üç plan hedefle,** fazlasını matrise taşı.
+- **Her plan kartına "kimin için" satırı yaz.**
+- **Billing toggle'ın aktif durumunu renk dışında bir işaretle de göster.**
+- **"En çok tercih edilen" iddiasının dayanağı olsun.**
+- **Tik ve çarpılar için metin karşılığı yaz.**
+
+</Callout>
+
+<Summary>
+
+- Pricing table planları yan yana karşılaştırır; üç plan yaygındır çünkü karar felcine yol açmaz.
+- Plan kartı: ad, hedef kitle, fiyat, periyot, CTA, dahil olanlar.
+- Billing toggle'ın aktif durumu net olmalı, yalnızca renkle taşınmamalı.
+- "En popüler" iddiası doğru olmalı; yanlışsa güven kaybettirir.
+- Kart hızlı karar, özellik matrisi derin karşılaştırma içindir; tik/çarpı metinle de verilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Fiyat tablolarında neden genelde üç plan bulunur?">
+
+Karşılaştırma için yeterli, karar felcine yol açmayacak kadar azdır (Hick yasası). Daha fazla plan varsa fazlası özellik matrisine taşınır.
+
+</SelfCheck>
+
+<SelfCheck question="Plan kartı ile özellik matrisi nasıl birlikte çalışır?">
+
+Plan kartları özet verir ve hızlı karar sağlar; matris detay arayan kullanıcı için sayfanın altında durur ve derin karşılaştırma sunar.
+
+</SelfCheck>

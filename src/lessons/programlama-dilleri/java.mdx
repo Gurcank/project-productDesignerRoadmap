@@ -1,0 +1,62 @@
+---
+summary: "Büyük kurumsal sistemlerin dili: bankalar, sigorta, telekom, kamu. Uzun ömürlü, öngörülebilir ve katmanlı sistemler; tasarımcı için takvim ve devralınan kısıtlar."
+outcomes:
+  - "Java'nın hangi tür sistemlerde baskın olduğunu söyleyebilirsin."
+  - "Katmanlı bir kurumsal mimarinin küçük bir değişikliği neden pahalı kıldığını açıklayabilirsin."
+minutes: 5
+sources:
+  - label: "dev.java — Java öğren"
+    url: "https://dev.java/learn/"
+  - label: "Android Developers — Kotlin"
+    url: "https://developer.android.com/kotlin"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Java, uzun ömürlü ve çok kişiyle yazılan sistemlerin dilidir: bankalar, sigorta, telekom, kamu. Bir banka uygulamasının arkasında çoğu zaman bir Java servisi bulunur.
+
+## Nerede karşına çıkar
+
+- **Kurumsal back-end.** Bankacılık ve büyük kurumlarda çok yaygındır.
+- **Android.** Tarihsel olarak Android'in diliydi; yeni işler Kotlin'e kaydı ama devralınan kodun çoğu Java'dır.
+- **Büyük veri altyapıları.** Elasticsearch gibi araçların kendisi Java ile yazılıdır.
+
+## Güçlü ve zayıf yanları
+
+**İyi yaptığı:** yıllar boyunca bakılabilen, geriye uyumluluğu ciddiye alan bir ekosistem sunar; katı tip sistemi ve olgun araçlarıyla çok kişinin aynı koda dokunmasını kolaylaştırır; kurumsal ihtiyaçların çoğunun hazır çözümü vardır.
+
+**Kötü yaptığı:**
+
+- **Ayrıntılıdır (verbose).** Aynı iş daha çok satırla yazılır; küçük bir değişiklik çok dosyaya dokunabilir.
+- **Başlangıç maliyeti yüksektir.** Küçük bir servis için ağır gelir.
+- **Değişim yavaştır.** Bu bir güvenlik özelliğidir ama modern bir arayüz ihtiyacını karşılamak zaman alabilir.
+
+**Alternatifler:** aynı ekosistemde çok daha az ayrıntıyla Kotlin; Microsoft dünyasında C#; basit ve yüksek trafikli servislerde Go.
+
+<Callout kind="tasarimci">
+
+- **Java'lı bir kurumda takvim beklentini ayarla.** Küçük görünen bir değişiklik, katmanlı bir mimaride birçok noktaya dokunabilir.
+- **Devralınan sistem tasarımı kısıtlar.** "Bu alanı kaldıralım" isteği, o alana bağlı yıllanmış entegrasyonlar yüzünden reddedilebilir; erken sor.
+
+</Callout>
+
+<Summary>
+
+- Java kurumsal, uzun ömürlü sistemlerin dilidir; Android'de de çok devralınan kod vardır.
+- Gücü öngörülebilirlik ve ölçeklenebilir ekip çalışmasıdır; bedeli ayrıntılılık ve yavaş değişimdir.
+- Tasarımcı için sonuç: takvim ve devralınan entegrasyon kısıtlarını erken sormak.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Java'lı kurumsal bir sistemde küçük bir değişiklik neden pahalı olabilir?">
+
+Katmanlı mimaride bir alan birçok noktaya (servis, veri, entegrasyon) bağlıdır; küçük görünen bir değişiklik çok dosyaya ve yıllanmış entegrasyonlara dokunabilir.
+
+</SelfCheck>

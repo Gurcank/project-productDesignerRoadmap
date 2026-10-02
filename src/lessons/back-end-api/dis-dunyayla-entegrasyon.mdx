@@ -1,0 +1,67 @@
+---
+summary: "Dış servislerle konuşmanın üç parçası: webhook, üçüncü parti entegrasyon/SDK ve API anahtarı. Webhook gecikmeli gelir ve 'işleniyor' ara durumu tasarlanmazsa kullanıcı panik yapar."
+outcomes:
+  - "Webhook'un yönünün neden ters olduğunu ve hangi ara durumu zorunlu kıldığını söyleyebilirsin."
+  - "Üçüncü parti entegrasyonun getirdiği bağımlılık ve riskleri sayabilirsin."
+  - "Yayınlanabilir ve gizli API anahtarı farkını açıklayabilirsin."
+minutes: 7
+sources:
+  - label: "Stripe — Webhooks"
+    url: "https://docs.stripe.com/webhooks"
+  - label: "Stripe — API anahtarları"
+    url: "https://docs.stripe.com/keys"
+  - label: "Stripe — Idempotent istekler"
+    url: "https://docs.stripe.com/api/idempotent_requests"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Kullanıcı ödemeyi tamamladı, kart çekildi, ama sipariş ekranı hâlâ "ödeme bekleniyor" diyor. Panik. Arka planda ne oluyor olabilir? Cevap, dış dünyayla entegrasyonun nasıl çalıştığında.
+
+## Webhook
+
+**Webhook**, bir dış servisin bir olay gerçekleştiğinde **senin** sunucunu çağırmasıdır. Yönü terstir: normalde sen dış servise sorarsın; webhook'ta o sana haber verir. "Ödeme onaylandı", "e-posta açıldı", "kargo teslim edildi" bilgileri böyle gelir. Sürekli sorup durmaktan (polling) çok daha verimlidir. "Ödeme onayını webhook'la alalım; kullanıcı sayfayı kapatsa bile sipariş güncellensin."
+
+**Tasarım açısından kritik bir sonucu var:** webhook gecikmeli gelebilir. Kullanıcı ödemeyi tamamladıktan sonra sipariş durumu hemen güncellenmeyebilir. Bu ara durum ("işleniyor") tasarlanmalıdır; yoksa kullanıcı "param gitti ama sipariş yok" paniği yaşar.
+
+## Üçüncü parti entegrasyon ve SDK
+
+**Üçüncü parti entegrasyon**, dış bir servisin özelliklerini kullanmaktır; **SDK** o servisin kendi sağladığı hazır kod paketidir. Ödeme, harita, analiz ve e-posta gibi işleri sıfırdan yazmak yerine hazır servisle çözer. SDK entegrasyonu kolaylaştırır. "Harita için SDK gömüyoruz ama 90KB ekliyor; lazy load edelim."
+
+Her üçüncü parti bir **bağımlılık ve risktir:** paket boyutu, performans, gizlilik ve o servisin çökmesi durumunda ne olacağı. Ayrıca ön yüze gömülen üçüncü parti kodlar kullanıcı verisine erişebilir.
+
+## API anahtarı
+
+**API key (API anahtarı)**, bir dış servise kimliğini kanıtlayan gizli dizidir. Servisin seni tanıması ve faturalandırması için vardır. **Kritik ayrım:** bazı servisler iki tür anahtar verir: ön yüze gömülebilen **yayınlanabilir (publishable)** anahtar ve yalnızca sunucuda kalması gereken **gizli (secret)** anahtar. İkincisini ön yüz koduna koymak ciddi bir güvenlik açığıdır ve otomatik tarayıcılar tarafından kısa sürede bulunur. "Bu anahtar gizli; ön yüzde kullanamayız, isteği sunucudan geçirelim."
+
+<Callout kind="tasarimci">
+
+- **Ödeme, e-posta, kargo gibi webhook'lu akışlarda "işleniyor" ara durumunu çiz** ve ne kadar süreceğini, kullanıcının ne yapacağını yaz.
+- **Üçüncü parti bileşenlerin (harita, ödeme formu) ağırlığını ve çökme hâlini hesaba kat.**
+- **Gizli bilgi isteyen tasarımlardan kaçın:** anahtar türünü geliştiriciyle teyit et.
+
+</Callout>
+
+<Summary>
+
+- Webhook, dış servisin olay olduğunda seni çağırmasıdır; gecikmeli gelebileceği için "işleniyor" ara durumu tasarlanmalıdır.
+- Üçüncü parti entegrasyon ve SDK hız kazandırır ama bağımlılık, boyut, gizlilik ve çökme riski getirir.
+- Yayınlanabilir anahtar ön yüze gömülebilir; gizli anahtar yalnızca sunucuda kalmalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Webhook nedir ve tasarım açısından hangi ara durumu zorunlu kılar?">
+
+Dış servisin, bir olay olduğunda senin sunucunu çağırmasıdır. Gecikmeli gelebileceği için sipariş durumu hemen güncellenmeyebilir; bu yüzden "işleniyor" ara durumu tasarlanmalıdır, yoksa kullanıcı "param gitti ama sipariş yok" paniği yaşar.
+
+</SelfCheck>
+
+<SelfCheck question="Yayınlanabilir ve gizli API anahtarı arasındaki fark nedir?">
+
+Yayınlanabilir anahtar ön yüz koduna gömülebilir; gizli anahtar yalnızca sunucuda kalmalıdır. Gizli anahtarı ön yüze koymak ciddi bir güvenlik açığıdır.
+
+</SelfCheck>

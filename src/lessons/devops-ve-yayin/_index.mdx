@@ -1,0 +1,31 @@
+---
+summary: "Kodun bilgisayardan çıkıp kullanıcıya ulaştığı ve orada yaşadığı süreç: CI/CD, ortamlar, deploy stratejileri, olay yönetimi, gözlemlenebilirlik ve maliyet; tasarımcının üç somut bağlantısıyla."
+sources:
+  - label: "Martin Fowler — Continuous Delivery"
+    url: "https://martinfowler.com/bliki/ContinuousDelivery.html"
+  - label: "Google SRE Kitabı"
+    url: "https://sre.google/sre-book/table-of-contents/"
+flags: ["degisken"]
+---
+
+Bu bölüm, kodun bilgisayardan çıkıp kullanıcıya ulaştığı ve orada yaşadığı süreci anlatıyor.
+
+Tasarımcı için üç somut bağlantısı var:
+
+1. **Yayın hızı, tasarım kalitesini belirler.** Deploy kolaysa küçük düzeltmeler hemen yayınlanır.
+2. **Kalite kontrolü otomatikleştirilebilir.** Erişilebilirlik taraması, performans bütçesi ve görsel karşılaştırma yayın hattına konabilir.
+3. **Canlıda ne olduğunu görmek.** Analitik olaylarını tasarlamak senin işin; bir hata canlıda yaşandığında kullanıcının gördüğü ekran da senin tasarımın.
+
+Kavramlar eskimeyen, **ürün ve fiyat bilgileri hızlı eskiyen** türdendir; hosting ve maliyet derslerinde değişken bilgi uyarıları sık.
+
+## Bu bölümü bitirdiğinde
+
+- CI, Continuous Delivery ve Deployment farkını ve pipeline'ın aşamalarını açıklayabileceksin.
+- Preview ortamını tasarım onayı için kullanabileceksin.
+- Feature flag, canary ve blue-green stratejilerini ve kill switch'i anlatabileceksin.
+- Olay anında kullanıcıya gösterilecek ekranları önceden hazırlayabileceksin.
+- Ölçüm planı (event tasarımı) yazabilecek, tasarım kararlarının maliyetini görebileceksin.
+
+## Nasıl çalışmalı?
+
+On iki ders var. Senin günlük işine en yakın olanlar: **ortamlar** (preview), **deploy stratejileri** (feature flag), **olay yönetimi** (hata ekranları) ve **hata izleme ve analitik** (event tasarımı). Docker ve Kubernetes derslerini kulak aşinalığı olarak oku.

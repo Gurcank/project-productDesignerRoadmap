@@ -1,0 +1,79 @@
+---
+summary: "Engel ve olay dilinin kelimeleri: blocker/impediment, escalation, fire drill, war room, incident, sev1/sev2, postmortem, hotfix, rollback ve action item. Action item'ın sahibi ve tarihi yoksa yapılmaz; fire drill kelimesi aciliyeti sorgulama izni verir."
+outcomes:
+  - "Blocker ile impediment arasındaki farkı söyleyebilirsin."
+  - "Bir action item'ın taşıması gereken iki şeyi ve eksikse ne olduğunu açıklayabilirsin."
+  - "Fire drill kelimesinin ne kazandırdığını bilirsin."
+minutes: 5
+sources:
+  - label: "Atlassian — Olay şiddet seviyeleri"
+    url: "https://www.atlassian.com/incident-management/kpis/severity-levels"
+  - label: "Google SRE — Postmortem kültürü"
+    url: "https://sre.google/sre-book/postmortem-culture/"
+skipTerms: ["Accessibility (a11y)","accessibility (a11y)","erişilebilirlik","a11y"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+| Terim | Anlamı |
+|---|---|
+| **Blocker** | İlerlemeyi tamamen durduran engel |
+| **Impediment** | Yavaşlatan ama durdurmayan engel |
+| **Escalation** | Sorunu karar yetkisi olan üst seviyeye taşımak |
+| **Fire drill** | Aciliyeti abartılmış, panikle yapılan iş |
+| **War room** | Kriz süresince herkesin aynı kanalda toplanması |
+| **Incident** | Kullanıcıyı etkileyen beklenmedik sorun |
+| **Sev1 / Sev2** | Olayın önem seviyesi |
+| **Postmortem** | Olay sonrası değerlendirme |
+| **Action item** | Toplantıdan çıkan, sahibi ve tarihi olan somut iş |
+| **Hotfix** | Süreci atlayan acil düzeltme |
+| **Rollback** | Önceki sürüme dönme |
+
+Blocker ve impediment ayrımı önemli: **her zorluğa "blocker" demek kelimenin gücünü tüketir.** Blocker kendi başına çözülemeyen ve ilerlemeyi tamamen durduran engeldir.
+
+## Action item
+
+**Action item (aksiyon maddesi)**, bir toplantı veya değerlendirmeden çıkan, **sahibi ve tarihi belli** somut iştir. "Şuna bir bakalım" bir aksiyon maddesi değildir: kim, ne zaman, neyi bitirecek belli değilse hiç konuşulmamış sayılır. Retro ve postmortem'lerin işe yaramamasının bir numaralı sebebi budur. Toplantı notlarının sonunda karşına çıkar. "Aksiyon maddesi olarak yazalım: erişilebilirlik kontrol listesini PR şablonuna ekleme; sahibi ben, cuma."
+
+## Fire drill
+
+**Fire drill ("yangın tatbikatı")**, gerçek aciliyeti olmayan ama acilmiş gibi yürütülen, ekibin planını bozan iştir. Bu ifadeyi bilmek, bir işin gerçekten acil mi yoksa birinin paniği mi olduğunu sorgulama izni verir. Sürekli fire drill yaşayan ekipler planlı iş yapamaz hâle gelir. "Bu bir fire drill mı yoksa gerçekten sev1 mi? Etkilenen kullanıcı sayısına bakalım."
+
+<Callout kind="tasarimci">
+
+- **Engelini doğru adlandır:** durduruyorsa blocker, yavaşlatıyorsa impediment.
+- **Toplantıdan çıkarken her maddeye sahip ve tarih yaz.**
+- **"Acil" geldiğinde sor:** kaç kullanıcı etkileniyor? Gerçek mi, fire drill mı?
+
+</Callout>
+
+<Summary>
+
+- Blocker durdurur, impediment yavaşlatır; her şeye blocker demek kelimeyi aşındırır.
+- Action item'ın sahibi ve tarihi olmalı; yoksa yapılmaz.
+- Fire drill, aciliyeti sorgulama izni verir.
+- Incident, sev1/sev2, postmortem, hotfix ve rollback olay yönetiminin dilidir (DevOps bölümünde ayrıntısı var).
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Blocker ile impediment arasındaki fark nedir?">
+
+Blocker ilerlemeyi tamamen durdurur ve kendi başına çözülemez. Impediment yavaşlatır ama durdurmaz. Her zorluğa "blocker" demek kelimenin gücünü tüketir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir action item'ın taşıması gereken iki şey nedir? Eksikse ne olur?">
+
+Sahibi ve tarihi. Eksikse "şuna bir bakalım" seviyesinde kalır ve yapılmaz; retro ve postmortem'lerin işe yaramamasının bir numaralı sebebi budur.
+
+</SelfCheck>
+
+<SelfCheck question="Fire drill nedir ve bu kelimeyi bilmek ne kazandırır?">
+
+Gerçek aciliyeti olmayan ama acilmiş gibi yürütülen, ekibin planını bozan iş. Bir işin gerçekten acil mi yoksa birinin paniği mi olduğunu sorgulama izni verir.
+
+</SelfCheck>

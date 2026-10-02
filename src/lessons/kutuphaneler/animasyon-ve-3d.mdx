@@ -1,0 +1,88 @@
+---
+summary: "Arayüz hareketi ve 3B için araçlar: Motion, GSAP, Lenis, Three.js ve Lottie/Spline. 2024-2025'te iki büyük değişiklik oldu (Motion adı, GSAP'ın ücretsiz olması) ve bilmen gerekiyor."
+outcomes:
+  - "Motion ile GSAP'ın rakip değil, farklı işler için araçlar olduğunu söyleyebilirsin."
+  - "Yumuşak kaydırma kütüphanelerinin erişilebilirlik riskini ve çözümünü açıklayabilirsin."
+  - "3B bir sahneyi eklemeden önce hangi maliyeti ölçmen gerektiğini bilirsin."
+minutes: 8
+sources:
+  - label: "Motion"
+    url: "https://motion.dev/"
+  - label: "GSAP"
+    url: "https://gsap.com/"
+  - label: "Lenis"
+    url: "https://lenis.darkroom.engineering/"
+  - label: "Three.js"
+    url: "https://threejs.org/"
+  - label: "Lottie (Airbnb)"
+    url: "https://airbnb.io/lottie/"
+  - label: "Spline"
+    url: "https://spline.design/"
+  - label: "W3C — WCAG 2.2: Animation from Interactions"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bu alanda 2024-2025'te iki büyük değişiklik oldu ve ikisini de bilmen gerekiyor. Materyale göre kaynaklar yeniden adlandırma tarihlerinde tutarsız; **tarihe değil, mevcut duruma güven** ve kullanmadan önce doğrula.
+
+## Motion
+
+**Motion** (eski adıyla Framer Motion), React'te bildirimsel animasyon kütüphanesidir: bileşenin giriş, çıkış, hover ve sürükleme animasyonlarını durum olarak tanımlarsın. Arayüz hareketi için en doğal React aracıdır: yerleşim animasyonları, çıkış geçişleri (bir öğe kaldırıldığında animasyonla gitmesi) ve jestler hazır gelir; `useReducedMotion` ile hareket azaltma tercihine uyum sağlar. "Modal giriş-çıkış animasyonunu Motion ile yapalım."
+
+**İsim değişti:** Framer Motion bağımsız bir proje hâline gelip Motion adını aldı. Paket adı `framer-motion` yerine `motion`, içe aktarma yolu `motion/react` oldu; eski paket hâlâ çalışıyor. Artık yalnızca React değil, vanilla JavaScript ve Vue de destekleniyor.
+
+## GSAP
+
+**GSAP**, framework'ten bağımsız, zaman çizelgesi ve kaydırma tabanlı animasyonlarda sektör standardı olan kütüphanedir. Karmaşık sıralı animasyonlar, kaydırmaya bağlı anlatım (scrollytelling) ve sabitleme (pinning) gibi işlerde Motion'dan derindir; **ScrollTrigger** eklentisi referans araçtır. Ödüllü tanıtım sitelerinde ve kampanya sayfalarında görürsün.
+
+**Fiyatlandırma değişti:** GSAP bazı eklentileri (SplitText, MorphSVG, ScrollSmoother, DrawSVG) ücretli üyelikle sunuyordu. Materyale göre Webflow'un GreenSock'u satın almasının ardından 30 Nisan 2025'te GSAP'ın tamamı ticari kullanım dahil ücretsiz oldu. "GSAP pahalı" diyen eski kaynaklar geçersizdir.
+
+Motion ile GSAP **rakip değil,** farklı işler için araçlardır. Aynı projede ikisi de kullanılabilir; yeter ki her öğenin sahibi net olsun.
+
+## Lenis ve yumuşak kaydırma
+
+**Lenis**, sayfa kaydırmasını yumuşatan küçük bir kütüphanedir; tanıtım sitelerinde "premium" hissi verir. Ama kaydırma davranışını değiştirmek bir **erişilebilirlik riskidir:** kullanıcının beklediği kaydırma hissini bozar ve bazı kullanıcılarda rahatsızlık ya da yön kaybı yaratır. Hareket azaltma açıkken devre dışı kalmalı ve kapatılabilir olmalıdır. "Lenis ekleyelim ama `prefers-reduced-motion` açıkken devre dışı kalsın."
+
+## Three.js ve 3B
+
+**Three.js** ve onun React karşılığı **React Three Fiber**, tarayıcıda 3B grafik üretir: ürün konfigüratörleri, 3B ürün görselleri, etkileyici tanıtım sahneleri. Ağırdır: paket boyutu, GPU kullanımı ve pil tüketimi ciddidir ve mobil cihazlarda deneyimi bozabilir. **Bir gerekçesi olmalıdır;** yalnızca etkileyici görünsün diye eklenen 3B performans bütçesini tek başına tüketebilir. "3B sahne etkileyici olur ama paket boyutu ve mobil performans maliyetini önce ölçelim."
+
+## Lottie ve Spline
+
+**Lottie**, tasarım aracında hazırlanmış vektör animasyonlarını web'de oynatan formattır; **Spline** kod yazmadan 3B sahne hazırlamayı sağlar. Tasarımcının geliştiriciye bağımlı olmadan animasyon üretmesini sağlar; **bu senin için doğrudan bir imkândır.** Boş durum illüstrasyonlarında, onboarding animasyonlarında ve hero sahnelerinde karşına çıkar. "Boş durum animasyonunu Lottie olarak verelim; geliştiriciye JSON dosyası yeterli." Lottie dosyaları beklenenden büyük olabilir; dosya boyutunu kontrol et. Araçların fiyatlandırma ve dışa aktarma seçenekleri değişir.
+
+<Callout kind="tasarimci">
+
+- **Her animasyon için hareket azaltma alternatifini tasarla.**
+- **Kaydırma davranışını değiştiren efektleri (yumuşak kaydırma, scroll hijacking) kapatılabilir yap.**
+- **3B ya da ağır animasyon önermeden önce performans bütçesine bak.**
+- **Lottie teslim ederken dosya boyutunu yaz.**
+
+</Callout>
+
+<Summary>
+
+- Motion React arayüz hareketi (giriş/çıkış, yerleşim, jest) içindir; GSAP karmaşık zaman çizelgesi ve kaydırmaya bağlı anlatım içindir. İkisi rakip değildir.
+- Framer Motion, Motion adını aldı (`motion/react`); GSAP'ın tamamı ücretsiz hâle geldi (materyale göre 30 Nisan 2025).
+- Yumuşak kaydırma erişilebilirlik riskidir; hareket azaltma tercihinde kapanmalıdır.
+- 3B ağırdır ve gerekçe ister. Lottie/Spline tasarımcıyı geliştiriciden bağımsız kılar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Motion ile GSAP rakip mi? Hangisi hangi iş için?">
+
+Rakip değiller. Motion: React arayüz hareketi (giriş/çıkış geçişleri, yerleşim animasyonları, jestler). GSAP: karmaşık zaman çizelgeleri, kaydırmaya bağlı anlatım, sabitleme. Aynı projede ikisi de kullanılabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Lenis gibi yumuşak kaydırma kütüphaneleri hangi erişilebilirlik riskini taşır?">
+
+Kullanıcının beklediği kaydırma hissini değiştirir; bazı kullanıcılarda rahatsızlık ve yön kaybı yaratabilir. Hareket azaltma açıkken devre dışı kalmalı ve kapatılabilir olmalıdır.
+
+</SelfCheck>

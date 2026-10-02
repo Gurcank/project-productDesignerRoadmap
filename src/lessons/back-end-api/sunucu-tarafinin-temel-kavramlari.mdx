@@ -1,0 +1,65 @@
+---
+summary: "Process, port ve ortam değişkeni: sunucu tarafının üç temel parçası. 'Local'de çalışıyor ama production'da patlıyor' cümlesinin arkasındaki en yaygın sebep olan ortam değişkenini ve ön yüze giden şeylerin neden gizli olmadığını öğrenirsin."
+outcomes:
+  - "Bir uygulamanın tek process olarak çalışmasının riskini söyleyebilirsin."
+  - "Port'un ne olduğunu ve neden aynı makinede birden fazla servis çalışabildiğini açıklayabilirsin."
+  - "Ortam değişkeninin neden gerektiğini ve ön yüze gönderilenlerin neden gizli olmadığını bilirsin."
+minutes: 6
+sources:
+  - label: "The Twelve-Factor App — Config"
+    url: "https://12factor.net/config"
+  - label: "MDN — Glossary: API"
+    url: "https://developer.mozilla.org/en-US/docs/Glossary/API"
+  - label: "Node.js — Öğren"
+    url: "https://nodejs.org/en/learn"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bu bölümün amacı seni back-end geliştiricisi yapmak değil. Üç şey için buradasın:
+
+1. Bir geliştirici "bu endpoint 429 dönüyor" dediğinde ne dendiğini anlamak.
+2. Bir özelliğin **neden zor** olduğunu tahmin edebilmek, böylece gerçekçi tasarım yapmak.
+3. Tasarım kararlarının arka yüzde ne maliyet ürettiğini görmek. "Bu listede her ürünün yorumlarını da gösterelim" masum bir istek gibi görünür ama arka tarafta N+1 problemine ve yavaş sayfaya dönüşebilir.
+
+Web Temelleri bölümünde request/response döngüsünü kurmuştun; burası onun detayı. Bu bölümün bilgisinin çoğu **eskimeyen** kategoridedir: HTTP, REST, önbellekleme ve kuyruk mantığı yirmi yıldır aynı. Değişken olan araç ve servis adlarıdır.
+
+## Process
+
+**Process (süreç)**, sunucuda çalışan tek bir program örneğidir. Bir uygulama tek bir process olarak çalışıyorsa, o process çöktüğünde site düşer. Bu yüzden üretimde genelde birden fazla kopya çalıştırılır ve önlerine bir dağıtıcı konur. "Process bellek sızıntısı yüzünden şişip yeniden başlıyor; loglara bakalım."
+
+## Port
+
+**Port (bağlantı noktası)**, aynı makinede birden fazla servisin ayrı ayrı dinlenebilmesini sağlayan numaralı kapıdır. `localhost:3000` adresindeki 3000 budur. Bir makinede aynı anda ön yüz (3000), API (4000) ve veritabanı (5432) çalışabilmesinin sebebi budur. "Port çakışması var; başka bir uygulama 3000'i kullanıyor."
+
+## Ortam değişkeni
+
+**Environment variable (ortam değişkeni)**, uygulamanın çalıştığı ortama göre değişen ayarların kodun dışında tutulmasıdır. Aynı kod farklı ortamlarda (local, staging, production) farklı veritabanına bağlanabilsin diye vardır. API anahtarları gibi gizli bilgiler de koda yazılmaz; bu bir güvenlik gereğidir. Deploy sorunlarının en yaygın sebebi eksik ya da yanlış ortam değişkenidir. "Local'de çalışıyor ama production'da patlıyor; bir env var eksik olabilir."
+
+**Karıştırma:** ön yüze gönderilen ortam değişkenleri **gizli değildir.** Tarayıcıya giden her şey görülebilir. Gerçek sırlar yalnızca sunucuda kalan değişkenlerde tutulur.
+
+<Callout kind="tasarimci">
+
+- **"Bu özellik neden bu kadar zor?" sorusunu arka yüz maliyetiyle ilişkilendir:** liste ekranına eklenen her alan bir sorgu, bir istek ya da bir bağımlılık olabilir.
+- **Ortam farklılıklarını ciddiye al:** staging'de çalışan bir akış production'da bir ortam değişkeni yüzünden bozulabilir.
+- **Gizli olması gereken bilgiyi ön yüzde istemeyi bırak.**
+
+</Callout>
+
+<Summary>
+
+- Process tek örnek çökerse site düşer; bu yüzden birden fazla kopya çalıştırılır.
+- Port, aynı makinede birden fazla servisin dinlenmesini sağlar.
+- Ortam değişkeni ortama göre değişen ayarları ve sırları kodun dışında tutar; ön yüze giden hiçbir şey gizli değildir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Local'de çalışıyor ama production'da patlıyor' cümlesinde ilk neye bakılır?">
+
+Eksik ya da yanlış bir ortam değişkenine. Deploy sorunlarının en yaygın sebebi budur.
+
+</SelfCheck>

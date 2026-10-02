@@ -1,0 +1,111 @@
+---
+summary: "Ekibin ne kadar iş alabileceğini kestirme araçları: story point, velocity, capacity, burndown ve timebox. Hepsinin ortak kuralı: bunlar planlama aracıdır, performans ölçme aracı değil."
+outcomes:
+  - "Story point'in neden saat değil göreli büyüklük olduğunu açıklayabilirsin."
+  - "Velocity ile capacity'nin farkını ve birlikte nasıl kullanıldığını bilirsin."
+  - "Velocity'nin neden performans göstergesi olarak kullanılmaması gerektiğini anlatabilirsin."
+  - "Timebox'ın ne işe yaradığını ve bir araştırmayı nasıl sınırlandıracağını bilirsin."
+minutes: 10
+sources:
+  - label: "Atlassian — Agile tahminleme"
+    url: "https://www.atlassian.com/agile/project-management/estimation"
+  - label: "Atlassian — Sprint metrikleri"
+    url: "https://www.atlassian.com/agile/project-management/metrics"
+  - label: "Scrum Guide (2020)"
+    url: "https://scrumguides.org/scrum-guide.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+"Son üç sprint velocity 24; bu sprint 35 puan almak gerçekçi değil." Bu cümleyi duyduğunda üç kelimeyi (velocity, puan, sprint) bilmen gerekiyor, ama daha önemlisi **bu sayıların ne için olmadığını** bilmen gerekiyor.
+
+Bu ders ekibin ne kadar iş alabileceğini kestirme araçlarını anlatıyor. Hepsinin ortak kuralı şu:
+
+> **Bunlar planlama aracıdır, performans ölçme aracı değildir.**
+
+Performans ölçümüne dönüştürüldüklerinde ekip sayıları manipüle etmeye başlar ve araç işlevini kaybeder.
+
+## Story point: göreli büyüklük
+
+**Story point** (hikâye puanı), bir işin büyüklüğünü **saat yerine, göreli bir puanla** ifade etme birimidir. Neden saat değil? **İnsanlar süre tahmininde kötüdür ama karşılaştırmada iyidir.** "Bu iş şu işin iki katı" demek, "bu iş 6 saat sürer" demekten daha güvenilirdir.
+
+Puan; karmaşıklığı, belirsizliği ve iş miktarını birlikte kapsar. Genelde Fibonacci benzeri bir dizi kullanılır: **1, 2, 3, 5, 8, 13.** Büyüdükçe aralığın açılması, büyük işlerde belirsizliğin de büyüdüğünü yansıtır: 8 ile 9 arasındaki farkı ayırt edemezsin, ama 8 ile 13 farklı şeylerdir.
+
+Grooming ve planning toplantılarında kullanılır. **Planning poker** denen yöntemle herkes aynı anda puan gösterir; farklı puanlar çıkarsa asıl değerli olan, aradaki farkın **neden** olduğunu konuşmaktır. "Ben 3 verdim sen 8 verdin; farkı konuşalım, muhtemelen ikimiz farklı kapsam düşünüyoruz."
+
+İki yaygın hata:
+
+- **Story point ≠ saat.** Puanı saate çevirmek ("1 puan = 4 saat") yöntemin tüm faydasını yok eder; gizli bir saat tahminine dönüşür.
+- **Puanlar ekipten ekibe kıyaslanamaz.** Her ekibin ölçeği kendine özeldir.
+
+## Velocity ve capacity: geçmiş ve bugün
+
+**Velocity** (hız), bir ekibin sprint başına ortalama olarak tamamladığı story point miktarıdır. Gelecek sprint'te ne kadar iş alınabileceğini tahmin etmeye yarar. Son 3–5 sprint'in ortalaması kullanılır.
+
+**Capacity** (kapasite), ekibin bu sprint'te **fiilen çalışabileceği süredir.** Velocity geçmişe bakar; capacity bu sprint'in gerçeğine bakar: izinler, tatiller, toplantılar, başka projeye ayrılan zaman. İkisi birlikte kullanılır.
+
+<StepFlow
+  label="Bu sprint'e ne kadar iş alınır?"
+  caption="Velocity sana normalde ne kadar yapabildiğini söyler, capacity bu sprint'in koşullarını. Doğru sayı genelde ikisinin birleşiminden çıkar."
+  steps={[
+    { title: "Velocity'ye bak", sub: "Son 3-5 sprint ortalaması: örn. 24 puan", tone: "plain" },
+    { title: "Capacity'yi hesapla", sub: "İzinler, tatiller: örn. ekip %60 çalışacak", tone: "accent" },
+    { title: "Birleştir", sub: "24 puan × %60 ≈ 14 puan civarında iş al", tone: "progress" },
+  ]}
+/>
+
+"İki kişi izinli, kapasitemiz %60; velocity'ye göre değil ona göre alalım." Bu kontrol sprint planning'in ilk adımıdır.
+
+**Velocity bir performans göstergesi değildir.** Yönetim velocity'yi hedef hâline getirirse ekip puanları şişirir; sayı artar ama üretilen iş artmaz ve metrik ölçtüğü şeyi ölçmeyi bırakır. Ayrıca iki ekibin velocity'si karşılaştırılamaz. Bunu bilmek, bir yönetici "neden bu ekibin velocity'si şu ekibin yarısı?" diye sorduğunda sana cevap verecek kadar güçlü bir argüman sağlar.
+
+## Burndown: sapmayı erken görmek
+
+**Burndown chart** (tükenme grafiği), sprint boyunca **kalan işin** gün gün nasıl azaldığını gösteren grafiktir. Sapmayı erken gösterir: çizgi düz gidiyorsa iş ilerlemiyor demektir; sprint bitmeden müdahale şansı verir. Jira gibi araçların sprint ekranında otomatik üretilir.
+
+"Burndown yatay gidiyor; üç gündür hiçbir iş 'done'a geçmedi, bir yerde takılıyoruz."
+
+Ayrım: **burndown kalan işi** gösterir (aşağı iner). **Burnup** ise tamamlanan işi ve toplam kapsamı *ayrı ayrı* gösterir; bu yüzden **kapsam büyümesini** (scope creep) görünür kılar. Kapsam değişikliğini izlemek istiyorsan burnup daha faydalıdır.
+
+## Timebox: önceden sabit süre
+
+**Timebox** (zaman kutusu), bir işe ya da toplantıya **önceden sabit bir süre** ayırıp, süre dolduğunda durma kuralıdır. Sonu belirsiz araştırmaların ve toplantıların sınırlandırılmasını sağlar. Süre dolduğunda iş bitmemiş olabilir; o zaman elde ne varsa onunla karar verilir. **Amaç mükemmel cevap değil, zamanında cevaptır.**
+
+Standup'ın 15 dakika olması bir timebox'tır. Araştırma işlerinde de kullanılır: "Bu araştırmayı iki günle timebox'layalım; süre dolunca ne bulduysak onunla karar veririz."
+
+Bir tasarımcı için timebox'ın pratik karşılığı: "Bu akış için üç ana varyant çizeceğim, iki gün." Süre dolunca kalan belirsizliği açıkça söylersin; kusursuz çıktı beklenmez.
+
+<Callout kind="tasarimci">
+
+- **Kendi işini göreli tahmin et.** "Bu ekran geçen haftakinin iki katı" demek, "6 saat sürer" demekten daha dürüsttür.
+- **Puanı saate çevirmeye karşı çık.** "1 puan = 4 saat" dendiğinde yöntemin işe yaramadığını nazikçe hatırlat.
+- **Velocity hedef olarak istenirse itiraz et.** Gerekçe: puanlar şişer ve sayı anlamını yitirir.
+- **Belirsiz tasarım işlerini timebox'la.** "İki günlük keşif" sınırlı ve ucuz bir adımdır.
+
+</Callout>
+
+<Summary>
+
+- Story point süre değil göreli büyüklüktür; saate çevrilmez ve ekipler arasında kıyaslanmaz.
+- Velocity geçmişin ortalaması, capacity bu sprint'in gerçeğidir; ikisi birlikte kullanılır.
+- Velocity performans göstergesi değildir; hedef yapılırsa puanlar şişer.
+- Burndown kalan işi, burnup tamamlanan işi ve kapsamı gösterir; kapsam büyümesi için burnup.
+- Timebox sonu belirsiz işleri sınırlar; amaç mükemmel değil zamanında cevaptır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Story point'i saate çevirmek (&quot;1 puan = 4 saat&quot;) neden yöntemi bozar?">
+
+Story point'in tüm faydası, süre tahmini yerine göreli büyüklük tahmini yapmasıdır; insanlar karşılaştırmada iyi, süre kestiriminde kötüdür. Saate çevrildiği anda yöntem gizli bir saat tahminine dönüşür ve belirsizliği taşıma özelliğini kaybeder.
+
+</SelfCheck>
+
+<SelfCheck question="Velocity'nin performans göstergesi olarak kullanılması neden sorun yaratır?">
+
+Velocity hedefe dönüştüğünde ekip puanları şişirir; sayı artar ama üretilen iş artmaz ve metrik ölçtüğü şeyi ölçmeyi bırakır. Ayrıca velocity ekibe özeldir, iki ekip arasında karşılaştırılamaz.
+
+</SelfCheck>

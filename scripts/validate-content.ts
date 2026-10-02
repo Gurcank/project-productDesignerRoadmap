@@ -9,7 +9,7 @@
  *
  * Usage: npm run validate
  */
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 // The site's own resolver, not a copy of its rules: a validator that reimplements
@@ -102,9 +102,43 @@ for (const section of DIAGRAM_SECTIONS) {
   }
 }
 
+/*
+ * Lessons (ADR-015): each must replace a step that exists — a typo in the file
+ * name would silently leave the term-card view in place — and must name a
+ * primary source. The schema already demands one; this reports the file.
+ */
+const LESSONS = path.join(ROOT, "src/lessons");
+let lessonCount = 0;
+if (existsSync(LESSONS)) {
+  for (const category of readdirSync(LESSONS)) {
+    for (const fileName of readdirSync(path.join(LESSONS, category))) {
+      if (!fileName.endsWith(".mdx")) continue;
+      const relative = `${category}/${fileName}`;
+      const slug = fileName.replace(/\.mdx$/, "");
+      if (slug === "_index") continue;
+      lessonCount += 1;
+
+      const topicDir = path.join(TOPICS, category);
+      const topicFile = existsSync(topicDir)
+        ? readdirSync(topicDir).find((name) => name.replace(/^\d+-/, "").replace(/\.md$/, "") === slug)
+        : undefined;
+      if (!topicFile) problems.push({ file: `src/lessons/${relative}`, message: "bu ders hiçbir adıma karşılık gelmiyor" });
+
+      const raw = readFileSync(path.join(LESSONS, category, fileName), "utf8");
+      if (!/^sources:\s*$/m.test(raw) || !/^\s+- label:/m.test(raw)) {
+        problems.push({ file: `src/lessons/${relative}`, message: "kaynak yok — materyal dışı bilgi kaynaksız yayınlanmaz" });
+      }
+      // The old view had cards; a lesson that still ships one has not been converted.
+      if (/^### .+\n\n- \*\*Terim/m.test(raw)) {
+        problems.push({ file: `src/lessons/${relative}`, message: "ders içinde terim kartı kalmış" });
+      }
+    }
+  }
+}
+
 console.log(
   `${topicCount} konu · ${headingCount} başlık · ${termCardCount} terim kartı · ` +
-    `${referenceCount} çapraz referans · ${DIAGRAM_SECTIONS.length} diyagram`,
+    `${referenceCount} çapraz referans · ${DIAGRAM_SECTIONS.length} diyagram · ${lessonCount} ders`,
 );
 
 if (deferred.length > 0) {

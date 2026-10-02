@@ -1,0 +1,111 @@
+---
+summary: "Bir ekranın 'dolu ve her şey yolunda' hâli dışındaki bütün hâlleri: yükleniyor, boş, hata, çevrimdışı, başarı. Tasarımcının en sık atladığı iş."
+outcomes:
+  - "Veri gösteren bir ekranın en az dört hâlini sayabilirsin."
+  - "Skeleton, spinner ve progress bar arasında süreye göre seçim yapabilirsin."
+  - "Üç farklı boş durum türünü ve her birinin tasarımını anlatabilirsin."
+  - "Hata durumunun kapsamını doğru seçebilirsin."
+minutes: 10
+skipTerms: ["header"]
+sources:
+  - label: "NN/g — Skeleton Screens 101"
+    url: "https://www.nngroup.com/articles/skeleton-screens/"
+  - label: "NN/g — Designing Empty States in Complex Applications"
+    url: "https://www.nngroup.com/articles/empty-state-interface-design/"
+  - label: "NN/g — Response Times: The 3 Important Limits"
+    url: "https://www.nngroup.com/articles/response-times-3-important-limits/"
+  - label: "web.dev — Cumulative Layout Shift (CLS)"
+    url: "https://web.dev/articles/cls"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import StateCards from "~/components/lesson/StateCards.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Tasarım dosyasında listen mükemmel: on proje, ikonlar, rozetler. Gerçek kullanıcı ise ilk kez giriyor ve hiç projesi yok. Ya da internet yavaş. Ya da sunucu hata verdi. Senin ekranın bu üç durumda ne gösteriyor?
+
+Çoğu zaman cevap: hiçbir şey; çünkü tasarlamadın. Geliştirici o boşluğu **tahminle** doldurur ve bu eksiklik doğrudan kullanıcıya yansır. Bu derste ekranın "dolu" hâli dışındaki hâllerini öğreneceksin.
+
+**Kural:** Veri gösteren her ekranın en az dört hâli tasarlanmalıdır: **yükleniyor, boş, hata, dolu.** Beşincisi de sık gerekir: **kısmi / az veri.**
+
+<StateCards />
+
+## Yükleniyor
+
+**Loading state**, içerik hazır olmadan önce gösterilen geçici hâldir. Kullanıcıya sistemin çalıştığını söyler. Hangi göstergenin seçileceği süreye bağlıdır: çok kısa sürede hiçbir şey gerekmez, orta sürede skeleton ya da spinner, uzun sürede ilerleme göstergesi ve tahmini süre.
+
+**Skeleton**, gelecek içeriğin şeklini taklit eden gri bloklardır. Algılanan bekleme süresini kısaltır, çünkü kullanıcı boş ekrana değil, oluşmakta olan bir yapıya bakar. İkinci faydası: yer önceden ayrıldığı için içerik geldiğinde yerleşim kaymaz (CLS). Bu yüzden skeleton, gerçek içerikle **aynı boyutta** olmalı; yoksa faydası kaybolur. Parıltı animasyonu hareket azaltma tercihinde sadeleşmeli. "Skeleton gerçek yerleşimle aynı ölçüde olsun; şu an içerik gelince kartlar zıplıyor."
+
+**Spinner**, süresi bilinmeyen bir işlemi gösteren dönen animasyondur. Basittir ama hiçbir bilgi vermez: ne kadar kaldığı ve ilerleyip ilerlemediği bilinmez. Bu yüzden kısa işlemler ve küçük alanlar (buton içi) için uygundur. Tam sayfa spinner uzun sürelerde en kötü seçenektir.
+
+**Progress indicator**, işlemin ne kadarının tamamlandığını gösterir. **Determinate** yüzdeyi bilir, **indeterminate** bilmez, yalnızca devam ettiğini gösterir. Yüzde bilinmiyorsa bile adım adı göstermek yardımcı olur: "Dosya yükleniyor… Doğrulanıyor… Kaydediliyor."
+
+**Optimistic UI**, sunucudan yanıt beklemeden, işlemin başarılı olacağı varsayılarak arayüzün hemen güncellenmesidir. Beğeni, işaretleme, sıralama gibi neredeyse hep başarılı işlemlerde bekleme hissini ortadan kaldırır. Tasarımcıyı ilgilendirir, çünkü **hata durumunda ne olacağı** tasarlanmalıdır: değişiklik geri alınır ve kullanıcıya bildirilir.
+
+## Boş
+
+**Empty state**, gösterilecek veri olmadığında görünen ekrandır ve **en değerli ama en çok atlanan ekrandır.** Üç farklı boş durum vardır ve üçü farklı tasarlanır:
+
+1. **İlk kullanım** (henüz hiç veri yok): burası aslında bir onboarding fırsatıdır. Ne yapılacağını anlat ve birincil eylemi göster.
+2. **Kullanıcı temizledi** (hepsi tamamlandı ya da silindi): olumlu bir mesaj uygundur.
+3. **Sonuç yok** (arama ya da filtre boş döndü): kullanıcıyı çıkmazda bırakma; filtreyi temizleme ya da öneri sun.
+
+Boş durumu yalnızca "Kayıt bulunamadı" ile geçmek, en yaygın kaçırılmış fırsattır.
+
+## Hata, çevrimdışı, başarı
+
+**Error state**, bir şey ters gittiğinde gösterilen ekran ya da bölümdür. Üç soruyu cevaplamalıdır: ne oldu, neden oldu, şimdi ne yapmalıyım. Kapsamı da doğru seç: tek bir kart yüklenemediyse tüm sayfayı hata ekranına çevirmek aşırıdır; hata o bileşenin içinde gösterilmeli. "Grafik yüklenemezse sadece grafik alanında hata ve 'Tekrar dene' butonu gösterelim."
+
+**404 ve 500 sayfaları**: 404 istenen sayfanın olmadığını, 500 sunucuda bir şeyin ters gittiğini söyler. İkisi de kullanıcının kaybolduğu andır ve bir çıkış yolu sunmalıdır: arama kutusu, ana sayfa bağlantısı, popüler sayfalar. 404'te suç kullanıcıda değildir; ton buna göre olmalı. 404 sayfası da site tasarımının parçasıdır: header, footer ve navigasyon korunmalıdır, boş sayfa çıkmazdır. Genelde en son yapılır ya da hiç yapılmaz.
+
+**Offline state**, bağlantı kesildiğinde gösterilen hâldir. Bağlantı sorununu uygulama hatasından ayırır: kullanıcı "uygulama bozuldu" değil, "bağlantım yok" diye anlar. Girilen verinin korunması bu durumun parçasıdır. Mobil ağırlıklı ürünlerde ve PWA'larda özellikle önemlidir.
+
+**Success state**, işlem tamamlandığında gösterilen onaydır. Kullanıcı işlemin gerçekten olduğunu bilmelidir ve bu, **sonraki adımı** göstermek için iyi bir fırsattır: sipariş tamamlandı → siparişi takip et; kayıt oldu → ilk projeni oluştur.
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bağlantı kesilince bu sitenin üstünde "İnternet yok — indirilmiş içerik gösteriliyor." şeridi çıkar (offline state). Arama sonuç bulamazsa `"…" için sonuç yok.` diye duyurur. 404 sayfası ise çıkmaz değildir: yol haritasına dön, ara, sözlük ve kategori listesi sunar.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Her veri ekranı için beş hâli çiz:** yükleniyor, boş (üç türü), hata, dolu, az veri.
+- **Skeleton'ı gerçek yerleşimle aynı boyutta tasarla.**
+- **Boş durumun içine birincil eylemi koy.**
+- **Hata mesajını bileşen kapsamında göster** ve "tekrar dene" ver.
+- **404'e arama ve çıkış yolu koy;** header ve footer'ı koru.
+- **Optimistic UI kullanıyorsan hata hâlini ayrıca çiz.**
+
+</Callout>
+
+<Summary>
+
+- Veri gösteren her ekran en az dört hâle sahiptir: yükleniyor, boş, hata, dolu. Beşincisi: az veri.
+- Skeleton algılanan beklemeyi kısaltır ve yerleşim kaymasını önler; spinner kısa işlere, progress bar uzun işlere uygundur.
+- Üç boş durum vardır: ilk kullanım, kullanıcı temizledi, sonuç yok; her biri farklı tasarlanır.
+- Hata durumu ne oldu, neden, şimdi ne yapmalı sorularını cevaplar ve en dar kapsamda gösterilir.
+- 404 ve offline durumları da tasarımın parçasıdır. Başarı ekranı sonraki adımı gösterir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Veri gösteren bir ekranın kaç hâli tasarlanmalı? Hepsini say.">
+
+En az dört: yükleniyor, boş, hata, dolu. Beşincisi sık gerekir: kısmi ya da az veri.
+
+</SelfCheck>
+
+<SelfCheck question="Üç farklı boş durum türü nedir ve her biri nasıl farklı tasarlanır?">
+
+İlk kullanım (henüz veri yok): onboarding fırsatı, ne yapılacağını ve birincil eylemi göster. Kullanıcı temizledi: olumlu mesaj. Sonuç yok (arama ya da filtre boş): filtreyi temizleme ya da öneri sun, kullanıcıyı çıkmazda bırakma.
+
+</SelfCheck>
+
+<SelfCheck question="Skeleton'ın spinner'a göre iki avantajı nedir?">
+
+Algılanan bekleme süresini kısaltır (kullanıcı oluşmakta olan bir yapıya bakar) ve yer önceden ayrıldığı için içerik geldiğinde yerleşim kaymaz (CLS önlenir).
+
+</SelfCheck>

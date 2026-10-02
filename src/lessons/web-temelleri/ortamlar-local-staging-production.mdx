@@ -1,0 +1,98 @@
+---
+summary: "Aynı kodun farklı yerlerde çalışan kopyalarını (local, staging, production) ve her birinin neden var olduğunu öğren; tasarım kontrolünü doğru ortamda yapmayı bil."
+outcomes:
+  - "Local, staging ve production farkını ve her birinin görevini açıklayabilirsin."
+  - "\"Bende çalışıyor\" cümlesinin neden güvenilir olmadığını bilirsin."
+  - "Tasarım kalite kontrolünü neden staging'de yapacağını ve hız ölçümünü neden production'da yapacağını söyleyebilirsin."
+  - "Staging ile preview'un farkını bilirsin."
+minutes: 7
+sources:
+  - label: "Vercel — Ortamlar (Environments)"
+    url: "https://vercel.com/docs/deployments/environments"
+  - label: "MDN — Geliştirme ortamı (örnek kurulum)"
+    url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/Express_Nodejs/development_environment"
+flags: []
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+"Staging'e attım, bakabilir misin?" cümlesi, bir tasarımcının duyacağı en sık cümlelerden biri olacak. Bu cümleyi duyduğunda ne yapman gerektiğini, nereye bakacağını ve neyi kontrol edeceğini bilmen gerekiyor.
+
+Bu ders, aynı kodun **farklı yerlerde çalışan kopyalarını** anlatıyor. Bu ayrım olmasa her deneme canlı sitede yapılırdı; kullanıcı her hatayı görürdü. Detaylı yönetimi ileride (yayın ve DevOps kategorisinde) göreceksin; burada yalnızca kavram var.
+
+<StepFlow
+  label="Kodun yolculuğu: üç ortam"
+  caption="Kod soldan sağa ilerler: her adımda daha fazla kişiye ve daha fazla gerçekliğe yaklaşır. Hata ne kadar erken bulunursa, o kadar ucuza çözülür."
+  steps={[
+    { title: "Local", sub: "Geliştiricinin kendi bilgisayarı. Yalnızca ona açık.", tone: "plain" },
+    { title: "Staging", sub: "Canlının kopyası. Dışarıya kapalı. Son kontrol.", tone: "accent" },
+    { title: "Production", sub: "Gerçek kullanıcılar, gerçek veri.", tone: "progress" },
+  ]}
+/>
+
+## Local: denemenin bedava olduğu yer
+
+**Local** (yerel ortam, *localhost*), projenin geliştiricinin **kendi bilgisayarında** çalışan hâlidir. Denemenin bedava ve risksiz olduğu yerdir; yalnızca o bilgisayardan erişilir, internetten kimse göremez. `localhost:3000` gibi adresler bu ortamı gösterir.
+
+"Bende çalışıyor" cümlesinin geçtiği her yer budur. Ve burada bir uyarı var: **local'de çalışması, canlıda çalışacağı anlamına gelmez.** Bu, yazılımın en eski şakalarından biri ve gerçek bir risk kaynağıdır: "Local'de sorun yok ama canlıya alınca patlıyor; ortam değişkenlerinden biri eksik olabilir."
+
+### Development: geliştirme için ayarlı ortam
+
+**Development environment** (geliştirme ortamı, *dev*), geliştirme sırasında kullanılan ve **hata ayıklamayı kolaylaştıracak şekilde ayarlanmış** ortamdır. Ayrıntılı hata mesajları, otomatik yenileme ve sıkıştırılmamış kod içerir.
+
+Bu yüzden canlıdan **yavaştır**. Önemli sonuç: **dev ortamındaki hız ölçümü gerçeği yansıtmaz.** "Dev modunda ölçme; production build al, öyle bak" cümlesi bunu söyler. Bir sayfanın hızı hakkında konuşuyorsan, canlıya benzeyen ortamda ölçülmüş olmalı.
+
+## Staging: son prova
+
+**Staging environment** (prova ortamı), canlının **birebir kopyası olan ama gerçek kullanıcıya açık olmayan** ortamdır. Son kontrolün yapıldığı yerdir. Bir tasarım incelemesi ya da müşteri onayı burada alınır; hata bulunursa gerçek kullanıcı etkilenmemiş olur.
+
+**Tasarımcı olarak asıl çalıştığın ortam budur.** Figma'daki tasarım ile gerçek ekranı karşılaştırdığın yer staging'dir: "Staging'de boşluklar Figma ile uyuşmuyor; canlıya çıkmadan düzeltelim." Tasarım kalite kontrolünü burada yaparsın.
+
+Staging ile **preview** ortamı aynı değildir: preview genelde her değişiklik için **otomatik üretilen geçici** bir adrestir; staging ise **kalıcı ve tek** bir ortamdır. Bir geliştirici "PR'ın preview linkini attım" derse, geçici bir kopyadan bahsediyordur.
+
+## Production: gerçek hayat
+
+**Production** (prod, canlı ortam), **gerçek kullanıcıların kullandığı, gerçek verinin bulunduğu** ortamdır. Ürünün gerçekten yaşadığı yerdir. Buradaki her hata gerçek bir kullanıcıyı etkiler; bu yüzden buraya çıkış ayrı bir disiplinle yönetilir.
+
+"Prod'a çıktı", "prod'da bug var", "prod'a dokunma": hepsi aynı ortamdan bahseder. Terimin tonu ciddidir; şaka yapılmaz. Bir de kültürel not: **"Cuma akşamı prod'a çıkmayalım"** gibi cümleler, sorun çıkarsa hafta sonu kimsenin müdahale edemeyeceği anlamına gelir.
+
+| Ortam | Kim görür? | Veri | Ne için? |
+|---|---|---|---|
+| Local | Yalnızca geliştirici | Deneme verisi | Geliştirme, deneme |
+| Staging | Ekip (dışarıya kapalı) | Canlıya benzer, gerçek değil | Son kontrol, tasarım onayı |
+| Production | Herkes | Gerçek veri | Gerçek kullanım |
+
+<Callout kind="tasarimci">
+
+- **Tasarım incelemesini staging'de yap.** Geliştiricinin bilgisayarında ("local'de bak") ya da canlıda yapılan kontrol, ikisi de geç ya da riskli.
+- **Hız ve animasyon akıcılığını production'a benzeyen ortamda değerlendir.** Dev ortamında her şey daha yavaş görünür.
+- Staging'de bulduğun her farkı not al: boşluk, renk, font, durumlar. Canlıya çıktıktan sonra düzeltmek hem pahalı hem görünür.
+
+</Callout>
+
+<Summary>
+
+- Local geliştiricinin kendi bilgisayarı; denemenin bedava olduğu, yalnızca ona açık yer.
+- Development ortamı hata ayıklama için ayarlanmıştır, canlıdan yavaştır; orada ölçülen hız gerçeği yansıtmaz.
+- Staging canlının kopyasıdır, dışarıya kapalıdır; tasarım kalite kontrolü ve onay burada yapılır.
+- Production gerçek kullanıcıların ve gerçek verinin olduğu ortamdır; hataları gerçek insanları etkiler.
+- Local'de çalışması canlıda çalışacağı anlamına gelmez.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Local, staging ve production arasındaki farkı ve her birinin ne işe yaradığını açıkla.">
+
+Local: geliştiricinin kendi bilgisayarı, yalnızca ona açık, deneme yeri. Staging: canlının kopyası, dış kullanıcıya kapalı, son kontrol ve onay yeri. Production: gerçek kullanıcıların kullandığı canlı ortam, gerçek veri burada.
+
+</SelfCheck>
+
+<SelfCheck question={"Bir geliştirici \"bende çalışıyor\" diyor, ama canlıda bozuk. Neden olabilir?"}>
+
+Local ile production arasında farklar olabilir: eksik bir ortam değişkeni, farklı veri, farklı yapılandırma. Local'de çalışması, canlıda çalışacağı anlamına gelmez; bu yüzden staging gibi canlıya benzer bir ortamda son kontrol yapılır.
+
+</SelfCheck>

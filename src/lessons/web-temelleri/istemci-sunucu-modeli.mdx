@@ -1,0 +1,165 @@
+---
+summary: "Webdeki her şeyin iki taraflı bir konuşma olduğunu, tarafların kim olduğunu ve hangi işin hangi tarafta yapıldığının neden tasarım kararı olduğunu öğren."
+outcomes:
+  - "İstemci ve sunucuyu kendi cümlelerinle, bir benzetme kullanmadan anlatabilirsin."
+  - "Bir işin cihazda mı yoksa sunucuda mı yapılması gerektiğini gerekçesiyle söyleyebilirsin."
+  - "Tarayıcı, tarayıcı motoru ve JavaScript motoru arasındaki farkı bilirsin."
+  - "Bir geliştirici \"bunu client'ta çözüyoruz\" dediğinde ne kastettiğini anlarsın."
+minutes: 9
+sources:
+  - label: "MDN — How the web works"
+    url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works"
+  - label: "Apple — Alternative browser engines in the EU"
+    url: "https://developer.apple.com/support/alternative-browser-engines/"
+additions:
+  - "iOS'ta tüm tarayıcıların WebKit kullanma zorunluluğu artık AB'de geçerli değil (iOS 17.4 ve sonrası)."
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Outside from "~/components/lesson/Outside.astro";
+import ClientServerMap from "~/components/lesson/ClientServerMap.astro";
+
+Bir alışveriş sitesinde ürünü sepete ekledin ve sepet simgesindeki sayı 1 oldu. Peki o "1" şu an nerede duruyor? Telefonunun içinde mi, yoksa internetin öbür ucundaki bir bilgisayarda mı? Başka bir cihazdan aynı hesaba girince sepet orada da görünecek mi?
+
+Bu sorunun cevabı bu dersin konusu. Cevap "ikisi de olabilir, ve hangisi olduğu ekranını nasıl tasarlaman gerektiğini değiştirir." Önce iki tarafı tanıyalım.
+
+## Web bir konuşmadır
+
+Webdeki her şey iki taraflı bir konuşmadır: bir taraf **ister**, diğer taraf **verir**. İsteyen tarafa **istemci** (İngilizcesi *client*), veren tarafa **sunucu** (*server*) denir.
+
+Bir restoranı düşün. Sen masaya oturup menüden bir şey seçiyorsun; bu bir *istek*. Garson siparişi mutfağa taşıyor. Mutfak yemeği hazırlıyor, garson geri getiriyor; bu da *cevap*. Sen mutfağa girmiyorsun, mutfak da senin masana gelmiyor. Konuşma hep aynı yönden başlıyor: önce sen istiyorsun, sonra cevap geliyor.
+
+Webde karşılıkları şöyle:
+
+| Restoranda | Webde |
+|---|---|
+| Müşteri | İstemci: senin cihazın ve üstündeki tarayıcı |
+| Mutfak | Sunucu: veriyi tutan ve cevabı üreten uzak bilgisayar |
+| Garson ve yollar | İnternet: isteği götürür, cevabı getirir |
+| Sipariş | İstek (request) |
+| Servis edilen yemek | Cevap (response) |
+
+Benzetme bir yerde bozuluyor ve o yer önemli: restoranda mutfağı görebilirsin, istersen içeri bakarsın. Webde sunucunun içini göremezsin, yalnız cevabını görürsün. Bu bir eksik değil, bilerek yapılmış bir sınırdır; birazdan nedenine geleceğiz.
+
+<ClientServerMap />
+
+### İstemci: isteyen taraf
+
+İstemci, bir içeriği ya da veriyi isteyen taraftır. Pratikte bu, **senin cihazın ve onun içindeki tarayıcıdır**. Telefonun, dizüstün, hatta akıllı televizyonun istemci olabilir.
+
+"Client" kelimesi iş dünyasında "müşteri" anlamına da gelir. Teknik bir toplantıda "client" duyduğunda müşteri değil, kullanıcının cihazı kastedilir. Bağlamdan ayırt edilir: "client'ta çalışıyor" cümlesindeki client bir şirket değildir.
+
+İstemci tarafında olan her şeyi, yani tarayıcıda çalışanı, tarayıcının geliştirici araçlarıyla (örneğin Chrome DevTools) inceleyebilirsin. Bu araçların tamamı istemci tarafını gösterir. Hata raporlarında da "client-side error" ayrı bir kategoridir: sorun cihazda, tarayıcıda çıktı demektir.
+
+### Sunucu: veren taraf
+
+Sunucu, gelen istekleri karşılayıp cevap üreten, **sürekli açık duran uzaktaki bir bilgisayar ya da programdır**. "Sürekli açık" önemli: sen uyurken de, sabaha karşı üçte de cevap vermesi gerekir.
+
+Sunucu kelimesi "hosting" ile karıştırılır. Sunucu, makinenin ya da programın kendisidir. Hosting ise o makineyi kiralama hizmetidir; aylık faturada gördüğün şey hostingdir. Birini et, diğerini kasap gibi düşün: biri ürün, biri onu sağlayan iş. (Hosting'i 1.2'de ayrıntılı göreceksin.)
+
+"Server down" cümlesi, sunucunun cevap veremediği, yani sitenin erişilemez olduğu anlamına gelir.
+
+## Neden iki taraf var?
+
+Her şeyi tek yerde yapmak daha kolay olmaz mıydı? Hayır, çünkü iki ayrı ihtiyaç var ve her biri başka tarafta daha iyi çözülüyor.
+
+**Sunucu ortak olan ve gizli kalması gereken şeyleri tutar.**
+
+- *Ortak veri.* Herkesin cihazında ayrı bir ürün listesi olsaydı iki kullanıcı aynı bilgiyi göremezdi. Veri tek merkezde durduğu için herkes aynı fiyatı, aynı stoğu görür.
+- *Gizli işler.* Şifre kontrolü, ödeme, veritabanına erişim gibi işler kullanıcının göremeyeceği bir yerde yapılmalıdır. Çünkü istemcide çalışan her kodu kullanıcı görebilir ve değiştirebilir. Fiyat hesabını istemcide yaparsan, kullanıcı kodu değiştirip fiyatı kendine göre ayarlayabilir. Bu yüzden geliştiriciler "fiyat hesabını server'da yapmamız lazım" der.
+
+**İstemci hız ve etkileşim sağlar.**
+
+- Her tıklamada sunucuya gidip gelmek yavaştır. Bazı işler cihazda çözülünce sonuç anında gelir: bir menünün açılması, bir sekmenin değişmesi, yazdığın harflerin ekranda görünmesi.
+- Bunun da bedeli var. Örneğin liste filtrelemesi istemcide yapılırsa sonuçlar anında gelir, ama bunun için tüm verinin baştan cihaza inmesi gerekir. Veri çok büyükse ilk açılış yavaşlar.
+
+Bu iş bölümünün adı **istemci–sunucu modelidir** (*client-server model*): görsel sunum ve etkileşim istemcide, veri ve iş kuralları sunucuda yaşar. Web baştan sona bu model üzerine kuruludur. İş görüşmelerinde "webin nasıl çalıştığını anlat" denirse beklenen cevap budur, bu yüzden mimari konuşmalarında ilk çizilen diyagram da hep bu ikilidir.
+
+Bir ayrım daha: **peer-to-peer** (P2P) modelde merkezi sunucu yoktur, cihazlar doğrudan birbiriyle konuşur (BitTorrent gibi). Web P2P değildir; web her zaman bir istemci ile bir sunucu arasındadır.
+
+<Callout kind="tasarimci">
+
+Geliştiricilerle çalışırken en işe yarar soru şudur: **"Bu bilgi nerede yaşıyor, bu işi kim yapıyor: cihaz mı, sunucu mu?"**
+
+- Cevap "sunucu" ise ekranda bir **bekleme** durumu olabilir: yükleniyor, yavaş bağlantı, hata. Bu ekranları sen tasarlamazsan geliştirici zorunlu olarak kafasına göre yapar.
+- Cevap "istemci" ise tepki anında olur, ama veri cihaza kadar gelmek zorundadır.
+- Başlangıçtaki sepet sorusuna dönelim: sepet hesaba bağlı sunucuda tutuluyorsa başka cihazdan girince de görünür; yalnızca cihazda tutuluyorsa görünmez. İkisi de meşru bir karar, ama kullanıcı deneyimi farklı olur ve bunu tasarım aşamasında bilmek gerekir.
+
+</Callout>
+
+## Tarayıcı: istemcinin içindeki program
+
+İstemci cihaz, o cihazda isteği yapan ve cevabı gösteren program ise **tarayıcıdır** (*browser*). Tarayıcı, internetten gelen HTML, CSS ve JavaScript'i alıp ekranda görsel bir sayfaya çevirir. Gelen şey ham koddur; tarayıcı onu senin okuyabileceğin bir sayfaya dönüştürür.
+
+Bunun dışında üç görevi daha var:
+
+- **Güvenlik sınırlarını uygular.** Bir sitenin başka bir sitenin verisine erişmesini engeller. Açık iki sekmenin birbirinin içini okuyamamasının nedeni budur.
+- **Geçmişi ve çerezleri yönetir.** Hangi siteleri açtığını, hangi sitelere giriş yaptığını hatırlar.
+- **Önbelleği yönetir.** Daha önce indirdiği dosyaları saklar, aynısını tekrar istemez.
+
+Tarayıcıya teknik literatürde **user agent** (UA, kullanıcı ajanı) da denir. Bu adı daha çok sunucu kayıtlarında ve bot tespiti konuşmalarında duyarsın: sunucu, isteği hangi programın gönderdiğini bu etiketten anlar.
+
+Gündelik hayatta iki şey karışır: **Chrome bir tarayıcıdır, Google bir arama motorudur.** Kullanıcılar bunu sürekli karıştırır; sen teknik konuşmada karıştırma. Takım çalışmasında şu cümleyi sık duyarsın: "Hangi browser'da test ettin?" Test sürecinin standart sorusudur, çünkü aynı sayfa farklı tarayıcılarda farklı görünebilir. Analitik raporlarında da kullanıcılar tarayıcıya göre kırılır; hangisini ne kadar kişi kullanıyor diye bakılır.
+
+## Tarayıcının içinde bir motor var
+
+Peki aynı sayfa neden bazı tarayıcılarda bozuk görünüyor? Cevap, tarayıcının içindeki **tarayıcı motorunda** (*rendering engine*) yatıyor. Motor, HTML ve CSS'i alıp ekrandaki piksellere çeviren asıl bileşendir.
+
+| Motor | Hangi tarayıcılarda |
+|---|---|
+| Blink | Chrome, Edge |
+| WebKit | Safari |
+| Gecko | Firefox |
+
+İki tarayıcı aynı motoru kullanıyorsa, sayfayı büyük ölçüde aynı çizer. Bu yüzden "Safari'de bozuluyor ama Chrome'da sorun yok" cümlesi çoğu zaman bir **tarayıcı uyumluluğu** (*cross-browser*) sorununa işaret eder. Bir CSS özelliğinin hangi motorda çalıştığına bakmak için caniuse.com gibi sitelere gidilir ve sonuçlar motora göre listelenir.
+
+Burada sık yapılan bir karışıklık var: **tarayıcı motoru ile JavaScript motoru farklı şeylerdir.** JavaScript motoru, sayfadaki JavaScript kodunu çalıştıran ayrı bir bileşendir (Chrome'da adı V8). Yani tek bir tarayıcının içinde iki ayrı motor çalışır: biri sayfayı çizer, diğeri kodu çalıştırır.
+
+<Outside source="Apple Developer — Alternative browser engines" href="https://developer.apple.com/support/alternative-browser-engines/">
+
+Eskiden iPhone'da her tarayıcı, adı ne olursa olsun, Safari'nin motoru olan WebKit'i kullanmak zorundaydı. Yani iPhone'da Chrome ile Safari aynı davranırdı. Bu kural artık mutlak değil: Apple'ın geliştirici sayfasına göre **Avrupa Birliği'nde, iOS 17.4 ve sonrasında** alternatif tarayıcı motorlarına izin veriliyor.
+
+Apple'ın aynı sayfası yalnız AB'yi belirtiyor. Kullanıcıların AB dışındaysa varsayılan olarak "iPhone'da her tarayıcı WebKit'tir" diye düşünebilirsin, ama bu bilgi hızlı değişiyor; karar vermeden önce güncel durumu kontrol et.
+
+</Outside>
+
+## Sık karışan beş şey
+
+Bu derste geçen ve toplantılarda sürekli karıştırılan ikililer:
+
+- **Client ≠ müşteri.** Teknik konuşmada client, kullanıcının cihazıdır.
+- **Server ≠ hosting.** Sunucu makinedir, hosting o makineyi kiralamaktır.
+- **Browser ≠ arama motoru.** Chrome tarayıcı, Google arama motoru.
+- **Tarayıcı motoru ≠ JavaScript motoru.** Biri sayfayı çizer, diğeri kodu çalıştırır.
+- **Web ≠ peer-to-peer.** Web her zaman bir sunucuya dayanır.
+
+<Summary>
+
+- Web iki taraflı bir konuşmadır: **istemci ister**, **sunucu verir**.
+- İstemci = senin cihazın ve tarayıcın. Sunucu = istekleri karşılayan, sürekli açık, uzaktaki bilgisayar ya da program.
+- Veri ve gizli işler sunucuda durur; hız ve etkileşim için işin bir kısmı istemcide yapılır.
+- Tarayıcı kodu sayfaya çevirir; içindeki motor (Blink, WebKit, Gecko) çizimi yapar, bu yüzden aynı sayfa tarayıcıya göre farklı görünebilir.
+- Her ekranda sor: bu iş nerede yapılıyor? Cevap sana hangi bekleme ve hata ekranlarını tasarlaman gerektiğini söyler.
+
+</Summary>
+
+## Kendini yokla
+
+Cevabı önce kendi cümlenle söyle, sonra aç.
+
+<SelfCheck question="Bir online alışveriş sitesinde ürün fiyatı neden istemcide değil sunucuda hesaplanır?">
+
+Çünkü istemcide çalışan kodu kullanıcı görebilir ve değiştirebilir. Fiyat istemcide hesaplanırsa kullanıcı kodu değiştirip kendine indirimli fiyat gösterebilir. Gizli kalması ve güvenilir olması gereken işler sunucuda yapılır.
+
+</SelfCheck>
+
+<SelfCheck question="Aynı sayfa Safari'de bozuk, Chrome'da düzgün görünüyor. Bunun olası nedeni nedir?">
+
+Safari ile Chrome farklı tarayıcı motorları kullanır (WebKit ve Blink). Bir CSS özelliği ya da davranışı bir motorda desteklenip diğerinde desteklenmiyor olabilir. Bu bir tarayıcı uyumluluğu sorunudur.
+
+</SelfCheck>

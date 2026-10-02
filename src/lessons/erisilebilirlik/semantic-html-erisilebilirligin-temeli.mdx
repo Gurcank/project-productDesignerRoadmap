@@ -1,0 +1,142 @@
+---
+summary: "Erişilebilirliğin en büyük kısmı ekstra bir şey eklemekle değil, doğru elemanı kullanmakla sağlanır. Semantic HTML, link ile buton farkı, bölge işaretleri (landmark) ve başlık hiyerarşisi."
+outcomes:
+  - "Neden görsel olarak buton gibi görünen bir div'in sorunlu olduğunu somut kayıplarla anlatabilirsin."
+  - "Bir etkileşimin link mi buton mu olması gerektiğine karar verip teslimde yazabilirsin."
+  - "Başlık seviyelerini görünüme göre değil yapıya göre belirleyebilirsin."
+  - "Landmark'ların ekran okuyucu kullanıcısına ne sağladığını bilirsin."
+minutes: 10
+sources:
+  - label: "MDN — HTML: Erişilebilirliğin temeli"
+    url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibility/HTML"
+  - label: "W3C — WCAG 2.2 Quick Reference"
+    url: "https://www.w3.org/WAI/WCAG22/quickref/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import KeyboardDemo from "~/components/lesson/KeyboardDemo.astro";
+
+Aşağıda iki "buton" var. Gözle bakınca aynılar. Birine Tab tuşuyla ulaşabilirsin, ötekine ulaşamazsın; birine Enter ile basabilirsin, ötekine basamazsın. Dene.
+
+<KeyboardDemo />
+
+Fark nerede? Biri gerçek bir `<button>` elemanı, öteki `<div>`. Bu ders bu farkın neden bu kadar önemli olduğunu anlatıyor.
+
+Erişilebilirliğin en büyük kısmı ekstra bir şey **eklemekle** değil, **doğru elemanı kullanmakla** sağlanır. Yardımcı teknolojiler ekranı değil, kodun yapısını okur.
+
+## Semantic HTML: doğru eleman bedava getirir
+
+**Semantic HTML** (anlamsal HTML), her öğe için işlevini ifade eden **doğru HTML elemanını** kullanmaktır. Doğru eleman, erişilebilirliğin çoğunu **bedava** getirir.
+
+Gerçek bir `<button>`:
+
+1. Klavyeyle **odaklanabilir** (Tab).
+2. **Enter ve Space** ile çalışır.
+3. Ekran okuyucuya **"buton"** diye tanıtılır.
+4. Tarayıcının **varsayılan odak göstergesini** alır.
+
+Aynı görünümdeki bir `<div>`'de bunların hepsini elle yazman gerekir ve genelde **eksik** yazılır. Kod incelemelerinde ve erişilebilirlik denetimlerinde en sık çıkan sorun kategorisidir. "Bu tıklanabilir kart `div`; klavyeyle ulaşılamıyor. Buton veya link olmalı."
+
+Tasarımcı olarak bu seni neden ilgilendirir? Çünkü tasarımda "bu tıklanabilir" dediğin her şeyin **hangi eleman** olacağına sen de karar verirsin ve teslimde yazarsın.
+
+## Link ve buton
+
+**Link** (`<a>`) kullanıcıyı **bir yere götürür;** **buton** (`<button>`) bir **eylem yapar.**
+
+| | Link | Buton |
+|---|---|---|
+| Ne yapar? | Bir adrese gider | Bir eylem yapar |
+| Yeni sekmede açılır mı? | Evet | Hayır |
+| Adresi kopyalanır mı? | Evet | Hayır |
+| Geçmişe girer mi? | Evet | Hayır |
+| Klavye | Enter | Enter ve Space |
+| Örnek | "Ürün detayı" | "Sepete ekle" |
+
+Fark davranışa yansır. Yanlış eleman kullanmak kullanıcının beklentisini bozar. Tasarım tesliminde belirtilmesi gereken bir karardır: **"Bu bir link mi buton mu?" sorusunun cevabı sende.** "'Sepete ekle' buton, 'Ürün detayı' link. Görsel olarak ikisi de buton gibi görünebilir ama kod farklı olmalı."
+
+Görünüm ile eleman farklı şeylerdir. Bir link buton gibi **görünebilir;** önemli olan işlevidir.
+
+## Landmark: sayfanın bölgeleri
+
+**Landmark** (bölge işareti), sayfanın ana bölgelerini tanımlayan elemanlardır: `header`, `nav`, `main`, `aside`, `footer`, `form`, `search`. Ekran okuyucu kullanıcıları bu bölgeler arasında **doğrudan atlayabilir.** Görsel kullanıcı ana içeriğin nerede olduğunu bir bakışta görür; landmark aynı bilgiyi kod düzeyinde verir.
+
+"Sayfada iki `main` var; tek olmalı. Diğerini `section` yapalım." Sayfa iskeleti tanımlarında karşına çıkar.
+
+## Başlık hiyerarşisi
+
+**Heading hierarchy** (başlık hiyerarşisi), `h1`–`h6` başlıklarının, içeriğin yapısını yansıtacak şekilde **sırayla** kullanılmasıdır. Ekran okuyucu kullanıcılarının çoğu sayfayı **başlık listesi üzerinden** gezer; tıpkı görsel kullanıcının sayfayı tarayarak gezmesi gibi.
+
+İki kural:
+
+- **Seviye atlanmaz.** h2'den h4'e geçilirse yapı bozulur.
+- **Seviye görünüm için değil, yapı için seçilir.** Küçük görünmesi gereken bir h2, CSS ile küçültülür; h4 yapılmaz.
+
+Sayfada tek bir `h1` olması yaygın kabul gören pratiktir ve genelde sayfa başlığıdır. "Bu bölüm başlığı görsel olarak küçük ama yapıda h2; seviyeyi teslimde yazdım."
+
+<Compare>
+<Pane title="Doğru yapı">
+
+- h1: Sayfa başlığı
+- h2: Bölüm başlığı
+- h3: Alt bölüm
+- Görünüm CSS ile ayarlı
+
+</Pane>
+<Pane title="Yanlış yapı">
+
+- h1: Sayfa başlığı
+- h4: Bölüm (küçük görünsün diye)
+- h2: Alt bölüm
+- Yapı ekran okuyucuda dağınık
+
+</Pane>
+</Compare>
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitedeki her sayfada tek bir `h1` var, bölgeler (`header`, `nav`, `main`, `aside`) işaretli, sayfanın en başında "Ana içeriğe atla" bağlantısı duruyor ve gezinti menüsünde etiketli bölge adı var ("Ana menü", "Alt gezinme"). Başlıklar görünüme göre değil yapıya göre seçildi. Dersin başındaki iki butondan sahte olan, bilerek bozuk bırakılmış bir örnek.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Teslimde eleman türünü yaz:** link mi buton mu, hangi başlık seviyesi.
+- **Tıklanabilir her şeyin hangi eleman olacağını belirle.** Kart tıklanıyorsa link ya da buton olmalı.
+- **Başlık seviyesini yapıya göre ver,** küçülmesi gerekiyorsa görünümü ayrıca belirt.
+- **Sayfa iskeletinde bölgeleri adlandır:** ana içerik, gezinti, yan bilgi, altbilgi.
+- **Tasarımı klavyeyle ve ekran okuyucuyla "okunur" düşün:** Tab sırası ve başlık listesi mantıklı mı?
+
+</Callout>
+
+<Summary>
+
+- Doğru HTML elemanı erişilebilirliğin çoğunu bedava getirir; `div`'de her şeyi elle yazmak gerekir ve genelde eksik kalır.
+- Link bir yere götürür, buton bir eylem yapar; tasarım teslimde hangisi olduğu yazılmalı.
+- Landmark'lar ekran okuyucu kullanıcısının sayfa bölgeleri arasında atlamasını sağlar; sayfada tek `main` olmalı.
+- Başlık seviyesi yapıya göre seçilir, görünüme göre değil; seviye atlanmaz.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Görsel olarak buton gibi görünen bir div neden sorunludur? En az üç kayıp say.">
+
+(1) Klavyeyle odaklanılamaz, Tab ile ulaşılamaz. (2) Enter/Space ile çalışmaz. (3) Ekran okuyucuya "buton" olarak tanıtılmaz. (4) Tarayıcının varsayılan odak göstergesini almaz. Hepsi elle eklenmek zorunda kalır ve genelde eksik eklenir.
+
+</SelfCheck>
+
+<SelfCheck question="Link ile buton arasındaki fark nedir? &quot;Sepete ekle&quot; hangisi olmalı?">
+
+Link kullanıcıyı bir yere götürür, buton bir eylem yapar. "Sepete ekle" bir eylemdir, yani buton. Görsel olarak ikisi de buton gibi görünebilir; belirleyici olan işlevdir.
+
+</SelfCheck>
+
+<SelfCheck question="Başlık seviyesi (h2, h3) neye göre seçilir: görünüme mi yapıya mı?">
+
+Yapıya göre. Başlık seviyesi içeriğin hiyerarşisini yansıtır; görünüm CSS ile ayarlanır. Küçük görünmesi gereken bir h2, h4 yapılmaz, küçültülür.
+
+</SelfCheck>

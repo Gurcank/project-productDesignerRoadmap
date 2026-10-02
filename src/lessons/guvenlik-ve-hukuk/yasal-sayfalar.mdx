@@ -1,0 +1,62 @@
+---
+summary: "Bir sitede bulunması beklenen hukuki içerikler: gizlilik/aydınlatma, çerez politikası, kullanım şartları, mesafeli satış ve iade, iletişim ve kimlik bilgileri, erişilebilirlik beyanı. Hukuk metinleri tasarımın en ihmal edilen kısmıdır; katmanlı sunum işe yarar."
+outcomes:
+  - "Altı yasal sayfanın ne için olduğunu söyleyebilirsin."
+  - "Yasal sayfaların yalnızca footer'da olmasının neden yetmeyebileceğini açıklayabilirsin."
+  - "Katmanlı sunum yaklaşımını bilirsin."
+minutes: 5
+sources:
+  - label: "GDPR Madde 12 — Şeffaf bilgilendirme"
+    url: "https://gdpr-info.eu/art-12-gdpr/"
+  - label: "W3C WAI — Erişilebilirlik beyanı (Accessibility Statements)"
+    url: "https://www.w3.org/WAI/planning/statements/"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+> Bu ders genel bilgilendirmedir, hukuki tavsiye değildir. Hangi sayfaların zorunlu olduğu ülkeye, sektöre ve iş modeline göre değişir; avukat görüşü al.
+
+Bir sitenin altında "Gizlilik", "Kullanım şartları", "İade politikası" bağlantıları sıralanır. Bunlar tasarımın en ihmal edilen sayfalarıdır, ama hukuki olarak en kritik olanlarıdır.
+
+| Sayfa | Ne için |
+|---|---|
+| **Gizlilik politikası / Aydınlatma metni** | Kişisel verinin nasıl işlendiği |
+| **Çerez politikası** | Hangi çerezlerin hangi amaçla kullanıldığı |
+| **Kullanım şartları** | Hizmetin kullanım kuralları ve sorumluluk sınırları |
+| **Mesafeli satış sözleşmesi / İade politikası** | E-ticarette zorunlu; teslimat, iade ve cayma hakkı |
+| **İletişim ve kimlik bilgileri** | Ticari unvan, adres, vergi bilgileri (e-ticarette yasal zorunluluk) |
+| **Erişilebilirlik beyanı** | Erişilebilirlik durumu ve geri bildirim yolu |
+
+## Tasarımcı için notlar
+
+- Bu sayfalar footer'da bulunur ama **yalnızca footer'da bulunmaları yeterli olmayabilir:** ilgili oldukları anda (form gönderimi, satın alma) da erişilebilir olmalıdırlar.
+- Hukuk metinleri genelde tasarımın en ihmal edilen kısmıdır. Okunabilir bir tipografi, makul satır uzunluğu ve iyi bir başlık yapısı bu sayfalarda da gereklidir.
+- **Katmanlı sunum** yaklaşımı işe yarar: özet bir üst katman ve detaya inen bir alt katman. Uzun bir hukuk metnini olduğu gibi dökmek şeffaflık ilkesine hizmet etmez.
+
+<Callout kind="tasarimci">
+
+- **Yasal sayfa listesini projenin türüne göre çıkar** (ürün sitesi mi, e-ticaret mi?) ve hukukla birlikte onayla.
+- **Her yasal sayfa için okunabilir bir şablon tasarla:** başlıklar, özet kutusu, bağlantılı içindekiler.
+- **Form ve satın alma anında ilgili sayfaya doğrudan bağlantı koy.**
+- **Erişilebilirlik beyanı sayfasını unutma;** geri bildirim yolu içermelidir.
+
+</Callout>
+
+<Summary>
+
+- Altı yasal sayfa: gizlilik/aydınlatma, çerez, kullanım şartları, mesafeli satış/iade, iletişim ve kimlik bilgileri, erişilebilirlik beyanı.
+- Footer'da bulunmak yetmeyebilir; ilgili anda da erişilebilir olmalıdır.
+- Katmanlı sunum (özet + detay) okunabilirlik ve şeffaflık sağlar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Yasal sayfaların yalnızca footer'da bulunması neden yetmeyebilir?">
+
+Veri toplama ya da satın alma gibi ilgili oldukları anda da erişilebilir olmaları gerekir; footer'daki bağlantıyı çoğu kullanıcı o anda görmez.
+
+</SelfCheck>

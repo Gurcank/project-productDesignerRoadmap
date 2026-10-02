@@ -1,0 +1,119 @@
+---
+summary: "Planın bozulduğu noktaların adları: blocker, dependency, escalation, spike ve carry over. Bir sorunu şikâyet olmaktan çıkarıp ele alınabilir bir konuya dönüştüren kelimeler."
+outcomes:
+  - "Blocker ile dependency'yi ve \"yavaşlatan şey\"i birbirinden ayırabilirsin."
+  - "Bir bağımlılığı önceden fark edip ekibe taşıyabilirsin."
+  - "Escalation'ın suçlama değil bir süreç adımı olduğunu ve ne zaman yapılacağını bilirsin."
+  - "Belirsiz bir işi spike ile tahmin edilebilir hâle getirebilirsin."
+  - "Tekrarlayan carry over'ın ne anlama geldiğini bilirsin."
+minutes: 9
+sources:
+  - label: "Atlassian — Agile (genel bakış)"
+    url: "https://www.atlassian.com/agile"
+  - label: "Scrum Guide (2020)"
+    url: "https://scrumguides.org/scrum-guide.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Üç gündür aynı ekran üzerinde çalışıyorsun ve ilerlemiyorsun. İçerik metni gelmemiş, geliştirici bir API bekliyor, yönetici de bir kararı vermemiş. Bunların her birini "sorun var" diye anlatmak mümkün, ama **farklı kelimeler** farklı eylemleri tetikler.
+
+Bu ders planın bozulduğu noktaların adlarını öğretiyor. Bu terimleri doğru kullanmak, bir sorunu *şikâyet* olmaktan çıkarıp *ele alınabilir bir konuya* dönüştürür.
+
+## Blocker: ne yapsan ilerleyemediğin durum
+
+**Blocker** (engel), bir işin ilerlemesini **tamamen durduran** ve kendi başına çözülemeyen durumdur. Kelimenin bir ağırlığı vardır: "blocker" dendiğinde ekip müdahale eder. Bu yüzden doğru kullanılmalıdır; **her zorluk blocker değildir.** Blocker, *sen ne yaparsan yap ilerleyemediğin* durumdur.
+
+Standup'ın asıl amacı bunları ortaya çıkarmaktır. "Blocker'ım var: API anahtarı gelmeden entegrasyonu test edemiyorum."
+
+**Blocker ≠ yavaşlatan şey.** İkincisi için "impediment" ya da yalnızca "risk" denir. Her şeye blocker demek kelimenin gücünü tüketir; gerçek bir blocker geldiğinde kimse ciddiye almaz.
+
+## Dependency: başkasına bağlı iş
+
+**Dependency** (bağımlılık), bir işin başlayabilmesi ya da bitebilmesi için **önce başka bir işin ya da başka bir tarafın tamamlanması** gerekmesidir. Gecikmelerin en yaygın yapısal sebebidir. Önceden tespit edilirse sıralama değiştirilerek yönetilebilir; edilmezse sprint ortasında patlar. Bu yüzden PRD'de ayrı bir başlıktır.
+
+Planlamada ve ekipler arası koordinasyonda karşına çıkar. **Tasarımcı için tipik bağımlılık:** içerik metni gelmeden ekran tamamlanamaz. Başkaları: logo dosyası, hukuk onayı, API'nin hazır olması. "Bu story'nin ödeme ekibine bağımlılığı var; onlar bitirmeden bizim işimiz başlayamaz."
+
+Yazılımda *dependency* aynı zamanda "projenin kullandığı dış kütüphane" anlamına gelir. Bağlamdan ayırt et.
+
+<StepFlow
+  label="Dependency ile blocker arasındaki ilişki"
+  caption="Bağımlılık bir durumdur, blocker o durumun işi fiilen durdurduğu andır. Bağımlılığı erken fark etmek, blocker'a dönüşmesini önler."
+  steps={[
+    { title: "Dependency fark edilir", sub: "İçerik metni gelmesi gerek (planlanabilir)", tone: "accent" },
+    { title: "Sıralama değiştirilir", sub: "Metin gelmeden önce başka işe geçilir" },
+    { title: "Yine de gelmezse blocker olur", sub: "Artık ilerleyemiyorsun: ekibe taşı", tone: "progress" },
+  ]}
+/>
+
+## Escalation: sessizce beklemeyi bitirmek
+
+**Escalation** (üst mercie taşıma), kendi seviyende çözülemeyen bir sorunu, **karar yetkisi olan bir üst seviyeye** taşımaktır. Bir sorunun sessizce beklemesini engeller. Doğru kullanıldığında bir şikâyet değil, bir **süreç adımıdır:** "bu benim yetkimi aşıyor, karar verecek kişiye taşıyorum."
+
+Bağımlılık çözülmediğinde, kaynak yetmediğinde, iki ekip anlaşamadığında devreye girer. "İki gündür cevap alamıyoruz; escalate edip yöneticiye taşıyorum."
+
+**Escalation bir suçlama değildir.** İyi ekiplerde erken escalate etmek olumlu karşılanır. **Geç escalate etmek, sorunu büyüttüğü için asıl hatadır.** Pratikte bir escalation mesajı şunları içerir: ne oldu, ne denendi, hangi karar gerekiyor, ne zamana kadar.
+
+## Spike: bilinmeyeni bilinebilir yapmak
+
+**Spike**, bir soruyu cevaplamak ya da belirsizliği azaltmak için ayrılan, **süresi sınırlı araştırma işidir.** Tahmin edilemeyen bir işi tahmin edilebilir hâle getirir. "Bu ne kadar sürer bilmiyoruz" durumunda önce bir spike açılır, sonra gerçek iş tahmin edilir.
+
+Backlog'da ayrı bir kart türü olarak yer alır; yeni bir kütüphane ya da entegrasyon değerlendirilirken kullanılır. "Önce 2 günlük spike açalım; bu kütüphanenin işimizi görüp görmediğini anlayalım." Spike bir **timebox'tır:** süre dolunca ne bulunduysa onunla karar verilir.
+
+**Spike ≠ POC.** Örtüşürler ama farklıdır: spike bir *zaman kutusu ve backlog kaydıdır*, POC üretilen *çıktının adıdır.*
+
+Tasarımda da işe yarar: "Bu etkileşimin mümkün olup olmadığını bilmiyorum" yerine "iki günlük bir spike açalım: geliştirici ile birlikte prototiplerini deneyelim" demek, belirsizliği yönetir.
+
+## Carry over: devreden iş
+
+**Carry over** (spillover, devreden iş), sprint sonunda bitmeyip **bir sonraki sprint'e aktarılan** iştir. Tek başına felaket değildir, ama **tekrar ederse** bir sinyaldir. Üç olası neden:
+
+1. İşler **çok büyük** bölünüyor.
+2. **Kapasite** yanlış hesaplanıyor.
+3. İşler **eksik tanımla** giriyor (hazır olma tanımı karşılanmıyor).
+
+Retro'nun standart gündem maddelerinden biridir. "Üç sprint üst üste carry over var; story'leri daha küçük bölmemiz lazım."
+
+| Terim | Ne zaman söylenir | Ne tetikler |
+|---|---|---|
+| **Blocker** | İlerleyemiyorum | Ekip müdahalesi |
+| **Dependency** | Başkasına bağlıyım | Sıralama değişikliği, koordinasyon |
+| **Escalation** | Karar yetkim yok | Üst seviyeye taşıma |
+| **Spike** | Bilmiyorum, öğrenmeliyim | Sınırlı araştırma |
+| **Carry over** | Bitmedi, devrettik | Retro gündemi |
+
+<Callout kind="tasarimci">
+
+- **Bağımlılıkları işe başlamadan önce listele.** İçerik, görsel, onay, API: hangisi sende, hangisi başkasında?
+- **"Blocker"ı hak ettiği anda kullan.** İçerik gelmedi ama başka ekranda çalışabiliyorsan bu bir bağımlılık; hiçbir şey yapamıyorsan blocker.
+- **Erken escalate et.** "Cevap alamadım" ikinci günde söylenir, beşinci günde değil. Yöntem: ne oldu, ne denedim, hangi karar gerekli, ne zamana kadar.
+- **Belirsiz işleri spike'a çevir.** "Bu ne kadar sürer?" sorusuna cevap veremiyorsan, tahmin istemeden önce bir spike iste.
+
+</Callout>
+
+<Summary>
+
+- Blocker, ne yaparsan yap ilerleyemediğin durumdur; her zorluk blocker değildir.
+- Dependency başka bir işe ya da tarafa bağımlılıktır; erken fark edilirse sıralama değiştirilerek yönetilir.
+- Escalation bir suçlama değil süreç adımıdır; geç escalate etmek asıl hatadır.
+- Spike süresi sınırlı araştırma işidir ve belirsiz işi tahmin edilebilir yapar.
+- Tekrar eden carry over bir sinyaldir: iş çok büyük, kapasite yanlış ya da tanım eksik olabilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Blocker ile dependency arasındaki fark nedir?">
+
+Dependency, bir işin başka bir işe ya da tarafa bağlı olmasıdır; planlanabilir ve sıralama değiştirilerek yönetilebilir. Blocker, o bağımlılığın (ya da başka bir sebebin) işi fiilen durdurduğu durumdur ve acil müdahale gerektirir.
+
+</SelfCheck>
+
+<SelfCheck question="Üç sprint üst üste carry over var. Bu neye işaret edebilir?">
+
+İşlerin çok büyük bölündüğüne, kapasitenin yanlış hesaplandığına ya da işlerin eksik tanımla sprint'e girdiğine. Retro'da konuşulması ve aksiyona çevrilmesi gereken bir sinyaldir.
+
+</SelfCheck>

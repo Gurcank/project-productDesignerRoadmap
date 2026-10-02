@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
+import OfflineDownload from "~/components/OfflineDownload.astro";
 ---
 
 <BaseLayout
@@ -27,6 +28,27 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
     </aside>
 
     <p class="storage-error" role="alert" data-storage-error hidden></p>
+
+    <section class="block" aria-labelledby="yazi">
+      <h2 id="yazi" class="block__title">Yazı boyutu</h2>
+      <p class="block__hint">Telefonda ya da hareket hâlinde okurken büyüt. Tüm site aynı oranda ölçeklenir.</p>
+
+      <div class="actions" role="group" aria-label="Yazı boyutu">
+        <button type="button" class="button" data-text-size="sm" aria-pressed="false">Küçük</button>
+        <button type="button" class="button" data-text-size="md" aria-pressed="false">Normal</button>
+        <button type="button" class="button" data-text-size="lg" aria-pressed="false">Büyük</button>
+        <button type="button" class="button" data-text-size="xl" aria-pressed="false">Çok büyük</button>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="cevrimdisi">
+      <h2 id="cevrimdisi" class="block__title">Çevrimdışı</h2>
+      <p class="block__hint">
+        Tüm dersleri, sözlüğü ve aramayı cihazına indir; internet olmadan da açılır. Yeni dersler eklenince
+        buradan güncelle.
+      </p>
+      <OfflineDownload scope="all" label="Tüm siteyi indir" />
+    </section>
 
     <section class="block" aria-labelledby="ozet">
       <h2 id="ozet" class="block__title">Durum</h2>
@@ -175,6 +197,28 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
     if (status) status.textContent = error ?? "İlerleme geri yüklendi.";
   });
 
+  // Reading size: the same key the inline script in BaseLayout reads before first paint.
+  const sizeButtons = document.querySelectorAll<HTMLButtonElement>("[data-text-size]");
+  const currentSize = () => document.documentElement.dataset.text ?? "md";
+  const paintSize = () => {
+    for (const button of sizeButtons) button.setAttribute("aria-pressed", String(button.dataset.textSize === currentSize()));
+  };
+  for (const button of sizeButtons) {
+    button.addEventListener("click", () => {
+      const size = button.dataset.textSize!;
+      if (size === "md") delete document.documentElement.dataset.text;
+      else document.documentElement.dataset.text = size;
+      try {
+        if (size === "md") localStorage.removeItem("pdr.text-size");
+        else localStorage.setItem("pdr.text-size", size);
+      } catch {
+        // Private mode: the size still applies for this visit.
+      }
+      paintSize();
+    });
+  }
+  paintSize();
+
   document.querySelector("[data-reset]")?.addEventListener("click", () => {
     const status = statusOf("reset");
     if (!confirm("Tüm ilerleme silinecek. Yedek aldın mı?")) {
@@ -319,6 +363,11 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
     font-size: var(--text-sm);
     text-decoration: none;
     cursor: pointer;
+  }
+
+  .button[aria-pressed="true"] {
+    border-color: var(--c-action);
+    background-color: var(--c-surface-raised);
   }
 
   .button:hover {

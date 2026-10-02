@@ -1,0 +1,62 @@
+---
+summary: "Ortam türleri ve yapılandırma yönetimi: preview ortamı doğrudan senin işine yarar (kimseden bir şey istemeden gerçek adreste görme). Eksik ya da yanlış ortam değişkeni deploy sorunlarının en yaygın sebebidir; staging'de gerçek servis kullanmak tehlikelidir."
+outcomes:
+  - "Preview ortamının neden değerli olduğunu ve staging'den farkını söyleyebilirsin."
+  - "Ortam değişkeni yönetiminin neden gerekli olduğunu açıklayabilirsin."
+  - "Staging'de gerçek servisleri kullanmanın riskini bilirsin."
+minutes: 5
+sources:
+  - label: "Vercel — Preview deployment'lar"
+    url: "https://vercel.com/docs/deployments/preview-deployments"
+  - label: "The Twelve-Factor App — Config"
+    url: "https://12factor.net/config"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir tasarım değişikliğini müşteriye göstermek istiyorsun, ama canlıya almak da istemiyorsun. Çözüm: preview ortamı.
+
+## Ortam türleri
+
+Aynı uygulamanın farklı amaçlarla çalışan kopyaları: **local, development, preview, staging, production.** **Preview environment**, her PR için otomatik oluşturulan, geçici ve kendine ait adresi olan ortamdır.
+
+**Preview ortamı doğrudan senin işine yarar:** bir tasarım değişikliğini kimseden bir şey istemeden, gerçek bir adreste görebilir ve paylaşabilirsin. Modern hosting platformlarının en değerli özelliklerinden biridir. "PR'ın preview linkini müşteriye gönderelim; staging'e almadan onay alalım." Karıştırma: **preview geçicidir ve PR'a bağlıdır;** staging kalıcı ve tektir.
+
+## Ortam değişkeni yönetimi
+
+Her ortamın kendi yapılandırma değerlerine sahip olması ve sırların güvenli saklanması. Aynı kod farklı ortamlarda farklı veritabanına, farklı ödeme anahtarına ve farklı analitik hesabına bağlanır. **Deploy sorunlarının en yaygın tek sebebi eksik ya da yanlış ortam değişkenidir.** Hosting platformunun ayarlar ekranında yönetilir. "Staging test ödeme anahtarını kullansın; canlı anahtar yalnızca production'da olsun."
+
+**Staging'de gerçek servisleri kullanmak tehlikelidir:** test siparişi gerçek kart çekebilir, test e-postası gerçek müşteriye gidebilir. Bu bir tasarım ve süreç kararıdır.
+
+<Callout kind="tasarimci">
+
+- **Her tasarım PR'ında preview linki iste** ve onayı o linkte ver.
+- **Staging'in test servislerini (sahte ödeme, test e-postası) kullandığını doğrula.**
+- **Ortam farklılıklarını test planına yaz:** ödeme, e-posta, analitik farklı ortamlarda farklı davranır.
+
+</Callout>
+
+<Summary>
+
+- Preview ortamı her PR için geçici ve paylaşılabilir bir adrestir; tasarım onayı için çok değerlidir.
+- Preview geçicidir, staging kalıcı ve tektir.
+- Eksik ya da yanlış ortam değişkeni deploy sorunlarının en yaygın sebebidir; staging'de gerçek servis tehlikelidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Preview environment senin iş akışında neden değerli? Staging'den farkı nedir?">
+
+Bir tasarım değişikliğini kimseden bir şey istemeden gerçek bir adreste görüp paylaşabilirsin. Preview geçicidir ve PR'a bağlıdır; staging kalıcı ve tektir.
+
+</SelfCheck>
+
+<SelfCheck question="Staging'de gerçek servisleri kullanmanın riski nedir?">
+
+Test siparişi gerçek kart çekebilir, test e-postası gerçek müşteriye gidebilir. Staging test anahtarlarını kullanmalıdır.
+
+</SelfCheck>

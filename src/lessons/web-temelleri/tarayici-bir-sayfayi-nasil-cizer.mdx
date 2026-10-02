@@ -1,0 +1,155 @@
+---
+summary: "Dosyalar tarayıcıya ulaştıktan sonra ekranda görüntü oluşana kadar ne olduğunu öğren; \"sayfa zıplıyor\" ve \"geç açılıyor\" şikâyetlerinin teknik karşılığını söyle."
+outcomes:
+  - "HTML'in nasıl ekrana dönüştüğünü altı adımda anlatabilirsin."
+  - "DOM ile HTML'in neden aynı şey olmadığını ve bunun SEO'yu nasıl etkilediğini bilirsin."
+  - "\"Sayfa zıpladı, yanlış yere tıkladım\" sorununu adıyla (layout shift) söyleyebilirsin."
+  - "Hangi animasyonun akıcı, hangisinin takılacağını önceden tahmin edebilirsin."
+minutes: 12
+sources:
+  - label: "MDN — Document Object Model"
+    url: "https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model"
+  - label: "MDN — Critical rendering path"
+    url: "https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Critical_rendering_path"
+  - label: "web.dev — Core Web Vitals"
+    url: "https://web.dev/articles/vitals"
+additions:
+  - "Core Web Vitals (LCP, INP, CLS) ve eşik değerleri; bir tasarım kararının performansa nasıl yansıdığı."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Outside from "~/components/lesson/Outside.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import FoldFigure from "~/components/lesson/FoldFigure.astro";
+
+Bir haber sitesini açıyorsun, okumaya başlıyorsun, sonra bir reklam yükleniyor ve metin aşağı kayıyor. Tam o anda bir bağlantıya basmak üzereydin; yanlış yere tıklıyorsun. Bu sinir bozucu olay tesadüf değil: tarayıcının işleyişindeki belirli bir adımın sonucu.
+
+Bu derste tarayıcının, kendisine gelen dosyaları nasıl ekrandaki görüntüye çevirdiğini öğreneceksin. İki işine yarar: bir sitenin neden yavaş açıldığını anlarsın ve "sayfa zıplıyor" gibi tasarım şikâyetlerinin **teknik karşılığını** söyleyebilirsin.
+
+## Büyük resim: altı adım
+
+Tarayıcıya HTML, CSS ve JavaScript ulaştığında hemen çizmeye başlayamaz. Önce bunları kendi anlayacağı yapılara çevirir. Bu zincire **critical rendering path** (kritik çizim yolu) denir. "Neden bu kadar geç açılıyor?" sorusunun cevabı hemen her zaman bu zincirin bir halkasındadır.
+
+<StepFlow
+  label="Tarayıcının sayfayı çizme adımları"
+  caption="İki kol (HTML ve CSS) ayrı ayrı işlenir, ikisi birleşince çizim başlar. Bir halka gecikirse ekranın tamamı gecikir."
+  steps={[
+    { title: "HTML okunur → DOM oluşur", sub: "Sayfanın yapısı, bir ağaç olarak", tone: "accent" },
+    { title: "CSS okunur → CSSOM oluşur", sub: "Hangi elemente hangi stil" },
+    { title: "İkisi birleşir → render tree", sub: "Yalnızca ekranda görünecekler" },
+    { title: "Layout (yerleşim hesabı)", sub: "Her şey nerede, ne büyüklükte" },
+    { title: "Paint (boyama)", sub: "Renkler, metin, gölgeler" },
+    { title: "Composite (birleştirme)", sub: "Katmanlar üst üste, son görüntü", tone: "progress" },
+  ]}
+/>
+
+Sırayla bakalım.
+
+## DOM: HTML'in canlı hâli
+
+Sunucudan gelen HTML, düz bir metin dosyasıdır. Tarayıcı onu bellekte bir **ağaç yapısına** çevirir; buna **DOM** (Document Object Model, belge nesne modeli) denir. HTML ölü bir metindir; DOM onun canlı, değiştirilebilir hâlidir.
+
+Bu fark önemli, çünkü **JavaScript sayfayı ancak DOM üzerinden değiştirebilir.** Bir butona tıklayınca menünün açılması, aslında DOM'un değiştirilmesidir.
+
+Pratik karşılığı:
+
+- Tarayıcının geliştirici araçlarındaki *Elements* sekmesinde gördüğün şey HTML dosyası değil, **DOM'dur**. "DOM'a bak" denildiğinde oraya bakılır.
+- "Kaynak kodda o div yok; JavaScript sonradan DOM'a ekliyor" cümlesi bu ayrımdan çıkar.
+- "DOM çok büyük" demek, sayfada çok fazla element var ve tarayıcı zorlanıyor demektir.
+
+**DOM ≠ HTML.** HTML sunucudan gelen metin; DOM tarayıcının ondan ürettiği ve sonradan değişebilen yapıdır. İkisi çoğu zaman farklıdır, ve bu fark **SEO'da kritiktir**: bazı arama motoru botları JavaScript çalıştırmadan yalnızca HTML'i görür. İçerik yalnızca JavaScript çalıştıktan sonra DOM'a ekleniyorsa, o botlar o içeriği göremeyebilir.
+
+## CSSOM: stillerin hafızası
+
+**CSSOM**, DOM'un CSS karşılığıdır: tarayıcının tüm stil kurallarını bellekte tuttuğu yapı. Tarayıcı hangi elemente hangi stilin uygulanacağını hesaplamak için buna ihtiyaç duyar.
+
+**CSSOM tamamlanmadan hiçbir şey çizilmez.** Neden? Tarayıcı CSS'i tam almadan çizmeye başlarsa kullanıcı bir anlığına stilsiz, çirkin bir sayfa görürdü. Bu yüzden bekler. Bu yüzden CSS "render-blocking" (çizimi engelleyen) sayılır.
+
+Bu seviye 2 bir terim: senin ağzından çıkması gerekmez, ama duyduğunda anlaman gerekir. "CSS dosyası çok büyük; CSSOM oluşana kadar ekran boş kalıyor" cümlesi, ekranın boş kaldığı süreyi anlatır.
+
+### Render-blocking: çizimi bekleten dosyalar
+
+**Render-blocking resource**, indirilip işlenmeden tarayıcının ekrana bir şey çizmesini engelleyen dosyadır. Bekleme boş ekran süresi demektir. Performans optimizasyonunun büyük kısmı bu listeyi kısaltmakla ilgilidir. Lighthouse raporunda "Eliminate render-blocking resources" uyarısını sık göreceksin.
+
+Tasarımcıyı ilgilendiren yanı: örneğin **üç ayrı font ailesi** yüklüyorsan, hepsi çizimi bekletebilir. "Bire indirelim" demek hem tutarlılık hem hız kararıdır.
+
+## Layout: her şey nerede?
+
+**Layout** (Firefox terminolojisinde *reflow*), tarayıcının her elementin ekranda **tam olarak nerede ve ne büyüklükte** olacağını hesapladığı adımdır. Yerleşim hesabı pahalı bir işlemdir.
+
+Asıl sorun şu: bir elementin boyutu sonradan değişirse, tarayıcı hesabı yeniden yapar ve **etraftaki her şey kayar**. Başlangıçtaki hikâye tam olarak budur: reklam ya da görsel yüklenince kutunun boyutu belli olur, altındaki her şey aşağı itilir, sen yanlış yere basarsın.
+
+Bunun adı **layout shift**, ölçüsü **CLS** (Cumulative Layout Shift, birikimli yerleşim kayması). Görsellere ve reklam alanlarına önceden yer ayırmanın sebebi budur ve bu senin tasarım kararındır: yer ayrılmazsa kayma olur. Geliştiriciler genelde "görsellere `width`/`height` vermedik, yüklenince layout kayıyor, CLS puanı düşük" der.
+
+**Layout (tarayıcı adımı) ≠ layout (tasarımda sayfa düzeni).** Aynı kelime, iki bağlam.
+
+## Paint ve composite: boyama ve birleştirme
+
+**Paint (boyama)**, piksellerin renklendirilmesidir: renkler, metin, gölgeler. **Composite (birleştirme)** ise ayrı katmanların üst üste getirilip son görüntünün oluşturulmasıdır.
+
+Animasyon performansının anahtarı burada. Yalnızca composite aşamasını etkileyen özellikler akıcı animasyon verir (`transform`, `opacity`). Layout'u tetikleyen özellikler (`width`, `top`, `left`, `margin`) her karede yerleşimi baştan hesaplatır ve takılmaya yol açar.
+
+Pratik karşılık: bir menü animasyonunun neden takıldığını sorduğunda alacağın cevap genelde "`left` ile oynatıyoruz, `transform` ile oynatalım" olur. Tasarımda hareket eklerken bunu bilmek, geliştiriciyle aynı dili konuşmanı sağlar.
+
+## Viewport ve katlama çizgisi
+
+**Viewport (görüntü alanı)**, kullanıcının o anda ekranda gördüğü alandır. Responsive tasarımın ölçü birimidir: breakpoint'ler viewport genişliğine göre tanımlanır. Ayrıca lazy loading kararları buna göre verilir; viewport dışındaki görseller sonradan yüklenir. Figma'da çizdiğin her ekran boyutu bir viewport varsayımıdır.
+
+**Viewport ≠ ekran çözünürlüğü.** Tarayıcı penceresi ekrandan küçük olabilir; ayrıca cihaz piksel oranı yüzünden CSS pikseli ile fiziksel piksel aynı değildir.
+
+**Above the fold**, kullanıcının hiç kaydırmadan gördüğü alandır. Gazete katlandığında üstte kalan kısımdan gelen bir terim. En önemli mesaj ve birincil buton buraya konur, buradaki görseller öncelikli yüklenir.
+
+<FoldFigure />
+
+Dikkat: katlama çizgisi **sabit bir piksel değeri değildir**; cihaza göre değişir. "800px above the fold" gibi bir cümle yanlıştır. Landing page tasarımında bu yüzden "mobilde birincil buton kaydırmadan görünüyor mu?" diye sorarsın.
+
+<Outside source="web.dev — Core Web Vitals" href="https://web.dev/articles/vitals">
+
+Bu dersteki kavramların hepsi, Google'ın üç ana kullanıcı deneyimi ölçüsüne bağlanır. **Core Web Vitals:**
+
+| Ölçü | Neyi ölçer | "İyi" eşik |
+|---|---|---|
+| **LCP** (Largest Contentful Paint) | En büyük içeriğin ne zaman göründüğü: sayfanın "yüklendi" hissi | 2,5 saniye veya altı |
+| **INP** (Interaction to Next Paint) | Dokunma/tıklamaya sayfanın ne kadar hızlı yanıt verdiği | 200 milisaniye veya altı |
+| **CLS** (Cumulative Layout Shift) | Sayfanın ne kadar zıpladığı | 0,1 veya altı |
+
+Tasarım kararlarının doğrudan etkisi var: büyük bir hero görseli LCP'yi uzatabilir, yer ayrılmamış görsel ya da reklam CLS'i artırır, ağır bir etkileşim INP'yi bozar. Bu eşikler zamanla güncellenebilir; ölçü sistemini kullanmadan önce kaynağı kontrol et.
+
+</Outside>
+
+<Callout kind="tasarimci">
+
+Bu dersin tasarımcıya bıraktığı üç karar:
+
+- **Yer ayır.** Görsele, videoya, reklama, yüklenecek her kutuya önceden boyut ver. Sayfa zıplamasın.
+- **Az yükle.** Font ailesi, ikon seti, görsel sayısı, ilk ekranı geciktiren her şey bir bedel ödetir. İlk görünen ekranı olabildiğince hafif tut.
+- **Doğru animasyonu seç.** Hareketi `transform` ve `opacity` ile kurgulayabilecek şekilde tasarla; boyut ya da konum değişimi gerektiren animasyonlar pahalı olabilir.
+
+</Callout>
+
+<Summary>
+
+- Tarayıcı HTML'i DOM'a, CSS'i CSSOM'a çevirir, birleştirir (render tree), sonra layout, paint ve composite yapar.
+- DOM, HTML'in tarayıcıdaki canlı hâlidir; ikisi farklı olabilir ve bu SEO'yu etkiler.
+- CSS çizimi bekletir (render-blocking); az ve hafif dosya, kısa boş ekran demektir.
+- Boyutu belli olmayan içerik yüklenince layout kayar (CLS). Çözüm: önceden yer ayırmak.
+- `transform` ve `opacity` akıcı animasyon verir; `width`, `left`, `margin` takılma yaratabilir.
+- Viewport görünen penceredir; above the fold kaydırmadan görünen alandır ve sabit bir piksel değildir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Sayfa açılırken görseller yüklendikçe içerik aşağı kayıyor ve kullanıcı yanlış butona tıklıyor. Bunun teknik adı nedir, tarayıcının hangi adımıyla ilgilidir?">
+
+Layout shift; ölçülen metrik CLS'tir. Tarayıcının layout (reflow) adımıyla ilgilidir: boyutu önceden belli olmayan içerik yüklenince yerleşim yeniden hesaplanır. Çözüm: görsele ve dinamik alanlara önceden yer ayırmak.
+
+</SelfCheck>
+
+<SelfCheck question="DOM ile HTML arasındaki fark nedir ve bu fark neden SEO'yu ilgilendirir?">
+
+HTML sunucudan gelen ham metin dosyasıdır; DOM tarayıcının ondan ürettiği ve JavaScript'in sonradan değiştirebildiği canlı yapıdır. İçerik yalnızca JavaScript çalıştıktan sonra DOM'a ekleniyorsa, JavaScript çalıştırmayan botlar o içeriği göremeyebilir.
+
+</SelfCheck>

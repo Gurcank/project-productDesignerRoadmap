@@ -1,0 +1,55 @@
+---
+summary: "TypeScript hataları yazarken yakalar. Tasarımcı için asıl değeri, tip tanımının bir verinin hangi alanlardan oluştuğunun ve hangisinin boş olabileceğinin listesi olması."
+outcomes:
+  - "TypeScript'in ne yaptığını ve ne yapmadığını söyleyebilirsin."
+  - "Bir tip tanımına bakıp hangi alanların opsiyonel olduğunu ve neyi tasarlaman gerektiğini çıkarabilirsin."
+minutes: 5
+sources:
+  - label: "TypeScript Handbook — Temel tipler"
+    url: "https://www.typescriptlang.org/docs/handbook/2/basic-types.html"
+  - label: "TypeScript Handbook — Object types"
+    url: "https://www.typescriptlang.org/docs/handbook/2/objects.html"
+flags: ["degisken"]
+skipTerms: ["alan adı"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Tasarladığın kartta bir açıklama satırı var. Canlıda bir ürünün açıklaması yok ve kart bozuk görünüyor. Bu bilgi, geliştiricilerin kullandığı bir dosyada baştan yazıyordu: açıklama alanı opsiyonel. TypeScript'i bu yüzden bilmen yararlı.
+
+## TypeScript nedir
+
+**TypeScript**, JavaScript'in, değerlerin türünü (metin mi, sayı mı, hangi yapıda bir nesne mi) önceden tanımlamayı sağlayan sürümüdür. Hataları çalışma zamanında değil **yazarken** yakalar: yanlış alan adı, eksik alan, beklenmeyen `null`. Büyük projelerde bakım maliyetini belirgin biçimde düşürür; modern web projelerinin çoğunda varsayılandır. Ekosistem hızlı hareket ettiği için dil özellikleri ve araç desteği değişir. "Stack TypeScript olsun; API yanıtlarının tiplerini tanımlarsak alan adı hataları derlemede yakalanır."
+
+İki yanlış anlama:
+
+- TypeScript tarayıcıda çalışmaz; derlenerek JavaScript'e çevrilir.
+- Tip güvenliği **çalışma zamanında** garanti değildir: sunucudan beklenmedik veri gelirse tip tanımı onu durdurmaz. Bunun için ayrıca veri doğrulaması (örneğin Zod) gerekir.
+
+## Tip tanımı tasarımcıya ne söyler
+
+**Type / interface**, bir verinin hangi alanlardan oluştuğunu tanımlar. Tasarımcı için değeri şudur: bir nesnenin **hangi bilgilere sahip olduğunun listesidir**. Bir kart tasarlarken "bu alanda ne var, boş olabilir mi?" sorusunun cevabı tip tanımında yazar. "Tipe baktım: `description` opsiyonel. Boş olduğunda kartın nasıl görüneceğini de tasarlayalım."
+
+<Callout kind="tasarimci">
+
+- **Tasarlamadan önce tip tanımına (ya da API yanıtına) bak.** Hangi alan zorunlu, hangisi opsiyonel?
+- **Her opsiyonel alan için "boşken" hâlini çiz.**
+
+</Callout>
+
+<Summary>
+
+- TypeScript tipleri baştan tanımlayıp hataları yazarken yakalar; çalışma zamanında garanti vermez.
+- Tip tanımı, bir verinin alanlarının ve hangisinin boş olabileceğinin listesidir; boş hâller bundan çıkar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="TypeScript tip tanımının tasarımcı için pratik değeri nedir?">
+
+Bir nesnenin hangi alanlara sahip olduğunun listesidir. "Bu alanda ne var, boş olabilir mi?" sorusunun cevabı orada yazar; böylece opsiyonel alanların boş hâlini de tasarlarsın.
+
+</SelfCheck>

@@ -1,0 +1,58 @@
+---
+summary: "Hangi adresin hangi ekranı gösterdiği: route, dinamik ve iç içe yollar, query parametresi, redirect. Tasarımcının karar vereceği şey: hangi ekranın kendi URL'i olacağı."
+outcomes:
+  - "Hangi ekranların kendi URL'i olması gerektiğine karar verebilirsin."
+  - "Dinamik ve iç içe route'ların neden şablon ve ortak layout sağladığını açıklayabilirsin."
+  - "Query parametresi ve redirect'in tasarıma ve SEO'ya etkisini söyleyebilirsin."
+minutes: 6
+sources:
+  - label: "MDN — URL nedir?"
+    url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL"
+  - label: "Google Search Central — 301 yönlendirmeleri"
+    url: "https://developers.google.com/search/docs/crawling-indexing/301-redirects"
+skipTerms: ["layout"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir kullanıcı ürün detayını açtı, linki arkadaşına gönderdi. Arkadaşı linke tıkladı ve ürün listesine düştü, çünkü detay bir modal içinde açılıyordu ve kendi adresi yoktu. Bu, **routing** konusunun tasarımcıya düşen kısmı.
+
+## Route
+
+**Route (yol)**, bir URL ile gösterilecek ekran arasındaki eşleşmedir; routing bu eşleşmelerin yönetimidir. Sitenin yapısını belirler ve bilgi mimarisinin koddaki karşılığıdır.
+
+Tasarımcının burada bir sorumluluğu var: **hangi ekranın kendi URL'i olacağına karar vermek.** Modal içinde açılan bir içeriğin URL'i yoksa paylaşılamaz, yer imine eklenemez, arama motoru bulamaz. "Ürün detayı modal'da açılsın ama kendi URL'i de olsun; paylaşılabilir kalsın."
+
+## Dinamik ve iç içe yol
+
+**Dynamic route**, adresin bir kısmının değişken olduğu yapıdır (`/urunler/[slug]`). Binlerce ürün için binlerce sayfa tanımlamak yerine tek bir şablon yazılır. **Nested route (iç içe yol)** ise bir bölümün altındaki alt sayfalardır ve genelde ortak bir layout paylaşır; header ya da sidebar her sayfada yeniden çizilmez. "Ayarlar altındaki tüm sayfalar aynı layout'u paylaşsın; sadece sağdaki içerik değişsin."
+
+## Query param ve redirect
+
+**Query param**, URL'e eklenen ek bilgidir (`?filtre=kirmizi`). **Filtre ve sıralama durumunu paylaşılabilir kılar.** **Redirect** ise bir adresin otomatik olarak başka bir adrese gönderilmesidir; site yeniden yapılandırıldığında eski bağlantıların kırılmamasını sağlar ve SEO için kritiktir. "Yeni yapıya geçerken eski URL'lerden kalıcı redirect verelim; sıralamayı kaybetmeyelim."
+
+<Callout kind="tasarimci">
+
+- **Sitemap'te her ekran için URL var mı işaretle.** Modal ve drawer içeriği kalıcıysa URL'i olmalı.
+- **Filtre ve sıralama durumunu URL'e yazdırmayı iste.**
+- **Yeniden tasarımda eski URL'lerin listesini çıkar** ve her biri için redirect hedefini yaz.
+
+</Callout>
+
+<Summary>
+
+- Route, URL ile ekran arasındaki eşleşmedir; hangi ekranın URL'i olacağı tasarım kararıdır.
+- Dinamik route tek şablonla çok sayfa üretir; iç içe route ortak layout paylaşır.
+- Query param filtre durumunu paylaşılabilir yapar; kalıcı redirect eski bağlantıları ve SEO'yu korur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Modal içinde açılan bir içeriğin URL'i olmazsa ne olur?">
+
+Paylaşılamaz, yer imine eklenemez ve arama motoru bulamaz. Kalıcı içerik için modal'da açılsa bile kendi URL'i olmalıdır.
+
+</SelfCheck>

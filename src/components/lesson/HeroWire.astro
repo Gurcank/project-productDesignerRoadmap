@@ -1,0 +1,36 @@
+---
+import DiagramFigure from "../diagrams/DiagramFigure.astro";
+---
+
+<DiagramFigure
+  label="Bir hero bölümünün parçaları"
+  caption="Hero üç soruyu cevaplar: bu ne, kimin için, şimdi ne yapmalıyım. Başlık ilkini, alt başlık ikincisini, tek birincil CTA üçüncüsünü taşır."
+>
+  <svg class="dg-narrow" viewBox="0 0 360 330" role="img" aria-label="Eyebrow, başlık, alt başlık, iki buton ve ürün görseli">
+    <title>Hero anatomisi</title>
+
+    <rect class="dg-box" x="8" y="8" width="344" height="314" rx="10"></rect>
+
+    <text class="dg-sub" x="24" y="34" style="letter-spacing:0.08em">ÜCRETSİZ ARAÇ</text>
+    <text class="dg-sub" x="226" y="34">eyebrow</text>
+
+    <text class="dg-label" x="24" y="64" style="font-size:20px">Projelerini tek yerde</text>
+    <text class="dg-label" x="24" y="88" style="font-size:20px">yönet</text>
+    <text class="dg-sub" x="226" y="64">headline</text>
+
+    <text class="dg-sub" x="24" y="114">Ekibin görevleri, tarihleri ve dosyaları</text>
+    <text class="dg-sub" x="24" y="130">aynı ekranda görür.</text>
+    <text class="dg-sub" x="226" y="114">subheadline</text>
+
+    <rect class="dg-box dg-box--progress" x="24" y="148" width="120" height="34" rx="8"></rect>
+    <text class="dg-label" x="84" y="170" text-anchor="middle">Ücretsiz başla</text>
+    <rect class="dg-box" x="156" y="148" width="100" height="34" rx="8" stroke-dasharray="4 3"></rect>
+    <text class="dg-sub" x="206" y="170" text-anchor="middle">Demo izle</text>
+    <text class="dg-sub" x="24" y="198">birincil CTA</text>
+    <text class="dg-sub" x="156" y="198">ikincil CTA</text>
+
+    <rect class="dg-box dg-box--accent" x="24" y="212" width="312" height="94" rx="8"></rect>
+    <text class="dg-label" x="180" y="252" text-anchor="middle">hero visual</text>
+    <text class="dg-sub" x="180" y="270" text-anchor="middle">gerçek ürün ekran görüntüsü</text>
+  </svg>
+</DiagramFigure>

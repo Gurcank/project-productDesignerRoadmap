@@ -1,0 +1,79 @@
+---
+summary: "Kısıtlar modelin senin yerine karar vermesini engeller. Bir web işi için kısıtlar beş grupta toplanır: teknik, tasarım, erişilebilirlik, kapsam ve her seferinde yazmak yerine talimat dosyasına taşınacak olanlar."
+outcomes:
+  - "Beş kısıt grubunu ve her birinden örnek söyleyebilirsin."
+  - "Hangi kısıtın talimat dosyasına, hangisinin prompt'a gittiğini ayırabilirsin."
+minutes: 5
+sources:
+  - label: "Anthropic Docs — Açık ve doğrudan ol"
+    url: "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/be-clear-and-direct"
+  - label: "WCAG 2.2 — Hızlı başvuru"
+    url: "https://www.w3.org/WAI/WCAG22/quickref/"
+  - label: "Claude Code Docs — Memory (CLAUDE.md)"
+    url: "https://code.claude.com/docs/en/memory"
+skipTerms: ["Scope","scope","kapsam"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Kısıtlar, modelin senin yerine karar vermesini engelleyen şeydir. Bir web işi için tipik kısıt listesi beş grupta toplanır.
+
+## Teknik
+
+- **Stack ve sürümler:** "Next.js App Router, TypeScript, Tailwind".
+- **Kütüphane politikası:** "yeni bağımlılık ekleme" veya "sadece şu listedekiler".
+- **Rendering stratejisi:** "bu sayfa statik üretilmeli".
+- **Paket boyutu:** "ilk yükte 150KB JavaScript sınırını aşma".
+
+## Tasarım
+
+- **Ölçekler:** "spacing yalnızca 4/8/12/16/24/32/48'den, type scale 16 tabanlı 1.25 oranında".
+- **Token kullanımı:** "ham hex veya px değeri yazma, token kullan".
+- **Yasaklar:** "eşit üç sütunlu ikon kartı yok, gerekçesiz gradient yok, sırasız içerikte numaralandırma yok".
+- **Hareket:** "animasyon yalnızca yön gösterme veya durum bildirme amaçlıysa".
+
+## Erişilebilirlik
+
+- "Tüm etkileşimler klavyeyle erişilebilir, focus göstergesi görünür."
+- "Kontrast WCAG 2.2 AA'yı sağlamalı."
+- "Dokunma hedefleri en az 24×24."
+- "Anlam yalnızca renkle taşınmasın."
+
+## Kapsam
+
+- **Kapsam dışı:** "bu işte veri katmanına dokunma".
+- **Dosya sınırı:** "yalnızca şu bileşen dosyasını değiştir".
+
+**Önemli:** kısıtları her seferinde yazmak yerine çoğunu **talimat dosyasına taşı;** prompt'ta yalnızca o işe özgü olanları belirt.
+
+<Callout kind="tasarimci">
+
+- **Sayıyla yaz:** "boşluklar tutarlı olsun" değil, "4/8/12/16/24/32/48 ölçeği".
+- **Kalıcı olanı dosyaya, bu işe özgü olanı prompt'a koy.**
+- **Kapsam kısıtını atlama:** beklenmedik değişikliklerin önünü o keser.
+
+</Callout>
+
+<Summary>
+
+- Beş grup: teknik, tasarım, erişilebilirlik, kapsam; ve bunların kalıcı olanlarını talimat dosyasına taşıma kararı.
+- Doğrulanabilir (sayılı) kısıt, belirsiz sıfattan iyidir.
+- Prompt'ta yalnızca o işe özgü kısıtlar kalır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir web işi için kısıtlar hangi gruplara ayrılır? Her birinden bir örnek ver.">
+
+Teknik ("yeni bağımlılık ekleme"), tasarım ("ham hex yazma, token kullan"), erişilebilirlik ("dokunma hedefleri en az 24×24"), kapsam ("yalnızca şu bileşen dosyasını değiştir").
+
+</SelfCheck>
+
+<SelfCheck question="Kısıtları her prompt'ta yazmak yerine ne yapılır?">
+
+Çoğu talimat dosyasına taşınır; prompt'ta yalnızca o işe özgü olanlar belirtilir.
+
+</SelfCheck>

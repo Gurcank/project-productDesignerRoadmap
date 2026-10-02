@@ -1,0 +1,84 @@
+---
+summary: "Monitoring bildiğin sorunları izler, observability bilmediğin sorunları sorabilmektir. Log, metric ve trace üç farklı soruyu cevaplar. Uptime monitor ve synthetic monitoring sorunu kullanıcıdan önce öğretir; alert fatigue gerçek olayı kaçırtır."
+outcomes:
+  - "Monitoring ile observability'yi ayırt edebilirsin."
+  - "Log, metric ve trace'in cevapladığı soruları söyleyebilirsin."
+  - "Synthetic monitoring'in ve alert fatigue'in ne olduğunu bilirsin."
+minutes: 6
+sources:
+  - label: "OpenTelemetry — Observability primer"
+    url: "https://opentelemetry.io/docs/concepts/observability-primer/"
+  - label: "Google SRE Kitabı — Dağıtık sistemleri izlemek"
+    url: "https://sre.google/sre-book/monitoring-distributed-systems/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Kullanıcı "yavaş" diyor. Panelde her şey yeşil. Neden? Çünkü bildiğin sorunları izliyorsun; ama sorun bildiğin türden değil.
+
+<Compare>
+<Pane title="Monitoring">
+
+- Önceden bildiğin sorunları izler
+- "CPU %90'ı geçti mi?"
+
+</Pane>
+<Pane title="Observability">
+
+- Bilmediğin sorunları sorabilme yeteneği
+- "Neden yalnızca Türkiye'deki Android kullanıcıları yavaş?"
+
+</Pane>
+</Compare>
+
+## Monitoring ve observability
+
+Monitoring bilinen soruları cevaplar; observability yeni soru sormanı sağlar. Karmaşık sistemlerde sorunların çoğu öngörülemez olduğu için ikincisi giderek daha önemli hâle geldi. "Uyarılarımız var ama sorunun nerede olduğunu bulamıyoruz; gözlemlenebilirlik eksik."
+
+## Log, metric, trace
+
+- **Log:** tekil olayların metin kaydı ("şu anda şu hata oluştu"). "Tam olarak ne oldu?"
+- **Metric:** zaman içindeki sayısal ölçüm (istek sayısı, yanıt süresi). "Bir sorun var mı?"
+- **Trace:** tek bir isteğin sistemdeki tüm yolculuğunun kaydı. "Nerede?"
+
+Dağıtık sistemlerde trace olmadan sorunun hangi serviste olduğunu bulmak çok zorlaşır. "Metriklerde p95 yükselmiş; trace'e bakıp hangi serviste beklediğini bulalım."
+
+## Uptime monitor ve uyarı
+
+**Uptime monitoring**, sitenin dışarıdan düzenli olarak kontrol edilmesi ve sorun tespit edildiğinde ilgili kişilere bildirim gidilmesidir; sorunu kullanıcıdan önce öğrenmeni sağlar. **Synthetic monitoring** yalnızca "site açılıyor mu?" değil, "giriş yapılabiliyor mu, sepete eklenebiliyor mu?" gibi kritik akışları otomatik test eder. "Yalnızca ana sayfayı değil, ödeme akışını da synthetic olarak izleyelim."
+
+**Alert fatigue** gerçek bir sorundur: çok fazla uyarı gönderen bir sistemde insanlar uyarıları görmezden gelmeye başlar ve gerçek olay kaçırılır. Uyarı sayısı, eyleme geçilebilir olanlarla sınırlı tutulmalıdır.
+
+<Callout kind="tasarimci">
+
+- **Kritik kullanıcı akışlarını (giriş, ödeme, kayıt) synthetic izleme listesine yazdır.**
+- **"Yavaş" şikâyetinde segmenti belirt:** hangi cihaz, hangi bölge, hangi sayfa? Bu observability'yi besler.
+- **Uyarı kanallarının gürültüsünü (alert fatigue) ekiple konuş.**
+
+</Callout>
+
+<Summary>
+
+- Monitoring bilinen sorunları izler, observability yeni sorular sormayı sağlar.
+- Metric "var mı?", trace "nerede?", log "ne oldu?" sorusunu cevaplar.
+- Synthetic monitoring kritik akışları otomatik test eder; çok uyarı gerçek olayı kaçırtır (alert fatigue).
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Log, metric ve trace hangi üç farklı soruyu cevaplar?">
+
+Metric: "bir sorun var mı?" Trace: "nerede?" Log: "tam olarak ne oldu?"
+
+</SelfCheck>
+
+<SelfCheck question="Alert fatigue nedir?">
+
+Çok fazla uyarı gönderen bir sistemde insanların uyarıları görmezden gelmeye başlaması ve gerçek olayın kaçırılması. Uyarılar eyleme geçilebilir olanlarla sınırlı tutulmalıdır.
+
+</SelfCheck>

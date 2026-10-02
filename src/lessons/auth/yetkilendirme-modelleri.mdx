@@ -1,0 +1,72 @@
+---
+summary: "Kimin neyi yapabileceğini tanımlama biçimleri: RBAC, ABAC/permission/scope ve multi-tenancy. Rol matrisi, yetkisiz eylemin gösterimi ve çok kiracılı yapıda veri yalıtımı: en ciddi hata sınıfı."
+outcomes:
+  - "RBAC'ı ve tasarımda düşünülmesi gereken üç soruyu söyleyebilirsin."
+  - "RBAC ile ABAC'ın farkını ve ABAC'ın bedelini açıklayabilirsin."
+  - "Multi-tenancy'nin tasarıma getirdiği ekranları ve en kritik güvenlik noktasını (veri yalıtımı) bilirsin."
+minutes: 8
+sources:
+  - label: "OWASP — Authorization Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html"
+  - label: "PostgreSQL — Row Security Policies"
+    url: "https://www.postgresql.org/docs/current/ddl-rowsecurity.html"
+  - label: "OAuth 2.0 — Scope"
+    url: "https://oauth.net/2/scope/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir ekip ürününde "Admin", "Editör", "Görüntüleyici" rolleri var. Ya "yalnızca kendi ekibinin projelerini görsün" gibi bir kural? Yetkilendirme modelleri, kimin neyi yapabileceğini tanımlama biçimleridir.
+
+## RBAC
+
+**RBAC (Role-Based Access Control, rol tabanlı erişim kontrolü)**: kullanıcılara roller atanır (admin, editör, görüntüleyici) ve izinler rollere bağlanır. En yaygın ve en anlaşılır modeldir. Kullanıcı sayısı arttıkça herkese tek tek izin vermek yerine rol atamak yönetilebilir kalır. "Üç rol yeterli: Owner, Admin, Member. Daha fazlası karmaşıklık üretir."
+
+**Tasarım tarafında düşünülmesi gereken üç soru:**
+
+1. **Rol matrisi** kullanıcıya nasıl gösterilecek (hangi rol ne yapabilir)?
+2. **Yetkisi olmayan bir eylem** gizlenecek mi, pasif mi gösterilecek?
+3. **Rol değiştiğinde** kullanıcı bilgilendirilecek mi?
+
+## ABAC, permission, scope
+
+**ABAC (Attribute-Based Access Control)** kararı özniteliklere göre verir ("kendi departmanındaki belgeleri düzenleyebilir"). **Permission** tek bir yetkidir. **Scope** OAuth'ta bir uygulamaya verilen erişim sınırıdır. RBAC'ın yetmediği durumlarda daha ince ayar sağlar. Bedeli karmaşıklıktır: hem uygulanması hem kullanıcıya anlatılması zorlaşır. "RBAC yetmiyor; kullanıcı yalnızca kendi ekibinin projelerini görsün, bu ABAC'a giriyor."
+
+## Multi-tenancy
+
+**Multi-tenancy (çok kiracılı yapı)**: aynı uygulamanın birden fazla müşteri kuruluşuna hizmet vermesi ve verilerinin birbirinden yalıtılmasıdır (tenant, organization, workspace). B2B SaaS'ın temel yapısıdır. **Tasarım karşılığı çok somuttur:** kullanıcı birden fazla kuruluşta olabilir mi? Öyleyse **kuruluş değiştirici (workspace switcher)** gerekir. Davet akışı, rol atama, kuruluş ayarları ve faturalandırma ayrı ekranlar demektir. "Kullanıcı birden fazla workspace'te olabilecek; header'a workspace switcher koyalım."
+
+**En kritik güvenlik noktası veri yalıtımıdır:** bir kiracının verisinin başka bir kiracıya sızması, bir SaaS ürünü için en ciddi hata sınıfıdır. Her sorguda kiracı filtresinin uygulandığından emin olunmalıdır; veritabanı seviyesinde Row Level Security bunun için kullanılır.
+
+<Callout kind="tasarimci">
+
+- **Rol matrisini bir tablo olarak tasarla** ve arayüzde kullanıcıya göster (hangi rol ne yapabilir).
+- **Yetkisiz eylem için tek bir kural belirle:** genelde pasif + açıklama ("Yetki için yöneticine başvur").
+- **Rol değişikliğinde bildirim ve etkilerini göster.**
+- **Birden fazla kuruluşa üyelik olasılığını erken sor;** workspace switcher, davet ve faturalama ekranlarını planla.
+
+</Callout>
+
+<Summary>
+
+- RBAC rollere izin bağlar; rol matrisi, yetkisiz eylem ve rol değişikliği bildirimi tasarım kararlarıdır.
+- ABAC özniteliklerle daha ince ayar sağlar ama karmaşıklık getirir; scope OAuth erişim sınırıdır.
+- Multi-tenancy workspace switcher, davet, rol ve faturalama ekranları gerektirir; en kritik risk veri yalıtımıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Multi-tenancy'de en kritik güvenlik noktası nedir?">
+
+Veri yalıtımı: bir kiracının verisinin başka bir kiracıya sızması SaaS için en ciddi hata sınıfıdır. Her sorguda kiracı filtresinin uygulandığından emin olunmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="RBAC'ta tasarımda düşünülmesi gereken üç soru nedir?">
+
+Rol matrisi kullanıcıya nasıl gösterilecek; yetkisi olmayan eylem gizlenecek mi pasif mi gösterilecek; rol değiştiğinde kullanıcı bilgilendirilecek mi?
+
+</SelfCheck>

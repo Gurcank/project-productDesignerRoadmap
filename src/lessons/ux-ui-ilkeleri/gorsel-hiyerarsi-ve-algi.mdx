@@ -1,0 +1,135 @@
+---
+summary: "Gözün ekranda nereye gideceğini belirleyen kurallar: görsel hiyerarşi, Gestalt ilkeleri, kontrast, boşluk, hizalama ve tarama desenleri. 'Karışık duruyor' izlenimini teknik bir gerekçeye çevirmeyi öğren."
+outcomes:
+  - "Bir ekranın neden \"karışık\" göründüğünü hiyerarşi, gruplama ve hizalama üzerinden açıklayabilirsin."
+  - "Gestalt ilkelerini (yakınlık, benzerlik, ortak alan...) form ve kart tasarımına uygulayabilirsin."
+  - "Vurgunun kontrastla ve boşlukla nasıl üretildiğini bilirsin."
+  - "F-pattern'in neden bir hedef değil bir uyarı işareti olduğunu söyleyebilirsin."
+minutes: 13
+sources:
+  - label: "NN/g — Principles of Visual Design"
+    url: "https://www.nngroup.com/articles/principles-visual-design/"
+  - label: "NN/g — Gestalt Principles: Proximity"
+    url: "https://www.nngroup.com/articles/gestalt-proximity/"
+  - label: "NN/g — F-Shaped Pattern For Reading Web Content"
+    url: "https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Bu tasarım karışık duruyor." Herkes bu cümleyi söyler ve kimse neden karışık olduğunu açıklayamaz. Bu ders o hissi **teknik bir gerekçeye** çeviriyor: karışıklığın üç kaynağını (ağırlık, gruplama, hizalama) ve her birinin çözümünü göreceksin.
+
+## Görsel hiyerarşi: önem sırası
+
+**Visual hierarchy** (görsel hiyerarşi), öğelerin **önem sırasının görsel ağırlıkla ifade edilmesidir.** Kullanıcı ekranı okumaz, tarar. Hiyerarşi yoksa göz nereye bakacağını bilemez ve ekran "karışık" hissedilir.
+
+Ağırlık üretmenin araçları:
+
+- **Boyut:** büyük olan önce görülür.
+- **Ağırlık (font weight):** kalın olan öne çıkar.
+- **Renk kontrastı:** zeminden ayrışan dikkat çeker.
+- **Boşluk:** çevresi açık olan vurgulanır.
+- **Konum:** üst ve sol, daha önce görülür.
+- **Yüzey farkı:** kutu, gölge, dolgu.
+
+Neredeyse her tasarım geri bildiriminde karşına çıkar. **En sık rastlanan kusur: bir ekranda birden fazla birincil eylem olması.** "Bu ekranda üç buton da dolu renkli; birincil eylem hangisi belli değil, ikisini ikincil stile alalım."
+
+<Compare>
+<Pane title="Hiyerarşi yok">
+
+- Üç buton da dolu ve aynı boyutta
+- Başlık ile gövde metni aynı ağırlıkta
+- Göz nereye gideceğini bilmiyor
+
+</Pane>
+<Pane title="Hiyerarşi var">
+
+- Bir birincil (dolu), diğerleri ikincil (çerçeveli)
+- Başlık büyük ve kalın, gövde hafif
+- Göz birincil eyleme gidiyor
+
+</Pane>
+</Compare>
+
+## Gestalt: zihin gruplamayı kendisi yapar
+
+**Gestalt principles** (Gestalt ilkeleri), insan zihninin ayrı öğeleri **nasıl gruplayarak algıladığını** tanımlar. Kullanıcı gruplamayı senin niyetinden değil, **görsel ipuçlarından** okur. Yanlış boşluk ilgisiz iki şeyi bir grup gibi gösterir; bu, tasarım hatalarının **en sessiz ve en yaygın kaynağıdır.**
+
+"Etiket ile alan arasındaki boşluk, alan ile bir sonraki etiket arasındakinden büyük; yakınlık ilkesi gereği yanlış eşleşme okunuyor." Form, kart ve liste tasarımında geçerlidir.
+
+| İlke | Ne der | Tasarımdaki karşılığı |
+|---|---|---|
+| **Yakınlık** (proximity) | Yakın olanlar ilişkili algılanır | Etiket–alan mesafesi, kart içi boşluk |
+| **Benzerlik** (similarity) | Benzer görünenler aynı gruba ait algılanır | Aynı tür eylemler aynı buton stilinde |
+| **Ortak alan** (common region) | Aynı çerçeve içindekiler bir gruptur | Kart, panel, kenarlıklı bölüm |
+| **Tamamlama** (closure) | Zihin eksik şekli tamamlar | Kırpılmış görsel, kısmen görünen sonraki kart |
+| **Süreklilik** (continuity) | Aynı hat üzerindekiler ilişkili algılanır | Hizalama, grid |
+| **Şekil–zemin** (figure–ground) | Bir katman ön, diğeri arka algılanır | Modal ve arkasındaki karartma |
+
+Pratik kural: **birbirine ait olanları yakın, olmayanları uzak tut.** Bir formda etiket kendi alanına, bir sonraki alandan daha yakın olmalıdır.
+
+## Kontrast, boşluk ve hizalama
+
+### Kontrast
+
+**Contrast** (kontrast), iki öğe arasındaki **algılanabilir farktır:** renk, boyut, ağırlık ya da biçim üzerinden. Hem hiyerarşinin hem okunabilirliğin temelidir. Erişilebilirlik tarafında **ölçülebilir bir eşiği vardır,** yani tercih meselesi değildir. Ayrıca kontrast tasarrufludur: **her şey vurguluysa hiçbir şey vurgulu değildir.**
+
+"Açık gri metin arka planla 2,8:1 kontrast veriyor; AA için 4,5:1 gerekiyor, koyulaştıralım." (Erişilebilirlik bölümünde bu eşikleri ayrıntılı göreceksin.)
+
+### Boşluk
+
+**White space** (boşluk, negatif alan), öğeler arasında **bilinçli olarak bırakılan boş alandır.** Boşluk boş değildir: gruplama yapar, nefes verir ve önem işaretler. **Bir öğenin etrafındaki boşluğu artırmak, onu büyütmeden vurgular.** "Buraya bir şey koyalım" isteği çoğu zaman tasarımın en işlevli parçasını yok eder. "Bu boşluk kasıtlı; kaldırırsak iki bölüm tek bölüm gibi okunur."
+
+### Hizalama
+
+**Alignment** (hizalama), öğelerin **ortak eksenlere göre** yerleştirilmesidir. Görünmez düzen çizgileri yaratır ve "dağınık" hissini ortadan kaldırır. **Amatör görünen tasarımların en yaygın sebebi hizasızlıktır;** genelde renk ya da font değil. "Kart içindeki ikon ve başlık farklı eksende; ikisini de sol kenara hizalayalım."
+
+## Tarama desenleri
+
+**Scanning patterns** (F-pattern, Z-pattern, layer-cake), kullanıcıların sayfayı okurken izlediği tipik **göz hareketi desenleridir.** Önemli bilginin nereye konacağına dair kaba bir yön verir: metin yoğun sayfalarda göz sola ve üste yığılır. "Uzun metin bloğunda kullanıcı F deseniyle tarıyor; önemli bilgi ilk iki satırda ve alt başlıklarda olsun."
+
+<Callout kind="dikkat" title="F-pattern bir hedef değil, bir uyarıdır">
+
+Bu desenler bir kural değil, **gözlemdir** ve **iyi tasarlanmamış** sayfalarda ortaya çıkar. Net görsel hiyerarşi ve alt başlıklar konulduğunda kullanıcı F deseninden çıkar. Yani bir sayfanın F deseniyle okunması bir başarı değil, **hiyerarşinin zayıf olduğunun** işaretidir.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+Bir ekran "karışık" göründüğünde bu üç soruyu sor:
+
+1. **Hiyerarşi:** Tek bir birincil eylem ve belirgin bir başlık var mı?
+2. **Gruplama:** Birbirine ait olanlar yakın, olmayanlar uzak mı? (Yakınlık, ortak alan.)
+3. **Hizalama:** Öğeler ortak eksenlere oturuyor mu?
+
+Çoğu zaman cevap bu üçünden birindedir. "Bence karışık" yerine "birincil eylem ikincil eylemle aynı ağırlıkta, bu yüzden göz nereye gideceğini bilmiyor" dersin.
+
+</Callout>
+
+<Summary>
+
+- Görsel hiyerarşi önem sırasını boyut, ağırlık, kontrast, boşluk, konum ve yüzeyle ifade eder; en sık hata birden fazla birincil eylem.
+- Gestalt ilkeleri gruplamayı belirler; yanlış boşluk yanlış gruplama gösterir.
+- Kontrast ölçülebilir bir eşiğe sahiptir; her şey vurguluysa hiçbir şey vurgulu değildir.
+- Boşluk gruplar ve vurgular; hizasızlık amatör görünümün en yaygın sebebidir.
+- F-pattern bir hedef değil, hiyerarşinin zayıf olduğunun uyarısıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir formda etiket ile alan arasındaki boşluk, alan ile bir sonraki etiket arasındakinden büyük. Hangi ilke ihlal ediliyor ve sonuç ne?">
+
+Yakınlık (proximity) ilkesi: yakın olanlar ilişkili algılanır. Etiket kendi alanından çok bir sonraki alana yakın durduğu için yanlış eşleşme okunur. Çözüm: etiketi kendi alanına yaklaştırıp bir sonraki alandan uzaklaştırmak.
+
+</SelfCheck>
+
+<SelfCheck question="F-pattern iyi bir tasarım hedefi midir? Neden?">
+
+Hayır. F-pattern bir hedef değil, görsel hiyerarşisi zayıf sayfalarda ortaya çıkan bir gözlemdir. Net başlıklar, alt başlıklar ve hiyerarşi konulduğunda kullanıcı bu desenden çıkar; F-pattern görmek bir uyarı işaretidir.
+
+</SelfCheck>

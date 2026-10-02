@@ -1,0 +1,36 @@
+---
+import DiagramFigure from "../diagrams/DiagramFigure.astro";
+---
+
+<DiagramFigure
+  label="Bir sayfanın ana bölgeleri"
+  caption="Her bölge hem görsel bir parçadır hem bir landmark: ekran okuyucu kullanıcıları bölgeler arasında doğrudan atlar. Sayfa başına tek bir main bulunur."
+>
+  <svg class="dg-narrow" viewBox="0 0 360 320" role="img" aria-label="Üstte header ve nav, ortada main ve aside, altta footer">
+    <title>Sayfa iskeleti</title>
+
+    <rect class="dg-box dg-box--accent" x="8" y="8" width="344" height="56" rx="8"></rect>
+    <text class="dg-label" x="20" y="30">header</text>
+    <text class="dg-sub" x="20" y="48">logo, ana menü, arama, giriş</text>
+    <rect class="dg-box" x="196" y="22" width="148" height="28" rx="6"></rect>
+    <text class="dg-sub" x="270" y="40" text-anchor="middle">nav</text>
+
+    <rect class="dg-box dg-box--progress" x="8" y="76" width="230" height="170" rx="8"></rect>
+    <text class="dg-label" x="20" y="98">main</text>
+    <text class="dg-sub" x="20" y="116">sayfaya özgü asıl içerik</text>
+    <rect class="dg-box" x="20" y="132" width="206" height="14" rx="3"></rect>
+    <rect class="dg-box" x="20" y="154" width="206" height="14" rx="3"></rect>
+    <rect class="dg-box" x="20" y="176" width="150" height="14" rx="3"></rect>
+    <rect class="dg-box" x="20" y="204" width="206" height="30" rx="4"></rect>
+
+    <rect class="dg-box" x="250" y="76" width="102" height="170" rx="8"></rect>
+    <text class="dg-label" x="262" y="98">aside</text>
+    <text class="dg-sub" x="262" y="116">yan alan</text>
+    <text class="dg-sub" x="262" y="132">içindekiler,</text>
+    <text class="dg-sub" x="262" y="146">ilgili yazılar</text>
+
+    <rect class="dg-box dg-box--accent" x="8" y="258" width="344" height="54" rx="8"></rect>
+    <text class="dg-label" x="20" y="280">footer</text>
+    <text class="dg-sub" x="20" y="298">ikincil bağlantılar, yasal bilgiler</text>
+  </svg>
+</DiagramFigure>

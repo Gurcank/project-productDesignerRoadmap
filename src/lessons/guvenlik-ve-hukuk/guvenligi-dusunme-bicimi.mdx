@@ -1,0 +1,67 @@
+---
+summary: "Güvenlik açıklarının çoğu bir tasarım kararının sonucudur. Tehdit modeli, 'kim, neden, nasıl saldırır?' sorusunu sistemli sorar; saldırı yüzeyi her yeni özellik ve alanla büyür ve sadelik burada bir güvenlik faydası üretir."
+outcomes:
+  - "Tasarım kararlarının güvenlik sonucunu gösteren üç örnek verebilirsin."
+  - "Tehdit modelinin neden tasarım aşamasında yapılması gerektiğini açıklayabilirsin."
+  - "Saldırı yüzeyi ile sadelik arasındaki ilişkiyi söyleyebilirsin."
+minutes: 7
+sources:
+  - label: "OWASP — Threat Modeling Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html"
+  - label: "OWASP Top 10:2025 — Giriş"
+    url: "https://top10.owasp.org/2025/0x00_2025-Introduction"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Güvenlik, "geliştiricinin işi" sanılan ama tasarımcının sürekli içine düştüğü bir alan. Sebep basit: **güvenlik açıklarının çoğu bir tasarım kararının sonucudur.** Birkaç örnek bölümün tamamını özetliyor:
+
+- URL'de sıralı ID göstermek → başkasının kaydına erişim denemesini kolaylaştırır (IDOR).
+- "Bu e-posta kayıtlı değil" hata mesajı → saldırgana hesap listesi verir.
+- Kullanıcıdan gereksiz alan istemek → her toplanan kişisel veri bir yükümlülüktür.
+- Çerez banner'ında "Reddet"i küçültmek → hukuki risk.
+- Bir üçüncü parti bileşen gömmek → o servisin erişimini de kabul etmek.
+
+Bu bölümün amacı seni güvenlik uzmanı yapmak değil; **kendi kararlarının güvenlik sonucunu görebilmen** ve bir güvenlik denetimi raporunu okuyabilmen.
+
+> **Hukuki uyarı:** Hukuki yükümlülüklerle ilgili derslerdeki bilgiler genel bilgilendirmedir, hukuki tavsiye değildir. Gerçek bir projede avukat görüşü almadan hareket etme.
+
+## Threat model
+
+**Threat model (tehdit modeli)**, "kim, neden ve nasıl bize saldırır?" sorusunu sistemli biçimde cevaplamaktır. Güvenliği "her şeyi koru" gibi imkânsız bir hedeften, önceliklendirilebilir bir listeye çevirir. Bir blog ile bir ödeme sistemi aynı tehditlerle karşılaşmaz; korumaların da aynı olması gerekmez. **Tasarım aşamasında yapılması gereken bir çalışmadır;** sonradan yapılırsa mimari değiştirmek gerekir. "Tehdit modelimizde en yüksek risk hesap ele geçirme; MFA'ya önce oradan başlayalım."
+
+## Attack surface
+
+**Attack surface (saldırı yüzeyi)**, bir sisteme dışarıdan dokunulabilecek tüm noktaların toplamıdır. Her yeni özellik, her yeni form alanı, her yeni üçüncü parti entegrasyon yüzeyi büyütür. **Tasarım karşılığı:** kaldırılan bir özellik, korunması gereken bir yüzeyin de kaldırılması demektir. **Sadelik burada bir güvenlik faydası üretir.** "Bu dosya yükleme özelliğini gerçekten istiyor muyuz? Saldırı yüzeyini belirgin biçimde büyütüyor."
+
+<Callout kind="tasarimci">
+
+- **Yeni özellik önerirken "bu saldırı yüzeyini nasıl değiştiriyor?" diye sor** (dosya yükleme, URL girişi, üçüncü parti gömme).
+- **Tehdit modeli toplantısına katıl:** en yüksek riskli kullanıcı akışlarını (giriş, ödeme, hesap kurtarma) sen bilirsin.
+- **Gereksiz özelliği ve alanı kaldırmayı bir güvenlik kazanımı olarak savun.**
+
+</Callout>
+
+<Summary>
+
+- Güvenlik açıklarının çoğu bir tasarım kararının sonucudur: ID gösterimi, hata mesajı, gereksiz veri, çerez banner'ı, üçüncü parti gömme.
+- Tehdit modeli "kim, neden, nasıl saldırır?" sorusudur ve tasarım aşamasında yapılmalıdır.
+- Saldırı yüzeyi her özellik ve alanla büyür; sadelik güvenlik faydası üretir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Güvenlik açıklarının çoğu neden bir tasarım kararının sonucudur? Üç örnek ver.">
+
+Mimari ve akış kararları saldırı imkânlarını belirler. Örnekler: URL'de sıralı ID göstermek (IDOR'u kolaylaştırır), "bu e-posta kayıtlı değil" mesajı (hesap listesi verir), gereksiz form alanı toplamak (her kişisel veri bir yükümlülük ve sızma riski).
+
+</SelfCheck>
+
+<SelfCheck question="Attack surface ile tasarım sadeliği arasındaki ilişki nedir?">
+
+Her yeni özellik, form alanı ve üçüncü parti entegrasyon saldırı yüzeyini büyütür. Kaldırılan bir özellik, korunması gereken bir yüzeyin de kaldırılması demektir; yani sadelik bir güvenlik faydası üretir.
+
+</SelfCheck>

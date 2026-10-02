@@ -1,0 +1,159 @@
+---
+/**
+ * Checkbox, radio and switch side by side, all native inputs. The switch is a
+ * checkbox with role="switch": the browser still supplies keyboard and focus,
+ * and the script only reports what each control just did, so the difference
+ * (a switch acts at once, the others wait for a submit) is visible.
+ */
+---
+
+<div class="controls-demo" data-controls-demo>
+  <p class="controls-demo__hint">Dene: her birine tıkla ya da Tab ve Space ile kullan. Alttaki satır ne olduğunu söyler.</p>
+
+  <div class="controls-demo__grid">
+    <fieldset>
+      <legend>Onay kutusu</legend>
+      <label><input type="checkbox" name="c" value="a" /> Bülten</label>
+      <label><input type="checkbox" name="c" value="b" /> Kampanya e-postası</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Seçim düğmesi</legend>
+      <label><input type="radio" name="r" value="m" /> Aylık</label>
+      <label><input type="radio" name="r" value="y" /> Yıllık</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Anahtar</legend>
+      <label><input type="checkbox" role="switch" name="s" /> Karanlık tema</label>
+    </fieldset>
+  </div>
+
+  <p class="controls-demo__result" role="status" data-controls-result>Henüz bir şey denemedin.</p>
+</div>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>("[data-controls-demo]")) {
+    const result = root.querySelector<HTMLElement>("[data-controls-result]")!;
+
+    root.addEventListener("change", (event) => {
+      const input = event.target as HTMLInputElement;
+      if (input.type === "radio") {
+        result.textContent = "Seçim düğmesi: yalnızca biri seçili kalır. Değer form gönderilince geçerli olur.";
+      } else if (input.getAttribute("role") === "switch") {
+        result.textContent = input.checked
+          ? "Anahtar açıldı: ayar şimdi uygulanır, kaydet butonu beklenmez."
+          : "Anahtar kapandı: ayar şimdi geri alınır.";
+      } else {
+        result.textContent = "Onay kutusu: istediğin kadarı seçilebilir. Değer form gönderilince geçerli olur.";
+      }
+    });
+  }
+</script>
+
+<style>
+  .controls-demo {
+    margin: var(--spacing-6) 0;
+    padding: var(--spacing-4);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-raised);
+  }
+
+  .controls-demo__hint,
+  .controls-demo__result {
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .controls-demo__result {
+    min-height: 1.5em;
+    margin-bottom: 0;
+  }
+
+  .controls-demo__grid {
+    display: grid;
+    gap: var(--spacing-4);
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    margin-block: var(--spacing-4);
+  }
+
+  .controls-demo fieldset {
+    margin: 0;
+    padding: var(--spacing-3);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    min-width: 0;
+  }
+
+  .controls-demo legend {
+    padding-inline: var(--spacing-1);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: var(--c-text);
+  }
+
+  .controls-demo label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    min-height: 44px;
+    font-size: var(--text-sm);
+    color: var(--c-text);
+    cursor: pointer;
+  }
+
+  .controls-demo input {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: 0;
+    flex: none;
+    accent-color: var(--c-action);
+  }
+
+  /* The switch keeps a real checkbox underneath; only the paint changes. */
+  .controls-demo input[role="switch"] {
+    appearance: none;
+    width: 2.5rem;
+    height: 1.5rem;
+    border: 1px solid var(--c-control-border);
+    border-radius: 999px;
+    background-color: var(--c-surface-sunken);
+    position: relative;
+    transition: background-color 0.15s;
+  }
+
+  .controls-demo input[role="switch"]::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 1.05rem;
+    height: 1.05rem;
+    border-radius: 50%;
+    background-color: var(--c-text-secondary);
+    transition: transform 0.15s;
+  }
+
+  .controls-demo input[role="switch"]:checked {
+    background-color: var(--c-action);
+    border-color: var(--c-action);
+  }
+
+  .controls-demo input[role="switch"]:checked::after {
+    transform: translateX(1rem);
+    background-color: var(--c-on-action);
+  }
+
+  .controls-demo input:focus-visible {
+    outline: 2px solid var(--c-focus);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .controls-demo input[role="switch"],
+    .controls-demo input[role="switch"]::after {
+      transition: none;
+    }
+  }
+</style>

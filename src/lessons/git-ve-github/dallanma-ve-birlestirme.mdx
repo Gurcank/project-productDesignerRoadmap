@@ -1,0 +1,77 @@
+---
+summary: "Git'in asıl gücü: birden fazla kişinin birbirini engellemeden çalışabilmesi. Branch, merge, rebase, conflict ve cherry-pick. Dal ne kadar uzun yaşarsa çakışma o kadar büyür; rebase'in altın kuralı: paylaşılan dalda yapma."
+outcomes:
+  - "Branch ve merge'in neden gerekli olduğunu söyleyebilirsin."
+  - "Rebase'in altın kuralını ve nedenini açıklayabilirsin."
+  - "Merge conflict'in neden normal olduğunu ve uzun dallarda neden büyüdüğünü bilirsin."
+minutes: 8
+sources:
+  - label: "Pro Git — Temel dallanma ve birleştirme"
+    url: "https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging"
+  - label: "Pro Git — Rebasing"
+    url: "https://git-scm.com/book/en/v2/Git-Branching-Rebasing"
+  - label: "Git — cherry-pick"
+    url: "https://git-scm.com/docs/git-cherry-pick"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import BranchGraph from "~/components/lesson/BranchGraph.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Üç kişi aynı projede çalışıyor. Biri yeni bir tasarımı kodluyor, biri bir hatayı düzeltiyor, biri bir özelliği deniyor. Hiçbiri ötekinin yarım işiyle karşılaşmak istemiyor. Çözüm: dallar.
+
+<BranchGraph />
+
+## Branch
+
+**Branch (dal)**, ana koddan ayrılan, bağımsız olarak üzerinde çalışılabilen bir çizgidir. Yarım kalmış işin çalışan koda karışmamasını sağlar. Herkes kendi dalında çalışır, işi bitince ana dala birleştirir. Ana dalın adı genelde `main`'dir. "Bu tasarım değişikliği için ayrı bir dal açalım; hazır olunca main'e alırız."
+
+## Merge
+
+**Merge (birleştirme)**, bir daldaki değişikliklerin başka bir dala katılmasıdır; dalın amacına ulaşması. **Fast-forward merge**, ana dal hiç ilerlememişse yapılan basit birleştirmedir; aksi hâlde bir "birleştirme commit'i" oluşur. "Dalı main'e merge ettim; deploy tetiklenecek."
+
+## Rebase
+
+**Rebase (yeniden temellendirme)**, bir daldaki commit'leri sanki ana dalın güncel hâlinden başlamış gibi yeniden yazmaktır. Geçmişi düz ve okunabilir tutar: birleştirme commit'leri birikmez. "Main'den rebase al, sonra PR'ı güncelle."
+
+**Rebase geçmişi yeniden yazar.** Başkalarının da kullandığı paylaşılan bir dalda rebase yapmak herkesin geçmişini bozar. **Altın kural: paylaşılan dallarda rebase yapma, kendi dalında yap.** Merge ile rebase tartışması ekiplerde bitmeyen bir tercih tartışmasıdır; ikisi de geçerlidir.
+
+## Conflict
+
+**Merge conflict (çakışma)**, iki kişinin aynı dosyanın aynı satırlarını farklı biçimde değiştirmesi ve Git'in hangisinin doğru olduğuna karar verememesidir. Git'in "bunu ben çözemem, sen karar ver" demesi; kötü değil, normaldir. Ama **dallar ne kadar uzun yaşarsa çakışma o kadar büyür,** çünkü iki taraf o süre boyunca birbirinden habersiz uzaklaşır. Kısa ömürlü dallar bu yüzden önerilir. "Conflict çıktı; iki kişi de aynı bileşene dokunmuş, birlikte bakalım."
+
+## Cherry-pick
+
+**Cherry-pick (seçerek alma)**, bir daldaki tek bir commit'i dalın tamamını almadan başka bir dala kopyalamaktır. Acil düzeltmelerde işe yarar: kritik bir düzeltmeyi, o dalın geri kalanı hazır değilken canlıya almak. "Yalnızca o düzeltmeyi cherry-pick'leyip release dalına alalım."
+
+<Callout kind="tasarimci">
+
+- **Uzun yaşayan tasarım dallarından kaçın:** küçük, sık birleşen PR'lar çakışmayı azaltır.
+- **Çakışmanın tasarım dosyasında değil kodda çıktığını** bil; aynı bileşene iki kişinin dokunduğunu koordine et.
+- **"Hotfix" duyduğunda** cherry-pick'in kritik düzeltmeyi hızlı almak için kullanıldığını hatırla.
+
+</Callout>
+
+<Summary>
+
+- Dal, ana koddan bağımsız çalışma çizgisidir; merge işi ana dala katar.
+- Rebase geçmişi yeniden yazar: paylaşılan dalda yapma, kendi dalında yap.
+- Conflict normaldir; uzun yaşayan dallarda büyür.
+- Cherry-pick tek bir commit'i başka dala kopyalar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Merge conflict kötü bir şey mi? Neden uzun ömürlü dallarda daha büyük olur?">
+
+Kötü değil, normaldir: Git'in "bunu ben çözemem, sen karar ver" demesidir. Uzun ömürlü dallarda iki taraf o süre boyunca birbirinden habersiz uzaklaşır; ne kadar uzun ayrı kalırlarsa o kadar çok satır çakışır.
+
+</SelfCheck>
+
+<SelfCheck question="Rebase'in altın kuralı nedir ve neden?">
+
+Paylaşılan dallarda rebase yapma, kendi dalında yap. Rebase geçmişi yeniden yazar; başkalarının kullandığı bir dalda yapılırsa herkesin geçmişi bozulur.
+
+</SelfCheck>

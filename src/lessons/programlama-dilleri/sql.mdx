@@ -1,0 +1,69 @@
+---
+summary: "Ne yapılacağını değil, ne istendiğini söylediğin dil. Bir tasarımcı için en yüksek getirili teknik yatırımlardan biri: ürün metriklerini kendin çıkarabilmek."
+outcomes:
+  - "SQL'in bildirimsel olmasının ne demek olduğunu söyleyebilirsin."
+  - "Her filtre ve sıralamanın bir sorgu olduğunu ve maliyetinin olduğunu açıklayabilirsin."
+  - "'Toplam sonuç sayısı'nın neden pahalı olabileceğini bilirsin."
+minutes: 6
+sources:
+  - label: "PostgreSQL — SQL'e giriş"
+    url: "https://www.postgresql.org/docs/current/tutorial-sql.html"
+  - label: "W3Schools — SQL öğreticisi"
+    url: "https://www.w3schools.com/sql/"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı. Veritabanı kategorisi konuyu ayrıntılı işler."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+SQL, diğerlerinden farklı bir dildir: **ne yapılacağını** değil, **ne istendiğini** söylersin. "Şu koşula uyan kayıtları, şu sıraya göre getir" dersin; nasıl bulacağına veritabanı karar verir. Veritabanı kategorisi bu konunun ayrıntısını kapsar; burada SQL'i bir dil olarak konumlandırıyoruz.
+
+## Nerede karşına çıkar
+
+Her yerde. Arkada ilişkisel bir veritabanı varsa (çoğu üründe vardır) veri oradan SQL ile çıkar. Geliştirici doğrudan yazmasa bile (ORM kullanıyorsa) üretilen şey SQL'dir.
+
+Senin açından en görünür olduğu yer **analizdir:** ürün metriklerini kendin çıkarabilmek, "kaç kullanıcı şu adımda düşüyor?" sorusunu birine sormadan cevaplayabilmek demektir.
+
+## Güçlü ve zayıf yanları
+
+**İyi yaptığı:** bildirimseldir (ne istediğini yazarsın, nasıl alınacağını sistem çözer), temel düzeyde her üründe benzer çalışır, analiz için güçlüdür (gruplama, toplama, birleştirme tek sorguda).
+
+**Kötü yaptığı:**
+
+- **Yazması kolay, hızlı yazması zordur.** Aynı sonucu veren iki sorgunun maliyeti bin kat farklı olabilir.
+- **Ürünler arası farklar vardır.** "Standart SQL" teoride var; pratikte her veritabanının kendi eklentileri bulunur.
+- **Yanlışlıkla ağır sorgu yazmak kolaydır** ve bu canlı sistemi yavaşlatabilir.
+
+**Alternatifler:** SQL'i dilin nesneleriyle yazma katmanı olan **ORM** (kolaylaştırır ama ne ürettiğini gizlediği için tuzaklara yol açabilir); SQL'in yerine değil, önüne geçen API katmanı **GraphQL**.
+
+<Callout kind="tasarimci">
+
+- **Temel SQL öğrenmek, bir Product Designer için en yüksek getirili teknik yatırımlardan biridir.** "Bu ekrana kaç kişi geliyor?" sorusunu kendin cevaplayabilirsin.
+- **Her filtre ve sıralama bir sorgudur.** Tabloya beşinci filtreyi eklemek bedava değildir; hangilerinin gerçekten kullanıldığını sormak tasarımcının işidir.
+- **"Toplam sonuç sayısı" pahalı olabilir.** "10.000+" göstermek, tam sayı vermekten çok daha ucuza gelebilir.
+
+</Callout>
+
+<Summary>
+
+- SQL bildirimseldir: ne istediğini söylersin, nasıl alınacağına veritabanı karar verir.
+- Analiz için güçlüdür; tasarımcının kendi metriklerini çıkarması için değerli bir yatırımdır.
+- Her filtre ve sıralama bir sorgudur ve maliyeti vardır; tam sayım pahalı olabilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Tabloya yeni bir filtre eklemek neden bedava değildir?">
+
+Her filtre ve sıralama bir veritabanı sorgusudur; sorgunun maliyeti ve veritabanı üzerindeki yükü vardır. Hangi filtrelerin gerçekten kullanıldığını sormak gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="'Toplam sonuç sayısı'nı göstermenin ucuz bir alternatifi nedir?">
+
+Tam sayı yerine "10.000+" gibi bir üst sınır göstermek; tam sayım çok daha pahalıya gelebilir.
+
+</SelfCheck>

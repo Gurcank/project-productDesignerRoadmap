@@ -1,0 +1,61 @@
+---
+summary: "Sayfanın iskeleti: element, tag ve attribute ne demek, semantic HTML neden herkesin ortak temeli ve elemanlar belge akışında nasıl dizilir."
+outcomes:
+  - "Element, tag ve attribute'u ayırt edip bir geliştiriciyle bu kelimelerle konuşabilirsin."
+  - "Semantic HTML'in erişilebilirlik, SEO ve bakım için neden ortak temel olduğunu söyleyebilirsin."
+  - "Belge akışını ve akıştan çıkarmanın bedelini açıklayabilirsin."
+minutes: 7
+sources:
+  - label: "MDN — HTML temelleri"
+    url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax"
+  - label: "MDN — Normal flow (formatting contexts)"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flow_layout/Introduction_to_formatting_contexts"
+skipTerms: ["layout"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bu bölümün amacı sana kod yazdırmak değil. Bir geliştirici "bu bileşen client'a düşüyor, o yüzden bundle büyüyor" dediğinde ne dendiğini anlaman ve "bu bölümü server component yapabilir miyiz?" diye sorabilmen. Bu yüzden söz dizimi yok; her terim **karar verirken işine yarayacağı kadar** anlatılıyor.
+
+Bölüm iki parçadan oluşur: ilk dokuz ders eskimeyen kavramlardır (HTML, CSS, bileşenler: bunlar on yıl sonra da aynı). Son dört ders (rendering, build, performans, SEO) hızlı değişir; oralarda "değişken bilgi" uyarıları sık çıkar.
+
+## Element, tag, attribute
+
+Sayfadaki her parça bir **element**'tir: bir başlık, bir buton, bir görsel. **Tag**, o elementi işaretleyen kod parçasıdır. **Attribute (nitelik)** ise elemente eklenen ek bilgidir: bağlantı adresi, alt metin, tür.
+
+Bu üç kelime konuşma birimidir. "Bu elemente `aria-label` niteliği ekle" cümlesinde geçen şey budur. Kod incelemesinde ve tarayıcı DevTools'unun Elements sekmesinde sürekli karşına çıkar. "Bu görsele `loading="lazy"` niteliği eklenmiş mi kontrol edelim."
+
+## Semantic HTML
+
+Her öğe için işlevini ifade eden **doğru elemanı** kullanmak: başlık için başlık elemanı, buton için buton, gezinme için nav. Bir `div` yığını görsel olarak her şeyi yapabilir ama makineler için hiçbir şey ifade etmez. Erişilebilirlik bölümünde gördüğün gibi, bu seçim ekran okuyucunun, arama motorunun ve sonraki geliştiricinin sayfayı anlamasını belirler. Yani erişilebilirliğin ve SEO'nun temelini HTML kurar.
+
+## Belge akışı
+
+**Document flow (belge akışı)**, hiçbir özel yerleşim kuralı verilmediğinde elemanların dizilme biçimidir: blok elemanlar alt alta, satır içi elemanlar yan yana. CSS'in çoğu bu varsayılan akışı **değiştirmekle** ilgilidir.
+
+Bir elemanı akıştan çıkarmak (absolute, fixed konumlandırma) güçlüdür ama responsive davranışı elle yönetmeyi gerektirir; bu yüzden ölçülü kullanılır. "Bu öğe akıştan çıkarılmış; o yüzden altındaki içerik onun altına kaymıyor, üstüne biniyor."
+
+<Callout kind="tasarimci">
+
+- **Tasarımını elemanların adıyla düşün:** bu bir başlık, bu bir liste, bu bir buton. "Her şey bir kutu" diye teslim etme.
+- **Akıştan çıkan öğeleri teslimde işaretle** (sabit çubuk, üst üste binen rozet) ve dar ekranda ne olacağını yaz.
+
+</Callout>
+
+<Summary>
+
+- Element sayfanın bir parçası, tag onu işaretleyen kod, attribute ek bilgidir.
+- Semantic HTML erişilebilirlik, SEO ve bakımın ortak temelidir.
+- Belge akışı varsayılan dizilimdir; akıştan çıkarmak güçlü ama elle yönetim gerektirir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Element, tag ve attribute arasındaki fark nedir?">
+
+Element sayfadaki bir parçadır (başlık, buton). Tag onu işaretleyen kod parçasıdır. Attribute elemente eklenen ek bilgidir (bağlantı adresi, alt metin, tür).
+
+</SelfCheck>

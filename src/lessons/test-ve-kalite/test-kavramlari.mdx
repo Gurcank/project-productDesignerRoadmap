@@ -1,0 +1,68 @@
+---
+summary: "Test coverage 'kod çalıştırıldı mı?'yı ölçer, 'doğru mu?'yu değil; hedefe dönüşünce bozulur. Flaky test altyapının en yıkıcı sorunudur: düzelt ya da karantinaya al, yeniden denemeyle örtme. Mock, stub ve fixture testi hızlı tutar; aşırı mock'lama tehlikelidir."
+outcomes:
+  - "Coverage'ın neyi ölçüp neyi ölçmediğini ve neden hedef olmaması gerektiğini söyleyebilirsin."
+  - "Flaky test'in neden yıkıcı olduğunu ve doğru tepkiyi açıklayabilirsin."
+  - "Mock/stub/fixture'ı ve aşırı mock'lamanın riskini bilirsin."
+minutes: 6
+sources:
+  - label: "Martin Fowler — Test Coverage"
+    url: "https://martinfowler.com/bliki/TestCoverage.html"
+  - label: "Martin Fowler — Kararsız (non-deterministic) testler"
+    url: "https://martinfowler.com/articles/nonDeterminism.html"
+  - label: "Martin Fowler — Mocks Aren't Stubs"
+    url: "https://martinfowler.com/articles/mocksArentStubs.html"
+skipTerms: ["Scope","scope","kapsam"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+PR'da bir yorum: "Bu değişiklik kapsamı %84'ten %81'e düşürüyor." Bu ne demek ve ne kadar önemli?
+
+## Test coverage
+
+**Test coverage (test kapsamı)**, kodun ne kadarının testler tarafından çalıştırıldığını gösteren yüzdedir. Test edilmemiş bölgeleri görünür kılar. Ama **ölçtüğü şey "kod çalıştırıldı mı", "doğru mu" değil:** %100 kapsama sahip bir kod tabanı yine de yanlış çalışabilir. "Kapsam %85 ama kritik ödeme akışı test edilmemiş; sayı yanıltıyor."
+
+**Kapsam bir hedefe dönüştürüldüğünde bozulur** (Goodhart yasası): ekip, değer üretmeyen ama yüzdeyi yükselten testler yazmaya başlar. Kapsam bir **teşhis aracıdır,** bir hedef değil.
+
+## Flaky test
+
+**Flaky test (kararsız test)**: kod değişmediği hâlde bazen geçen, bazen kalan test. **Test altyapısının en yıkıcı sorunudur.** Bir test rastgele kaldığında ekip "yine takıldı, tekrar çalıştır" demeye başlar ve bu alışkanlık oluştuğu anda **tüm test setine olan güven ölür;** gerçek bir hata olduğunda da aynı refleksle geçilir. E2E testlerde çok yaygındır; genelde zamanlama, paylaşılan durum ya da ağ kaynaklıdır. "Bu test kararsız; ya düzeltelim ya devre dışı bırakalım, ama 'tekrar çalıştır' demeyi bırakalım." Kararsız bir testi otomatik yeniden denemeye almak sorunu gizler, çözmez: **düzelt ya da karantinaya al.**
+
+## Mock, stub, fixture
+
+**Mock/stub**, testte gerçek bir bağımlılığın (API, veritabanı, ödeme servisi) yerine konan sahte versiyondur. **Fixture**, testin kullandığı hazır örnek veridir. Testi hızlı ve öngörülebilir kılar: gerçek bir ödeme servisine bağlanmadan ödeme akışı test edilebilir. "API'yi mock'layalım; test gerçek sunucuya bağlı olmasın."
+
+**Aşırı mock'lama tehlikelidir:** her şey taklit edilirse test gerçek sistemi değil kendi kurgusunu doğrular. Fixture verisi de gerçekçi olmalıdır: seed verisi için geçerli kural burada da geçer; uzun isimler, boş alanlar ve uç değerler içermelidir.
+
+<Callout kind="tasarimci">
+
+- **Fixture verisine uç durumlarını ver:** uzun isim, boş alan, çok büyük sayı, yabancı karakter.
+- **Kapsam yüzdesinin yerine "kritik akışlar test edilmiş mi?" sorusunu sor.**
+- **Kararsız testlerin ekibi nasıl etkilediğini** (yeniden çalıştır alışkanlığı) fark et ve düzeltilmesini savun.
+
+</Callout>
+
+<Summary>
+
+- Coverage kodun çalıştırıldığını ölçer, doğruluğunu değil; hedef olunca bozulur.
+- Flaky test güveni öldürür; düzelt ya da karantinaya al, yeniden denemeyle örtme.
+- Mock/stub testi hızlandırır ama aşırı mock'lama testi anlamsız kılar; fixture gerçekçi olmalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Test coverage neyi ölçer, neyi ölçmez? Hedefe dönüştüğünde ne olur?">
+
+"Kod çalıştırıldı mı"yı ölçer, "doğru mu"yu ölçmez. %100 kapsamlı bir kod yine de yanlış çalışabilir. Hedefe dönüştüğünde ekip değer üretmeyen ama yüzdeyi yükselten testler yazmaya başlar; teşhis aracı olmaktan çıkar.
+
+</SelfCheck>
+
+<SelfCheck question="Flaky test neden test altyapısının en yıkıcı sorunudur? Doğru tepki nedir?">
+
+Ekip "yine takıldı, tekrar çalıştır" demeye başlar ve tüm test setine olan güven ölür; gerçek bir hata olduğunda da aynı refleksle geçilir. Doğru tepki: düzelt ya da karantinaya al, otomatik yeniden denemeyle örtme.
+
+</SelfCheck>

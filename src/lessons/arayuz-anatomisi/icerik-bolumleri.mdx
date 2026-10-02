@@ -1,0 +1,129 @@
+---
+summary: "Ürünü anlatan bölümlerin kalıpları: feature grid, bento, alternating, timeline, akordeon, sekmeler, carousel, marquee, SSS. Her kalıbın ne zaman işe yaradığı ve ne zaman jenerikleştiği."
+outcomes:
+  - "Feature grid'in neden jenerikleştiğini ve üç çıkış yolunu söyleyebilirsin."
+  - "Numaralandırmanın ne zaman uygun olduğunu açıklayabilirsin."
+  - "Accordion, tabs ve carousel'in kısıtlarını sayabilirsin."
+  - "Hareketli bölümlerin (carousel, marquee, scrollytelling) hangi erişilebilirlik ölçütüne tabi olduğunu söyleyebilirsin."
+minutes: 11
+sources:
+  - label: "NN/g — Designing Effective Carousels"
+    url: "https://www.nngroup.com/articles/designing-effective-carousels/"
+  - label: "W3C — WCAG 2.2: Pause, Stop, Hide (2.2.2)"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html"
+  - label: "W3C WAI — Carousels Tutorial"
+    url: "https://www.w3.org/WAI/tutorials/carousels/"
+  - label: "W3C WAI-ARIA APG — Accordion Pattern"
+    url: "https://www.w3.org/WAI/ARIA/apg/patterns/accordion/"
+  - label: "W3C WAI-ARIA APG — Tabs Pattern"
+    url: "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/"
+flags: ["emin-degil"]
+includeTerms: ["tabs", "accordion", "timeline", "callout", "marquee", "gallery", "masonry", "step", "section"]
+skipTerms: ["process","yol haritası"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Hero'dan sonra sayfa ürünü anlatmaya başlar. Burada sayfanın çoğu **içerik bölümleri** kalıplarından oluşur. Bu kalıpların adlarını bilmek sayfa kurgusunu hızlıca konuşabilmek demektir; ama her kalıbın bir bedeli ve bir jenerikleşme tehlikesi de vardır.
+
+## Özellikleri anlatan kalıplar
+
+**Feature grid (özellik ızgarası)**, özelliklerin eşit boyutlu kutularda, genelde ikon + başlık + kısa açıklama biçiminde dizildiği bölümdür. Çok sayıda özelliği taranabilir sunar ve neredeyse her landing page'de vardır. Ama bu, tasarımın **en jenerikleşen kalıbıdır**: eşit üç sütunda ikon, başlık ve iki satır gri metin, "AI ile üretilmiş" hissinin en yaygın kaynağıdır. Kaçınma yolları:
+
+- Kartları eşit ağırlıkta yapma (bento grid).
+- Her karta gerçek bir görsel veya ekran görüntüsü koy.
+- Sayıyı üçe zorlama; içeriğin gerektirdiği kadar yap.
+
+**Bento grid**, farklı boyutlardaki kutuların, Japon bento kutusu gibi iç içe geçmiş bir ızgarada dizildiği yerleşimdir. Eşit kartların monotonluğunu kırar ve **hiyerarşi kurar**: önemli özellik büyük kutuda, ikincil olanlar küçükte. Bento da bir kalıptır ve fazla kullanıldığında o da jenerikleşir; boyut farkının bir **gerekçesi** (önem sırası) olmalı, rastgele olmamalı. Kalıbın kesin çıkış tarihi ve kimin yaygınlaştırdığı kaynaklarda net değil.
+
+**Alternating section (dönüşümlü bölüm)**, metin ve görselin sırayla yer değiştirdiği bölüm dizisidir: bir bölümde metin solda, sonrakinde sağda. Her özelliği derinlemesine anlatmaya izin verir ve ekran görüntüsü gibi görsel kanıta yer bırakır. Mobilde hepsi tek sütuna düşer ve dönüşümlü etki kaybolur; o durumda sıranın mantıklı olması (önce görsel mi, önce metin mi) ayrıca kararlaştırılmalı.
+
+## Sıralı anlatımlar
+
+**Timeline (zaman çizelgesi)**, olayların kronolojik sırayla bir eksen üzerinde gösterildiği bölümdür: şirket tarihçesi, yol haritası, sipariş takibi. **Step (process) section** ise "nasıl çalışır" tipi, numaralandırılmış adımlardan oluşur ve karmaşık bir hizmeti anlaşılır kılar: "kaydol → veri bağla → raporu al."
+
+Numaralandırma (01/02/03) yalnızca **gerçekten sıralı** içerikte anlamlıdır. Sırasız özellikleri numaralandırmak yaygın bir jenerikleşme kalıbıdır: okuyucuya olmayan bir sıra vaat eder.
+
+## Açılır ve değişen içerik
+
+<Compare>
+<Pane title="Accordion">
+
+- Başlığa tıklayınca altındaki içerik açılır
+- Uzun içeriği taranabilir yapar (SSS)
+- Kritik bilgi içine saklanmaz
+
+</Pane>
+<Pane title="Tabs">
+
+- Alternatif içerikler aynı alanda değişir
+- Aylık/yıllık fiyat, sektör bazlı anlatım
+- SEO için kritik içerik sekmede gizlenmez
+
+</Pane>
+</Compare>
+
+**Accordion (akordeon)**, başlıklara tıklandığında altındaki içeriğin açılıp kapandığı listedir ve **progressive disclosure**'ın en yaygın uygulamasıdır. "SSS'yi accordion yapalım; 12 soru açık hâlde sayfayı çok uzatıyor." Kapalı içerik okunmadığı için kritik bilgiyi içine saklama. Ok ya da artı ikonu durumunu açıkça değiştirmeli ve klavyeyle açılabilmelidir.
+
+**Tabs (sekmeler)** birbirine alternatif içerikleri aynı yerde sunar. Dikkat: *tabs* aynı sayfa içinde içerik değiştirir, önceki derste gördüğün *tab bar* ise sayfa değiştirir. Ayrıca sekmelerdeki içeriği arama motoru okuyabilir ama kullanıcı görmeyebilir; SEO açısından kritik içeriği sekmeye gizleme.
+
+## Hareketli bölümler
+
+**Carousel / slider**, içeriğin yatay olarak sırayla gösterildiği dizidir. Dar alanda çok içerik sunar, ama etkinliği düşüktür: ilk slayttan sonrasının görülme oranı hızla düşer ve otomatik dönenler kullanıcıyı okurken keser. **Kritik mesajı carousel'e koymak, onu gizlemekle aynıdır.** "Hero carousel yerine tek güçlü bir mesaj koyalım; carousel'de üçüncü slaytı kimse görmüyor." Otomatik dönen carousel, WCAG'in **Pause, Stop, Hide** ölçütüne (2.2.2) tabidir: durdurma kontrolü gerekir. Klavye ve dokunmatikle de gezilebilmelidir.
+
+**Marquee (kayan şerit)**, yatay olarak sürekli akan içerik şeridir, çoğunlukla logolar ya da kısa metinler; logo cloud'un hareketli sürümüdür. Aynı Pause/Stop/Hide ölçütüne tabidir ve `prefers-reduced-motion` açıkken durmalıdır. Okunması gereken metni marquee'ye koyma. "Logo cloud'u marquee yapalım ama üzerine gelince dursun."
+
+**Sticky scroll / scrollytelling**, kullanıcı kaydırdıkça bir tarafın sabit kalıp diğerinin değiştiği ya da bir animasyonun kaydırmaya bağlı ilerlediği bölümdür. Bir süreci adım adım anlatmak için güçlüdür. Kaydırma davranışını ele geçirmek (*scroll hijacking*) kullanıcıyı rahatsız eder ve erişilebilirlik sorunları çıkarır; hareket azaltma tercihi için sade bir alternatif gerekir.
+
+**Gallery / masonry.** Gallery bir görsel koleksiyonudur; **masonry** farklı yükseklikteki öğelerin boşluk bırakmadan dizildiği tuğla benzeri yerleşimdir; **lightbox** bir görsele tıklanınca açılan tam ekran görüntüleyicidir. Masonry farklı oranlı görselleri kırpmadan gösterir ama okuma sırası görsel sırayla uyuşmayabilir: klavye ve ekran okuyucu sırasını kontrol et.
+
+## SSS ve vurgu kutusu
+
+**FAQ**, sık sorulan soruların listesidir; satın alma öncesi tereddütleri karşılar ve destek yükünü azaltır. En etkili FAQ, **gerçek destek taleplerinden** türetilendir: "FAQ'yu destek ekibinin en sık aldığı 8 soruyla dolduralım, tahminle değil." Bir sorunun FAQ'ya girmesi çoğu zaman akışta bir eksiklik olduğunun işaretidir; mümkünse cevabı akışın içine yerleştir.
+
+**Callout (vurgu kutusu)**, metin akışı içinde dikkat çekmek için ayrılmış kutudur: ipucu, uyarı, not. Bu sitedeki "Tasarımcı olarak sen" kutuları buna örnektir. Türleri (info, warning, danger) semantik renklerle ayrılır ama yalnızca renkle değil, ikonla da.
+
+<Callout kind="tasarimci">
+
+- **Feature grid'i varsayılan seçme.** Önce içeriğin hiyerarşisini sor: biri baskınsa bento ya da alternating düşün.
+- **Numarayı yalnızca gerçek sıra için kullan.**
+- **Her otomatik hareketli bölüm için durdurma kontrolünü ve hareket azaltma davranışını tasarla.**
+- **Kritik mesajı accordion, tab ya da carousel içine koyma.**
+- **FAQ'yu gerçek sorulardan yaz;** tekrar eden soru bir akış sorununu işaret eder.
+
+</Callout>
+
+<Summary>
+
+- Feature grid jenerikleşir; çıkış yolları bento, gerçek görsel ve içeriğe göre sayıdır.
+- Alternating section her özelliği derinlemesine, görsel kanıtla anlatır; mobilde sırası ayrıca düşünülür.
+- 01/02/03 yalnızca gerçekten sıralı içerikte kullanılır.
+- Accordion ve tabs içeriği gizler; kritik bilgi ve SEO içeriği içlerine konmaz. Tabs sayfa içinde, tab bar sayfalar arasında geçer.
+- Carousel ve marquee Pause/Stop/Hide ölçütüne tabidir; kritik mesaj carousel'e konmaz.
+- FAQ gerçek destek taleplerinden yazılır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Feature grid'in en yaygın jenerikleşme biçimi nedir ve nasıl kaçınılır?">
+
+Eşit üç sütunda ikon + başlık + iki satır gri metin. Kaçınmak için kartları eşit ağırlıkta yapmamak (bento), her karta gerçek görsel koymak, sayıyı üçe zorlamak yerine içeriğin gerektirdiği kadar yapmak ya da alternating section'a geçmek.
+
+</SelfCheck>
+
+<SelfCheck question="Carousel'e kritik mesaj koymak neden risklidir? Otomatik dönen carousel hangi ölçüte tabidir?">
+
+İlk slayttan sonrasının görülme oranı hızla düşer; kritik mesajı carousel'e koymak onu gizlemekle aynıdır. Otomatik dönenler WCAG'in Pause, Stop, Hide ölçütüne (2.2.2) tabidir: durdurma kontrolü gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="01/02/03 numaralandırması ne zaman uygundur?">
+
+İçerik gerçekten sıralı olduğunda (nasıl çalışır, süreç adımları). Sırasız özellikleri numaralandırmak okuyucuya olmayan bir sıra vaat eder.
+
+</SelfCheck>

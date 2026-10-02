@@ -1,0 +1,104 @@
+---
+summary: "Adı sık geçen ama üzerinde durulmayan küçük bileşenler: avatar, divider, icon button, FAB, başa dön, okuma ilerleme çubuğu ve alıntı/kod/kbd. Bölüm sonunda 25 soruluk genel test."
+outcomes:
+  - "Avatar için neden bir fallback tasarlanması gerektiğini söyleyebilirsin."
+  - "Çizgi yerine boşluğun ne zaman daha iyi ayırıcı olduğunu açıklayabilirsin."
+  - "İkon buton için zorunlu üç şeyi sayabilirsin."
+  - "Arayüz Anatomisi bölümünün kavramlarını bir testle yoklayabilirsin."
+minutes: 7
+sources:
+  - label: "W3C — WCAG 2.2: Target Size (Minimum)"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html"
+  - label: "W3C WAI — Images Tutorial"
+    url: "https://www.w3.org/WAI/tutorials/images/"
+  - label: "MDN — <dialog> (Esc ve odak davranışı için)"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog"
+includeTerms: ["avatar", "divider"]
+skipTerms: ["header","fallback"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bu bölümün son dersi küçük parçalara ayrılmış. Ama küçük, önemsiz demek değil: en çok erişilebilirlik hatası küçük parçalarda çıkar.
+
+## Parçalar
+
+**Avatar**, bir kişiyi ya da kurumu temsil eden küçük, genelde dairesel görseldir. Kişiyi hızlı tanıtır. Fotoğraf yoksa bir **fallback** gerekir: baş harfler, üretilmiş bir renk ya da varsayılan ikon. Tasarlamazsan kırık görsel ikonu çıkar. "Fotoğrafı olmayan kullanıcılar için baş harfli fallback tasarlayalım; renk isimden türetilsin."
+
+**Divider (ayırıcı çizgi)**, içerik grupları arasına konan ince çizgidir. Ama **çoğu zaman boşluk daha iyi bir ayırıcıdır**: çizgi görsel gürültü ekler, boşluk eklemez; ayrıca yakınlık ilkesiyle aynı ayrımı yapar. Çizgi, boşluğun yetmediği yoğun arayüzlerde (tablo satırları, ayar listeleri) anlamlıdır. "Bu çizgileri kaldırıp aralığı 16'dan 32'ye çıkaralım."
+
+**Icon button**, yalnızca ikondan oluşan butondur. Yer kazandırır; bedeli **anlam belirsizliği ve erişilebilirlik riski**. Üç şey zorunludur:
+
+1. **Erişilebilir ad** (ekran okuyucu için).
+2. **Tooltip** ya da başka bir görsel açıklama.
+3. **Yeterli dokunma hedefi:** ikon 16px kalabilir, ama tıklanabilir alan en az 24×24 olmalı (dolguyla büyütülür).
+
+Yaygın olmayan ikonlarda metin etiket kullanmak daha güvenlidir. "İkon 16px kalsın, tıklama alanı 40px olsun."
+
+**FAB (floating action button)**, ekranın, genelde sağ alt köşesinde yüzen dairesel birincil eylem butonudur ve Material Design'dan yaygınlaşmıştır. Ana eylemi her an erişilebilir tutar: "Mobilde 'Yeni ekle' için FAB koyalım; liste uzun, üstteki butona dönmek zor." İçeriğin son satırını kapatabilir; alt boşluk bırak. Yalnızca ikonluysa erişilebilir adı gerekir.
+
+**Back to top (başa dön)**, uzun sayfalarda sayfanın başına döndüren küçük butondur ve genelde belirli bir kaydırma mesafesinden sonra belirir: "İki ekran boyu kaydırınca belirsin, sağ altta."
+
+**Scroll indicator (okuma ilerleme çubuğu)**, sayfanın ne kadarının okunduğunu gösteren, genelde üstte duran ince çubuktur. "Daha ne kadar var?" sorusunu cevaplar. "Makale sayfasına üstte 3px'lik okuyucu çubuğu ekleyelim."
+
+**Blockquote, code block, kbd.** Blockquote öne çıkarılmış alıntıdır; code block kod parçasıdır (genelde renklendirilmiş ve kopyalanabilir); `kbd` klavye tuşunu gösteren küçük etikettir (`Ctrl` `K`). İçerik türlerini görsel olarak ayırır. Kod bloğunda **kopyala butonu** neredeyse zorunlu bir beklentidir: "Kod bloklarına kopyala butonu ve dil etiketi ekleyelim."
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitede uzun bir dersten çıkıp geri döndüğünde kaldığın kaydırma konumu hatırlanır; yani "başa dön" butonuna da, okuma ilerleme çubuğuna da ihtiyaç duyulmamıştır. Bu bir tercih, kural değil: çok uzun içeriklerde bu iki parça hâlâ işe yarar.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Avatar için fallback çiz:** baş harf, renk, ikon.
+- **Önce boşluk dene,** çizgiyi gerekirse ekle.
+- **Her icon button için ad, tooltip ve 24×24 hedefi yaz.**
+- **FAB ve sticky öğeler için alt boşluk bırak.**
+
+</Callout>
+
+<Summary>
+
+- Avatar için fotoğraf yoksa fallback tasarlanır.
+- Boşluk çoğu zaman çizgiden iyi bir ayırıcıdır; çizgi yoğun arayüzlerde anlamlıdır.
+- Icon button için erişilebilir ad, tooltip ve en az 24×24 hedef zorunludur.
+- FAB ve başa dön içeriği kapatmamalı; kod bloğunda kopyala butonu beklenir.
+
+</Summary>
+
+## Bölüm testi: Arayüz Anatomisi
+
+Aşağıdaki sorular bölümün tamamını kapsar. Her cevap açılır kutudadır; önce kendin cevapla.
+
+<SelfCheck question="İkon buton kullanırken zorunlu olan üç şey nedir?">
+
+Erişilebilir ad, tooltip ya da başka bir görsel açıklama ve yeterli dokunma hedefi (tıklanabilir alan en az 24×24; ikon dolguyla küçük kalabilir).
+
+</SelfCheck>
+
+<SelfCheck question="Divider yerine çoğu zaman ne kullanmak daha iyidir ve neden?">
+
+Boşluk. Çizgi görsel gürültü ekler, boşluk eklemez ve yakınlık ilkesiyle aynı ayrımı yapar. Çizgi, boşluğun yetmediği yoğun arayüzlerde (tablo satırları, ayar listeleri) anlamlıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Header ile hero'nun, tooltip ile popover'ın ve badge ile chip'in farkını birer cümleyle söyle.">
+
+Header üstteki ince şerit, hero onun altındaki tanıtım alanıdır. Tooltip kısa ve tıklanmaz, popover tıklamayla açılır ve etkileşimli içerik taşır. Badge durumu gösterir ve tıklanmaz, chip kullanıcının seçtiği ve kaldırabildiği öğedir.
+
+</SelfCheck>
+
+<SelfCheck question="Veri gösteren bir ekranın hangi hâlleri tasarlanmalı ve çerez bildiriminde en kritik kural nedir?">
+
+Yükleniyor, boş, hata, dolu (ve sık gerekirse az veri). Çerez bildiriminde reddetmek, kabul etmek kadar kolay olmalıdır; aksi dark pattern sayılır.
+
+</SelfCheck>
+
+<SelfCheck question="Checkbox, radio ve switch ne zaman, Pagination ve infinite scroll hangi takasla seçilir?">
+
+Checkbox çoklu seçim, radio tam bir seçim, switch anında etkili ayar içindir. Pagination konum duygusu ve paylaşılabilir URL verir; infinite scroll keşif için doğaldır ama footer'a ve klavye kullanıcısının sayfa sonuna erişimi engeller.
+
+</SelfCheck>

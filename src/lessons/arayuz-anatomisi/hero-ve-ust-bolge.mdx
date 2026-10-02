@@ -1,0 +1,86 @@
+---
+summary: "Sayfanın ilk ekranı kalıp kalmayacağına karar verilen yerdir. Hero'nun parçaları, tek birincil CTA kuralı ve arka plan efektlerinin gerekçesi."
+outcomes:
+  - "Bir hero'nun cevaplaması gereken üç soruyu söyleyebilirsin."
+  - "Headline ile subheadline'ın işini ayırabilirsin."
+  - "Neden bir ekranda tek birincil CTA olduğunu açıklayabilirsin."
+  - "Arka plan efektlerinde metin kontrastını nerede ölçeceğini bilirsin."
+minutes: 8
+sources:
+  - label: "NN/g — Visual Hierarchy in UX"
+    url: "https://www.nngroup.com/articles/visual-hierarchy-ux-definition/"
+  - label: "NN/g — How Long Do Users Stay on Web Pages?"
+    url: "https://www.nngroup.com/articles/how-long-do-users-stay-on-web-pages/"
+  - label: "web.dev — Largest Contentful Paint (LCP)"
+    url: "https://web.dev/articles/lcp"
+  - label: "W3C — WCAG 2.2 Quick Reference (1.4.3 Contrast)"
+    url: "https://www.w3.org/WAI/WCAG22/quickref/"
+includeTerms: ["section", "headline", "subheadline"]
+skipTerms: ["header"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import HeroWire from "~/components/lesson/HeroWire.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir sayfaya girdin, üç saniye baktın ve ne olduğunu anlamadın. Çıktın. Bu üç saniyenin geçtiği yere **hero** denir: sayfanın en üstündeki, ana mesajı ve birincil eylemi taşıyan büyük bölüm. Tasarım tartışmalarının en yoğunlaştığı yerdir, çünkü kullanıcının kalıp kalmayacağına burada karar verir.
+
+## Üç soru
+
+Hero üç soruyu cevaplamak zorundadır: **Bu ne? Kimin için? Şimdi ne yapmalıyım?** Üçünü cevaplamayan hero, ne kadar güzel olursa olsun işini yapmıyordur. "Hero'da ne yaptığımız anlaşılmıyor; başlık soyut, ürün görseli de yok." cümlesi tam bu teşhistir.
+
+## Parçalar
+
+<HeroWire />
+
+**Eyebrow (üst başlık)**, ana başlığın hemen üstündeki küçük, genelde büyük harfli kısa metindir: "ÜCRETSİZ ARAÇ", "Yeni", "Vaka çalışması". Bağlam verir ve başlığa görsel bir çıpa sağlar. Küçük punto ile okunabilir kalması için çoğunlukla büyük harf ve açılmış harf aralığıyla yazılır.
+
+**Headline ve subheadline.** Headline **ne olduğunu** söyler, subheadline **nasıl ve kime** olduğunu açar. İkisini tek cümlede birleştirmeye çalışmak ikisini de zayıflatır: başlık kısa ve net, alt başlık açıklayıcı olmalıdır. "Headline'ı kısaltalım, detayı subheadline'a alalım; şu an başlık üç satır." Yapıda başlık `h1` olmalıdır ama görsel boyutu ayrı bir karardır.
+
+**CTA** (*call to action*, eylem çağrısı), kullanıcıdan istediğin eylemi tetikleyen buton ya da bağlantıdır. Kural: **bir ekranda tek bir birincil CTA olur.** İkinci bir eylem gerekiyorsa ikincil stilde (outline, ghost veya link) verilir. İki dolu buton yan yana durursa kullanıcı hangisinin asıl olduğunu anlamaz. "İki dolu buton var; 'Demo izle'yi ikincil stile alalım, birincil sadece 'Ücretsiz başla' olsun."
+
+CTA metni eylemi tarif etmelidir: "Gönder" yerine "Rezervasyonu tamamla", "Tıkla" yerine "Fiyatları gör". Kullanıcı ne olacağını bilmelidir.
+
+**Hero visual.** Hero'daki ana görsel; ürün yazılımsa çoğu zaman arayüz ekran görüntüsü, bazen bir laptop ya da telefon çerçevesi (*device frame*) içinde. Ürünün ne olduğunu metinden hızlı anlatır ve soyut bir illüstrasyondan genellikle daha ikna edicidir, çünkü "gerçekten var" mesajı verir. "Soyut illüstrasyon yerine gerçek arayüz ekran görüntüsü koyalım, hafif eğimli bir cihaz çerçevesiyle." Buradaki *mockup* "çerçeveye yerleştirilmiş görsel" demektir; tasarım sürecindeki mockup (yüksek doğruluklu tasarım) farklı bir şeydir. Hero görseli çoğu zaman sayfanın en büyük öğesidir, yani yükleme performansını belirler: optimize et ve boyutunu önceden ayır ki yerleşim kaymasın.
+
+**Background treatment (arka plan uygulaması)**, bölümün arkasına uygulanan gradient, mesh gradient, grain, pattern, glow, spotlight gibi efektlerdir. Derinlik ve karakter verir, bölümleri ayırır. Ama her birinin bir **gerekçesi** olmalı: gradient dikkati bir yöne çekmek veya bölüm sınırı kurmak için kullanılabilir; sırf "boş durmasın" diye eklendiğinde çıktı jenerik görünür. "Gradient CTA'nın arkasında en parlak olsun ki göz oraya gitsin."
+
+Uyarı: arka plandaki metnin kontrastı, arka planın **her noktasında** ölçülmelidir. Gradientin açık yerinde geçen bir metin, koyu yerinde kalan kısmından farklı bir kontrasta sahiptir.
+
+**Announcement bar (duyuru çubuğu)**, header'ın üstünde duran ince, tek satırlık duyuru şeridir: kampanya, yeni özellik, kritik bilgi. Kapatılabilir olmalı ve kapatıldığında hatırlanmalıdır; her sayfada yeniden çıkması sinir bozar. "Kapatınca 30 gün geri gelmesin." Bu, sistem durumunu bildiren **alert banner** ile aynı şey değildir: announcement pazarlamadır ve kapatılabilir; alert banner kalıcıdır ve bir sonraki derslerde gelecek.
+
+<Callout kind="tasarimci">
+
+- **Hero'yu üç soruyla test et.** Bir meslektaşına üç saniye göster, üçünü cevaplayabiliyor mu?
+- **Her hero için tek birincil CTA seç.** İkincisi varsa ikincil stile indir.
+- **Başlıkla alt başlığı ayrı yaz.** Başlık ne, alt başlık nasıl ve kime.
+- **Arka plan efektinin nedenini yaz:** "dikkati CTA'ya çeker". Nedeni yoksa kaldır.
+- **Kontrastı arka planın en açık ve en koyu noktasında ölç.**
+
+</Callout>
+
+<Summary>
+
+- Hero üç soruyu cevaplar: bu ne, kimin için, şimdi ne yapmalıyım.
+- Headline ne olduğunu, subheadline nasıl ve kime olduğunu söyler; eyebrow bağlam verir.
+- Bir ekranda tek birincil CTA olur; diğerleri ikincil stildedir. CTA metni eylemi tarif eder.
+- Hero visual için gerçek ürün ekranı çoğu zaman soyut illüstrasyondan daha ikna edicidir.
+- Arka plan efektinin gerekçesi olmalı ve metin kontrastı her noktada ölçülmelidir.
+- Announcement bar kapatılabilir ve kapatma hatırlanır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir hero'nun cevaplaması gereken üç soru nedir?">
+
+Bu ne? Kimin için? Şimdi ne yapmalıyım? Üçünü cevaplamayan hero işini yapmıyordur.
+
+</SelfCheck>
+
+<SelfCheck question="Bir ekranda kaç birincil CTA olmalı? İkinci bir eylem gerekiyorsa ne yapılır?">
+
+Bir tane. İkinci eylem ikincil stilde (outline, ghost ya da link) verilir. İki dolu buton yan yana durursa kullanıcı hangisinin asıl olduğunu anlamaz.
+
+</SelfCheck>

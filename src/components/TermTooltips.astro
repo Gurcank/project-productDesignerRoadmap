@@ -29,6 +29,11 @@ for (const entry of entries) {
 <div class="term-preview" role="tooltip" data-preview hidden>
   <p class="term-preview__term" data-preview-term></p>
   <p class="term-preview__definition" data-preview-definition></p>
+  {/* Only shown as a bottom sheet: a pointer can leave the tooltip, a thumb needs a target. */}
+  <div class="term-preview__actions">
+    <a class="term-preview__open" data-preview-link href="/sozluk/">Sözlükte aç</a>
+    <button type="button" class="term-preview__close" data-preview-close>Kapat</button>
+  </div>
 </div>
 
 <script type="application/json" id="term-previews" set:html={JSON.stringify(previews)} />
@@ -51,6 +56,8 @@ for (const entry of entries) {
   // Re-bound as narrowed constants: the arrow functions below close over these,
   // and a hoisted function declaration would not see the null check above.
   const box = boxEl;
+  const linkEl = document.querySelector<HTMLAnchorElement>("[data-preview-link]")!;
+  const closeEl = document.querySelector<HTMLButtonElement>("[data-preview-close]")!;
   const termEl = termNode;
   const definitionEl = definitionNode;
 
@@ -71,8 +78,19 @@ for (const entry of entries) {
   };
 
   const place = (link: HTMLElement) => {
-    const rect = link.getBoundingClientRect();
     box.hidden = false;
+
+    // Touch: a sheet pinned to the bottom edge, inside thumb reach, instead of a
+    // tooltip that has to dodge the finger that opened it.
+    const sheet = !hoverable.matches;
+    box.classList.toggle("term-preview--sheet", sheet);
+    if (sheet) {
+      box.style.insetInlineStart = "";
+      box.style.insetBlockStart = "";
+      return;
+    }
+
+    const rect = link.getBoundingClientRect();
 
     const width = box.offsetWidth;
     const margin = 12;
@@ -89,6 +107,10 @@ for (const entry of entries) {
     if (!preview) return;
     termEl.textContent = preview.term;
     definitionEl.textContent = preview.definition;
+    // A term inside a lesson knows its glossary page; a cross-reference link already is the page.
+    const target = link.dataset.href ?? (link as HTMLAnchorElement).getAttribute("href");
+    linkEl.hidden = !link.dataset.href || !target;
+    if (target) linkEl.href = target;
     openFor = link;
     place(link);
   };
@@ -114,9 +136,11 @@ for (const entry of entries) {
     });
 
     // Keyboard users get the same preview without a pointer.
-    link.addEventListener("focus", () => open(link));
+    // Touch has its own tap flow below; focus there would open the sheet and the
+    // blur from tapping inside it would close it before the tap lands.
+    link.addEventListener("focus", () => hoverable.matches && open(link));
     link.addEventListener("blur", () => {
-      if (openFor === link) close();
+      if (hoverable.matches && openFor === link) close();
     });
 
     link.addEventListener("click", (event) => {
@@ -140,7 +164,10 @@ for (const entry of entries) {
     if (event.key === "Escape") close();
   });
 
-  window.addEventListener("scroll", () => openFor && close(), { passive: true });
+  closeEl.addEventListener("click", close);
+
+  // The sheet stays put while the page scrolls under it; a tooltip would be left floating.
+  window.addEventListener("scroll", () => openFor && hoverable.matches && close(), { passive: true });
 </script>
 
 <style is:global>
@@ -153,6 +180,56 @@ for (const entry of entries) {
     border-radius: var(--radius-md);
     background-color: var(--c-surface-overlay);
     box-shadow: var(--elev-2);
+  }
+
+  .term-preview__actions {
+    display: none;
+  }
+
+  /* Phone: full-width sheet at the bottom, safe-area aware, one-handed targets. */
+  .term-preview--sheet {
+    inset: auto 0 0 0 !important;
+    inline-size: auto;
+    padding: var(--spacing-4) var(--spacing-4) calc(var(--spacing-4) + env(safe-area-inset-bottom));
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    border-inline-width: 0;
+    border-block-end-width: 0;
+    box-shadow: var(--elev-2);
+  }
+
+  .term-preview--sheet .term-preview__term {
+    font-size: var(--text-base);
+  }
+
+  .term-preview--sheet .term-preview__definition {
+    font-size: var(--text-base);
+  }
+
+  .term-preview--sheet .term-preview__actions {
+    display: flex;
+    gap: var(--spacing-3);
+    margin-block-start: var(--spacing-4);
+  }
+
+  .term-preview__open,
+  .term-preview__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding-inline: var(--spacing-4);
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-full);
+    background: none;
+    color: var(--c-text);
+    font: inherit;
+    font-size: var(--text-sm);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .term-preview__open[hidden] {
+    display: none;
   }
 
   .term-preview__term {

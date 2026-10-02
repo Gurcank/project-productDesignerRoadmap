@@ -1,0 +1,108 @@
+---
+summary: "Sunucunun 'ne oldu' cevabı. İlk haneden kategoriyi okumak çoğu zaman yeter; sık kodların her birinin tasarımda karşılığı var. 401 ile 403'ü ve 429'u özellikle ayır."
+outcomes:
+  - "2xx, 3xx, 4xx ve 5xx'in anlamını ve sorumlusunu söyleyebilirsin."
+  - "401 ile 403'ün neden farklı tasarım gerektirdiğini açıklayabilirsin."
+  - "429 için neden bekleme süresi gösterilmesi gerektiğini bilirsin."
+minutes: 8
+sources:
+  - label: "MDN — HTTP yanıt durum kodları"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status"
+  - label: "MDN — 401 Unauthorized"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/401"
+  - label: "MDN — 403 Forbidden"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/403"
+  - label: "MDN — 429 Too Many Requests"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/429"
+  - label: "MDN — Retry-After"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Retry-After"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Bu endpoint 429 dönüyor." Bu cümleyi duyduğunda ne olduğunu ve ekranda ne göstermen gerektiğini bilmelisin. Status kodu, sunucunun "ne oldu?" cevabıdır. Üç haneli sayının **ilk hanesi** kategoriyi verir; onu bilmek çoğu durumda yeter.
+
+| Aralık | Anlamı | Kim sorumlu |
+|---|---|---|
+| **2xx** | Başarılı | — |
+| **3xx** | Yönlendirme | — |
+| **4xx** | İstemci hatası: istek yanlış | İstemci / kullanıcı |
+| **5xx** | Sunucu hatası: istek doğru ama sunucu beceremedi | Sunucu |
+
+## Sık göreceğin kodlar
+
+| Kod | Adı | Ne demek | Tasarımda karşılığı |
+|---|---|---|---|
+| **200** | OK | İşlem başarılı | Normal akış |
+| **201** | Created | Yeni kayıt oluşturuldu | Başarı durumu |
+| **204** | No Content | Başarılı ama dönecek veri yok | Silme sonrası |
+| **301 / 302** | Moved | Kalıcı / geçici yönlendirme | SEO'da kritik |
+| **304** | Not Modified | İçerik değişmemiş, önbellektekini kullan | Kullanıcı görmez |
+| **400** | Bad Request | İstek biçimsiz ya da eksik | Form hatası |
+| **401** | Unauthorized | Kimliğin doğrulanmamış | Giriş ekranına yönlendir |
+| **403** | Forbidden | Kimliğin belli ama yetkin yok | "Bu sayfaya erişiminiz yok" ekranı |
+| **404** | Not Found | Böyle bir şey yok | 404 sayfası |
+| **409** | Conflict | Çakışma (aynı e-posta zaten kayıtlı) | Alan bazlı hata mesajı |
+| **422** | Unprocessable | İstek anlaşıldı ama içerik geçersiz | Doğrulama hatası |
+| **429** | Too Many Requests | Çok fazla istek attın | "Biraz bekleyin" mesajı |
+| **500** | Internal Server Error | Sunucuda beklenmedik hata | Hata ekranı |
+| **502 / 503 / 504** | Gateway / Unavailable / Timeout | Sunucu erişilemiyor ya da yanıt vermedi | Bakım ya da hata ekranı |
+
+## 401 ve 403
+
+<Compare>
+<Pane title="401: kimlik doğrulanmadı">
+
+- "Kim olduğunu bilmiyorum, giriş yap."
+- Çözüm: giriş ekranına yönlendir
+
+</Pane>
+<Pane title="403: erişim yasak">
+
+- "Kim olduğunu biliyorum ama buraya giremezsin."
+- Çözüm: "Erişiminiz yok, yetki talep edin" ekranı
+
+</Pane>
+</Compare>
+
+İkisi tamamen farklı tasarım gerektirir. 403'te giriş ekranına yönlendirmek hatadır: kullanıcı zaten giriş yapmıştır ve tekrar giriş yapması bir şeyi değiştirmez; **sonsuz döngü** oluşur. "403 alınca giriş sayfasına atıyoruz; kullanıcı sonsuz döngüye giriyor. Ayrı bir yetki ekranı yapalım."
+
+## 429
+
+**429 Too Many Requests**, istemcinin kısa sürede çok fazla istek attığı ve geçici olarak sınırlandığı durumdur. Hız sınırlamanın kullanıcıya yansıyan yüzüdür. **Tasarlanması gereken bir durumdur** ama neredeyse hep atlanır: kullanıcı ne kadar beklemesi gerektiğini bilmelidir. Sunucu genelde bir `Retry-After` bilgisi döner ve bu, arayüzde geri sayım olarak gösterilebilir. "429'da 'çok fazla deneme, 30 saniye sonra tekrar deneyin' diyelim; yalnızca 'hata oluştu' yazmayalım."
+
+<Callout kind="tasarimci">
+
+- **Her kod ailesi için bir ekran ya da mesaj tanımla:** 400/422 form hatası, 401 giriş, 403 yetki yok, 404 bulunamadı, 429 bekleme, 5xx genel hata.
+- **403 için ayrı ekran tasarla;** giriş sayfasına yönlendirme.
+- **429'da bekleme süresini göster.**
+- **5xx'te kullanıcıyı suçlamayan, tekrar dene ve çıkış yolu sunan bir hata tasarla.**
+
+</Callout>
+
+<Summary>
+
+- İlk hane kategoriyi verir: 2xx başarı, 3xx yönlendirme, 4xx istemci hatası, 5xx sunucu hatası.
+- 401 giriş yapılmamış, 403 giriş yapılmış ama yetki yok; ikisi farklı ekran ister, 403'te girişe yönlendirmek döngü yaratır.
+- 429 hız sınırlama; bekleme süresi gösterilmelidir.
+- Her yaygın kodun tasarımda bir karşılığı vardır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="401 ile 403 arasındaki fark nedir? 403'te kullanıcıyı giriş sayfasına yönlendirmek neden hatadır?">
+
+401: kim olduğunu bilmiyorum, giriş yap. 403: kim olduğunu biliyorum ama yetkin yok. 403'te girişe yönlendirmek hatadır çünkü kullanıcı zaten giriş yapmıştır; tekrar giriş bir şey değiştirmez ve sonsuz döngü oluşur. Ayrı bir "erişiminiz yok" ekranı gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="429 ne demektir ve tasarımda ne yapılmalıdır?">
+
+Çok fazla istek atıldığı için geçici sınırlandın. Kullanıcıya ne kadar beklemesi gerektiği söylenmelidir (sunucu genelde bir bekleme süresi döner, geri sayım olarak gösterilebilir); "bir hata oluştu" yetersizdir.
+
+</SelfCheck>

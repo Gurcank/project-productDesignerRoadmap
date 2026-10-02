@@ -1,0 +1,70 @@
+---
+summary: "İyi bir talimatın yedi bileşeni var: rol, bağlam, görev, kısıt, format, kabul kriteri, örnek. Eksik olan her bileşen, modelin senin yerine karar verdiği bir yerdir. En çok atlananlar kısıt, kabul kriteri ve 'neye benzemesin'."
+outcomes:
+  - "Yedi bileşeni ve her birinin hangi soruyu cevapladığını sayabilirsin."
+  - "En çok atlanan üç bileşeni ve neden iterasyonu en çok onların düşürdüğünü açıklayabilirsin."
+  - "Negatif kısıtın neden gerekli olduğunu ve 'jenerik' çıktının sebebini söyleyebilirsin."
+minutes: 6
+sources:
+  - label: "Anthropic Docs — Prompt engineering genel bakış"
+    url: "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview"
+  - label: "Anthropic Docs — Açık ve doğrudan ol"
+    url: "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/be-clear-and-direct"
+  - label: "Anthropic Docs — Örneklerle yönlendirme (multishot)"
+    url: "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/multishot-prompting"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir talimatın yedi bileşeni var. Hepsi her seferinde gerekmez ama **eksik olan her bileşen, modelin senin yerine karar verdiği bir yer** demektir.
+
+| # | Bileşen | Neyi cevaplar | Karşılığı |
+|---|---|---|---|
+| 1 | **Rol** | Hangi bakış açısından yaklaşsın | — |
+| 2 | **Bağlam** | Bu iş neyin parçası, kim için | Brief |
+| 3 | **Görev** | Tam olarak ne yapılacak | User story |
+| 4 | **Kısıt** | Neyi yapamaz, neye uymalı | Constraint |
+| 5 | **Format** | Çıktı hangi biçimde gelsin | — |
+| 6 | **Kabul kriteri** | "Bitti" ne demek | Acceptance criteria |
+| 7 | **Örnek / referans** | Neye benzesin, neye benzemesin | Moodboard |
+
+**En çok atlanan üçü: kısıt, kabul kriteri ve "neye benzemesin".** Üçü de "istemediğim şeyi baştan eleme" işlevi görür ve iterasyon sayısını en çok düşüren şey budur.
+
+## Negatif kısıt
+
+**Negative constraint (olumsuz kısıt)**, ne istediğini değil **ne istemediğini** açıkça yazmaktır. Bir model, belirtilmeyen her yerde **en yaygın kalıba** yönelir, çünkü eğitim verisinde en çok o vardır. "Jenerik" çıktının sebebi budur: **yasaklamadığın varsayılan, gelecektir.** Tasarım taleplerinde en kritik bileşendir.
+
+"Eşit üç sütunlu ikon + başlık + iki satır gri metin kartı kullanma. Sebepsiz gradient başlık kullanma. Sıralı olmayan içeriğe 01/02/03 numarası verme."
+
+<Callout kind="tasarimci">
+
+- **Her talimatta yediyi tara:** hangisi yoksa model onun yerine karar veriyor.
+- **Yasak listeni oluştur ve yeniden kullan:** aynı jenerik kalıplar hep gelir; bir kez yaz, kalıcı talimat dosyasına taşı (sonraki derslerde).
+- **Referans ver:** "şuna benzesin, şuna benzemesin" bir moodboard'dur.
+
+</Callout>
+
+<Summary>
+
+- Yedi bileşen: rol, bağlam, görev, kısıt, format, kabul kriteri, örnek/referans.
+- Eksik her bileşen, modelin senin yerine karar verdiği yerdir.
+- En çok atlananlar kısıt, kabul kriteri ve "neye benzemesin"; iterasyonu en çok onlar düşürür.
+- Yasaklamadığın varsayılan gelir: jenerik çıktının sebebi budur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="İyi bir prompt'un yedi bileşeni nedir? En çok atlanan üçü hangisi?">
+
+Rol, bağlam, görev, kısıt, format, kabul kriteri, örnek/referans. En çok atlanan üçü: kısıt, kabul kriteri ve "neye benzemesin".
+
+</SelfCheck>
+
+<SelfCheck question="Negatif kısıt neden gereklidir? Yasaklamadığın varsayılan ne olur?">
+
+Model belirtilmeyen her yerde en yaygın kalıba yönelir, çünkü eğitim verisinde en çok o vardır. Yasaklamadığın varsayılan gelecektir; "jenerik" çıktının sebebi budur.
+
+</SelfCheck>

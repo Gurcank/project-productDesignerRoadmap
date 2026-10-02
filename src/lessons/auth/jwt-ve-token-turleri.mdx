@@ -1,0 +1,68 @@
+---
+summary: "JWT imzalı ama şifreli olmayan bir jeton biçimidir: içindeki bilgi okunabilir ve süresi dolana kadar iptal edilemez. Access ve refresh token ayrımı bu sorunu hafifletir; yenilemenin kullanıcıya görünmemesi bir tasarım gereksinimidir."
+outcomes:
+  - "JWT'nin şifreli olmadığını, yalnızca imzalı olduğunu ve neden hassas veri konmadığını söyleyebilirsin."
+  - "Access ve refresh token'ın neden ayrıldığını açıklayabilirsin."
+  - "Jeton yenilemenin kullanıcıya görünmez olması gerektiğini ve süresi dolduğunda yaşanacak anı tasarlaman gerektiğini bilirsin."
+minutes: 6
+sources:
+  - label: "RFC 7519 — JSON Web Token (JWT)"
+    url: "https://datatracker.ietf.org/doc/html/rfc7519"
+  - label: "RFC 6749 — OAuth 2.0 (access/refresh token)"
+    url: "https://www.rfc-editor.org/rfc/rfc6749"
+  - label: "OWASP — Session Management Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+JWT, token tabanlı yaklaşımın en yaygın biçimi. Adını sık duyarsın ve hakkında iki yaygın yanılgı vardır.
+
+## JWT
+
+**JWT (JSON Web Token)**, içinde kullanıcı bilgisi taşıyan, sunucu tarafından **imzalanmış** jeton biçimidir. İmza sayesinde alıcı jetonun değiştirilmediğini veritabanına bakmadan doğrulayabilir; bu, dağıtık sistemlerde her servisin bağımsız doğrulama yapabilmesini sağlar. Modern API'lerde ve mikroservislerde karşına çıkar. "JWT'nin içine rolü de koyalım; her serviste ayrıca veritabanı sorgusu olmasın."
+
+**İki önemli yanılgı:**
+
+1. **JWT şifreli değildir, yalnızca imzalıdır.** İçindeki bilgi herkes tarafından okunabilir; imza yalnızca değiştirilmediğini garanti eder. Bu yüzden içine hassas veri konmaz.
+2. **İptal edilemez.** Bir kullanıcıyı yasakladığında, elindeki jeton süresi dolana kadar geçerli kalmaya devam eder.
+
+Bu iki gerçek JWT'yi çoğu basit web uygulaması için session'dan daha karmaşık hâle getirir.
+
+## Access ve refresh token
+
+**Access token** kısa ömürlüdür (dakikalar) ve her istekte kullanılır. **Refresh token** uzun ömürlüdür ve yalnızca yeni bir access token almak için kullanılır. JWT'nin iptal edilememe sorununu hafifletir: access token çalınsa bile kısa sürede geçersiz olur; refresh token ise sunucuda kayıtlı olduğu için iptal edilebilir. Mobil uygulamalarda ve OAuth akışlarında yaygındır. "Access token 15 dakika, refresh token 30 gün olsun."
+
+**Tasarım karşılığı:** jeton yenileme kullanıcıya **görünmez** olmalıdır. Kullanıcının 15 dakikada bir çıkış yapmış olması bir hatadır. Ama refresh token da süresi dolduğunda kullanıcı gerçekten çıkış yapar ve bu anın nasıl yaşandığı (yarım kalan iş kaybolur mu?) tasarlanmalıdır.
+
+<Callout kind="tasarimci">
+
+- **"Jeton süresi doldu" anını tasarla:** yarım kalan iş korunsun, giriş sonrası aynı yere dönülsün.
+- **Hassas veri gerektiren ekranlarda** (örneğin kullanıcı yetkisi gösteren) jetonun içeriğine güvenme; sunucuda doğrulatılması gerekir.
+- **Oturum süresi kararlarını (access/refresh süresi) ürün kararı olarak yaz.**
+
+</Callout>
+
+<Summary>
+
+- JWT imzalıdır ama şifreli değildir; içindeki bilgi okunabilir ve süresi dolana kadar iptal edilemez.
+- Access token kısa ömürlü, refresh token uzun ömürlü ve iptal edilebilirdir; ikisi iptal sorununu hafifletir.
+- Jeton yenileme kullanıcıya görünmez olmalı; yenilemenin başarısız olduğu an tasarlanmalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="JWT şifreli midir? İçine hassas veri konur mu? Neden?">
+
+JWT şifreli değildir, yalnızca imzalıdır. İçindeki bilgi herkes tarafından okunabilir; imza yalnızca değiştirilmediğini garanti eder. Bu yüzden içine hassas veri konmaz.
+
+</SelfCheck>
+
+<SelfCheck question="Access token ile refresh token neden ayrılır?">
+
+JWT'nin iptal edilememe sorununu hafifletmek için: access token kısa ömürlüdür ve çalınsa bile hızla geçersiz olur; refresh token uzun ömürlüdür ama sunucuda kayıtlı olduğu için iptal edilebilir.
+
+</SelfCheck>

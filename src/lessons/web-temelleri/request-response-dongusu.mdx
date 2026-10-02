@@ -1,0 +1,169 @@
+---
+summary: "İstemci ile sunucunun konuşma kurallarını (HTTP), bir mesajın parçalarını ve \"yavaş\" hissinin nereden geldiğini öğren."
+outcomes:
+  - "Bir isteğin ve cevabın içinde neler olduğunu söyleyebilirsin."
+  - "HTTP ile HTTPS farkını ve HTTPS'in neyi korumadığını bilirsin."
+  - "Latency ile bandwidth'i ayırır, \"gidiş-dönüş sayısı\" üzerinden hız tartışabilirsin."
+  - "Durum kodlarını (200, 404, 500) görünce hangi ekranın tasarlanması gerektiğini çıkarabilirsin."
+minutes: 11
+sources:
+  - label: "MDN — HTTP'ye genel bakış"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview"
+  - label: "MDN — HTTP mesajları"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Messages"
+  - label: "MDN — HTTP durum kodları"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status"
+additions:
+  - "HTTP durum kodlarının (200, 301, 401, 403, 404, 500, 503) tasarım karşılığı."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Outside from "~/components/lesson/Outside.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Bir geliştirici sana "istek 200 dönüyor ama gövde boş" dediğinde ne söylediğini anlamak istiyorsun. Ya da "bu sayfa 84 istek atıyor" dediğinde, bunun yavaşlıkla ne ilgisi olduğunu. Bu ders o cümlelerin sözlüğü.
+
+Geçen derste istemcinin istediğini, sunucunun verdiğini öğrendin. Şimdi o konuşmanın **kurallarına** bakıyoruz. Bir web geliştiricisi gün içinde en çok bu döngünün ayrıntılarına bakar; tarayıcının geliştirici araçlarındaki *Network* sekmesi bunu gösterir.
+
+## HTTP: ortak dil
+
+**HTTP** (HyperText Transfer Protocol), istemci ile sunucunun hangi formatta konuşacağını belirleyen kural setidir. Ortak bir dil sağlar: farklı firmaların yazdığı tarayıcılar ve sunucular, aynı kurallara uydukları için birbirini anlar. Yani Chrome ile bir Türk sitesinin sunucusu, hiç tanışmadan konuşabilir.
+
+"HTTP metodu", "HTTP durum kodu", "HTTP header" gibi ifadelerin hepsi bu protokolün parçalarıdır. Her API konuşmasında karşına çıkacak.
+
+**HTTP ≠ HTML.** HTTP taşıma kuralıdır; HTML, taşınan içeriğin formatıdır. Posta kuralı ile mektubun içeriği gibi.
+
+## HTTPS: şifreli hâli
+
+**HTTPS** (HTTP Secure), HTTP'nin şifrelenmiş hâlidir. Arada birinin trafiği okumasını engeller. Şifre, kredi kartı, kişisel veri gibi bilgilerin yolda okunmasını önler ve gönderilen içeriğin değiştirilmediğini garanti eder.
+
+Bugün HTTPS pazarlık konusu değil, zorunluluktur:
+
+- Tarayıcılar HTTPS olmayan siteleri "güvenli değil" diye işaretler.
+- Konum, kamera ve service worker gibi bazı tarayıcı özellikleri yalnızca HTTPS'te çalışır.
+- Arama motorları HTTPS'i sıralama sinyali olarak kullanır.
+
+<Callout kind="dikkat" title="Sık yapılan hata">
+
+HTTPS **aktarımı** şifreler. Sunucuda duran veriyi şifrelemez. "HTTPS var, veri güvende" cümlesi eksiktir: yol güvenli, ama deponun güvenliği başka bir konudur.
+
+</Callout>
+
+## İstek ve cevap: mesajın anatomisi
+
+Konuşma iki mesajdan oluşur.
+
+**Request (istek)**, istemcinin sunucuya gönderdiği "şunu istiyorum" mesajıdır. Konuşmayı başlatan taraf odur. Ne istendiği, kim tarafından istendiği ve varsa gönderilen veri bu mesajın içindedir.
+
+**Response (cevap)**, sunucunun isteğe karşılık gönderdiği mesajdır. İstenen içeriği ya da bir hata bilgisini geri taşır. İsteğin başarılı olup olmadığı cevaptaki **durum kodundan** anlaşılır.
+
+Ham hâlleri şöyle görünür:
+
+```http
+GET /urunler/kirmizi-ceket HTTP/1.1
+Host: ornek.com
+Accept-Language: tr
+```
+
+```http
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+Cache-Control: max-age=3600
+
+<!doctype html> ... sayfanın HTML'i burada ...
+```
+
+İlk satır ne istendiğini (ya da ne olduğunu) söyler; sonraki satırlar **header**'dır; boş satırdan sonraki kısım **gövde**dir (**payload**/body).
+
+### Header ve gövde (payload)
+
+**Header (başlık)**, istek veya cevapla birlikte giden, asıl içeriğin dışındaki bilgi satırlarıdır. İçeriğin türünü, dilini, kimlik bilgisini, önbellek kurallarını ve güvenlik politikalarını taşır. İçeriğin kendisi değil, içerik *hakkındaki* bilgidir. Auth konuşmalarında kimlik bilgisi header'da gider; "authorization header'ı gitmiyor, o yüzden 401 alıyoruz" gibi cümleler buradan gelir.
+
+**Payload (gövde)**, istek veya cevabın içindeki asıl veridir. Header "bu ne hakkında" der, payload "işte bu" der. Bir form gönderdiğinde girdiğin bilgiler istek gövdesinde gider; bir liste çektiğinde liste cevabın gövdesinde gelir.
+
+"Payload'ı büyütmeyelim" cümlesi, gereksiz alan göndermeyelim ya da getirmeyelim demektir; büyük payload yavaşlatır. Örneğin liste her ürünün tüm açıklamasını gövdeye koyuyorsa ama kart görünümü yalnız başlığı ve fiyatı gösteriyorsa, kullanıcı hiç görmeyeceği veriyi indiriyor demektir.
+
+Bir de ayrım: **HTTP header ≠ sayfanın header'ı.** İkincisi, sayfanın üstündeki görsel bölümdür (menü ve logo alanı). Aynı kelime, iki ayrı şey; bağlamdan ayırt et.
+
+## Hız: gidiş-dönüş ve gecikme
+
+Bir isteğin gidip cevabın dönmesine kadar geçen tam tura **round trip (gidiş-dönüş)** denir. İstekle cevap arasında geçen süreye **latency (gecikme)** denir. Latency, "yavaş" hissinin ölçülebilir hâlidir.
+
+Gecikme fiziksel mesafeden de etkilenir: sunucu Frankfurt'ta, kullanıcı İstanbul'daysa aradaki mesafe milisaniye olarak faturaya yazılır. Bu yüzden sunucu bölgesi seçimi bir hız kararıdır.
+
+Tek bir sayfa açılışında bile birkaç gidiş-dönüş olur:
+
+<StepFlow
+  label="Bir sayfa açılırken geçen süre"
+  caption="Her adım zaman alır. Hızı artırmanın yolu çoğu zaman bir adımı kısaltmak değil, gidiş-dönüş sayısını azaltmaktır."
+  steps={[
+    { title: "Adı IP'ye çevirmek (DNS)", sub: "İlk gidiş-dönüş" },
+    { title: "Sunucuyla güvenli bağlantı kurmak", sub: "Bir ya da daha fazla gidiş-dönüş" },
+    { title: "İsteği göndermek", sub: "Mesafe ve bağlantı kalitesi etkiler", tone: "accent" },
+    { title: "Sunucunun cevabı hazırlaması", sub: "Veritabanı, hesaplama" },
+    { title: "Cevabın inmesi", sub: "Boyut büyükse uzar", tone: "progress" },
+  ]}
+/>
+
+Burada ayırt etmen gereken iki kavram var:
+
+- **Latency (gecikme):** Yolun *uzunluğu*. Bir mesajın gidip gelmesi ne kadar sürer.
+- **Bandwidth (bant genişliği):** Yolun *genişliği*. Birim zamanda ne kadar veri taşınabilir.
+
+**Yüksek bandwidth, yüksek latency'yi çözmez.** Geniş bir otoyol, şehirler arası mesafeyi kısaltmaz. Küçük ama çok sayıda isteği olan bir sayfa, yüksek bandwidth'e rağmen yavaş hissedilebilir.
+
+Bu yüzden performans konuşmalarında "request sayısı" öne çıkar. "Sayfa açılırken 84 istek atıyor; ikonları tek dosyada birleştirirsek ciddi düşürürüz" gibi cümleler, gidiş-dönüş sayısını azaltmakla ilgilidir. Özellikle **mobil bağlantıda** her gidiş-dönüş daha pahalıdır; checkout akışında dört ayrı gidiş-dönüşü ikiye indirmek, algılanan hızı gözle görülür artırır.
+
+<Outside source="MDN — HTTP durum kodları" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status">
+
+Cevabın ilk satırındaki sayıya **durum kodu** denir. Tasarımcı için bu kodlar, "hangi ekranı tasarlamam gerekiyor" listesidir:
+
+| Kod | Anlamı | Senin ekranın |
+|---|---|---|
+| 200 | Başarılı | Normal ekran (içerik boşsa: boş durum ekranı) |
+| 301 | Kalıcı yönlendirme | Kullanıcı farkında olmaz; eski adres yeniye gider |
+| 401 | Kimlik doğrulama gerekli | Giriş ekranı veya "oturum süresi doldu" |
+| 403 | Erişim yok | "Bu sayfayı görme yetkin yok" |
+| 404 | Bulunamadı | 404 ekranı |
+| 500 | Sunucu hatası | Genel hata ekranı: "Bir şeyler ters gitti" |
+| 503 | Servis geçici kullanılamıyor | Bakım ya da yoğunluk ekranı |
+
+Genel kural: **2xx başarı, 3xx yönlendirme, 4xx istemci hatası, 5xx sunucu hatası.** "200 ama gövde boş" cümlesi, sunucunun hatasız cevap verdiğini ama içerikte bir şey gelmediğini söyler; bu, hata değil, boş durumdur ve ayrı tasarlanır.
+
+</Outside>
+
+<Callout kind="tasarimci">
+
+Geliştiriciye şu soruyu sormayı alışkanlık edin: **"Bu ekran için kaç istek atılıyor, hangisini beklerken ne gösteriyoruz?"**
+
+- Her bekleme anı için bir yükleme durumu, her hata kodu için bir hata ekranı tasarlanmalı. Tasarlamazsan geliştirici kendi aklıyla bir şey koyar.
+- Yavaş bağlantıda ne olacağını düşün: metro, asansör, kalabalık etkinlik. Bu bir uç senaryo değil, kullanıcının önemli bir kısmının günlük hâlidir.
+- Aynı bilgiyi tek istekte getirmek mümkünse, hız kazanırsın. Bu bir "teknik detay" değil, ekran tasarımının (ne aynı anda gösterilecek) sonucudur.
+
+</Callout>
+
+<Summary>
+
+- HTTP, istemci ile sunucunun ortak diline; HTTPS onun şifreli hâline denir. HTTPS yolu korur, sunucudaki veriyi korumaz.
+- İstek (request) isteyeni, cevap (response) vereni anlatır. İkisi de header (içerik hakkında bilgi) ve gövdeden (asıl veri) oluşur.
+- Round trip bir gidiş-dönüş; latency yolun uzunluğu, bandwidth yolun genişliğidir. Birini artırmak diğerini çözmez.
+- Hızı çoğunlukla gidiş-dönüş sayısı belirler; mobil bağlantıda bu daha çok önemlidir.
+- Durum kodu (200, 404, 500…) hangi ekranı tasarlaman gerektiğini söyler.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Latency yüksek ile bandwidth düşük aynı şey mi?">
+
+Hayır. Latency gecikmedir: isteğin gidip dönmesinin süresi. Bandwidth kapasitedir: birim zamanda taşınabilen veri miktarı. Bandwidth'i artırmak latency'yi düşürmez; mesafe ve gidiş-dönüş sayısı azalmadan gecikme azalmaz.
+
+</SelfCheck>
+
+<SelfCheck question="Bir sayfa 200 dönüyor ama ekranda hiçbir ürün görünmüyor. Bu bir hata mı, nasıl bir ekran gerekir?">
+
+Hata değil: sunucu isteği başarıyla karşıladı, ama gövdede veri gelmedi (boş liste). Bu bir boş durumdur; kullanıcıya neden boş olduğunu ve ne yapabileceğini söyleyen ayrı bir ekran tasarlanır.
+
+</SelfCheck>

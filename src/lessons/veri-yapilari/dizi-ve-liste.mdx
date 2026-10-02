@@ -1,0 +1,79 @@
+---
+summary: "Dizi, sıralı öğelerden oluşan en temel yapıdır: sıra numarasıyla erişim anlık, arama ve ortaya ekleme pahalı. Arayüzdeki asıl mesele kaç öğe çizildiği: sanallaştırma ve sayfalama."
+outcomes:
+  - "Dizinin neyi iyi, neyi kötü yaptığını söyleyebilirsin."
+  - "Sanallaştırmanın tasarıma üç bedelini (Ctrl+F, değişken yükseklik, ekran okuyucu) sayabilirsin."
+  - "Sıralamanın anlamını neden tasarımcının söylemesi gerektiğini açıklayabilirsin."
+minutes: 8
+sources:
+  - label: "MDN — Array"
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array"
+  - label: "web.dev — Uzun listeleri sanallaştırma"
+    url: "https://web.dev/articles/virtualize-long-lists-react-window"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Arayüzde gördüğün neredeyse her liste (ürünler, yorumlar, arama sonuçları, tablo satırları) bir **dizidir.** Dizi, sıralı öğelerden oluşan en temel yapıdır: her öğenin bir sırası vardır ve o sıra numarasıyla doğrudan erişilir.
+
+"Liste" günlük konuşmada diziyle eş anlamlı kullanılır; teknik olarak **bağlı liste** farklı bir yapıdır ve ürün arayüzlerinde nadiren karşına çıkar. Pratikte "liste" dendiğinde dizi kastedilir.
+
+## Ne iyi yapar
+
+- **Sırayı korur.** Sıra anlam taşıyorsa (mesajlar, adımlar, zaman çizelgesi) bu bedava gelir.
+- **Sıra numarasıyla erişim anlıktır.** "3. öğeyi getir" işlemi listenin uzunluğundan bağımsız aynı sürede biter.
+- **Baştan sona gezmek ucuzdur.** Ekranda liste çizmek tam olarak budur.
+
+## Ne kötü yapar
+
+- **Arama.** "Şu id'ye sahip öğe hangisi?" sorusu baştan başlayıp tek tek bakmayı gerektirir. 10 öğede önemsizdir, 100.000 öğede hissedilir. Çözümü sözlük yapısıdır (sonraki ders).
+- **Ortadan ekleme ve silme.** Bir öğeyi listenin ortasına eklemek, ondan sonraki her şeyi kaydırmak demektir.
+- **Tekilliği garanti etmez.** Aynı öğe iki kez eklenebilir (bkz. küme).
+
+| İşlem | Maliyet | Arayüzdeki hâli |
+|---|---|---|
+| Sıra numarasıyla erişim | Anlık | "Listedeki 3. karta git" |
+| Sona ekleme | Anlık | "Yorum ekle" |
+| Arama | Liste uzunluğuyla orantılı | Filtre kutusu |
+| Ortaya ekleme / silme | Liste uzunluğuyla orantılı | Sürükle-bırak ile sıralama |
+
+## Asıl mesele: kaç tanesini çiziyoruz
+
+Dizinin kendisi genellikle sorun değildir; **ekrana kaç öğe çizildiği** sorundur. Tarayıcı her satır için bir DOM düğümü oluşturur ve 10.000 satırlık bir tabloyu tek seferde çizmek sayfayı dondurur.
+
+Standart çözüm **sanallaştırmadır (virtualization / windowing):** yalnızca görünen alandaki satırları çizmek, kaydırdıkça değiştirmek. Tasarıma üç somut bedeli vardır ve genellikle geç fark edilir:
+
+- **Ctrl+F çalışmaz.** Tarayıcının sayfa içi araması yalnızca çizilmiş satırları bulur; kendi arama kutunu vermen gerekir.
+- **Değişken yükseklikli satırlar zorlaşır.** Her satır aynı yükseklikteyse ucuz, değilse karmaşıktır. "Bazı satırlar iki satırlık metin olsun" masum bir istek değildir.
+- **Yazdırma ve ekran okuyucu davranışı değişir.** Ekran okuyucuya listenin toplam uzunluğunu ayrıca bildirmek gerekir.
+
+**Alternatifler:** sözlük (arama baskınsa), küme (yalnızca "var mı?" soruluyorsa), **sayfalama** (sanallaştırmadan daha basit ve daha erişilebilir; maliyeti kullanıcının tıklaması), sonsuz kaydırma (geri dönüşü ve paylaşılabilir konumu bozar).
+
+<Callout kind="tasarimci">
+
+- **Sıralamanın anlamını söyle:** "yeniden eskiye" mi, "alakaya göre" mi? Belirtilmezse geliştirici veritabanından ne gelirse çizer ve sıra zamanla değişir; kullanıcı bunu rastgelelik olarak görür.
+- **Uzun liste için sayfalama mı sanallaştırma mı olduğunu netleştir:** boş durum, yükleniyor ve klavye davranışı farklıdır.
+- **Sürükle-bırak ile sıralama istiyorsan erken söyle:** ortaya ekleme pahalıdır; sıralanabilir liste genelde ayrı bir "sıra" alanı ister.
+- **"Toplam kaç sonuç var" sayısını isteyip istemediğine karar ver:** "10.000+" çok daha ucuzdur.
+
+</Callout>
+
+<Summary>
+
+- Dizi sırayı korur ve sıra numarasıyla anlık erişim verir; arama ve ortaya ekleme pahalıdır.
+- Asıl mesele ekrana çizilen öğe sayısıdır; sanallaştırma çözümdür ama Ctrl+F, değişken yükseklik ve erişilebilirlik bedelleri vardır.
+- Sıralamanın kuralı tasarımcı tarafından söylenmelidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Sanallaştırmanın tasarıma üç somut bedeli nedir?">
+
+Ctrl+F yalnızca çizilmiş satırları bulur (kendi arama kutusu gerekir); değişken yükseklikli satırlar zorlaşır; yazdırma ve ekran okuyucu davranışı değişir (toplam uzunluk ayrıca bildirilmeli).
+
+</SelfCheck>

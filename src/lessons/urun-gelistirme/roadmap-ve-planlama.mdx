@@ -1,0 +1,94 @@
+---
+summary: "Ne zaman ne yapılacağının üst seviye planı: roadmap bir takvim değil bir niyet beyanı. Now / Next / Later formatını, çeyrek, kilometre taşı ve tema kavramlarını öğren."
+outcomes:
+  - "Roadmap ile proje planı arasındaki farkı anlatabilirsin."
+  - "Roadmap'e kesin tarih yazmanın neden riskli olduğunu ve alternatifini söyleyebilirsin."
+  - "Bir çalışma önerisini \"özellik\" yerine \"tema\" diliyle çerçeveleyebilirsin."
+  - "Bir şirkete girdiğinde çeyreğin ne zaman başladığını sormayı bilirsin."
+minutes: 8
+sources:
+  - label: "Atlassian — Ürün yönetimi"
+    url: "https://www.atlassian.com/agile/product-management"
+  - label: "Silicon Valley Product Group — Product Discovery"
+    url: "https://www.svpg.com/product-discovery/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Yönetim toplantısında bir slayt gösteriliyor: "Q3'te çok dilli destek, Q4'te yapay zekâ önerileri." Herkes başını sallıyor. Üç ay sonra Q3 geliyor ve çok dilli destek hâlâ başlamadı. Hata nerede? Slaytın bir plan gibi görünmesinde ama bir niyet beyanı olmasında.
+
+Bu ders, **roadmap'in ne olduğunu ve ne olmadığını** anlatıyor. Roadmap bir takvim değil, bir *niyet beyanıdır;* bu ayrımı bilmek, roadmap'e tarih yazmanın neden riskli olduğunu açıklar.
+
+## Roadmap: hedef listesi
+
+**Roadmap** (yol haritası), ürünün önümüzdeki dönemde hangi hedeflere, hangi sırayla yöneleceğini gösteren **üst seviye plandır.** Ekibi ve paydaşları ortak bir yönde hizalar. İyi bir roadmap özellik listesi değil, **hedef listesidir;** çünkü hedef sabit kalırken çözüm değişebilir.
+
+Çeyrek planlamalarında, yönetim sunumlarında, hatta işe alım görüşmelerinde karşına çıkar. "Roadmap'te bu çeyreğin teması elde tutma; yeni özellik değil, mevcut akışların iyileştirilmesi."
+
+**Roadmap ≠ proje planı.** Proje planı tarihler ve bağımlılıklar içerir; roadmap yön ve öncelik gösterir. **Roadmap'e kesin tarih yazmak,** tahmini taahhüde çevirdiği için sık yapılan bir hatadır: tarih yazıldığı anda herkes onu söz olarak okur.
+
+## Now / Next / Later: dürüst belirsizlik
+
+**Now / Next / Later**, roadmap'i tarih yerine **üç zaman ufkuna** bölen formattır. Belirsizliği dürüstçe yansıtır: yakın işler nettir, uzak işler bulanıktır, ve bu format bunu görünür kılar. Tarihli roadmap ise uzak işleri de kesinmiş gibi gösterir ve güven kaybına yol açar.
+
+<StepFlow
+  arrows={false}
+  label="Now / Next / Later roadmap"
+  caption="Soldan sağa belirsizlik artar. Şimdi dediklerin üzerinde çalışıyorsun; sonra dediklerin netleşiyor; ileride dediklerin henüz fikir."
+  steps={[
+    { title: "Now: şimdi", sub: "Üzerinde çalışılıyor. Net, kapsamı belli.", tone: "progress" },
+    { title: "Next: sonra", sub: "Sıradakiler. Kısmen net, tasarım/keşif sürüyor.", tone: "accent" },
+    { title: "Later: ileride", sub: "Fikir aşamasında. Tarih vermek yanıltıcı olur.", tone: "plain" },
+  ]}
+/>
+
+"Bunu 'Later'a koyalım; şu an nasıl çözeceğimizi bile bilmiyoruz, tarih vermek yanıltıcı olur." Bu cümle, tasarımcı için de değerlidir: henüz keşfedilmemiş bir şeyin tarihli bir söze dönüşmesini engeller.
+
+## Çeyrek ve kilometre taşı
+
+**Quarter** (çeyrek, Q1–Q4), yılın üç aylık dilimleridir; şirketlerin planlama ve ölçüm birimidir. Yıl planlamak için fazla uzun, ay çok kısa; çeyrek hedef koyup sonuç görmeye yetecek uzunlukta bir dilim sunar. Hedef döngüsü (OKR) genelde çeyreklik olur. "Bu Q2 işi değil; Q3 roadmap'ine alalım."
+
+Dikkat: **çeyrek her şirkette Ocak'ta başlamaz.** Şirketin **mali yılı** (fiscal year) farklı bir ayda başlayabilir. Bir şirkete girdiğinde "Q1 ne zaman başlıyor?" diye sor.
+
+**Milestone** (kilometre taşı), projede ulaşılması hedeflenen belirgin ara noktadır. Uzun bir işi ölçülebilir aralıklara böler: "tasarım onaylandı", "beta yayında" gibi noktalar ilerlemenin görünür kanıtlarıdır. "İlk milestone tasarım onayı; ona kadar geliştirme başlamıyor."
+
+## Tema ve girişim: özellik listesine dönüşmeyi önlemek
+
+**Theme (tema) / Initiative (girişim)**, birden fazla epic'i bir arada tutan **üst seviye odak alanıdır.** Roadmap'in özellik listesine dönüşmesini engeller. "Bu çeyreğin teması: yeni kullanıcının ilk gün deneyimi" demek, ekibe altında çalışacağı bir çerçeve verir ve **çözümü sabitlemez.**
+
+"Onboarding teması altında dört epic var; hepsi aynı metriği hedefliyor."
+
+<Callout kind="tasarimci">
+
+- **Tema ile konuş, özellikle değil.** "Şu butonu ekleyelim" yerine "ilk gün terk oranını düşürmek" önerisi, tasarıma da alan bırakır.
+- **Tarih istendiğinde aralık ve güven seviyesi ver.** "Muhtemelen Next'te, tahminimiz iki çeyreğe yayılıyor."
+- **Kendi işini Now / Next / Later ile çerçevele.** Hangi tasarım işi netleşti, hangisi hâlâ keşifte?
+- **Q'nun ne zaman başladığını sor.** "Q3'te çıkar" cümlesi mali yıla göre değişir.
+
+</Callout>
+
+<Summary>
+
+- Roadmap hedef ve öncelik gösterir; takvim ya da proje planı değildir.
+- Kesin tarih, tahmini taahhüde çevirdiği için riskli; alternatif Now / Next / Later formatı.
+- Çeyrek planlama birimidir ama mali yıl şirkete göre değişebilir; kilometre taşı ilerlemenin görünür kanıtıdır.
+- Tema, birden fazla epic'i bir hedef altında toplar ve çözümü sabitlemez.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Roadmap'e kesin tarih yazmak neden riskli görülüyor? Alternatif format nedir?">
+
+Tarih yazıldığında tahmin, taahhüt gibi okunur; uzak işler de kesinmiş gibi görünür ve güven kaybına yol açar. Alternatif: Now / Next / Later formatı; tarih yerine üç zaman ufku kullanır ve belirsizliği dürüstçe gösterir.
+
+</SelfCheck>
+
+<SelfCheck question="Roadmap ile proje planı arasındaki fark nedir?">
+
+Proje planı tarihler ve bağımlılıklar içerir; roadmap yön ve öncelik gösterir. Roadmap bir niyet beyanıdır, takvim değildir.
+
+</SelfCheck>

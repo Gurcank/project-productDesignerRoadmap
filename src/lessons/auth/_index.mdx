@@ -1,0 +1,27 @@
+---
+summary: "Bir üründe hem en çok kullanılan hem en az tasarlanan akış: kimlik doğrulama ve yetkilendirme. Teknik terimleri anlamak ve auth akışındaki tasarım sorumluluğunu görmek."
+sources:
+  - label: "OWASP — Authentication Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+  - label: "NIST SP 800-63B Revizyon 4"
+    url: "https://pages.nist.gov/800-63-4/sp800-63b.html"
+flags: ["degisken"]
+---
+
+Auth, bir üründe **hem en çok kullanılan hem en az tasarlanan** akıştır. Herkes kayıt olur, herkes giriş yapar, herkes şifresini unutur; ama bu ekranlar genelde en sona bırakılır ve varsayılan hâlleriyle kalır.
+
+Bu bölümün iki hedefi var:
+
+1. **Teknik tarafı anlamak.** Session, token, OAuth, JWT gibi terimler her auth konuşmasında geçer ve karıştırılmaları güvenlik açığına yol açar.
+2. **Tasarım sorumluluğunu görmek.** Hangi yöntemlerin sunulacağı, hata mesajının ne diyeceği, oturumun ne kadar süreceği, hesabını kaybeden kullanıcının ne yapacağı: çoğu senin işin.
+
+## Bu bölümü bitirdiğinde
+
+- Authentication ile authorization'ı ve 401/403'ü ayırabileceksin.
+- Session, token, çerez ve JWT arasındaki takasları söyleyebileceksin.
+- Sosyal giriş, SSO, magic link, OTP ve passkey akışlarının tasarım gereksinimlerini sayabileceksin.
+- Güncel şifre politikasını ve MFA/kurtarma akışı kararlarını açıklayabileceksin.
+
+## Nasıl çalışmalı?
+
+On bir ders var. Bölümdeki kavramlar eskimeyen kategoridedir; **şifre politikası** (karmaşıklık kuralları artık önerilmiyor) ve **hazır çözümler** ise değişken. Son ders bir **kontrol listesidir:** auth akışı tasarlarken ona dön.

@@ -1,0 +1,118 @@
+---
+summary: "Senin için en doğrudan işe yarayan ders: hazır bileşenlerle çalışırken ana ayrım, kütüphanenin sana görünüm mü yoksa yalnızca davranış mı verdiği. Headless, Radix/Base UI, shadcn/ui ve styled kütüphaneler."
+outcomes:
+  - "Headless ile styled kütüphane farkını ve kendi tasarım sisteminle hangisini seçeceğini söyleyebilirsin."
+  - "shadcn/ui'nin neden klasik bir paket olmadığını ve avantaj-bedelini açıklayabilirsin."
+  - "Bir modalı sıfırdan yazmak yerine primitif kullanmanın erişilebilirlik gerekçesini anlatabilirsin."
+minutes: 9
+sources:
+  - label: "Radix UI"
+    url: "https://www.radix-ui.com/"
+  - label: "Base UI"
+    url: "https://base-ui.com/"
+  - label: "shadcn/ui — Dokümantasyon"
+    url: "https://ui.shadcn.com/docs"
+  - label: "MUI — Material UI"
+    url: "https://mui.com/material-ui/"
+  - label: "Mantine"
+    url: "https://mantine.dev/"
+  - label: "Ant Design"
+    url: "https://ant.design/"
+  - label: "React Aria"
+    url: "https://react-spectrum.adobe.com/react-aria/"
+  - label: "Headless UI"
+    url: "https://headlessui.com/"
+  - label: "W3C WAI-ARIA APG — Dialog (Modal) Pattern"
+    url: "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Hazır bileşenlerle çalışıyorsun; bu yüzden bu ders senin için en doğrudan işe yarayan derslerden biri. Ana ayrım tek bir soruda: **kütüphane sana görünüm mü veriyor, yoksa yalnızca davranış mı?**
+
+> Bu bölümdeki "güncel durum" notları hızla eskir (materyal Eylül 2026'da doğrulandı). Kullanmadan önce kontrol et.
+
+## Headless ve styled
+
+<Compare>
+<Pane title="Headless (görünümsüz)">
+
+- Davranışı verir: klavye, odak, ARIA, aç-kapa mantığı
+- Görünümü sana bırakır
+- Kendi tasarım dilin varsa
+
+</Pane>
+<Pane title="Styled (hazır görünümlü)">
+
+- Davranış + görünüm birlikte
+- İç panel, hız öncelikli işler
+- Marka farkı gerekmiyorsa
+
+</Pane>
+</Compare>
+
+Bu **doğrudan bir tasarım kararıdır.** Kendi tasarım dilin varsa headless seçersin: erişilebilirlik gibi zor kısmı hazır alır, görünümü sıfırdan kurarsın. Görünümün önemli olmadığı bir iç panelde ise styled kütüphane haftalarca kazandırır. "Kendi tasarım sistemimiz var; headless gidelim, hazır görünümü sökmeye çalışmayalım."
+
+Styled bir kütüphaneyi kendi tasarımına benzetmeye çalışmak, en yaygın zaman kaybı biçimlerinden biridir: varsayılan görünümüne ne kadar uzaksan o kadar çok savaşırsın.
+
+## Radix UI ve Base UI
+
+Erişilebilir, görünümsüz React primitifleridir: dialog, dropdown, popover, tabs, combobox ve benzerleri. Arayüz Anatomisi ve Erişilebilirlik bölümlerindeki zor kısmı çözerler: odak hapsi, klavye gezinmesi, ARIA nitelikleri, Esc davranışı. **Bir modalı ya da combobox'ı sıfırdan erişilebilir yazmak sanılandan çok daha zordur;** bu yüzden kütüphane seçimi bir erişilebilirlik kararıdır. "Dropdown'ı sıfırdan yazmayalım; Radix primitifi alıp kendi stilimizi giydirelim."
+
+Güncel durum (değişken): materyale göre Radix'in WorkOS tarafından satın alındığı ve geliştirme hızının düştüğü raporlanıyor; MUI ekibinin **Base UI**'ı Radix'e doğrudan alternatif olarak Aralık 2025'te kararlı 1.0'a ulaştı; shadcn/ui'nin Temmuz 2026 itibarıyla yeni projelerde varsayılan olarak Base UI kullandığı anılıyor. Radix terk edilmiş değil ama varsayılan değişmiş görünüyor. Kullanmadan önce doğrula.
+
+**React Aria** (Adobe) erişilebilirlik ve uluslararasılaştırmada derindir; **Headless UI** (Tailwind Labs) daha küçük kapsamlı ve Tailwind ile uyumludur. Karmaşık erişilebilirlik gereksinimlerinde React Aria sık tercih edilir.
+
+## shadcn/ui
+
+Bileşenleri bir paket olarak **kurmak yerine kodunu doğrudan projene kopyalayan** koleksiyondur. Altta headless primitifler, üstte Tailwind stilleri kullanır. Fark önemlidir: bileşen kodunu **sen sahiplenirsin.** Bir şeyi değiştirmek istediğinde kütüphanenin izin verip vermediğine bakmazsın, dosyayı açıp değiştirirsin. Tasarım kontrolü isteyen ekipler için büyük avantajdır. Bedeli: güncellemeler otomatik gelmez, bakım senin sorumluluğundadır. **Hazır bileşen alıp uyarlamak çalışma biçimine en uygun model budur.** "shadcn/ui'den button ve dialog'u alalım, token'larımıza göre uyarlayalım."
+
+shadcn/ui bir npm paketi değildir; "sürümünü güncelleyelim" cümlesi burada işlemez. Tailwind kullanmıyorsan doğal uyum kaybolur; bileşen bakımını üstlenecek zamanın yoksa hazır bir kütüphane daha az yük getirir.
+
+## Styled kütüphaneler
+
+**MUI, Mantine, Chakra UI ve Ant Design** hem davranışı hem görünümü hazır veren geniş kütüphanelerdir. Hız sağlarlar: bir yönetim paneli için gereken tablo, tarih seçici, form kontrolü ve grafik bileşenlerini sıfırdan yazmak haftalar alır.
+
+- **MUI:** en geniş bileşen seti ve olgun dokümantasyon; kurumsal projelerde güvenli seçim. Bedeli büyük paket boyutu ve Material Design estetiğinden uzaklaşmanın zorluğu.
+- **Ant Design:** veri yoğun panellerde güçlü; gelişmiş tablo ve form.
+- **Mantine:** çok sayıda bileşen ve hook; geliştirici ergonomisi iyi kabul edilir.
+- **Chakra UI:** prop tabanlı stil yaklaşımı. Materyale göre v3, stil katmanını Panda CSS'e ve bileşen mantığını Ark UI'a taşıyan kapsamlı bir yeniden yazım; v2'den geçiş önemsiz değil.
+
+"İç panel için MUI kullanalım; tasarım farklılaşması gerekmiyor, hız önemli." **Marka farklılaşmasının önemli olduğu tüketiciye dönük ürünlerde** uygun değildir: varsayılan görünümü tamamen değiştirmek, headless bir temelden başlamaktan genelde daha pahalıdır.
+
+<Callout kind="tasarimci">
+
+- **İlk soru: tasarım dilim kütüphaneye uyuyor mu?** Uymuyorsa headless ya da shadcn/ui.
+- **Tasarım sistemi kuruyorsan headless primitif öner:** erişilebilirliğin zor kısmı hazır gelir.
+- **İç panelde styled kütüphane meşrudur;** hız marka özgünlüğünden önemliyse.
+- **Bileşenin davranış kurallarını (odak, Esc, klavye) teslimde yaz,** hangi kütüphane gelirse gelsin eşleştirilebilsin.
+
+</Callout>
+
+<Summary>
+
+- Headless kütüphane davranış verir, görünümü sana bırakır; styled ikisini birden verir. Kendi tasarım dilin varsa headless.
+- Radix/Base UI/React Aria, erişilebilirliğin zor kısmını (odak, klavye, ARIA, Esc) hazır getirir; seçim bir erişilebilirlik kararıdır.
+- shadcn/ui bir paket değil, kopyalayıp sahiplendiğin koddur: tam kontrol, ama bakım sende.
+- MUI, Mantine, Chakra ve Ant Design hızlı iç panel için iyidir; marka farkı gereken ürünlerde pahalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="shadcn/ui'nin diğer kütüphanelerden yapısal farkı nedir? Avantajı ve bedeli nedir?">
+
+Bir npm paketi değildir; bileşen kodunu doğrudan projene kopyalar. Avantajı: kodu sahiplenirsin, değiştirmek için kütüphanenin iznine ihtiyaç duymazsın. Bedeli: güncellemeler otomatik gelmez, bakım senin sorumluluğundadır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir modalı sıfırdan yazmak yerine headless bir primitif kullanmanın erişilebilirlik gerekçesi nedir?">
+
+Odak hapsi, klavye gezinmesi, ARIA nitelikleri ve Esc davranışını sıfırdan doğru yazmak sanılandan çok zordur ve genelde eksik kalır. Test edilmiş bir primitif bunları hazır getirir; yani kütüphane seçimi bir erişilebilirlik kararıdır.
+
+</SelfCheck>

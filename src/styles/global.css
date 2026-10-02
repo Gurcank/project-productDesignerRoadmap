@@ -3,6 +3,7 @@
 @import "@fontsource-variable/literata/standard.css";
 @import "./tokens.css";
 @import "./content.css";
+@import "./lesson.css";
 
 /*
  * Tailwind theme (ADR-008). Every default scale is cleared first, so the only
@@ -94,6 +95,7 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    font-size: 100%;
     scroll-behavior: smooth;
     /* Sticky header wraps to two rows on phones, so anchors need more clearance. */
     scroll-padding-top: 7.5rem;
@@ -103,6 +105,20 @@
     html {
       scroll-padding-top: 5rem;
     }
+  }
+
+  /* Reading size (Ayarlar). Everything is in rem, so one number scales the site;
+     it is set before first paint by the inline script in BaseLayout. */
+  html[data-text="sm"] {
+    font-size: 93.75%;
+  }
+
+  html[data-text="lg"] {
+    font-size: 112.5%;
+  }
+
+  html[data-text="xl"] {
+    font-size: 125%;
   }
 
   /* The fixed bottom bar would otherwise cover the last lines of every page. */

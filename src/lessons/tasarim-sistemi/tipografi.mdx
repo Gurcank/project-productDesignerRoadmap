@@ -1,0 +1,142 @@
+---
+summary: "Metnin nasıl görüneceğine dair kararlar: typeface ve font, ağırlık, tipografi ölçeği, satır yüksekliği, harf aralığı, satır uzunluğu, değişken font ve yedek fontlar. Web'in içeriği ezici çoğunlukla metindir."
+outcomes:
+  - "Typeface ile font farkının performansı nasıl etkilediğini açıklayabilirsin."
+  - "Bir oran ve tabandan tipografi ölçeği çıkarabilirsin."
+  - "Gövde ve başlık için neden farklı satır yüksekliği oranı kullanıldığını söyleyebilirsin."
+  - "Bir makale sayfasında satır uzunluğu için neden max-width verildiğini bilirsin."
+minutes: 13
+sources:
+  - label: "Butterick — Practical Typography: Line length"
+    url: "https://practicaltypography.com/line-length.html"
+  - label: "MDN — CSS clamp()"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/clamp"
+  - label: "W3C WCAG 2.2 — Text Spacing"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import TypeScaleDemo from "~/components/lesson/TypeScaleDemo.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+
+Web'in içeriğinin ezici çoğunluğu **metindir.** Bu yüzden tipografi kararları, tek tek renk kararlarından daha çok etki eder. Bir sayfanın "profesyonel" ya da "amatör" hissettirmesinde çoğu zaman font seçiminden çok **boyut, aralık ve satır uzunluğu** rol oynar.
+
+Bu ders tipografiyi, sayıya dönüşen kararlarıyla anlatıyor.
+
+## Typeface ve font: iki ayrı şey
+
+**Typeface** (yazı karakteri), tasarımın kendisidir: Inter, Söhne, Georgia. **Font** ise o tasarımın belirli bir ağırlık, stil ve format hâlindeki **dosyasıdır:** Inter Bold Italic, `.woff2`.
+
+Ayrım pratikte önemlidir: bir typeface seçersin ama **kaç font dosyası yükleyeceğine** ayrıca karar verirsin ve bu doğrudan **performans** meselesidir. Beş ağırlık yüklemek beş dosya demektir. "Typeface Inter kalsın ama üç ağırlıkla sınırlayalım; şu an altı font dosyası yüklüyoruz."
+
+Günlük konuşmada ikisine de "font" denir ve bu bir sorun değildir. Ama fatura ve performans tarafında fark ortaya çıkar.
+
+### Font weight: en ucuz hiyerarşi
+
+**Font weight** (yazı ağırlığı), harflerin kalınlığıdır; genelde 100–900 arası sayılarla ifade edilir (400 normal, 700 kalın). **Hiyerarşinin en ucuz aracıdır:** boyut büyütmeden, yalnızca ağırlık değiştirerek vurgu üretilebilir, bu da dikey alanı korur. "Başlığı büyütmek yerine 600'e çıkaralım; yer kaplamadan hiyerarşi kuralım."
+
+Dikkat: tarayıcı, olmayan bir ağırlığı **sahte olarak** üretebilir (faux bold) ve sonuç bozuk görünür. Kullanılan her ağırlığın gerçekten yüklendiğinden emin ol.
+
+### Değişken font
+
+**Variable font** (değişken font), tek dosyada ağırlık ve genişlik gibi **eksenler boyunca sürekli değişebilen** font formatıdır. Beş ayrı ağırlık dosyası yerine tek dosya yüklenir; bu genelde performans kazancıdır ve ara ağırlıklar (örneğin 550) kullanılabilir hâle gelir. "Değişken font'a geçelim; üç ayrı dosya yerine tek dosya yükleyeceğiz."
+
+**Her zaman daha hafif değildir:** tek ağırlık kullanılıyorsa statik dosya daha küçük olabilir. Ölçmeden karar verme.
+
+### Yedek font
+
+**Font stack / fallback** (yazı tipi yığını, yedek font), birincil font yüklenemezse sırayla denenecek alternatiflerin listesidir. Font yüklenene kadar geçen sürede metin bir şeyle gösterilmek zorundadır. **Yedek fontun ölçülerinin birincil fonta yakın olması,** yükleme tamamlandığında yaşanan sıçramayı (CLS) azaltır. "Fallback olarak sistem fontu kullanalım; hiç font yüklenmese bile makul görünsün."
+
+## Tipografi ölçeği: rastgele boyutu bitirmek
+
+**Type scale** (tipografi ölçeği), kullanılacak yazı boyutlarının **belirli bir orana göre** önceden belirlenmiş listesidir. Rastgele boyut kullanımını engeller. 14, 15, 16, 17, 18 hepsi kullanılırsa hiyerarşi okunmaz; belirgin adımlar (16, 20, 25, 31, 39) kullanılırsa fark anlaşılır.
+
+Oran genelde **1,125 ile 1,333** arasında seçilir: küçük oran yoğun arayüzler için, büyük oran pazarlama sayfaları için uygundur. Her adım bir öncekinin oranla çarpımıdır:
+
+<TypeScaleDemo base={16} ratio={1.25} steps={[0, 1, 2, 3, 4]} labels={["Gövde", "Küçük başlık", "Başlık", "Büyük başlık", "Hero"]} />
+
+"Tipografi ölçeği 1.25 oranında, 16px tabanlı: 16 / 20 / 25 / 31 / 39. Ara değer kullanmayalım." Tasarım sistemi kurulumunun ilk adımlarından biridir ve ölçek token olarak saklanır.
+
+## Satır yüksekliği, harf aralığı ve satır uzunluğu
+
+### Satır yüksekliği
+
+**Line-height** (satır yüksekliği), satırlar arasındaki dikey mesafedir. **Okunabilirliğin en büyük tek etkenidir.** Genel kural:
+
+> **Yazı büyüdükçe satır yüksekliği oranı küçülür.**
+
+Gövde metni için 1,5 civarı rahat okunur; büyük başlıkta 1,5 dağınık durur, 1,1–1,2 uygundur. "Gövde 16/24 (yani 1,5), başlık 40/44. Tek bir oranı her yere uygulamayalım." Erişilebilirlik tarafında da gövde metni için yeterli satır aralığı beklenir.
+
+<Compare>
+<Pane title="Gövde metni">
+
+- 16px yazıda ~1,5 oran (24px satır)
+- Göz satırdan satıra rahat geçer
+- Dar aralık okumayı yorar
+
+</Pane>
+<Pane title="Büyük başlık">
+
+- 40px yazıda ~1,1–1,2 oran (44–48px)
+- Aynı 1,5 oranı satırları kopuk gösterir
+- Satırlar tek blok gibi okunmalı
+
+</Pane>
+</Compare>
+
+### Harf aralığı
+
+**Letter-spacing** (tracking, harf aralığı), harfler arasındaki yatay mesafedir. Büyük başlıklarda harfler optik olarak fazla ayrık görünür; **hafif negatif değer** (yaklaşık −0,01em ile −0,02em) toparlar. Tersine, tümü büyük harfle yazılmış küçük etiketlerde **pozitif aralık** okunabilirliği artırır. "Hero başlığında -0,02em uygulayalım; şu an dağınık duruyor."
+
+*Tracking* (tüm bloğa uygulanan aralık) ≠ *kerning* (belirli harf çiftleri arasındaki özel düzeltme). Kerning font dosyasının içinde tanımlıdır.
+
+### Satır uzunluğu
+
+**Measure** (satır uzunluğu), bir satırda yer alan **karakter sayısıdır.** Çok uzun satırda göz, satır sonundan bir sonraki satır başına dönerken kaybolur; çok kısa satırda okuma sürekli kesilir. Yaygın öneri gövde metni için **yaklaşık 45–75 karakter** aralığıdır.
+
+Bu, bir içerik alanının **neden ekranın tamamına yayılmaması** gerektiğinin gerekçesidir. "Makale gövdesine max-width verelim; şu an 1440px'de satırlar 140 karakter, okunmuyor."
+
+Türkçe notu: Türkçe metin İngilizceden yaklaşık %15–25 daha uzundur. Yani aynı içerik aynı genişlikte daha çok satır tutar; satır uzunluğu aralığını biraz geniş tutmak makul olur. (Bu sitede okuma sütunu bu yüzden 68 karakter.)
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu site iki yazı tipi ailesi kullanıyor: başlıklarda kitap hissi veren bir serif (Literata), gövdede ve arayüzde teknik dokümantasyon için tasarlanmış bir sans (IBM Plex Sans). Üçüncü bir aile yok; fazla aile hem performans hem tutarlılık maliyetidir. Ölçek 16px tabanlı ve 1,25 oranlı; satır yüksekliği boyutla ters orantılı (gövde 1,6, başlık 1,15–1,25); okuma sütunu 68 karakterle sınırlı. Ayrıca iki font da Türkçe harfleri (`ı İ ğ Ğ ş Ş ç Ç ö Ö ü Ü`) gerçek metinle doğrulanarak seçildi; font Türkçe karakterde yedeğe düşseydi aday değişirdi. Bu, Türkçe içerikli her proje için yapılması gereken bir kontrol.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Font dosyası sayısını say.** "3 ağırlık, 1 aile" gibi bir bütçe belirle.
+- **Ölçeği token yap, ara değer üretme.** Her boyut ölçekten gelsin.
+- **Satır yüksekliğini boyuta göre ver.** Gövde ve başlık için tek oran kullanma.
+- **Okuma sütunu sınırla.** Geniş ekranda uzun metin için `max-width` iste.
+- **Türkçe karakterleri test et.** Seçtiğin fontta `ı İ ğ ş ç ö ü` gerçek metinde nasıl görünüyor?
+
+</Callout>
+
+<Summary>
+
+- Typeface tasarımdır, font bir dosyadır; her ağırlık ek bir dosyadır ve performansı etkiler.
+- Ağırlık hiyerarşinin en ucuz aracıdır; olmayan ağırlığı tarayıcı sahte üretebilir.
+- Tipografi ölçeği bir orana göre belirlenmiş adımlardır; ara değer kullanılmaz.
+- Yazı büyüdükçe satır yüksekliği oranı küçülür; büyük başlıkta harf aralığı hafif negatif olur.
+- Satır uzunluğu 45–75 karakter civarında tutulur; bu yüzden içerik alanı sınırlandırılır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Typeface ile font arasındaki fark pratikte neyi etkiler?">
+
+Typeface tasarımın kendisidir (Inter), font ise belirli bir ağırlık, stil ve format dosyasıdır (Inter Bold, `.woff2`). Pratikte performansı etkiler: bir typeface seçersin ama kaç font dosyası yükleyeceğine ayrıca karar verirsin; her ağırlık ek bir dosyadır.
+
+</SelfCheck>
+
+<SelfCheck question="Gövde metni ve büyük başlık için satır yüksekliği neden farklı olmalı?">
+
+Yazı büyüdükçe satır yüksekliği oranı küçülmelidir. Gövde için 1,5 civarı rahat okunur; aynı oran 40px'lik bir başlıkta satırları kopuk ve dağınık gösterir, orada 1,1–1,2 uygundur.
+
+</SelfCheck>

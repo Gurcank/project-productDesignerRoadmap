@@ -1,0 +1,122 @@
+---
+summary: "Menü bağlantısından komut paletine: navigasyonun parçaları, hangisinin hangi ekranda işe yaradığı ve her birinin bedeli."
+outcomes:
+  - "Aktif durumun neden her menüde zorunlu olduğunu söyleyebilirsin."
+  - "Hamburger menü, tab bar ve mega menü arasında ekrana göre seçim yapabilirsin."
+  - "Breadcrumb'ın neyi gösterip neyi göstermediğini ayırt edebilirsin."
+  - "Sticky header'ın klavye erişimine verdiği zararı ve çözümünü açıklayabilirsin."
+minutes: 9
+sources:
+  - label: "NN/g — Hamburger Menus and Hidden Navigation Hurt UX Metrics"
+    url: "https://www.nngroup.com/articles/hamburger-menus/"
+  - label: "NN/g — Mega Menus Work Well for Site Navigation"
+    url: "https://www.nngroup.com/articles/mega-menus-work-well/"
+  - label: "NN/g — Breadcrumbs: 11 Design Guidelines"
+    url: "https://www.nngroup.com/articles/breadcrumbs/"
+  - label: "W3C — WCAG 2.2: Focus Not Obscured (Minimum)"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html"
+includeTerms: ["nav", "tabs"]
+skipTerms: ["header"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir e-ticaret sitesine telefondan girdin. Üstte üç çizgi, altta dört sekme, ürün sayfasında bir de "Ana sayfa › Kadın › Bot" yolu var. Hepsi "nasıl gezinirim?" sorusunun cevabı, ama her biri farklı bir ihtiyaca çalışıyor. Bu derste menünün parçalarını ve hangisinin ne zaman seçileceğini öğreneceksin.
+
+## Menü bağlantısı ve aktif durum
+
+Bir menüdeki tek bağlantıya **nav link**, o an bulunulan sayfayı işaretleyen görsel duruma **active state** (aktif durum, *current page indicator*) denir. Aktif durum kullanıcının "neredeyim?" sorusunu cevaplar; yoksa yönünü kaybeder.
+
+Tasarım tesliminde bir menü bağlantısının dört hâli de verilmelidir: **default, hover, focus, active**. Ayrıca aktif durum yalnızca renkle taşınmamalı: "Aktif menü öğesini sadece renkle değil, altında bir çizgiyle de işaretleyelim."
+
+## Mobilde: hamburger mi, tab bar mı?
+
+**Hamburger menü**, üç yatay çizgi ikonunun arkasına gizlenmiş menüdür. Dar ekranda çok bağlantıyı gizler, ama bedeli **keşfedilebilirliktir**: gizlenen menü daha az kullanılır. Bu yüzden mobilde en kritik bir-iki eylem (çoğu zaman birincil CTA) hamburger'in **dışında** kalır: "Mobilde 'Ücretsiz dene' butonu hamburger'in dışında kalsın, header'da görünür olsun." Bazı ekipler ikonun yanına "Menü" yazar; NN/g'nin araştırması, gizli navigasyonun kullanımı düşürdüğünü gösterdiği için görünür etiket sık önerilen bir iyileştirmedir. Masaüstünde ise yer varken menüyü gizlemek gereksiz bir maliyettir.
+
+**Tab bar** (alt sekme çubuğu) ise ekranın altında duran, 3-5 ana bölüme geçiş sağlayan sabit çubuktur. Başparmağın rahat ulaştığı bölgededir ve hamburger'in aksine bölümleri **görünür** tutar. Uygulama benzeri ürünlerde hamburger'e tercih edilir.
+
+<Compare>
+<Pane title="Hamburger menü">
+
+- Çok sayıda bağlantıyı gizler
+- Keşfedilebilirlik düşer
+- Kritik eylem dışarıda kalmalı
+
+</Pane>
+<Pane title="Tab bar">
+
+- 3–5 bölümü görünür tutar
+- Başparmak bölgesinde durur
+- Bölümler arası geçiş: sayfa değişir
+
+</Pane>
+</Compare>
+
+Karıştırma: **tab bar** bölümler arasında geçer ve sayfa değişir; **tabs** (sekmeler) ise aynı sayfa içinde içerik değiştirir. İkisini sonraki derste tekrar göreceksin.
+
+## Masaüstünde: mega menü
+
+**Mega menu**, üzerine gelindiğinde ya da tıklandığında geniş bir panel olarak açılan, çok sütunlu ve gruplanmış menüdür. Çok sayfalı sitelerde (e-ticaret, kurumsal) hiyerarşiyi tek seferde görünür kılar; kullanıcı iki-üç seviye tıklamadan hedefe ulaşır. "Ürünler menüsünü mega menu yapalım; kategorileri sütunlara ayırıp öne çıkan ürünü sağda gösterelim."
+
+Erişilebilirlik açısından risklidir: yalnızca hover ile açılan mega menüler klavye ve dokunmatik kullanıcılar için sorun çıkarır. Tıklamayla da açılabilmeli ve klavyeyle gezilebilmelidir.
+
+## Konum duygusu: breadcrumb
+
+**Breadcrumb** (içerik yolu), kullanıcının hiyerarşide nerede olduğunu gösteren, üst seviyelere bağlayan yatay izdir: `Ana sayfa › Kadın › Ayakkabı › Bot`. Derin hiyerarşilerde yön duygusu verir ve tek tıkla yukarı çıkmayı sağlar. Özellikle arama motorundan doğrudan iç sayfaya gelen kullanıcı için değerlidir: o kişi ana sayfayı hiç görmemiştir.
+
+Breadcrumb **hiyerarşiyi** gösterir, kullanıcının geçmişini değil. Tarayıcının geri tuşunun yerine geçmez.
+
+## Üstte kalan header
+
+**Sticky header** (yapışkan üst bar), sayfa aşağı kaydırılırken üstte kalan header'dır. Navigasyona her an erişim sağlar; bedeli dikey alandır, özellikle mobilde ekranın önemli bir kısmını yer. **Scroll-aware** sürümü aşağı kaydırırken gizlenir, yukarı kaydırırken geri gelir ve bu takası dengeler. "Header sticky olsun ama kaydırınca inceltelim; 80px'ten 56px'e insin."
+
+Burada kritik bir erişilebilirlik kuralı var: WCAG 2.2'nin **Focus Not Obscured** ölçütü, klavyeyle odaklanılan bir öğenin sticky bir bileşenin arkasında tamamen kalmamasını ister. Header, klavye kullanıcısının tam o an odaklandığı bağlantıyı kapatmamalıdır.
+
+## Komut paleti
+
+**Command palette** (komut paleti), genelde Cmd/Ctrl+K gibi bir kısayolla açılan, yazarak arama ve komut çalıştırma penceresidir. Uzman kullanıcıya menülerde gezinmeden hedefe gitme yolu verir ve büyük bir uygulamada navigasyonu ölçeklemenin en verimli yollarından biridir; Linear, Notion, Raycast gibi araçlarda görürsün.
+
+Keşfedilebilirliği düşüktür: varlığını duyurman gerekir (arama kutusunda kısayolu göstermek gibi). Ana navigasyonun yerine geçmez, onu **tamamlar**.
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitede hamburger menü yok. Geniş ekranda sol kenarda bir menü, orta genişlikte üstte bir bağlantı sırası, telefonda ise altta bir **alt gezinme çubuğu** (tab bar) çıkar. Aktif sayfa yalnızca renkle değil, `aria-current` ile de işaretlenir. Komut paleti ise henüz yok.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Her menü bağlantısı için dört durum çiz:** default, hover, focus, active.
+- **Mobilde karar ver:** 3-5 ana bölüm varsa tab bar, çok bağlantı varsa hamburger; kritik eylem hamburger'in dışında.
+- **Hover'a bağlı menü çizme.** Mega menünün tıklamayla ve klavyeyle de açıldığını teslimde yaz.
+- **Sticky header'ın yüksekliğini tanımla** ve odaklanan öğenin onun altında kalmadığını kontrol ettir.
+
+</Callout>
+
+<Summary>
+
+- Menü bağlantısının aktif durumu kullanıcıya "neredeyim?" der; yalnızca renkle değil, çizgi veya benzeri bir işaretle de verilir.
+- Hamburger keşfedilebilirliği düşürür; mobilde kritik eylemi dışarıda bırak. Tab bar bölümleri görünür tutar.
+- Mega menü büyük sitelerde hiyerarşiyi tek seferde gösterir ama hover'a bağımlı olmamalıdır.
+- Breadcrumb konumu gösterir, geçmişi değil.
+- Sticky header klavye odağını kapatmamalı. Komut paleti navigasyonu tamamlar, yerine geçmez.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Mobilde hamburger yerine tab bar ne zaman daha iyidir ve neden?">
+
+Dört-beş ana bölüm olduğunda ve uygulama benzeri bir ürün tasarlandığında. Tab bar bölümleri görünür tutar (hamburger gizler, keşfedilebilirlik düşer) ve başparmağın rahat ulaştığı bölgededir.
+
+</SelfCheck>
+
+<SelfCheck question="Sticky header klavye kullanıcısına nasıl zarar verebilir?">
+
+Klavyeyle odaklanılan bir öğe sayfa kaydığında header'ın arkasında kalabilir ve kullanıcı odağın nerede olduğunu göremez. WCAG 2.2'nin Focus Not Obscured ölçütü bunu kapsar.
+
+</SelfCheck>

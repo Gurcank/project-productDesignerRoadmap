@@ -1,0 +1,70 @@
+---
+summary: "Dikey ve yatay ölçekleme ve otomatik ölçekleme: makineyi büyütmek mi, makine eklemek mi? Otomatik ölçekleme anında değildir; ani zirvelerde önceden ölçeklemek gerekebilir."
+outcomes:
+  - "Dikey ve yatay ölçeklemenin farkını ve her birinin sınırını söyleyebilirsin."
+  - "Otomatik ölçeklemenin neden anında olmadığını ve kampanya zirvelerine etkisini açıklayabilirsin."
+minutes: 5
+sources:
+  - label: "AWS Well-Architected — Güvenilirlik ilkeleri"
+    url: "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/design-principles.html"
+  - label: "Microsoft — Azure mimari stilleri"
+    url: "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Kampanya günü trafik on kat artacak. Sistem buna hazır mı? Ölçekleme iki yönde yapılır.
+
+<Compare>
+<Pane title="Dikey (scale up)">
+
+- Makineyi büyütmek: daha çok işlemci, bellek
+- Basit, kod değişmez
+- Tavanı var; tek makine, arıza riski sürer
+
+</Pane>
+<Pane title="Yatay (scale out)">
+
+- Daha çok makine eklemek
+- Teorik olarak sınırsız
+- Uygulamanın stateless olmasını gerektirir
+
+</Pane>
+</Compare>
+
+## Dikey ve yatay
+
+**Dikey ölçekleme** basittir (kod değişmez) ama bir tavanı vardır ve tek makine kaldığı için arıza riski sürer. **Yatay ölçekleme** teorik olarak sınırsızdır ama uygulamanın **stateless** olmasını gerektirir. "Önce dikey büyütelim, ucuz ve hızlı. Tavana yaklaşınca yatay ölçekleme için stateless'a geçeriz."
+
+## Autoscaling
+
+**Autoscaling (otomatik ölçekleme)**, trafiğe göre kopya sayısının otomatik artıp azalmasıdır. Düzensiz trafikte maliyeti kontrol eder: gece az kopya, gündüz çok. Serverless'ın doğal davranışıdır. "Kampanya günü trafik on kat artacak; autoscaling limitlerini önceden yükseltelim."
+
+**Otomatik ölçekleme anında değildir:** yeni kopyaların açılması zaman alır. Ani zirvelerde (bilet satışı, canlı yayın) **önceden ölçeklendirme** gerekebilir.
+
+<Callout kind="tasarimci">
+
+- **Önceden bilinen trafik zirvelerini (kampanya, lansman) ekibe önceden bildir;** ölçekleme için süre gerekir.
+- **Zirve anı için kullanıcıya görünen davranışı tasarla:** bekleme odası, sıra, "yoğunluk var" mesajı.
+
+</Callout>
+
+<Summary>
+
+- Dikey ölçekleme makineyi büyütür; basit ama tavanı var. Yatay ölçekleme makine ekler; stateless gerektirir.
+- Otomatik ölçekleme trafiğe göre kopya sayısını ayarlar ama anında değildir.
+- Ani zirvelerde önceden ölçeklendirme gerekebilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Otomatik ölçekleme neden bilet satışı gibi ani zirvelerde yetmeyebilir?">
+
+Yeni kopyaların açılması zaman alır; ani zirvede kapasite yetişmeyebilir. Bu durumlarda önceden ölçeklendirme gerekir.
+
+</SelfCheck>

@@ -1,0 +1,81 @@
+---
+summary: "Verinin yaşam döngüsü: yedek ve geri yükleme, soft delete, denetim kaydı, saklama süresi ve kişisel veri. Test edilmemiş yedek yedek sayılmaz; soft delete ile silinme hakkı çelişebilir."
+outcomes:
+  - "Yedeğin neden geri yüklemenin denenmesiyle birlikte anlamlı olduğunu söyleyebilirsin."
+  - "Soft delete'in sağladığı şeyi ve KVKK/GDPR ile nasıl çelişebileceğini açıklayabilirsin."
+  - "Toplanan kişisel verinin neden bir tasarım kararı olduğunu bilirsin."
+minutes: 8
+sources:
+  - label: "PostgreSQL — Yedekleme ve geri yükleme"
+    url: "https://www.postgresql.org/docs/current/continuous-archiving.html"
+  - label: "GDPR Madde 5 — Veri işleme ilkeleri"
+    url: "https://gdpr-info.eu/art-5-gdpr/"
+  - label: "GDPR Madde 17 — Silinme hakkı"
+    url: "https://gdpr-info.eu/art-17-gdpr/"
+additions:
+  - "Saklama süresi sınırı (storage limitation) ve silinme hakkının birincil metinleri: GDPR Madde 5 ve 17."
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Outside from "~/components/lesson/Outside.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir kullanıcı hesabını sildi. Peki veri gerçekten gitti mi? Yoksa "silindi" işaretiyle duruyor mu? Ve bir gün veritabanı bozulursa yedek çalışacak mı? Verinin yaşam döngüsü bu sorulara cevap verir.
+
+## Backup ve restore
+
+**Backup (yedek)** verinin düzenli kopyalarının alınması, **restore (geri yükleme)** gerektiğinde geri getirilmesidir. Veri kaybı bir "ihtimal" değil bir "ne zaman" meselesidir: donanım arızası, hatalı bir migration, yanlış bir silme komutu. **Kritik nokta:** yedek almak yetmez, **geri yüklemenin denenmiş olması** gerekir. Test edilmemiş yedek, yedek sayılmaz; gerçek bir olayda çalışmadığı ancak o an anlaşılır. "Yedek alınıyor ama geri yükleme hiç denenmedi; bir tatbikat yapalım."
+
+## Soft delete
+
+**Soft delete (yumuşak silme)**, kaydı gerçekten silmek yerine "silinmiş" olarak işaretlemektir (**hard delete** kalıcı silmedir). Kazayla silmeyi geri alınabilir kılar ve ilişkili kayıtların bozulmasını engeller: silinen kullanıcının siparişleri hâlâ anlamlı kalır. **Tasarım karşılığı:** "çöp kutusu" özelliği, "geri al" seçeneği ve "silinmiş kullanıcı" görünümü hep bu kararın sonucudur. "Soft delete kullanalım, 30 gün çöp kutusunda kalsın, sonra kalıcı silinsin."
+
+KVKK/GDPR kapsamında kullanıcı **silinme hakkını** kullandığında soft delete yeterli olmayabilir; gerçek silme ya da anonimleştirme gerekebilir. Bu ikisi çelişebilir ve ürün kararı gerektirir.
+
+## Audit log
+
+**Audit log (denetim kaydı)**, kim, ne zaman, neyi değiştirdi bilgisinin kalıcı olarak tutulmasıdır. Kurumsal ürünlerde zorunluluktur ve ekip ürünlerinde güven üretir. Arayüzdeki karşılığı activity feed'dir. "Kim hangi ayarı değiştirdi görünsün; audit log'u activity feed olarak gösterelim."
+
+## Saklama süresi ve kişisel veri
+
+**Data retention (veri saklama süresi)** hangi verinin ne kadar süre saklanacağı; **PII** (kişisel veri) kişiyi tanımlayan veridir. KVKK ve GDPR gereği veri **amacı için gereken süre kadar** saklanmalıdır, süresiz değil. Ayrıca ne kadar az kişisel veri toplanırsa risk o kadar azalır; bu **tasarım aşamasında verilen bir karardır:** formda gerçekten telefon numarası gerekli mi? "Bu alanı toplamayalım; kullanmıyoruz ve topladığımız her kişisel veri bir yükümlülük."
+
+<Outside source="GDPR Madde 5(1)(e) ve Madde 17" href="https://gdpr-info.eu/art-5-gdpr/">
+
+Birincil metinde saklama süresi sınırı ("storage limitation") şöyle ifade edilir: kişisel veri, işlendiği amaç için gerekli olandan daha uzun süre kimliği belirlenebilir biçimde tutulmamalıdır. Silinme hakkı Madde 17'de düzenlenir ve bazı koşullarda kullanıcının verinin gecikmeden silinmesini talep etmesini sağlar. Bunlar GDPR metnidir; Türkiye'de KVKK'nın güncel hükümlerini ve hukuk görüşünü ayrıca doğrula.
+
+</Outside>
+
+<Callout kind="tasarimci">
+
+- **Silme akışlarını tasarlarken "geri alınabilir mi, kalıcı mı?" sor** ve kullanıcıya hangisini yaptığını söyle.
+- **Çöp kutusu süresini ve kalıcı silme anını ekranda belirt.**
+- **Formda her alan için "bunu neden topluyoruz?" sor;** gereksizi çıkar.
+- **Ekip ürünlerinde etkinlik akışını (kim, ne zaman, ne) denetim kaydına bağla.**
+
+</Callout>
+
+<Summary>
+
+- Yedek, geri yüklemesi denenmediyse yedek sayılmaz.
+- Soft delete kazayla silmeyi geri alınabilir yapar; silinme hakkı ile çelişebilir ve ürün kararı gerektirir.
+- Denetim kaydı kim-ne-zaman-neyi bilgisini tutar; activity feed olarak gösterilebilir.
+- Veri amacı için gereken süre kadar saklanır; toplanan her kişisel veri bir yükümlülüktür.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Yedek alıyoruz' demek yeterli mi?">
+
+Hayır. Geri yüklemenin denenmiş olması gerekir. Test edilmemiş yedek, yedek sayılmaz; gerçek bir olayda çalışmadığı ancak o an anlaşılır.
+
+</SelfCheck>
+
+<SelfCheck question="Soft delete ne sağlar ve KVKK ile nasıl çelişebilir?">
+
+Kazayla silmeyi geri alınabilir kılar ve ilişkili kayıtların bozulmasını engeller. Kullanıcı silinme hakkını kullandığında ise soft delete yeterli olmayabilir; gerçek silme ya da anonimleştirme gerekebilir. İkisi çelişir ve ürün kararı gerektirir.
+
+</SelfCheck>

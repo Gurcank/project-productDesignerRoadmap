@@ -1,0 +1,161 @@
+---
+summary: "En yaygın agile çerçevesi Scrum: sabit uzunlukta dönemler (sprint), üç sorumluluk alanı ve beş toplantı. Resmî tanım ile şirketlerdeki uygulamayı ayırt etmeyi öğren."
+outcomes:
+  - "Bir sprint'in başından sonuna hangi toplantılarla aktığını anlatabilirsin."
+  - "Sprint'in süresinin neden sabit olduğunu ve sprint goal'ün neden önemli olduğunu söyleyebilirsin."
+  - "Review ile retrospective'in farkını bilirsin."
+  - "\"Scrum yapıyoruz\" diyen bir ekipte gerçekte Scrum olup olmadığını ayırt edebilirsin."
+minutes: 14
+sources:
+  - label: "Scrum Guide (2020)"
+    url: "https://scrumguides.org/scrum-guide.html"
+  - label: "Atlassian — Scrum"
+    url: "https://www.atlassian.com/agile/scrum"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+"Scrum uyguluyoruz: iki haftalık sprint, salı planning, cuma review ve retro." Bu cümleyi bir şirketin ilk gününde duyacaksın. Bu ders, o cümlenin her kelimesini açıyor.
+
+**Scrum**, işi sabit uzunlukta dönemlere bölen ve her dönemin sonunda **çalışan bir çıktı** üretmeyi hedefleyen agile çerçevesidir. En yaygın agile çerçevesidir ve iş ilanlarında "Scrum deneyimi" sık aranır. Belirsizliğe ritim getirir: sabit uzunluktaki dönem, ekibe düzenli aralıklarla durup bakma fırsatı verir. Ne yaptık, ne öğrendik, sırada ne var?
+
+Resmî tanımı **Scrum Guide** adlı kısa bir belgede yapılır; Ken Schwaber ve Jeff Sutherland tarafından yazılır ve yıllar içinde güncellenir. **Değişken bilgi:** Güncel sürüm 2020 tarihlidir (Kasım 2020). Bu sürümde "rol" kelimesi "sorumluluk alanı" (accountability) ile değiştirildi ve "Development Team" ayrımı kaldırılarak tek bir *Scrum Team* tanımlandı. Scrum Guide birkaç yılda bir güncellenir; scrumguides.org üzerinden güncel sürümü kontrol et.
+
+## Sprint: sabit uzunlukta bir tur
+
+**Sprint**, genelde bir ila dört hafta süren, sonunda **kullanılabilir bir çıktı** hedeflenen sabit uzunluktaki çalışma dönemidir. Planlamanın temel birimidir: "Bu sprint'e sığar mı?" en sık sorulan sorulardan biridir. "Bu iş bu sprint'e sığmaz; ya ikiye bölelim ya sonrakine bırakalım."
+
+**Süresinin sabit olması kritiktir.** Sabit süre, iş bitmediğinde **kapsamın kısılmasını** zorlar. Süre esnek olsaydı her seferinde tarih kayardı, tahmin anlamını yitirirdi. Ayrıca düzenli bir öğrenme ritmi kurar.
+
+İsim yanıltıcıdır: **sprint ≠ acele etmek.** Sprint bir hız değil, bir zaman dilimidir; sürekli hız beklentisi tükenmeye yol açar.
+
+<StepFlow
+  label="Bir sprint'in akışı"
+  caption="Her sprint aynı sırayla akar ve bir sonrakini besler. Retro'dan çıkan aksiyon, bir sonraki planlamanın girdisidir."
+  steps={[
+    { title: "Sprint planning", sub: "Hangi işler, hangi hedef? (ilk gün)", tone: "accent" },
+    { title: "Günlük standup", sub: "Her gün 15 dakika: engeller, koordinasyon" },
+    { title: "Sprint review", sub: "Ürünü stakeholder'lara göster, geri bildirim al" },
+    { title: "Retrospective", sub: "Süreci değerlendir, aksiyon yaz", tone: "progress" },
+  ]}
+/>
+
+### Sprint goal
+
+**Sprint goal** (sprint hedefi), sprint boyunca ulaşılmak istenen **tek cümlelik ortak amaçtır.** Sprint'i bir görev listesi olmaktan çıkarır. Hedef varsa işler tam bitmese bile "hedefe ulaştık mı?" sorusu cevaplanabilir; ayrıca sprint ortasında öncelik tartışması çıktığında karar ölçütü olur.
+
+Örnek: *"Yeni kullanıcı kayıt olduktan sonra ilk projesini yardım almadan oluşturabilsin."*
+
+En sık atlanan Scrum parçasıdır. Atlandığında sprint bir "yapılacaklar kutusuna" dönüşür. Sprint planlamanın çıktısıdır.
+
+### Sprint backlog ve increment
+
+**Sprint backlog**, bu sprint içinde yapılmak üzere seçilen işlerin listesidir. Ürün backlog'undan ayrılır: ürün backlog'u tüm gelecek işleri içerir, sprint backlog'u yalnızca bu birkaç haftalık **taahhüdü.** Sprint ortasında bu listeye ekleme yapmak planın anlamını yok eder. "Bunu sprint backlog'una ekleyemeyiz; ekliyorsak eşdeğer bir işi çıkarmamız lazım."
+
+**Increment** (artım), sprint sonunda ortaya çıkan, önceki çıktıların üzerine eklenen ve **kullanılabilir durumda** olan ürün parçasıdır. "Bitti" tanımını somutlaştırır: sprint'in çıktısı yarım kalmış bir şey değil, bitmiş sayılma tanımını (Definition of Done) karşılayan gerçek bir parçadır. "Increment yayına çıkmak zorunda değil ama çıkabilir durumda olmalı."
+
+## Sorumluluk alanları: kim neyden sorumlu?
+
+Scrum Guide 2020'ye göre üç sorumluluk alanı vardır:
+
+| Sorumluluk | Odağı |
+|---|---|
+| **Product Owner** | *Ne yapılacağı* ve hangi sırayla; backlog'un sahibi |
+| **Scrum Master** | *Sürecin işlemesi*, engellerin kaldırılması, ekibin korunması |
+| **Developers** | İşin *nasıl yapılacağı* ve sprint sonunda çıktının üretilmesi |
+
+"Developers" burada yalnızca kod yazan kişi anlamına gelmez; sprint çıktısını üretmeye katkı veren **herkesi** kapsar. **Tasarımcı da dahil.**
+
+### Scrum Master
+
+**Scrum Master**, sürecin doğru işlemesinden, engellerin kaldırılmasından ve ekibin dış müdahalelerden korunmasından sorumlu kişidir. Ekip kendi kendini yönetiyorsa bile, süreci kimin sahipleneceği belirsizse ritüeller çürür. Scrum Master ayrıca ekip dışından gelen ani talepleri filtreler.
+
+Scrum uygulayan orta ve büyük ekiplerde bulunur; küçük ekiplerde ayrı bir Scrum Master yoktur, işi ekip lideri ya da PM üstlenir. "Bu bağımlılığı ben çözemiyorum, Scrum Master diğer ekiple konuşacak."
+
+**Scrum Master ≠ yönetici.** Hiyerarşik yetkisi yoktur; işi kolaylaştırmaktır. Ve **≠ Product Owner:** PO *ne yapılacağına*, Scrum Master *nasıl çalışılacağına* odaklanır.
+
+## Beş toplantı
+
+### Sprint planning
+
+**Sprint planning**, sprint'in başında yapılan, hangi işlerin alınacağının ve sprint hedefinin belirlendiği toplantıdır. Taahhüdü ortak hâle getirir: kimin ne yapacağı burada netleşir; sonradan "ben bunu bilmiyordum" denmesini engeller.
+
+Tasarımcı olarak burada bulunman şart: tasarım gerektiren işleri işaret edip **önden hazırlık süresini takvime yerleştirebilirsin.** "Planning'de söyleyeyim: bu story'nin tasarımı hazır değil, hazır olma tanımını karşılamıyor."
+
+Planning bir *tahmin* toplantısıdır; backlog düzenlemenin (grooming) yerine geçmez. Grooming yapılmamışsa planning saatlerce sürer ve tahminler kötü çıkar.
+
+### Daily standup
+
+**Daily standup**, ekibin her gün kısa süreyle (genelde 15 dakika) bir araya gelip günü hizaladığı toplantıdır. Amacı **rapor vermek değil, engelleri erken görmek ve günü koordine etmektir.** İki kişinin aynı işe girmesi ya da birinin üç gündür takılı kalması bu toplantıda ortaya çıkar. "Standup'ta söylerim; API'yi bekliyorum, bugün ilerleyemiyorum."
+
+İki önemli not:
+
+- Klasik "dün ne yaptım / bugün ne yapacağım / engelim var mı" üçlüsü artık **Scrum Guide'ın zorunlu tuttuğu bir format değildir;** 2020 sürümünde bu üç soru kaldırıldı.
+- Standup bir yöneticiye **durum raporu** verme toplantısı değildir. Bu, en yaygın bozulma biçimidir.
+
+Uzaktan çalışan ekiplerde yazılı (async) yapılabilir; bunu 6. derste göreceksin.
+
+### Sprint review
+
+**Sprint review** (demo), sprint sonunda üretilen çıktının stakeholder'lara gösterildiği ve geri bildirim alındığı toplantıdır. Çalışan çıktının gerçekten çalıştığını kanıtlar ve geri bildirim döngüsünü kapatır. **Slayt değil, ürün gösterilir;** bu ayrım önemlidir.
+
+Tasarımcı olarak burası, kararlarının gerçek tepkiyle karşılaştığı yerdir. "Review'da yeni akışı canlı gösterelim, ekran görüntüsüyle değil."
+
+### Retrospective
+
+**Retrospective** (retro), ekibin çalışma biçimini gözden geçirip **neyi değiştireceğine** karar verdiği toplantıdır. Sürecin kendisini iyileştirmenin tek yapısal fırsatıdır. Retro yoksa aynı sorun her sprint tekrar eder ve kimse kurumsal olarak müdahale etmez.
+
+**Kritik nokta:** Retro'nun çıktısı bir duygu paylaşımı değil, **sahibi ve tarihi olan somut bir aksiyondur.** "Retro'da üç sprint üst üste aynı şeyi konuştuk; bu sefer aksiyon yazıp sahibini belirleyelim."
+
+Retro suçlu arama toplantısı değildir. Suçlamaya dönerse insanlar gerçek sorunu söylemeyi bırakır ve toplantı işlevsizleşir.
+
+**Review ≠ retrospective.** Review *ürünü*, retro *süreci* değerlendirir. İkisini aynı toplantıda birleştiren ekiplerde retro genelde ezilir.
+
+## Resmî Scrum ile gerçek hayat
+
+Çoğu ekip "Scrum yapıyoruz" der ama aslında yalnızca sprint ve standup uygular; retro yapılmaz, sprint goal yazılmaz. Buna sektörde alaycı biçimde **"Scrum-but"** ya da **"Dark Scrum"** denir.
+
+Bir ekibin gerçekten Scrum yapıp yapmadığını anlamak için şu kontrol listesine bak:
+
+- Sprint süresi sabit mi?
+- Sprint goal yazılıyor mu?
+- Review'da ürün gösteriliyor mu, slayt mı?
+- Retro'dan sahibi ve tarihi olan aksiyon çıkıyor mu?
+- Sprint ortasında ekibe yeni iş ekleniyor mu?
+
+<Callout kind="tasarimci">
+
+- **Planning'e katıl ve tasarım hazırlık süresini sprint'e yerleştir.** Tasarım gerektiren işin tasarımı sprint'in *önünde* yapılmalı, içinde değil. (Önceki bölümde dual-track'i hatırla.)
+- **Review'da canlı ürün göster.** Tasarım kararlarının gerçek ürünle nasıl göründüğü, ekran görüntüsüyle gösterilemez.
+- **Retro'ya katkı ver.** "Tasarım teslimleri geç geliyor" gibi bir sorunu retroda aksiyona çevir: "Tasarım hazır olma tanımına eklensin."
+- **"Scrum-but" gördüğünde eleştirme, ayır.** Önce neyin uygulandığını, neyin uygulanmadığını anlamaya çalış.
+
+</Callout>
+
+<Summary>
+
+- Scrum işi sabit uzunlukta sprint'lere böler; süre sabit olduğu için iş yetişmezse kapsam kısılır.
+- Sprint goal sprint'i görev listesi olmaktan çıkarır; en çok atlanan Scrum parçasıdır.
+- Üç sorumluluk alanı: Product Owner (ne), Scrum Master (nasıl çalışılır), Developers (üretim; tasarımcı dahil).
+- Beş olay: planning, günlük standup, review (ürünü gösterir), retro (süreci değerlendirir). Retro'nun çıktısı sahibi ve tarihi olan aksiyondur.
+- Çoğu ekip yalnızca bir kısmını uygular ("Scrum-but"); resmî tanım ile uygulamayı ayırt et.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Sprint'in süresinin sabit olması neden önemli? Süre esnek olsaydı ne olurdu?">
+
+Sabit süre, iş yetişmediğinde kapsamın kısılmasını zorlar. Süre esnek olsaydı her sprint biraz daha uzar, tahmin anlamını yitirir ve ekip düzenli öğrenme ritmini kaybederdi.
+
+</SelfCheck>
+
+<SelfCheck question="Sprint review ile retrospective arasındaki fark nedir?">
+
+Sprint review ürünü değerlendirir: çıktı stakeholder'lara gösterilir, geri bildirim alınır. Retrospective süreci değerlendirir: ekip kendi çalışma biçimini gözden geçirir ve değiştireceği şeye karar verir.
+
+</SelfCheck>

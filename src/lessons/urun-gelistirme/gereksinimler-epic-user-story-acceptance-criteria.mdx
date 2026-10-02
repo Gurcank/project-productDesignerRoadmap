@@ -1,0 +1,156 @@
+---
+summary: "Büyük bir işi parçalara bölme dili: epic, user story, task, kabul kriteri. Bir özellik talebini bu formatta yazmayı ve \"bitti\"nin ne demek olduğunu netleştirmeyi öğren."
+outcomes:
+  - "Bir özellik talebini epic → story → task hiyerarşisine bölebilirsin."
+  - "Standart user story kalıbını yazabilir, \"çünkü\" kısmının neden en önemli olduğunu açıklayabilirsin."
+  - "Ölçülemeyen bir kabul kriterini evet/hayır cevabı verilebilir hâle getirebilirsin."
+  - "Given/When/Then ile bir kriteri üç parçaya bölebilirsin."
+minutes: 12
+sources:
+  - label: "Atlassian — User story"
+    url: "https://www.atlassian.com/agile/project-management/user-stories"
+  - label: "Atlassian — Epic"
+    url: "https://www.atlassian.com/agile/project-management/epics"
+  - label: "Martin Fowler — Given When Then"
+    url: "https://martinfowler.com/bliki/GivenWhenThen.html"
+  - label: "Bill Wake — INVEST in Good Stories"
+    url: "https://xp123.com/invest-in-good-stories-and-smart-tasks/"
+additions:
+  - "INVEST: iyi bir user story'nin altı özelliği (Bill Wake)."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Outside from "~/components/lesson/Outside.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+"Sepeti cihazlar arasında senkronla" diye bir talep geliyor. Bu bir cümle, ama içinde iki hafta ile iki ay arasında değişebilecek bir iş var. Neyi kapsıyor? Kim yapacak? Ne zaman "bitti" diyeceksiniz? Bu üç sorunun cevabı, bu dersin üç kavramında: **epic, user story ve kabul kriteri.**
+
+Bunlar senin için en yüksek getirili terimler. Bir özellik talebini bu formatta yazabiliyorsan, hem geliştiriciyle hem yapay zekâyla **profesyonel seviyede** konuşuyorsun demektir.
+
+## Büyükten küçüğe: epic, story, task
+
+<StepFlow
+  arrows={false}
+  label="İş hiyerarşisi"
+  caption="Üstteki küçülerek alttakilere bölünür. Alt seviyeler üst seviyenin neden var olduğunu unutmaz: her task bir story'ye, her story bir epic'e bağlıdır."
+  steps={[
+    { title: "Epic", sub: "Tek sprint'e sığmayan büyük hedef. Örn. Ödeme akışı", tone: "accent" },
+    { title: "User story", sub: "Kullanıcı için bir değer. Örn. Sepetimi cihazlar arası görmek istiyorum", tone: "plain" },
+    { title: "Task", sub: "Teknik tekil iş. Örn. Sepet tablosunu ekle, ekranı kodla", tone: "progress" },
+  ]}
+/>
+
+### Epic
+
+**Epic**, tek bir sprint'e sığmayacak kadar büyük, birden fazla story'ye bölünen iş kümesidir. Büyük hedefin parçalara bölünürken kaybolmamasını sağlar: yirmi ayrı iş kaydı arasında "aslında hepsi ödeme akışının parçası" bilgisini taşıyan katman budur. Jira ve Linear gibi araçlarda hiyerarşinin üst seviyesidir; roadmap'te bir satır genelde bir epic'tir. "Ödeme epic'i altında sekiz story var, ikisi bu sprint'te."
+
+### User story
+
+**User story**, bir gereksinimi **kullanıcının bakış açısından, tek cümlede** anlatan yazım biçimidir. Gereksinimi teknik görevden ayırıp amaca bağlar. Standart kalıbı:
+
+> **[Rol] olarak, [şunu] yapmak istiyorum, çünkü [şu sebeple].**
+
+Örnek: *"Kayıtlı kullanıcı olarak, sepetimi cihazlar arasında görmek istiyorum, çünkü telefonda ekleyip bilgisayarda satın alıyorum."*
+
+**Son kısım (çünkü) en önemlisidir ve en çok atlanandır.** Sebep yazılırsa geliştirici daha iyi bir çözüm önerebilir; yazılmazsa yalnızca söyleneni birebir yapar. Yukarıdaki örnekte sebebi bilen biri, "belki sepet zaten hesaba bağlıdır, ayrı bir senkron gerekmez" diyebilir.
+
+### Task
+
+**Task**, bir story'yi hayata geçirmek için yapılması gereken tekil teknik iştir. İşin *kim tarafından, hangi sırayla* yapılacağını netleştirir. Bir story'nin altında hem tasarım hem front-end hem back-end task'ı olabilir: "Story'nin tasarım task'ı bitti, front-end task'ı bu hafta başlıyor."
+
+**Story ≠ task.** Story kullanıcı için bir *değer* ifade eder; task o değeri üretmek için yapılan *teknik adımdır.* "Veritabanına sepet tablosu ekle" bir task'tır, story değil.
+
+<Outside source="Bill Wake — INVEST in Good Stories" href="https://xp123.com/invest-in-good-stories-and-smart-tasks/">
+
+İyi bir user story'nin altı özelliği için yaygın bir hatırlatıcı **INVEST**'tir (Bill Wake):
+
+| Harf | Anlamı | Kendine sor |
+|---|---|---|
+| **I**ndependent | Bağımsız | Başka bir story'ye bağımlı kalmadan yapılabilir mi? |
+| **N**egotiable | Pazarlığa açık | Çözümü sabitlemiyor, konuşmaya yer bırakıyor mu? |
+| **V**aluable | Değerli | Kullanıcıya ya da işe bir değer veriyor mu? |
+| **E**stimable | Tahmin edilebilir | Ekip büyüklüğünü kabaca söyleyebiliyor mu? |
+| **S**mall | Küçük | Bir sprint'e sığıyor mu? |
+| **T**estable | Test edilebilir | "Bitti"yi kontrol edebiliyor muyuz? |
+
+Bir story bu listenin çoğunda zorlanıyorsa genelde bölünmesi ya da netleştirilmesi gerekir. Bu bir kural değil, bir kontrol listesidir.
+
+</Outside>
+
+## Acceptance criteria: "bitti" ne demek?
+
+**Acceptance criteria** (AC, kabul kriterleri), bir işin "bitti" sayılabilmesi için sağlanması gereken, **tek tek kontrol edilebilir koşullar listesidir.** "Bitti" kelimesinin herkes için aynı anlama gelmesini sağlar. Kriterler yazılmazsa iş, geliştiricinin doğru sandığı yerde biter; sonra revizyon turu başlar.
+
+Bu, dosyadaki **en yüksek getirili tek beceridir**: bir isteği kabul kriterleriyle yazabilmek, gelen çıktının doğruluğunu doğrudan artırır. Her iş kaydının içinde yer alır; QA testini buradan yazar. Yapay zekâya istem yazarken de aynı işlevi görür.
+
+"AC'ye 'boş sonuç durumunda ne görüneceği' maddesini ekleyelim, yoksa boş ekran tasarımsız kalır."
+
+**İyi kabul kriteri nasıl anlaşılır?** Her madde **"evet" ya da "hayır"** diye cevaplanabiliyorsa iyidir.
+
+| Kötü | İyi |
+|---|---|
+| "Sayfa hızlı açılmalı." | "Sayfa 3G bağlantıda 3 saniyeden kısa sürede etkileşime hazır olmalı." |
+| "Arama sonuçları doğru gelmeli." | "En az 3 karakter yazıldığında sonuçlar 500 ms içinde görünür; eşleşme yoksa boş durum ekranı gösterilir." |
+
+Ayrıca kriterler yalnız **başarılı durumu** değil, **boş durumu, hata durumunu ve yükleme durumunu** da kapsamalıdır. Tasarımcı olarak bu üçünü listeye sen eklersin; yoksa kimse düşünmez.
+
+**AC ≠ Definition of Done.** AC o *işe özeldir* ("filtre seçildiğinde URL güncellenir"). Definition of Done ise *tüm işler için geçerli genel standarttır* ("kod review'dan geçti, testler yeşil"). İkisi birden sağlanmadan iş bitmiş sayılmaz. (DoD'u bu bölümün sonunda göreceksin.)
+
+### Given / When / Then
+
+**Given / When / Then** (GWT), bir kabul kriterini üç parçaya bölerek yazma biçimidir: *başlangıç durumu, yapılan eylem, beklenen sonuç.* Üç parça da yazılmak zorunda olduğu için "hangi durumda?" sorusu atlanamaz; en sık atlanan bilgi budur.
+
+```text
+Given  kullanıcı giriş yapmamış
+When   sepete ürün ekler
+Then   ürün korunur ve giriş sonrası sepette görünür
+```
+
+Kabul kriterlerinde ve otomatik testlerde kullanılır. Cucumber gibi test araçlarının kullandığı Gherkin dili bu yapıya dayanır (Dan North ve Chris Matts'in BDD çalışmasından).
+
+## Non-functional requirement: ürünün "nasıl"ı
+
+**Non-functional requirement** (NFR, işlevsel olmayan gereksinim), ürünün *ne yaptığını* değil, *nasıl olması gerektiğini* tanımlar: hız, erişilebilirlik, güvenlik, tarayıcı desteği, dil desteği.
+
+Bunlar yazılmazsa **hiç kimse sahiplenmez** ve en sona kalır; sona kalınca da yapılmaz. Erişilebilirlik ve performans en sık bu yüzden düşer. PRD'de ayrı başlık olarak yer alır; kurumsal projelerde sözleşmeye girer.
+
+"NFR olarak yazalım: tüm etkileşimler klavyeyle erişilebilir olmalı ve kontrast WCAG AA'yı sağlamalı." Bu cümle tasarımcının kendi alanında en güçlü araçlarından biridir: kalite ölçütünü kimse unutmadan **kayda geçirir.**
+
+<Callout kind="tasarimci">
+
+Bir talebi ekibe aktarırken şu sırayı izle:
+
+1. **Epic'i yaz:** büyük hedef nedir?
+2. **Story'lere böl:** her biri "[rol] olarak ... çünkü ..." kalıbında.
+3. **Her story için kabul kriteri ekle:** evet/hayır cevaplanabilir; başarı, boş, hata, yükleme durumlarını kapsa.
+4. **NFR'leri ayrıca yaz:** erişilebilirlik, hız, tarayıcı desteği.
+
+Bu dört adım, "bunu yapabilir misin?" cümlesini "şunu yapıyoruz ve şu koşullarda bitti diyoruz" cümlesine çevirir.
+
+</Callout>
+
+<Summary>
+
+- Epic büyük hedef, user story kullanıcı için değer, task teknik adımdır; story task değildir.
+- User story kalıbı: "[rol] olarak, [şunu] yapmak istiyorum, çünkü [sebep]". En çok atlanan ve en değerli kısım "çünkü"dür.
+- Kabul kriteri evet/hayır cevaplanabilir olmalı; başarı, boş, hata ve yükleme durumlarını kapsamalı.
+- AC o işe özel, Definition of Done tüm işler için geneldir; ikisi birden sağlanmalı.
+- Given/When/Then "hangi durumda?" sorusunu atlanamaz kılar; NFR'ler yazılmazsa sahipsiz kalır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="User story'nin standart kalıbı nedir ve kalıbın hangi kısmı en çok atlanır? Atlanınca ne kaybedilir?">
+
+"[Rol] olarak, [şunu] yapmak istiyorum, çünkü [şu sebeple]." En çok atlanan kısım sebeptir. Sebep yazılmazsa geliştirici alternatif ve daha iyi bir çözüm öneremez; yalnızca söyleneni birebir uygular.
+
+</SelfCheck>
+
+<SelfCheck question={"Şu kabul kriteri neden kötü: \"Arama sonuçları hızlı ve doğru gelmeli.\" Nasıl düzeltirsin?"}>
+
+Ölçülebilir değil: "hızlı" ve "doğru" kişiden kişiye değişir ve evet/hayır ile cevaplanamaz. Düzeltilmiş hâli: "Given kullanıcı en az 3 karakter yazmış, When aramayı tetikler, Then sonuçlar 500 ms içinde görünür ve eşleşme yoksa boş durum ekranı gösterilir."
+
+</SelfCheck>

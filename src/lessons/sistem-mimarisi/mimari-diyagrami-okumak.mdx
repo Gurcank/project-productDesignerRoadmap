@@ -1,0 +1,72 @@
+---
+summary: "Mimari diyagramlar bir dildir: kutular bileşen, oklar bağımlılık yönü, çerçeveler sınır. Bir diyagrama bakarken sorulacak beş soru ve 'hangi zoom seviyesinde konuşuyoruz?' sorusu."
+outcomes:
+  - "Kutuları, okları ve sınırları okuyabilirsin."
+  - "Okun yönünün neyi söylediğini açıklayabilirsin."
+  - "Bir diyagrama bakarken beş soruyu sorabilirsin."
+minutes: 6
+sources:
+  - label: "C4 modeli"
+    url: "https://c4model.com/"
+  - label: "Microsoft — Azure mimari stilleri"
+    url: "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/"
+flags: ["emin-degil"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Toplantıda bir mimari diyagram açılıyor: kutular, oklar, kesikli çerçeveler. Sessizce başını sallıyorsun ama okuyamıyorsun. Bu dersin sonunda okuyabileceksin. Diyagramlar bir dildir; standart bir gösterim yoktur ama yaygın kalıplar vardır.
+
+## Kutular, oklar, sınırlar
+
+**Kutular** bileşenleri temsil eder: servisler, veritabanları, dış sistemler, kullanıcı arayüzleri. Bir kutunun adı genelde sorumluluğunu söyler.
+
+**Oklar** veri ya da çağrı akışını gösterir. **Okun yönü kimin kimi çağırdığını söyler** ve önemli bir bilgidir: A → B ise A, B'ye bağımlıdır; B'nin çökmesi A'yı etkiler, tersi geçerli olmayabilir. Kesikli oklar genelde eş zamansız iletişimi, düz oklar eş zamanlı çağrıyı gösterir.
+
+**Kesikli kutular ya da çerçeveler** sınırları temsil eder: bir ağ sınırı, bir güvenlik sınırı, bir ekip sorumluluğu ya da bir bulut hesabı. **Bir sınırı geçen her ok, üzerinde durulması gereken bir noktadır:** orada kimlik doğrulama, gecikme ve hata olasılığı vardır.
+
+## Beş soru
+
+1. **Kullanıcı isteği hangi kutulardan geçiyor?** Zincirdeki her halka gecikme ve arıza ihtimali ekler.
+2. **Hangi kutu çökerse ne olur?** Tek arıza noktaları burada görünür.
+3. **Hangi oklar bir sınırı geçiyor?** Ağ sınırını geçen her çağrı yavaş ve güvenilmezdir.
+4. **Veri nerede duruyor?** Kaç ayrı yerde veri var ve nasıl senkron kalıyor?
+5. **Ne eksik?** İzleme, önbellek, kuyruk ve yedeklilik diyagramlarda en sık atlanan parçalardır.
+
+## Zoom seviyeleri
+
+**C4 modeli** olarak anılan ve diyagramları dört zoom seviyesine ayıran bir yaklaşım yaygın kullanılır: sistem bağlamı, konteyner, bileşen, kod. Kesin detayı doğrulama gerektirir; ama "hangi seviyede konuşuyoruz?" sorusu diyagram tartışmalarında işe yarar: çoğu karışıklık, iki kişinin farklı zoom seviyelerinden konuşmasından çıkar.
+
+<Callout kind="tasarimci">
+
+- **Kullanıcı akışını diyagramın üstünde yürü:** ekranındaki her adım hangi kutulardan geçiyor?
+- **Sınırı geçen oklar için hata durumlarını tasarla:** gecikme, zaman aşımı, kimlik hatası.
+- **Eksik parçaları (izleme, önbellek, kuyruk, yedeklilik) toplantıda sor.**
+- **Kendi diyagramlarını (kullanıcı akışı, sitemap) da "hangi zoom seviyesindeyiz?" sorusuyla netleştir.**
+
+</Callout>
+
+<Summary>
+
+- Kutular bileşen, oklar bağımlılık yönü (kimin kimi çağırdığı), çerçeveler sınırdır.
+- Sınırı geçen her ok kimlik, gecikme ve hata olasılığı taşır.
+- Beş soru: kullanıcı isteği nereden geçiyor, kim çökerse ne olur, hangi oklar sınırı geçiyor, veri nerede, ne eksik?
+- "Hangi zoom seviyesinde konuşuyoruz?" karışıklığı önler.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir mimari diyagramında okun yönü neyi söyler?">
+
+Kimin kimi çağırdığını, yani bağımlılık yönünü. A → B ise A, B'ye bağımlıdır: B'nin çökmesi A'yı etkiler, tersi geçerli olmayabilir. Kesikli oklar genelde eş zamansız, düz oklar eş zamanlı iletişimi gösterir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir diyagrama bakarken sorulacak beş soruyu say.">
+
+Kullanıcı isteği hangi kutulardan geçiyor? Hangi kutu çökerse ne olur? Hangi oklar bir sınırı geçiyor? Veri nerede duruyor ve nasıl senkron kalıyor? Ne eksik (izleme, önbellek, kuyruk, yedeklilik)?
+
+</SelfCheck>

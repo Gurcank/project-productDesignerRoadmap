@@ -1,0 +1,58 @@
+---
+summary: "GitHub'da iş takibi: issue, label, milestone, şablonlar ve proje panosu. Issue ve PR şablonları doğrudan senin işine yarar: Definition of Done'ı mekanikleştirirler."
+outcomes:
+  - "Issue, label, milestone ve assignee'nin ne olduğunu söyleyebilirsin."
+  - "PR şablonunun tasarımcı için bir kalite aracı olduğunu açıklayabilirsin."
+  - "Project board'un Kanban ile ilişkisini bilirsin."
+minutes: 5
+sources:
+  - label: "GitHub Docs — Issue'lar hakkında"
+    url: "https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues"
+  - label: "GitHub Docs — Issue ve PR şablonları"
+    url: "https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/about-issue-and-pull-request-templates"
+  - label: "GitHub Docs — Projects hakkında"
+    url: "https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Küçük bir ekipte iş takibi için ayrı bir araca gerek var mı? GitHub'ın kendi iş takibi çoğu zaman yeter: iş kaydı, tartışma ve kod aynı yerde durur.
+
+## Issue
+
+**Issue**, GitHub üzerinde bir iş, hata ya da fikrin takip edildiği kayıttır; ticket'ın GitHub'daki karşılığıdır. **Label** kategorize eder, **milestone** gruplar, **assignee** sahibini belirler. Açık kaynak projelerde ve küçük ekiplerde yaygındır. "Tasarım eksiklerini issue olarak açalım, `design` etiketiyle işaretleyelim."
+
+## Issue ve PR şablonları
+
+**Issue template** ve **pull request template**, yeni bir issue ya da PR açıldığında otomatik gelen, doldurulması beklenen alanlardır. **Doğrudan senin işine yarayan bir araç:** bir hata raporunun hangi bilgileri içermesi gerektiğini şablona yazarsan eksik raporlar azalır. Aynı şekilde bir PR şablonuna "tasarım kontrol edildi mi?", "responsive test edildi mi?", "erişilebilirlik kontrolü yapıldı mı?" maddelerini koymak **Definition of Done'ı mekanikleştirir.** "PR şablonuna erişilebilirlik kontrol listesi ekleyelim; sona kalmasın."
+
+## Project board
+
+**Project board (proje panosu)**, issue ve PR'ların sütunlar hâlinde takip edildiği panodur; Kanban panosunun GitHub'daki hâli. Avantajı, kod ile iş takibinin aynı yerde olması. "Jira yerine GitHub Projects kullanalım; iki araç arasında gidip gelmeyelim."
+
+<Callout kind="tasarimci">
+
+- **Tasarım eksikleri için bir issue şablonu tasarla:** ekran görüntüsü, beklenen davranış, cihaz, bağlantı.
+- **PR şablonuna tasarım kontrol listesi ekle:** durumlar, responsive, erişilebilirlik, token kullanımı.
+- **Issue etiketlerini (design, a11y, copy) ekiple kararlaştır.**
+
+</Callout>
+
+<Summary>
+
+- Issue iş takibinin GitHub'daki karşılığıdır; label, milestone, assignee ile düzenlenir.
+- Şablonlar eksik raporları azaltır ve Definition of Done'ı mekanikleştirir.
+- Project board kod ile iş takibini aynı yerde tutan Kanban panosudur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="PR şablonu tasarımcı için nasıl bir araç olabilir?">
+
+Definition of Done'ı mekanikleştirmenin aracıdır: şablona "tasarım kontrol edildi mi?", "responsive test edildi mi?", "erişilebilirlik kontrolü yapıldı mı?" maddelerini koyarsan bu kontroller insan hafızasına değil sürece bağlanır.
+
+</SelfCheck>

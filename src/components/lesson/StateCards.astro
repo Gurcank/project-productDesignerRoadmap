@@ -1,0 +1,148 @@
+---
+/**
+ * The four states every data screen needs, drawn as one small list card each.
+ * Pure HTML/CSS: the point is the shape of each state, not an interaction.
+ * Skeleton bars carry no text on purpose, so they are hidden from assistive tech.
+ */
+---
+
+<div class="state-cards" role="group" aria-label="Aynı listenin dört hâli">
+  <figure class="state-card">
+    <div class="state-card__box" aria-hidden="true">
+      <span class="skel skel--title"></span>
+      <span class="skel"></span>
+      <span class="skel skel--short"></span>
+      <span class="skel"></span>
+      <span class="skel skel--short"></span>
+    </div>
+    <figcaption><strong>Yükleniyor</strong> Gerçek listeyle aynı boyutta gri bloklar.</figcaption>
+  </figure>
+
+  <figure class="state-card">
+    <div class="state-card__box state-card__box--center">
+      <p class="state-card__head">Henüz proje yok</p>
+      <p class="state-card__text">İlk projeni oluşturarak başla.</p>
+      <span class="state-card__btn">İlk projeni oluştur</span>
+    </div>
+    <figcaption><strong>Boş</strong> Ne yapılacağını ve birincil eylemi söyler.</figcaption>
+  </figure>
+
+  <figure class="state-card">
+    <div class="state-card__box state-card__box--center">
+      <p class="state-card__head">Liste yüklenemedi</p>
+      <p class="state-card__text">Bağlantı koptu. Girdiğin veri korundu.</p>
+      <span class="state-card__btn">Tekrar dene</span>
+    </div>
+    <figcaption><strong>Hata</strong> Ne oldu, neden, şimdi ne yapmalı.</figcaption>
+  </figure>
+
+  <figure class="state-card">
+    <div class="state-card__box">
+      <p class="state-card__row"><span>Landing sayfası</span><span class="state-card__tag">Taslak</span></p>
+      <p class="state-card__row"><span>Mobil uygulama</span><span class="state-card__tag">Yayında</span></p>
+      <p class="state-card__row"><span>Tasarım sistemi</span><span class="state-card__tag">Yayında</span></p>
+    </div>
+    <figcaption><strong>Dolu</strong> Her şeyin yolunda olduğu tek hâl.</figcaption>
+  </figure>
+</div>
+
+<style>
+  .state-cards {
+    display: grid;
+    gap: var(--spacing-4);
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    margin: var(--spacing-6) 0;
+  }
+
+  .state-card {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+  }
+
+  .state-card__box {
+    flex: 1;
+    min-height: 9.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    padding: var(--spacing-4);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-raised);
+  }
+
+  .state-card__box--center {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .state-card figcaption {
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .state-card figcaption strong {
+    display: block;
+    color: var(--c-text);
+  }
+
+  .skel {
+    display: block;
+    height: 0.75rem;
+    border-radius: var(--radius-sm);
+    background-color: var(--c-surface-sunken);
+    border: 1px solid var(--c-border);
+  }
+
+  .skel--title {
+    height: 1rem;
+    width: 55%;
+  }
+
+  .skel--short {
+    width: 70%;
+  }
+
+  .state-card__head {
+    margin: 0;
+    font-weight: 600;
+    color: var(--c-text);
+  }
+
+  .state-card__text {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .state-card__btn {
+    margin-top: var(--spacing-1);
+    padding: var(--spacing-1) var(--spacing-3);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    color: var(--c-text);
+  }
+
+  .state-card__row {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-2);
+    margin: 0;
+    padding-block: var(--spacing-1);
+    border-bottom: 1px solid var(--c-border);
+    font-size: var(--text-sm);
+    color: var(--c-text);
+  }
+
+  .state-card__row:last-child {
+    border-bottom: 0;
+  }
+
+  .state-card__tag {
+    color: var(--c-text-secondary);
+  }
+</style>

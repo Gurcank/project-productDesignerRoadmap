@@ -1,0 +1,110 @@
+---
+summary: "UX, UI, etkileşim tasarımı, görsel tasarım ve hizmet tasarımı: günlük konuşmada birbirinin yerine kullanılan terimlerin ne zaman gerçekten farklı şeyleri kastettiğini öğren."
+outcomes:
+  - "UX ile UI farkını ve \"kusursuz UI, kötü UX\" olabileceğini bir örnekle anlatabilirsin."
+  - "Bir sorunun arayüzde mi, etkileşimde mi, görsel tasarımda mı yoksa hizmette mi olduğunu ayırt edebilirsin."
+  - "İş ilanlarındaki \"UX/UI Designer\" gibi ifadelerin neyi kapsadığını yorumlayabilirsin."
+minutes: 8
+sources:
+  - label: "NN/g — The Definition of User Experience (UX)"
+    url: "https://www.nngroup.com/articles/definition-user-experience/"
+  - label: "NN/g — Usability 101"
+    url: "https://www.nngroup.com/articles/usability-101-introduction-to-usability/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Bu bölüm senin **ana alanın.** Amacı, şu ana kadar sezgiyle yaptığın şeylerin *adını ve gerekçesini* vermek.
+
+Fark şurada: "burası biraz boş duruyor" demek bir izlenimdir, tartışılamaz. "Bu bölümde görsel hiyerarşi yok; birincil eylem ikincil eylemle aynı ağırlıkta, bu yüzden göz nereye gideceğini bilmiyor" demek bir **argümandır,** savunulabilir. İkinci cümleyi kurabilen tasarımcı, kararını zevk tartışmasından çıkarır.
+
+Bir uyarı: bu bölümdeki "yasalar" fizik yasası değildir. Çoğu, belirli koşullarda yapılmış psikoloji çalışmalarından türetilmiş ve zamanla sloganlaştırılmıştır. Hangi kuralın nerede yanlış uygulandığını da göreceksin, çünkü bir kuralı yanlış yerde kullanmak, hiç bilmemekten daha kötü sonuç verebilir.
+
+Şimdi başlangıç noktası: kelimeler. Bu terimler günlük konuşmada birbirinin yerine kullanılır ve bu bir sorun değildir. Ama ne zaman gerçekten farklı şeyleri kastettiklerini bilmek, iş ilanlarını okurken ve ekipte kimin ne yaptığını anlarken işini görür.
+
+## UX: ilişkinin bütünü
+
+**UX** (User Experience, kullanıcı deneyimi), bir kişinin bir ürün ya da hizmetle kurduğu **ilişkinin bütünüdür.** Yalnızca ekranlar değil; bekleme süreleri, e-postalar, destek görüşmesi ve sonrasındaki his dahil.
+
+Deneyimin ekranlarda bitmediğini hatırlatır. **Kusursuz bir arayüz, onay e-postası 20 dakika geç geliyorsa kötü bir deneyim üretir.** Bu, tasarımcının sorumluluk alanını arayüzün ötesine taşır. "Arayüz temiz ama UX kötü; kullanıcı işlemi bitirdikten sonra ne olduğunu anlamıyor."
+
+İş ilanlarında en yaygın kısaltmadır ve çok gevşek kullanılır: "UX iyileştirme" cümlesi bazen yalnızca "butonu büyütelim" demektir.
+
+## UI: dokunulabilir yüzey
+
+**UI** (User Interface, kullanıcı arayüzü), kullanıcının ürünle etkileştiği **görsel ve etkileşimsel katmandır:** ekranlar, butonlar, tipografi, renk, hareket. Soyut bir akışı dokunulabilir ve anlaşılabilir bir yüzeye çevirir. İyi bir UI, doğru kurgulanmış bir akışı hızlandırır; kötü bir UI, doğru akışı bile kullanılamaz hâle getirir.
+
+**UX ≠ UI.** UI, UX'in bir *parçasıdır;* UX ondan geniştir. "UX/UI Designer" ifadesi bu ikisini bir arada yapan kişiyi anlatır ama teknik olarak farklı kapsamlardır. "Akış doğru ama UI'da hiyerarşi yok; üç buton da aynı ağırlıkta duruyor."
+
+## Üç alt disiplin
+
+UX ve UI'ın içinde, bazen ayrı roller olarak da karşına çıkan alt alanlar var.
+
+### Etkileşim tasarımı
+
+**Interaction Design** (IxD, etkileşim tasarımı), kullanıcının bir eylemi ile sistemin verdiği **tepki arasındaki ilişkiyi** tasarlama disiplinidir. "Tıklayınca ne olacak?" sorusunun tasarımıdır: bekleme sırasında ne görünür, hata olursa ne olur, geri alınabilir mi, geçiş nasıl olur.
+
+Statik ekran çizmekle bitmeyen kısım burasıdır ve **en sık atlanan kısımdır.** "IxD tarafı eksik: kaydet butonuna basınca ne olduğunu, hata durumunda ne göründüğünü tanımlamamışız." Prototip hazırlarken ve geliştiriciye teslimde durum tanımları yazarken karşına çıkar.
+
+### Görsel tasarım
+
+**Visual design** (görsel tasarım), tipografi, renk, boşluk, görsel ve hiyerarşi kararlarının verildiği katmandır. Görsel karar yalnızca estetik değildir: hiyerarşi kurar, okunabilirliği belirler, güven duygusunu etkiler. Bir ürünün "ciddi" ya da "amatör" görünmesi bu katmanda oluşur.
+
+**Visual design ≠ dekorasyon.** Görsel kararların işlevi vardır; kontrast bir okunabilirlik meselesidir, tercih meselesi değildir. "Visual design tarafında sorun yok, sorun akışta."
+
+### Hizmet tasarımı
+
+**Service design** (hizmet tasarımı), bir hizmetin, kullanıcı tarafındaki ve arka taraftaki **tüm parçalarının birlikte** tasarlanmasıdır. Bazı deneyim sorunları ekranda çözülemez; süreçte, personelde ya da politikada çözülür. **"İade süreci kötü" sorununun cevabı çoğu zaman iade sayfasının tasarımı değil, iade politikasıdır.**
+
+Bankacılık, sağlık, kamu ve perakende projelerinde yaygındır. Ön yüzü ve arka yüzü aynı haritada gösteren *service blueprint* bu disiplinden gelir. "Bu bir arayüz sorunu değil, service design sorunu; destek ekibinin elinde bu bilgi yok."
+
+<StepFlow
+  arrows={false}
+  label="Disiplinler: geniş olandan dar olana"
+  caption="Dıştaki daha geniştir ve içtekini kapsar. Sorun hangi katmandaysa çözüm de orada aranmalıdır: arayüzü güzelleştirmek bir politika sorununu çözmez."
+  steps={[
+    { title: "Hizmet tasarımı", sub: "Ön yüz + arka yüz: süreç, personel, politika", tone: "progress" },
+    { title: "UX", sub: "Ürünle kurulan ilişkinin bütünü (ekran dışı dahil)", tone: "accent" },
+    { title: "Etkileşim tasarımı", sub: "Eylem ve tepki: durumlar, geçişler, hata" },
+    { title: "UI / görsel tasarım", sub: "Ekranlar, tipografi, renk, hiyerarşi" },
+  ]}
+/>
+
+<Callout kind="tasarimci">
+
+Bir geri bildirim aldığında önce **sorunun hangi katmanda olduğunu** bul:
+
+- "Kullanıcı ne yapacağını bilmiyor" → akış ya da **etkileşim** (UX)
+- "Karışık duruyor" → **görsel hiyerarşi** (UI)
+- "Tıklayınca ne olduğu belli değil" → **etkileşim tasarımı**
+- "İade süreci berbat" → **hizmet tasarımı**, ekran dışında
+
+Doğru katmanı bulmak, yanlış yere zaman harcamayı önler. İş ilanında da aynısı: "UX/UI Designer" yazıyorsa hangi katmanların ağırlıkta olduğunu **görüşmede sor.**
+
+</Callout>
+
+<Summary>
+
+- UX kullanıcının ürünle ilişkisinin tamamı, UI onun görsel ve etkileşimsel yüzeyidir.
+- Etkileşim tasarımı eylem-tepki ilişkisini, görsel tasarım hiyerarşi ve okunabilirliği, hizmet tasarımı ekran dışındaki süreci kapsar.
+- Kusursuz bir UI, kötü bir UX üretebilir (örneğin geç gelen onay e-postası).
+- Bazı sorunlar arayüzde çözülemez; politika ya da süreç sorunudur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="UX ile UI arasındaki fark nedir? Kusursuz bir UI kötü bir UX üretebilir mi? Örnek ver.">
+
+UI arayüz katmanıdır (ekranlar, butonlar, tipografi); UX ise kullanıcının ürünle kurduğu ilişkinin bütünüdür: bekleme süreleri, e-postalar, destek dahil. Evet üretebilir: kusursuz bir ödeme ekranı, onay e-postası 20 dakika sonra geliyorsa kullanıcıda "işlem geçti mi?" endişesi bırakır.
+
+</SelfCheck>
+
+<SelfCheck question={"\"İade süreci kötü\" şikâyeti için neden her zaman iade sayfasını yeniden tasarlamak çözüm olmaz?"}>
+
+Çünkü sorun ekranda değil süreçte ya da politikada olabilir (iade koşulları, destek ekibinin yetkisi). Bu bir hizmet tasarımı sorunudur; arayüzü güzelleştirmek asıl nedeni çözmez.
+
+</SelfCheck>

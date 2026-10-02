@@ -1,0 +1,59 @@
+---
+summary: "Kabul kriteriyle istemek, 'bitti' tanımını baştan koymaktır. Bu, iterasyonu en çok azaltan tek uygulamadır; liste aynı zamanda çıktıyı denetlemenin listesi olur. Kabul kriteri yazamıyorsan isteğin henüz netleşmemiştir."
+outcomes:
+  - "Kötü ve iyi bir isteği kabul kriteri üzerinden ayırt edebilirsin."
+  - "Kabul kriteri yazamamanın neyin işareti olduğunu söyleyebilirsin."
+minutes: 4
+sources:
+  - label: "Anthropic Docs — Prompt engineering genel bakış"
+    url: "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview"
+  - label: "Claude Code Docs — En iyi uygulamalar"
+    url: "https://code.claude.com/docs/en/best-practices"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Ürün Geliştirme bölümündeki kabul kriteri, prompt yazarken **"bitti" tanımını baştan koymak** anlamına gelir. Bu, iterasyonu en çok azaltan tek uygulamadır.
+
+**Kötü:** "Bir fiyatlandırma bölümü yap."
+
+**İyi, kabul kriterleriyle:**
+
+> Fiyatlandırma bölümü. Bitmiş sayılması için:
+> - Üç plan kartı, ortadaki "En çok tercih edilen" rozetiyle öne çıkarılmış
+> - Aylık/yıllık geçiş anahtarı; yıllıkta tasarruf rozeti
+> - Her kartta: plan adı, kime uygun olduğu, fiyat, tek CTA, dahil olanlar listesi
+> - Mobilde tek sütun, 768px üstünde üç sütun
+> - Anahtarın hangi durumda olduğu renkten bağımsız olarak anlaşılır
+> - Tüm butonlar klavyeyle erişilebilir, focus göstergesi görünür
+> - Boşluklar spacing ölçeğinden, renkler token'dan
+
+Bu liste tek tek "evet/hayır" ile kontrol edilebilir; yani **çıktıyı denetlemenin de listesi olur.**
+
+**Kural:** bir kabul kriteri yazamıyorsan isteğin henüz netleşmemiştir. Bu, modelin değil **senin probleminin** işaretidir.
+
+<Callout kind="tasarimci">
+
+- **Her kriter evet/hayır ile cevaplanabilmeli:** "güzel görünsün" kriter değildir.
+- **Durumları kriter yap:** boş, hata, yükleme, uzun metin.
+- **Yazamıyorsan dur:** önce isteği netleştir.
+
+</Callout>
+
+<Summary>
+
+- Kabul kriteri "bitti"yi baştan tanımlar ve iterasyonu en çok azaltan uygulamadır.
+- Liste evet/hayır ile denetlenebilir; çıktıyı kontrol etmenin de listesidir.
+- Yazamıyorsan sorun isteğin netleşmemiş olmasıdır, modelin değil.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Kabul kriteri yazamıyorsan bu neyin işaretidir?">
+
+İsteğin henüz netleşmediğinin. Bu, modelin değil senin probleminin göstergesidir.
+
+</SelfCheck>

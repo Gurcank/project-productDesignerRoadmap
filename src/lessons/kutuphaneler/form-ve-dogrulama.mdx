@@ -1,0 +1,63 @@
+---
+summary: "React Hook Form, Zod ve eski nesil Formik/Yup: form durumunu ve doğrulamayı yöneten araçlar. Zod'un tasarımcı için anlamı: doğrulama kuralları ve hata mesajları tek yerde."
+outcomes:
+  - "React Hook Form'un uzun formlarda neden performans farkı yarattığını söyleyebilirsin."
+  - "TypeScript ile Zod'un farklı anlarda koruduğunu açıklayabilirsin."
+  - "Hata mesajlarının neden bir şema dosyasında toplu gözden geçirilebildiğini bilirsin."
+minutes: 5
+sources:
+  - label: "React Hook Form"
+    url: "https://react-hook-form.com/"
+  - label: "Zod"
+    url: "https://zod.dev/"
+  - label: "Formik"
+    url: "https://formik.org/"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Formlar tasarımcının sürekli temas ettiği bir alan; arkasındaki araçların iki adını bilmek, hata mesajlarını nerede düzelteceğini bilmek demektir.
+
+## React Hook Form
+
+**React Hook Form (RHF)**, React'te form durumunu ve doğrulamasını yöneten kütüphanedir. Kontrolsüz bileşen yaklaşımını kullandığı için her tuş vuruşunda tüm formu yeniden çizmez; uzun formlarda performans farkı belirgindir. Doğrulama, hata mesajları ve gönderim akışı hazır gelir. "20 alanlı form için RHF kullanalım; her tuşta yeniden çizim olmasın."
+
+## Zod
+
+**Zod**, verinin beklenen yapıya uyup uymadığını **çalışma zamanında** kontrol eden şema doğrulama kütüphanesidir. TypeScript tipleri yalnızca yazarken korur; sunucudan beklenmedik veri gelirse bir şey yapmaz. Zod bu boşluğu doldurur: aynı şemayı hem form doğrulaması hem API yanıtı kontrolü için kullanabilirsin.
+
+**Tasarımcı için anlamı:** doğrulama kuralları (minimum uzunluk, format, zorunluluk) tek yerde tanımlanır ve hata mesajları buradan gelir; yani mesaj metinlerini bir yerde toplu gözden geçirebilirsin. "Zod şemasındaki hata mesajlarını gözden geçirelim; kullanıcıya teknik dille konuşuyoruz."
+
+Zod (çalışma zamanı doğrulama) ile TypeScript (derleme zamanı tip kontrolü) farklı anlarda korur ve birbirinin yerine geçmez.
+
+## Formik ve Yup
+
+**Formik** ve **Yup**, RHF ve Zod'dan önceki nesil form ve doğrulama kütüphaneleridir. Hâlâ çok sayıda projede kullanılır; adlarını duyduğunda tanıman yeterli. Yeni projelerde tercih edilme oranları düştü; güncel durumlarını kontrol et. "Proje Formik kullanıyor; yeni formları RHF'ye geçirmeden önce tutarlılığı düşünelim."
+
+<Callout kind="tasarimci">
+
+- **Hata mesajlarını tek bir listede yaz** (alan, kural, mesaj); geliştirici şemaya bunları koyar.
+- **Doğrulama kurallarını teslimde belirt:** minimum uzunluk, biçim, zorunluluk.
+- **Hata mesajı tonunu gözden geçir:** teknik değil, kullanıcı diliyle.
+
+</Callout>
+
+<Summary>
+
+- RHF kontrolsüz yaklaşımla her tuşta tüm formu yeniden çizmez; uzun formlarda fark yaratır.
+- Zod çalışma zamanında şemayı doğrular; TypeScript derlemede korur, ikisi birbirinin yerine geçmez.
+- Zod şeması doğrulama kurallarını ve hata mesajlarını tek yerde toplar.
+- Formik/Yup eski nesildir; adlarını tanımak yeterli.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="TypeScript ile Zod arasındaki fark nedir? Neden ikisi birden gerekir?">
+
+TypeScript yazarken korur (derleme zamanı); sunucudan beklenmedik veri gelirse bir şey yapmaz. Zod çalışma zamanında verinin şemaya uyup uymadığını kontrol eder. İkisi farklı anlarda korur ve birbirinin yerine geçmez.
+
+</SelfCheck>

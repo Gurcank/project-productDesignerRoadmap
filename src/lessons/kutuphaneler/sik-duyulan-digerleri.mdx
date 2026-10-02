@@ -1,0 +1,59 @@
+---
+summary: "Adını duyduğunda kategorisini bilmen yeterli olan araçlar: çok dillilik, tarih, grafik, tablo, ikon, bildirim ve sanallaştırma. Kategoriyi öğren, ismi doğrula."
+outcomes:
+  - "Yedi araç kategorisini ve her birinin işini söyleyebilirsin."
+  - "Bu araçların neden isim değil kategori düzeyinde öğrenilmesi gerektiğini açıklayabilirsin."
+minutes: 3
+sources:
+  - label: "TanStack Table"
+    url: "https://tanstack.com/table/latest"
+  - label: "TanStack Virtual"
+    url: "https://tanstack.com/virtual/latest"
+  - label: "FormatJS"
+    url: "https://formatjs.github.io/"
+  - label: "date-fns"
+    url: "https://date-fns.org/"
+  - label: "D3"
+    url: "https://d3js.org/"
+  - label: "Chart.js"
+    url: "https://www.chartjs.org/"
+  - label: "Lucide"
+    url: "https://lucide.dev/"
+  - label: "Sonner"
+    url: "https://sonner.emilkowal.ski/"
+flags: ["degisken"]
+skipTerms: ["grid"]
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bunlar **seviye 3** terimlerdir: adını duyduğunda kategorisini bilmen yeterli. Tablodaki isimlerin hepsi ürün adıdır ve değişir; **kategoriyi öğren, ismi doğrula.**
+
+| Kategori | Yaygın adlar | Ne işe yarar |
+|---|---|---|
+| **i18n** (uluslararasılaştırma) | next-intl, react-i18next, FormatJS | Çok dilli içerik, tarih/sayı/para biçimlendirme, sağdan sola diller |
+| **Tarih** | date-fns, Day.js, Luxon, Temporal API | Tarih hesabı, biçimlendirme, saat dilimi yönetimi |
+| **Grafik** | Recharts, Chart.js, Visx, Tremor, D3 | Veri görselleştirme; D3 en esnek ama en düşük seviyeli |
+| **Tablo** | TanStack Table, AG Grid | Sıralama, filtreleme, sanallaştırma, satır içi düzenleme |
+| **İkon** | Lucide, Phosphor, Heroicons, Material Symbols | İkon setleri |
+| **Bildirim** | Sonner, react-hot-toast | Toast bileşenleri |
+| **Sanallaştırma** | TanStack Virtual | Uzun listelerde yalnızca görünen satırları çizme; INP'yi korur |
+
+Bu tabloyu tasarımla ilişkilendirmek için: **i18n** metin uzunluğu ve yazı yönü kararlarını, **tarih** biçim ve saat dilimi kararlarını, **tablo** ve **sanallaştırma** veri yoğun ekranların yoğunluk ve performans kararlarını, **bildirim** kütüphaneleri ise toast davranışını (süre, konum, geri al) doğrudan etkiler.
+
+<Summary>
+
+- Çok dillilik, tarih, grafik, tablo, ikon, bildirim ve sanallaştırma yedi sık duyulan araç kategorisidir.
+- İsimler hızla değişir; kategoriyi ve işini öğren.
+- Her kategori bir tasarım kararına dokunur: metin uzunluğu, tarih biçimi, yoğunluk, toast davranışı.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Sanallaştırma (virtualization) kütüphanesi ne işe yarar ve hangi metriği korur?">
+
+Uzun listelerde yalnızca görünen satırları çizer; gereksiz yeniden çizimi azaltarak INP'yi korur.
+
+</SelfCheck>

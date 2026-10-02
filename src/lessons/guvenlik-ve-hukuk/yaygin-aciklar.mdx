@@ -1,0 +1,109 @@
+---
+summary: "Adlarını duyacağın ve ne olduğunu anlaman gereken saldırı türleri: XSS, CSRF, SQL injection, IDOR, SSRF ve clickjacking. IDOR tasarımcının en çok ilgilendiği açıktır; 'zengin metin' ve 'URL önizleme' gibi masum özellikler risk doğurur."
+outcomes:
+  - "XSS ile CSRF arasındaki farkı söyleyebilirsin."
+  - "IDOR'un neden tasarımcıyı ilgilendirdiğini ve asıl savunmanın ne olduğunu açıklayabilirsin."
+  - "URL önizleme gibi bir özelliğin SSRF riskini ve zengin metin isteğinin XSS riskini bilirsin."
+minutes: 9
+sources:
+  - label: "OWASP — XSS Prevention Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+  - label: "OWASP — CSRF Prevention Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html"
+  - label: "OWASP — IDOR Prevention Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html"
+  - label: "OWASP — SSRF Prevention Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html"
+  - label: "OWASP — Clickjacking Defense Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/Clickjacking_Defense_Cheat_Sheet.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bu ders bir saldırı kataloğu değil; adlarını duyacağın ve ne olduğunu anlaman gereken saldırıların kısa tanıtımı. Her birinin tasarım bağlantısına dikkat et.
+
+## XSS
+
+**XSS (Cross-Site Scripting)**: saldırganın, başka kullanıcıların tarayıcısında kendi kodunu çalıştırabilmesidir. Kullanıcı girdisi (yorum, profil adı, arama terimi) ekranda gösterilirken kod olarak yorumlanırsa oluşur. Sonucu ağırdır: oturum çalma, sahte form gösterme, kullanıcı adına işlem yapma. Modern framework'ler varsayılan olarak korur, **ama "ham HTML olarak göster" gibi özellikler bu korumayı kapatır.**
+
+**Tasarım kararıyla bağlantısı:** "kullanıcı biçimlendirme yapabilsin" isteği, ham HTML kabul etmek anlamına gelirse risk doğurur. Güvenli yol, sınırlı bir zengin metin editörü ve sunucu tarafında temizleme (sanitization) kullanmaktır. "Kullanıcı yorumlarında zengin metin desteği istiyoruz; XSS riskini nasıl yöneteceğiz?"
+
+## CSRF
+
+**CSRF (Cross-Site Request Forgery)**: kullanıcının, farkında olmadan başka bir sitede oturum açık olduğu uygulamada işlem yapmasının sağlanmasıdır. Çerezler her isteğe otomatik eklendiği için kötü niyetli bir site senin adına bir form gönderebilir. Savunması: `SameSite` çerez ayarı ve CSRF jetonları.
+
+<Compare>
+<Pane title="XSS">
+
+- Saldırgan senin sitende kod çalıştırır
+- Savunma: escaping, CSP
+
+</Pane>
+<Pane title="CSRF">
+
+- Saldırgan başka siteden senin sitene istek attırır
+- Savunma: SameSite, CSRF jetonu
+
+</Pane>
+</Compare>
+
+## SQL injection
+
+**SQL injection**: kullanıcı girdisinin, veritabanı sorgusunun bir parçası olarak çalıştırılabilmesidir. Tüm veritabanının okunmasına ya da silinmesine yol açabilir; en eski ve en yıkıcı açıklardan biridir. Modern ORM'ler ve parametreli sorgular bunu büyük ölçüde ortadan kaldırır. "Arama sorgusunu elle birleştiriyoruz; parametreli sorguya çevirelim."
+
+## IDOR
+
+**IDOR (Insecure Direct Object Reference)**: bir kaydın kimliğini değiştirerek başkasına ait kayda erişilebilmesidir. **Tasarımcının en çok ilgilendiği açıktır:** URL'de `/siparis/1042` görüyorsan `/siparis/1043` yazarak başkasının siparişini görebilir misin? Sunucu her istekte "bu kayıt bu kullanıcıya mı ait?" kontrolünü yapmıyorsa evet. Erişim kontrolü kategorisinin en yaygın biçimidir.
+
+**Tahmin edilemez kimlik kullanmak bir savunma değil, yalnızca zorlaştırmadır.** Asıl savunma, her istekte yetki kontrolü yapmaktır; ikisi birlikte kullanılır. "IDOR testi yapalım: başka kullanıcının sipariş ID'siyle URL'i deneyelim."
+
+## SSRF
+
+**SSRF (Server-Side Request Forgery)**: saldırganın, sunucuyu kendi seçtiği bir adrese istek atmaya zorlamasıdır. "Bir URL gir, biz o sayfanın önizlemesini getirelim" gibi masum görünen özellikler bu riski doğurur: saldırgan sunucunun iç ağdaki gizli servislere istek atmasını sağlayabilir. URL önizleme, webhook yapılandırma ve görsel içe aktarma özelliklerinde karşına çıkar. "URL önizleme özelliği SSRF riski taşıyor; hangi adreslere istek atılabileceğini sınırlayalım."
+
+## Clickjacking
+
+**Clickjacking**: sitenin görünmez bir çerçeve içinde başka bir sayfaya gömülüp kullanıcının farkında olmadan tıklamasının sağlanmasıdır. Kullanıcı bir yere tıkladığını sanır, aslında altta duran uygulamanda bir işlem onaylar. Savunması, sitenin başka sayfalara gömülmesini engelleyen başlıklardır. "Uygulamanın iframe içine gömülmesini engelleyelim."
+
+<Callout kind="tasarimci">
+
+- **"Kullanıcı biçimlendirebilsin" isteğinde** sınırlı editör + sunucu temizleme öner.
+- **URL'de kimlik gösterirken IDOR'u hatırla:** her istekte yetki kontrolü şart.
+- **URL önizleme, içe aktarma gibi özelliklerde SSRF riskini ekiple konuş.**
+- **Kritik eylem ekranlarının iframe içinde gösterilmesini engellemeyi iste.**
+
+</Callout>
+
+<Summary>
+
+- XSS saldırganın senin sitende kod çalıştırması, CSRF başka bir siteden senin sitene istek attırmasıdır.
+- SQL injection girdinin sorgu parçası olması; ORM ve parametreli sorgular ortadan kaldırır.
+- IDOR: kimliği değiştirerek başkasının kaydına erişim; asıl savunma her istekte yetki kontrolüdür.
+- SSRF sunucuyu saldırganın seçtiği adrese istek atmaya zorlar; URL önizleme gibi özellikler riskli.
+- Clickjacking sitenin görünmez çerçevede gömülmesidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="XSS ile CSRF arasındaki fark nedir?">
+
+XSS, saldırganın senin sitende kod çalıştırmasıdır. CSRF, saldırganın başka bir siteden senin sitene, kullanıcının oturumunu kullanarak istek attırmasıdır. Farklı savunmalar gerektirir (escaping/CSP ve SameSite/CSRF jetonu).
+
+</SelfCheck>
+
+<SelfCheck question="IDOR nedir ve neden tasarımcıyı doğrudan ilgilendirir? Asıl savunması nedir?">
+
+Bir kaydın kimliğini değiştirerek başkasına ait kayda erişebilmektir (`/siparis/1042` → `/siparis/1043`). URL yapısı ve kimlik gösterimi tasarım kararı olduğu için ilgilendirir. Asıl savunma, her istekte "bu kayıt bu kullanıcıya mı ait?" kontrolüdür; tahmin edilemez kimlik yalnızca zorlaştırır.
+
+</SelfCheck>
+
+<SelfCheck question="'URL gir, biz önizlemesini getirelim' özelliği hangi riski doğurur?">
+
+SSRF: saldırgan, sunucunun iç ağdaki gizli servislere istek atmasını sağlayabilir. Hangi adreslere istek atılabileceği sınırlanmalıdır.
+
+</SelfCheck>

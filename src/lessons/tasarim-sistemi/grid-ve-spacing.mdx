@@ -1,0 +1,128 @@
+---
+summary: "Yerleşimin ve boşlukların sistemi: ızgara, container, boşluk ölçeği, 8pt grid, dikey ritim ve yoğunluk. Tasarımın düzenli mi dağınık mı göründüğünü belirleyen en sessiz katman."
+outcomes:
+  - "Izgaranın parçalarını (sütun, gutter, margin) ve neden 12 sütunun yaygın olduğunu söyleyebilirsin."
+  - "Boşluk ölçeğinin neden 'yapay zekâyla üretilmiş' hissine karşı en iyi panzehir olduğunu açıklayabilirsin."
+  - "8pt grid'in asıl faydasının matematik değil karar sayısını azaltmak olduğunu bilirsin."
+  - "Başlık üstü boşluğunun neden başlık altından büyük olması gerektiğini Gestalt ile açıklayabilirsin."
+minutes: 10
+sources:
+  - label: "Spec — 8-Point Grid"
+    url: "https://spec.fm/specifics/8-pt-grid"
+  - label: "NN/g — Gestalt: Proximity"
+    url: "https://www.nngroup.com/articles/gestalt-proximity/"
+  - label: "MDN — CSS Grid layout"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import SpacingDemo from "~/components/lesson/SpacingDemo.astro";
+
+İki tasarıma bakıyorsun. İkisinde de aynı renkler, aynı font var. Biri "düzenli", öteki "dağınık" hissettiriyor. Fark nerede? Çoğu zaman **boşlukta ve hizada:** biri tutarlı bir sisteme uyuyor, öteki 13px, 17px, 22px gibi rastgele değerlerle dolu.
+
+Bu ders yerleşimin ve boşlukların sistemini anlatıyor. Tasarımın "düzenli" mi "dağınık" mı göründüğünü belirleyen **en sessiz katmandır:** kimse fark etmez, ama eksikliği hissedilir.
+
+## Izgara ve kapsayıcı
+
+**Grid** (ızgara, sütun ızgarası), sayfayı eşit sütunlara bölen **görünmez** yerleşim yapısıdır. Üç parçası var:
+
+- **Column (sütun):** İçeriğin oturduğu dikey şeritler.
+- **Gutter:** Sütunlar arası boşluk.
+- **Margin:** Kenar boşluğu.
+
+Hizalama kararlarını tek tek vermek yerine bir sisteme bağlar. **12 sütun** yaygındır çünkü 2, 3, 4 ve 6'ya bölünebilir; bu da farklı düzenlere esneklik verir. Figma'da "layout grid" olarak, kodda CSS Grid ya da Flexbox olarak karşına çıkar. "Masaüstünde 12 sütun, 24px gutter; kart bölümü 4 sütunluk üçlü olsun."
+
+### Container
+
+**Container / max-width** (kapsayıcı, maksimum genişlik), içeriğin yayılabileceği **en fazla genişliktir.** Geniş ekranlarda içeriğin sonsuza kadar yayılmasını engeller: sınırsız genişlik hem satır uzunluğunu bozar hem göz taramasını zorlaştırır.
+
+Farklı içerikler farklı genişlik ister: **metin dar, tablo ve galeri geniş.** "Genel container 1200px, ama makale gövdesi 680px'te kalsın."
+
+## Boşluk ölçeği: en büyük panzehir
+
+**Spacing scale** (boşluk ölçeği), kullanılacak boşluk değerlerinin **önceden belirlenmiş listesidir:** 4, 8, 12, 16, 24, 32, 48, 64.
+
+<SpacingDemo steps={[4, 8, 12, 16, 24, 32, 48, 64]} />
+
+**"Yapay zekâyla üretilmiş" hissinin en büyük panzehiri budur.** Ölçek yoksa her bölümde farklı değer çıkar (13px, 17px, 22px) ve göz bunu **düzensizlik** olarak okur, sebebini adlandıramasa bile. Ölçek varsa boşluklar birbiriyle ilişkili olur. Token tanımlarında ve her yerleşim kararında karşına çıkar. "Bu boşluk 18px; ölçekte yok. 16 ya da 24'e yuvarlayalım."
+
+### 8pt grid
+
+**8pt grid** (8 birimlik ızgara), tüm boşluk ve boyut değerlerinin **8'in katı** olması yaklaşımıdır (bazı yerlerde 4'lük ara adımlarla). Yaygın ekran boyutlarının çoğu 8'e bölünebildiği için ölçekleme daha temiz çalışır. Ama **asıl faydası matematiksel değil, karar sayısını azaltmasıdır:** 8, 16, 24 arasından seçmek, 0–100 arasından seçmekten hızlı ve tutarlıdır.
+
+Yaygın bir sektör alışkanlığıdır, resmî bir standart değil. "8pt sisteme uyuyoruz; ikon içi hizalamalarda 4'lük ara adım serbest."
+
+**Kutsal bir kural değildir.** Tipografi ve optik hizalama zaman zaman ölçek dışı değer gerektirir; kural körü körüne uygulanınca sonuç kötüleşebilir.
+
+## Dikey ritim
+
+**Vertical rhythm** (dikey ritim), dikey boşlukların **tutarlı bir tabana göre** tekrar etmesidir. Sayfayı aşağı kaydırırken oluşan düzen hissini üretir.
+
+Temel kural: **başlık üstü boşluk, her zaman başlık altı boşluktan büyük olmalıdır.** Neden? Gestalt yakınlık ilkesi gereği başlık, altındaki metne ait olarak okunmalıdır. Üst ve alt boşluk eşitse başlık hangi bloğa ait olduğunu belli etmez.
+
+<Compare>
+<Pane title="Eşit boşluk (belirsiz)">
+
+- Başlık üstü 24, altı 24
+- Başlık hangi bloğa ait belli değil
+- İki bölüm birbirine karışıyor
+
+</Pane>
+<Pane title="Üst büyük, alt küçük (net)">
+
+- Başlık üstü 48, altı 16
+- Başlık altındaki metne yapışık
+- Bölümler birbirinden ayrışıyor
+
+</Pane>
+</Compare>
+
+"Başlık üstü 48, altı 16; şu an ikisi de 24 olduğu için başlık hangi bloğa ait belli değil."
+
+## Yoğunluk
+
+**Density** (yoğunluk), belirli bir alanda **ne kadar bilgi gösterildiğidir.** Farklı kullanıcı ve bağlamlar farklı yoğunluk ister: bir pazarlama sayfası ferah olmalıdır; günde sekiz saat tablo inceleyen bir uzman ise az kaydırmak ister. Bazı sistemler yoğunluğu bir **mod** olarak sunar (compact / comfortable). Panel ve tablo tasarımlarında karşına çıkar. "Operasyon ekibi için compact mod ekleyelim; satır yüksekliğini 48'den 36'ya indiren bir mod yeterli."
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitedeki her boşluk 4 tabanlı bir ölçekten geliyor (0,25 rem ile 6 rem arası dokuz adım); Tailwind yapılandırması varsayılan ölçeği silip yalnızca bu adımları bıraktığı için `18px` yazmak mümkün değil. Okuma sütunu 68 karakterle sınırlı (container). Omurga asimetrik: adım menüsü + içerik + sayfa içi içindekiler; hiçbir sayfa baştan sona ortalanmış değil.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Ölçek dışı değer görürsen yuvarla.** 18px yerine 16 ya da 24.
+- **Boşluğu token olarak teslim et.** Geliştirici `margin: 18px` yerine `--spacing-4` yazsın.
+- **Gruplamayı boşlukla kur.** Birbirine ait olan yakın, olmayan uzak.
+- **Başlık altını üstünden küçük tut.**
+- **Yoğunluğu hedef kitleye göre seç.** Uzman paneli compact, tanıtım sayfası ferah.
+
+</Callout>
+
+<Summary>
+
+- Izgara sütun, gutter ve margin'den oluşur; 12 sütun çok bölünebildiği için yaygındır. Container içeriğin yayılabileceği en fazla genişliği belirler.
+- Boşluk ölçeği rastgele değerleri bitirir; "yapay zekâyla üretilmiş" hissine karşı en güçlü araçtır.
+- 8pt grid'in asıl faydası karar sayısını azaltmaktır; kutsal bir kural değildir.
+- Dikey ritimde başlık üstü boşluk altından büyük olmalıdır (yakınlık ilkesi).
+- Yoğunluk bağlama göre değişir; bazı sistemlerde bir mod olarak sunulur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="8pt grid'in asıl faydası matematiksel midir? Değilse nedir?">
+
+Hayır. Ekran boyutlarının 8'e bölünebilmesi ikincil bir faydadır; asıl fayda karar sayısını azaltmasıdır. 8, 16, 24 arasından seçmek 0–100 arasından seçmekten hem hızlı hem tutarlıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Başlık üstündeki boşluk neden başlık altındakinden büyük olmalı? Hangi ilkeyle açıklanır?">
+
+Gestalt yakınlık (proximity) ilkesi gereği. Başlık altındaki metne ait olarak okunmalıdır; üst boşluk alt boşluktan küçük olursa başlık bir önceki bloğa aitmiş gibi görünür.
+
+</SelfCheck>

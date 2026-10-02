@@ -1,0 +1,66 @@
+---
+summary: "Tarayıcıda çalışan tek programlama dili. Nerede çalıştığı, neyi iyi ve kötü yaptığı ve tasarımcı olarak JavaScript bütçesini neden önemsemen gerektiği."
+outcomes:
+  - "'Bunu istemcide yapalım' cümlesinin JavaScript demek olduğunu söyleyebilirsin."
+  - "İstemciye gönderilen hiçbir şeyin gizli olmadığını açıklayabilirsin."
+  - "Etkileşimli her bileşenin indirilen kod demek olduğunu bilirsin."
+minutes: 6
+sources:
+  - label: "MDN — JavaScript"
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+  - label: "Node.js — Hakkında"
+    url: "https://nodejs.org/en/about"
+  - label: "Stack Overflow — Developer Survey"
+    url: "https://survey.stackoverflow.co/"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir sayfada tıklamaya tepki veren, veri çeken, ekranı güncelleyen her şey ya JavaScript'tir ya da JavaScript'e derlenmiştir. **Tarayıcıda çalışan tek** programlama dilidir. Kavramsal tarafı (event, promise, fetch) Front-end bölümünde gördün; burada dil profili var.
+
+## Nerede karşına çıkar
+
+- **Tarayıcı.** Alternatifi yok: "bunu istemcide yapalım" demek JavaScript demektir.
+- **Sunucu.** Node.js ile aynı dil arkada da çalışır. Bir ekibin tek dille iki tarafı yazabilmesi küçük ekiplerde büyük avantajdır.
+- **Mobil ve masaüstü.** React Native, Electron gibi araçlarla.
+
+## Güçlü ve zayıf yanları
+
+**İyi yaptığı:** her yerde çalışır (tarayıcı, sunucu, mobil), ekosistemi devasa (hemen her iş için hazır paket var; tasarımda istediğin çoğu bileşenin hazır geleceği anlamına gelir), işe alım kolaydır.
+
+**Kötü yaptığı:**
+
+- **Tip güvenliği yok.** Bir alanın adını yanlış yazmak çalışma anında patlar, yazarken değil. Büyük projelerde bu TypeScript'i neredeyse zorunlu kılar.
+- **Ekosistem hızlı eskir.** Bugün standart olan araç iki yıl sonra bakım modunda olabilir.
+- **Paket bağımlılığı derinleşir.** Küçük bir özellik yüzlerce dolaylı bağımlılık getirebilir; bu hem güvenlik hem performans yüzeyidir.
+
+**Alternatifler:** TypeScript (aynı dilin tipli hâli, yeni projelerde varsayılan sayılır) ve WebAssembly (tarayıcıda ağır hesap için; JavaScript'in yerine değil, yanına).
+
+<Callout kind="tasarimci">
+
+- **İstemcide olan her şey JavaScript bütçesine yazılır.** Her etkileşimli bileşen indirilen kod demektir; "sadece küçük bir animasyon" bir paket getirebilir.
+- **Tarayıcıda çalışan kod gizli değildir.** İstemciye gönderilen hiçbir şey sır sayılmaz: "bunu sadece admin görsün" istemci tarafında çözülmez.
+- **JavaScript kapalıysa ya da geç yüklenirse ne olacak?** İçeriğin sunucudan gelmesi (SSR/SSG) bir tasarım kararıdır, teknik detay değil.
+
+</Callout>
+
+<Summary>
+
+- JavaScript tarayıcıda çalışan tek dildir; sunucuda Node.js ile de çalışır.
+- Gücü her yerde çalışması ve devasa ekosistemidir; zayıflığı tip güvenliğinin olmaması ve hızlı eskiyen ekosistemidir.
+- Her etkileşimli bileşen indirilen kod demektir ve istemciye giden hiçbir şey gizli değildir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Bunu sadece admin görsün' isteği neden istemci tarafında çözülemez?">
+
+Tarayıcıya gönderilen her şey kullanıcının elindedir; gizli sayılamaz. Yetkiyi sunucu tarafında doğrulamak gerekir.
+
+</SelfCheck>

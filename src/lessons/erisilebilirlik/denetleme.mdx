@@ -1,0 +1,124 @@
+---
+summary: "Erişilebilirliği nasıl denetlersin: otomatik araçlar (axe, Lighthouse) sorunların yalnızca bir kısmını yakalar; tasarımcının yapabileceği dört manuel kontrol; overlay'lerin neden eleştirildiği ve gerçek kullanıcılarla test."
+outcomes:
+  - "\"Lighthouse 100 verdi\" cümlesinin ne anlama geldiğini ve gelmediğini açıklayabilirsin."
+  - "Tasarımcının yapabileceği dört manuel erişilebilirlik kontrolünü uygulayabilirsin."
+  - "Erişilebilirlik overlay'lerinin neden eleştirildiğini ve alternatifini söyleyebilirsin."
+  - "Gerçek yardımcı teknoloji kullanıcılarıyla test yapmanın neden gerekli olduğunu bilirsin."
+minutes: 9
+sources:
+  - label: "Deque — Otomatik test dijital erişilebilirlik sorunlarının %57'sini buluyor"
+    url: "https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/"
+  - label: "Overlay Fact Sheet"
+    url: "https://overlayfactsheet.com/"
+  - label: "W3C WAI — Erişilebilirliği değerlendirme"
+    url: "https://www.w3.org/WAI/fundamentals/accessibility-intro/"
+flags: ["emin-degil"]
+additions:
+  - "Otomatik araçların yakaladığı oran: materyaldeki %30–40 aralığı yöntem ve sayım biçimine göre değişir; Deque'nin çalışması sorun hacminin %57'sini bulduğunu bildiriyor."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Outside from "~/components/lesson/Outside.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Ekip toplantısında biri sevinçle: "Lighthouse erişilebilirlikte 100 verdi, bitirdik!" Ama sen ekranı klavyeyle dolaştığında odak üç yerde kayboluyor, bir butonun etiketi anlamsız ve hata mesajı hiç duyurulmuyor. 100 puan gerçek, ama anlattığı şey sandığından çok daha küçük.
+
+Bu ders erişilebilirliği **nasıl denetleyeceğini** anlatıyor. En önemli uyarı baştan:
+
+> **Otomatik araçlar sorunların yalnızca bir kısmını yakalar.**
+
+## Otomatik test
+
+**Automated accessibility testing** (otomatik erişilebilirlik testi), Lighthouse, axe, WAVE gibi araçlarla yapılan otomatik taramadır. Ucuz ve hızlıdır: eksik alt metin, düşük kontrast, eksik etiket gibi sorunları anında bulur. CI hattına eklenebilir, böylece yeni hatalar birikmez. "axe'ı CI'a ekleyelim; her PR'da yeni ihlal varsa uyarsın."
+
+**Bu bölümün en önemli uyarısı:** otomatik araçlar sorunların yalnızca **bir kısmını** yakalar. "Lighthouse 100 verdi" cümlesi erişilebilir olduğun anlamına gelmez. Odak sırasının mantıklı olması, alt metnin **doğru** olması, hata mesajının anlaşılır olması: hiçbiri otomatik ölçülemez.
+
+<Outside source="Deque — Otomatik test çalışması" href="https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/">
+
+Materyal, araçların yakaladığı oranı **%30–40** civarında anıyor. Bu rakam sık anılır ama tek bir kesin değer yok. Deque'nin geniş bir çalışması, otomatik testin **sorun hacminin %57'sini** bulduğunu bildiriyor. Fark, neyin sayıldığından geliyor: *sorun çeşidi* mi (tür), *toplam sorun sayısı* mı (hacim)? Aynı tür sorun (ör. eksik etiket) bir sitede yüzlerce kez tekrarlanabilir ve otomatik araç bunları kolayca bulur.
+
+Bu yüzden iki şeyi birlikte akılda tut:
+
+- Otomatik araç **bulabildiği türlerde** (kontrast, eksik etiket, geçersiz işaretleme) çok kullanışlıdır.
+- Bulamadığı türlerde (mantık, anlam, kullanılabilirlik) **hiçbir şey söylemez.** Yani %100 tarama başarısı, %100 erişilebilirlik demek değildir.
+
+Hangi oranı alırsan al, sonuç aynı: manuel test şart.
+
+</Outside>
+
+## Manuel test: tasarımcının dört kontrolü
+
+**Manual accessibility testing** (manuel erişilebilirlik testi), klavye, ekran okuyucu, yakınlaştırma ve renk simülasyonu ile **elle** yapılan kontroldür. Otomatik aracın göremediği şeyleri yakalar. Tasarımcının yapabileceği en verimli dört kontrol:
+
+<StepFlow
+  label="Dört manuel kontrol"
+  caption="Her biri beş dakikada yapılır ve farklı bir sorun sınıfını yakalar. Birlikte, otomatik aracın göremediği şeylerin çoğunu açığa çıkarır."
+  steps={[
+    { title: "1. Fareyi bırak", sub: "Yalnızca Tab, Enter, Space, ok tuşlarıyla ana akışı bitir", tone: "accent" },
+    { title: "2. %200 yakınlaştır", sub: "İçerik kırpılıyor, üst üste biniyor mu?", tone: "accent" },
+    { title: "3. Ekran okuyucuyu aç", sub: "VoiceOver (macOS), NVDA (Windows): ilk ekranı dinle", tone: "accent" },
+    { title: "4. Gri tonlama uygula", sub: "Renkten bağımsız her şey anlaşılıyor mu?", tone: "progress" },
+  ]}
+/>
+
+"Tasarım incelemesine klavye turunu da ekledim; üç bileşende odak göstergesi yok." Bu kontroller tasarım incelemesinde ve yayın öncesi kontrolde yer almalıdır.
+
+## Overlay: hızlı çözüm vaadi
+
+**Accessibility overlay / widget** (erişilebilirlik eklentisi), siteye eklenen ve **"tek satır kodla erişilebilirlik sağladığını"** iddia eden üçüncü parti araçlardır. "Hızlı çözüm" arayan müşteri taleplerinde karşına çıkar.
+
+**Erişilebilirlik topluluğu tarafından geniş ölçüde eleştirilir.** Temel gerekçeler:
+
+- **Altta yatan sorunları düzeltmezler.**
+- Bazı durumlarda yardımcı teknolojilerin **kendi ayarlarıyla çakışırlar.**
+- **Yasal koruma** sağladıkları iddiası tartışmalıdır.
+
+**Kalıcı çözüm, sorunun kodda ve tasarımda düzeltilmesidir.** "Overlay yerine gerçek düzeltmeleri planlayalım; bütçeyi oraya harcamak daha kalıcı." Bu eleştirilerin **hukuki sonuçları ülkeye göre değişir;** kesin bir hukuki iddiada bulunmuyorum.
+
+## Gerçek kullanıcılarla test
+
+**Testing with users with disabilities** (engelli kullanıcılarla test), **gerçek yardımcı teknoloji kullanıcılarıyla** yapılan kullanılabilirlik testidir. Tüm ölçütleri geçen ama kullanılamayan arayüzler mümkündür. Deneyimli bir ekran okuyucu kullanıcısı, hiçbir aracın bulamayacağı sorunları **on dakikada** bulur. Olgun erişilebilirlik programlarında yer alır.
+
+"Standartları geçtik ama bir NVDA kullanıcısıyla da test edelim; akış gerçekten bitiyor mu görelim."
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitenin kendi denetim süreci tam da bu katmanları kullanıyor: bölümlerin kontrol listeleri kabul kriteri olarak kullanılıyor, kontrast ve Türkçe karakter kontrolü hesapla yapılıyor, bir klavye turu faz kapısında. Otomatik tarama (axe) bağımlılık olarak projede duruyor ama tek başına yeterli sayılmıyor.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **"100 puan" demek yetmez.** Otomatik taramayı geçtikten sonra dört manuel kontrolü yap.
+- **Klavye turu, yakınlaştırma, ekran okuyucu, gri tonlama:** bunları tasarım incelemesine ve bitmiş sayılma tanımına yaz.
+- **Overlay talebini nazikçe geri çevir.** Aynı bütçeyle gerçek düzeltmeler daha kalıcı.
+- **Mümkünse gerçek kullanıcıyla bir kez test et.** Öğrenilen şey bir rapordan fazlasıdır.
+
+</Callout>
+
+<Summary>
+
+- Otomatik araçlar bulabildikleri türlerde (kontrast, eksik etiket) iyi, bulamadıklarında (mantık, anlam) sessizdir; "Lighthouse 100" erişilebilir demek değildir.
+- Oran kaynağa göre değişir (tür mü hacim mi sayılıyor); sonuç aynı: manuel test şart.
+- Tasarımcının dört kontrolü: klavye, %200 yakınlaştırma, ekran okuyucu, gri tonlama.
+- Overlay'ler altta yatan sorunu düzeltmez; kalıcı çözüm kod ve tasarım düzeltmesidir.
+- Gerçek yardımcı teknoloji kullanıcılarıyla test, araçların bulamadığı sorunları açığa çıkarır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question={"Otomatik erişilebilirlik araçları sorunların ne kadarını yakalar? \"Lighthouse 100 verdi\" ne anlama gelir, ne anlama gelmez?"}>
+
+Rakam kaynağa ve neyin sayıldığına göre değişir (yaygın olarak %30–40 anılır; bir çalışma sorun hacminin %57'sini bildiriyor). "Lighthouse 100" yalnızca makinenin ölçebildiği kontrollerin geçtiği anlamına gelir; odak sırasının mantıklı olduğu, alt metnin doğru olduğu ya da hata mesajının anlaşılır olduğu anlamına gelmez.
+
+</SelfCheck>
+
+<SelfCheck question="Erişilebilirlik overlay'leri neden eleştirilir?">
+
+Altta yatan sorunları düzeltmezler, bazı durumlarda yardımcı teknolojilerin kendi ayarlarıyla çakışırlar ve sağladıkları iddia edilen yasal koruma tartışmalıdır. Kalıcı çözüm sorunun kodda ve tasarımda düzeltilmesidir.
+
+</SelfCheck>

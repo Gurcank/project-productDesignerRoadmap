@@ -1,0 +1,137 @@
+---
+summary: "Sayfanın üstünde beliren geçici katmanlar: overlay, modal, drawer, tooltip, popover, dropdown, toast ve uyarı şeridi. Benzer görünen çiftleri ayırmayı ve her birinin odak kuralını öğrenirsin."
+outcomes:
+  - "Modal ile drawer, tooltip ile popover arasındaki farkı söyleyebilirsin."
+  - "Hangi bilginin toast'a konmayacağını ve nedenini açıklayabilirsin."
+  - "Confirm dialog yerine geri alınabilir işlemi neden önerdiğini anlatabilirsin."
+  - "Modal'ın dört erişilebilirlik kuralını sayabilirsin."
+minutes: 12
+sources:
+  - label: "NN/g — Modal & Nonmodal Dialogs"
+    url: "https://www.nngroup.com/articles/modal-nonmodal-dialog/"
+  - label: "NN/g — Confirmation Dialogs Can Prevent User Errors"
+    url: "https://www.nngroup.com/articles/confirmation-dialog/"
+  - label: "NN/g — Tooltip Guidelines"
+    url: "https://www.nngroup.com/articles/tooltip-guidelines/"
+  - label: "W3C WAI-ARIA APG — Dialog (Modal) Pattern"
+    url: "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+  - label: "W3C — WCAG 2.2: Content on Hover or Focus"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html"
+  - label: "W3C — WCAG 2.2: Dragging Movements"
+    url: "https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html"
+includeTerms: ["modal", "dialog", "drawer", "sheet", "toast", "backdrop"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import OverlayWire from "~/components/lesson/OverlayWire.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Önceki derslerde sayfanın yapısını gördün. Bu derste kullanıcının ürünle konuştuğu anlara geçiyoruz: bildirimler, açılır pencereler, ipuçları. Burada bileşenlerin çoğu **birbirine çok benzeyen ama farklı işler yapan çiftler** hâlinde gelir. "Karıştırdığın şeyler" bu yüzden bu bölümün en değerli kısmıdır.
+
+Hepsinin ortak sorunu aynıdır: **odak yönetimi ve kapatılabilirlik.** Bir katman açıldığında klavye odağı nereye gider, nasıl kapanır, kapanınca odak nereye döner?
+
+<OverlayWire />
+
+## Örtü ve pencere
+
+**Overlay** (*backdrop*, *scrim*), modal ya da çekmece açıldığında arka planı karartan yarı saydam katmandır. İki iş görür: dikkati öndeki içeriğe toplar ve arkadaki içeriğin tıklanamaz olduğunu bildirir. Genelde üzerine tıklayınca katman kapanır. "Overlay opaklığı %60 olsun; %20'de arka plan hâlâ dikkat çekiyor." Karıştırma: bu katman, erişilebilirlik bölümünde gördüğün *accessibility overlay* eklentisiyle aynı şey değildir.
+
+**Dialog** bileşenin adıdır; **modal** ise bir davranış sıfatıdır: arkadaki içerikle etkileşimi engelleyen dialog'a modal denir, engellemeyene non-modal dialog. Modal akışı keser ve kullanıcıdan tek bir şeye odaklanmasını ister; bu kesme maliyetlidir, bu yüzden yalnızca gerçekten gerektiğinde kullanılır: yıkıcı işlemlerin onayı, kısa ve zorunlu girdiler. Uzun formlar ve karmaşık akışlar modal'a konmaz: kaydırma, klavye ve mobil davranışı bozulur. "Bu formu modal yerine ayrı sayfaya alalım; sekiz alan modal içine sığmıyor."
+
+Modal'ın erişilebilirlik kuralları zorunludur:
+
+1. Açılınca odak içeri taşınır.
+2. Odak içeride döner (**focus trap**).
+3. Esc ile kapanır.
+4. Kapanınca odak, açan öğeye döner.
+
+**Confirm dialog**, bir işlemin gerçekten istendiğini soran küçük modal'dır. Kazayı önler ama aşırı kullanılırsa kullanıcı otomatik olarak "Evet"e basmaya alışır ve koruma işlevi ölür. Çoğu durumda daha iyi alternatif **geri alınabilir işlemdir**: işlemi yap, "Geri al" seçenekli bir toast göster. Tek satır silmede onay sorma, geri al ver; toplu silmede onay sor. Buton metinleri "Evet/Hayır" değil eylemi söyleyen metinler olsun: "Projeyi sil" / "Vazgeç".
+
+**Drawer / sheet**, ekranın kenarından kayarak açılan paneldir: yandan gelirse drawer ya da side panel, mobilde alttan gelirse **bottom sheet**. Modal'ın aksine bağlamı korur: arkadaki liste görünmeye devam eder, kullanıcı nerede olduğunu unutmaz. Detay görüntüleme, filtre paneli ve düzenleme formları için modal'dan genelde daha uygundur. "Ürün detayını modal yerine drawer'da açalım; kullanıcı listedeki yerini kaybetmesin." Drawer da modal olabilir ya da olmayabilir. Bottom sheet'lerde sürükleyerek kapatma yaygındır ama sürüklemesiz bir alternatif şarttır (WCAG 2.2 Dragging Movements).
+
+<Compare>
+<Pane title="Modal">
+
+- Arkadaki içerik kilitli
+- Akışı keser, tek işe odaklar
+- Onay, kısa zorunlu girdi
+
+</Pane>
+<Pane title="Drawer">
+
+- Bağlam görünür kalır
+- Kenardan açılır
+- Detay, filtre, düzenleme formu
+
+</Pane>
+</Compare>
+
+## Küçük açılır parçalar
+
+**Tooltip**, bir öğenin üzerine gelindiğinde ya da odaklanıldığında beliren kısa açıklamadır. Yalnızca ikonla gösterilen bir eylemin adını ya da kısaltılmış bir bilginin tamamını gösterir ve **kısa** olmalıdır: birkaç kelime. Kritik bilgi tooltip'e konmaz: dokunmatik cihazlarda hover yoktur, tooltip görünmeyebilir. Tooltip içeriği tıklanabilir öğe içermemelidir; içerecekse o bir popover'dır.
+
+**Popover**, bir öğeye tıklandığında yanında açılan, içinde metin, bağlantı ya da form taşıyabilen küçük paneldir. Tooltip'ten farkı **etkileşimli içerik** barındırması ve tıklamayla açılmasıdır. "Bu tooltip içinde link var; popover'a çevirelim, tooltip'te tıklanamıyor."
+
+**Dropdown menu**, bir butona tıklanınca açılan eylem ya da bağlantı listesidir; ikincil eylemleri gizleyerek arayüzü sadeleştirir. Genelde "üç nokta" (kebab) ikonuyla açılır. Bu, form alanı olan *select* ile aynı şey değildir: dropdown eylem listesi, select değer seçimidir. Kodları ve erişilebilirlik davranışları farklıdır.
+
+**Context menu**, sağ tıklama ya da uzun basma ile açılan, o öğeye özel eylemler menüsüdür. Uzman kullanıcıya hız verir ama keşfedilebilirliği düşüktür; eylemler başka yerden de erişilebilir olmalıdır: "Sağ tık menüsü ekleyelim ama aynı eylemler kebab menüde de olsun."
+
+## Bildirimler
+
+**Toast / snackbar**, ekranın bir köşesinde kısa süre görünüp kendiliğinden kaybolan bildirimdir. Snackbar, Material Design'daki adıdır ve genelde bir eylem butonu içerir. Akışı kesmeden işlemin sonucunu bildirir ve "Geri al" için ideal yerdir. "Proje silindi — Geri al, 6 saniye kalsın."
+
+**Kritik bilgi ve hata toast'a konmaz:** kaybolur, geri getirilemez ve kaçırılabilir. Ekran okuyucuya duyurulması için canlı bölge gerekir. Süresi de yeterli olmalı; okuma hızı yavaş kullanıcılar için 3 saniye yetmez.
+
+**Alert banner**, sayfanın ya da bir bölümün içinde kalıcı duran durum mesajıdır: ödeme başarısız, hesap doğrulanmamış, plan limiti doldu. Toast'ın aksine kaybolmaz; semantik renklerle türlendirilir ama yalnızca renkle değil, ikon ve metinle de. "'E-postanı doğrula' mesajı toast değil alert banner olsun; kalıcı ve eylem butonlu." Pazarlama amaçlı, kapatılabilir *announcement bar* ile karıştırma.
+
+**Inline validation**, form alanının doğruluğunun, form gönderilmeden, alanın hemen yanında bildirilmesidir. Hatayı kullanıcı hâlâ o alandayken görür ve düzeltir. **Zamanlama kritiktir:** daha ilk harfte "geçersiz e-posta" demek rahatsız edicidir. Yaygın yaklaşım: ilk doğrulamayı alandan çıkınca (blur) yap, düzeltme sırasında anında güncelle.
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitedeki terim açıklamaları geniş ekranda bir **tooltip** gibi açılır; dokunmatik ekranda ise alttan bir **bottom sheet** olarak. İkisi aynı içeriği farklı katmanla sunar: dokunmada hover olmadığı için tooltip yetmez. Bu, bu derste öğrendiğin "kritik bilgi tooltip'e konmaz" kuralının pratiği.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Modal mı drawer mı?** Kullanıcının bağlamı görmesi gerekiyorsa drawer, tek bir karar istiyorsan modal.
+- **Her modal için dört kuralı yaz:** odak içeri, odak içeride, Esc, odak geri.
+- **Silmeyi geri alınabilir tasarla;** onay penceresini toplu ve kalıcı işlemlere sakla.
+- **Hata ve kritik bilgiyi toast yerine alert banner ya da alan içinde göster.**
+- **Linkli açıklamayı popover olarak çiz, tooltip olarak değil.**
+
+</Callout>
+
+<Summary>
+
+- Overlay arkayı karartır; modal arkayı kilitler, drawer bağlamı görünür tutar. Modal'ın odak kuralları: içeri, içeride, Esc, geri.
+- Confirm dialog çok kullanılırsa işlevini yitirir; geri al çoğu zaman daha iyidir. Butonlar eylemi söyler.
+- Tooltip kısa ve tıklanmaz; popover tıklamayla açılır ve etkileşimli içerik taşır. Kritik bilgi tooltip'e konmaz.
+- Dropdown menu eylem listesidir, select değer seçimidir.
+- Toast geçicidir; kritik bilgi ve hata için kalıcı alert banner kullanılır.
+- Inline validation alandan çıkınca başlar, yazarken kızarmaz.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Modal ile drawer arasındaki fark nedir? Liste içindeki bir öğenin detayı için hangisi uygundur?">
+
+Modal arkadaki içerikle etkileşimi engeller ve bağlamı kaybettirir; drawer kenardan açılır ve arkadaki liste görünür kalır. Liste öğesinin detayı için drawer uygundur, çünkü kullanıcı listedeki yerini kaybetmez.
+
+</SelfCheck>
+
+<SelfCheck question="Toast'a hangi bilgi konmaz ve neden?">
+
+Kritik bilgi ve hata mesajları. Toast kaybolur, geri getirilemez ve kaçırılabilir. Kalıcı olması gereken bilgi alert banner'a konur.
+
+</SelfCheck>
+
+<SelfCheck question="İçinde link olan bir açıklama tooltip mi popover mı olmalı?">
+
+Popover. Tooltip etkileşimli içerik taşımamalı; hover ile açılan tooltip'teki linke fareyle gidilemez.
+
+</SelfCheck>

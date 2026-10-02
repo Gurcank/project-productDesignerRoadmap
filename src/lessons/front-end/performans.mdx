@@ -1,0 +1,118 @@
+---
+summary: "Hızın ölçüldüğü metrikler ve tasarım kararlarının onlara etkisi: Core Web Vitals (LCP, INP, CLS), TTFB, bundle boyutu, görsel ve font optimizasyonu, preload, performans bütçesi."
+outcomes:
+  - "LCP, INP ve CLS'nin neyi ölçtüğünü ve 'iyi' eşiklerini söyleyebilirsin."
+  - "Core Web Vitals'ın laboratuvar değil saha verisi olduğunu açıklayabilirsin."
+  - "Hero görselinin neden lazy load edilmeyeceğini bilirsin."
+  - "TTFB ve LCP'ye bakarak sorunun sunucuda mı ön yüzde mi olduğunu ayırabilirsin."
+minutes: 13
+sources:
+  - label: "web.dev — Core Web Vitals"
+    url: "https://web.dev/articles/vitals"
+  - label: "web.dev — Interaction to Next Paint (INP)"
+    url: "https://web.dev/articles/inp"
+  - label: "web.dev — Cumulative Layout Shift (CLS)"
+    url: "https://web.dev/articles/cls"
+  - label: "web.dev — LCP'yi optimize et"
+    url: "https://web.dev/articles/optimize-lcp"
+  - label: "web.dev — TTFB"
+    url: "https://web.dev/articles/ttfb"
+  - label: "web.dev — Fetch Priority"
+    url: "https://web.dev/articles/fetch-priority"
+  - label: "web.dev — Font en iyi uygulamaları"
+    url: "https://web.dev/articles/font-best-practices"
+  - label: "web.dev — Performans bütçeleri 101"
+    url: "https://web.dev/articles/performance-budgets-101"
+flags: ["degisken"]
+skipTerms: ["layout","header"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Hero görselinin boyutu, kaç font ağırlığı yüklendiği, animasyonların ağırlığı: hepsi tasarım kararı, hepsi aynı zamanda **ölçülebilir bir hız maliyeti.** Bu ders, o ölçülerin adlarını ve eşiklerini verir.
+
+## Core Web Vitals
+
+**Core Web Vitals (CWV)**, Google'ın gerçek kullanıcı deneyimini ölçtüğü üç metriktir: **LCP** (yüklenme), **INP** (tepki verme), **CLS** (görsel kararlılık). Hızı öznel olmaktan çıkarır ve arama sıralamasında bir sinyal olarak kullanılır.
+
+Kritik nokta: bunlar **laboratuvar değil saha verisidir.** Gerçek kullanıcıların Chrome üzerinden toplanan verisi (CrUX) kullanılır ve **75. yüzdelik** dilim üzerinden, 28 günlük kayan bir pencerede değerlendirilir. Yani Lighthouse'ta aldığın 100 puan, gerçek kullanıcıların %25'i yavaş yaşıyorsa seni geçirmez. "Lighthouse yeşil ama CrUX verisinde INP kırmızı; laboratuvar değil saha verisine bakalım."
+
+| Metrik | Ölçtüğü | İyi | Kötü |
+|---|---|---|---|
+| **LCP** | En büyük görünür öğenin ne zaman çizildiği | ≤ 2,5 sn | > 4 sn |
+| **INP** | Etkileşime verilen tepki süresi | ≤ 200 ms | > 500 ms |
+| **CLS** | Beklenmedik yerleşim kayması | ≤ 0,1 | > 0,25 |
+
+Metrikler ve eşikler değişebilir. Nitekim **INP, 12 Mart 2024'te FID'in yerini aldı;** FID'den bahseden kaynaklar eskimiştir. Güncel eşikleri web.dev'den doğrula.
+
+## Üç metrik ayrıntıda
+
+**LCP (Largest Contentful Paint)**, ekrandaki en büyük görünür öğenin (genelde hero görseli ya da ana başlık) ne zaman çizildiğidir; "sayfa açıldı mı?" hissinin ölçüsü. Tasarımcıyı doğrudan ilgilendirir: **hero görseli genelde LCP öğesidir.** Ağır bir hero görseli seçmek ölçülebilir bir maliyettir. "LCP 4,2 saniye; hero görselini WebP'ye çevirip önceliklendirelim."
+
+**INP (Interaction to Next Paint)**, kullanıcı bir şeye tıkladığında ekranda bir tepki görünene kadar geçen süredir; "bu site takılıyor" hissinin ölçüsü. FID yalnızca ilk etkileşimi ölçerdi; INP **tüm etkileşimleri** ölçüp en kötüye yakın bir değeri raporladığı için geçmesi daha zordur. Ağır JavaScript kullanan arayüzlerde sorun çıkar. "Filtre değiştirince 600ms takılma var; listeyi sanallaştıralım."
+
+**CLS (Cumulative Layout Shift)**, sayfa yüklenirken içeriğin beklenmedik kayma miktarıdır; "tam tıklayacaktım, yer değişti" sorununun ölçüsü. Çoğu bir tasarım/uygulama disiplini meselesidir: görsellere ve reklam alanlarına **önceden yer ayır** (aspect-ratio), fontları metrik uyumlu yedeklerle yükle, dinamik eklenen bileşenlere (banner, bildirim) yer ayır. "Duyuru çubuğu sonradan yükleniyor ve her şeyi aşağı itiyor; yerini baştan ayıralım."
+
+## Sorunun nerede olduğunu bulmak
+
+**TTFB** sunucunun ilk yanıt baytını göndermesine kadar geçen süredir; **FCP** ekranda ilk herhangi bir içeriğin görünmesidir. İkisi sorunun **nerede** olduğunu ayırır: TTFB yüksekse sorun sunucuda ya da ağdadır (rendering stratejisi, sunucu bölgesi, CDN); TTFB iyi ama LCP kötüyse sorun ön yüzdedir (görsel, font, JavaScript). "TTFB 1,8 saniye; sorun görsellerimizde değil, sunucu tarafında."
+
+**Bundle size**, tarayıcıya gönderilen JavaScript'in toplam boyutudur. Hem indirilmesi hem **çalıştırılması** maliyetlidir ve ikincisi, orta seviye telefonlarda ciddi fark yaratır. Bir kütüphane eklemenin görünmeyen bedeli budur. "Bu animasyon kütüphanesi bundle'ı 40KB büyütüyor; CSS ile çözebilir miyiz?"
+
+## Görsel, font, ön yükleme
+
+**Image optimization.** Web sayfalarının ağırlığının büyük kısmı görsellerdir. Üç kural: **modern format** (WebP, AVIF), **cihaza uygun boyut** (telefona 2000px görsel göndermek israftır), **ekran dışındakileri sonradan yükle.** Ama hero görseli lazy load **edilmemelidir:** o LCP öğesidir ve öncelikli yüklenmelidir. "Hero görselini öncelikli yükleyelim, alttaki galeriyi lazy load edelim."
+
+**Font loading.** Özel font yüklenene kadar metnin davranışı iki türlüdür: **FOIT** metin görünmez kalır; **FOUT** yedek fontla gösterilip sonra değişir. FOIT kullanıcıyı boş ekrana baktırır; genelde FOUT tercih edilir. Ama yedek fontun metrikleri farklıysa değişim anında metin sıçrar ve CLS bozulur; yedek fontu birincil fonta yakın seçmek bunu azaltır. "Üç font ağırlığı yüklüyoruz ve ikisi kullanılmıyor; kaldıralım."
+
+**Preload / prefetch.** Preload "bunu şimdi ve öncelikli indir" (hero görseli, kritik font); prefetch "muhtemelen sonra gerekecek, boşta indir" (kullanıcının gitmesi olası sonraki sayfa). Doğru kullanıldığında algılanan hızı belirgin artırır; aşırı kullanıldığında gereksiz veri indirir ve asıl kritik kaynaklarla yarışır.
+
+**Performance budget (performans bütçesi)**, sayfanın aşmaması gereken sınırların önceden belirlenmesidir: toplam JavaScript boyutu, görsel ağırlığı, hedef metrik değerleri. Performansı bir **kural** hâline getirir; bütçe olmadan her ekleme tek tek makul görünür ve sayfa zamanla ağırlaşır. CI'a bağlanabilir. "Bütçemiz: LCP 2,5 sn altı, ilk yükte 150KB JavaScript. Aşarsak CI uyarsın."
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitenin ilk yüklemedeki toplam JavaScript'i 60 KB bütçesinin altında tutulur ve her derlemede bir betik bunu denetler; aşılırsa komut hata ile biter. Bu, "bütçe bir kural olmalı" fikrinin pratiğidir.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Hero görselini bir bütçeyle seç:** hedef boyut ve format teslimde yazılı olsun.
+- **Her görsele oran ve alan ayır;** her dinamik bileşene yer ayır (CLS).
+- **Font ağırlığı sayısını sınırla;** yedek fontu birincil fonta yakın seç.
+- **"Yavaş" geri bildiriminde önce TTFB ve LCP'ye bak;** sorun sunucuda mı ön yüzde mi?
+
+</Callout>
+
+<Summary>
+
+- CWV saha verisidir (CrUX, 75. yüzdelik, 28 gün); Lighthouse 100, gerçek kullanıcılar için yeterli değildir.
+- Eşikler: LCP ≤ 2,5 sn, INP ≤ 200 ms, CLS ≤ 0,1. INP, Mart 2024'te FID'in yerini aldı.
+- Hero görseli genelde LCP öğesidir; lazy load edilmez, öncelikli yüklenir.
+- CLS'i görsellere ve dinamik bileşenlere önceden yer ayırarak önlersin.
+- TTFB yüksekse sunucu/ağ, TTFB iyi ama LCP kötüyse ön yüz sorunludur.
+- Performans bütçesi performansı kurala bağlar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Core Web Vitals laboratuvar verisi mi saha verisi mi? 'Lighthouse 100' neyi garanti etmez?">
+
+Saha verisi: gerçek Chrome kullanıcılarından toplanan CrUX verisi, 75. yüzdelik dilimde, 28 günlük kayan pencerede. Lighthouse 100 yalnızca laboratuvar koşullarında iyi olduğunu gösterir; gerçek kullanıcıların %25'inden fazlası yavaş yaşıyorsa metrik yine geçmez.
+
+</SelfCheck>
+
+<SelfCheck question="TTFB yüksek ama görseller optimize. Sorun nerede aranır?">
+
+Sunucu ve ağ tarafında: rendering stratejisi (her istekte hesaplama), sunucu bölgesinin kullanıcıya uzaklığı, veritabanı sorguları, önbellek ve CDN kullanımı. Ön yüz optimizasyonu bu durumda sorunu çözmez.
+
+</SelfCheck>
+
+<SelfCheck question="FOIT ile FOUT arasındaki fark nedir? Hangisi tercih edilir ve yan etkisi nedir?">
+
+FOIT font yüklenene kadar metni görünmez tutar; FOUT yedek fontla gösterip sonra değiştirir. FOUT tercih edilir çünkü kullanıcı boş ekrana bakmaz; yan etkisi, yedek font metrikleri farklıysa metnin sıçraması ve CLS'nin bozulmasıdır.
+
+</SelfCheck>

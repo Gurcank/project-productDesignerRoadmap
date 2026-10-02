@@ -1,0 +1,100 @@
+---
+summary: "KVKK ve GDPR'ın doğrudan tasarım kararına dönüşen kısımları: aydınlatma metni, açık rıza (ikisi ayrı sunulmalı), yurt dışına aktarım, veri minimizasyonu, ilgili kişinin hakları ve ihlal bildirimi. Hukuki tavsiye değildir; avukat görüşü al."
+outcomes:
+  - "Aydınlatma metni ile açık rızanın neden ayrı sunulması gerektiğini söyleyebilirsin."
+  - "Veri minimizasyonunun neden hem UX hem uyum meselesi olduğunu açıklayabilirsin."
+  - "İlgili kişinin haklarının arayüzdeki karşılığını (veri indirme, hesap silme) sayabilirsin."
+  - "Üçüncü parti servis seçiminin neden yurt dışı aktarım sorusunu gündeme getirdiğini bilirsin."
+minutes: 11
+sources:
+  - label: "6698 sayılı Kişisel Verilerin Korunması Kanunu (mevzuat.gov.tr)"
+    url: "https://www.mevzuat.gov.tr/mevzuatmetin/1.5.6698.pdf"
+  - label: "GDPR Madde 5 — Veri işleme ilkeleri"
+    url: "https://gdpr-info.eu/art-5-gdpr/"
+  - label: "GDPR Madde 12 — Şeffaf bilgilendirme"
+    url: "https://gdpr-info.eu/art-12-gdpr/"
+  - label: "GDPR Madde 17 — Silinme hakkı"
+    url: "https://gdpr-info.eu/art-17-gdpr/"
+flags: ["degisken", "emin-degil"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+> **Hukuki uyarı:** Bu ders genel bilgilendirmedir, hukuki tavsiye değildir. Ben hukukçu değilim. Gerçek bir projede avukat görüşü almadan hareket etme. Mevzuat ve kurul kararları değişir; aşağıdaki ayrıntıları birincil kaynaktan doğrula.
+
+Kayıt formuna bir onay kutusu ekleyeceksin: "Aydınlatma metnini okudum ve kişisel verilerimin işlenmesine izin veriyorum." Bu cümle tek bir kutuda iki farklı hukuki işlemi birleştiriyor mu? Bu ders, kişisel veri mevzuatının doğrudan tasarım kararına dönüşen yanlarını anlatır.
+
+## KVKK ve GDPR
+
+**KVKK** (6698 sayılı Kişisel Verilerin Korunması Kanunu) Türkiye'de, **GDPR** AB'de geçerlidir. Kişisel verinin nasıl toplanacağını, işleneceğini, saklanacağını ve silineceğini düzenlerler. İkisi de benzer ilkelere dayanır: şeffaflık, amaçla sınırlılık, veri minimizasyonu, saklama süresi sınırı ve ilgili kişinin hakları. "AB'ye de hizmet veriyoruz; hem KVKK hem GDPR uyumunu düşünmemiz gerekiyor."
+
+## Aydınlatma metni
+
+**Aydınlatma metni (privacy notice)**, veri toplanmadan **önce** kullanıcıya sunulan, verisinin nasıl işleneceğini anlatan bilgilendirmedir. KVKK madde 10 kapsamında bir yükümlülüktür ve rıza gerektirip gerektirmediğinden bağımsız sunulmalıdır. Materyale göre ilgili tebliğ uyarınca içeriğinde şunların bulunması beklenir: veri sorumlusunun kimliği, işleme amaçları, aktarılacak alıcı kategorileri, toplama yöntemi, hukuki sebep ve ilgili kişinin hakları. "Aydınlatma metnini form gönderilmeden önce erişilebilir kılalım; yalnızca footer'da olması yetmeyebilir."
+
+**Metnin dili bir tasarım meselesidir.** Materyale göre Kurum, aydınlatma metinlerinde açık, anlaşılır ve sade bir dil kullanılmamasını yaygın bir hata olarak niteliyor. Hukuk metnini olduğu gibi yapıştırmak uyumsuzluk riski taşıyabilir. (GDPR'da buna karşılık gelen ilke: bilginin kısa, şeffaf, anlaşılır ve kolay erişilebilir biçimde sunulması, Madde 12.)
+
+## Açık rıza
+
+**Açık rıza (explicit consent)**: belirli bir konuya ilişkin, bilgilendirmeye dayanan ve özgür iradeyle açıklanan onaydır. Bazı veri işleme faaliyetleri için gereklidir. **Ama her şey için gerekli değildir:** sözleşmenin ifası, kanuni yükümlülük ve meşru menfaat gibi başka hukuki sebepler de vardır. Her şeyi rızaya dayandırmak yaygın bir hatadır ve risklidir: rıza her an geri çekilebilir, işlemenin hukuki temeli kırılgan hâle gelir.
+
+**Doğrudan bir arayüz kısıtı ve senin işin (değişken ve doğrulanması gereken bilgi):** materyal, Kişisel Verileri Koruma Kurulu'nun 18.02.2026 tarihli ve 2026/347 sayılı ilke kararına ilişkin kamuoyu duyurusuna dayanarak, **açık rıza metni ile aydınlatma metninin ayrı ayrı düzenlenmesi gerektiğini** ve ikisinin iç içe tek metin hâlinde sunulmasının en sık karşılaşılan hukuka aykırılıklardan biri olarak nitelendiğini aktarıyor. Aynı duyuruda, aydınlatma yapıldığına dair kullanıcıdan **onay/rıza istenmesinin** de hatalı olduğu belirtiliyor. Kurul'un duyurusunu bu turda açamadım (kvkk.gov.tr bu ortamdan erişilemiyordu); kullanmadan önce Kurum'un sitesinden doğrula.
+
+**Tasarım karşılığı çok somut:** yaygın "Aydınlatma metnini okudum ve kişisel verilerimin işlenmesine izin veriyorum" tek kutusu bu yaklaşıma göre sorunludur. **Aydınlatma bilgilendirmedir** (onay istenmez); **rıza ise ayrı, isteğe bağlı ve geri alınabilir** olmalıdır. "Tek bir onay kutusuyla hem aydınlatmayı hem rızayı almayalım; ikisini ayıralım ve rıza gerçekten isteğe bağlı olsun."
+
+## Yurt dışına veri aktarımı
+
+Kişisel verinin Türkiye dışındaki bir sunucuya ya da hizmet sağlayıcıya aktarılması. **Bu, doğrudan teknoloji seçimini etkiler:** ABD'de barındırılan bir analitik servisi, e-posta servisi ya da BaaS kullanmak yurt dışına veri aktarımı anlamına gelebilir. Materyale göre 7499 sayılı Kanunla KVKK'nın 9. maddesinde köklü bir değişiklik yapıldı ve **açık rızaya dayalı aktarım genel kural olmaktan çıkıp istisna hâline geldi;** yerine yeterlilik kararı ve standart sözleşme gibi güvence mekanizmaları getirildi ve geçiş sürecinin 1 Eylül 2024'te tamamlandığı belirtiliyor. Bu bilgiler ikincil kaynaktan alınmıştır; kesin uygulama için mevzuata ve avukata bak. "Bu analitik servisi verileri ABD'de tutuyor; yurt dışı aktarım rejimine göre değerlendirmemiz gerekiyor."
+
+## Ürün tarafına yansıyan ilkeler
+
+- **Veri minimizasyonu:** toplamadığın veri, korumak zorunda olmadığın veridir. Formdaki her alan bir yükümlülüktür: "bu alanı gerçekten kullanıyor muyuz?" sorusu hem UX hem uyum sorusudur.
+- **Amaçla sınırlılık:** bir amaç için toplanan veri başka bir amaçla kullanılamaz. "Kayıt için topladığımız e-postaya pazarlama gönderelim" bir uyum sorunu doğurabilir.
+- **Saklama süresi:** veri süresiz saklanamaz; bir silme ya da anonimleştirme politikası gerekir.
+- **İlgili kişinin hakları:** kullanıcı verisine erişme, düzeltme ve silinmesini isteme hakkına sahiptir. **Bunların bir arayüzü olmalıdır:** "verilerimi indir" ve "hesabımı sil" ekranları. Başvuru yolu makul olmalıdır; yalnızca noter gibi maliyetli kanallar sunmak eleştirilen bir uygulamadır.
+- **Şeffaflık:** kullanıcı ne toplandığını ve neden toplandığını anlayabilmelidir; bu bir metin yazımı işidir.
+
+## Veri ihlali bildirimi
+
+Kişisel veri sızması durumunda otoriteye ve etkilenen kişilere bildirim yapma yükümlülüğü vardır. Bir ihlal yaşandığında ne yapılacağı **önceden** planlanmış olmalıdır; olay anında öğrenilmez. Bildirimin metni ve kullanıcıya nasıl iletileceği de tasarlanması gereken bir şeydir. "İhlal senaryosu için bir iletişim şablonumuz var mı? Olay anında yazmaya çalışmayalım."
+
+<Callout kind="tasarimci">
+
+- **Aydınlatmayı ve rızayı ayrı tasarla;** aydınlatma için onay kutusu koyma, rıza isteğe bağlı ve geri alınabilir olsun.
+- **Her form alanı için "neden topluyoruz?" sor;** gereksizi çıkar.
+- **"Verilerimi indir" ve "hesabımı sil" akışlarını tasarla.**
+- **Üçüncü parti servis seçerken veri nerede tutuluyor sorusunu hukukla birlikte sor.**
+- **İhlal bildirim şablonunu önceden hazırla.**
+
+</Callout>
+
+<Summary>
+
+- Aydınlatma bilgilendirmedir (onay istenmez); açık rıza ayrı, isteğe bağlı ve geri alınabilir olmalıdır. İkisini tek kutuda birleştirmek sorunludur (doğrula).
+- Her şeyi rızaya dayandırmak riskli; başka hukuki sebepler de vardır.
+- Veri minimizasyonu, amaçla sınırlılık, saklama süresi, ilgili kişinin hakları ve şeffaflık doğrudan tasarım kararlarıdır.
+- Yurt dışı aktarım teknoloji seçimini etkiler; veri ihlali bildirimi önceden planlanmalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Aydınlatma metni ile açık rıza aynı onay kutusunda toplanabilir mi?">
+
+Güncel yaklaşım bunu sorunlu buluyor (materyalin aktardığı Kurul duyurusuna göre; doğrula): açık rıza ve aydınlatma ayrı düzenlenmeli, iç içe tek metin en sık hukuka aykırılıklardan biri. Aydınlatma bir bilgilendirmedir ve onay gerektirmez; rıza ayrı, isteğe bağlı ve geri alınabilir olmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Veri minimizasyonu neden hem UX hem uyum meselesidir?">
+
+Toplamadığın veri, korumak zorunda olmadığın veridir. Formdaki her alan hem kullanıcı için sürtünme hem şirket için yükümlülük ve sızma riskidir; "bu alanı gerçekten kullanıyor muyuz?" sorusu ikisini birden cevaplar.
+
+</SelfCheck>
+
+<SelfCheck question="İlgili kişinin haklarının arayüzdeki karşılığı nedir?">
+
+Ekranlar: kullanıcı verisine erişme, düzeltme ve silinmesini isteme hakkının karşılığı "verilerimi indir" ve "hesabımı sil" akışlarıdır; başvuru yolu da makul olmalıdır.
+
+</SelfCheck>

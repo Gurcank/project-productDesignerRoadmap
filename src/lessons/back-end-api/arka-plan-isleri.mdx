@@ -1,0 +1,70 @@
+---
+summary: "Kullanıcıyı bekletmeden yapılması gereken işler: kuyruk, worker, zamanlanmış görev, yeniden deneme. İş arka plana alındığında 'işleminiz alındı' ara durumu tasarlanmazsa kullanıcı işlemin kaybolduğunu sanır."
+outcomes:
+  - "Hangi işlerin kuyruğa alındığını ve tasarıma etkisini söyleyebilirsin."
+  - "Cron job'un ne olduğunu ve örneklerini sayabilirsin."
+  - "Yeniden denemenin neden idempotent iş gerektirdiğini açıklayabilirsin."
+minutes: 6
+sources:
+  - label: "AWS — Amazon SQS nedir?"
+    url: "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html"
+  - label: "AWS — Ölü mektup kuyrukları (DLQ)"
+    url: "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html"
+  - label: "AWS Builders' Library — Zaman aşımı, yeniden deneme ve geri çekilme"
+    url: "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+  - label: "Stripe — Idempotent istekler"
+    url: "https://docs.stripe.com/api/idempotent_requests"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Raporu indir" butonuna bastın, 40 saniye boyunca bir şey olmadı. Ya da basar basmaz "hazır olunca e-posta göndereceğiz" dendi. İkincisi arka plan işleriyle mümkün; ve tasarlanması gereken bir ara durum doğurur.
+
+## Kuyruk, worker, job
+
+**Queue (kuyruk)**, uzun süren işlerin bir sıraya konup arka planda çalışan ayrı bir süreç (**worker**) tarafından tek tek işlenmesidir; her bir iş bir **job**'dur. Kullanıcı işin bitmesini beklemek zorunda kalmaz. E-posta gönderme, PDF üretme, görsel işleme, dışa aktarma ve toplu bildirim gibi işler kuyruğa alınır. "Rapor 40 saniye sürüyor; kuyruğa alalım, hazır olunca kullanıcıya bildirim gidelim."
+
+**Tasarımı doğrudan etkiler:** iş arka plana alındığında kullanıcıya "işleminiz alındı, hazır olunca haber vereceğiz" demek ve bir takip yolu (bildirim, e-posta, durum ekranı) sunmak gerekir. Bu ara durum tasarlanmazsa kullanıcı işlemin kaybolduğunu sanır.
+
+## Cron job
+
+**Cron job (zamanlanmış görev)**, belirli zamanlarda otomatik çalışan iştir: günlük özet e-postası, gece yedeği, haftalık rapor, süresi dolmuş kayıtların temizlenmesi. Neredeyse her üretim sisteminde bulunur. "Haftalık özet e-postası pazartesi 09:00'da cron ile gitsin."
+
+## Yeniden deneme ve ölü mektup kuyruğu
+
+**Retry (yeniden deneme)**: bir iş başarısız olursa tekrar denenir ve her denemede bekleme süresi artar (**exponential backoff**). Belirli sayıda denemeden sonra hâlâ başarısızsa incelenmek üzere ayrı bir kuyruğa alınır (**dead letter queue, DLQ**). Geçici hatalar (ağ kesintisi, dış servisin anlık meşguliyeti) kendiliğinden çözülür; artan bekleme zaten sıkışık bir servisi daha da boğmayı engeller. "E-posta gönderimi 3 kez denensin, olmazsa DLQ'ya düşsün ve uyarı gitsin."
+
+**Önkoşul:** yeniden deneme, işin **idempotent** olmasını gerektirir. Yoksa aynı e-posta üç kez gider ya da aynı ödeme iki kez alınır.
+
+<Callout kind="tasarimci">
+
+- **Uzun süren her iş için "alındı" ekranı ve takip yolu tasarla:** bildirim, e-posta ya da durum sayfası.
+- **Zamanlanmış e-postaların saatini ve sıklığını kullanıcı kontrolüne ver.**
+- **Başarısız olan arka plan işleri için kullanıcıya görünen hata kanalı düşün.**
+
+</Callout>
+
+<Summary>
+
+- Kuyruk uzun işleri arka plana alır; kullanıcıya "alındı" ve bir takip yolu sunmak gerekir.
+- Cron job zamanlanmış görevdir (özet e-posta, yedek, temizlik).
+- Yeniden deneme artan beklemeyle çalışır; DLQ ısrarla başarısız işleri ayırır.
+- Yeniden deneme için iş idempotent olmalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Uzun süren bir işi kuyruğa almak tasarımda neyi zorunlu kılar?">
+
+Kullanıcıya "işleminiz alındı, hazır olunca haber vereceğiz" demeyi ve bir takip yolu sunmayı (bildirim, e-posta, durum ekranı). Bu ara durum tasarlanmazsa kullanıcı işlemin kaybolduğunu sanır.
+
+</SelfCheck>
+
+<SelfCheck question="Yeniden deneme mekanizması hangi önkoşulu gerektirir ve neden?">
+
+İşin idempotent olmasını: aksi hâlde yeniden deneme aynı e-postayı üç kez gönderir ya da aynı ödemeyi iki kez alır.
+
+</SelfCheck>

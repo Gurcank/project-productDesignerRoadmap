@@ -1,0 +1,12 @@
+---
+/** One question the reader answers aloud before opening the answer. */
+interface Props {
+  question: string;
+}
+const { question } = Astro.props;
+---
+
+<details class="selfcheck">
+  <summary><span class="selfcheck__q">{question}</span></summary>
+  <div class="selfcheck__a"><slot /></div>
+</details>

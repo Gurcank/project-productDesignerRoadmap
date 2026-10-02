@@ -1,0 +1,79 @@
+---
+summary: "Sıralama, arayüzde tek bir tıklamadır ama arkada listenin tamamına dokunan bir iştir. Kararlı sıralama, eşitlikte ikinci ölçüt ve sıralama + sayfalama tuzağı tasarımcının söylemesi gereken kararlardır."
+outcomes:
+  - "'Sadece ilk sayfayı gösteriyoruz' demenin sıralamayı neden ucuzlatmadığını açıklayabilirsin."
+  - "Eşit değerli satırların neden zıpladığını ve çözümünü (ikinci ölçüt) söyleyebilirsin."
+  - "Offset ve cursor sayfalamanın sıralamayla ilişkisini bilirsin."
+minutes: 5
+sources:
+  - label: "MDN — Array.prototype.sort (kararlı sıralama)"
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort"
+  - label: "MDN — Intl.Collator (dile duyarlı sıralama)"
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator"
+  - label: "PostgreSQL — Index'lere giriş"
+    url: "https://www.postgresql.org/docs/current/indexes-intro.html"
+additions:
+  - "Bu bölüm materyalde yok; bu site için yazıldı."
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Sütun başlığına tıklayıp sıralamak tek bir hareket. Arkada ise listenin tamamına dokunan bir iş.
+
+## Maliyeti nereden gelir
+
+Sıralamak, tüm veriyi görmeyi gerektirir. İlk 20 satırı göstereceksen bile **hangi 20 olduğunu** bulmak için hepsine bakmak gerekir; bu yüzden "sadece ilk sayfayı gösteriyoruz" sıralamayı ucuzlatmaz. Kurtaran şey yine index: veritabanı o sütun için sıralı bir yapı tutuyorsa sıralama zaten yapılmıştır. Tutmuyorsa her istekte yeniden sıralanır. Pratik kural: **her sütuna sıralama koymak, her sütun için index istemek demektir;** her index yazmayı yavaşlatır ve yer kaplar.
+
+## Kararlı sıralama
+
+İki kayıt aynı değere sahipse hangisi önce gelir? **Kararlı (stable)** sıralama önceki sırayı korur, kararsız olan korumaz. Arayüzdeki karşılığı: aynı tarihe sahip iki satır, sayfa her yenilendiğinde yer değiştirebilir ve kullanıcı bunu hata sanar. Çözümü ikinci bir sıralama ölçütü belirlemektir ("tarihe göre, eşitse ada göre") ve bunu **senin** söylemen gerekir.
+
+## Sıralama ve sayfalama tuzağı
+
+Sayfalama sıralı bir liste üzerinde çalışır. Sıra belirsizse 2. sayfada 1. sayfada gördüğün bir kaydı tekrar görebilir ya da bir kaydı hiç göremeyebilirsin. Bu, offset tabanlı sayfalamanın bilinen sorunudur ve veri değişirken büyür. Cursor tabanlı sayfalama bunu çözer ama "3. sayfaya git" özelliğini kaybettirir.
+
+<Compare>
+<Pane title="Offset: sayfa 3">
+
+- Sayfa numarası var
+- Veri değişirken kayabilir, tekrar edebilir
+- Sonsuz kaydırmaya zayıf uyar
+
+</Pane>
+<Pane title="Cursor: sonraki 20">
+
+- Sayfa numarası yok
+- Veri değişirken tutarlı
+- Sonsuz kaydırmaya uygun
+
+</Pane>
+</Compare>
+
+<Callout kind="tasarimci">
+
+- **Varsayılan sıralamayı sen belirle ve yaz.** Belirtmezsen veritabanından ne gelirse o gelir ve zamanla değişir.
+- **Eşitlikte ikinci ölçüt ver;** bu tek cümle "satırlar zıplıyor" şikâyetini önler.
+- **Hangi sütunların gerçekten sıralanması gerekiyor?** Hepsi demek, hepsine maliyet demek.
+- **Sayfa numarası mı, sonsuz kaydırma mı?** Bu görsel bir tercih değil, veri tutarlılığı kararıdır.
+
+</Callout>
+
+<Summary>
+
+- Sıralama tüm veriye bakmayı gerektirir; ilk sayfayı göstermek maliyeti düşürmez.
+- Eşit değerlerde ikinci ölçüt verilmezse satırlar zıplar.
+- Offset sayfalama değişen listede kayar; cursor tutarlıdır ama sayfa numarası vermez.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Aynı tarihe sahip iki satır neden her yenilemede yer değiştirebilir ve çözümü nedir?">
+
+Sıralama kararsızsa eşit değerlerin sırası korunmaz. Çözüm, ikinci bir sıralama ölçütü belirlemektir ("tarihe göre, eşitse ada göre").
+
+</SelfCheck>

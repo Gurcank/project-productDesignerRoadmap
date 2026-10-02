@@ -1,0 +1,65 @@
+---
+summary: "Docker, uygulamayı kendi çalışma ortamıyla birlikte paketler: 'bende çalışıyor' problemini yapısal olarak çözer. Image, container, Dockerfile, Compose. Konteyner sanal makine değildir ve varsayılan olarak kalıcı değildir."
+outcomes:
+  - "Image, container ve Dockerfile'ı ayırabilirsin."
+  - "Docker'ın 'bende çalışıyor' problemini nasıl çözdüğünü ve konteynerin sanal makineden farkını söyleyebilirsin."
+  - "Konteynerdeki verinin neden kaybolduğunu ve volume'un çözümünü bilirsin."
+minutes: 6
+sources:
+  - label: "Docker — Genel bakış"
+    url: "https://docs.docker.com/get-started/docker-overview/"
+  - label: "Docker — Volumes"
+    url: "https://docs.docker.com/engine/storage/volumes/"
+  - label: "Docker — Compose"
+    url: "https://docs.docker.com/compose/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Bende çalışıyor" cümlesi, yazılım dünyasının en eski şakalarından biri. Docker bu probleme yapısal bir cevap.
+
+## Container, image, Dockerfile
+
+- **Image (imaj):** uygulamanın ve çalışması için gereken her şeyin (dil sürümü, kütüphaneler, işletim sistemi parçaları) paketlenmiş hâli.
+- **Container (konteyner):** o imajın çalışan bir örneği.
+- **Dockerfile:** imajın nasıl oluşturulacağını tanımlayan tarif.
+
+**"Bende çalışıyor" problemini yapısal olarak çözer.** Uygulama yalnızca kendi kodunu değil, çalıştığı ortamı da taşır; senin bilgisayarında çalışan imaj sunucuda da birebir aynı çalışır. "Veritabanını Docker'da çalıştıralım; herkesin bilgisayarına ayrı ayrı kurmayalım."
+
+Karıştırmayacağın iki şey: **konteyner bir sanal makine değildir;** işletim sistemini tekrarlamaz, yalnızca yalıtım sağlar, bu yüzden çok daha hafif ve hızlıdır. Ve **konteyner varsayılan olarak kalıcı değildir:** durdurulduğunda içindeki veri silinir. Kalıcı veri için **volume** kullanılır.
+
+## Docker Compose
+
+**Docker Compose**, birden fazla konteyneri (uygulama, veritabanı, önbellek) tek bir yapılandırma dosyasıyla birlikte çalıştırma aracıdır. Yerel geliştirme ortamını tek komutla ayağa kaldırır; yeni birinin projeye katılma süresini günlerden dakikalara indirebilir. "Compose dosyası var; tek komutla uygulama, Postgres ve Redis birlikte kalkıyor."
+
+<Callout kind="tasarimci">
+
+- **Yerel kurulum sorununu Docker/Compose ile çözme önerisini bil;** tasarımcı olarak projeyi kendi bilgisayarında çalıştırmak istiyorsan sorun.
+- **Docker terimlerini duyduğunda** image/container ayrımını hatırla.
+
+</Callout>
+
+<Summary>
+
+- Image paketlenmiş uygulama, container onun çalışan örneği, Dockerfile tarifidir.
+- Docker uygulamayı çalışma ortamıyla birlikte taşıyarak "bende çalışıyor" problemini çözer; sanal makine değildir.
+- Konteyner verisi varsayılan olarak kalıcı değildir; kalıcı veri için volume kullanılır.
+- Compose birden fazla konteyneri tek dosyayla çalıştırır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Docker 'bende çalışıyor' problemini nasıl çözer? Konteyner bir sanal makine midir?">
+
+Uygulama yalnızca kendi kodunu değil çalıştığı ortamı da taşır (dil sürümü, kütüphaneler, sistem parçaları); bilgisayarında çalışan imaj sunucuda da birebir aynı çalışır. Konteyner sanal makine değildir: işletim sistemini tekrarlamaz, yalnızca yalıtım sağlar, bu yüzden çok daha hafiftir.
+
+</SelfCheck>
+
+<SelfCheck question="Konteynerdeki veri neden kaybolur? Çözümü nedir?">
+
+Konteyner varsayılan olarak kalıcı değildir; durdurulduğunda içindeki veri silinir. Kalıcı veri için volume kullanılır.
+
+</SelfCheck>

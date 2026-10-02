@@ -1,0 +1,136 @@
+---
+summary: "Bir işin başlamaya ve bitmeye hazır olduğunu nasıl anladığımızı (Definition of Ready, Definition of Done), tasarımın geliştiriciye nasıl devredildiğini ve tasarım incelemesinin neden son kalite kapısı olduğunu öğren."
+outcomes:
+  - "Definition of Ready ile Definition of Done'ı ve acceptance criteria'dan farkını anlatabilirsin."
+  - "Eksiksiz bir tasarım handoff'unda ekran görüntüsünden başka neler olması gerektiğini sayabilirsin."
+  - "Design review'ın staging'de neden yapıldığını ve neye baktığını bilirsin."
+  - "Sign-off'un neden yazılı olması gerektiğini açıklayabilirsin."
+minutes: 10
+sources:
+  - label: "Scrum Guide — Definition of Done"
+    url: "https://scrumguides.org/scrum-guide.html"
+  - label: "Figma — Dev Mode rehberi"
+    url: "https://help.figma.com/hc/en-us/articles/15023124644247-Guide-to-Dev-Mode"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Compare from "~/components/lesson/Compare.astro";
+import Pane from "~/components/lesson/Pane.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Sprint ortasında geliştirici soruyor: "Bu butona basınca ne olacak? Hata gelirse ne gösteriyoruz?" Tasarımda cevap yok. Dört gün bekleniyor ya da geliştirici tahmin yürütüyor. Bu, sprint'in **en pahalı israfıdır** ve çoğunlukla işin başlamaya *hazır* olmamasından çıkar.
+
+Bu ders, bir işin başlamaya ve bitmeye hazır olduğunu nasıl anladığımızı, ve bu iki nokta arasında tasarımın nasıl devredildiğini anlatıyor. Bu iki tanım yazılı değilse ekip sürekli aynı tartışmayı yeniden yapar.
+
+<StepFlow
+  label="Bir işin yolculuğundaki kapılar"
+  caption="İki tanım iki kapıdır: biri işin sprint'e girmesine, diğeri bitmiş sayılmasına karar verir. İkisi arasında tasarım devredilir ve uygulanmış hâli kontrol edilir."
+  steps={[
+    { title: "Definition of Ready", sub: "Başlamaya hazır mı? Tasarım ve AC var mı?", tone: "accent" },
+    { title: "Handoff", sub: "Tasarım geliştiriciye aktarılır" },
+    { title: "Design review", sub: "Uygulanan hâl tasarımla karşılaştırılır" },
+    { title: "Definition of Done", sub: "Ortak koşulların hepsi sağlandı mı?", tone: "progress" },
+  ]}
+/>
+
+## Definition of Ready: başlamadan önce
+
+**Definition of Ready** (DoR, hazır olma tanımı), bir işin geliştirmeye alınabilmesi için **önceden sağlanması gereken koşullar listesidir.** Yarım tanımlanmış işin sprint'e girmesini engeller. Sprint ortasında "burada ne olacak?" diye takılmak sprint'in en pahalı israfıdır. Sprint planlamanın giriş kapısıdır.
+
+Tasarımcı için önemli bir madde: **"tasarım hazır."** "DoR'a göre tasarım onaylı ve kabul kriteri yazılı olmadan story sprint'e alınmıyor." Bu cümle seni baskıdan korur: tasarım yetişmediyse iş sprint'e girmez.
+
+## Definition of Done: bitti demek ne demek?
+
+**Definition of Done** (DoD, bitmiş olma tanımı), bir işin "bitti" sayılabilmesi için sağlanması gereken, **tüm işler için ortak** koşullar listesidir. "Bitti" kelimesini standartlaştırır. Aksi hâlde bir geliştirici için "bitti" kodun çalışması, tasarımcı için tasarıma uyması, QA için test edilmiş olması demektir. Üçü aynı anda doğru olmadıkça iş bitmemiştir.
+
+Ekibin çalışma anlaşmasında yer alır; sprint değerlendirmesinde bir işin sayılıp sayılmayacağını belirler.
+
+**Tipik DoD maddeleri:**
+
+- Kod incelemesinden (review) geçti
+- Testler yeşil
+- Tasarımla karşılaştırıldı
+- Responsive kontrol edildi
+- Erişilebilirlik temel kontrolü yapıldı
+- Staging'e yayınlandı
+- Dokümantasyon güncellendi
+
+"DoD'a 'mobilde kontrol edildi' ve 'klavyeyle gezilebiliyor' maddelerini ekleyelim." Bu iki cümle, tasarım kalitesini ekip standardına yazmanın yoludur.
+
+<Compare>
+<Pane title="Acceptance criteria">
+
+- O işe özel
+- Örnek: "Filtre seçildiğinde URL güncellenir"
+- İş kaydının içinde yazılır
+
+</Pane>
+<Pane title="Definition of Done">
+
+- Tüm işler için ortak
+- Örnek: "Kod incelemeden geçti, mobilde kontrol edildi"
+- Ekibin çalışma anlaşmasında yazılır
+
+</Pane>
+</Compare>
+
+İkisi birden sağlanmalıdır: iş kendi kriterlerini karşılasa bile ortak standardı karşılamıyorsa bitmiş sayılmaz.
+
+## Handoff: duvarın üstünden atmamak
+
+**Handoff** (devir/teslim), tasarımın **uygulanmak üzere geliştiriciye aktarılmasıdır.** Ekran görüntüsü yeterli değildir. Eksiksiz bir handoff'ta şunlar bulunmalıdır:
+
+- **Ölçüler ve boşluklar**
+- **Renk değerleri ve yazı stilleri** (tasarım sistemi bileşenlerine bağlı)
+- **Durumlar:** hover, focus, disabled, error
+- **Responsive davranış:** farklı ekran boyutlarında ne olacağı
+- **Boş, hata ve yükleme ekranları**
+- **Hareket ve geçişler:** süre ve eğri
+
+Eksik handoff, uygulama sırasında geliştiricinin **tahmin yürütmesine** yol açar ve tahmin edilen her karar tasarımdan uzaklaşır. "Handoff'ta tüm buton durumlarını ve boş liste ekranını da ekledim." Figma Dev Mode gibi araçlar bu aktarımı kolaylaştırır.
+
+Handoff bir "duvarın üstünden atma" anı olarak görülürse **başarısız olur.** İyi ekiplerde tasarımcı uygulama boyunca ulaşılabilir kalır ve sonucu staging'de kontrol eder.
+
+## Design review ve sign-off
+
+**Design review** (tasarım incelemesi), uygulanmış arayüzün tasarım kararlarına uygunluğunun kontrol edildiği incelemedir. Uygulama sırasında oluşan sapmaları yayından önce yakalar. En sık kayan şeyler: **boşluklar, yazı tipi ağırlıkları, geçiş süreleri ve durumlar.**
+
+Staging ortamında, yayından önce yapılır; tasarımcının **kalite kapısıdır.** "Design review'da üç sapma buldum: kart aralıkları, ikincil buton rengi ve boş durum metni." Bulgularını net yaz: ekran görüntüsü, beklenen, gerçek.
+
+**Sign-off** (onay), yetkili kişinin bir çıktıyı **resmen kabul etmesidir.** Sorumluluğu netleştirir ve sonradan gelen itirazın önüne geçer. Özellikle müşteriyle çalışırken yazılı onay, kapsam tartışmasının kanıtıdır. Tasarım teslimi, yayın öncesi ve sözleşmeli işlerde faturalama öncesi gerekir. "Müşteriden yazılı sign-off almadan geliştirmeye başlamayalım."
+
+<Callout kind="tasarimci">
+
+- **DoR'a "tasarım hazır" yazdır.** Böylece tasarım yetişmeden sprint'e giren iş krizine dönmez.
+- **Handoff'u kontrol listesiyle yap.** Durumlar, boş/hata/yükleme ekranları, responsive: her biri bir madde.
+- **Uygulama boyunca ulaşılabilir ol.** Sorulara hızlı cevap vermek, tahminle ilerleyen kararları önler.
+- **Design review'ı takvime koy.** İşi "bitti" saymadan önce staging'de kendi gözünle bak.
+- **Yazılı onay iste.** Sözlü "tamam" tartışma çıkınca kanıt olmaz.
+
+</Callout>
+
+<Summary>
+
+- DoR işin başlamaya hazır olduğunu, DoD bitmiş sayılması için ortak standardı tanımlar; AC ise o işe özeldir.
+- Eksiksiz handoff'ta ölçüler, renkler, durumlar, responsive davranış ve boş/hata/yükleme ekranları bulunur.
+- Handoff duvarın üstünden atmak değildir; tasarımcı uygulama boyunca ulaşılabilir kalır.
+- Design review staging'de, yayından önce yapılan tasarım kalite kapısıdır.
+- Sign-off yazılı olmalıdır; sorumluluğu ve kapsamı netleştirir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Acceptance criteria ile Definition of Done arasındaki fark nedir? Birer örnek ver.">
+
+Acceptance criteria o işe özeldir: "Filtre seçildiğinde URL güncellenir." Definition of Done tüm işler için ortaktır: "Kod incelemeden geçti, testler yeşil, mobilde kontrol edildi." İkisi birden sağlanmadan iş bitmiş sayılmaz.
+
+</SelfCheck>
+
+<SelfCheck question="Bir tasarım handoff'unda ekran görüntüsünden başka neler bulunmalı? En az dört şey say.">
+
+Ölçüler ve boşluklar, renk ve yazı stilleri, durumlar (hover, focus, disabled, error), responsive davranış, boş / hata / yükleme ekranları, hareket ve geçişler.
+
+</SelfCheck>

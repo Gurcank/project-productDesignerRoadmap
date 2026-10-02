@@ -1,0 +1,71 @@
+---
+summary: ".gitignore, Git LFS/submodule ve monorepo: depoyu temiz tutmak. .gitignore geçmişi silmez; büyük tasarım varlıklarını doğrudan depoya koymak boyutu kalıcı şişirir; monorepo tasarım sistemi olan ekipler için anlamlıdır."
+outcomes:
+  - "`.gitignore`'un neyi yapıp neyi yapmadığını söyleyebilirsin."
+  - "Büyük tasarım varlıklarını doğrudan depoya koymanın sakıncasını açıklayabilirsin."
+  - "Monorepo'nun tasarım sistemi olan bir ekip için neden anlamlı olduğunu bilirsin."
+minutes: 6
+sources:
+  - label: "Git — gitignore"
+    url: "https://git-scm.com/docs/gitignore"
+  - label: "GitHub Docs — Git Large File Storage hakkında"
+    url: "https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage"
+  - label: "Turborepo — Dokümantasyon"
+    url: "https://turborepo.com/docs"
+  - label: "Nx"
+    url: "https://nx.dev/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Depoya yanlış bir şey girdiğinde çıkarmak zordur. Bu yüzden hijyen baştan önemlidir.
+
+## .gitignore
+
+**`.gitignore`**, Git'in takip etmeyeceği dosya ve klasörleri listeleyen dosyadır. İki iş görür: gereksiz dosyaları (bağımlılık klasörleri, derleme çıktıları, işletim sistemi dosyaları) depodan uzak tutar ve **sırların depoya girmesini engeller.** "`.env` `.gitignore`'da mı? Yoksa API anahtarları depoya girer."
+
+`.gitignore` yalnızca **henüz takip edilmeyen** dosyalar için çalışır. Bir dosya bir kez commit'lendiyse sonradan `.gitignore`'a eklemek onu geçmişten çıkarmaz; depoya giren bir sır silinse bile iptal edilip yenilenmelidir.
+
+## Git LFS ve submodule
+
+**Git LFS (Large File Storage)**, büyük ikili dosyaları (video, yüksek çözünürlüklü görsel, tasarım dosyaları) Git'in dışında saklayıp depoda yalnızca bir işaretçi tutmaktır. **LFS seni doğrudan ilgilendirebilir:** büyük tasarım varlıklarını doğrudan depoya koymak, deponun boyutunu **kalıcı olarak şişirir,** çünkü Git her sürümü saklar. Bir kez girdiyse çıkarmak zordur. "Video dosyalarını doğrudan repoya koymayalım; LFS ya da ayrı bir depolama kullanalım."
+
+**Submodule**, bir deponun içine başka bir depoyu gömmektir. Güçlüdür ama yönetimi zordur; çoğu ekip ondan kaçınır. Seviye 3.
+
+## Monorepo
+
+**Monorepo (tek depo)**, birden fazla projenin (web sitesi, uygulama, tasarım sistemi paketi) tek bir depoda yaşamasıdır. **Tasarım sistemi olan ekipler için doğrudan anlamlıdır:** bileşen kütüphanesi ile onu kullanan uygulamalar aynı depodaysa bir bileşendeki değişikliğin hangi uygulamaları etkilediği tek PR'da görülür ve birlikte test edilir. Ayrı depolarda bu senkronu sağlamak çok daha zordur. "Tasarım sistemini monorepo'ya alalım; bileşen değişince tüketen uygulamaları da aynı PR'da güncelleyelim."
+
+Küçük ve tek ürünlü projelerde gereksiz karmaşıklık üretir; araç zinciri ve derleme yapılandırması ağırlaşır.
+
+<Callout kind="tasarimci">
+
+- **Büyük tasarım varlıklarını (video, yüksek çözünürlüklü görsel) depoya koymadan önce LFS veya ayrı depolama sor.**
+- **Sır içeren dosyaları (`.env`, anahtar) asla tasarım paylaşımlarına koyma.**
+- **Tasarım sistemin varsa monorepo'yu önerinin bir parçası olarak ele al.**
+
+</Callout>
+
+<Summary>
+
+- `.gitignore` takip edilmeyecekleri listeler ama geçmişe girmiş dosyayı çıkarmaz.
+- Büyük ikili dosyalar deponun boyutunu kalıcı şişirir; LFS ya da ayrı depolama kullanılır.
+- Monorepo, bileşen kütüphanesi ile uygulamaların etkisini tek PR'da görünür kılar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="`.gitignore` bir dosyayı geçmişten çıkarır mı?">
+
+Hayır. Yalnızca henüz takip edilmeyen dosyalar için çalışır. Bir dosya bir kez commit'lendiyse geçmişte kalır; depoya giren bir sır silinse bile iptal edilip yenilenmelidir.
+
+</SelfCheck>
+
+<SelfCheck question="Büyük tasarım varlıklarını doğrudan depoya koymanın sakıncası nedir?">
+
+Git her sürümü saklar; büyük ikili dosyalar deponun boyutunu kalıcı olarak şişirir ve bir kez girdiyse çıkarmak zordur. Çözüm: Git LFS ya da ayrı bir depolama servisi.
+
+</SelfCheck>

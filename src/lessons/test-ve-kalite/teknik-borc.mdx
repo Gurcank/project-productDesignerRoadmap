@@ -1,0 +1,82 @@
+---
+summary: "Teknik borç, bugün hızlı gitmek için alınan kısa yolun gelecekteki maliyetidir; bilinçli borç meşrudur, sorun kayıt altına alınmamasıdır. Tasarım borcu da aynı biçimde birikir. Refactor davranışı değiştirmez; izci kuralı borcu küçük adımlarla azaltır."
+outcomes:
+  - "Teknik borcun her zaman kötü olmadığını ve asıl sorunun ne olduğunu söyleyebilirsin."
+  - "Tasarım borcunun dört örneğini sayabilirsin."
+  - "Refactor'ın tanımındaki kritik kelimeyi ve neden yeni özellikle aynı PR'a konmadığını açıklayabilirsin."
+minutes: 7
+sources:
+  - label: "Martin Fowler — Technical Debt"
+    url: "https://martinfowler.com/bliki/TechnicalDebt.html"
+  - label: "Martin Fowler — Code Smell"
+    url: "https://martinfowler.com/bliki/CodeSmell.html"
+  - label: "Refactoring.com"
+    url: "https://refactoring.com/"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+"Bu neden bu kadar yavaş ilerliyor?" sorusunun en yaygın cevabı: birikmiş borç.
+
+## Teknik borç
+
+**Technical debt (teknik borç)**, bugün hızlı gitmek için alınan kısa yolun, gelecekte faiziyle ödenecek maliyetidir. Metafor kasıtlıdır: **borç her zaman kötü değildir.** Bir tarihe yetişmek için bilinçli olarak borçlanmak meşru bir karardır. Sorun, **borcun kayıt altına alınmaması** ve faizinin görünmez birikmesidir. "Bunu şimdilik kopyalayalım ama teknik borç olarak kaydedelim ve bir sonraki sprint'te toparlayalım."
+
+**Tasarım borcu da vardır ve aynı biçimde birikir:**
+
+- Sisteme girmemiş tek kullanımlık bileşenler.
+- Ölçek dışı boşluk ve renk değerleri.
+- Tanımlanmamış durum ekranları (boş, hata, yükleme).
+- Kopyalanıp ana bileşenden koparılmış Figma örnekleri.
+
+Bunlar da kayıt altına alınmalı ve bütçelenmelidir.
+
+## Refactor
+
+**Refactoring (yeniden yapılandırma)**, kodun **davranışını değiştirmeden** iç yapısını iyileştirmektir. Tanımın kritik kısmı "davranışı değiştirmeden"dir: refactor bir yeniden yazım değildir ve kullanıcı hiçbir fark görmemelidir. Testler bu güvenceyi sağlayan şeydir; testsiz refactor bir kumar hâline gelir. "Bu PR yalnızca refactor; davranış değişmedi, testler aynı kalmalı."
+
+**Refactor ile yeni özelliği aynı PR'a koymamak önemlidir:** ikisi karışınca inceleyen kişi neyin niyetli neyin kaza olduğunu ayırt edemez.
+
+## Code smell ve izci kuralı
+
+**Code smell (kod kokusu)**, kendisi hata olmayan ama daha derin bir sorunun işareti olan kalıptır: aşırı uzun fonksiyon, tekrarlanan mantık, çok fazla parametre. **Boy scout rule (izci kuralı)**: "dokunduğun yeri bulduğundan biraz daha temiz bırak." Büyük temizlik projeleri beklemek yerine borcu sürekli ve küçük adımlarla azaltmayı önerir. Büyük temizlik projeleri genelde onaylanmaz; küçük iyileştirmeler ise her PR'da yapılabilir. "Bu dosyaya zaten dokunuyoruz; şu tekrarı da temizleyelim."
+
+<Callout kind="tasarimci">
+
+- **Tasarım borcunu bir listede tut** ve düzenli bütçele (her sprint küçük bir pay).
+- **Bilinçli borçlanma kararlarını kaydet:** neden, ne zaman ödenecek?
+- **İzci kuralını tasarım dosyalarına uygula:** dokunduğun bileşeni bir miktar toparla.
+- **Refactor PR'larında "davranış değişmedi" kanıtı iste** (görsel fark yok, testler aynı).
+
+</Callout>
+
+<Summary>
+
+- Teknik borç bilinçli alınırsa meşrudur; sorun kayıt altına alınmaması ve faizin görünmez birikmesidir.
+- Tasarım borcu da birikir: tek kullanımlık bileşenler, ölçek dışı değerler, eksik durum ekranları, kopuk Figma örnekleri.
+- Refactor davranışı değiştirmez; yeni özellikle aynı PR'a konmaz.
+- İzci kuralı borcu küçük ve sürekli adımlarla azaltır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Teknik borç her zaman kötü müdür? Asıl sorun nedir?">
+
+Hayır. Bir tarihe yetişmek için bilinçli borçlanmak meşru bir karardır. Asıl sorun borcun kayıt altına alınmaması ve faizinin görünmez birikmesidir.
+
+</SelfCheck>
+
+<SelfCheck question="Tasarım borcu nasıl birikir? Dört örnek ver.">
+
+Sisteme girmemiş tek kullanımlık bileşenler, ölçek dışı boşluk ve renk değerleri, tanımlanmamış durum ekranları (boş, hata, yükleme), kopyalanıp ana bileşenden koparılmış Figma örnekleri.
+
+</SelfCheck>
+
+<SelfCheck question="Refactor'ın tanımındaki kritik kelime nedir? Neden yeni özellikle aynı PR'a konmaz?">
+
+"Davranışı değiştirmeden." Refactor bir yeniden yazım değildir; kullanıcı hiçbir fark görmemelidir. İkisi karışınca inceleyen kişi neyin niyetli neyin kaza olduğunu ayırt edemez.
+
+</SelfCheck>

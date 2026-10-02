@@ -1,0 +1,65 @@
+---
+summary: "GitHub Actions, depoda bir olay gerçekleştiğinde otomatik çalışan iş tanımlarıdır: kalite kontrolünü insan disiplinine değil mekanizmaya bağlar. Bir workflow dört parçadan oluşur: tetikleyici, iş, adım, runner."
+outcomes:
+  - "GitHub Actions'ın ne işe yaradığını söyleyebilirsin."
+  - "Bir workflow'un dört parçasını (tetikleyici, iş, adım, runner) sayabilirsin."
+  - "Bir PR'da 'CI kırıldı' uyarısını gördüğünde hangi işin hangi adımında kırıldığını okuyabilirsin."
+minutes: 6
+sources:
+  - label: "GitHub Docs — GitHub Actions'ı anlamak"
+    url: "https://docs.github.com/en/actions/about-github-actions/understanding-github-actions"
+  - label: "GitHub Docs — Workflow'lar hakkında"
+    url: "https://docs.github.com/en/actions/writing-workflows/about-workflows"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir PR açtın ve birkaç dakika sonra altında yeşil tikler ya da kırmızı çarpılar belirdi. Bu otomatik kontrollerin arkasında çoğu zaman GitHub Actions var.
+
+## GitHub Actions
+
+**GitHub Actions**, depoda bir olay gerçekleştiğinde (push, PR açılması, etiket oluşturulması) otomatik olarak çalışan iş tanımlarıdır. CI/CD'nin GitHub içindeki hâlidir: her PR'da testlerin, linter'ın, tip kontrolünün ve erişilebilirlik taramasının otomatik çalışmasını sağlar. **Kalite kontrolünü insan disiplinine değil mekanizmaya bağlar.** Modern GitHub projelerinin çoğunda `.github/workflows/` klasöründe bulunur. "Her PR'da Lighthouse çalıştıralım; performans bütçesi aşılırsa uyarsın." Ücretlendirme ve dakika limitleri değişir; GitLab CI, CircleCI gibi alternatifleri vardır.
+
+## Bir workflow'un mantığı
+
+Söz dizimi değil, yapısı:
+
+1. **Tetikleyici (trigger):** ne olduğunda çalışsın? (PR açıldığında, `main`'e push yapıldığında, her gece)
+2. **İş (job):** bağımsız çalışan bir görev grubu; birden fazla iş paralel çalışabilir.
+3. **Adım (step):** işin içindeki tek tek komutlar.
+4. **Runner:** bunların çalıştığı sanal makine.
+
+Bu yapıyı bilmek, bir PR'da "CI kırıldı" uyarısını gördüğünde **hangi işin hangi adımında** kırıldığını okuyabilmeni sağlar; hata mesajı genelde doğrudan orada durur.
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitenin kalite kapıları da benzer biçimde çalışır: içerik doğrulaması, tip denetimi ve JavaScript bütçesi (60 KB) ayrı komutlarla her derlemede denetlenir; aşılırsa komut hata ile biter. İstersen bunlar bir CI iş akışına bağlanabilir.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Kalite kontrollerini (erişilebilirlik taraması, görsel regresyon, performans bütçesi) CI'a ekleme önerisini getir.**
+- **"CI kırıldı" uyarısında kırılan adımı oku;** çoğu zaman sorun tasarımla ilgili (örneğin kontrast taraması) olabilir.
+- **PR şablonu + otomatik kontrol birlikte çalışır:** şablon insan kontrolünü, workflow otomatik kontrolü karşılar.
+
+</Callout>
+
+<Summary>
+
+- GitHub Actions olay tetiklemeli iş tanımlarıdır; testleri, linter'ı ve erişilebilirlik taramasını otomatik çalıştırır.
+- Workflow'un dört parçası: tetikleyici, iş, adım, runner.
+- Hata mesajı genelde kırılan işin ve adımın içinde durur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir workflow'un dört parçası nedir?">
+
+Tetikleyici (ne olduğunda çalışacağı), iş (bağımsız çalışan görev grubu, paralel olabilir), adım (işin içindeki tek tek komutlar) ve runner (çalıştıkları sanal makine).
+
+</SelfCheck>

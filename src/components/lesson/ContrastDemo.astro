@@ -1,0 +1,108 @@
+---
+/**
+ * Shows real colour pairs with their WCAG contrast ratio computed at build
+ * time — the number is calculated, not eyeballed (project rule). The verdict is
+ * spelled out in words, so the result never depends on seeing the colours.
+ *
+ * The hex values are lesson content (the colours being discussed), not UI
+ * chrome, which is why they are allowed to be literals here.
+ */
+interface Pair {
+  fg: string;
+  bg: string;
+  label: string;
+}
+
+interface Props {
+  pairs: Pair[];
+}
+
+const { pairs } = Astro.props;
+
+const channel = (value: number) => {
+  const c = value / 255;
+  return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+};
+
+const luminance = (hex: string) => {
+  const n = parseInt(hex.replace("#", ""), 16);
+  return 0.2126 * channel((n >> 16) & 255) + 0.7152 * channel((n >> 8) & 255) + 0.0722 * channel(n & 255);
+};
+
+const ratio = (a: string, b: string) => {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+};
+
+const rows = pairs.map((pair) => {
+  const value = ratio(pair.fg, pair.bg);
+  return {
+    ...pair,
+    value: value.toFixed(2),
+    normal: value >= 4.5,
+    ui: value >= 3,
+  };
+});
+---
+
+<ul class="contrast-demo">
+  {
+    rows.map((row) => (
+      <li class="contrast-demo__row">
+        <span class="contrast-demo__sample" style={`color:${row.fg};background-color:${row.bg}`}>
+          Aa metin örneği
+        </span>
+        <span class="contrast-demo__info">
+          <b>{row.label}</b>
+          <span>
+            {row.value}:1 · gövde metni {row.normal ? "geçer" : "kalır"} · arayüz öğesi {row.ui ? "geçer" : "kalır"}
+          </span>
+        </span>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .contrast-demo {
+    display: grid;
+    gap: var(--spacing-3);
+    margin: var(--spacing-6) 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contrast-demo__row {
+    display: grid;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-raised);
+  }
+
+  .contrast-demo__sample {
+    padding: var(--spacing-3) var(--spacing-4);
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+  }
+
+  .contrast-demo__info {
+    display: grid;
+    gap: var(--spacing-1);
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .contrast-demo__info b {
+    color: var(--c-text);
+    font-weight: 600;
+  }
+
+  @media (min-width: 48rem) {
+    .contrast-demo__row {
+      grid-template-columns: 14rem minmax(0, 1fr);
+      align-items: center;
+    }
+  }
+</style>

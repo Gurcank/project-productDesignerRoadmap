@@ -1,0 +1,56 @@
+---
+summary: "React konuşmalarında sürekli geçen üç kelime: hook, side effect, re-render. Anlaman yeter; ama re-render performansa, yan etki hatalara bağlanır."
+outcomes:
+  - "Hook, side effect ve re-render'ı bir cümleyle tanımlayabilirsin."
+  - "'Sayfa açılışında istek iki kez gidiyor' ya da 'liste takılıyor' cümlelerinin hangi kavrama işaret ettiğini bilirsin."
+minutes: 5
+sources:
+  - label: "React — Custom hook'larla mantığı paylaşmak"
+    url: "https://react.dev/learn/reusing-logic-with-custom-hooks"
+  - label: "React — Effect'lerle senkronize olmak"
+    url: "https://react.dev/learn/synchronizing-with-effects"
+  - label: "React — Render ve commit"
+    url: "https://react.dev/learn/render-and-commit"
+skipTerms: ["state"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bu üç kavram React konuşmalarında sürekli geçer. Bunlar derinlemesine öğrenmen gereken şeyler değil: duyduğunda ne dendiğini anlaman yeter. Ama her birinin ardında bir tasarım sonucu var.
+
+## Hook
+
+**Hook**, bir bileşene state, yan etki ya da başka yetenekler kazandıran özel işlevlerdir. Adları `use` ile başlar (`useState`, `useEffect`). Ekipler ayrıca **custom hook** yazar: tekrar eden mantığı (veri çekme, form yönetimi, medya sorgusu) tek yere toplar. "Bu mantık üç bileşende tekrar ediyor; custom hook'a alalım."
+
+## Side effect
+
+**Side effect (yan etki)**, bileşenin ekrana çizmek dışında yaptığı işlerdir: veri çekmek, zamanlayıcı kurmak, tarayıcı olayını dinlemek. Bu işlerin ne zaman ve kaç kez çalışacağı yönetilmezse hata çıkar: çift istek, sızıntı, sonsuz döngü. Sık görülen hata kaynaklarından biridir. "Sayfa açılışında istek iki kez gidiyor; side effect bağımlılıkları yanlış tanımlanmış olabilir."
+
+## Re-render
+
+**Re-render (yeniden çizim)**, state ya da props değiştiğinde bileşenin kendini yeniden hesaplamasıdır. Normal ve gerekli bir davranıştır. Ama gereksiz yeniden çizimler, özellikle uzun listelerde, arayüzü yavaşlatır ve doğrudan **INP** metriğini etkiler (performans dersinde). "Liste her tuş vuruşunda yeniden çiziliyor; arama girdisi takılıyor."
+
+<Callout kind="tasarimci">
+
+- **"Takılıyor" geri bildirimini re-render ile ilişkilendir;** uzun liste ve anlık filtre tasarımlarında geliştiriciyle konuş.
+- **Bir etkileşimin tetiklediği isteklerin sayısını sor,** özellikle yazarken güncellenen arama kutularında.
+
+</Callout>
+
+<Summary>
+
+- Hook, bileşene state ve yan etki gibi yetenekler kazandıran `use...` işlevleridir; custom hook tekrar eden mantığı toplar.
+- Yan etki, ekrana çizmek dışındaki işlerdir; yönetilmezse çift istek ve sızıntı çıkar.
+- Re-render normaldir ama gereksizse uzun listelerde yavaşlık ve kötü INP üretir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Re-render neden bazen sorun olur?">
+
+State ya da props değiştiğinde yeniden çizim normaldir; ama gereksiz yeniden çizimler, özellikle uzun listelerde, arayüzü yavaşlatır ve INP metriğini kötüleştirir.
+
+</SelfCheck>

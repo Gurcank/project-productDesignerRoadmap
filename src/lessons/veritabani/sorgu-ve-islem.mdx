@@ -1,0 +1,64 @@
+---
+summary: "Her ekranın arkasında bir ya da birkaç sorgu vardır. Query, join, aggregate ve transaction: bir ekranın kaç sorgu attığı hızını belirler; transaction 'yarım kalmış sipariş' durumunu engeller."
+outcomes:
+  - "Join'in neden tek tek sorgu atmaktan hızlı olduğunu söyleyebilirsin."
+  - "Dashboard sayılarının neden pahalı olabildiğini açıklayabilirsin."
+  - "Transaction'ın 'ya hepsi ya hiçbiri' garantisini ve ürün karşılığını bilirsin."
+minutes: 7
+sources:
+  - label: "PostgreSQL — SQL öğreticisi: Join"
+    url: "https://www.postgresql.org/docs/current/tutorial-join.html"
+  - label: "PostgreSQL — Toplulaştırma"
+    url: "https://www.postgresql.org/docs/current/tutorial-agg.html"
+  - label: "PostgreSQL — Transaction'lar"
+    url: "https://www.postgresql.org/docs/current/tutorial-transactions.html"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Bir ekranı açtığında arka planda kaç sorgu gidiyor? Bir ödeme tamamlanırken stok düşüp sipariş oluşmazsa ne olur? İki soru, bu dersin iki yarısı.
+
+## Query
+
+**Query (sorgu)**, veritabanından veri isteme ya da veriyi değiştirme talebidir; SQL bu talebin yazıldığı dildir. Her ekranın arkasında bir veya birkaç sorgu vardır. **Bir ekranın kaç sorgu attığı, o ekranın hızını doğrudan belirler.** "Bu sayfa kaç sorgu atıyor? 40'tan fazlaysa bir sorun var."
+
+## Join
+
+**Join (birleştirme)**, birden fazla tablodaki veriyi tek bir sorguda birleştirmektir. Normalleştirilmiş verinin bir arada gösterilmesini sağlar: siparişi kullanıcı adıyla birlikte listelemek gibi. Doğru kullanıldığında ayrı ayrı sorgu atmaktan çok daha hızlıdır. "Kullanıcı adını ayrı sorguyla çekmeyelim; join ile tek sorguda alalım."
+
+## Aggregate
+
+**Aggregation (toplulaştırma)**, çok sayıda satırdan tek bir özet sayı üretmektir: kaç tane, toplam ne kadar, ortalama kaç (count, sum, average, group by). Dashboard'lardaki tüm sayılar bunlarla üretilir. Büyük tablolarda pahalı olabilir; bu yüzden bazen önceden hesaplanıp saklanır (denormalizasyon). "Dashboard'daki bu dört sayı her açılışta milyonlarca satır tarıyor; günlük özet tablosu yapalım."
+
+## Transaction
+
+**Transaction (işlem)**, birden fazla değişikliğin **ya hep birlikte ya da hiç** uygulanmasını garanti eden mekanizmadır. Klasik örnek para transferi: bir hesaptan düşülüp diğerine eklenmesi tek bir bütün olmalıdır; ortada kesilirse para yok olur. **Ürün karşılığı:** sipariş oluşturulurken stok düşülmesi, ödeme kaydı ve sipariş satırı hep birlikte olmalıdır; biri başarısız olursa hiçbiri olmamalıdır. Bu, arayüzdeki "yarım kalmış sipariş" durumlarını engeller. "Sipariş oluşturma işlemini transaction'a alalım; stok düştü ama sipariş oluşmadı durumu olmasın."
+
+Transaction'ların güvence listesine **ACID** denir (Atomicity, Consistency, Isolation, Durability). Dört harfi ezberlemek gerekmez; önemli olan **atomiklik** fikridir: "ya hepsi ya hiçbiri".
+
+<Callout kind="tasarimci">
+
+- **Dashboard sayıları için "bu sayı nasıl hesaplanıyor, ne sıklıkta yenileniyor?" sor.**
+- **Birden fazla adımdan oluşan işlemlerde (sipariş, ödeme) yarım kalmış durumların olmaması gerektiğini vurgula.**
+- **Ekrana yeni bir veri eklerken "bunun için ek sorgu gerekiyor mu?" sor.**
+
+</Callout>
+
+<Summary>
+
+- Her ekranın arkasında sorgular vardır; sorgu sayısı ekranın hızını belirler.
+- Join birden fazla tabloyu tek sorguda birleştirir; ayrı ayrı sorgu atmaktan çok daha hızlıdır.
+- Aggregate büyük tablolarda pahalı olabilir; dashboard sayıları bazen önceden hesaplanır.
+- Transaction "ya hepsi ya hiçbiri" garantisi verir ve yarım kalmış sipariş durumlarını engeller.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Transaction ne garanti eder? Sipariş akışında karşılığı nedir?">
+
+Birden fazla değişikliğin ya hep birlikte ya da hiç uygulanmasını. Sipariş akışında stok düşülmesi, ödeme kaydı ve sipariş satırı hep birlikte olmalıdır; biri başarısız olursa hiçbiri olmamalıdır, böylece "yarım kalmış sipariş" oluşmaz.
+
+</SelfCheck>

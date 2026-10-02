@@ -1,0 +1,107 @@
+---
+summary: "Görünümün tanımlandığı katman: selector, cascade ve specificity, kutu modeli, display, position, overflow ve CSS değişkenleri. Tasarımcının en çok temas ettiği teknik alan."
+outcomes:
+  - "'Neden bu renk değişmiyor?' sorusunun cevabını cascade ve specificity ile verebilirsin."
+  - "Padding ile margin farkını ve tıklanabilir alanı neden padding'in büyüttüğünü açıklayabilirsin."
+  - "display: none'ın erişilebilirliğe etkisini söyleyebilirsin."
+  - "CSS değişkeninin design token'ın koddaki karşılığı olduğunu bilirsin."
+minutes: 11
+sources:
+  - label: "MDN — Cascade"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_cascade/Cascade"
+  - label: "MDN — Specificity"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_cascade/Specificity"
+  - label: "MDN — Kutu modeli"
+    url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Box_model"
+  - label: "MDN — display"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/display"
+  - label: "MDN — position"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/position"
+  - label: "MDN — overflow"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/overflow"
+  - label: "MDN — CSS özel özellikleri (değişkenler)"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties"
+skipTerms: ["layout","style","state","grid","metin alanı"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import BoxModelFigure from "~/components/lesson/BoxModelFigure.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Tasarımda 16px'lik bir boşluk çizdin; sayfada 24px çıktı. Ya da bir rengi değiştirdin ama ekranda eski renk duruyor. Bunların cevabı CSS'te. Bu ders, CSS'in tasarımcıyı en çok ilgilendiren kavramlarını anlatır.
+
+## Selector ve çakışma kuralları
+
+**Selector (seçici)**, stilin hangi elemanlara uygulanacağını söyleyen ifadedir. CSS'in tamamı "kime" ve "ne" sorularından oluşur; seçici "kime" kısmıdır. "Bu stil çok geniş bir seçiciyle yazılmış; başka yerleri de etkiliyor."
+
+Aynı elemana birden fazla stil uygulandığında hangisinin kazanacağını üç kavram belirler:
+
+- **Cascade (basamaklama):** çakışmaları çözen kurallar bütünü.
+- **Specificity (özgüllük):** seçicinin ne kadar "özel" olduğu; daha özel olan kazanır.
+- **Inheritance (kalıtım):** bazı özelliklerin (yazı tipi, renk) çocuk elemanlara otomatik geçmesi.
+
+"Neden bu renk değişmiyor?" sorusunun cevabı neredeyse her zaman buradadır. `!important` bu yarışı zorla kazanır ama **bir borçtur:** bir kez kullanıldığında sonraki her düzeltme de `!important` gerektirmeye başlar. "Bu kuralı `!important` ile ezmişiz; asıl sorun seçicinin fazla özgül olması."
+
+## Kutu modeli
+
+<BoxModelFigure />
+
+Her eleman dört katmandır: içerik, **padding** (iç boşluk), **border** (kenarlık), **margin** (dış boşluk). Boşluk konuşmasının dili budur ve **padding ile margin farkı tasarımcı için kritiktir:** padding kutunun içinde kalır ve arka plan rengini alır; margin dışarıdadır ve almaz. Bir butonun tıklanabilir alanını büyütmek istiyorsan padding kullanırsın, margin değil. DevTools'ta seçilen elemanın altında bu katmanlar renkli gösterilir. "Kart içindeki boşluk padding olsun, kartlar arasındaki margin veya gap."
+
+## display, position, overflow
+
+**display**, elemanın nasıl davranacağını ve çocuklarını nasıl dizeceğini belirler (block, inline, flex, grid, none). Yerleşimin ilk kararıdır. `display: none` öğeyi tamamen kaldırır; **ekran okuyucudan da gizler.** "Mobilde gizleyelim" dediğinde bu bilgi ekran okuyucu kullanıcısından da gizleniyor olabilir. Yalnızca görsel gizleme için farklı bir teknik gerekir.
+
+**position**, bir elemanın belge akışına göre yerleşimini belirler (static, relative, absolute, fixed, sticky). **sticky** özellikle önemlidir: eleman normal akışta durur, belirli bir kaydırma noktasında yapışır. Sticky header, sticky CTA ve sabit tablo başlıkları bununla kurulur.
+
+**overflow**, içerik kutusuna sığmadığında ne olacağını belirler: görünür kalır, kırpılır, kaydırılır. Bu karar tasarımcıyı doğrudan ilgilendirir: uzun bir kullanıcı adı kartı taşırsa ne olacak? **Bu karar tasarımda verilmezse geliştirici tahmin eder.** "Uzun başlıklar iki satırda kesilsin ve sonuna üç nokta gelsin; tooltip'te tamamı görünsün."
+
+## CSS değişkeni
+
+**CSS custom property** (CSS değişkeni), bir değeri isimle saklayıp her yerde kullanmayı sağlar. **Design token'ların koddaki karşılığıdır.** Tema değiştirmenin en yaygın yolu: üst seviyede değişkenlerin değerini değiştirirsin, alt bileşenler otomatik güncellenir. "Renkleri CSS değişkeni olarak tanımlayalım; dark mode'da sadece değerleri değiştireceğiz."
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitenin renkleri ve boşlukları CSS değişkenleridir; açık ve koyu tema aynı bileşenleri kullanıp yalnızca değişken değerlerini değiştirir. Bileşenler ham renk yerine anlamlı adlar (örneğin metin, eylem, ilerleme rengi) kullanır.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Boşluğu doğru türde adlandır:** kart içi padding, kartlar arası gap/margin.
+- **Her uzun metin alanı için taşma kararını yaz:** kes, üç nokta, kaydır, satır sınırı.
+- **Gizleme taleplerinde ekran okuyucu etkisini sor.**
+- **Renk ve boşlukları token olarak teslim et;** geliştirici bunları değişken yapar.
+
+</Callout>
+
+<Summary>
+
+- Seçici "kime" der; cascade, specificity ve inheritance çakışmaları çözer. `!important` bir borçtur.
+- Padding içeride ve arka planlı, margin dışarıda; tıklanabilir alanı padding büyütür.
+- `display: none` ekran okuyucudan da gizler. Sticky, normal akışta durup kaydırınca yapışır.
+- Taşma davranışı tasarımda karara bağlanmalı, yoksa geliştirici tahmin eder.
+- CSS değişkeni, design token'ın koddaki karşılığıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Padding ile margin arasındaki fark nedir? Butonun tıklanabilir alanını büyütmek için hangisi kullanılır?">
+
+Padding kutunun içinde kalır ve arka plan rengini alır; margin dışarıdadır ve almaz. Tıklanabilir alan kutunun kendisi olduğu için padding kullanılır.
+
+</SelfCheck>
+
+<SelfCheck question="`!important` neden bir borç olarak nitelendirilir?">
+
+Özgüllük yarışını zorla kazanır ve sonraki her düzeltmenin de `!important` gerektirmesine yol açar. Asıl sorun (fazla özgül seçici ya da organizasyon eksikliği) çözülmeden birikir.
+
+</SelfCheck>
+
+<SelfCheck question="`display: none` kullanmanın erişilebilirlik açısından sonucu nedir?">
+
+Öğeyi tamamen kaldırır ve ekran okuyucudan da gizler. Yalnızca görsel gizleme gerekiyorsa farklı bir teknik gerekir.
+
+</SelfCheck>

@@ -1,0 +1,68 @@
+---
+summary: "Kod yazmayacaksın ama bu kelimeler her teknik konuşmada geçer: event, promise ve async, fetch ve JSON. Her birinin tasarım kararıyla bağlantısı."
+outcomes:
+  - "Event'in erişilebilirliği nasıl belirlediğini açıklayabilirsin."
+  - "Her eş zamansız işlemin neden bir bekleme ve bir hata hâli olduğunu söyleyebilirsin."
+  - "DevTools'ta bir JSON yanıtını okuyup tasarımdaki boş alan kararlarını verebilirsin."
+minutes: 6
+sources:
+  - label: "MDN — Olaylar (events)"
+    url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Events"
+  - label: "MDN — Promise kullanımı"
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises"
+  - label: "MDN — Fetch kullanımı"
+    url: "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch"
+skipTerms: ["state","fallback"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+JavaScript, sayfayı canlı yapan dildir. Kod yazmayacaksın; ama üç kavramın tasarım kararlarına doğrudan dokunduğunu bilmelisin.
+
+## Event
+
+Kullanıcının yaptığı bir şey (tıklama, tuşa basma, kaydırma) bir **event (olay)**'tir; onu bekleyip tepki veren koda **event listener (olay dinleyici)** denir. Arayüzün etkileşimli olmasını sağlayan mekanizmadır.
+
+Tasarımcıyı ilgilendiren yanı: **hangi olayın dinlendiği erişilebilirliği belirler.** Yalnızca `click` dinlemek fareyle sınırlı kalır; klavye olayları da gerekir. Doğru HTML elemanı (gerçek bir buton) kullanıldığında bu otomatik gelir. "Bu `div`'e sadece tıklama olayı bağlanmış; klavyeyle çalışmıyor."
+
+## Promise ve async
+
+Bazı işlemlerin sonucu hemen gelmez: sunucudan veri çekmek gibi. **Promise** "sonuç birazdan gelecek" sözüdür; **async/await** bu bekleyişi yönetme biçimidir. Tarayıcı veri beklerken donmaz, arayüz çalışmaya devam eder.
+
+**Tasarımcı için anlamı:** her eş zamansız işlemin bir **bekleme hâli** ve bir **hata hâli** vardır ve ikisi de tasarlanmalıdır. "Bu istek asenkron; yükleniyor ve hata durumlarını da tasarlayalım."
+
+## Fetch ve JSON
+
+**fetch**, tarayıcının sunucudan veri istemesini sağlayan işlevdir; **JSON** veri alışverişinin standart metin formatıdır. API'lerle konuşmanın standart yoludur. DevTools'un Network sekmesinde bir isteğin yanıtına bakabilirsin: hangi alanların geldiğini görürsün ve tasarımda o alanlara göre karar verirsin. "Response'a baktım; `avatarUrl` alanı boş dönebiliyor, fallback tasarlayalım."
+
+<Callout kind="tasarimci">
+
+- **Her veri çeken ekran için bekleme ve hata hâlini çiz.**
+- **Etkileşimli öğeleri gerçek buton/bağlantı olarak tarif et;** klavye otomatik gelsin.
+- **Network sekmesinde gerçek yanıta bak;** hangi alanın boş olabildiğini tasarımda karşıla.
+
+</Callout>
+
+<Summary>
+
+- Event, kullanıcının eylemidir; hangi olayın dinlendiği erişilebilirliği belirler.
+- Promise/async, sonucu geç gelen işleri yönetir; her biri bir bekleme ve bir hata hâli doğurur.
+- fetch veriyi çeker, JSON formatıdır; yanıtı okumak tasarım kararını netleştirir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Event dinleyici ile erişilebilirlik arasındaki bağ nedir?">
+
+Yalnızca click dinleyen bir öğe fareyle sınırlı kalır; klavye olayları da gerekir. Doğru HTML elemanı (gerçek buton) kullanıldığında klavye desteği otomatik gelir.
+
+</SelfCheck>
+
+<SelfCheck question="Asenkron bir işlem tasarımcıya hangi iki iş çıkarır?">
+
+Bekleme (yükleniyor) hâlini ve hata hâlini tasarlamak.
+
+</SelfCheck>

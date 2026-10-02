@@ -1,0 +1,77 @@
+---
+summary: "Kullanıcıların çoğu hata bildirmez, terk eder: hata izleme bunu görünür kılar. Web analitiği trafiği, ürün analitiği davranışı ölçer. Olay tasarımı (event/tracking plan) doğrudan senin işin ve çoğu ekipte sahipsiz kalır."
+outcomes:
+  - "Hata izlemenin neden gerekli olduğunu söyleyebilirsin."
+  - "Web analitiği ile ürün analitiği farkını açıklayabilirsin."
+  - "Bir ölçüm planının (event tasarımı) içermesi gerekenleri sayabilirsin."
+minutes: 8
+sources:
+  - label: "Sentry — Dokümantasyon"
+    url: "https://docs.sentry.io/"
+  - label: "Sentry — JavaScript source map'leri"
+    url: "https://docs.sentry.io/platforms/javascript/sourcemaps/"
+  - label: "Segment Academy — Temiz veri için adlandırma kuralları"
+    url: "https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Sentry'de bir hata günde 200 kez tetikleniyor ama tek bir destek talebi yok. Kullanıcılar şikâyet etmiyor; sessizce terk ediyor. Üç ölçüm katmanı bunu görmeni sağlar.
+
+## Hata izleme
+
+**Error tracking (Sentry vb.)**, canlıda oluşan hataların otomatik olarak toplanması, gruplanması ve bağlamıyla birlikte raporlanmasıdır. **Kullanıcıların çoğu hata bildirmez, yalnızca terk eder;** hata izleme bildirilmeyen sorunları görünür kılar: hangi tarayıcıda, hangi sayfada, kaç kullanıcıda olduğunu gösterir. Source map yüklenmezse raporlar okunamaz hâle gelir. Üretime çıkan her projede olmalıdır. "Sentry'de bu hata günde 200 kez tetikleniyor ama tek bir destek talebi yok."
+
+## Web ve ürün analitiği
+
+**Web analitiği** trafik odaklıdır: kaç ziyaretçi, nereden geldi, hangi sayfaya baktı. **Ürün analitiği** davranış odaklıdır: kullanıcı hangi adımları tamamladı, nerede takıldı, hangi özelliği kullandı. İkisi farklı sorulara cevap verir ve tasarımcı ikincisine ihtiyaç duyar: funnel, elde tutma ve özellik kullanım oranları ürün analitiğinden gelir. "Web analitiği 'trafik var' diyor ama funnel'ın nerede koptuğunu göremiyoruz; ürün analitiği kuralım." Araç adları ve fiyatlar sık değişir.
+
+Her iki tür de kişisel veri toplayabilir; KVKK/GDPR uyumu ve çerez onayı gerekir. Ayrıca reklam engelleyiciler bazı araçları bloke eder; ölçümler eksik olabilir.
+
+## Olay tasarımı
+
+**Event tasarımı (tracking plan)**: hangi kullanıcı davranışlarının kaydedileceğinin ve nasıl adlandırılacağının önceden planlanmasıdır. **Bu doğrudan senin işin ve çoğu ekipte sahipsiz kalır.** Olaylar plansız eklenirse üç ay sonra `button_click`, `btn_clicked` ve `ClickedButton` adlı üç ayrı olay olur ve hiçbiri analiz edilemez.
+
+İyi bir ölçüm planı şunları içerir:
+
+1. Olayın **adı** (tutarlı adlandırma kuralı).
+2. **Ne zaman tetiklendiği.**
+3. Taşıdığı **ek bilgiler (özellikler).**
+4. **Hangi soruyu cevaplamak için var olduğu.**
+
+Başarı ölçütü tanımlanırken onu ölçecek olay da tanımlanmalıdır. "Bu özelliğin başarı ölçütü var ama onu ölçecek olay tanımlı değil; yayına çıkarsak ölçemeyiz." **Her şeyi ölçmek bir strateji değildir:** cevaplanmayacak soru için toplanan veri hem gürültü hem gereksiz bir gizlilik yükümlülüğüdür.
+
+<Callout kind="tasarimci">
+
+- **Her özellik tanımına ölçüm planı ekle:** olay adı, tetikleyici, özellikler, cevapladığı soru.
+- **Adlandırma kuralını ekiple belirle** (örneğin `nesne_eylem`).
+- **Her şeyi ölçmeye çalışma;** başarı ölçütünü cevaplayan olaylarla başla.
+- **Hata izleme panelini düzenli kontrol et;** kullanıcı terk ettiği hataları sen görmezsin.
+
+</Callout>
+
+<Summary>
+
+- Hata izleme, kullanıcının bildirmeden terk ettiği sorunları görünür kılar; source map gerekir.
+- Web analitiği trafiği, ürün analitiği davranışı (funnel, kullanım) ölçer; tasarımcı ikincisine ihtiyaç duyar.
+- Event tasarımı tasarımcının işidir: ad, tetikleyici, özellikler ve hangi soruya cevap verdiği.
+- Her şeyi ölçmek strateji değildir; gereksiz veri yükümlülük yaratır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Error tracking neden gerekli? Kullanıcılar hataları bildirmez mi?">
+
+Kullanıcıların çoğu hata bildirmez, yalnızca terk eder. Hata izleme bildirilmeyen sorunları görünür kılar: hangi tarayıcıda, hangi sayfada, kaç kullanıcıda olduğunu gösterir.
+
+</SelfCheck>
+
+<SelfCheck question="Event tasarımı neden senin işin? Plansız olay ekleme nasıl sonuçlanır?">
+
+Hangi davranışın ölçüleceği bir ürün/tasarım kararıdır ve çoğu ekipte sahipsiz kalır. Plansız eklenirse üç ay sonra `button_click`, `btn_clicked` ve `ClickedButton` gibi üç ayrı olay olur ve hiçbiri analiz edilemez. Başarı ölçütü tanımlanırken onu ölçecek olay da tanımlanmalıdır.
+
+</SelfCheck>

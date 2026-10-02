@@ -1,0 +1,62 @@
+---
+summary: "Tasarım kararlarının doğrudan bulut maliyeti karşılığı var: optimize edilmemiş görseller egress'i, ağır sunucu işlevleri hesaplamayı büyütür; statik üretim neredeyse bedavadır. Ücretsiz katmanlar kalıcı değildir; ticari kullanıma kapalı olabilir."
+outcomes:
+  - "Hosting faturasının bileşenlerini sayabilirsin."
+  - "Tasarım kararlarının maliyet etkisine iki örnek verebilirsin."
+  - "Ücretsiz katman uyarısını ve doğru soruyu ('çıkmak ne kadar zor?') söyleyebilirsin."
+minutes: 4
+sources:
+  - label: "Vercel — Fiyatlandırma ve limitler"
+    url: "https://vercel.com/docs/pricing"
+  - label: "Cloudflare Pages — Dokümantasyon"
+    url: "https://developers.cloudflare.com/pages/"
+  - label: "web.dev — Görsel optimizasyonu"
+    url: "https://web.dev/articles/optimize-lcp"
+flags: ["degisken"]
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Fatura geldi: tahminin dört katı. Neden? Çünkü tasarım kararlarının bir fiyat etiketi var.
+
+## Bulut maliyeti
+
+Hosting faturasının bileşenleri: hesaplama süresi, veri transferi (özellikle **egress**, yani dışarı çıkan veri), depolama, derleme dakikaları ve koltuk başına ücretler. **Tasarım kararlarının doğrudan maliyet karşılığı var:**
+
+- **Optimize edilmemiş görseller** egress faturasını büyütür; görsel optimizasyonu hem hız hem maliyet kararıdır.
+- **Her sayfada çalışan ağır bir sunucu işlevi** hesaplama maliyeti üretir.
+- **Statik üretim** neredeyse bedavadır; rendering stratejisi bir maliyet kararıdır.
+
+"Görselleri optimize edip CDN'e alalım; hem hızlanır hem egress maliyeti düşer."
+
+## Ücretsiz katman uyarısı
+
+Veritabanı bölümündeki PlanetScale dersi burada da geçerli: **ücretsiz katmanlar kalıcı değildir.** Materyalin Eylül 2026 tarihli kaynakları, birden fazla platformun ücretsiz katmanını daralttığını ya da fiyatlandırma modelini değiştirdiğini raporluyor. Ayrıca bazı ücretsiz katmanların **ticari kullanıma kapalı** olduğu belirtiliyor; müşteri projesini oraya koymak sözleşme ihlali olabilir. Fiyat bilgisi hızla eskir; platformun kendi sayfasından doğrula.
+
+**Doğru soru:** "bugün bedava mı?" değil, **"ödemeli plana geçtiğimizde maliyeti ne olur ve çıkmak ne kadar zor?"**
+
+<Callout kind="tasarimci">
+
+- **Görsel boyutu ve sayısını maliyet kararı olarak da değerlendir.**
+- **Statik olabilecek sayfaları (pazarlama, blog) dinamik yapmamayı öner.**
+- **Müşteri projelerinde ücretsiz katmanın ticari kullanım koşulunu kontrol et.**
+
+</Callout>
+
+<Summary>
+
+- Fatura bileşenleri: hesaplama, veri transferi (egress), depolama, derleme dakikası, koltuk.
+- Optimize edilmemiş görseller egress'i, ağır sunucu işlevleri hesaplamayı büyütür; statik üretim neredeyse bedavadır.
+- Ücretsiz katmanlar kalıcı değildir; ticari kullanıma kapalı olabilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Tasarım kararlarının bulut maliyetiyle bağlantısına iki örnek ver.">
+
+Optimize edilmemiş görseller egress faturasını büyütür; görsel optimizasyonu hem hız hem maliyet kararıdır. Her sayfada çalışan ağır bir sunucu işlevi hesaplama maliyeti üretirken statik üretim neredeyse bedavadır; rendering stratejisi bir maliyet kararıdır.
+
+</SelfCheck>

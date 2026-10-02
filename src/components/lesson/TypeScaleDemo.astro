@@ -1,0 +1,71 @@
+---
+/**
+ * A type scale drawn from its own rule: base × ratio^step, rounded. Showing the
+ * numbers next to the specimen is the point — the scale is arithmetic, not taste.
+ */
+interface Props {
+  base?: number;
+  ratio?: number;
+  steps?: number[];
+  labels?: string[];
+}
+
+const { base = 16, ratio = 1.25, steps = [0, 1, 2, 3, 4], labels = [] } = Astro.props;
+
+const rows = steps.map((step, index) => ({
+  size: Math.round(base * Math.pow(ratio, step)),
+  label: labels[index] ?? (step === 0 ? "Gövde" : `Adım ${step}`),
+}));
+---
+
+<ul class="type-demo" aria-label={`Oran ${ratio}, taban ${base}px`}>
+  {
+    rows.reverse().map((row) => (
+      <li class="type-demo__row">
+        <span class="type-demo__meta">
+          {row.label} · {row.size}px
+        </span>
+        <span class="type-demo__sample" style={`font-size:${row.size}px`}>
+          Okunabilir bir başlık
+        </span>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .type-demo {
+    display: grid;
+    gap: var(--spacing-2);
+    margin: var(--spacing-6) 0;
+    padding: var(--spacing-4);
+    list-style: none;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-raised);
+  }
+
+  .type-demo__row {
+    display: grid;
+    gap: var(--spacing-1);
+    padding-block: var(--spacing-2);
+    border-bottom: 1px solid var(--c-border);
+  }
+
+  .type-demo__row:last-child {
+    border-bottom: 0;
+  }
+
+  .type-demo__meta {
+    font-size: var(--text-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--c-text-muted);
+  }
+
+  .type-demo__sample {
+    line-height: 1.2;
+    color: var(--c-text);
+    font-family: var(--font-serif);
+    overflow-wrap: anywhere;
+  }
+</style>

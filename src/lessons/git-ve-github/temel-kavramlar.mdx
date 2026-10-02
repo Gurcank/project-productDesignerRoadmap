@@ -1,0 +1,75 @@
+---
+summary: "Repository, commit, staging area, HEAD ve diff: Git'in beş temel kavramı. Tasarımcı için en işe yarayanı diff: bir PR'ı incelemek aslında diff'e bakmaktır."
+outcomes:
+  - "Repo, commit, staging area, HEAD ve diff'i kendi cümlenle açıklayabilirsin."
+  - "İyi bir commit'in neden tek bir mantıklı değişiklik içermesi gerektiğini söyleyebilirsin."
+  - "Diff'i okuyarak bir tasarım değişikliğinin uygulanıp uygulanmadığını kontrol edebilirsin."
+minutes: 7
+sources:
+  - label: "Pro Git — Depoya değişiklik kaydetmek"
+    url: "https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository"
+  - label: "Pro Git — Dallar: kısaca"
+    url: "https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell"
+---
+
+import Callout from "~/components/lesson/Callout.astro";
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+
+Beş kavram, Git konuşmalarının yarısı.
+
+## Repository
+
+**Repository (depo, repo)**, bir projenin tüm dosyalarını ve değişiklik geçmişini içeren klasördür. Projenin sınırını tanımlar. Bir depo genelde bir proje demektir; monorepo yaklaşımında birden fazla proje aynı depoda yaşayabilir. "Repoya baktın mı?" cümlesi standarttır. "Tasarım dosyalarını da repoya koyalım mı, yoksa ayrı mı dursun?"
+
+## Commit
+
+**Commit**, belirli bir andaki değişikliklerin bir açıklamayla birlikte geçmişe kaydedilmesidir. Geçmişin birimidir: her commit'in benzersiz bir kimliği, bir yazarı, bir tarihi ve bir mesajı vardır. **İyi bir commit tek bir mantıklı değişikliği içerir;** "her şeyi düzelttim" diyen dev bir commit, sonradan geri almayı imkânsızlaştırır. "Bu hatayı hangi commit getirdi bulalım; sonra yalnızca onu geri alırız."
+
+## Çalışma dizini ve staging area
+
+**Working directory** üzerinde çalıştığın dosyalardır. **Staging area (hazırlık alanı)** ise bir sonraki commit'e girecek değişikliklerin seçilip bekletildiği ara alandır. **Hangi değişikliklerin birlikte kaydedileceğini seçmeyi** sağlar: aynı anda iki farklı iş yaptıysan ikisini ayrı commit'lere bölebilirsin. "Yalnızca stil değişikliklerini stage'leyip ayrı commit atalım."
+
+## HEAD
+
+**HEAD**, şu anda nerede durduğunu gösteren işaretçidir; genelde bulunduğun dalın son commit'i. Git komutlarının çoğu buna göre çalışır. "Detached HEAD durumundasın; bir dalda değil, doğrudan bir commit'in üstündesin."
+
+## Diff
+
+**Diff (fark)**, iki sürüm arasındaki satır bazında değişikliklerdir. **Senin için en işe yarayan Git kavramı budur:** bir pull request'i incelemek aslında diff'e bakmaktır: hangi satırlar eklendi (yeşil), hangileri silindi (kırmızı). Bir tasarım değişikliğinin uygulanıp uygulanmadığını kod yazmayı bilmeden buradan görebilirsin. "Diff'e baktım; spacing değerleri token'dan değil, elle yazılmış."
+
+<Callout kind="ornek" title="Bu sitede nasıl?">
+
+Bu sitenin kendi kaynak kodu da bir Git deposudur. Bir değişikliğin diff'i, hangi dosyaların eklendiğini ve hangi satırların değiştiğini açıkça gösterir.
+
+</Callout>
+
+<Callout kind="tasarimci">
+
+- **Bir PR'da önce diff'e bak:** boşluk, renk ve metin değerleri token'lardan mı geliyor, elle mi yazılmış?
+- **Tek mantıklı değişiklik = tek commit:** ekibe önerirsin; geri alma ve inceleme kolaylaşır.
+- **"HEAD", "staging" gibi terimleri duyduğunda** nerede olunduğunu anlamak için bu sözlüğe dön.
+
+</Callout>
+
+<Summary>
+
+- Repo, projenin dosyalarını ve geçmişini içerir; commit geçmişin birimidir ve tek bir mantıklı değişiklik içermelidir.
+- Staging area, hangi değişikliklerin birlikte kaydedileceğini seçtirir; HEAD bulunduğun noktayı gösterir.
+- Diff iki sürüm arasındaki satır farkıdır; PR incelemesi diff'e bakmaktır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Staging area ne işe yarar?">
+
+Hangi değişikliklerin birlikte kaydedileceğini seçmeyi sağlar; aynı anda iki farklı iş yaptıysan ikisini ayrı commit'lere bölebilirsin.
+
+</SelfCheck>
+
+<SelfCheck question="Diff senin için neden en işe yarayan Git kavramı?">
+
+Bir pull request'i incelemek aslında diff'e bakmaktır: hangi satırlar eklendi, hangileri silindi. Bir tasarım değişikliğinin uygulanıp uygulanmadığını, ölçülerin token'dan mı elle mi geldiğini kod yazmayı bilmeden görebilirsin.
+
+</SelfCheck>

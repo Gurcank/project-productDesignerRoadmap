@@ -1,0 +1,50 @@
+---
+import DiagramFigure from "../diagrams/DiagramFigure.astro";
+---
+
+<DiagramFigure
+  label="Örnek kullanıcı akışı: kayıt"
+  caption="Düz çizgi happy path'tir: her şey yolunda giderse kullanıcının izlediği yol. Elmas bir karar noktasıdır; çıkan her dal, tasarlanması gereken bir ekran ister."
+>
+  <svg class="dg-narrow" viewBox="0 0 360 380" role="img" aria-label="Kayıt formundan başarılı kayda giden akış ve hata dalı">
+    <title>Kayıt akışı</title>
+
+    <rect class="dg-box dg-box--accent" x="100" y="8" width="160" height="34" rx="8"></rect>
+    <text class="dg-label" x="180" y="30" text-anchor="middle">Kayıt formu</text>
+    <path class="dg-line dg-line--accent" d="M180 42 V68"></path>
+    <path class="dg-line dg-line--accent" d="M174 62 l6 8 6 -8" stroke-linejoin="round"></path>
+
+    <path class="dg-box" d="M180 70 L260 108 L180 146 L100 108 Z"></path>
+    <text class="dg-sub" x="180" y="105" text-anchor="middle">Bilgiler</text>
+    <text class="dg-sub" x="180" y="120" text-anchor="middle">geçerli mi?</text>
+
+    <path class="dg-line dg-line--accent" d="M180 146 V176"></path>
+    <path class="dg-line dg-line--accent" d="M174 170 l6 8 6 -8" stroke-linejoin="round"></path>
+    <text class="dg-sub" x="190" y="164">evet</text>
+
+    <path class="dg-line" d="M260 108 H300 V176"></path>
+    <path class="dg-line" d="M294 170 l6 8 6 -8" stroke-linejoin="round"></path>
+    <text class="dg-sub" x="270" y="100">hayır</text>
+
+    <rect class="dg-box dg-box--accent" x="100" y="180" width="160" height="34" rx="8"></rect>
+    <text class="dg-label" x="180" y="202" text-anchor="middle">E-posta doğrulama</text>
+    <path class="dg-line dg-line--accent" d="M180 214 V244"></path>
+    <path class="dg-line dg-line--accent" d="M174 238 l6 8 6 -8" stroke-linejoin="round"></path>
+
+    <rect class="dg-box" x="262" y="180" width="76" height="56" rx="8"></rect>
+    <text class="dg-sub" x="300" y="202" text-anchor="middle">Hata ekranı</text>
+    <text class="dg-sub" x="300" y="217" text-anchor="middle">neyi düzelt?</text>
+    <path class="dg-line" d="M338 208 H350 V25 H266"></path>
+    <path class="dg-line" d="M272 19 l-8 6 8 6" stroke-linejoin="round"></path>
+
+    <rect class="dg-box dg-box--accent" x="100" y="248" width="160" height="34" rx="8"></rect>
+    <text class="dg-label" x="180" y="270" text-anchor="middle">İlk ekran (boş durum)</text>
+    <path class="dg-line dg-line--accent" d="M180 282 V308"></path>
+    <path class="dg-line dg-line--accent" d="M174 302 l6 8 6 -8" stroke-linejoin="round"></path>
+
+    <rect class="dg-box dg-box--progress" x="100" y="312" width="160" height="34" rx="8"></rect>
+    <text class="dg-label" x="180" y="334" text-anchor="middle">İlk görev tamamlandı</text>
+
+    <text class="dg-sub" x="8" y="370">Mavi: happy path. Gri: hata yolu, forma geri döner.</text>
+  </svg>
+</DiagramFigure>
