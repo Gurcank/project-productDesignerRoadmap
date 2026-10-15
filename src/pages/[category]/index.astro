@@ -10,6 +10,7 @@ import ProgressBar from "~/components/ui/ProgressBar.astro";
 import WaveButton from "~/components/ui/WaveButton.astro";
 import TermTooltips from "~/components/TermTooltips.astro";
 import OfflineDownload from "~/components/OfflineDownload.astro";
+import { planetOf } from "~/data/planets";
 
 export async function getStaticPaths() {
   const published = await getPublishedCategories();
@@ -50,6 +51,7 @@ const area = AREAS.find((a) => a.id === category.area);
 const cards = topics.reduce((sum, topic) => sum + topic.data.cardCount, 0);
 const minutes = topics.reduce((sum, topic) => sum + topicMinutes(topic), 0);
 const firstTopic = topics[0];
+const planet = planetOf(category.slug);
 
 // Categories written for this site have no quiz; linking to one would 404.
 const quizzes = await getCollection("quizzes");
@@ -62,8 +64,10 @@ const hasQuiz = quizzes.some((quiz) => quiz.data.category === category.slug);
 <BaseLayout title={category.title} description={category.summary} section="roadmap">
   <div class="category">
     <aside class="category__rail" aria-label={`${category.title} adımları`}>
-      <a class="category__back" href="/">← Yol haritası</a>
       <StepList
+        titleHref="/"
+        titleLabel="Yol haritası"
+        meter={false}
         topics={topics}
         categorySlug={category.slug}
         categoryTitle={category.title}
@@ -73,7 +77,10 @@ const hasQuiz = quizzes.some((quiz) => quiz.data.category === category.slug);
 
     <article class="category__main">
       <header class="category__head">
-        <p class="category__eyebrow">{area?.title}</p>
+        <span class:list={["category__planet", { "planet-rings": planet.ring }]} data-body={planet.body} aria-hidden="true">
+          <span class="planet-disc" data-body={planet.body} data-pattern={planet.pattern}></span>
+        </span>
+        <p class="category__eyebrow" style={`--area: var(--c-area-${category.area})`}>{area?.title}</p>
         <h1 class="category__title">{category.title}</h1>
 
         {/* One line, not a four-box grid: these are four small facts, and a grid
@@ -115,34 +122,10 @@ const hasQuiz = quizzes.some((quiz) => quiz.data.category === category.slug);
       </div>
 
       {
-        path.length > 0 && (
-          <section class="path" aria-labelledby="yol">
-            <h2 id="yol" class="path__title">Yol: {path.length} ders</h2>
-            <ol class="path__list">
-              {path.map(({ topic, lesson }) => (
-                <li class="path__item">
-                  <a href={topicHref(topic)} class="path__link">
-                    <span class="path__num">{topic.data.sectionNumber}</span>
-                    <span class="path__body">
-                      <span class="path__name">{topic.data.title}</span>
-                      {lesson && <span class="path__summary">{lesson.data.summary}</span>}
-                    </span>
-                    <span class="path__time">{lesson?.data.minutes ?? topicMinutes(topic)} dk</span>
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </section>
-        )
-      }
-
-      {
         glossaryGroups.length > 0 && (
           <section class="mini-glossary" aria-labelledby="mini-sozluk">
             <h2 id="mini-sozluk" class="path__title">Bu bölümün sözlüğü · {glossary.length} terim</h2>
-            <p class="mini-glossary__hint">
-              Terimleri burada ezberlemek gerekmiyor: derslerde geçtikleri yerde üzerlerine gelince ya da dokununca açıklamaları çıkıyor. Tekrar için buraya dön.
-            </p>
+            <p class="mini-glossary__hint">Derslerde terimin üzerine gelince ya da dokununca açıklaması çıkar; burası tekrar için.</p>
             {glossaryGroups.map((group) => (
               <details class="mini-glossary__group">
                 <summary>
@@ -212,49 +195,70 @@ const hasQuiz = quizzes.some((quiz) => quiz.data.category === category.slug);
     gap: var(--spacing-8);
     max-width: 90rem;
     margin-inline: auto;
-    padding: var(--spacing-6) var(--spacing-4) var(--spacing-16);
+    padding: var(--spacing-8) var(--spacing-4) var(--spacing-16);
   }
 
-  /* Phone: content first, step list after it. Desktop: list becomes the rail. */
+  /* Phone: content first, step list after it. Desktop: list becomes the rail.
+     The main column is a reading panel, like a lesson page. */
   .category__main {
     order: 1;
     min-width: 0;
+    inline-size: 100%;
+    max-inline-size: 46rem;
+    margin-inline: auto;
+    padding: var(--spacing-6) var(--spacing-4) var(--spacing-8);
+    border: 1px solid var(--c-border);
+    border-radius: 1.5rem;
+    background-color: var(--c-surface-reading);
+    box-shadow: var(--elev-card);
+  }
+
+  @media (min-width: 40rem) {
+    .category__main {
+      padding: var(--spacing-12);
+    }
   }
 
   .category__rail {
     order: 2;
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-3);
-    padding-block-start: var(--spacing-6);
-    border-top: 1px solid var(--c-border);
   }
 
-  .category__back {
-    align-self: start;
-    display: inline-flex;
-    align-items: center;
-    min-height: 24px;
-    font-size: var(--text-sm);
-    color: var(--c-text-secondary);
-    text-decoration: none;
+  .category__head {
+    position: relative;
   }
 
-  .category__back:hover {
-    color: var(--c-text);
+  /* The category's planet from the home map, so the two pages feel connected. */
+  .category__planet {
+    display: block;
+    inline-size: 4.5rem;
+    margin-block-end: var(--spacing-6);
   }
 
   .category__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-family: var(--font-display);
     font-size: var(--text-xs);
-    text-transform: uppercase;
+    font-weight: 600;
     letter-spacing: 0.08em;
-    color: var(--c-text-muted);
+    text-transform: uppercase;
+    color: var(--c-text-secondary);
+  }
+
+  .category__eyebrow::before {
+    content: "";
+    inline-size: 7px;
+    block-size: 7px;
+    border-radius: 50%;
+    background-color: var(--area);
   }
 
   .category__title {
-    margin-block: var(--spacing-2) var(--spacing-6);
-    font-size: var(--text-3xl);
-    letter-spacing: -0.02em;
+    margin-block: var(--spacing-2) var(--spacing-4);
+    font-size: var(--text-4xl);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
   }
 
   /* ----------------------------------------------------------------- facts */
@@ -316,7 +320,6 @@ const hasQuiz = quizzes.some((quiz) => quiz.data.category === category.slug);
   }
 
   /* ------------------------------------------------------------ lesson path */
-  .path,
   .mini-glossary {
     margin-block-start: var(--spacing-12);
   }
@@ -330,58 +333,10 @@ const hasQuiz = quizzes.some((quiz) => quiz.data.category === category.slug);
     color: var(--c-text-muted);
   }
 
-  .path__list {
-    display: grid;
-    gap: var(--spacing-2);
-    margin: var(--spacing-3) 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .path__link {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    gap: var(--spacing-3);
-    align-items: start;
-    min-height: 44px;
-    padding: var(--spacing-3) var(--spacing-4);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-md);
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .path__link:hover {
-    background-color: var(--c-surface-raised);
-  }
-
   .path__num {
     font-size: var(--text-xs);
     font-variant-numeric: tabular-nums;
     color: var(--c-text-muted);
-    padding-block-start: 0.2em;
-  }
-
-  .path__body {
-    display: grid;
-    gap: var(--spacing-1);
-  }
-
-  .path__name {
-    font-weight: 600;
-    color: var(--c-text);
-  }
-
-  .path__summary {
-    font-size: var(--text-sm);
-    color: var(--c-text-secondary);
-  }
-
-  .path__time {
-    font-size: var(--text-xs);
-    color: var(--c-text-muted);
-    white-space: nowrap;
-    padding-block-start: 0.2em;
   }
 
   .mini-glossary__hint {
@@ -392,7 +347,7 @@ const hasQuiz = quizzes.some((quiz) => quiz.data.category === category.slug);
 
   .mini-glossary__group {
     border: 1px solid var(--c-border);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
   }
 
   .mini-glossary__group + .mini-glossary__group {
@@ -444,11 +399,9 @@ const hasQuiz = quizzes.some((quiz) => quiz.data.category === category.slug);
     .category__rail {
       order: 0;
       position: sticky;
-      inset-block-start: 5rem;
-      max-height: calc(100vh - 6rem);
+      inset-block-start: var(--spacing-8);
+      max-height: calc(100vh - 4rem);
       overflow-y: auto;
-      padding-block-start: 0;
-      border-top: 0;
     }
   }
 </style>

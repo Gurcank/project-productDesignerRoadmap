@@ -1,32 +1,28 @@
 ---
 /**
- * Thumb-reachable navigation, phone only.
- *
- * The header nav sits at the top of a tall page; on a phone held one-handed the
- * top edge is the hardest place to reach. This is the same destinations moved
- * to where the thumb already is, and it is hidden from ≥48rem where the header
- * nav is fine.
+ * Thumb-reachable navigation below 64rem (phones and tablets): a floating glass
+ * pill at the bottom, where a one-handed thumb already is. From 64rem the left
+ * rail (SiteNav) takes over — the two share one list (~/data/nav).
  */
+import type { NavItem } from "~/data/nav";
+
 interface Props {
+  items: NavItem[];
   section?: string;
 }
 
-const { section } = Astro.props;
-
-const items = [
-  { href: "/", id: "roadmap", label: "Harita", glyph: "M4 6h16M4 12h10M4 18h7" },
-  { href: "/ara/", id: "ara", label: "Ara", glyph: "M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14ZM20 20l-4.2-4.2" },
-  { href: "/sozluk/", id: "sozluk", label: "Sözlük", glyph: "M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4ZM8 8h8M8 12h5" },
-  { href: "/ayarlar/", id: "ayarlar", label: "Ayarlar", glyph: "M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM12 3v3M12 18v3M3 12h3M18 12h3" },
-];
+const { items, section } = Astro.props;
 ---
 
-<nav class="mobile-nav" aria-label="Alt gezinme">
+<nav class="mobile-nav" aria-label="Ana menü">
   {
     items.map((item) => (
-      <a href={item.href} aria-current={section === item.id ? "page" : undefined}>
+      <a
+        href={item.href}
+        aria-current={section === item.id ? "page" : undefined}
+      >
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d={item.glyph} />
+          <path d={item.icon} />
         </svg>
         <span>{item.label}</span>
       </a>
@@ -37,33 +33,56 @@ const items = [
 <style>
   .mobile-nav {
     position: fixed;
-    inset-inline: 0;
-    inset-block-end: 0;
+    inset-inline: var(--spacing-3);
+    inset-block-end: calc(var(--spacing-3) + env(safe-area-inset-bottom, 0px));
     z-index: var(--z-sticky);
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
-    border-top: 1px solid var(--c-border);
-    background-color: color-mix(in oklab, var(--c-surface) 94%, transparent);
-    backdrop-filter: blur(12px);
-    /* Clear the home indicator on phones that have one. */
-    padding-block-end: env(safe-area-inset-bottom, 0px);
+    max-inline-size: 28rem;
+    margin-inline: auto;
+    padding: var(--spacing-1);
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-full);
+    background-color: var(--c-glass-strong);
+    box-shadow: var(--elev-2);
+    -webkit-backdrop-filter: blur(16px) saturate(1.3);
+    backdrop-filter: blur(16px) saturate(1.3);
   }
 
   .mobile-nav a {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 2px;
-    min-height: 56px;
+    min-height: 52px;
+    border-radius: var(--radius-full);
     color: var(--c-text-muted);
     text-decoration: none;
-    font-size: var(--text-xs);
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    transition:
+      color var(--dur) var(--e-out),
+      background-color var(--dur) var(--e-out);
   }
 
+  .mobile-nav a:hover {
+    color: var(--c-text);
+  }
+
+  /* Current page: a lit capsule behind the icon plus the label in full colour —
+     carried by shape and weight, not colour alone. */
   .mobile-nav a[aria-current="page"] {
     color: var(--c-text);
+    font-weight: 600;
+    background-color: color-mix(in oklab, var(--c-action) 16%, transparent);
+  }
+
+  .mobile-nav a[aria-current="page"] svg {
+    stroke: var(--c-action);
   }
 
   .mobile-nav svg {
@@ -76,23 +95,7 @@ const items = [
     stroke-linejoin: round;
   }
 
-  /* The active item gets a mark as well as a colour, so the state is not
-     carried by colour alone. */
-  .mobile-nav a[aria-current="page"]::before {
-    content: "";
-    position: absolute;
-    inset-block-start: 0;
-    inline-size: 28px;
-    block-size: 2px;
-    border-radius: var(--radius-full);
-    background-color: var(--c-action);
-  }
-
-  .mobile-nav a {
-    position: relative;
-  }
-
-  @media (min-width: 48rem) {
+  @media (min-width: 64rem) {
     .mobile-nav {
       display: none;
     }

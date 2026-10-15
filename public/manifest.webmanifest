@@ -7,8 +7,8 @@
   "display": "standalone",
   "lang": "tr",
   "dir": "ltr",
-  "background_color": "#12100e",
-  "theme_color": "#12100e",
+  "background_color": "#080e23",
+  "theme_color": "#080e23",
   "icons": [
     { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
   ]

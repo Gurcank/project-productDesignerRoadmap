@@ -1,0 +1,119 @@
+/*
+ * CSS-drawn celestial bodies (home map, category header). No images: each body
+ * is a disc whose background stacks, top to bottom,
+ *   1. a highlight where the "sun" hits it (upper left),
+ *   2. a terminator shadow sweeping round the lower right,
+ *   3. a surface pattern (bands, craters, swirls…) from its palette,
+ *   4. the base colour.
+ * Palettes (--pa/--pb/--pc) come from tokens.css `[data-body]`.
+ */
+
+.planet-disc {
+  --light: radial-gradient(circle at 32% 26%, var(--c-planet-light), transparent 42%);
+  --shade: radial-gradient(circle at 72% 78%, transparent 38%, var(--c-planet-shadow) 78%);
+  position: relative;
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: var(--pa);
+  background-image: var(--light), var(--shade), var(--surface, none);
+  box-shadow:
+    inset -6px -8px 18px color-mix(in oklab, var(--c-planet-shadow) 45%, transparent),
+    0 0 28px -6px color-mix(in oklab, var(--pa) 55%, transparent);
+}
+
+/* ------------------------------------------------------------- patterns */
+.planet-disc[data-pattern="earth"] {
+  --surface:
+    radial-gradient(ellipse 22% 16% at 50% 6%, var(--pc) 60%, transparent 62%),
+    radial-gradient(ellipse 26% 20% at 30% 40%, var(--pb) 55%, transparent 58%),
+    radial-gradient(ellipse 18% 28% at 62% 58%, var(--pb) 55%, transparent 58%),
+    radial-gradient(ellipse 14% 10% at 78% 32%, var(--pb) 55%, transparent 58%),
+    radial-gradient(ellipse 30% 6% at 40% 70%, color-mix(in oklab, var(--pc) 70%, transparent) 50%, transparent 55%),
+    radial-gradient(ellipse 28% 5% at 66% 22%, color-mix(in oklab, var(--pc) 60%, transparent) 50%, transparent 55%);
+}
+
+.planet-disc[data-pattern="craters"] {
+  --surface:
+    radial-gradient(circle at 62% 38%, var(--pc) 0 7%, transparent 8%),
+    radial-gradient(circle at 34% 62%, var(--pc) 0 10%, transparent 11%),
+    radial-gradient(circle at 70% 70%, var(--pb) 0 5%, transparent 6%),
+    radial-gradient(circle at 44% 30%, var(--pb) 0 4%, transparent 5%),
+    radial-gradient(circle at 24% 42%, var(--pc) 0 4%, transparent 5%),
+    radial-gradient(circle at 52% 80%, var(--pc) 0 3%, transparent 4%),
+    radial-gradient(ellipse 60% 40% at 40% 60%, color-mix(in oklab, var(--pb) 35%, transparent), transparent 70%);
+}
+
+.planet-disc[data-pattern="bands"] {
+  --surface:
+    radial-gradient(ellipse 12% 7% at 64% 62%, color-mix(in oklab, var(--pb) 70%, var(--c-planet-shadow)) 60%, transparent 65%),
+    repeating-linear-gradient(
+      172deg,
+      var(--pa) 0 8%,
+      var(--pb) 8% 13%,
+      var(--pc) 13% 18%,
+      var(--pa) 18% 26%,
+      color-mix(in oklab, var(--pb) 70%, var(--pa)) 26% 31%
+    );
+}
+
+.planet-disc[data-pattern="swirl"] {
+  --surface:
+    radial-gradient(ellipse 70% 22% at 40% 30%, color-mix(in oklab, var(--pb) 70%, transparent), transparent 70%),
+    radial-gradient(ellipse 60% 18% at 60% 62%, color-mix(in oklab, var(--pc) 55%, transparent), transparent 70%),
+    linear-gradient(165deg, var(--pb), var(--pa) 45%, var(--pc));
+}
+
+.planet-disc[data-pattern="veins"] {
+  --surface:
+    repeating-linear-gradient(28deg, transparent 0 17%, color-mix(in oklab, var(--pc) 45%, transparent) 17% 18%),
+    repeating-linear-gradient(-58deg, transparent 0 23%, color-mix(in oklab, var(--pc) 30%, transparent) 23% 24%),
+    linear-gradient(160deg, var(--pb), var(--pa));
+}
+
+.planet-disc[data-pattern="spots"] {
+  --surface:
+    radial-gradient(ellipse 20% 16% at 58% 58%, var(--pb) 55%, transparent 60%),
+    radial-gradient(circle at 30% 40%, var(--pc) 0 8%, transparent 9%),
+    radial-gradient(circle at 68% 30%, var(--pc) 0 5%, transparent 6%),
+    radial-gradient(circle at 40% 76%, var(--pc) 0 6%, transparent 7%),
+    radial-gradient(circle at 76% 72%, var(--pb) 0 4%, transparent 5%);
+}
+
+/* The Sun lights itself: no terminator, a hot core and a corona. */
+.planet-disc[data-pattern="sun"] {
+  background-image:
+    radial-gradient(circle at 42% 38%, var(--pb), transparent 55%),
+    radial-gradient(circle at 50% 50%, var(--pa) 40%, var(--pc));
+  box-shadow:
+    0 0 32px 4px color-mix(in oklab, var(--pa) 55%, transparent),
+    0 0 80px 10px color-mix(in oklab, var(--pc) 30%, transparent);
+}
+
+/* --------------------------------------------------------------- rings */
+/* A tilted ellipse drawn on a wrapper so the disc can stay round and clipped. */
+.planet-rings {
+  position: relative;
+}
+
+.planet-rings::after {
+  content: "";
+  position: absolute;
+  inset-inline: -20%;
+  inset-block: 42%;
+  border-radius: 50%;
+  border: 2px solid color-mix(in oklab, var(--pc) 80%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--pb) 30%, transparent);
+  rotate: -16deg;
+  pointer-events: none;
+}
+
+/* Uranus rolls on its side: a thinner ring, nearly upright. */
+.planet-rings[data-body="uranus"]::after {
+  inset-inline: 40%;
+  inset-block: -10%;
+  border-width: 1.5px;
+  box-shadow: none;
+  rotate: 12deg;
+}

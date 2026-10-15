@@ -1,0 +1,465 @@
+---
+/**
+ * The home page map: the learning route as a small solar system.
+ *
+ * One belt per area (Temel, Ürün ve Ekip, …), each opened by a horizontal rule
+ * carrying the area's name. Inside a belt, every category is a planet that can be
+ * pressed-and-held and dragged — but only within its own belt (galaxy-drag.ts).
+ * A single SVG layer joins the planets in route order and redraws as they move.
+ *
+ * The default layout is plain CSS (wrapping rows, alternate planets dropped a
+ * little lower), so without JavaScript the page is still the full, ordered list
+ * of links; scripting only adds the drag offset, the lines and the progress ring.
+ *
+ * Replaces RoadmapRoute (phones) and RoadmapPath (desktop): one layout that
+ * reflows by column count instead of two schemes swapped by breakpoint.
+ */
+import { AREAS, categoriesOfArea, ROUTE_POSITION } from "~/data/categories";
+import { planetOf } from "~/data/planets";
+
+interface Props {
+  publishedSlugs: Set<string>;
+  topicIdsByCategory: Record<string, string[]>;
+}
+
+const { publishedSlugs, topicIdsByCategory } = Astro.props;
+---
+
+<div class="galaxy" data-galaxy>
+  <svg class="galaxy__links" aria-hidden="true" data-galaxy-links></svg>
+
+  {
+    AREAS.map((area) => {
+      const categories = categoriesOfArea(area.id);
+      if (categories.length === 0) return null;
+      return (
+        <section
+          class="belt"
+          aria-labelledby={`alan-${area.id}`}
+          style={`--area: var(--c-area-${area.id}); --n: ${categories.length}`}
+        >
+          <h2 class="belt__title" id={`alan-${area.id}`}>
+            <span class="belt__label">{area.title}</span>
+          </h2>
+
+          <ol class="belt__field" data-field>
+            {categories.map((category) => {
+              const live = publishedSlugs.has(category.slug);
+              const ids = topicIdsByCategory[category.slug] ?? [];
+              const planet = planetOf(category.slug);
+              const Tag = live ? "a" : "div";
+              return (
+                <li class="orb">
+                  <Tag
+                    class:list={["planet", { "planet--pending": !live }]}
+                    href={live ? `/${category.slug}/` : undefined}
+                    draggable={live ? "false" : undefined}
+                    data-node={category.slug}
+                    data-route={ROUTE_POSITION.get(category.slug)}
+                    data-topic-ids={ids.join(" ")}
+                    title={planet.name}
+                  >
+                    <span class:list={["planet__body", { "planet-rings": planet.ring }]} data-body={planet.body}>
+                      {live && (
+                        <svg class="planet__ring" viewBox="0 0 100 100" aria-hidden="true">
+                          <circle class="planet__ring-track" cx="50" cy="50" r="47" />
+                          {/* pathLength 100: the offset is simply 100 minus percent done. */}
+                          <circle
+                            class="planet__ring-fill"
+                            cx="50"
+                            cy="50"
+                            r="47"
+                            pathLength="100"
+                            stroke-dasharray="100"
+                            stroke-dashoffset="100"
+                            data-ring
+                          />
+                        </svg>
+                      )}
+                      <span class="planet-disc" data-body={planet.body} data-pattern={planet.pattern} aria-hidden="true" />
+                      <span class="planet__name">{category.nodeTitle}</span>
+                      <span class="planet__check" aria-hidden="true">
+                        <svg viewBox="0 0 16 16">
+                          <path d="M3.5 8.5l3 3 6-7" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="sr-only" data-node-sr>
+                      {live ? `, ${ids.length} dersten 0 tamamlandı` : ", hazırlanıyor"}
+                    </span>
+                  </Tag>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      );
+    })
+  }
+</div>
+
+<script>
+  import { initProgress, $progress, summarise } from "~/lib/progress";
+  import { initGalaxyDrag } from "~/lib/galaxy-drag";
+
+  initProgress();
+
+  const root = document.querySelector<HTMLElement>("[data-galaxy]");
+  if (root) {
+    const links = root.querySelector<SVGSVGElement>("[data-galaxy-links]")!;
+    const nodes = Array.from(root.querySelectorAll<HTMLElement>("[data-node]")).sort(
+      (a, b) => Number(a.dataset.route) - Number(b.dataset.route),
+    );
+    const ns = "http://www.w3.org/2000/svg";
+
+    // One path per leg of the route; a leg glows green once its start is done.
+    const paths = nodes.slice(1).map(() => {
+      const path = document.createElementNS(ns, "path");
+      path.setAttribute("class", "galaxy__link");
+      links.appendChild(path);
+      return path;
+    });
+
+    const centre = (node: HTMLElement, origin: DOMRect) => {
+      const body = node.querySelector(".planet-disc")!.getBoundingClientRect();
+      return { x: body.left + body.width / 2 - origin.left, y: body.top + body.height / 2 - origin.top };
+    };
+
+    const draw = () => {
+      const origin = root.getBoundingClientRect();
+      links.setAttribute("viewBox", `0 0 ${origin.width} ${origin.height}`);
+      for (let index = 0; index < paths.length; index++) {
+        const a = centre(nodes[index]!, origin);
+        const b = centre(nodes[index + 1]!, origin);
+        // An S-curve: leaves and arrives horizontally-ish, bends in the middle.
+        const mid = (a.x + b.x) / 2;
+        const bend = Math.abs(b.y - a.y) * 0.35;
+        paths[index]!.setAttribute(
+          "d",
+          `M${a.x},${a.y} C${mid},${a.y + bend} ${mid},${b.y - bend} ${b.x},${b.y}`,
+        );
+      }
+    };
+
+    initGalaxyDrag(root, draw);
+    document.fonts?.ready.then(draw);
+    draw();
+
+    $progress.subscribe((progress) => {
+      nodes.forEach((node, index) => {
+        const ids = (node.dataset.topicIds ?? "").split(" ").filter(Boolean);
+        const summary = summarise(ids, progress);
+        const ring = node.querySelector<SVGCircleElement>("[data-ring]");
+        if (ring) ring.style.strokeDashoffset = String(100 - summary.percent);
+        const complete = summary.total > 0 && summary.done === summary.total;
+        node.classList.toggle("is-complete", complete);
+        node.classList.toggle("is-started", summary.done > 0);
+        const sr = node.querySelector<HTMLElement>("[data-node-sr]");
+        if (sr && summary.total > 0) sr.textContent = `, ${summary.total} dersten ${summary.done} tamamlandı`;
+        paths[index]?.classList.toggle("is-done", complete);
+      });
+    });
+  }
+</script>
+
+<style>
+  .galaxy {
+    --cols: 2;
+    --size: clamp(6.75rem, 30vw, 8.75rem);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+  }
+
+  @media (min-width: 40rem) {
+    .galaxy {
+      --cols: 3;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .galaxy {
+      --cols: 4;
+    }
+  }
+
+  /* ----------------------------------------------------------------- links */
+  .galaxy__links {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .galaxy__links :global(.galaxy__link) {
+    fill: none;
+    stroke: var(--c-route-line);
+    stroke-width: 1.5;
+    stroke-dasharray: 2 7;
+    stroke-linecap: round;
+    opacity: 0.75;
+    transition: stroke var(--dur-slow) var(--e-out);
+  }
+
+  .galaxy__links :global(.galaxy__link.is-done) {
+    stroke: var(--c-progress);
+    stroke-dasharray: none;
+    opacity: 0.6;
+  }
+
+  /* ------------------------------------------------------------------ belt */
+  .belt {
+    position: relative;
+  }
+
+  /* The dividing rule with the area's name sitting on it. */
+  .belt__title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--c-text);
+  }
+
+  .belt__title::before,
+  .belt__title::after {
+    content: "";
+    block-size: 1px;
+    background: linear-gradient(to right, transparent, color-mix(in oklab, var(--area) 55%, transparent));
+  }
+
+  .belt__title::before {
+    flex: 0 0 var(--spacing-6);
+  }
+
+  .belt__title::after {
+    flex: 1 1 auto;
+    background: linear-gradient(to right, color-mix(in oklab, var(--area) 55%, transparent), transparent);
+  }
+
+  .belt__label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-1) var(--spacing-3);
+    border-radius: var(--radius-full);
+    border: 1px solid color-mix(in oklab, var(--area) 45%, transparent);
+    background-color: var(--c-glass-strong);
+  }
+
+  .belt__label::before {
+    content: "";
+    inline-size: 7px;
+    block-size: 7px;
+    border-radius: 50%;
+    background-color: var(--area);
+    box-shadow: 0 0 10px var(--area);
+  }
+
+  /* The belt's field: the box its planets may roam in. */
+  .belt__field {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0;
+    padding: var(--spacing-6) 0 var(--spacing-8);
+    list-style: none;
+  }
+
+  .orb {
+    flex: 0 0 calc(100% / min(var(--cols), var(--n)));
+    display: flex;
+    justify-content: center;
+    padding-block: var(--spacing-3);
+  }
+
+  /* A gentle wave: every other planet sits a little lower. */
+  .orb:nth-child(even) {
+    padding-block-start: var(--spacing-12);
+  }
+
+  /* ---------------------------------------------------------------- planet */
+  .planet {
+    position: relative;
+    z-index: 1;
+    display: block;
+    inline-size: var(--size);
+    border-radius: 50%;
+    color: var(--c-text);
+    text-decoration: none;
+    cursor: grab;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .planet:focus-visible {
+    outline: none;
+  }
+
+  .planet__body {
+    position: relative;
+    display: grid;
+    place-items: center;
+    inline-size: 100%;
+    transition: scale var(--dur-slow) var(--e-spring);
+  }
+
+  .planet:hover .planet__body {
+    scale: 1.05;
+  }
+
+  .planet.is-dragging {
+    z-index: 3;
+    cursor: grabbing;
+  }
+
+  .planet.is-dragging .planet__body {
+    scale: 1.1;
+  }
+
+  .planet.is-dragging .planet-disc {
+    box-shadow:
+      0 0 0 3px color-mix(in oklab, var(--area) 60%, transparent),
+      0 24px 40px -16px var(--c-planet-shadow);
+  }
+
+  /* The name, inside the disc, on dark glass (≥9.7:1 even on the Sun). */
+  .planet__name {
+    position: absolute;
+    inset-inline: 10%;
+    inset-block-end: 16%;
+    z-index: 2;
+    padding: var(--spacing-1) var(--spacing-2);
+    border-radius: var(--radius-md);
+    background-color: var(--c-planet-label);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: center;
+    text-wrap: balance;
+    color: var(--c-text);
+  }
+
+  /* ------------------------------------------------------- progress ring */
+  /* Hidden until hover or focus; on touch screens (no hover) it shows once a
+     category is started. Green arc = share of lessons done. */
+  .planet__ring {
+    position: absolute;
+    inset: -12%;
+    inline-size: 124%;
+    block-size: 124%;
+    opacity: 0;
+    scale: 0.92;
+    transition:
+      opacity var(--dur) var(--e-out),
+      scale var(--dur-slow) var(--e-spring);
+    pointer-events: none;
+  }
+
+  .planet__ring-track {
+    fill: none;
+    stroke: var(--c-control-border);
+    stroke-width: 2.5;
+  }
+
+  .planet__ring-fill {
+    fill: none;
+    stroke: var(--c-progress);
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-box: fill-box;
+    transform-origin: center;
+    filter: drop-shadow(0 0 4px var(--c-progress));
+    transition: stroke-dashoffset var(--dur-slow) var(--e-out);
+  }
+
+  .planet:hover .planet__ring,
+  .planet:focus-visible .planet__ring,
+  .planet.is-dragging .planet__ring {
+    opacity: 1;
+    scale: 1;
+  }
+
+  /* Keyboard focus: the ring is the focus indicator, in the focus colour. */
+  .planet:focus-visible .planet__ring-track {
+    stroke: var(--c-focus);
+  }
+
+  @media (hover: none) {
+    .planet.is-started .planet__ring {
+      opacity: 1;
+      scale: 1;
+    }
+  }
+
+  /* --------------------------------------------------------- completed */
+  /* Done is told by a tick, not by colour alone, plus a soft green halo. */
+  .planet__check {
+    position: absolute;
+    inset-block-start: 4%;
+    inset-inline-end: 4%;
+    z-index: 2;
+    display: none;
+    place-items: center;
+    inline-size: 1.75rem;
+    block-size: 1.75rem;
+    border-radius: 50%;
+    background-color: var(--c-progress);
+    box-shadow: 0 0 0 3px var(--c-surface);
+  }
+
+  .planet__check svg {
+    inline-size: 1rem;
+    block-size: 1rem;
+    fill: none;
+    stroke: var(--c-on-progress);
+    stroke-width: 2.25;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .planet.is-complete .planet__check {
+    display: grid;
+  }
+
+  .planet.is-complete .planet-disc {
+    box-shadow:
+      inset -6px -8px 18px color-mix(in oklab, var(--c-planet-shadow) 45%, transparent),
+      0 0 36px -4px color-mix(in oklab, var(--c-progress) 55%, transparent);
+  }
+
+  .planet--pending {
+    cursor: not-allowed;
+  }
+
+  .planet--pending .planet-disc {
+    filter: grayscale(1) brightness(0.6);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .planet__body,
+    .planet__ring {
+      transition: none;
+    }
+
+    .planet:hover .planet__body {
+      scale: none;
+    }
+  }
+</style>

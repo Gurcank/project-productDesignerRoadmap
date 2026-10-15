@@ -174,14 +174,13 @@ Konudan türetildi: bu bir **başvuru kitabı**, bir SaaS paneli değil.
 
 | Karar | Gerekçe |
 |---|---|
-| Nötrler **sıcak** (hue 75) | Kâğıt hissi, uzun okuma. Soğuk gri panel görünümü verir. |
-| Eylemler **soğuk petrol** (hue 215) | Sıcak zeminin karşı ağırlığı; sakin, teknik. |
-| İlerleme **kehribar** (hue 72–80) | Sitenin kendine özgü işi tek doygun renkle işaretlenir. |
+| Nötrler **mavi-lacivert** (hue 265, koyu tema) ve **krem kâğıt** (hue 92, açık tema) | Saf siyah ve saf beyaz uzun okumada en yorucu zeminlerdir. |
+| Eylemler **ferah teal** (hue 195–210), ilerleme **bal rengi** (hue 88), her alan kendi pastel tonunda | Mavi-lacivert zemin ve krem kâğıt; sıcak ilerleme rengi başarıyı en sıcak şey yapar. Alan tonları yön bulmak içindir, durum taşımaz. |
 
 Elenen alternatifler: mavi-mor + soğuk gri (jenerik panel), siyah + tek asit rengi, krem + serif +
 terakota — son ikisi kullanıcının açık yasak listesinde.
 
-Token'lar iki katman: ham ölçek (`--n-*`, `--petrol-*`, `--amber-*`) → semantik
+Token'lar iki katman: ham ölçek (`--n-*`, `--paper-*`, `--ink-*`, `--teal-*`, `--honey-*`) → semantik
 (`--c-text`, `--c-action`, `--c-progress`, …). **Bileşenler yalnız semantik token kullanır.**
 Detay: [`src/styles/tokens.css`](src/styles/tokens.css).
 

@@ -1,9 +1,13 @@
 @import "tailwindcss";
-@import "@fontsource-variable/ibm-plex-sans/standard.css";
-@import "@fontsource-variable/literata/standard.css";
+/* Variable fonts, latin + latin-ext subsets (Turkish lives in latin-ext: ğ ş ı İ).
+   Each face declares a unicode-range, so a page only downloads what it uses. */
+@import "@fontsource-variable/atkinson-hyperlegible-next/wght.css";
+@import "@fontsource-variable/atkinson-hyperlegible-next/wght-italic.css";
+@import "@fontsource-variable/space-grotesk/wght.css";
 @import "./tokens.css";
 @import "./content.css";
 @import "./lesson.css";
+@import "./planets.css";
 
 /*
  * Tailwind theme (ADR-008). Every default scale is cleared first, so the only
@@ -42,8 +46,11 @@
   --color-current: currentColor;
 
   /* Type: 16px base, 1.25 ratio. Line-height falls as size rises. */
-  --font-sans: "IBM Plex Sans Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Literata Variable", ui-serif, Georgia, serif;
+  /* Body: Atkinson Hyperlegible Next — drawn so that easily confused letters
+     (I l 1, O 0, rn m) never are. Display: Space Grotesk for headings, numbers
+     and navigation — geometric, a little technical, at home in a star map. */
+  --font-sans: "Atkinson Hyperlegible Next Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk Variable", "Atkinson Hyperlegible Next Variable", ui-sans-serif, sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", monospace;
 
   --text-xs: 0.75rem;
@@ -97,14 +104,7 @@
     -webkit-text-size-adjust: 100%;
     font-size: 100%;
     scroll-behavior: smooth;
-    /* Sticky header wraps to two rows on phones, so anchors need more clearance. */
-    scroll-padding-top: 7.5rem;
-  }
-
-  @media (min-width: 48rem) {
-    html {
-      scroll-padding-top: 5rem;
-    }
+    scroll-padding-top: 1.5rem;
   }
 
   /* Reading size (Ayarlar). Everything is in rem, so one number scales the site;
@@ -123,21 +123,31 @@
 
   /* The fixed bottom bar would otherwise cover the last lines of every page. */
   body {
-    padding-block-end: calc(56px + env(safe-area-inset-bottom, 0px));
+    padding-block-end: calc(5.5rem + env(safe-area-inset-bottom, 0px));
   }
 
-  @media (min-width: 48rem) {
+  @media (min-width: 64rem) {
     body {
       padding-block-end: 0;
     }
   }
 
+  /* The night sky: a flat indigo ground with two faint nebula glows, fixed so
+     they stay put while content scrolls over them. Stars are their own layer
+     (Starfield.astro). */
   body {
     background-color: var(--c-surface);
+    background-image:
+      radial-gradient(60rem 40rem at 85% -10%, color-mix(in oklab, var(--c-nebula-1) 38%, transparent), transparent 70%),
+      radial-gradient(50rem 36rem at -10% 60%, color-mix(in oklab, var(--c-nebula-2) 30%, transparent), transparent 70%);
+    background-attachment: fixed;
     color: var(--c-text);
     font-family: var(--font-sans);
-    font-size: var(--text-base);
-    line-height: 1.65;
+    font-size: 1.0625rem;
+    /* Light text on a dark ground looks heavier than it is (irradiation); a hair
+       under 400 reads as regular. Atkinson is variable, so this is exact. */
+    font-weight: 370;
+    line-height: 1.7;
     font-feature-settings: "kern" 1, "liga" 1;
     font-synthesis: none; /* never let the browser fake a weight */
     -webkit-font-smoothing: antialiased;
@@ -147,8 +157,9 @@
   h2,
   h3,
   h4 {
-    font-family: var(--font-serif);
+    font-family: var(--font-display);
     font-weight: 600;
+    letter-spacing: -0.015em;
     text-wrap: balance;
     color: var(--c-text);
   }
@@ -176,7 +187,7 @@
 
   ::selection {
     background-color: var(--c-action-surface);
-    color: var(--n-0);
+    color: var(--c-on-action);
   }
 
   hr {
@@ -207,6 +218,15 @@
 }
 
 @layer components {
+  /* A card that floats over the starfield. */
+  .glass {
+    background-color: var(--c-glass);
+    border: 1px solid var(--c-border);
+    box-shadow: var(--elev-card);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
+  }
+
   /* Visible to screen readers, invisible on screen. */
   .sr-only {
     position: absolute;
@@ -267,7 +287,7 @@
   }
 
   .prose strong {
-    font-weight: 600;
+    font-weight: 650;
     color: var(--c-text);
   }
 

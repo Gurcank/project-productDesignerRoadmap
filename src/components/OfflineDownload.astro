@@ -101,17 +101,19 @@ const { scope, label } = Astro.props;
     align-items: center;
     min-height: 44px;
     padding-inline: var(--spacing-4);
-    border: 1px solid var(--c-control-border);
-    border-radius: var(--radius-md);
-    background: none;
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-full);
+    background-color: color-mix(in oklab, var(--c-text) 4%, transparent);
     color: var(--c-text);
     font: inherit;
     font-size: var(--text-sm);
+    font-weight: 500;
     cursor: pointer;
+    transition: border-color var(--dur) var(--e-out);
   }
 
   .offline-dl__button:hover:not(:disabled) {
-    background-color: var(--c-surface-raised);
+    border-color: var(--c-action);
   }
 
   .offline-dl__button:disabled {

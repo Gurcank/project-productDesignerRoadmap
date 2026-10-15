@@ -1,0 +1,229 @@
+---
+/**
+ * The night sky behind every page — a port of the Framer "NightSkyParticles"
+ * component without React (ADR-003). Same look: white and pale-blue SVG stars,
+ * r 0.5–1.5px, 0.85 lightness, twinkling, drifting with scroll at two depths,
+ * the odd shooting star, a faint haze.
+ *
+ * Built once at build time with a seeded random, so every build draws the same
+ * sky and nothing hydrates. Motion is compositor-only: each twinkle group is its
+ * own <svg> whose *opacity* animates (one layer per group, not one repaint per
+ * star), and parallax is a CSS scroll-driven transform — decorative, so no
+ * fallback: without support the stars simply stay put.
+ */
+
+// mulberry32 — tiny deterministic PRNG.
+function seeded(seed: number) {
+  return () => {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+interface Star {
+  x: number;
+  y: number;
+  r: number;
+  cool: boolean;
+  /** Every other star is dropped on phones, where the sky is smaller. */
+  dense: boolean;
+}
+
+function makeStars(count: number, minR: number, maxR: number, seed: number): Star[] {
+  const rand = seeded(seed);
+  return Array.from({ length: count }, (_, index) => ({
+    x: +(rand() * 100).toFixed(2),
+    y: +(rand() * 100).toFixed(2),
+    r: +(minR + rand() * (maxR - minR)).toFixed(2),
+    cool: rand() < 0.4,
+    dense: index % 2 === 1,
+  }));
+}
+
+// Three twinkle groups per depth; the last group stays still.
+const split = (stars: Star[]) => [0, 1, 2, 3].map((group) => stars.filter((_, index) => index % 4 === group));
+
+const far = split(makeStars(72, 0.5, 1.0, 7));
+const near = split(makeStars(32, 0.9, 1.5, 23));
+---
+
+<div class="sky" aria-hidden="true">
+  {
+    [
+      { name: "far", groups: far },
+      { name: "near", groups: near },
+    ].map((layer) => (
+      <div class={`sky__layer sky__layer--${layer.name}`}>
+        {layer.groups.map((stars, group) => (
+          <svg class={`sky__set sky__set--${group}`} width="100%" height="100%">
+            {stars.map((star) => (
+              <circle
+                class:list={[star.cool ? "cool" : "warm", { dense: star.dense }]}
+                cx={`${star.x}%`}
+                cy={`${star.y}%`}
+                r={star.r}
+              />
+            ))}
+          </svg>
+        ))}
+      </div>
+    ))
+  }
+  <span class="sky__meteor sky__meteor--1"></span>
+  <span class="sky__meteor sky__meteor--2"></span>
+</div>
+
+<style>
+  .sky {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  /* Taller than the viewport so the drift never uncovers an empty band. */
+  .sky__layer {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+    block-size: 130vh;
+  }
+
+  .sky__layer--near {
+    block-size: 150vh;
+  }
+
+  .sky__set {
+    position: absolute;
+    inset: 0;
+  }
+
+  .sky__set circle {
+    fill-opacity: 0.85;
+  }
+
+  .warm {
+    fill: var(--c-star);
+  }
+
+  .cool {
+    fill: var(--c-star-cool);
+  }
+
+  /* Twinkle: the whole group fades together, offset per group, so it reads as
+     scattered stars catching the light at different moments. */
+  @keyframes twinkle {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  .sky__set--0 {
+    animation: twinkle 3.2s ease-in-out infinite;
+  }
+
+  .sky__set--1 {
+    animation: twinkle 4.1s ease-in-out -1.3s infinite;
+  }
+
+  .sky__set--2 {
+    animation: twinkle 2.6s ease-in-out -0.7s infinite;
+  }
+
+  /* Parallax with the page's scroll: far stars drift less than near ones. */
+  @keyframes drift-far {
+    to {
+      transform: translateY(-30vh);
+    }
+  }
+
+  @keyframes drift-near {
+    to {
+      transform: translateY(-50vh);
+    }
+  }
+
+  @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+    .sky__layer--far {
+      animation: drift-far linear both;
+      animation-timeline: scroll(root block);
+    }
+
+    .sky__layer--near {
+      animation: drift-near linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+
+  /* Shooting stars: a short streak that crosses in the first few percent of a
+     long cycle, then waits off-screen. */
+  .sky__meteor {
+    position: absolute;
+    inline-size: 9rem;
+    block-size: 2px;
+    border-radius: 2px;
+    background: linear-gradient(to left, var(--c-meteor), transparent);
+    opacity: 0;
+    filter: blur(0.5px);
+    rotate: -32deg;
+  }
+
+  .sky__meteor--1 {
+    inset-block-start: 12%;
+    inset-inline-start: 70%;
+    animation: meteor 17s linear 4s infinite;
+  }
+
+  .sky__meteor--2 {
+    inset-block-start: 4%;
+    inset-inline-start: 35%;
+    animation: meteor 29s linear 13s infinite;
+  }
+
+  @keyframes meteor {
+    0% {
+      opacity: 0;
+      translate: 0 0;
+    }
+    1% {
+      opacity: 0.7;
+    }
+    5% {
+      opacity: 0;
+      translate: -26rem 16rem;
+    }
+    100% {
+      opacity: 0;
+      translate: -26rem 16rem;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .dense {
+      display: none;
+    }
+  }
+
+  /* Still sky: reduced motion, or switched off in Ayarlar. */
+  @media (prefers-reduced-motion: reduce) {
+    .sky__set,
+    .sky__layer,
+    .sky__meteor {
+      animation: none !important;
+    }
+  }
+
+  :global(html[data-stars="off"]) .sky__set,
+  :global(html[data-stars="off"]) .sky__layer,
+  :global(html[data-stars="off"]) .sky__meteor {
+    animation: none;
+  }
+</style>

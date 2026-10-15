@@ -60,12 +60,12 @@ unified({...})` kullanılıyor. Nedeni ve ödünleşimi ADR-010'da.
 ## Stil ve bileşen kuralları
 
 - **Bileşenler yalnız semantik token kullanır** (`--c-text`, `--c-action`, `--c-progress`, …). Ham
-  ölçek (`--n-*`, `--petrol-*`, `--amber-*`) **sadece** `tokens.css` içinde geçer.
+  ölçek (`--space-*`, `--star-*`, `--nebula-*`, `--aurora-*`, `--gold-*`) **sadece** `tokens.css` içinde geçer.
 - **Kontrol kenarlığı ayrı bir token.** Boş bir onay kutusu *yalnızca* kenarlığından ibarettir, bu
   yüzden 3:1 kuralına tabidir → `--c-control-border`. Dekoratif kenarlıklar (`--c-border`,
   `--c-border-strong`) bu kurala tabi değil; ikisini karıştırma.
-- **Dolu buton yüzeyi temaya göre ters yönde kayar.** Koyu temada etiket koyu olduğu için dolgu
-  açılır (`petrol-500`), açık temada etiket açık olduğu için dolgu koyulaşır (`petrol-700`).
+- **Tek tema: gece gökyüzü.** Açık tema yok. Yıldızların üstündeki kartlar `--c-glass` (yarı saydam +
+  blur), ders metni `--c-surface-reading` (neredeyse opak) üzerinde durur; arkasında yıldız kıpırdamaz.
 - **Tamamlandı durumu asla yalnız renkle taşınmaz** — tik + soluk metin birlikte.
 - Tek başına duran navigasyon bağlantıları ≥24px yüksekliğinde (SC 2.5.8). Cümle içindeki
   bağlantılar standardın "inline" istisnasına girer, onlara dokunma.

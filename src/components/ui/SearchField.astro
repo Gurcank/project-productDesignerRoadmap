@@ -1,0 +1,153 @@
+---
+/**
+ * The site's search box (Sözlük, Ara): a magnifying glass inside the field, a
+ * clear button that appears once there is text, and room on the right for a
+ * live count. The label is visually hidden — the icon and placeholder carry it
+ * on screen, the label carries it for assistive tech.
+ *
+ * Clearing dispatches an `input` event, so pages listen to one event only.
+ */
+interface Props {
+  id: string;
+  label: string;
+  placeholder: string;
+  name?: string;
+  autofocus?: boolean;
+  attrs?: Record<string, unknown>;
+}
+
+const { id, label, placeholder, name, autofocus = false, attrs = {} } = Astro.props;
+---
+
+<div class="search-field" data-search-field>
+  <label class="sr-only" for={id}>{label}</label>
+  <svg class="search-field__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M10.5 4a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM20 20l-4.6-4.6" />
+  </svg>
+  <input
+    id={id}
+    name={name}
+    type="search"
+    class="search-field__input"
+    placeholder={placeholder}
+    autocomplete="off"
+    spellcheck="false"
+    enterkeyhint="search"
+    autofocus={autofocus}
+    {...attrs}
+  />
+  <slot />
+  <button type="button" class="search-field__clear" aria-label="Aramayı temizle" hidden data-search-clear>
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 7l10 10M17 7 7 17" /></svg>
+  </button>
+</div>
+
+<script>
+  for (const field of document.querySelectorAll<HTMLElement>("[data-search-field]")) {
+    const input = field.querySelector<HTMLInputElement>("input")!;
+    const clear = field.querySelector<HTMLButtonElement>("[data-search-clear]")!;
+    const sync = () => (clear.hidden = input.value === "");
+    input.addEventListener("input", sync);
+    clear.addEventListener("click", () => {
+      input.value = "";
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+      input.focus();
+    });
+    sync();
+  }
+</script>
+
+<style is:global>
+  .search-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    min-block-size: 56px;
+    padding-inline: var(--spacing-4) var(--spacing-2);
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-full);
+    background-color: var(--c-glass-strong);
+    box-shadow: var(--elev-card);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    transition:
+      border-color var(--dur) var(--e-out),
+      box-shadow var(--dur) var(--e-out);
+  }
+
+  .search-field:focus-within {
+    border-color: var(--c-action);
+    box-shadow:
+      var(--elev-card),
+      0 0 0 4px color-mix(in oklab, var(--c-action) 22%, transparent);
+  }
+
+  .search-field__icon {
+    flex: none;
+    inline-size: 22px;
+    block-size: 22px;
+    fill: none;
+    stroke: var(--c-text-muted);
+    stroke-width: 1.9;
+    stroke-linecap: round;
+  }
+
+  .search-field:focus-within .search-field__icon {
+    stroke: var(--c-action);
+  }
+
+  .search-field__input {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    block-size: 100%;
+    min-block-size: 52px;
+    border: 0;
+    background: none;
+    color: var(--c-text);
+    font: inherit;
+    font-size: var(--text-base);
+    outline: none;
+  }
+
+  .search-field__input::placeholder {
+    color: var(--c-text-muted);
+  }
+
+  /* The browser's own clear cross would sit next to ours. */
+  .search-field__input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .search-field__clear {
+    flex: none;
+    display: grid;
+    place-items: center;
+    inline-size: 40px;
+    block-size: 40px;
+    border: 0;
+    border-radius: var(--radius-full);
+    background-color: color-mix(in oklab, var(--c-text) 8%, transparent);
+    color: var(--c-text-secondary);
+    cursor: pointer;
+  }
+
+  .search-field__clear[hidden] {
+    display: none;
+  }
+
+  .search-field__clear:hover {
+    color: var(--c-text);
+    background-color: color-mix(in oklab, var(--c-text) 14%, transparent);
+  }
+
+  .search-field__clear svg {
+    inline-size: 18px;
+    block-size: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+</style>

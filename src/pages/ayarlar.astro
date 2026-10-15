@@ -1,119 +1,141 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import OfflineDownload from "~/components/OfflineDownload.astro";
+import { getPublishedCategories } from "~/lib/content";
+
+const published = await getPublishedCategories();
+const totalTopics = published.reduce((sum, entry) => sum + entry.topics.length, 0);
+
+const SIZES = [
+  { id: "sm", label: "Küçük" },
+  { id: "md", label: "Normal" },
+  { id: "lg", label: "Büyük" },
+  { id: "xl", label: "Çok büyük" },
+];
 ---
 
-<BaseLayout
-  title="Ayarlar"
-  description="İlerlemeni yedekle, geri yükle veya sıfırla."
-  section="ayarlar"
->
+<BaseLayout title="Ayarlar" description="Görünüm, çevrimdışı kullanım ve ilerleme yedeği." section="ayarlar">
   <div class="settings">
     <header class="settings__head">
       <h1>Ayarlar</h1>
-      <p class="settings__lead">
-        İlerlemen yalnızca bu tarayıcıda, <code>localStorage</code> içinde saklanıyor. Hesap yok, sunucu yok — ama
-        bunun bir bedeli var.
-      </p>
+      <p class="settings__lead">İlerlemen yalnızca bu cihazda saklanır. Arada bir yedek al.</p>
     </header>
-
-    {/* The plan calls this a known cost of the chosen approach; it belongs where
-        the user can act on it, not in a document they will not open. */}
-    <aside class="warning">
-      <h2 class="warning__title">Yedek almazsan ilerleme kaybolur</h2>
-      <p>
-        Tarayıcı verilerini temizlersen, gizli sekmede çalışırsan veya başka bir cihaza geçersen ilerlemen gelmez.
-        Aşağıdaki JSON tek yedeğin.
-      </p>
-    </aside>
 
     <p class="storage-error" role="alert" data-storage-error hidden></p>
 
-    <section class="block" aria-labelledby="yazi">
-      <h2 id="yazi" class="block__title">Yazı boyutu</h2>
-      <p class="block__hint">Telefonda ya da hareket hâlinde okurken büyüt. Tüm site aynı oranda ölçeklenir.</p>
+    <div class="cards">
+      {/* ------------------------------------------------------- progress */}
+      <section class="card card--wide glass" aria-labelledby="ilerleme">
+        <div class="progress">
+          <div class="progress__gauge" aria-hidden="true">
+            <svg viewBox="0 0 120 120">
+              <circle class="progress__track" cx="60" cy="60" r="52" />
+              <circle
+                class="progress__fill"
+                cx="60"
+                cy="60"
+                r="52"
+                pathLength="100"
+                stroke-dasharray="100"
+                stroke-dashoffset="100"
+                data-stat-ring
+              />
+            </svg>
+            <span class="progress__percent"><span data-stat-percent>0</span><small>%</small></span>
+          </div>
 
-      <div class="actions" role="group" aria-label="Yazı boyutu">
-        <button type="button" class="button" data-text-size="sm" aria-pressed="false">Küçük</button>
-        <button type="button" class="button" data-text-size="md" aria-pressed="false">Normal</button>
-        <button type="button" class="button" data-text-size="lg" aria-pressed="false">Büyük</button>
-        <button type="button" class="button" data-text-size="xl" aria-pressed="false">Çok büyük</button>
-      </div>
-    </section>
-
-    <section class="block" aria-labelledby="cevrimdisi">
-      <h2 id="cevrimdisi" class="block__title">Çevrimdışı</h2>
-      <p class="block__hint">
-        Tüm dersleri, sözlüğü ve aramayı cihazına indir; internet olmadan da açılır. Yeni dersler eklenince
-        buradan güncelle.
-      </p>
-      <OfflineDownload scope="all" label="Tüm siteyi indir" />
-    </section>
-
-    <section class="block" aria-labelledby="ozet">
-      <h2 id="ozet" class="block__title">Durum</h2>
-      <dl class="stats">
-        <div>
-          <dt>Tamamlanan adım</dt>
-          <dd data-stat-done>—</dd>
+          <div class="progress__body">
+            <h2 id="ilerleme" class="card__title">İlerleme</h2>
+            <dl class="stats" data-total={totalTopics}>
+              <div>
+                <dt>Tamamlanan ders</dt>
+                <dd><span data-stat-done>0</span> / {totalTopics}</dd>
+              </div>
+              <div>
+                <dt>İşaretli madde</dt>
+                <dd data-stat-checklists>0</dd>
+              </div>
+              <div>
+                <dt>Son güncelleme</dt>
+                <dd data-stat-updated>—</dd>
+              </div>
+            </dl>
+          </div>
         </div>
-        <div>
-          <dt>İşaretli liste maddesi</dt>
-          <dd data-stat-checklists>—</dd>
+
+        <div class="actions">
+          <a class="button button--primary" download="pdr-ilerleme.json" data-download>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" /></svg>
+            Yedeği indir
+          </a>
+          <label class="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V9M7 14l5-5 5 5M5 4h14" /></svg>
+            Yedekten yükle
+            <input class="sr-only" type="file" accept="application/json,.json" data-import-file />
+          </label>
+          <button type="button" class="button" data-copy>Kopyala</button>
+          <span class="actions__status" role="status" data-copy-status></span>
         </div>
-        <div>
-          <dt>Son güncelleme</dt>
-          <dd data-stat-updated>—</dd>
+        <p class="actions__status" role="status" data-import-status></p>
+
+        <details class="advanced">
+          <summary>Gelişmiş: yedeği metin olarak gör veya yapıştır</summary>
+          <label class="field-label" for="export-json">Mevcut yedek</label>
+          <textarea id="export-json" class="json" rows="5" readonly data-export></textarea>
+          <label class="field-label" for="import-json">Yedek metnini yapıştır</label>
+          <textarea id="import-json" class="json" rows="5" placeholder="{ &quot;version&quot;: 1, … }" data-import-text
+          ></textarea>
+          <div class="actions">
+            <button type="button" class="button" data-import>Bu metni içe aktar</button>
+          </div>
+        </details>
+      </section>
+
+      {/* ----------------------------------------------------- appearance */}
+      <section class="card glass" aria-labelledby="gorunum">
+        <h2 id="gorunum" class="card__title">Görünüm</h2>
+
+        <p class="setting__label" id="yazi-boyutu">Yazı boyutu</p>
+        <div class="segmented" role="group" aria-labelledby="yazi-boyutu">
+          {
+            SIZES.map((size) => (
+              <button type="button" data-text-size={size.id} aria-pressed="false">
+                {size.label}
+              </button>
+            ))
+          }
         </div>
-      </dl>
-    </section>
 
-    <section class="block" aria-labelledby="disa-aktar">
-      <h2 id="disa-aktar" class="block__title">Dışa aktar</h2>
-      <p class="block__hint">
-        Aşağıdaki metni kopyala ya da dosya olarak indir. Geri yüklemek için tek ihtiyacın olan bu.
-      </p>
+        <div class="setting__row">
+          <div>
+            <p class="setting__label" id="yildiz">Yıldız animasyonu</p>
+            <p class="setting__hint">Parlayan ve kayan yıldızlar</p>
+          </div>
+          <button type="button" class="switch" role="switch" aria-checked="true" aria-labelledby="yildiz" data-stars-switch>
+            <span class="switch__thumb"></span>
+          </button>
+        </div>
+      </section>
 
-      <label class="sr-only" for="export-json">Yedek JSON</label>
-      <textarea id="export-json" class="json" rows="6" readonly data-export></textarea>
+      {/* -------------------------------------------------------- offline */}
+      <section class="card glass" aria-labelledby="cevrimdisi">
+        <h2 id="cevrimdisi" class="card__title">Çevrimdışı</h2>
+        <p class="setting__hint">Tüm dersleri, sözlüğü ve aramayı indir; internet olmadan açılır.</p>
+        <div class="offline">
+          <OfflineDownload scope="all" label="Tüm siteyi indir" />
+        </div>
+      </section>
 
-      <div class="actions">
-        <button type="button" class="button" data-copy>Kopyala</button>
-        <a class="button" download="pdr-ilerleme.json" data-download>Dosya olarak indir</a>
-        <span class="actions__status" role="status" data-copy-status></span>
-      </div>
-    </section>
-
-    <section class="block" aria-labelledby="ice-aktar">
-      <h2 id="ice-aktar" class="block__title">İçe aktar</h2>
-      <p class="block__hint">
-        Yedek dosyasını seç ya da JSON'u buraya yapıştır. Geçerliyse mevcut ilerlemenin yerine geçer.
-      </p>
-
-      <label class="file">
-        <span class="file__label">Dosya seç</span>
-        <input type="file" accept="application/json,.json" data-import-file />
-      </label>
-
-      <label class="sr-only" for="import-json">Geri yüklenecek JSON</label>
-      <textarea id="import-json" class="json" rows="6" placeholder="{ &quot;version&quot;: 1, … }" data-import-text
-      ></textarea>
-
-      <div class="actions">
-        <button type="button" class="button button--primary" data-import>İçe aktar</button>
-        <span class="actions__status" role="status" data-import-status></span>
-      </div>
-    </section>
-
-    <section class="block block--danger" aria-labelledby="sifirla">
-      <h2 id="sifirla" class="block__title">Sıfırla</h2>
-      <p class="block__hint">Tüm tikleri ve liste işaretlerini siler. Geri alınamaz — önce yedek al.</p>
-
-      <div class="actions">
-        <button type="button" class="button button--danger" data-reset>İlerlemeyi sıfırla</button>
-        <span class="actions__status" role="status" data-reset-status></span>
-      </div>
-    </section>
+      {/* --------------------------------------------------------- danger */}
+      <details class="card card--wide danger">
+        <summary class="danger__summary">İlerlemeyi sıfırla</summary>
+        <p class="setting__hint">Tüm tikleri ve liste işaretlerini siler. Geri alınamaz — önce yedeği indir.</p>
+        <div class="actions">
+          <button type="button" class="button button--danger" data-reset>Her şeyi sil</button>
+          <span class="actions__status" role="status" data-reset-status></span>
+        </div>
+      </details>
+    </div>
   </div>
 </BaseLayout>
 
@@ -127,8 +149,14 @@ import OfflineDownload from "~/components/OfflineDownload.astro";
   const importText = document.querySelector<HTMLTextAreaElement>("[data-import-text]");
   const importFile = document.querySelector<HTMLInputElement>("[data-import-file]");
   const errorBox = document.querySelector<HTMLElement>("[data-storage-error]");
+  const ring = document.querySelector<SVGCircleElement>("[data-stat-ring]");
+  const total = Number(document.querySelector<HTMLElement>("[data-total]")?.dataset.total ?? 0);
 
   const statusOf = (name: string) => document.querySelector<HTMLElement>(`[data-${name}-status]`);
+  const set = (name: string, value: string) => {
+    const element = document.querySelector<HTMLElement>(`[data-stat-${name}]`);
+    if (element) element.textContent = value;
+  };
 
   let objectUrl: string | null = null;
 
@@ -145,18 +173,13 @@ import OfflineDownload from "~/components/OfflineDownload.astro";
 
     const done = Object.values(progress.topics).filter((topic) => topic.done).length;
     const checked = Object.values(progress.checklists).filter(Boolean).length;
-
-    const set = (name: string, value: string) => {
-      const element = document.querySelector<HTMLElement>(`[data-stat-${name}]`);
-      if (element) element.textContent = value;
-    };
+    const percent = total > 0 ? Math.min(100, Math.round((done / total) * 100)) : 0;
 
     set("done", String(done));
+    set("percent", String(percent));
     set("checklists", String(checked));
-    set(
-      "updated",
-      progress.updatedAt ? new Date(progress.updatedAt).toLocaleString("tr-TR") : "henüz kayıt yok",
-    );
+    set("updated", progress.updatedAt ? new Date(progress.updatedAt).toLocaleDateString("tr-TR") : "—");
+    if (ring) ring.style.strokeDashoffset = String(100 - percent);
   });
 
   $storageError.subscribe((message) => {
@@ -171,30 +194,37 @@ import OfflineDownload from "~/components/OfflineDownload.astro";
       await navigator.clipboard.writeText(exportArea?.value ?? "");
       if (status) status.textContent = "Kopyalandı.";
     } catch {
-      // Clipboard access can be refused; the textarea is still selectable.
-      exportArea?.select();
-      if (status) status.textContent = "Kopyalanamadı — metin seçildi, Ctrl+C ile kopyala.";
+      // Clipboard access can be refused; the text is still in "Gelişmiş".
+      if (status) status.textContent = "Kopyalanamadı — Gelişmiş bölümünden seçip kopyala.";
     }
   });
 
+  const restore = (text: string, source: string) => {
+    const status = statusOf("import");
+    if (!confirm("Yedek, bu cihazdaki ilerlemenin yerine geçecek. Devam edilsin mi?")) {
+      if (status) status.textContent = "İptal edildi.";
+      return;
+    }
+    const error = importJson(text);
+    if (status) status.textContent = error ?? `${source} geri yüklendi.`;
+  };
+
+  // Choosing a file restores it straight away (after one confirmation).
   importFile?.addEventListener("change", async () => {
     const file = importFile.files?.[0];
-    if (!file || !importText) return;
-    importText.value = await file.text();
-    const status = statusOf("import");
-    if (status) status.textContent = `${file.name} okundu. "İçe aktar"a bas.`;
+    if (!file) return;
+    restore(await file.text(), file.name);
+    importFile.value = "";
   });
 
   document.querySelector("[data-import]")?.addEventListener("click", () => {
-    const status = statusOf("import");
     const text = importText?.value.trim();
+    const status = statusOf("import");
     if (!text) {
-      if (status) status.textContent = "Önce bir yedek yapıştır veya dosya seç.";
+      if (status) status.textContent = "Önce bir yedek metni yapıştır.";
       return;
     }
-
-    const error = importJson(text);
-    if (status) status.textContent = error ?? "İlerleme geri yüklendi.";
+    restore(text, "Yedek");
   });
 
   // Reading size: the same key the inline script in BaseLayout reads before first paint.
@@ -219,6 +249,23 @@ import OfflineDownload from "~/components/OfflineDownload.astro";
   }
   paintSize();
 
+  // Star motion: the same key BaseLayout reads before first paint.
+  const starSwitch = document.querySelector<HTMLButtonElement>("[data-stars-switch]");
+  const paintStars = () => starSwitch?.setAttribute("aria-checked", String(document.documentElement.dataset.stars !== "off"));
+  starSwitch?.addEventListener("click", () => {
+    const off = document.documentElement.dataset.stars !== "off";
+    if (off) document.documentElement.dataset.stars = "off";
+    else delete document.documentElement.dataset.stars;
+    try {
+      if (off) localStorage.setItem("pdr.stars", "off");
+      else localStorage.removeItem("pdr.stars");
+    } catch {
+      // Private mode: the choice still applies for this visit.
+    }
+    paintStars();
+  });
+  paintStars();
+
   document.querySelector("[data-reset]")?.addEventListener("click", () => {
     const status = statusOf("reset");
     if (!confirm("Tüm ilerleme silinecek. Yedek aldın mı?")) {
@@ -232,117 +279,138 @@ import OfflineDownload from "~/components/OfflineDownload.astro";
 
 <style>
   .settings {
-    max-width: 48rem;
+    max-width: 56rem;
     margin-inline: auto;
     padding: var(--spacing-12) var(--spacing-4) var(--spacing-16);
   }
 
   .settings__head h1 {
-    font-size: var(--text-3xl);
-    letter-spacing: -0.02em;
+    font-size: var(--text-4xl);
+    letter-spacing: -0.03em;
   }
 
   .settings__lead {
-    margin-block-start: var(--spacing-3);
-    color: var(--c-text-secondary);
-  }
-
-  .warning {
-    margin-block-start: var(--spacing-6);
-    padding: var(--spacing-4);
-    border: 1px solid var(--c-progress);
-    border-radius: var(--radius-md);
-    background-color: var(--c-surface-raised);
-  }
-
-  .warning__title {
-    font-family: var(--font-sans);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--c-progress-text);
-  }
-
-  .warning p {
     margin-block-start: var(--spacing-2);
     color: var(--c-text-secondary);
-    font-size: var(--text-sm);
   }
 
   .storage-error {
     margin-block-start: var(--spacing-4);
-    padding: var(--spacing-3);
+    padding: var(--spacing-3) var(--spacing-4);
     border: 1px solid var(--c-danger);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     color: var(--c-danger);
     font-size: var(--text-sm);
   }
 
-  .block {
-    margin-block-start: var(--spacing-12);
+  .storage-error[hidden] {
+    display: none;
   }
 
-  .block__title {
+  /* ----------------------------------------------------------------- cards */
+  .cards {
+    display: grid;
+    gap: var(--spacing-4);
+    margin-block-start: var(--spacing-8);
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    padding: var(--spacing-6);
+    border-radius: 1.25rem;
+  }
+
+  .card__title {
     font-size: var(--text-lg);
   }
 
-  .block__hint {
-    margin-block-start: var(--spacing-2);
-    color: var(--c-text-secondary);
-    font-size: var(--text-sm);
+  /* -------------------------------------------------------------- progress */
+  .progress {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-6);
+  }
+
+  .progress__gauge {
+    position: relative;
+    flex: none;
+    inline-size: 6.5rem;
+    block-size: 6.5rem;
+  }
+
+  .progress__gauge svg {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .progress__track {
+    fill: none;
+    stroke: var(--c-control-border);
+    stroke-width: 7;
+    opacity: 0.5;
+  }
+
+  .progress__fill {
+    fill: none;
+    stroke: var(--c-progress);
+    stroke-width: 8;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: stroke-dashoffset var(--dur-slow) var(--e-out);
+  }
+
+  .progress__percent {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    grid-auto-flow: column;
+    align-items: baseline;
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .progress__percent small {
+    font-size: 0.5em;
+    color: var(--c-text-muted);
+  }
+
+  .progress__body {
+    min-width: 0;
+    flex: 1 1 auto;
   }
 
   .stats {
     display: grid;
-    gap: var(--spacing-4);
-    margin-block-start: var(--spacing-4);
+    gap: var(--spacing-3);
+    margin-block-start: var(--spacing-3);
   }
 
   .stats dt {
     font-size: var(--text-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
     color: var(--c-text-muted);
   }
 
   .stats dd {
     margin: 0;
-    font-size: var(--text-lg);
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 600;
     font-variant-numeric: tabular-nums;
   }
 
-  .json {
-    inline-size: 100%;
-    margin-block-start: var(--spacing-3);
-    padding: var(--spacing-3);
-    border: 1px solid var(--c-control-border);
-    border-radius: var(--radius-md);
-    background-color: var(--c-surface-sunken);
-    color: var(--c-text-secondary);
-    font-family: var(--font-mono, monospace);
-    font-size: var(--text-xs);
-    line-height: 1.6;
-    resize: vertical;
-  }
-
-  .file {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--spacing-3);
-    margin-block-start: var(--spacing-3);
-  }
-
-  .file__label {
-    font-size: var(--text-sm);
-    color: var(--c-text-secondary);
-  }
-
+  /* --------------------------------------------------------------- buttons */
   .actions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--spacing-3);
-    margin-block-start: var(--spacing-3);
+    gap: var(--spacing-2);
   }
 
   .actions__status {
@@ -350,28 +418,48 @@ import OfflineDownload from "~/components/OfflineDownload.astro";
     color: var(--c-text-muted);
   }
 
+  .actions__status:empty {
+    display: none;
+  }
+
   .button {
     display: inline-flex;
     align-items: center;
+    gap: var(--spacing-2);
     min-height: 44px;
     padding-inline: var(--spacing-4);
-    border: 1px solid var(--c-control-border);
-    border-radius: var(--radius-md);
-    background: none;
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-full);
+    background-color: color-mix(in oklab, var(--c-text) 4%, transparent);
     color: var(--c-text);
     font: inherit;
     font-size: var(--text-sm);
+    font-weight: 500;
     text-decoration: none;
     cursor: pointer;
-  }
-
-  .button[aria-pressed="true"] {
-    border-color: var(--c-action);
-    background-color: var(--c-surface-raised);
+    transition:
+      border-color var(--dur) var(--e-out),
+      background-color var(--dur) var(--e-out);
   }
 
   .button:hover {
-    background-color: var(--c-surface-raised);
+    border-color: var(--c-action);
+    color: var(--c-text);
+  }
+
+  .button:has(input:focus-visible) {
+    outline: 2px solid var(--c-focus);
+    outline-offset: 2px;
+  }
+
+  .button svg {
+    inline-size: 18px;
+    block-size: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   .button--primary {
@@ -381,7 +469,8 @@ import OfflineDownload from "~/components/OfflineDownload.astro";
   }
 
   .button--primary:hover {
-    background-color: var(--c-action);
+    background-color: var(--c-action-hover);
+    color: var(--c-on-action);
   }
 
   .button--danger {
@@ -389,13 +478,161 @@ import OfflineDownload from "~/components/OfflineDownload.astro";
     color: var(--c-danger);
   }
 
-  .block--danger .block__title {
+  /* -------------------------------------------------------------- advanced */
+  .advanced summary,
+  .danger__summary {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    cursor: pointer;
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .advanced[open] summary {
+    margin-block-end: var(--spacing-2);
+  }
+
+  .field-label {
+    display: block;
+    margin-block: var(--spacing-3) var(--spacing-1);
+    font-size: var(--text-xs);
+    color: var(--c-text-muted);
+  }
+
+  .json {
+    inline-size: 100%;
+    padding: var(--spacing-3);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-sunken);
+    color: var(--c-text-secondary);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: 1.6;
+    resize: vertical;
+  }
+
+  /* ------------------------------------------------------------ appearance */
+  .setting__label {
+    font-weight: 600;
+  }
+
+  .setting__hint {
+    font-size: var(--text-sm);
+    color: var(--c-text-muted);
+  }
+
+  .segmented {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--spacing-1);
+    margin-block-start: calc(var(--spacing-2) * -1);
+    padding: var(--spacing-1);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-full);
+    background-color: var(--c-surface-sunken);
+  }
+
+  .segmented button {
+    min-height: 40px;
+    padding-inline: var(--spacing-1);
+    white-space: nowrap;
+    border: 0;
+    border-radius: var(--radius-full);
+    background: none;
+    color: var(--c-text-secondary);
+    font: inherit;
+    font-size: var(--text-xs);
+    cursor: pointer;
+  }
+
+  /* Selected: a lifted capsule and bold text, not colour alone. */
+  .segmented button[aria-pressed="true"] {
+    background-color: var(--c-surface-overlay);
+    color: var(--c-text);
+    font-weight: 600;
+    box-shadow: var(--elev-1), 0 0 0 1px var(--c-border-strong);
+  }
+
+  .setting__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-4);
+    padding-block-start: var(--spacing-4);
+    border-top: 1px solid var(--c-border);
+  }
+
+  /* On/off switch: the thumb's position carries the state; the track colour
+     only repeats it. */
+  .switch {
+    position: relative;
+    flex: none;
+    inline-size: 52px;
+    block-size: 32px;
+    padding: 0;
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-full);
+    background-color: var(--c-surface-sunken);
+    cursor: pointer;
+    transition: background-color var(--dur) var(--e-out);
+  }
+
+  .switch__thumb {
+    position: absolute;
+    inset-block-start: 3px;
+    inset-inline-start: 3px;
+    inline-size: 24px;
+    block-size: 24px;
+    border-radius: 50%;
+    background-color: var(--c-text-secondary);
+    transition:
+      translate var(--dur-slow) var(--e-spring),
+      background-color var(--dur) var(--e-out);
+  }
+
+  .switch[aria-checked="true"] {
+    border-color: var(--c-progress);
+    background-color: color-mix(in oklab, var(--c-progress) 30%, var(--c-surface-sunken));
+  }
+
+  .switch[aria-checked="true"] .switch__thumb {
+    translate: 20px 0;
+    background-color: var(--c-progress);
+  }
+
+  .offline {
+    margin-block-start: auto;
+  }
+
+  /* ---------------------------------------------------------------- danger */
+  .danger {
+    padding-block: var(--spacing-2);
+    border: 1px dashed color-mix(in oklab, var(--c-danger) 50%, transparent);
+    gap: var(--spacing-3);
+  }
+
+  .danger[open] {
+    padding-block-end: var(--spacing-6);
+  }
+
+  .danger__summary {
     color: var(--c-danger);
+    font-weight: 600;
   }
 
   @media (min-width: 48rem) {
     .settings {
       padding-inline: var(--spacing-6);
+    }
+
+    .cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card--wide {
+      grid-column: 1 / -1;
     }
 
     .stats {

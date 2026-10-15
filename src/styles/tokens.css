@@ -6,47 +6,56 @@
  *
  * Colours are authored in OKLCH because the lightness channel matches perceived
  * lightness, which keeps ramp steps even and makes contrast predictable.
+ *
+ * One theme only: a night sky (galaxy). Every text/UI pair below was computed
+ * against surface, raised, overlay and sunken — body ≥4.5:1, UI ≥3:1.
  */
 
 /* ---------------------------------------------------------------- primitives */
 :root {
-  /* Warm neutrals (hue 75). Warm because this is a reading surface, not a dashboard. */
-  --n-0: oklch(1 0 0);
-  --n-50: oklch(0.985 0.004 75);
-  --n-100: oklch(0.965 0.005 75);
-  --n-200: oklch(0.925 0.006 75);
-  --n-300: oklch(0.872 0.007 75);
-  --n-400: oklch(0.715 0.009 75);
-  --n-500: oklch(0.595 0.01 75);
-  --n-600: oklch(0.49 0.01 75);
-  --n-700: oklch(0.395 0.01 75);
-  --n-800: oklch(0.285 0.009 75);
-  --n-900: oklch(0.215 0.008 75);
-  --n-950: oklch(0.165 0.007 75);
-  --n-1000: oklch(0.125 0.006 75);
+  /* Space — deep indigo ground (hue 270). The Framer night-sky default #0A1026
+     sits at the bottom of this ramp. */
+  --space-1000: oklch(0.14 0.04 270);
+  --space-950: oklch(0.17 0.045 270);
+  --space-900: oklch(0.225 0.05 272);
+  --space-800: oklch(0.27 0.05 272);
+  --space-700: oklch(0.32 0.05 270);
+  --space-600: oklch(0.4 0.05 268);
+  --space-500: oklch(0.62 0.06 265);
 
-  /* Petrol — wayfinding and actions. Cool counterweight to the warm ground. */
-  --petrol-300: oklch(0.8 0.06 215);
-  --petrol-400: oklch(0.72 0.085 215);
-  --petrol-500: oklch(0.63 0.105 215);
-  --petrol-600: oklch(0.545 0.115 215);
-  --petrol-700: oklch(0.455 0.105 215);
-  --petrol-800: oklch(0.375 0.09 215);
+  /* Starlight — text, faintly blue like the stars it sits among. */
+  --star-100: oklch(0.95 0.015 260);
+  --star-300: oklch(0.8 0.03 262);
+  --star-400: oklch(0.7 0.035 264);
 
-  /* Amber — reserved for progress and focus. The only saturated warm in the UI. */
-  --amber-300: oklch(0.875 0.115 80);
-  --amber-400: oklch(0.82 0.145 78);
-  --amber-500: oklch(0.755 0.155 75);
-  /* Sits on the near-white light ground as a non-text indicator, so it carries
-     the 3:1 rule on its own; 0.66 lightness measured 3.06:1 — too thin a margin
-     for a threshold this project gates on. */
-  --amber-600: oklch(0.63 0.145 72);
+  /* Nebula — the glow behind everything, and the action colour (cyan). */
+  --nebula-cyan-300: oklch(0.88 0.09 215);
+  --nebula-cyan-400: oklch(0.83 0.1 215);
+  --nebula-cyan-500: oklch(0.78 0.11 215);
+  --nebula-violet: oklch(0.42 0.16 295);
+  --nebula-teal: oklch(0.42 0.1 200);
 
-  /* Status */
-  --green-400: oklch(0.78 0.13 150);
-  --green-700: oklch(0.5 0.115 150);
-  --red-400: oklch(0.72 0.15 25);
-  --red-600: oklch(0.55 0.17 25);
+  /* Aurora green — progress. A completed ring is the brightest green on screen. */
+  --aurora-400: oklch(0.8 0.17 150);
+
+  /* Star gold — focus. */
+  --gold-300: oklch(0.86 0.13 90);
+
+  --red-400: oklch(0.75 0.15 22);
+
+  /* Star colours, from the Framer NightSkyParticles defaults. */
+  --starlight-white: #ffffff;
+  --starlight-blue: #b5cfff;
+  --meteor: #fff7c2;
+
+  /* Area hues — one per roadmap area, same chroma and lightness so no area
+     shouts. They orient (where am I on the map); they never carry state. */
+  --hue-temel: 195;
+  --hue-urun-ekip: 290;
+  --hue-tasarim: 350;
+  --hue-muhendislik: 250;
+  --hue-sistem-operasyon: 150;
+  --hue-yapay-zeka: 55;
 
   /* Motion */
   --dur-fast: 120ms;
@@ -54,6 +63,7 @@
   --dur-slow: 260ms;
   --e-out: cubic-bezier(0.2, 0.8, 0.3, 1);
   --e-in: cubic-bezier(0.4, 0, 1, 1);
+  --e-spring: linear(0, 0.35 12%, 0.77 26%, 1.02 40%, 1.07 50%, 1.03 62%, 0.99 78%, 1);
 
   /* Layering */
   --z-sticky: 200;
@@ -64,94 +74,96 @@
   --measure: 68ch;
 }
 
-/* ------------------------------------------------------- semantic: dark (default) */
+/* ------------------------------------------------------------------ semantic */
 :root,
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --c-surface: var(--n-950);
-  --c-surface-raised: var(--n-900);
-  --c-surface-overlay: var(--n-800);
-  --c-surface-sunken: var(--n-1000);
+  --c-surface: var(--space-950);
+  --c-surface-raised: var(--space-900);
+  --c-surface-overlay: var(--space-800);
+  --c-surface-sunken: var(--space-1000);
+  /* Cards float over the starfield: the raised colour, part see-through, with a
+     blur behind it (see .glass in global.css). Contrast was computed against the
+     opaque raised and surface values, which bound every mix of the two. */
+  --c-glass: color-mix(in oklab, var(--space-900) 72%, transparent);
+  --c-glass-strong: color-mix(in oklab, var(--space-900) 88%, transparent);
+  /* The lesson column: almost opaque, so stars never twinkle behind a sentence. */
+  --c-surface-reading: color-mix(in oklab, var(--space-950) 94%, transparent);
 
-  --c-text: oklch(0.93 0.006 75);
-  --c-text-secondary: var(--n-400);
-  /* Lighter than --n-500: measured 4.34:1 on raised surfaces, which misses the
-     4.5 threshold for the small labels this token is used on. */
-  --c-text-muted: oklch(0.645 0.011 75);
+  --c-text: var(--star-100);
+  --c-text-secondary: var(--star-300);
+  --c-text-muted: var(--star-400);
 
-  --c-border: var(--n-800);
-  --c-border-strong: var(--n-700);
-  /* Form-control outlines carry meaning (an empty checkbox is only its border),
-     so they answer to the 3:1 non-text rule; decorative borders above do not. */
-  --c-control-border: var(--n-500);
-  /* The roadmap's connecting line and station rings. Order is also carried by
-     the numbers, so this is not the only cue — but it is what makes the page
-     read as one route, and --c-border-strong measured 2.06:1 here. */
-  --c-route-line: var(--n-500);
+  /* Decorative hairlines; anything that must be *seen* uses the two below. */
+  --c-border: color-mix(in oklab, var(--space-500) 28%, transparent);
+  --c-border-strong: color-mix(in oklab, var(--space-500) 48%, transparent);
+  --c-control-border: var(--space-500);
+  --c-route-line: var(--space-500);
 
-  --c-action: var(--petrol-400);
-  --c-action-hover: var(--petrol-300);
-  /* A filled button's label sits on this, so the two must move apart — and the
-     direction differs per theme: dark carries a dark label, light a light one.
-     petrol-600 measured 4.39:1 against the dark label. */
-  --c-action-surface: var(--petrol-500);
-  --c-on-action: var(--n-1000);
+  --c-action: var(--nebula-cyan-400);
+  --c-action-hover: var(--nebula-cyan-300);
+  --c-action-surface: var(--nebula-cyan-500);
+  --c-on-action: var(--space-950);
 
-  --c-progress: var(--amber-400);
-  /* A tick drawn on the progress colour. Named rather than reached for, so a
-     change to --c-progress has one place to answer for its mark. */
-  --c-on-progress: var(--n-1000);
-  /* Amber as *text*. --c-progress is tuned for the 3:1 non-text rule; used for
-     words it measured 3.57:1 in light and failed an axe scan. On the dark ground
-     the indicator amber already clears the text threshold, so it stays. */
-  --c-progress-text: var(--amber-400);
-  --c-focus: var(--amber-400);
-  --c-success: var(--green-400);
+  --c-progress: var(--aurora-400);
+  --c-on-progress: var(--space-950);
+  --c-progress-text: var(--aurora-400);
+  --c-focus: var(--gold-300);
+  --c-success: var(--aurora-400);
   --c-danger: var(--red-400);
+  --c-on-accent: var(--space-950);
 
-  /* Depth in dark mode comes from surface lightness, not shadow. */
-  --elev-1: none;
-  --elev-2: 0 8px 24px -12px oklch(0 0 0 / 0.8);
+  --c-nebula-1: var(--nebula-violet);
+  --c-nebula-2: var(--nebula-teal);
+  --c-star: var(--starlight-white);
+  --c-star-cool: var(--starlight-blue);
+  --c-meteor: var(--meteor);
+
+  --c-area-temel: oklch(0.8 0.12 var(--hue-temel));
+  --c-area-urun-ekip: oklch(0.8 0.12 var(--hue-urun-ekip));
+  --c-area-tasarim: oklch(0.8 0.12 var(--hue-tasarim));
+  --c-area-muhendislik: oklch(0.8 0.12 var(--hue-muhendislik));
+  --c-area-sistem-operasyon: oklch(0.8 0.12 var(--hue-sistem-operasyon));
+  --c-area-yapay-zeka: oklch(0.8 0.12 var(--hue-yapay-zeka));
+
+  /* Depth: an edge light on top, a soft dark drop below. */
+  --elev-1: 0 1px 0 oklch(1 0 0 / 0.05) inset;
+  --elev-2: 0 1px 0 oklch(1 0 0 / 0.06) inset, 0 18px 40px -20px oklch(0.05 0.03 270 / 0.95);
+  --elev-card: 0 1px 0 oklch(1 0 0 / 0.06) inset, 0 12px 28px -18px oklch(0.05 0.03 270 / 0.9);
 }
 
-/* ---------------------------------------------------------- semantic: light */
-[data-theme="light"] {
-  color-scheme: light;
-
-  --c-surface: var(--n-50);
-  --c-surface-raised: var(--n-0);
-  --c-surface-overlay: var(--n-0);
-  --c-surface-sunken: var(--n-100);
-
-  --c-text: var(--n-900);
-  --c-text-secondary: var(--n-700);
-  --c-text-muted: var(--n-600);
-
-  --c-border: var(--n-200);
-  --c-border-strong: var(--n-300);
-  --c-control-border: var(--n-500);
-  /* n-300 measured 1.41:1 on the light ground — the route vanished entirely. */
-  --c-route-line: var(--n-500);
-
-  /* petrol-600 measured 4.43:1 on the light ground — just under the threshold. */
-  --c-action: var(--petrol-700);
-  --c-action-hover: var(--petrol-800);
-  /* Mirror of the dark rule: same label-to-fill distance, opposite direction. */
-  --c-action-surface: var(--petrol-700);
-  --c-on-action: var(--n-50);
-
-  --c-progress: var(--amber-600);
-  --c-on-progress: var(--n-1000);
-  /* Darker than the indicator amber so words clear 4.5:1 on the light ground. */
-  --c-progress-text: oklch(0.52 0.125 66);
-  /* Darker than the progress amber: the ring must clear 3:1 with margin on both
-     the page ground and raised cards. */
-  --c-focus: oklch(0.6 0.15 68);
-  /* green-600 measured 4.39:1 on the light ground. */
-  --c-success: var(--green-700);
-  --c-danger: var(--red-600);
-
-  --elev-1: 0 1px 2px oklch(0.3 0.02 75 / 0.06), 0 1px 1px oklch(0.3 0.02 75 / 0.04);
-  --elev-2: 0 4px 6px -2px oklch(0.3 0.02 75 / 0.08), 0 12px 20px -8px oklch(0.3 0.02 75 / 0.1);
+/* ------------------------------------------------------------ planets */
+/* Shading shared by every body, and the dark glass the category name sits on
+   inside the disc (contrast computed against the brightest body, the Sun). */
+:root {
+  --c-planet-light: oklch(1 0 0 / 0.38);
+  --c-planet-shadow: oklch(0.1 0.04 270 / 0.82);
+  --c-planet-label: oklch(0.15 0.045 270 / 0.8);
 }
+
+/* Palettes: --pa base, --pb lighter detail, --pc dark (or bright) detail. Real
+   colours of each body, softened so none outshines the text on it. */
+[data-body="earth"] { --pa: #2f6fd6; --pb: #4caf6a; --pc: #eef4ff; }
+[data-body="mars"] { --pa: #c1502e; --pb: #e07a4f; --pc: #7a2c1a; }
+[data-body="venus"] { --pa: #e2bd74; --pb: #f3dca6; --pc: #b88a45; }
+[data-body="mercury"] { --pa: #9b958c; --pb: #c4beb5; --pc: #5e5a55; }
+[data-body="jupiter"] { --pa: #d8b48a; --pb: #b0764a; --pc: #f1e2c8; }
+[data-body="saturn"] { --pa: #e3cf9b; --pb: #c9a96a; --pc: #f4e7c3; }
+[data-body="uranus"] { --pa: #8fdbe0; --pb: #6fc0c8; --pc: #c9f3f2; }
+[data-body="neptune"] { --pa: #3b5bdb; --pb: #5b7cf0; --pc: #22379a; }
+[data-body="moon"] { --pa: #b9b9b9; --pb: #dedede; --pc: #858585; }
+[data-body="io"] { --pa: #e6cf62; --pb: #f2e9a0; --pc: #b86a22; }
+[data-body="europa"] { --pa: #d9cbb0; --pb: #f2eadb; --pc: #9a6f50; }
+[data-body="ganymede"] { --pa: #8d8072; --pb: #b9ab98; --pc: #5a5047; }
+[data-body="titan"] { --pa: #d89a3c; --pb: #e9b866; --pc: #a8692a; }
+[data-body="callisto"] { --pa: #5e5146; --pb: #8a7a6a; --pc: #d8cfc4; }
+[data-body="enceladus"] { --pa: #e6eef4; --pb: #ffffff; --pc: #8fb6cf; }
+[data-body="triton"] { --pa: #d8b8b0; --pb: #f0dcd4; --pc: #9e7c78; }
+[data-body="pluto"] { --pa: #c9a07a; --pb: #f5e3c8; --pc: #7a5238; }
+[data-body="charon"] { --pa: #9a8f88; --pb: #c2b8b0; --pc: #6b4a3e; }
+[data-body="ceres"] { --pa: #7f7a74; --pb: #a9a39b; --pc: #e9e6e1; }
+[data-body="vesta"] { --pa: #a39582; --pb: #c8bba8; --pc: #6e6253; }
+[data-body="phobos"] { --pa: #7d6c5c; --pb: #9e8b77; --pc: #4d4136; }
+[data-body="eris"] { --pa: #dcd8e6; --pb: #f6f4fb; --pc: #a9a2bd; }
+[data-body="sun"] { --pa: #ffb547; --pb: #fff3c4; --pc: #ff7a2f; }

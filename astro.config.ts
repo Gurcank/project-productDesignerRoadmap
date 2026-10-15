@@ -7,6 +7,7 @@ import { rehypeTermCards } from "./src/plugins/rehype-term-cards";
 import { rehypeCrossRefs } from "./src/plugins/rehype-cross-refs";
 import { rehypeTableScroll } from "./src/plugins/rehype-table-scroll";
 import { rehypeTermRefs } from "./src/plugins/rehype-term-refs";
+import { devPagefind } from "./src/plugins/dev-pagefind";
 
 // Static output: the site is content-only and is served from a static host (ADR-001).
 export default defineConfig({
@@ -42,6 +43,6 @@ export default defineConfig({
     }),
   },
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss(), devPagefind()],
   },
 });
