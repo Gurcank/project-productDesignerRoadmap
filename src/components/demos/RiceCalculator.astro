@@ -1,0 +1,217 @@
+---
+/**
+ * RICE, live: change one estimate and watch the order of the backlog change.
+ * The point the demo makes is the lesson's point — the score is only as good
+ * as the guesses inside it, and confidence is where a guess admits it.
+ *
+ * Cards never move: the rank is a number on each card. Re-sorting them would
+ * make the visual order disagree with the focus order, and slide a card away
+ * from under the field being typed in.
+ *
+ * Server-rendered with its starting numbers and computed scores, so without
+ * JavaScript it is a worked example; with it, a calculator.
+ */
+import DemoFrame from "./DemoFrame.astro";
+import { CONFIDENCE_SCALE, IMPACT_SCALE, rank, riceScore, type RiceInput } from "~/lib/demos/rice";
+
+interface Item extends RiceInput {
+  name: string;
+}
+
+interface Props {
+  items: Item[];
+  caption: string;
+  /** What reach counts ("kişi / çeyrek"). */
+  reachUnit?: string;
+}
+
+const { items, caption, reachUnit = "kişi / çeyrek" } = Astro.props;
+const order = rank(items);
+const position = new Map(order.map((index, place) => [index, place + 1]));
+const format = (n: number) => n.toLocaleString("tr-TR");
+---
+
+<DemoFrame
+  title="RICE hesaplayıcı"
+  hint="Bir tahmini değiştir; puanlar ve sıra hemen yeniden hesaplanır."
+  caption={caption}
+>
+  <div class="rice" data-rice>
+    {
+      items.map((item, index) => (
+        <fieldset class="rice__item" data-rice-item>
+          <legend class="rice__name">
+            <span class="rice__rank" data-rice-rank>
+              {position.get(index)}.
+            </span>{" "}
+            {item.name}
+          </legend>
+          <label class="rice__field">
+            <span>Erişim <small>({reachUnit})</small></span>
+            <input type="number" min="0" step="100" inputmode="numeric" value={item.reach} data-rice-input="reach" />
+          </label>
+          <label class="rice__field">
+            <span>Etki</span>
+            <select data-rice-input="impact">
+              {IMPACT_SCALE.map((option) => (
+                <option value={option.value} selected={option.value === item.impact}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label class="rice__field">
+            <span>Güven</span>
+            <select data-rice-input="confidence">
+              {CONFIDENCE_SCALE.map((option) => (
+                <option value={option.value} selected={option.value === item.confidence}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label class="rice__field">
+            <span>Efor <small>(kişi-ay)</small></span>
+            <input type="number" min="0.5" step="0.5" inputmode="decimal" value={item.effort} data-rice-input="effort" />
+          </label>
+          <p class="rice__score">
+            Puan <output data-rice-score>{format(riceScore(item))}</output>
+          </p>
+        </fieldset>
+      ))
+    }
+    <p class="rice__summary" aria-live="polite" data-rice-summary>
+      En yüksek puan: <strong>{items[order[0]!]!.name}</strong>
+    </p>
+  </div>
+</DemoFrame>
+
+<script>
+  import { rank, riceScore, type RiceInput } from "~/lib/demos/rice";
+
+  for (const root of document.querySelectorAll<HTMLElement>("[data-rice]")) {
+    const cards = Array.from(root.querySelectorAll<HTMLElement>("[data-rice-item]"));
+    const summary = root.querySelector<HTMLElement>("[data-rice-summary]");
+    const read = (card: HTMLElement): RiceInput => {
+      const value = (name: string) => Number((card.querySelector<HTMLInputElement>(`[data-rice-input="${name}"]`)?.value ?? "0").replace(",", "."));
+      return { reach: value("reach"), impact: value("impact"), confidence: value("confidence"), effort: value("effort") };
+    };
+    let leader = "";
+    const update = () => {
+      const inputs = cards.map(read);
+      const order = rank(inputs);
+      cards.forEach((card, index) => {
+        card.querySelector("[data-rice-score]")!.textContent = riceScore(inputs[index]!).toLocaleString("tr-TR");
+        card.querySelector("[data-rice-rank]")!.textContent = `${order.indexOf(index) + 1}.`;
+      });
+      const name = cards[order[0]!]!.querySelector(".rice__name")!.textContent!.replace(/^\s*\d+\.\s*/, "").trim();
+      // Announce only when the leader changes; a score change alone is visible.
+      if (summary && name !== leader) {
+        summary.innerHTML = "";
+        summary.append("En yüksek puan: ", Object.assign(document.createElement("strong"), { textContent: name }));
+        leader = name;
+      }
+    };
+    root.addEventListener("input", update);
+    update();
+  }
+</script>
+
+<style>
+  .rice {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+  }
+
+  .rice__item {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-3);
+    margin: 0;
+    padding: var(--spacing-3) var(--spacing-4) var(--spacing-4);
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-sunken);
+  }
+
+  @media (min-width: 40rem) {
+    .rice__item {
+      grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+      align-items: end;
+    }
+  }
+
+  .rice__name {
+    padding-inline: var(--spacing-1);
+    font-weight: 600;
+    color: var(--c-text);
+  }
+
+  .rice__rank {
+    font-variant-numeric: tabular-nums;
+    color: var(--c-action);
+  }
+
+  .rice__field {
+    display: grid;
+    gap: var(--spacing-1);
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .rice__field small {
+    font-size: var(--text-xs);
+    color: var(--c-text-muted);
+  }
+
+  .rice__field input,
+  .rice__field select {
+    min-block-size: 44px;
+    inline-size: 100%;
+    padding-inline: var(--spacing-2);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface);
+    color: var(--c-text);
+    font: inherit;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .rice__field input:focus-visible,
+  .rice__field select:focus-visible {
+    outline: 2px solid var(--c-focus);
+    outline-offset: 2px;
+  }
+
+  .rice__score {
+    grid-column: 1 / -1;
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  @media (min-width: 40rem) {
+    .rice__score {
+      grid-column: auto;
+      text-align: end;
+    }
+  }
+
+  .rice__score output {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--c-progress-text);
+  }
+
+  .rice__summary {
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .rice__summary strong {
+    color: var(--c-text);
+  }
+</style>

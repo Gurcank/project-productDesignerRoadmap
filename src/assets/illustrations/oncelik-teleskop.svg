@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+  <!-- Prioritising: many candidate worlds, one telescope, one chosen next. -->
+  <g class="il-star">
+    <circle class="twinkle" cx="24" cy="22" r="1.4"/>
+    <circle cx="118" cy="16" r="1.2"/>
+    <circle class="twinkle" cx="188" cy="152" r="1.3"/>
+    <circle cx="300" cy="20" r="1.5"/>
+    <circle class="twinkle" cx="260" cy="160" r="1.2"/>
+  </g>
+  <!-- Candidates: sizes differ, one is circled as the next -->
+  <circle class="il-surface il-line" cx="150" cy="58" r="12"/>
+  <circle class="il-surface il-line" cx="196" cy="104" r="22"/>
+  <circle class="il-surface il-line" cx="282" cy="118" r="9"/>
+  <circle class="il-surface il-ink" cx="250" cy="52" r="18"/>
+  <circle class="il-fill-glow" cx="244" cy="46" r="4"/>
+  <circle class="il-none il-warm il-dash" cx="250" cy="52" r="28"/>
+  <!-- The line of sight -->
+  <path class="il-none il-glow il-thin il-dash" d="M92 112 L226 60"/>
+  <!-- Telescope on a tripod -->
+  <path class="il-none il-line" d="M66 132 L48 168 M66 132 L84 168 M66 132 V168"/>
+  <path class="il-surface il-ink" d="M44 128 L96 104 L102 116 L50 140 Z"/>
+  <path class="il-fill-ink" d="M96 104 L104 100 L110 112 L102 116 Z"/>
+  <circle class="il-deep il-ink" cx="66" cy="132" r="5"/>
+</svg>

@@ -61,10 +61,12 @@ eklenebilir manifest · **çevrimdışı okuma** (ADR-012). Çevrimdışı katma
 derlemesinde etkindir; `astro dev` altında service worker kaydedilmez, kalmış olan sökülür —
 gerekçesi ve bedeli ADR-012'de.
 
+**Var — Araçlar (Faz 3).** `/araclar/`: doldurulmuş örnekli şablonlar (PRD, RACI, risk kaydı),
+Markdown ve Türkçe Excel'de açılan CSV indirmeleri (ADR-021).
+
 **Henüz yok — planlı, yapılmadı.** EN arayüz (`/en/`, `src/i18n`): kullanıcı ertelemeyi seçti,
-şu an TR tek dil · Araçlar bölümü (`/araclar/` — kontrol listeleri, proje akış haritası, çalışma
-takvimi, kaynaklar): rota yok, üst menüdeki bağlantı bu yüzden `ready: false` ile gizli ·
-framework ve kütüphane profil sayfaları · Cloudflare Pages yayını.
+şu an TR tek dil · Araçlar'da kontrol listeleri, proje akış haritası, çalışma takvimi ve diğer
+şablonlar · framework ve kütüphane profil sayfaları · Cloudflare Pages yayını.
 
 **Yok — bilinçli olarak.** Hesap/giriş sistemi · sunucu tarafı veri · cihazlar arası senkron
 (mimari hazır, uygulama sonraki faz) · içerik EN çevirisi · yorum/not alma · aralıklı tekrar
@@ -112,8 +114,8 @@ Veritabanı'ndan (11) sonra: N+1, index ve sorgu maliyeti orada anlatılıyor.
 ```
 
 Rezerve kökler (`RESERVED_ROOTS`, `src/data/categories.ts`; `validate` denetler): `ara`, `sozluk`,
-`araclar`, `ayarlar`, `roller`, `en`, `offline`, `404`, `pagefind`, `_astro`. `araclar`, `roller` ve
-`en` yalnız rezerve; rota üretilmiyor. Üst menüdeki Araçlar bağlantısı bu yüzden `ready: false` ile gizli.
+`araclar`, `ayarlar`, `roller`, `en`, `offline`, `404`, `pagefind`, `_astro`,
+`manifest.webmanifest`. `en` yalnız rezerve; rota üretilmiyor.
 Slug'lar Türkçe ve **sabittir** — materyal güncellense bile değişmez, çünkü ilerleme kayıtları
 onlara bağlı. Slug değişirse o adımın ilerlemesi kaybolur.
 

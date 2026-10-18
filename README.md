@@ -43,6 +43,7 @@ npm run preview    # http://localhost:4322
 | `npm run preview` | Derlenmiş siteyi sunar |
 | `npm run check` | TypeScript ve Astro denetimi |
 | `npm test` | Birim testleri (slug, adım kimliği, çapraz referans kuralları) |
+| `npm run lint:lessons` | Ders standardı v2: yapı, görsel, rol mercekleri, Türkçe okunabilirlik (Ateşman) |
 | `npm run validate` | İçerik doğrulaması (kaynaklar, bağlantılar, donmuş slug'lar, rezerve kökler) |
 | `npm run import` / `import:check` | `ProductDesignerMaterials/` içeriğini `src/content/` altına aktarır / farkı denetler |
 | `npm run budget` | Sayfa başına JS/CSS/HTML bütçesini denetler (JS ≤ 60 KB) |

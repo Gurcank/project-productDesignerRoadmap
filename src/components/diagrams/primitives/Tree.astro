@@ -1,0 +1,85 @@
+---
+/**
+ * A hierarchy: work breakdown structure, opportunity–solution tree, metric
+ * tree. Drawn as an indented outline with connector lines rather than a
+ * top-down tree: a top-down tree three levels deep is wider than a phone,
+ * while an outline reads the same at 360px as on a desk, and in the same order
+ * a screen reader walks it.
+ */
+import DiagramFigure from "../DiagramFigure.astro";
+import { boxClass, wrap, type Tone } from "./util";
+
+interface Node {
+  title: string;
+  sub?: string;
+  tone?: Tone;
+  children?: Node[];
+}
+
+interface Props {
+  label: string;
+  caption: string;
+  root: Node;
+}
+
+const { label, caption, root } = Astro.props;
+
+const INDENT = 24;
+const GAP = 8;
+interface Row {
+  depth: number;
+  node: Node;
+  title: string[];
+  sub: string[];
+  y: number;
+  h: number;
+  parent: number | null;
+}
+const rows: Row[] = [];
+let y = 8;
+const walk = (node: Node, depth: number, parent: number | null) => {
+  if (depth > 4) throw new Error(`Tree: en çok 4 seviye ("${node.title}")`);
+  const width = 360 - 10 - depth * INDENT - 8 - 20;
+  const title = wrap(node.title, width, "label", 2);
+  const sub = node.sub ? wrap(node.sub, width, "sub", 2) : [];
+  const h = 14 + title.length * 16 + sub.length * 14;
+  const index = rows.push({ depth, node, title, sub, y, h, parent }) - 1;
+  y += h + GAP;
+  for (const child of node.children ?? []) walk(child, depth + 1, index);
+};
+walk(root, 0, null);
+if (rows.length > 16) throw new Error(`Tree: en çok 16 düğüm (${rows.length})`);
+const height = y;
+const xOf = (depth: number) => 10 + depth * INDENT;
+---
+
+<DiagramFigure label={label} caption={caption}>
+  <svg class="dg-narrow" viewBox={`0 0 360 ${height}`} role="img" aria-label={label}>
+    <title>{label}</title>
+    {
+      rows.map((row) => {
+        if (row.parent === null) return null;
+        const parent = rows[row.parent]!;
+        const px = xOf(parent.depth) + 10;
+        return <path class="dg-line" d={`M${px} ${parent.y + parent.h} V${row.y + row.h / 2} H${xOf(row.depth)}`} />;
+      })
+    }
+    {
+      rows.map((row) => (
+        <>
+          <rect class={boxClass(row.node.tone)} x={xOf(row.depth)} y={row.y} width={360 - xOf(row.depth) - 8} height={row.h} rx="7" />
+          {row.title.map((line, i) => (
+            <text class="dg-label" x={xOf(row.depth) + 12} y={row.y + 18 + i * 16}>
+              {line}
+            </text>
+          ))}
+          {row.sub.map((line, i) => (
+            <text class="dg-sub" x={xOf(row.depth) + 12} y={row.y + 18 + row.title.length * 16 + i * 14 - 2}>
+              {line}
+            </text>
+          ))}
+        </>
+      ))
+    }
+  </svg>
+</DiagramFigure>

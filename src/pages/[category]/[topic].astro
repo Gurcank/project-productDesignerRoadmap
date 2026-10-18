@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import StepList from "~/components/StepList.astro";
+import { hasQuiz } from "~/lib/quizzes";
 import { getPublishedCategories, topicHref, topicId, topicSlug } from "~/lib/content";
 import { DIAGRAM_BY_SECTION } from "~/components/diagrams";
 import { getGlossary } from "~/lib/glossary";
@@ -49,8 +50,7 @@ const lessonSources = lesson?.data.sources ?? topic.data.sources;
 const lessonFlags = lesson ? lesson.data.flags : topic.data.flags;
 
 // Categories written for this site have no quiz; linking to one would 404.
-const quizzes = await getCollection("quizzes");
-const hasQuiz = quizzes.some((quiz) => quiz.data.category === category.slug);
+const quiz = await hasQuiz(category.slug);
 
 /*
  * The diagram sits between the section intro and the term cards: the intro says
@@ -106,7 +106,7 @@ const FLAG_LABEL: Record<string, { text: string; title: string }> = {
         activeId={id}
         categorySlug={category.slug}
         categoryTitle={category.title}
-        quizHref={hasQuiz ? `/${category.slug}/test/` : undefined}
+        quizHref={quiz ? `/${category.slug}/test/` : undefined}
       />
     </aside>
 
@@ -241,7 +241,7 @@ const FLAG_LABEL: Record<string, { text: string; title: string }> = {
               title={next.data.title}
               attrs={{ "data-advance": true }}
             />
-          ) : hasQuiz ? (
+          ) : quiz ? (
             <BrowseNav
               direction="forward"
               href={`/${category.slug}/test/`}

@@ -439,6 +439,61 @@ anahtarı attığı için eski build yeni yedeği, yeni build eski yedeği okur 
 **Ödünleşim.** Betik satır içi ve senkron kalmak zorunda (ADR-007 ile aynı neden). Her rol durumu
 HTML'de durduğu için sayfa biraz büyür; bütçe ve DOM boyutu izlenir.
 
+## ADR-020 — Medya: veri güdümlü diyagram ilkelleri, demolar, tema içi illüstrasyonlar
+
+**Bağlam.** 234 dersin 179'unda diyagram yoktu ve her şekil tek kullanımlık, elle çizilmiş bir
+bileşendi. Yüzlerce derse görsel eklemek için her şekli baştan çizmek ölçeklenmez.
+
+**Karar.**
+- **11 ilkel** ([`src/components/diagrams/primitives/`](src/components/diagrams/primitives)):
+  Matrix2x2, Cycle, Timeline, Network, Tree, Swimlane, Layers, Venn, Spectrum, Chart, Heatmap. Veri
+  props ile verilir; hepsi `DiagramFigure` ve `dg-*` sözlüğünü kullanır. Telefon için üç yol: 360
+  genişliğinde dar düzen (`dg-narrow`), ya da kendi genişliğinde kalıp yana kayma (`--dg-min`) ve
+  görünür "yana kaydır" ipucu. Veri taşıyan ilkeller altlarında JS'siz bir "Tablo olarak göster"
+  verir. Etiketler build'de sarılır; sığmayan etiket build'i kırar ve kendini adlandırır (Faz 3'te
+  iki kez yakaladı).
+- **Demolar** ([`src/components/demos/`](src/components/demos)): `DemoFrame` içinde, mantığı
+  `src/lib/demos/*.ts` altında test edilen saf fonksiyonlarda. Sunucuda çözülmüş örnekle render
+  edilir; JS'siz de öğretir. Kartlar yeniden dizilmez (görsel sıra = odak sırası). RICE demosu 574
+  bayt gzip.
+- **İllüstrasyonlar** (`src/assets/illustrations/*.svg`): yalnız `il-*` sınıfları; renkler
+  `--c-illu-*` token'larından. `<Illustration>` satır içi gömer (public/ değil: SW hash'siz
+  dosyayı sonsuza dek tutar). `validate` ham renk, öznitelik rengi, betik/dış referans, viewBox ve 12
+  KB sınırını denetler. Planlanan svgo hattı kurulmadı: elle yazılan SVG'ler zaten küçük ve yeni
+  bağımlılık gerekmedi.
+- Kontrast hesapla: ısı haritasının beş seviyesi 6,77–14,85:1 (seviye 3–4'te koyu mürekkep).
+
+**Ödünleşim.** Şekiller kalıplara sığar; bir ders gerçekten özel bir şekil isterse tek kullanımlık
+bileşen yazılır (eski yaklaşım). Genişlik tahmini bir ortalama glif genişliğine dayanır; çok geniş
+harflerle dolu bir etiket marjı aşabilir.
+
+## ADR-021 — Araçlar: şablonlar tek veriden sayfa, Markdown ve CSV üretir
+
+**Karar.** `/araclar/` hub'ı ve `/araclar/<slug>/` sayfaları `templates` koleksiyonundan
+(`src/tools/sablonlar/<slug>/index.mdx`) üretilir. "Belge" şablonunun yanında `ornek.md` ve
+`bos.md`; "tablo" şablonunun sütunları ve örnek satırları frontmatter'da — sayfa tablosu, Markdown ve
+CSV aynı veriden çıkar ([`src/lib/templates.ts`](src/lib/templates.ts)). İndirmeler statik dosya:
+`[name].csv.ts` / `[name].md.ts` (uzantı dosya adında, yoksa `trailingSlash: "always"` sona `/`
+ekliyor). CSV UTF-8 BOM + `;` + CRLF ([`src/lib/csv.ts`](src/lib/csv.ts)): Türkçe Excel ancak böyle
+"ş"yi doğru okur. Dersler `<Tool slug>` ile bağlanır; bilinmeyen slug build'i kırar. Telefonda alt
+çubukta Sözlük'ün yerini Araçlar aldı; Sözlük sol menüde ve Araçlar'dan erişilir.
+
+Yazılmış quizler (`src/authored/quizzes`, `overrides` ile) ve yazılmış terimler
+(`src/authored/terms`, sıradan kelimeler için `inline: false`) aynı fazda geldi
+([`src/lib/quizzes.ts`](src/lib/quizzes.ts), [`src/lib/authored-terms.ts`](src/lib/authored-terms.ts)).
+
+## ADR-022 — Ders standardı v2 ölçülür: `npm run lint:lessons`
+
+**Karar.** Standart [`docs/icerik/ders-standardi.md`](docs/icerik/ders-standardi.md)'de, ortak vaka
+[`docs/icerik/vaka.md`](docs/icerik/vaka.md)'de. Denetleyici satır tabanlıdır (yeni MDX bağımlılığı
+yok): yapı, görsel, mercek kapsamı (rol yollarından hesaplanır), ≥3 soru, süre ve Türkçe okunabilirlik
+(Ateşman 1997; hece = ünlü sayısı; [`src/lib/readability.ts`](src/lib/readability.ts), testli).
+Yalnız `standard: 2` taşıyan dersler hata verir; diğerleri uyarı ve ortalama puanla görünür, CI
+"v2: N/M" yazar. Süre, ders hızında (dakikada ~130 kelime) hesaplanır; 180 öğrenme içeriği için
+fazla hızlıydı. Liste maddeleri ayrı cümle sayılır.
+
+Pilot: üç ders v2'ye geçti (Ateşman 74,3 · 75,3 · 76,4; v1 ortalaması 64,3).
+
 ---
 
 ```

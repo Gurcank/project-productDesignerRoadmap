@@ -1,0 +1,101 @@
+---
+/**
+ * Bars on a time axis: a Gantt chart, a release plan, a milestone list, "a
+ * week of the role". Wide by nature (640), so it scrolls on a phone and its
+ * table carries the same dates. A milestone is a diamond, a bar is a span —
+ * shape, not colour, tells them apart.
+ */
+import DiagramFigure from "../DiagramFigure.astro";
+import DataTable from "../DataTable.astro";
+import { boxClass, fits, type Tone } from "./util";
+
+interface Row {
+  label: string;
+  /** In units from 0; a milestone uses only `start`. */
+  start: number;
+  end?: number;
+  tone?: Tone;
+  kind?: "bar" | "milestone";
+}
+
+interface Props {
+  label: string;
+  caption: string;
+  /** "hafta", "gün", "sprint" — shown on the axis. */
+  unit: string;
+  span: number;
+  rows: Row[];
+  /** A vertical line, e.g. "bugün". */
+  marker?: { at: number; label: string };
+  /** Label every n-th unit on the axis (default: every one when it fits). */
+  every?: number;
+}
+
+const { label, caption, unit, span, rows, marker, every } = Astro.props;
+
+const LABEL_W = 200;
+const CHART_W = 416;
+const ROW_H = 30;
+const TOP = 28;
+const step = CHART_W / span;
+const tick = every ?? (step >= 24 ? 1 : Math.ceil(24 / step));
+const xOf = (u: number) => LABEL_W + u * step;
+for (const row of rows) {
+  if (!fits(row.label, LABEL_W - 16)) throw new Error(`Timeline etiketi sığmıyor: "${row.label}"`);
+}
+const height = TOP + rows.length * ROW_H + 16;
+const range = (row: Row) =>
+  row.kind === "milestone" ? `${unit} ${row.start}` : `${unit} ${row.start + 1}–${row.end ?? row.start + 1}`;
+---
+
+<DiagramFigure label={label} caption={caption}>
+  <svg viewBox={`0 0 640 ${height}`} role="img" aria-label={label}>
+    <title>{label}</title>
+    {
+      Array.from({ length: Math.floor(span / tick) + 1 }, (_, i) => i * tick).map((u) => (
+        <>
+          <path class="dg-line" d={`M${xOf(u)} ${TOP - 6} V${height - 10}`} stroke-dasharray="1 5" />
+          {u < span && (
+            <text class="dg-sub" x={xOf(u) + 3} y={TOP - 12}>
+              {u + 1}
+            </text>
+          )}
+        </>
+      ))
+    }
+    <text class="dg-sub" x={LABEL_W - 10} y={TOP - 12} text-anchor="end">{unit}</text>
+
+    {
+      rows.map((row, i) => {
+        const y = TOP + i * ROW_H;
+        return (
+          <>
+            <text class="dg-label" x={LABEL_W - 12} y={y + 20} text-anchor="end">
+              {row.label}
+            </text>
+            {row.kind === "milestone" ? (
+              <path
+                class={boxClass(row.tone ?? "progress")}
+                d={`M${xOf(row.start)} ${y + 5} l10 10 -10 10 -10 -10 Z`}
+              />
+            ) : (
+              <rect class={boxClass(row.tone)} x={xOf(row.start)} y={y + 6} width={Math.max(6, ((row.end ?? row.start + 1) - row.start) * step)} height={ROW_H - 12} rx="5" />
+            )}
+          </>
+        );
+      })
+    }
+
+    {
+      marker && (
+        <>
+          <path class="dg-line dg-line--accent" d={`M${xOf(marker.at)} ${TOP - 4} V${height - 8}`} />
+          <text class="dg-sub dg-accent" x={xOf(marker.at) + 4} y={height - 2}>
+            {marker.label}
+          </text>
+        </>
+      )
+    }
+  </svg>
+  <DataTable slot="data" caption={label} head={["Satır", "Tür", "Zaman"]} rows={rows.map((row) => [row.label, row.kind === "milestone" ? "Kilometre taşı" : "İş", range(row)])} />
+</DiagramFigure>

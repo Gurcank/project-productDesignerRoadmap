@@ -16,6 +16,7 @@ import { SKIP, visit } from "unist-util-visit";
 import termIndex from "../data/generated/term-index.json";
 import termLookup from "../data/generated/term-lookup.json";
 import termAliases from "../data/term-aliases.json";
+import { loadAuthoredTerms } from "../lib/authored-terms";
 
 interface TermEntry {
   term: string;
@@ -53,6 +54,21 @@ for (const [alias, target] of Object.entries(termAliases.aliases)) {
   const entry = (termLookup as Record<string, TermEntry>)[target];
   if (!entry) throw new Error(`term-aliases.json: "${alias}" points at "${target}", which is not in term-lookup.json`);
   LESSON_TERMS[alias.toLocaleLowerCase("tr")] = { ...entry, acronym: false };
+}
+// Terms written for the site's own categories. A key the material already
+// defines keeps the material's definition: one word, one meaning site-wide.
+for (const authored of loadAuthoredTerms()) {
+  if (authored.inline === false) continue;
+  const entry: TermEntry = {
+    term: authored.term,
+    definition: authored.definition,
+    href: `/${authored.category}/${authored.topic}/`,
+    acronym: authored.acronym ?? false,
+  };
+  for (const surface of [authored.term, ...(authored.aliases ?? [])]) {
+    const key = authored.acronym ? surface.toLowerCase() : surface.toLocaleLowerCase("tr");
+    if (!(key in LESSON_TERMS)) LESSON_TERMS[key] = entry;
+  }
 }
 const LESSON_SORTED = Object.keys(LESSON_TERMS).sort((a, b) => b.length - a.length);
 

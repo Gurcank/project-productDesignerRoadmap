@@ -1,0 +1,97 @@
+---
+/**
+ * An illustration from src/assets/illustrations, inlined (plan §3.3).
+ *
+ * Inline, not an <img> from public/: the drawings use the theme's
+ * `--c-illu-*` tokens, which an <img> cannot see, and the service worker keeps
+ * unhashed files in public/ forever (sw.js `isHashedAsset`). Inline SVG rides
+ * in the page's own HTML and is cached and refreshed with it.
+ *
+ * Decorative by default (the text beside it says the same); pass `label` when
+ * the drawing itself carries meaning.
+ */
+interface Props {
+  name: string;
+  label?: string;
+  size?: "sm" | "md" | "lg";
+}
+
+const { name, label, size = "md" } = Astro.props;
+
+const files = import.meta.glob<string>("../assets/illustrations/*.svg", { query: "?raw", import: "default", eager: true });
+const raw = files[`../assets/illustrations/${name}.svg`];
+if (!raw) throw new Error(`<Illustration name="${name}">: src/assets/illustrations/${name}.svg yok`);
+
+const svg = raw
+  .replace(/<\?xml[^>]*>\s*/, "")
+  .replace(
+    "<svg",
+    label ? `<svg role="img" aria-label="${label.replace(/"/g, "&quot;")}"` : `<svg aria-hidden="true" focusable="false"`,
+  );
+---
+
+<div class:list={["illustration", `illustration--${size}`]} set:html={svg} />
+
+<style is:global>
+  .illustration {
+    margin-block: var(--spacing-6);
+    margin-inline: auto;
+  }
+
+  .illustration svg {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+
+  .illustration--sm {
+    max-inline-size: 10rem;
+  }
+
+  .illustration--md {
+    max-inline-size: 24rem;
+  }
+
+  .illustration--lg {
+    max-inline-size: 36rem;
+  }
+
+  /* The illustration palette. Drawings use these classes and nothing else, so
+     no file in src/assets/illustrations carries a raw colour (validate checks). */
+  .illustration svg * {
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .il-deep { fill: var(--c-illu-deep); }
+  .il-surface { fill: var(--c-illu-surface); }
+  .il-fill-ink { fill: var(--c-illu-ink); }
+  .il-fill-glow { fill: var(--c-illu-glow); }
+  .il-fill-warm { fill: var(--c-illu-warm); }
+  .il-fill-green { fill: var(--c-illu-green); }
+  .il-star { fill: var(--c-illu-star); }
+  .il-none { fill: none; }
+  .il-line { stroke: var(--c-illu-line); }
+  .il-ink { stroke: var(--c-illu-ink); }
+  .il-glow { stroke: var(--c-illu-glow); }
+  .il-warm { stroke: var(--c-illu-warm); }
+  .il-green { stroke: var(--c-illu-green); }
+  .il-dash { stroke-dasharray: 3 7; }
+  .il-thin { stroke-width: 1.25; }
+
+  /* Twinkle, only where motion is welcome and the stars are on. */
+  @media (prefers-reduced-motion: no-preference) {
+    html:not([data-stars="off"]) .illustration .twinkle {
+      animation: illu-twinkle 3.2s ease-in-out infinite alternate;
+    }
+  }
+
+  @keyframes illu-twinkle {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0.35;
+    }
+  }
+</style>

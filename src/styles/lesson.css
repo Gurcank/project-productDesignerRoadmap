@@ -412,3 +412,52 @@
   gap: var(--spacing-3);
   padding: 0 var(--spacing-3) var(--spacing-3);
 }
+
+/* ------------------------------------------------------------------ case */
+/* "Uygulamada" (Case.astro): the shared case, in the progress tone. */
+.callout--case {
+  --tone: var(--c-progress);
+}
+
+.callout__case {
+  font-weight: 400;
+  color: var(--c-text-secondary);
+}
+
+/* ---------------------------------------------------------------- deeper */
+.deeper {
+  margin-block: var(--spacing-8);
+  border: 1px solid var(--c-border-strong);
+  border-radius: var(--radius-lg);
+}
+
+.deeper__summary {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  min-block-size: 48px;
+  padding: var(--spacing-2) var(--spacing-4);
+  font-weight: 600;
+  color: var(--c-text);
+  cursor: pointer;
+}
+
+.deeper__badge {
+  flex: none;
+  padding: 0 var(--spacing-2);
+  border: 1px solid var(--c-text-secondary);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-text-secondary);
+}
+
+.deeper__body {
+  padding: 0 var(--spacing-4) var(--spacing-4);
+  color: var(--c-text-secondary);
+}
+
+.deeper__body > * + * {
+  margin-block-start: var(--spacing-3);
+}

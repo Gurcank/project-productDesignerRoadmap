@@ -1,0 +1,25 @@
+[
+  {
+    "term": "Proje",
+    "english": "Project",
+    "definition": "Benzersiz bir ürün, hizmet ya da sonuç üretmek için yürütülen geçici çaba; başı ve sonu bellidir.",
+    "topic": "proje-urun-ve-operasyon",
+    "inline": false
+  },
+  {
+    "term": "Operasyon",
+    "english": "Operations",
+    "definition": "Var olan bir işin her gün yeniden yapılması: sipariş karşılamak, destek vermek. Bitişi yoktur; süreç sürekli iyileştirilir.",
+    "topic": "proje-urun-ve-operasyon",
+    "inline": false
+  },
+  {
+    "term": "Proje sponsoru",
+    "english": "Project sponsor",
+    "definition": "Projeyi destekleyen, kaynağını sağlayan ve büyük kararlarda son sözü söyleyen kişi.",
+    "topic": "proje-urun-ve-operasyon",
+    "aliases": [
+      "sponsor"
+    ]
+  }
+]

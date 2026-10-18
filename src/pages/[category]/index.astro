@@ -3,6 +3,7 @@ import { getCollection, getEntry, render } from "astro:content";
 import { getGlossary } from "~/lib/glossary";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import StepList from "~/components/StepList.astro";
+import { hasQuiz } from "~/lib/quizzes";
 import { getPublishedCategories, topicMinutes, formatDuration, topicHref, topicId } from "~/lib/content";
 import { DURABILITY_LABEL, AREAS } from "~/data/categories";
 import ActivityBadge from "~/components/ui/ActivityBadge.astro";
@@ -71,8 +72,7 @@ const firstTopic = topics[0];
 const planet = planetOf(category.slug);
 
 // Categories written for this site have no quiz; linking to one would 404.
-const quizzes = await getCollection("quizzes");
-const hasQuiz = quizzes.some((quiz) => quiz.data.category === category.slug);
+const quiz = await hasQuiz(category.slug);
 ---
 
 {/* Same skeleton as a topic page: steps on the left, reading column on the
@@ -88,7 +88,7 @@ const hasQuiz = quizzes.some((quiz) => quiz.data.category === category.slug);
         topics={topics}
         categorySlug={category.slug}
         categoryTitle={category.title}
-        quizHref={hasQuiz ? `/${category.slug}/test/` : undefined}
+        quizHref={quiz ? `/${category.slug}/test/` : undefined}
       />
     </aside>
 

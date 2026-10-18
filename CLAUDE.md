@@ -60,8 +60,24 @@ bırakır ve arama anlamsız sonuç döndürür (Social → sona). Hash'siz her 
 **`tsconfig` yol eşlemesi `./` ile başlamalı** (`"~/*": ["./src/*"]`). `baseUrl` yokken `tsx`
 göreli olmayan yolu reddediyor.
 
+**Yazılmış terimler config yüklenirken okunur.** `src/authored/terms/*.json` değiştiyse dev
+sunucusunu yeniden başlat ve `build:fresh` çalıştır; terim eklentisi onları bir kez okur. Yeni bir
+content koleksiyonu eklediysen de dev sunucusu yeniden başlatılmalı.
+
+**Diyagram etiketi sığmazsa build kırılır** (`primitives/util.ts`). Dev'de belirti: ders sayfası
+açılır ama gövde boştur; sebep sunucu günlüğündedir ("Diyagram etiketi sığmıyor").
+
 **Astro 7 markdown eklentileri.** `markdown.rehypePlugins` artık kabul edilmiyor; `processor:
 unified({...})` kullanılıyor. Nedeni ve ödünleşimi ADR-010'da.
+
+## Ders yazımı
+
+Her yeni ya da yeniden yazılan ders **ders standardı v2**'ye uyar
+([docs/icerik/ders-standardi.md](docs/icerik/ders-standardi.md)) ve frontmatter'da `standard: 2`
+taşır; `npm run lint:lessons` temiz olmadan ders bitmiş sayılmaz. Örnekler ortak vakadan gelir
+([docs/icerik/vaka.md](docs/icerik/vaka.md)); vakadaki sayı ve isimler değişmez, yeni bilgi oraya
+eklenir. Dersin temel/önerilen olduğu her rolün `<Lens>`'i yazılır. Bir kaynağı açıp ne dediğini
+okumadan alıntılama: 200 dönmesi yetmez, bazı sayfalar boş ya da yönlendirmeli gelir.
 
 ## Stil ve bileşen kuralları
 

@@ -14,6 +14,7 @@
     "import": "tsx scripts/import-materials.ts",
     "import:check": "tsx scripts/import-materials.ts --check",
     "validate": "tsx scripts/validate-content.ts",
+    "lint:lessons": "tsx scripts/lint-lessons.ts",
     "budget": "tsx scripts/check-budget.ts"
   },
   "dependencies": {

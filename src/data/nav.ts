@@ -9,6 +9,8 @@ export interface NavItem {
   label: string;
   id: NavId;
   icon: string;
+  /** False keeps it off the phone's bottom bar (five items is the most that fit). */
+  mobile?: boolean;
 }
 
 export const NAV: NavItem[] = [
@@ -36,7 +38,16 @@ export const NAV: NavItem[] = [
     href: "/sozluk/",
     label: "Sözlük",
     id: "sozluk",
+    // On a phone the glossary is reached from Araçlar and from every lesson's term list.
+    mobile: false,
     icon: "M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5v-15ZM5 19.5A1.5 1.5 0 0 0 6.5 21H19M9 7.5h6M9 11h4",
+  },
+  {
+    href: "/araclar/",
+    label: "Araçlar",
+    id: "araclar",
+    // A clipboard: templates and checklists.
+    icon: "M9 3.5h6v3H9zM9 5H6v15.5h12V5h-3M9 11h6M9 15h4",
   },
   {
     href: "/ayarlar/",

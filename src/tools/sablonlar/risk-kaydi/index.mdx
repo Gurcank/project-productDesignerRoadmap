@@ -1,0 +1,46 @@
+---
+title: "Risk kaydı"
+summary: "Projeyi etkileyebilecek her bilinen riski, olasılığını, etkisini, tepkisini ve sahibini tek yerde izler."
+kind: "tablo"
+roles: ["project-manager", "product-owner", "scrum-master"]
+lessons: ["sirket-sozlugu/risk-ve-olay-dili"]
+sources:
+  - label: "Atlassian — What is a Risk Register?"
+    url: "https://www.atlassian.com/work-management/project-management/risk-register"
+  - label: "UK Government — The Orange Book: Management of Risk"
+    url: "https://www.gov.uk/government/publications/orange-book"
+table:
+  columns: ["No", "Risk", "Kategori", "Olasılık (1–5)", "Etki (1–5)", "Puan", "Tepki", "Sahip", "Durum", "Son kontrol"]
+  example:
+    - ["R1", "POS tedarikçisi entegrasyonu geç teslim eder", "Zaman", "4", "5", "20", "Haftalık ara teslim iste; 3. haftada çalışan bir demo yoksa B planı (tablet kasa) devreye girer", "Leyla", "Açık", "Pazartesi"]
+    - ["R2", "Öğrenci işleri protokolü dönem başına yetişmez", "Kapsam", "3", "4", "12", "İndirimi lansmandan ayır; protokol gelince ayrı yayınla", "Hakan", "Açık", "Pazartesi"]
+    - ["R3", "Kampüs Wi-Fi'si sabah yoğunluğunda siparişi geciktirir", "Kalite", "3", "3", "9", "İki kafede yük testi; zayıf bağlantıda sipariş kuyruğa alınsın", "Ece", "İzleniyor", "Çarşamba"]
+    - ["R4", "Kafe personeli Demlik Panel'i kullanmakta zorlanır", "Operasyon", "2", "4", "8", "Kısa eğitim ve tek sayfalık rehber; ilk hafta sahada destek", "Ozan", "Açık", "Perşembe"]
+    - ["R5", "Bütçe, POS lisans ücretiyle aşılır", "Bütçe", "2", "3", "6", "Lisansı kafe sayısına göre kademeli al; rezervden karşıla", "Leyla", "Kapandı", "Geçen hafta"]
+  blankRows: 8
+---
+
+## Neden bir kayıt?
+
+Risk henüz olmamış bir sorundur. Kayıtlı bir risk sürpriz değildir; kayıtsız bir risk, gerçekleştiğinde "kimse söylemedi" toplantısına dönüşür. Kayıt, ekibin ve paydaşların aynı risk listesine bakmasını sağlar ve proje boyunca yaşar: yeni riskler eklenir, kapananlar işaretlenir.
+
+## Sütunlar
+
+Atlassian'ın rehberi bir risk kaydının dört temel bileşenini sayar; tablo onlara göre kuruldu:
+
+1. **Tanımlama:** numara, kısa ad ve açıklama. Riski "kötü bir şey olabilir" diye değil, "şu olursa şu etkilenir" diye yaz.
+2. **Değerlendirme:** kategori (zaman, kapsam, bütçe, kalite …), olasılık ve etki. Burada ikisi de 1–5 arası; **puan = olasılık × etki**. Puan, hangi riskle önce uğraşılacağını sıralar.
+3. **Tepki:** riske karşı ne yapılacağı. Riskin olasılığını ya da etkisini azaltan somut bir adım, ve gerçekleşirse devreye girecek B planı.
+4. **Sahip:** riski izleyen ve tepkiyi yürüten tek kişi. Sahibi olmayan risk izlenmez.
+
+Durum ve son kontrol tarihi, kaydın canlı kalıp kalmadığını gösterir.
+
+## Ne sıklıkla?
+
+Projenin başında bir kez doldurulur ve haftalık durum toplantısında gözden geçirilir. Puanı en yüksek riskler durum raporuna taşınır. Risk yönetimini daha derinden öğrenmek istersen, İngiltere hükümetinin temel ilkeleri ve süreçleri anlatan rehberi "Orange Book" iyi bir başlangıçtır.
+
+## Sık hatalar
+
+- **Belirsiz risk yazmak.** "Gecikme olabilir" değil: "POS tedarikçisi entegrasyonu geç teslim ederse lansman tarihi kayar."
+- **Tepki yerine dilek yazmak.** "Dikkatli olacağız" bir tepki değildir; bir eylem ve tarih gerekir.
+- **Kaydı yalnız proje yöneticisine bırakmak.** Riski en iyi görenler işi yapanlardır; herkes ekleyebilmeli.

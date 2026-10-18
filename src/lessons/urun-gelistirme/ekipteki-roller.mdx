@@ -1,140 +1,179 @@
 ---
-summary: "Bir ürün ekibindeki rollerin kim olduğunu, hangi kararı kimin verdiğini ve bir tasarımcı olarak kime ne soracağını öğren."
+summary: "Bir ürün ekibinde kimin olduğunu, hangi kararı kimin verdiğini ve bir soruyla hangi kapıyı çalacağını öğren."
 outcomes:
-  - "Product Manager, Product Owner, Product Designer ve Product Engineer arasındaki farkı anlatabilirsin."
-  - "Bir kararın (ne yapılacak, nasıl yapılacak, ne zaman çıkacak) kimin kapısına gittiğini bilirsin."
-  - "Stakeholder ile kullanıcıyı karıştırmazsın ve istekleri çelişebileceğini öngörürsün."
-  - "Yeni bir şirkete girdiğinde rollerin gerçek dağılımını sorman gerektiğini bilirsin."
-minutes: 9
+  - "Product Manager, Product Owner ve Project Manager arasındaki farkı anlatabilirsin."
+  - "Bir kararın (ne, nasıl, ne zaman) kimin kapısına gittiğini bilirsin."
+  - "Paydaş ile kullanıcıyı ayırırsın ve isteklerinin çelişebileceğini öngörürsün."
+  - "Yeni bir ekipte rollerin gerçek dağılımını sorman gerektiğini bilirsin."
+minutes: 10
+standard: 2
 sources:
-  - label: "Atlassian — Ürün yönetimi ve ürün yöneticisi rolü"
-    url: "https://www.atlassian.com/agile/product-management"
-  - label: "Scrum Guide — Product Owner"
+  - label: "Scrum Guide 2020 — Scrum Team"
     url: "https://scrumguides.org/scrum-guide.html"
+  - label: "UK DDaT — Product manager"
+    url: "https://understand-digital-data-roles-skills.service.gov.uk/role/product-manager/"
+  - label: "PMI — What Is Project Management?"
+    url: "https://www.pmi.org/about/what-is-project-management"
+  - label: "UK DDaT — Business analyst"
+    url: "https://understand-digital-data-roles-skills.service.gov.uk/role/business-analyst/"
+  - label: "UK DDaT — User researcher"
+    url: "https://understand-digital-data-roles-skills.service.gov.uk/role/user-researcher/"
+additions:
+  - "Scrum Master, Project Manager, Business Analyst ve UX Researcher tanımları (Scrum Guide, PMI, UK DDaT)"
 flags: ["degisken"]
 ---
 
-import Compare from "~/components/lesson/Compare.astro";
-import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Outside from "~/components/lesson/Outside.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Venn from "~/components/diagrams/primitives/Venn.astro";
+import Illustration from "~/components/Illustration.astro";
 
-İlk haftanda bir toplantıya giriyorsun. Biri "bunu PM'e soralım" diyor, bir başkası "ama PO önceliği değiştirmişti", üçüncüsü "TL onaylamazsa olmaz" diyor. Kısaltmalar uçuşuyor ve sen kimin neye karar verdiğini bilmiyorsun.
+Demlik'teki ilk haftandasın. Biri "bunu Elif'e soralım" diyor. Bir başkası "ama Deniz önceliği değiştirdi" diye ekliyor. Üçüncüsü "Leyla onaylamazsa tarih kayar" diyor. İsimler ve kısaltmalar uçuşuyor. Kimin neye karar verdiğini bilmiyorsun.
 
-Bu ders o sahneyi önceden yaşatıyor. Bir ürün ekibinde kimlerin olduğunu ve tasarım işini yaparken **hangi kapıyı kime çalacağını** öğreneceksin.
+Bu ders o sahneyi önceden yaşatır. Bir ürün ekibinde kimlerin olduğunu ve bir soruyla hangi kapıyı çalacağını öğreneceksin.
 
-Önce bir uyarı: **rol adları şirketten şirkete kayar.** Aynı işi bir yerde "PM", başka yerde "PO", bir başkasında "Product Lead" yapıyor olabilir. Aşağıdaki tanımlar *tipik* dağılımı anlatır. Bir şirkete girdiğinde ilk yapman gereken şey, o şirketteki gerçek dağılımı sormaktır.
+Önce bir uyarı: rol adları şirketten şirkete değişir. Aynı işi bir yerde "PM", başka yerde "PO" yapar. Aşağıdaki tanımlar tipik dağılımı anlatır. Yeni bir ekipte ilk iş, gerçek dağılımı sormaktır.
+
+<Illustration name="ekip-masasi" />
 
 ## Ne yapılacağına karar verenler
 
-### Product Manager (PM)
+**Product Manager** (PM, ürün yöneticisi), neyin ve neden yapılacağına karar verir. Ürünün sonucundan sorumludur. Kullanıcının ihtiyacı, işin hedefi ve teknik gerçeklik farklı yönlere çeker. PM bunları tek bir karara indirir. Yetkisi unvandan değil, gerekçeden gelir.
 
-**Product Manager**, *ne* yapılacağına ve *neden* yapılacağına karar veren, ürünün sonucundan sorumlu kişidir. Kullanıcı ihtiyacı, iş hedefi ve teknik gerçeklik üç ayrı yönden çeker; PM bu üçünü tek bir karara indirger. Otoritesi genelde yetkiden değil, **ikna ve gerekçeden** gelir.
+**Product Owner** (PO, ürün sahibi), Scrum'da backlog'un sahibidir. Takımın neyi hangi sırayla yapacağına karar verir. Böylece takıma tek bir öncelik kaynağı verir. Herkes ayrı ayrı iş isterse takım dağılır; PO bu istekleri tek bir sıralı listeye çevirir.
 
-Roadmap, öncelik ve kapsam kararlarında muhatabın odur. Bir özelliğin *neden* yapıldığını en iyi PM açıklar: "PM'e sorayım, bu özellik bu çeyrekte mi, sonrakinde mi?"
+Birçok şirkette PM ve PO aynı kişidir. Ayrıldığında PM daha çok müşteriye ve stratejiye, PO daha çok takıma ve backlog'a döner.
 
-Dikkat: **Product Manager ≠ Project Manager.** Product Manager *ne* yapılacağına odaklanır. Project Manager ise işin *ne zaman ve nasıl* teslim edileceğine, yani plana ve koordinasyona odaklanır. İkisi de "PM" diye kısaltılır; hangisi olduğunu bağlamdan çıkarırsın.
+## Teslimatı yönetenler
 
-### Product Owner (PO)
+**Project Manager** (proje yöneticisi), işin söz verilen kapsam, zaman ve bütçe içinde teslim edilmesini yönetir. Plan, risk ve paydaş iletişimi onun alanıdır. İki rol de "PM" diye kısaltılır. Hangisinin kastedildiğini bağlamdan anlarsın.
 
-**Product Owner**, Scrum çerçevesinde backlog'un sahibi olan, ekibin ne üzerinde çalışacağını sıraya koyan roldür. Ekibe **tek bir öncelik kaynağı** verir: herkes ayrı ayrı iş talep ederse ekip dağılır; PO bu talepleri tek bir sıralı listeye indirger. Scrum uygulayan şirketlerde sprint planlama ve backlog düzenleme toplantılarının sahibidir.
+<Venn
+  label="Product Manager, Product Owner ve Project Manager"
+  caption="Üç rol aynı ürün etrafında ama farklı sorularla çalışır. Product Manager neyin ve neden yapılacağını, Product Owner sırada neyin olduğunu, Project Manager söz verilenin zamanında ve bütçesinde teslim edilip edilmeyeceğini sorar. Kesiştikleri yer paydaşlarla iletişimdir: üçü de kararları ve durumu paydaşlara anlatır."
+  sets={[
+    { title: "Product Manager", sub: "ne ve neden" },
+    { title: "Product Owner", sub: "backlog sırası" },
+    { title: "Project Manager", sub: "zaman, bütçe, risk" },
+  ]}
+  overlap="paydaşlarla iletişim"
+/>
 
-"Bu ticket'ı backlog'a ekledim ama önceliğini PO belirleyecek" cümlesi buradan gelir.
+<Outside source="Scrum Guide 2020" href="https://scrumguides.org/scrum-guide.html">
 
-**PO ≠ PM.** PO, Scrum'ın resmî bir rolüdür ve odağı backlog'dur; PM daha geniş bir ürün sorumluluğudur. Bazı şirketlerde aynı kişi ikisini birden yapar; bazılarında PO daha operasyonel bir rol olarak konumlanır. (Scrum'ın kendisini ileride *Çalışma Biçimi* bölümünde göreceksin.)
+**Scrum Master**, Scrum'ın doğru kurulmasından ve takımın etkinliğinden hesap verir. Takımın yöneticisi değildir. Takımın kendini yönetmesine yardım eder, engellerin kaldırılmasını sağlar, toplantıların amaca hizmet etmesini gözetir.
 
-## Tasarımı ve kodu yapanlar
+</Outside>
 
-### Product Designer
+## Tasarlayan, araştıran, analiz eden
 
-**Product Designer**, bir ürünün akışını, yapısını ve arayüzünü kurgulayan; **problemden çözüme kadar** tasarım kararlarını veren kişidir. Bir çözüm fikri ile kullanılabilir bir ekran arasındaki mesafeyi kapatır. Sadece güzel ekran çizmez: kullanıcının hangi adımda ne göreceğine, hangi durumda ne olacağına karar verir.
+**Product Designer** (ürün tasarımcısı), ürünün akışını, yapısını ve arayüzünü kurgular. Problemden çözüme kadar tasarım kararlarını verir. Kullanıcının hangi adımda ne göreceğine ve her durumda ne olacağına karar verir.
 
-Keşiften yayına kadar her fazda karşına çıkar. Ekipte tek bir tasarımcı varsa araştırma, bilgi mimarisi, arayüz, tasarım sistemi ve içerik yazımı aynı kişiye düşer.
+<Outside source="UK DDaT — User researcher ve Business analyst" href="https://understand-digital-data-roles-skills.service.gov.uk/role/user-researcher/">
 
-Ayrım: **Product Designer ≠ UI Designer ≠ Graphic Designer.** UI Designer daha çok arayüz katmanına odaklanır; Product Designer problem tanımından itibaren sürece girer. Graphic Designer marka ve görsel iletişim tarafındadır.
+**UX Researcher** (kullanıcı araştırmacısı), ürünü kullanan insanları anlamak için araştırma planlar ve yürütür. Ekibin kararlarını kanıta dayandırır.
 
-### Product Engineer
+**Business Analyst** (iş analisti), bir iş problemini anlar. İhtiyacı, tasarım ve test için kullanılabilecek gereksinimlere çevirir. Süreçleri, kuralları ve veriyi inceler.
 
-**Product Engineer**, yalnızca verilen görevi kodlamayan, ürünün *ne olması gerektiğine*, *nasıl görüneceğine* ve *nasıl çalışacağına* dair karara da katılan geliştiricidir.
+</Outside>
 
-Klasik ayrımda tasarımcı ekranı çizer, geliştirici uygular ve ikisi arasında **bilgi kaybı** olur. Product Engineer bu kaybı, aynı kişinin her iki tarafa da hâkim olmasıyla azaltır. Küçük ekiplerde en verimli roldür; büyük ekiplerde "spesifikasyonu sorgulayan geliştirici" anlamına gelir. "Ekip küçük; ayrı tasarımcı yok, product engineer olarak hem akışı kurguluyorum hem uyguluyorum."
+## Kodu yazan ve ayakta tutanlar
 
-Bu rolün tanımı henüz oturmuş değil; **şirketten şirkete anlamı değişiyor.** İş görüşmesinde ne kastedildiğini sor. Ayrıca **Product Engineer ≠ Full-stack developer**: full-stack *teknik kapsamı* (ön + arka yüz), Product Engineer *karar kapsamını* (ürün + uygulama) anlatır. Bir kişi ikisi birden olabilir.
+**Geliştiriciler** ürünü kodlar. **Product Engineer**, ürünün ne olması gerektiği kararına da katılan geliştiricidir. Tasarım ile kod arasındaki bilgi kaybını azaltır. Bu unvanın anlamı şirketten şirkete değişir; görüşmede ne kastedildiğini sor.
 
-### Tech Lead ve Engineering Manager
+**Tech Lead** (TL), teknoloji ve mimari kararlarının sahibidir. **Engineering Manager** (EM), kimin ne üzerinde çalıştığından ve ekibin gelişiminden sorumludur.
 
-Bir ekipte "hangi teknoloji, hangi mimari, hangi standart" sorularının bir sahibi olmalıdır; bu **Tech Lead**'dir (TL). Kimin ne üzerinde çalıştığı, kimin gelişmesi gerektiği ise ayrı bir iştir; bu da **Engineering Manager**'ın (EM) işidir.
+**QA** (kalite güvencesi), ürünü yayından önce sistemli biçimde dener. Boş bırakılan alanları, çok uzun metinleri, yavaş bağlantıyı sınar. **DevOps / SRE** ise kodun canlıda ayakta kalmasını sağlar: yayın hattı, sunucular, izleme.
 
-Mimari kararlarda ve teknik itirazlarda TL, kaynak ve zaman tartışmalarında EM devrededir. "Kütüphane seçimini TL onaylamalı, tek başımıza karar veremeyiz."
+## Ekibin etrafındakiler
 
-## Kalite ve yayını sağlayanlar
+**Paydaş** (stakeholder), ürünün sonucundan etkilenen ya da karara söz hakkı olan herkestir: yönetici, satış, hukuk, müşteri hizmetleri. Paydaşları baştan tanımak, iş bittikten sonra gelen "bu böyle olmamalıydı" itirazını önler.
 
-### QA (Quality Assurance)
+**Paydaş ≠ kullanıcı.** Kullanıcı ürünü kullanır; paydaş ürünün sonucuyla ilgilenir. İstekleri çelişebilir. Satış "butonu büyüt" der, kullanıcı rahatsız olur.
 
-**QA**, ürünün beklendiği gibi çalıştığını yayından önce sistematik olarak kontrol eden roldür. Geliştirici kendi yazdığı şeyi test ederken kendi varsayımlarının içinde kalır. QA ürünü "kullanıcı gibi ama kötü niyetli" bir gözle dener: boş bırakılan alanlar, çok uzun metinler, yavaş bağlantı, geri tuşu.
+**Çapraz işlevli ekip** (cross-functional team), bir işi baştan sona bitirmek için gereken rollerin hepsini içinde barındırır. Tasarımcı, geliştirici ve PM aynı ekipte olunca iş dışarı çıkmadan biter.
 
-Staging ortamında çalışır; bir hata raporu geldiyse muhtemelen QA'den gelmiştir: "QA staging'de üç bug açtı; ikisi görsel, biri akışı kırıyor." **QA ≠ test yazan geliştirici:** otomatik test yazmak geliştiricinin işi olabilir, QA daha çok senaryo ve kabul kontrolüdür. Küçük ekiplerde ayrı bir QA yoktur, iş ekibe dağılır.
+<Case>
 
-### DevOps ve SRE
+Demlik'te bir sorunun gideceği kapı şöyle:
 
-Kod yazmak ile kodun **canlıda ayakta kalması** ayrı işlerdir. **DevOps / SRE** (Site Reliability Engineering) yayın hattını, sunucuları ve izlemeyi kuran rol ve yaklaşımdır. Deploy sorunlarında, çökmelerde, performans krizlerinde devreye girer. Küçük projelerde bu işin çoğunu Vercel gibi platformlar üstlenir; ayrı bir rol gerekmez.
+- "Favori sipariş neden bu çeyrekte?" → **Elif** (Product Manager)
+- "Bu iş sıradaki sprinte giriyor mu?" → **Deniz** (Product Owner)
+- "Kampüs lansmanı tarihine yetişecek miyiz?" → **Leyla** (Project Manager)
+- "İade kuralları çelişiyor, hangisi geçerli?" → **Ayşe** (Business Analyst)
+- "Öğrenciler sabah ne kadar önceden sipariş veriyor?" → **Mert** (UX Researcher)
+- "Takım neden hep sprint sonunda sıkışıyor?" → **Kaan** (Scrum Master)
 
-## Ekibin dışındaki ve etrafındaki herkes
+Kampüs projesinde kimin neyi yaptığı ve kimin onayladığı bir RACI tablosunda yazılı.
 
-### Stakeholder (paydaş)
+</Case>
 
-**Stakeholder**, ürünün sonucundan etkilenen veya karara söz hakkı olan herkestir: yönetici, satış, pazarlama, hukuk, müşteri destek, bazen müşterinin kendisi. Bir ürün yalnızca kullanıcı için değil, birçok tarafın kısıtları içinde yapılır. Bu tarafları önceden tanımak, iş bittikten sonra gelen "ama bu böyle olmamalıydı" itirazını engeller.
-
-Kickoff toplantısında ilk yapılan şeylerden biri paydaş listesini çıkarmaktır. "Fiyat sayfasını yayınlamadan önce hukuk ve satıştan onay almamız gerek."
-
-**Stakeholder ≠ kullanıcı.** Kullanıcı ürünü kullanır; stakeholder ürünün sonucuyla ilgilenir. İkisi çoğu zaman farklı kişilerdir ve **istekleri çelişebilir**: satış "şu butonu büyüt" der, kullanıcı rahatsız olur.
-
-### Cross-functional team (çapraz işlevli ekip)
-
-Roller ayrı departmanlarda otursaydı her adım için başka bir departmandan sıra beklenirdi. **Cross-functional team**, bir işi baştan sona bitirebilmek için gereken tüm rolleri içinde barındıran ekiptir: tasarımcı, geliştirici ve PM aynı ekipte olunca iş dışarı çıkmadan biter. Şirket organizasyon şemalarında "squad" ya da "pod" adıyla da geçer; "squad" adı Spotify'ın yayınladığı modelden yaygınlaştı. "Ödeme squad'ı bu işi tek başına bitirebilir, başka ekibe bağımlılığımız yok."
-
-<Compare>
-<Pane title="Ne yapılacak, neden?">
-
-- **PM:** ürünün sonucu, ne ve neden
-- **PO:** backlog sırası, ekibin önceliği
-- **Stakeholder:** kısıtlar, onaylar
-
-</Pane>
-<Pane title="Nasıl yapılacak?">
-
-- **Product Designer:** akış, yapı, arayüz
-- **Product Engineer / geliştirici:** uygulama
-- **Tech Lead:** teknik standart, mimari
-
-</Pane>
-</Compare>
+<Tool slug="raci" />
 
 <Lenses>
 <Lens role="product-designer">
 
-Bir sorun ya da talep geldiğinde, doğru kapıyı çalmak günler kazandırır:
+- **Doğru kapıyı çal.** "Neden var?" PM'e, "ne zaman?" PO'ya, "yapılabilir mi?" Tech Lead'e gider.
+- **Araştırmacıyla ortak çalış.** Kanıt onda, çözüm sende; ikisi birlikte güçlüdür.
+- **İlk hafta gerçek dağılımı sor.** Kim onaylar, kim bilgilendirilir? Bir RACI tablosu varsa iste.
 
-- "Bu özellik neden var, hâlâ gerekli mi?" → **PM**
-- "Bu sprint'e girecek mi, hangi sırada?" → **PO**
-- "Bu teknik olarak yapılabilir mi, hangi kütüphane?" → **Tech Lead / geliştirici**
-- "Bu ekran beklediğim gibi çalışıyor mu?" → **QA ile birlikte staging'de**
-- "Bunu yayınlamadan kim onaylamalı?" → **Stakeholder listesi**
+</Lens>
+<Lens role="product-manager">
 
-İlk gün yapacağın en değerli şey: ekibe katıldığında bu rollerin **gerçek isimlerini ve gerçek sınırlarını** sormak.
+- **Ne ve neden senin sorun; nasıl ve ne zaman değil.** Bu sınırı korumak tasarımcıya ve takıma alan açar.
+- **PO ile ayrıysanız iş bölümünü yaz.** Kim müşteriye, kim backlog'a bakıyor? Belirsizlik kararları çift sahipli yapar.
+- **Paydaş listesini baştan çıkar.** Hukuk ve satış en son değil, en başta duyulmalı.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Takımın tek öncelik kaynağı sensin.** Takıma doğrudan gelen istekleri backlog'a yönlendir.
+- **PM ile sınırı netleştir.** Strateji ve sıra kararları aynı kişide değilse kimin neye karar verdiğini yazın.
+- **Scrum Master'la ortaklık kur.** O takımın nasıl çalıştığına, sen neyin yapıldığına bakarsın.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Product Manager ile karıştırılma.** İlk toplantıda kendi alanını söyle: plan, risk, bütçe, teslimat.
+- **Paydaş haritasını erkenden çıkar.** Onay ve itirazlar takvimi en çok buradan etkiler.
+- **Kimin neyi onayladığını RACI ile yaz.** Tek "hesap veren" yoksa iş sahipsizdir.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Takımın yöneticisi değilsin.** Takım kendini yönetir; sen bunu mümkün kılarsın.
+- **Rol çatışmalarını görünür kıl.** PM ve PO aynı işe farklı öncelik veriyorsa takım ikiye bölünür.
+- **Engeli doğru kişiye taşı.** Teknik engel Tech Lead'e, öncelik engeli PO'ya gider.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Paydaşla takım arasında köprü sensin.** Paydaşın dilini gereksinime, takımın sorusunu paydaşa çevirirsin.
+- **PO ile iş bölümünü netleştir.** Sen ihtiyacı analiz edersin, PO sıraya karar verir.
+- **QA'yı erken katılımcı yap.** Kabul kriterlerini birlikte yazmak test edilebilirliği garanti eder.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Araştırma sorusunu PM ve tasarımcıyla birlikte kur.** Kimsenin sormadığı soruya verilen cevap kullanılmaz.
+- **Paydaşları bulgulara davet et.** Kullanıcıyı kendi gözleriyle gören paydaş daha zor itiraz eder.
+- **Paydaş ≠ kullanıcı ayrımını koru.** Paydaşın görüşü kullanıcı kanıtı yerine geçmez.
 
 </Lens>
 </Lenses>
 
 <Summary>
 
-- Rol adları şirketten şirkete kayar; ilk iş gerçek dağılımı sormak.
-- PM *ne ve neden*, Project Manager *ne zaman ve nasıl* der; PO backlog'un tek sahibidir.
-- Product Designer problemden çözüme tasarım kararı verir; Product Engineer ürün kararına da katılan geliştiricidir.
-- TL teknik kararın, EM ekibin sorumlusu; QA yayından önce kontrol eder; DevOps/SRE kodun canlıda ayakta kalmasını sağlar.
-- Stakeholder kullanıcı değildir; istekleri çelişebilir. Cross-functional ekipte işi baştan sona bitirecek herkes bir aradadır.
+- Rol adları şirketten şirkete değişir; yeni bir ekipte ilk iş gerçek dağılımı sormaktır.
+- Product Manager ne ve neden, Product Owner sıradaki iş, Project Manager zaman, bütçe ve risk sorusunu sorar.
+- Scrum Master takımın etkinliğinden hesap verir; takımın yöneticisi değildir.
+- Tasarımcı çözümü kurgular, araştırmacı kanıtı üretir, iş analisti ihtiyacı gereksinime çevirir.
+- Paydaş kullanıcı değildir ve istekleri çelişebilir; çapraz işlevli ekip işi dışarı çıkmadan bitirir.
 
 </Summary>
 
@@ -142,12 +181,24 @@ Bir sorun ya da talep geldiğinde, doğru kapıyı çalmak günler kazandırır:
 
 <SelfCheck question="Product Manager ile Project Manager arasındaki fark nedir?">
 
-Product Manager *ne* yapılacağına ve *neden* yapılacağına karar verir, ürünün sonucundan sorumludur. Project Manager işin *ne zaman ve nasıl* teslim edileceğine, plan ve koordinasyona odaklanır. İkisi de "PM" diye kısaltılır.
+Product Manager neyin ve neden yapılacağına karar verir, ürünün sonucundan sorumludur. Project Manager işin söz verilen kapsam, zaman ve bütçe içinde teslim edilmesini yönetir. İkisi de "PM" diye kısaltılır.
 
 </SelfCheck>
 
-<SelfCheck question="Stakeholder ile kullanıcı aynı kişi midir? Neden önemli?">
+<SelfCheck question="Paydaş ile kullanıcı aynı kişi midir? Neden önemli?">
 
-Hayır. Kullanıcı ürünü kullanır; stakeholder ürünün sonucuyla ilgilenir (yönetici, satış, hukuk gibi). İkisinin istekleri çelişebilir; stakeholder'ları baştan tanımak, iş bittikten sonra gelen itirazları azaltır.
+Hayır. Kullanıcı ürünü kullanır; paydaş ürünün sonucuyla ilgilenir. İstekleri çelişebilir. Paydaşları baştan tanımak, iş bittikten sonra gelen itirazları azaltır.
+
+</SelfCheck>
+
+<SelfCheck question="Takıma iki farklı kişiden iki çelişen öncelik geliyor. Scrum'da bu çelişkiyi kim çözer, takım ne yapmalı?">
+
+Backlog'un sırası Product Owner'ın sorumluluğudur. Takım iki isteği de PO'ya yönlendirmeli; PO bunları tek bir sıralı listeye çevirir. Takım kendi başına birini seçerse, öncelik kaynağı ikiye bölünür.
+
+</SelfCheck>
+
+<SelfCheck question="Yeni katıldığın bir şirkette 'PM bunu onaylasın' deniyor. İlk sorman gereken soru ne?">
+
+Hangi PM'in kastedildiğini: Product Manager mı, Project Manager mı? Sonra o şirkette onayın gerçekten kimde olduğunu sor. Rol adları şirkete göre değişir; bir RACI tablosu varsa bu soruların cevabı oradadır.
 
 </SelfCheck>

@@ -1,0 +1,73 @@
+---
+/**
+ * A grid of numbers with their size shaded: a cohort retention table, a risk
+ * heat map. Every cell prints its value — the shade only helps the eye find
+ * the pattern. Five fixed steps from the surface to the action colour; the
+ * text switches to the dark ink on the two lightest-on-top steps, so every
+ * cell keeps its contrast (computed, see ADR-020).
+ */
+import DiagramFigure from "../DiagramFigure.astro";
+import DataTable from "../DataTable.astro";
+import { fits } from "./util";
+
+interface Props {
+  label: string;
+  caption: string;
+  rows: string[];
+  cols: string[];
+  values: (number | null)[][];
+  format?: "percent" | "number";
+  /** Value that maps to the strongest shade (default: the largest value). */
+  max?: number;
+  rowTitle?: string;
+}
+
+const { label, caption, rows, cols, values, format = "number", max, rowTitle = "" } = Astro.props;
+
+const ROW_LABEL = 112;
+const CELL = 56;
+const CELL_H = 36;
+const TOP = 26;
+const top = max ?? Math.max(...values.flat().filter((v): v is number => v !== null));
+const level = (v: number) => Math.min(4, Math.floor((v / (top || 1)) * 4.999));
+const show = (v: number | null) => (v === null ? "—" : format === "percent" ? `%${v}` : String(v));
+for (const row of rows) if (!fits(row, ROW_LABEL - 10, "sub")) throw new Error(`Heatmap satır etiketi sığmıyor: "${row}"`);
+const width = ROW_LABEL + cols.length * CELL + 4;
+const height = TOP + rows.length * CELL_H + 4;
+---
+
+<DiagramFigure label={label} caption={caption}>
+  <svg viewBox={`0 0 ${width} ${height}`} style={`--dg-min: ${Math.min(width, 640)}px`} role="img" aria-label={label} class:list={{ "dg-narrow": width <= 360 }}>
+    <title>{label}</title>
+    {rowTitle && <text class="dg-sub" x="4" y="16">{rowTitle}</text>}
+    {
+      cols.map((col, j) => (
+        <text class="dg-sub" x={ROW_LABEL + j * CELL + CELL / 2} y="16" text-anchor="middle">
+          {col}
+        </text>
+      ))
+    }
+    {
+      rows.map((row, i) => (
+        <>
+          <text class="dg-sub dg-strong" x="4" y={TOP + i * CELL_H + CELL_H / 2 + 4}>
+            {row}
+          </text>
+          {cols.map((_, j) => {
+            const v = values[i]?.[j] ?? null;
+            const l = v === null ? -1 : level(v);
+            return (
+              <>
+                <rect class={`dg-heat dg-heat--${l < 0 ? "none" : l}`} x={ROW_LABEL + j * CELL + 2} y={TOP + i * CELL_H + 2} width={CELL - 4} height={CELL_H - 4} rx="4" />
+                <text class={l >= 3 ? "dg-on-action" : "dg-sub dg-strong"} x={ROW_LABEL + j * CELL + CELL / 2} y={TOP + i * CELL_H + CELL_H / 2 + 4} text-anchor="middle">
+                  {show(v)}
+                </text>
+              </>
+            );
+          })}
+        </>
+      ))
+    }
+  </svg>
+  <DataTable slot="data" caption={label} head={[rowTitle || "", ...cols]} rows={rows.map((row, i) => [row, ...cols.map((_, j) => show(values[i]?.[j] ?? null))])} />
+</DiagramFigure>

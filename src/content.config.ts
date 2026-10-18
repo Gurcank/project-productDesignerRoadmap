@@ -70,6 +70,10 @@ const lessons = defineCollection({
     includeTerms: z.array(z.string()).default([]),
     /** Words whose shared definition is the wrong one here ("header" in page anatomy). */
     skipTerms: z.array(z.string()).default([]),
+    /** 2 = written to lesson standard v2 (docs/icerik/ders-standardi.md); lint:lessons enforces it. */
+    standard: z.union([z.literal(1), z.literal(2)]).default(1),
+    /** Step ids that should be read first. */
+    requires: z.array(z.string()).default([]),
   }),
 });
 
@@ -98,4 +102,70 @@ const roles = defineCollection({
   }),
 });
 
-export const collections = { topics, categories, quizzes, lessons, roles };
+/**
+ * Quizzes written for the site (src/authored/quizzes/<kategori>.json). One for a
+ * category the material has no quiz for, or — with `overrides: true` — a
+ * rewrite that replaces the imported one (role-neutral, scenario questions).
+ * Lesson standard v2 asks for at least eight questions.
+ */
+const authoredQuizzes = defineCollection({
+  loader: glob({ pattern: "*.json", base: "./src/authored/quizzes" }),
+  schema: z.object({
+    category: z.string(),
+    overrides: z.boolean().default(false),
+    sources: z.array(z.object({ label: z.string(), url: z.string().url() })).min(1),
+    items: z
+      .array(
+        z.object({
+          question: z.string(),
+          answer: z.string(),
+          /** Shown only to these roles (and in Keşif); omitted = everyone. */
+          roles: z.array(z.string()).optional(),
+        }),
+      )
+      .min(8),
+  }),
+});
+
+/**
+ * Araçlar → şablonlar (plan §3.4): src/tools/sablonlar/<slug>/index.mdx is the
+ * page — what the template is for, when, who owns it. A "belge" template keeps
+ * its filled example and its blank copy beside it (ornek.md, bos.md); a
+ * "tablo" template carries its columns and example rows in `table`, from which
+ * the page, the Markdown and the CSV are all generated.
+ */
+const templates = defineCollection({
+  loader: glob({
+    pattern: "*/index.mdx",
+    base: "./src/tools/sablonlar",
+    generateId: ({ entry }) => entry.split("/")[0]!,
+  }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    kind: z.enum(["belge", "tablo"]),
+    /** Role ids that usually own or use it. */
+    roles: z.array(z.string()).min(1),
+    /** Step ids (category/slug) that teach it. */
+    lessons: z.array(z.string()).default([]),
+    sources: z.array(z.object({ label: z.string(), url: z.string().url() })).min(1),
+    table: z
+      .object({
+        columns: z.array(z.string()).min(2),
+        example: z.array(z.array(z.string())).min(1),
+        blankRows: z.number().int().positive().default(6),
+      })
+      .optional(),
+  }),
+});
+
+const templateDocs = defineCollection({
+  loader: glob({
+    pattern: "*/{ornek,bos}.md",
+    base: "./src/tools/sablonlar",
+    generateId: ({ entry }) => entry.replace(/\.md$/, ""),
+  }),
+  schema: z.object({}),
+});
+
+export const collections = { topics, categories, quizzes, lessons, roles, authoredQuizzes, templates, templateDocs };

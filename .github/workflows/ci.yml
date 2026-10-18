@@ -36,6 +36,10 @@ jobs:
       - name: İçerik doğrulaması
         run: npm run validate
 
+      # Lesson standard v2: structure, a visual, lenses, readability (Ateşman).
+      - name: Ders standardı
+        run: npm run lint:lessons
+
       - name: Derleme
         run: npm run build
 

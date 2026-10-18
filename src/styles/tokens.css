@@ -131,6 +131,17 @@
   --c-area-sistem-operasyon: oklch(0.8 0.12 var(--hue-sistem-operasyon));
   --c-area-yapay-zeka: oklch(0.8 0.12 var(--hue-yapay-zeka));
 
+  /* Illustrations (src/assets/illustrations): the only colours an illustration
+     may use, so every drawing sits in the same night sky as the page. */
+  --c-illu-ink: var(--star-100);
+  --c-illu-line: var(--space-500);
+  --c-illu-surface: var(--space-800);
+  --c-illu-deep: var(--space-1000);
+  --c-illu-glow: var(--nebula-cyan-400);
+  --c-illu-warm: var(--gold-300);
+  --c-illu-green: var(--aurora-400);
+  --c-illu-star: var(--starlight-white);
+
   /* Depth: an edge light on top, a soft dark drop below. */
   --elev-1: 0 1px 0 oklch(1 0 0 / 0.05) inset;
   --elev-2: 0 1px 0 oklch(1 0 0 / 0.06) inset, 0 18px 40px -20px oklch(0.05 0.03 270 / 0.95);

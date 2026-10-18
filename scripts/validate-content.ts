@@ -288,6 +288,25 @@ for (const id of ROLE_IDS) {
   }
 }
 
+/*
+ * Illustrations (plan §3.3): theme classes only, so a drawing can never bring
+ * its own colours into the night sky; a viewBox so it scales; no script or
+ * outside reference, since it is inlined into the page; and small.
+ */
+const ILLUSTRATIONS = path.join(ROOT, "src/assets/illustrations");
+const MAX_ILLUSTRATION = 12 * 1024;
+if (existsSync(ILLUSTRATIONS)) {
+  for (const name of readdirSync(ILLUSTRATIONS).filter((file) => file.endsWith(".svg"))) {
+    const file = `src/assets/illustrations/${name}`;
+    const svg = readFileSync(path.join(ILLUSTRATIONS, name), "utf8");
+    if (/#[0-9a-f]{3,8}\b|rgba?\(|hsla?\(|oklch\(/i.test(svg)) problems.push({ file, message: "ham renk var; yalnız il-* sınıfları" });
+    if (/\s(fill|stroke)="(?!none")/.test(svg)) problems.push({ file, message: "fill/stroke özniteliği var; rengi il-* sınıfı verir" });
+    if (!/viewBox="/.test(svg)) problems.push({ file, message: "viewBox yok" });
+    if (/<script|href=|xlink:/i.test(svg)) problems.push({ file, message: "betik ya da dış referans var" });
+    if (Buffer.byteLength(svg) > MAX_ILLUSTRATION) problems.push({ file, message: `${Buffer.byteLength(svg)} bayt (en çok ${MAX_ILLUSTRATION})` });
+  }
+}
+
 // Not an error: a category no route takes seriously is still reachable, but it
 // is worth a second look.
 const orphaned = routeOrder.filter(

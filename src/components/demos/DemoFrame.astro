@@ -1,0 +1,87 @@
+---
+/**
+ * Shell for every interactive demo (plan §3.2). A demo is a figure: a title,
+ * one line on what to try, the control itself, and a caption that states the
+ * lesson in prose — so the page teaches the same thing without the script.
+ *
+ * Budget: one demo's script ≤5 KB gzip, at most two demos per lesson. Logic
+ * lives in src/lib/demos/*.ts as pure, tested functions; the .astro file only
+ * wires inputs to them.
+ */
+interface Props {
+  title: string;
+  hint: string;
+  caption: string;
+}
+
+const { title, hint, caption } = Astro.props;
+---
+
+<figure class="demo" role="group" aria-label={title}>
+  <div class="demo__head">
+    <p class="demo__badge">Dene</p>
+    <p class="demo__title">{title}</p>
+    <p class="demo__hint">{hint}</p>
+  </div>
+  <div class="demo__body">
+    <slot />
+  </div>
+  <figcaption class="demo__caption">{caption}</figcaption>
+</figure>
+
+<style is:global>
+  .demo {
+    margin-block: var(--spacing-8);
+    padding: var(--spacing-4);
+    border: 1px solid color-mix(in oklab, var(--c-action) 45%, var(--c-border));
+    border-radius: var(--radius-lg);
+    background-color: var(--c-surface-raised);
+  }
+
+  @media (min-width: 40rem) {
+    .demo {
+      padding: var(--spacing-6);
+    }
+  }
+
+  .demo__head {
+    display: grid;
+    gap: var(--spacing-1);
+  }
+
+  .demo__badge {
+    justify-self: start;
+    padding: 0 var(--spacing-2);
+    border-radius: var(--radius-full);
+    background-color: var(--c-action);
+    color: var(--c-on-action);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .demo__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--c-text);
+  }
+
+  .demo__hint {
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .demo__body {
+    margin-block-start: var(--spacing-4);
+  }
+
+  .demo__caption {
+    margin-block-start: var(--spacing-4);
+    padding-block-start: var(--spacing-3);
+    border-top: 1px solid var(--c-border);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--c-text-secondary);
+  }
+</style>

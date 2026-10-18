@@ -1,0 +1,17 @@
+---
+/**
+ * "Derine in": detail that makes the lesson complete without making it heavy —
+ * exceptions, history, the second-order points. Folded by default, so the main
+ * text stays short and the reader opts in.
+ */
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<details class="deeper">
+  <summary class="deeper__summary"><span class="deeper__badge">Derine in</span> {title}</summary>
+  <div class="deeper__body"><slot /></div>
+</details>

@@ -1,0 +1,139 @@
+---
+/**
+ * Who does which step: a process across lanes (roles, teams, systems). The
+ * vocabulary of BPMN at its simplest — a step is a box, a decision is a
+ * diamond, start and end are circles — so a process model can be read before
+ * BPMN itself is taught. Wide (lanes × columns), so it scrolls on a phone.
+ */
+import DiagramFigure from "../DiagramFigure.astro";
+import DataTable from "../DataTable.astro";
+import { boxClass, wrap, type Tone } from "./util";
+
+interface Step {
+  id: string;
+  lane: number;
+  col: number;
+  title: string;
+  kind?: "task" | "decision" | "start" | "end";
+  tone?: Tone;
+}
+
+interface Flow {
+  from: string;
+  to: string;
+  label?: string;
+}
+
+interface Props {
+  label: string;
+  caption: string;
+  lanes: string[];
+  steps: Step[];
+  flows: Flow[];
+}
+
+const { label, caption, lanes, steps, flows } = Astro.props;
+
+const LANE_W = 112;
+const COL_W = 132;
+const LANE_H = 92;
+const BOX_W = 108;
+const BOX_H = 52;
+const cols = Math.max(...steps.map((s) => s.col)) + 1;
+const width = LANE_W + cols * COL_W + 8;
+const height = lanes.length * LANE_H + 4;
+const centre = (step: Step) => ({ x: LANE_W + step.col * COL_W + COL_W / 2, y: step.lane * LANE_H + LANE_H / 2 });
+const byId = new Map(steps.map((step) => [step.id, step]));
+for (const flow of flows) {
+  if (!byId.has(flow.from) || !byId.has(flow.to)) throw new Error(`Swimlane: bilinmeyen adım ${flow.from} → ${flow.to}`);
+}
+const placed = steps.map((step) => ({ ...step, ...centre(step), lines: step.kind === "start" || step.kind === "end" ? [] : wrap(step.title, BOX_W - 14, "sub", 3) }));
+const half = (step: Step) => (step.kind === "start" || step.kind === "end" ? 14 : step.kind === "decision" ? 30 : BOX_W / 2);
+const halfH = (step: Step) => (step.kind === "start" || step.kind === "end" ? 14 : step.kind === "decision" ? 30 : BOX_H / 2);
+---
+
+<DiagramFigure label={label} caption={caption}>
+  <svg viewBox={`0 0 ${width} ${height}`} style={`--dg-min: ${Math.min(width, 640)}px`} role="img" aria-label={label}>
+    <title>{label}</title>
+    {
+      lanes.map((lane, i) => (
+        <>
+          <rect class="dg-box" x="2" y={i * LANE_H + 2} width={width - 4} height={LANE_H - 2} rx="6" />
+          {wrap(lane, LANE_W - 20, "label", 2).map((line, j) => (
+            <text class="dg-label" x="12" y={i * LANE_H + LANE_H / 2 + 4 + (j - 0.5) * 15}>
+              {line}
+            </text>
+          ))}
+          <path class="dg-line" d={`M${LANE_W} ${i * LANE_H + 8} V${(i + 1) * LANE_H - 6}`} />
+        </>
+      ))
+    }
+    {
+      flows.map((flow) => {
+        const a = byId.get(flow.from)!;
+        const b = byId.get(flow.to)!;
+        const pa = centre(a);
+        const pb = centre(b);
+        const sameLane = a.lane === b.lane;
+        const x1 = sameLane ? pa.x + half(a) : pa.x;
+        const y1 = sameLane ? pa.y : pa.y + (b.lane > a.lane ? halfH(a) : -halfH(a));
+        const x2 = sameLane ? pb.x - half(b) - 3 : pb.x - half(b) - 3;
+        const y2 = pb.y;
+        const d = sameLane ? `M${x1} ${y1} H${x2}` : `M${x1} ${y1} V${y2} H${x2}`;
+        return (
+          <>
+            <path class="dg-line dg-line--accent" d={d} />
+            <path class="dg-line dg-line--accent" d={`M${x2 - 6} ${y2 - 5} l6 5 -6 5`} stroke-linejoin="round" />
+            {flow.label && (
+              <text class="dg-sub dg-accent" x={sameLane ? (x1 + x2) / 2 : x1 + 6} y={sameLane ? y1 - 6 : (y1 + y2) / 2}>
+                {flow.label}
+              </text>
+            )}
+          </>
+        );
+      })
+    }
+    {
+      placed.map((step) =>
+        step.kind === "start" || step.kind === "end" ? (
+          <>
+            <circle class={boxClass(step.kind === "end" ? "progress" : "accent")} cx={step.x} cy={step.y} r="14" stroke-width={step.kind === "end" ? 3 : 1.5} />
+            <text class="dg-sub" x={step.x} y={step.y + 30} text-anchor="middle">{step.title}</text>
+          </>
+        ) : step.kind === "decision" ? (
+          <>
+            <path class={boxClass(step.tone)} d={`M${step.x} ${step.y - 30} l30 30 -30 30 -30 -30 Z`} />
+            {wrap(step.title, 120, "sub", 2).map((line, i) => (
+              <text class="dg-sub" x={step.x} y={step.y - 40 + i * 13} text-anchor="middle">
+                {line}
+              </text>
+            ))}
+            <text class="dg-label" x={step.x} y={step.y + 5} text-anchor="middle">?</text>
+          </>
+        ) : (
+          <>
+            <rect class={boxClass(step.tone)} x={step.x - BOX_W / 2} y={step.y - BOX_H / 2} width={BOX_W} height={BOX_H} rx="7" />
+            {step.lines.map((line, i) => (
+              <text class="dg-sub dg-strong" x={step.x} y={step.y + 4 + (i - (step.lines.length - 1) / 2) * 13} text-anchor="middle">
+                {line}
+              </text>
+            ))}
+          </>
+        ),
+      )
+    }
+  </svg>
+  <DataTable
+    slot="data"
+    caption={label}
+    head={["Adım", "Kim", "Sonra"]}
+    rows={steps.map((step) => [
+      step.title,
+      lanes[step.lane] ?? "",
+      flows
+        .filter((flow) => flow.from === step.id)
+        .map((flow) => `${byId.get(flow.to)!.title}${flow.label ? ` (${flow.label})` : ""}`)
+        .join(", ") || "—",
+    ])}
+  />
+</DiagramFigure>

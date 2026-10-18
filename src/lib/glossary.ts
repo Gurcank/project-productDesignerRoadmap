@@ -9,6 +9,7 @@
  */
 import { render } from "astro:content";
 import { getPublishedCategories, topicSlug } from "~/lib/content";
+import { loadAuthoredTerms } from "~/lib/authored-terms";
 
 export interface GlossaryEntry {
   /** The card heading, e.g. "Pull request". */
@@ -98,6 +99,25 @@ export async function getGlossary(): Promise<GlossaryEntry[]> {
         });
       });
     }
+  }
+
+  // Terms written for the site's own categories (src/authored/terms), listed
+  // once their step is published.
+  for (const authored of loadAuthoredTerms()) {
+    const owner = published.find(({ category }) => category.slug === authored.category);
+    const topic = owner?.topics.find((entry) => topicSlug(entry) === authored.topic);
+    if (!owner || !topic) continue;
+    entries.push({
+      term: authored.term,
+      english: authored.english ?? null,
+      definition: authored.definition,
+      categorySlug: owner.category.slug,
+      categoryTitle: owner.category.title,
+      topicTitle: topic.data.title,
+      sectionNumber: topic.data.sectionNumber ?? "",
+      href: `/${owner.category.slug}/${authored.topic}/`,
+      letter: bucketLetter(authored.term),
+    });
   }
 
   entries.sort(

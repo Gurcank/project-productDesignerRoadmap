@@ -1,0 +1,87 @@
+---
+/**
+ * A loop: sprint, build–measure–learn, PDCA. Drawn as a chain with a return
+ * arrow down the left side instead of a ring — a ring of six boxes does not fit
+ * a 360px phone at a readable size, and a chain reads in the same order a
+ * screen reader does. The return arrow is what makes it a cycle.
+ */
+import DiagramFigure from "../DiagramFigure.astro";
+import { boxClass, wrap, type Tone } from "./util";
+
+interface Step {
+  title: string;
+  sub?: string;
+  tone?: Tone;
+}
+
+interface Props {
+  label: string;
+  caption: string;
+  steps: Step[];
+  /** What the return arrow carries back ("öğrenilen", "geri bildirim"). */
+  back?: string;
+}
+
+const { label, caption, steps, back } = Astro.props;
+if (steps.length < 3 || steps.length > 7) throw new Error(`Cycle: 3–7 adım olmalı (${steps.length})`);
+
+const X = 56;
+const W = 290;
+const GAP = 20;
+const rows = steps.map((step) => {
+  const title = wrap(step.title, W - 28, "label", 1);
+  const sub = step.sub ? wrap(step.sub, W - 28, "sub", 2) : [];
+  return { ...step, title, sub, h: 30 + sub.length * 15 + 8 };
+});
+let y = 10;
+const placed = rows.map((row) => {
+  const top = y;
+  y += row.h + GAP;
+  return { ...row, top };
+});
+const height = y - GAP + 14;
+const first = placed[0]!;
+const last = placed.at(-1)!;
+---
+
+<DiagramFigure label={label} caption={caption}>
+  <svg class="dg-narrow" viewBox={`0 0 360 ${height}`} role="img" aria-label={label}>
+    <title>{label}</title>
+    {
+      placed.map((row, index) => (
+        <>
+          <rect class={boxClass(row.tone)} x={X} y={row.top} width={W} height={row.h} rx="8" />
+          <text class="dg-label" x={X + 14} y={row.top + 21}>
+            {index + 1}. {row.title[0]}
+          </text>
+          {row.sub.map((line, i) => (
+            <text class="dg-sub" x={X + 14} y={row.top + 38 + i * 15}>
+              {line}
+            </text>
+          ))}
+          {index < placed.length - 1 && (
+            <>
+              <path class="dg-line dg-line--accent" d={`M${X + W / 2} ${row.top + row.h} V${row.top + row.h + GAP - 2}`} />
+              <path class="dg-line dg-line--accent" d={`M${X + W / 2 - 6} ${row.top + row.h + GAP - 9} l6 8 6 -8`} stroke-linejoin="round" />
+            </>
+          )}
+        </>
+      ))
+    }
+
+    {/* The return: from the last step back up to the first. */}
+    <path
+      class="dg-line dg-line--progress"
+      d={`M${X} ${last.top + last.h / 2} H${X - 26} V${first.top + first.h / 2} H${X - 3}`}
+      stroke-linejoin="round"
+    />
+    <path class="dg-line dg-line--progress" d={`M${X - 10} ${first.top + first.h / 2 - 6} l7 6 -7 6`} stroke-linejoin="round" />
+    {
+      back && (
+        <text class="dg-sub dg-progress" transform={`translate(${X - 32} ${(first.top + last.top + last.h) / 2}) rotate(-90)`} text-anchor="middle">
+          {back}
+        </text>
+      )
+    }
+  </svg>
+</DiagramFigure>
