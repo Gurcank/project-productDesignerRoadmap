@@ -16,9 +16,10 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Altı filtre, her biri iki seçenekli: tasarımda küçük bir panel. Arkada ise onlarca farklı sorgu şekli.
 
@@ -45,7 +46,8 @@ Bu bir tasarım kararıdır ve genelde atlanır:
 - **URL'de:** paylaşılabilir, geri tuşu çalışır, yenilemede kaybolmaz. Neredeyse her zaman doğru cevap.
 - **Yalnızca bellekte:** paylaşılamaz, geri tuşu filtreyi değil sayfayı bırakır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Filtre listesini kısa tut ve gerçekten kullanılanı ölç.** Her filtre kalıcı bir maliyettir.
 - **Sonuç sayısını göstermek zorunda mısın?** "1.000+" çoğu zaman yeterli ve çok daha ucuz.
@@ -53,7 +55,8 @@ Bu bir tasarım kararıdır ve genelde atlanır:
 - **Filtreyi URL'e yaz;** paylaşılabilirlik ve geri tuşu sonradan eklenmesi zor davranışlardır.
 - **Filtre sonucu boşsa ne olacak?** En dar filtreyi gevşetmeyi öner; kullanıcıyı çıkmazda bırakma.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

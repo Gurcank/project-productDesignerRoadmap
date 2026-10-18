@@ -18,9 +18,10 @@ sources:
 flags: ["degisken", "emin-degil"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 > **Hukuki uyarı:** Bu ders genel bilgilendirmedir, hukuki tavsiye değildir. Ben hukukçu değilim. Gerçek bir projede avukat görüşü almadan hareket etme. Mevzuat ve kurul kararları değişir; aşağıdaki ayrıntıları birincil kaynaktan doğrula.
 
@@ -60,7 +61,8 @@ Kişisel verinin Türkiye dışındaki bir sunucuya ya da hizmet sağlayıcıya 
 
 Kişisel veri sızması durumunda otoriteye ve etkilenen kişilere bildirim yapma yükümlülüğü vardır. Bir ihlal yaşandığında ne yapılacağı **önceden** planlanmış olmalıdır; olay anında öğrenilmez. Bildirimin metni ve kullanıcıya nasıl iletileceği de tasarlanması gereken bir şeydir. "İhlal senaryosu için bir iletişim şablonumuz var mı? Olay anında yazmaya çalışmayalım."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Aydınlatmayı ve rızayı ayrı tasarla;** aydınlatma için onay kutusu koyma, rıza isteğe bağlı ve geri alınabilir olsun.
 - **Her form alanı için "neden topluyoruz?" sor;** gereksizi çıkar.
@@ -68,7 +70,8 @@ Kişisel veri sızması durumunda otoriteye ve etkilenen kişilere bildirim yapm
 - **Üçüncü parti servis seçerken veri nerede tutuluyor sorusunu hukukla birlikte sor.**
 - **İhlal bildirim şablonunu önceden hazırla.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

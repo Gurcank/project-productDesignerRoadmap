@@ -13,9 +13,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Sunucudan gelen verinin yönetimi, bu bölümde bilmenin seni teknik konuşmalarda ayırdığı ayrımlardan biridir.
 
@@ -29,13 +30,15 @@ Sunucudan gelen veri **senin verin değildir:** sunucudaki verinin bir **kopyas�
 
 Bu araçlar yükleme, hata, boş ve **"eski veri gösterilirken tazeleniyor"** durumlarını hazır olarak yönetir. Yani **senin tasarlaman gereken durumları ortaya çıkarırlar.** Optimistic UI desteği de hazır gelir. Dördüncü bir durumun varlığını (eski veri + tazeleme) bilmek, durum ekranlarını tasarlarken ekstra bir hâli akla getirir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her veri çeken ekran için dört hâli çiz:** yükleniyor, boş, hata ve "eski veri + tazeleniyor".
 - **Tazeleme sırasında ne gösterileceğini belirt:** eski veri soluk mu, ince bir ilerleme çizgisi mi?
 - **Optimistic UI kullanılacaksa hata durumunda geri dönüşü tasarla.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -13,10 +13,11 @@ sources:
     url: "https://www.svpg.com/product-discovery/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Toplantıda bir karar aldınız: "kayıt formunda telefon numarası zorunlu olmayacak." Herkes başını salladı. İki hafta sonra geliştirici zorunlu yapmış; "ben öyle anlamıştım" diyor. Kimse haksız değil: karar sözlüydü ve beş kişi beş farklı şey hatırlıyor.
 
@@ -83,14 +84,16 @@ Ajans işlerinde ve serbest çalışmada standarttır. Bir müşteriden iş alı
 | Spec | Tam olarak ne olacak? | PM, tasarımcı, geliştirici | Geliştirmeden önce |
 | Brief | Bu tasarım/içerik işinin hedefi ve sınırı ne? | Müşteri ya da PM; yoksa tasarımcı | İşe başlamadan önce |
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Yazılmamış kararı yazıya dök.** Toplantı biter bitmez üç satırlık bir özet gönder: ne karar verdik, kim sorumlu, neyi sonraya bıraktık.
 - **Belgede eksik olanı sor.** "Boş durumda ne olacak?", "hata olursa ne görecek?", "kapsam dışı ne?" Bu üç soru çoğu belgenin açığını yakalar.
 - **Brief yoksa sen yaz.** İş alırken müşteriden brief gelmediyse, hedefi ve kısıtı kendin yazıp onaylat. Bu hem seni korur hem kapsamı çizer.
 - **Spec'i tasarım dosyasının yanına koy.** Figma'nın yanında "kurallar" belgesi yoksa, tasarım ve kural birbirinden ayrılır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

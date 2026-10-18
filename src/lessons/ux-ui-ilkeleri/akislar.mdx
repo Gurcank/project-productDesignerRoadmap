@@ -13,10 +13,11 @@ sources:
     url: "https://www.nngroup.com/articles/error-message-guidelines/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import FlowExample from "~/components/lesson/FlowExample.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir kayıt ekranı tasarladın: temiz, güzel, bir de buton. Geliştirici soruyor: "E-posta zaten kayıtlıysa ne olacak? Doğrulama e-postası gelmezse? Kullanıcı sayfayı kapatırsa?" Tasarımda cevap yok. Çünkü **ekran** çizdin, ama **akış** çizmedin.
 
@@ -81,7 +82,8 @@ Tasarımın ilk çıktısıdır; Figma, FigJam, Whimsical gibi araçlarda çizil
 | 404 | "Sayfa yok." | "Bu sayfayı bulamadık. Ana sayfaya dön ya da ara." |
 | Ödeme hatası | "Hata oluştu." | "Kartın reddedildi. Başka kart dene ya da bankanla görüş." |
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 Bir akış çizdikten sonra her kutuya şu sorular için bir cevap yaz:
 
@@ -93,7 +95,8 @@ Bir akış çizdikten sonra her kutuya şu sorular için bir cevap yaz:
 
 Bu beş soru, kabul kriterlerinin de iskeletidir: geliştiriciye ne tasarladığını ve ne tasarlamadığını açıkça verir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

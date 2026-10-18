@@ -15,11 +15,12 @@ sources:
     url: "https://www.nngroup.com/articles/ux-writing-study-guide/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir silme ekranında iki buton var: "Tamam" ve "İptal". Kullanıcı "Tamam"a basıyor ve aboneliğini iptal ediyor. Ne yaptığını bilmiyordu: "Tamam" neyi onaylıyor? Butonu "Aboneliği iptal et" yapsan, aynı ekran bambaşka bir güven üretirdi.
 
@@ -97,7 +98,8 @@ Form doğrulamalarında, ödeme akışlarında, bağlantı hatalarında karşın
 
 **Güvenlik gerektiren yerlerde mesaj bilinçli olarak belirsiz tutulur:** giriş ekranında "e-posta bulunamadı" demek saldırgana hangi hesapların var olduğunu söyler. Orada "e-posta veya şifre hatalı" denir. (Kimlik doğrulama bölümünde bu ayrıntıya döneceksin.)
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Butonu eylemle adlandır.** "Tamam" yerine kullanıcının neyi onayladığını söyle.
 - **Her alana kalıcı label ver.** Placeholder'ı yalnızca ek örnek için kullan.
@@ -105,7 +107,8 @@ Form doğrulamalarında, ödeme akışlarında, bağlantı hatalarında karşın
 - **Ton rehberi yoksa en azından hata ve başarı için ayrı ton belirle.**
 - **Metni tasarımdan sonra değil, birlikte yaz.** Gerçek metinle tasarlamak taşma ve uzunluk sorunlarını erken gösterir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

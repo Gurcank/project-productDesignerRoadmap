@@ -16,9 +16,10 @@ sources:
     url: "https://docs.stripe.com/api/idempotent_requests"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Raporu indir" butonuna bastın, 40 saniye boyunca bir şey olmadı. Ya da basar basmaz "hazır olunca e-posta göndereceğiz" dendi. İkincisi arka plan işleriyle mümkün; ve tasarlanması gereken bir ara durum doğurur.
 
@@ -38,13 +39,15 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 **Önkoşul:** yeniden deneme, işin **idempotent** olmasını gerektirir. Yoksa aynı e-posta üç kez gider ya da aynı ödeme iki kez alınır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Uzun süren her iş için "alındı" ekranı ve takip yolu tasarla:** bildirim, e-posta ya da durum sayfası.
 - **Zamanlanmış e-postaların saatini ve sıklığını kullanıcı kontrolüne ver.**
 - **Başarısız olan arka plan işleri için kullanıcıya görünen hata kanalı düşün.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

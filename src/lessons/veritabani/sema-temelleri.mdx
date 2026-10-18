@@ -12,9 +12,10 @@ sources:
     url: "https://www.postgresql.org/docs/current/ddl-constraints.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir ekranı tasarlamadan önce bakabileceğin en faydalı belge: veritabanı şeması.
 
@@ -34,13 +35,15 @@ Her sütun ne tür veri tutacağı (metin, sayı, tarih, doğru/yanlış), **bo�
 
 Karıştırma: `NULL` (değer yok) ile boş metin (`""`) ve sıfır farklı şeylerdir. "Değer girilmemiş" ile "bilerek boş bırakılmış" ayrımı bazen ürün açısından anlamlıdır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarlamadan önce şemaya (ya da API yanıtına) bak,** nullable alanları listele.
 - **Her nullable alan için boş hâlini çiz** ve teslimde işaretle.
 - **Varsayılan değerlerin kullanıcıya nasıl görüneceğini sor** (örneğin varsayılan saat dilimi).
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

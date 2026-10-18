@@ -16,9 +16,10 @@ sources:
     url: "https://dmarc.org/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Yayın günü. Site hazır, alan adı satın alındı. Peki alan adı siteye nasıl bağlanıyor? DNS kayıtlarıyla. Kavramlar Web Temelleri bölümündeydi; burada pratik tarafı var.
 
@@ -40,13 +41,15 @@ Yayın gününün en sık takıldığı yer burasıdır. Kayıtları eklemek, se
 
 **DNS propagation (yayılma süresi)**, bir DNS değişikliğinin dünya genelinde geçerli hâle gelmesi için geçen süredir. Değişiklik anında olmaz; bazı kullanıcılar bir süre eski adresi görür. Bu, **yayın gününde "bende açılmıyor" şikâyetlerinin en yaygın sebebidir** ve genelde bir hata değildir. "Geçiş öncesi TTL'i düşürelim; değişiklik daha hızlı yayılsın."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Yayın günü kontrol listesine DNS adımlarını ekle:** CNAME/A kayıtları, e-posta kayıtlarının taşınması, TTL.
 - **"Bende açılmıyor" şikâyetinde önce propagation'ı düşün.**
 - **Alan adı e-posta kayıtlarını (MX, SPF, DKIM, DMARC) yayın öncesi kaydet.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

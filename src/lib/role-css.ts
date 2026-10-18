@@ -23,6 +23,13 @@ export function roleCss(): string {
   for (const state of ROLE_STATES) {
     rules.push(`html[data-role="${state}"] [data-for-role]:not([data-for-role~="${state}"]){display:none!important}`);
     rules.push(`html[data-role="${state}"] [data-off~="${state}"]{${OFF_ROUTE}}`);
+    // Lenses: your own lens in the open, every other one in "Diğer roller".
+    rules.push(
+      `html[data-role="${state}"] .lenses__primary .lens:not([data-lens="${state}"]),` +
+        `html[data-role="${state}"] .lenses__others .lens[data-lens="${state}"]{display:none!important}`,
+    );
   }
+  // No role chosen: nothing is "yours", so every lens waits in the group.
+  rules.push(`html:not([data-role]) .lenses__primary .lens{display:none!important}`);
   return rules.join("\n");
 }

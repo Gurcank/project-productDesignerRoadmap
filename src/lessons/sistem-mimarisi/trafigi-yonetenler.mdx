@@ -11,9 +11,10 @@ sources:
     url: "https://learn.microsoft.com/en-us/azure/architecture/microservices/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir mimari diyagramında kullanıcı ile uygulama arasında iki kutu görürsün: biri yükü dağıtır, biri isteği karşılar ve yönlendirir. İkisi de trafiği yöneten katmanlardır.
 
@@ -27,12 +28,14 @@ Bir mimari diyagramında kullanıcı ile uygulama arasında iki kutu görürsün
 
 Gateway bir **tek arıza noktası** hâline gelebilir; kendisi de yedekli kurulmalıdır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Diyagramda bu kutuları gördüğünde "çökerse ne olur?" sor.**
 - **Hız sınırı ve kimlik doğrulama hatalarının hangi katmandan döneceğini öğren;** kullanıcıya gösterilecek ekran buna bağlı.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

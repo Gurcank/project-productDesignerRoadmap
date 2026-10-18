@@ -18,11 +18,12 @@ sources:
     url: "https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Deploy'dan sonra site bozuldu. Ne yapılır? Panikle düzeltmeye mi çalışılır, yoksa geri mi alınır? Bu derste doğru refleksi ve geçmişi okumanın yollarını göreceksin.
 
@@ -57,13 +58,15 @@ Deploy'dan sonra site bozuldu. Ne yapılır? Panikle düzeltmeye mi çalışıl�
 
 **Blame senin için faydalıdır:** "bu boşluk değeri neden 22px?" sorusunu, ilgili satırın hangi commit ve hangi PR ile geldiğine bakarak cevaplayabilirsin ve o PR'daki tartışmayı okuyabilirsin. "Blame'e baktım; bu değer altı ay önce bir hotfix'te elle girilmiş, token'dan gelmiyor." Adı talihsizdir; amaç suçlu bulmak değil, **bağlamı bulmaktır.**
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Olay anında "önce revert" refleksini ekiple konuş;** tasarım olarak geri dönüş mesajını (bakım ekranı) hazırla.
 - **Sürüm notlarını (release) ve etiketleri izle:** "hangi sürümde ne değişti?" sorusunu kendin cevapla.
 - **Bir değerin nedenini bulmak için blame'e bak;** PR tartışmasında bağlam çıkar.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

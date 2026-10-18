@@ -19,6 +19,8 @@ import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import KeyboardDemo from "~/components/lesson/KeyboardDemo.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Aşağıda iki "buton" var. Gözle bakınca aynılar. Birine Tab tuşuyla ulaşabilirsin, ötekine ulaşamazsın; birine Enter ile basabilirsin, ötekine basamazsın. Dene.
 
@@ -102,7 +104,8 @@ Bu sitedeki her sayfada tek bir `h1` var, bölgeler (`header`, `nav`, `main`, `a
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Teslimde eleman türünü yaz:** link mi buton mu, hangi başlık seviyesi.
 - **Tıklanabilir her şeyin hangi eleman olacağını belirle.** Kart tıklanıyorsa link ya da buton olmalı.
@@ -110,7 +113,8 @@ Bu sitedeki her sayfada tek bir `h1` var, bölgeler (`header`, `nav`, `main`, `a
 - **Sayfa iskeletinde bölgeleri adlandır:** ana içerik, gezinti, yan bilgi, altbilgi.
 - **Tasarımı klavyeyle ve ekran okuyucuyla "okunur" düşün:** Tab sırası ve başlık listesi mantıklı mı?
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

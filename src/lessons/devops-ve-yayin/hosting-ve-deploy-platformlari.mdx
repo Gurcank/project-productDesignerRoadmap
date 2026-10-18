@@ -23,9 +23,10 @@ sources:
 flags: ["degisken", "emin-degil"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 > **Bu ders dosyadaki en hızlı eskiyen içeriklerden biri.** Aşağıdaki konumlandırmalar materyalin Eylül 2026 tarihli ikincil kaynaklarına dayanır. **Fiyatları karar vermeden önce platformun kendi sayfasından doğrula.**
 
@@ -55,13 +56,15 @@ Fiyattan önce şu sorular:
 
 Kullanıma dayalı faturalamanın bilinen bir riski var: **bot ve tarayıcı trafiği faturayı şişirebilir.** Yayınlanmamış bir projenin, yapay zekâ botlarının taraması yüzünden dört haneli bir fatura ürettiğine dair vaka anlatımları var; bu belirli vakayı doğrulamadım ama risk yapısal olarak gerçektir. Savunma: **harcama sınırı ve uyarı kurmak,** bot trafiğini engellemek (WAF) ve hız sınırı uygulamak. Bir projeyi yayına almadan önce bunları kurmak, sonradan faturayı tartışmaktan kolaydır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Önizleme ortamını platform seçiminin ilk kriterlerinden biri yap.**
 - **Ücretsiz katmanın ticari kullanım koşulunu** müşteri projesi için kontrol et.
 - **Yayından önce harcama sınırını ve uyarıyı kurduğundan emin ol.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -17,11 +17,12 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Her ekip dalları kendi alışkanlığıyla kullanmaz; anlaşılmış bir strateji vardır. Bu derstekiler sektör eğilimidir ve zamanla değişir.
 
@@ -67,13 +68,15 @@ Güçlü otomatik test ve feature flag altyapısı yoksa risklidir: yarım iş d
 
 **Özet karar:** tek sürüm destekleyen bir web projesinde **GitHub Flow** doğal başlangıçtır. Tempo artıp ekip büyüdükçe **trunk-based**'e evrilir. **Git Flow**, yalnızca çoklu sürüm ya da katı denetim gereksinimi varsa tercih edilir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Ekibin stratejisini öğren:** tasarım teslimlerinin PR akışında ne zaman girdiğini planla.
 - **Feature flag'li bir ekipte** yeni tasarımı kademeli açma (yüzde yüzde) kararını ürün tarafıyla konuş.
 - **Uzun yaşayan tasarım dalları** önermek yerine küçük adımlar öner.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

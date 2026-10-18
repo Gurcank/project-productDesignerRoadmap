@@ -17,9 +17,10 @@ sources:
     url: "https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bu ders bir terim listesi değil, bir **kontrol listesidir.** Auth akışında tasarımcının cevaplaması gereken soruları topluyor. Her başlık kendi başına bir toplantı gündemi olabilir.
 
@@ -54,7 +55,8 @@ Bu ders bir terim listesi değil, bir **kontrol listesidir.** Auth akışında t
 
 Şifre değişti, yeni cihazdan giriş yapıldı, MFA kapatıldı, e-posta değişti: **bunların hepsi kullanıcıya bildirilmelidir.** Bu bildirimler, hesap ele geçirmenin fark edilmesini sağlayan tek mekanizma olabilir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Bu dersi bir tasarım kontrol listesi olarak kullan:** her auth akışı için maddeleri işaretle.
 - **Oturum süresi ve yarım kalan iş davranışını** ürün gereksinimi olarak yaz.
@@ -62,7 +64,8 @@ Bu ders bir terim listesi değil, bir **kontrol listesidir.** Auth akışında t
 - **Hesap kurtarma akışını ana akış kadar tasarla.**
 - **Güvenlik bildirim e-postalarını da tasarla** (metin, bağlantı, "bu ben değildim" eylemi).
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

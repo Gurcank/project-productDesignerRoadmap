@@ -17,13 +17,14 @@ additions:
   - "Kaç kişiyle görüşmenin yeterli olduğu: nitel kullanılabilirlik testlerinde küçük örneklem tekrarlanan sorunları bulur, ama yüzde hesabı yapılamaz (NN/g)."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Outside from "~/components/lesson/Outside.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Analitik raporuna bakıyorsun: kullanıcıların %40'ı kayıt akışının ikinci adımında çıkıyor. İyi, bir sayı elde ettin. Peki *neden* çıkıyorlar? Sayı sana bunu söylemiyor. Bunu söylemek için başka bir yöntem gerekiyor.
 
@@ -112,7 +113,8 @@ Veri tek başına karar üretmez. Üç kelimeyi ayırmak gerekir:
 
 Ayrım: **journey ≠ user flow.** Journey daha geniş ve duygusaldır, ürün dışını da kapsar. User flow ise ürün içindeki ekran ve karar adımlarını gösterir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Sayıyla başla, nedenle bitir.** Analitik sana *nerede* sorun olduğunu söyler; görüşme *neden* olduğunu.
 - **Bulguyu içgörüye çevirmeden sunma.** "Şunu gördük" yetmez; "bu yüzden şunu öneriyoruz" de.
@@ -120,7 +122,8 @@ Ayrım: **journey ≠ user flow.** Journey daha geniş ve duygusaldır, ürün d
 - **Varsayımlarını yazıya dök.** Yazılmamış varsayım, ekibin gözünde gerçek olur.
 - **Ekran dışına bak.** En büyük kopma bazen e-postada, bazen destek hattında yaşanır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

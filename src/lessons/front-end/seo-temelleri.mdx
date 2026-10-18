@@ -20,9 +20,10 @@ sources:
 skipTerms: ["title"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir sitenin güzel olması, bulunması demek değil. Arama motorları siteni nasıl okuyor, bir bağlantı paylaşıldığında ne görünüyor? Bunun çoğu kod değil; **içerik ve tasarım kararı.**
 
@@ -52,14 +53,16 @@ Klasik bir yayın hatası: **staging'deki "botları engelle" ayarının canlıya
 
 **Favicon**, tarayıcı sekmesinde ve yer imlerinde görünen küçük ikondur. Marka tanınırlığı için etkilidir ve sık unutulur. Küçük boyutta okunabilmesi için logonun sadeleştirilmiş sürümü kullanılır; tam logo 16px'te okunmaz.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her sayfa türü için başlık ve açıklama şablonu yaz** (ürün adı, kategori adı…).
 - **Paylaşım görselini şablon olarak tasarla** ve oranını sabitle.
 - **Favicon için sadeleştirilmiş logo üret;** 16px'te dene.
 - **Yayın öncesi robots.txt'i kontrol listesine ekle.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

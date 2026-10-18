@@ -19,10 +19,11 @@ includeTerms: ["section", "headline", "subheadline"]
 skipTerms: ["header"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import HeroWire from "~/components/lesson/HeroWire.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir sayfaya girdin, üç saniye baktın ve ne olduğunu anlamadın. Çıktın. Bu üç saniyenin geçtiği yere **hero** denir: sayfanın en üstündeki, ana mesajı ve birincil eylemi taşıyan büyük bölüm. Tasarım tartışmalarının en yoğunlaştığı yerdir, çünkü kullanıcının kalıp kalmayacağına burada karar verir.
 
@@ -50,7 +51,8 @@ Uyarı: arka plandaki metnin kontrastı, arka planın **her noktasında** ölç�
 
 **Announcement bar (duyuru çubuğu)**, header'ın üstünde duran ince, tek satırlık duyuru şeridir: kampanya, yeni özellik, kritik bilgi. Kapatılabilir olmalı ve kapatıldığında hatırlanmalıdır; her sayfada yeniden çıkması sinir bozar. "Kapatınca 30 gün geri gelmesin." Bu, sistem durumunu bildiren **alert banner** ile aynı şey değildir: announcement pazarlamadır ve kapatılabilir; alert banner kalıcıdır ve bir sonraki derslerde gelecek.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Hero'yu üç soruyla test et.** Bir meslektaşına üç saniye göster, üçünü cevaplayabiliyor mu?
 - **Her hero için tek birincil CTA seç.** İkincisi varsa ikincil stile indir.
@@ -58,7 +60,8 @@ Uyarı: arka plandaki metnin kontrastı, arka planın **her noktasında** ölç�
 - **Arka plan efektinin nedenini yaz:** "dikkati CTA'ya çeker". Nedeni yoksa kaldır.
 - **Kontrastı arka planın en açık ve en koyu noktasında ölç.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

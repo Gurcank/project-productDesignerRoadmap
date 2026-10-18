@@ -14,9 +14,10 @@ sources:
     url: "https://nodejs.org/en/learn"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bu bölümün amacı seni back-end geliştiricisi yapmak değil. Üç şey için buradasın:
 
@@ -40,13 +41,15 @@ Web Temelleri bölümünde request/response döngüsünü kurmuştun; burası on
 
 **Karıştırma:** ön yüze gönderilen ortam değişkenleri **gizli değildir.** Tarayıcıya giden her şey görülebilir. Gerçek sırlar yalnızca sunucuda kalan değişkenlerde tutulur.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Bu özellik neden bu kadar zor?" sorusunu arka yüz maliyetiyle ilişkilendir:** liste ekranına eklenen her alan bir sorgu, bir istek ya da bir bağımlılık olabilir.
 - **Ortam farklılıklarını ciddiye al:** staging'de çalışan bir akış production'da bir ortam değişkeni yüzünden bozulabilir.
 - **Gizli olması gereken bilgiyi ön yüzde istemeyi bırak.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

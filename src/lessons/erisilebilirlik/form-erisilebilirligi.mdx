@@ -20,6 +20,8 @@ import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir kayıt formu on iki alan içeriyor. Kullanıcı "Kaydol"a basıyor, sayfanın tepesinde kırmızı bir yazı beliriyor: "Formda hata var." Hangi alan? Neden? On iki alanın arasında kayboluyor. Ekran okuyucu kullanıcısı için ise durum daha kötü: hata yazısı hiç duyurulmuyor bile.
 
@@ -86,7 +88,8 @@ Bu sitenin arama alanı etiketli (görünmez ama ekran okuyucuya okunan bir etik
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her alana kalıcı etiket tasarla** ve teslimde "etiket ilişkili" yaz.
 - **Hata durumunu üç parça tasarla:** alanın görünümü (renk + ikon), mesaj metni, duyuru.
@@ -94,7 +97,8 @@ Bu sitenin arama alanı etiketli (görünmez ama ekran okuyucuya okunan bir etik
 - **Autocomplete değerlerini form tasarımına ekle.** Hangi alan ad, hangisi e-posta, hangisi adres?
 - **Zorunluluğu azınlığı etiketleyerek göster.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

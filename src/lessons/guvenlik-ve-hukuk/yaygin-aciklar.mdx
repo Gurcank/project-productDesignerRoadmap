@@ -18,11 +18,12 @@ sources:
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Clickjacking_Defense_Cheat_Sheet.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bu ders bir saldırı kataloğu değil; adlarını duyacağın ve ne olduğunu anlaman gereken saldırıların kısa tanıtımı. Her birinin tasarım bağlantısına dikkat et.
 
@@ -69,14 +70,16 @@ Bu ders bir saldırı kataloğu değil; adlarını duyacağın ve ne olduğunu a
 
 **Clickjacking**: sitenin görünmez bir çerçeve içinde başka bir sayfaya gömülüp kullanıcının farkında olmadan tıklamasının sağlanmasıdır. Kullanıcı bir yere tıkladığını sanır, aslında altta duran uygulamanda bir işlem onaylar. Savunması, sitenin başka sayfalara gömülmesini engelleyen başlıklardır. "Uygulamanın iframe içine gömülmesini engelleyelim."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Kullanıcı biçimlendirebilsin" isteğinde** sınırlı editör + sunucu temizleme öner.
 - **URL'de kimlik gösterirken IDOR'u hatırla:** her istekte yetki kontrolü şart.
 - **URL önizleme, içe aktarma gibi özelliklerde SSRF riskini ekiple konuş.**
 - **Kritik eylem ekranlarının iframe içinde gösterilmesini engellemeyi iste.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

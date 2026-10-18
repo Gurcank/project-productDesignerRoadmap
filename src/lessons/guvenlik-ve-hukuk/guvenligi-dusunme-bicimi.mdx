@@ -12,9 +12,10 @@ sources:
     url: "https://top10.owasp.org/2025/0x00_2025-Introduction"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Güvenlik, "geliştiricinin işi" sanılan ama tasarımcının sürekli içine düştüğü bir alan. Sebep basit: **güvenlik açıklarının çoğu bir tasarım kararının sonucudur.** Birkaç örnek bölümün tamamını özetliyor:
 
@@ -36,13 +37,15 @@ Bu bölümün amacı seni güvenlik uzmanı yapmak değil; **kendi kararlarını
 
 **Attack surface (saldırı yüzeyi)**, bir sisteme dışarıdan dokunulabilecek tüm noktaların toplamıdır. Her yeni özellik, her yeni form alanı, her yeni üçüncü parti entegrasyon yüzeyi büyütür. **Tasarım karşılığı:** kaldırılan bir özellik, korunması gereken bir yüzeyin de kaldırılması demektir. **Sadelik burada bir güvenlik faydası üretir.** "Bu dosya yükleme özelliğini gerçekten istiyor muyuz? Saldırı yüzeyini belirgin biçimde büyütüyor."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Yeni özellik önerirken "bu saldırı yüzeyini nasıl değiştiriyor?" diye sor** (dosya yükleme, URL girişi, üçüncü parti gömme).
 - **Tehdit modeli toplantısına katıl:** en yüksek riskli kullanıcı akışlarını (giriş, ödeme, hesap kurtarma) sen bilirsin.
 - **Gereksiz özelliği ve alanı kaldırmayı bir güvenlik kazanımı olarak savun.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

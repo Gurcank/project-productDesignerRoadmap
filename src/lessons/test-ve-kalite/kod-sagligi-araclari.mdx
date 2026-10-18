@@ -22,6 +22,8 @@ skipTerms: ["Domain name","Hook","Measure","domain name","alan adı","hook","mea
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir kod incelemesinde "burada boşluk eksik", "tırnak tek olmalı" yorumları görürsen, o ekipte araçlar eksik demektir. Bu araçlar bu tür tartışmayı baştan ortadan kaldırır.
 
@@ -45,13 +47,15 @@ Bu sitede de kalite kapıları ayrı komutlarla çalışır: içerik doğrulamas
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarım kalitesi kontrollerinden (erişilebilirlik, görsel fark) hangilerinin zorunlu kapı, hangilerinin uyarı olacağını ekiple belirle.**
 - **Formatter ve linter varsa kod incelemesinde biçim yorumu yazma.**
 - **Zorunlu kapı listesini kısa tut;** ekibin hızını koru.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

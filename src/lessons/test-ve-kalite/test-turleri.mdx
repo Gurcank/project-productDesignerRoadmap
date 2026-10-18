@@ -15,9 +15,10 @@ sources:
 skipTerms: ["Domain name","Validation","domain name","alan adı","validation","doğrulama"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Test dendiğinde tek bir şey akla gelir; ama farklı testler farklı hataları yakalar.
 
@@ -39,13 +40,15 @@ E2E testlerin kırılganlığı gerçek bir sorundur; tasarım değişince testl
 
 **Smoke test (duman testi)**: yayından hemen sonra "en temel şeyler çalışıyor mu?" kontrolü; bozuk bir yayını dakikalar içinde yakalar. **Regression test (gerileme testi)**: daha önce düzeltilmiş bir hatanın geri gelmediğini doğrulayan test. **Her hata düzeltmesinin yanına bir test eklenmesi** disiplininden doğar: aynı hata bir daha sessizce dönemez. "Bu hatayı düzelttik; yanına bir regression testi ekleyelim ki tekrar etmesin."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **E2E kapsamına alınacak kritik akışları sen öner:** kayıt, giriş, ödeme, arama.
 - **Arayüzü erişilebilir adlarla ve rollerle tasarla;** hem erişilebilirlik hem test kararlılığı kazanır.
 - **Bir hata düzeltildiğinde "regression testi var mı?" diye sor.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

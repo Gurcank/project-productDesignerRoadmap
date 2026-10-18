@@ -28,6 +28,8 @@ import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Önceki derslerde sayfanın yapısını gördün. Bu derste kullanıcının ürünle konuştuğu anlara geçiyoruz: bildirimler, açılır pencereler, ipuçları. Burada bileşenlerin çoğu **birbirine çok benzeyen ama farklı işler yapan çiftler** hâlinde gelir. "Karıştırdığın şeyler" bu yüzden bu bölümün en değerli kısmıdır.
 
@@ -95,7 +97,8 @@ Bu sitedeki terim açıklamaları geniş ekranda bir **tooltip** gibi açılır;
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Modal mı drawer mı?** Kullanıcının bağlamı görmesi gerekiyorsa drawer, tek bir karar istiyorsan modal.
 - **Her modal için dört kuralı yaz:** odak içeri, odak içeride, Esc, odak geri.
@@ -103,7 +106,8 @@ Bu sitedeki terim açıklamaları geniş ekranda bir **tooltip** gibi açılır;
 - **Hata ve kritik bilgiyi toast yerine alert banner ya da alan içinde göster.**
 - **Linkli açıklamayı popover olarak çiz, tooltip olarak değil.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

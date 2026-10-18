@@ -13,12 +13,13 @@ sources:
     url: "https://help.figma.com/hc/en-us/articles/15023124644247-Guide-to-Dev-Mode"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Sprint ortasında geliştirici soruyor: "Bu butona basınca ne olacak? Hata gelirse ne gösteriyoruz?" Tasarımda cevap yok. Dört gün bekleniyor ya da geliştirici tahmin yürütüyor. Bu, sprint'in **en pahalı israfıdır** ve çoğunlukla işin başlamaya *hazır* olmamasından çıkar.
 
@@ -101,7 +102,8 @@ Staging ortamında, yayından önce yapılır; tasarımcının **kalite kapısı
 
 **Sign-off** (onay), yetkili kişinin bir çıktıyı **resmen kabul etmesidir.** Sorumluluğu netleştirir ve sonradan gelen itirazın önüne geçer. Özellikle müşteriyle çalışırken yazılı onay, kapsam tartışmasının kanıtıdır. Tasarım teslimi, yayın öncesi ve sözleşmeli işlerde faturalama öncesi gerekir. "Müşteriden yazılı sign-off almadan geliştirmeye başlamayalım."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **DoR'a "tasarım hazır" yazdır.** Böylece tasarım yetişmeden sprint'e giren iş krizine dönmez.
 - **Handoff'u kontrol listesiyle yap.** Durumlar, boş/hata/yükleme ekranları, responsive: her biri bir madde.
@@ -109,7 +111,8 @@ Staging ortamında, yayından önce yapılır; tasarımcının **kalite kapısı
 - **Design review'ı takvime koy.** İşi "bitti" saymadan önce staging'de kendi gözünle bak.
 - **Yazılı onay iste.** Sözlü "tamam" tartışma çıkınca kanıt olmaz.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

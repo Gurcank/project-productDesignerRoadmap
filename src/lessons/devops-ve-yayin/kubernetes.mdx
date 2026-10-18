@@ -12,9 +12,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 **Kubernetes (K8s)**, çok sayıda konteynerin otomatik olarak dağıtılmasını, ölçeklenmesini, izlenmesini ve çöktüğünde yeniden başlatılmasını yöneten sistemdir (orkestrasyon). Onlarca servis ve yüzlerce konteyner varsa bunları elle yönetmek imkânsızdır; Kubernetes bu işi otomatikleştirir: bir konteyner çökerse yerine yenisini açar, trafik artınca kopya sayısını artırır. Büyük ölçekli ve mikroservis mimarilerinde karşına çıkar. **Seviye 3** terimdir.
 
@@ -24,12 +25,14 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 Kubernetes bir tercih değil, bir **maliyettir:** bir uzmanlık, bir ekip yükü ve bir öğrenme eğrisi getirir. "Kubernetes kullanıyoruz" cümlesi bir üstünlük göstergesi değil, bir **ölçek** göstergesi olmalıdır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Kubernetes'e geçelim" önerisinde** kaç servis, kaç ekip, neden platform yetmiyor sorularını sor.
 - **Kubernetes'in tasarım kararlarına doğrudan etkisi yoktur;** ürün hızına etkisi vardır: ekip zamanını nereye harcıyor?
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

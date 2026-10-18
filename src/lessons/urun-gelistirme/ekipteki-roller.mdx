@@ -14,11 +14,12 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 İlk haftanda bir toplantıya giriyorsun. Biri "bunu PM'e soralım" diyor, bir başkası "ama PO önceliği değiştirmişti", üçüncüsü "TL onaylamazsa olmaz" diyor. Kısaltmalar uçuşuyor ve sen kimin neye karar verdiğini bilmiyorsun.
 
@@ -111,7 +112,8 @@ Roller ayrı departmanlarda otursaydı her adım için başka bir departmandan s
 </Pane>
 </Compare>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 Bir sorun ya da talep geldiğinde, doğru kapıyı çalmak günler kazandırır:
 
@@ -123,7 +125,8 @@ Bir sorun ya da talep geldiğinde, doğru kapıyı çalmak günler kazandırır:
 
 İlk gün yapacağın en değerli şey: ekibe katıldığında bu rollerin **gerçek isimlerini ve gerçek sınırlarını** sormak.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

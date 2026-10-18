@@ -17,9 +17,10 @@ sources:
 flags: ["emin-degil"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Siteye girdiğinde "çerezleri kabul et" bildirimi çıkar. Ama çerezin bir de görünmeyen bir yüzü var: oturumunu taşıyan şey.
 
@@ -41,13 +42,15 @@ Siteye girdiğinde "çerezleri kabul et" bildirimi çıkar. Ama çerezin bir de 
 
 Erişim jetonunu çerez yerine tarayıcının yerel deposunda (`localStorage`) saklamak yaygın bir kalıptır ama **riskli** kabul edilir: `localStorage`'a JavaScript erişebilir; sayfada bir XSS açığı varsa saldırgan jetonu okuyup çalabilir. httpOnly çerez bu riski ortadan kaldırır çünkü JavaScript ona erişemez. "Token localStorage'da duruyor; httpOnly çereze taşımayı değerlendirelim." Bu konu tamamen siyah-beyaz değildir ve mimariye göre farklı yaklaşımlar savunulur; tek doğru cevap gibi sunma. Ama "XSS varsa localStorage'daki jeton okunabilir" kısmı tartışmasızdır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Güvenlik denetimine çerez ayarlarını ekle:** httpOnly, Secure, SameSite.
 - **Çerez onayı ile oturum çerezini karıştırma:** zorunlu (teknik) çerezler onay istemez.
 - **Jetonun nerede saklandığını geliştiriciye sor;** localStorage ise XSS riskini konuş.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

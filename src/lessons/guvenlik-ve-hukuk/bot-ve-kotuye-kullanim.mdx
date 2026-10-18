@@ -11,9 +11,10 @@ sources:
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 İletişim formun spam'le doldu. İlk refleks: "CAPTCHA ekleyelim." Ama bu çoğu zaman ilk değil, son seçenek olmalı.
 
@@ -29,13 +30,15 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 **WAF bir yama değildir:** koddaki açığı kapatmaz, yalnızca bazı saldırıları engeller. "WAF var" cümlesi bir güvenlik açığını mazur göstermez.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Spam sorununda sırayı izle:** honeypot ve hız sınırı → gerekirse CAPTCHA.
 - **CAPTCHA kullanılacaksa erişilebilir alternatifini** (ses, mantık dışı yöntemler, güvenilir cihaz) planla.
 - **Hız sınırına takılan gerçek kullanıcı için mesajı tasarla** (429 durumu).
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

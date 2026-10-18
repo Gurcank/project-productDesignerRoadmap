@@ -13,9 +13,10 @@ sources:
 flags: ["emin-degil"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Toplantıda bir mimari diyagram açılıyor: kutular, oklar, kesikli çerçeveler. Sessizce başını sallıyorsun ama okuyamıyorsun. Bu dersin sonunda okuyabileceksin. Diyagramlar bir dildir; standart bir gösterim yoktur ama yaygın kalıplar vardır.
 
@@ -39,14 +40,16 @@ Toplantıda bir mimari diyagram açılıyor: kutular, oklar, kesikli çerçevele
 
 **C4 modeli** olarak anılan ve diyagramları dört zoom seviyesine ayıran bir yaklaşım yaygın kullanılır: sistem bağlamı, konteyner, bileşen, kod. Kesin detayı doğrulama gerektirir; ama "hangi seviyede konuşuyoruz?" sorusu diyagram tartışmalarında işe yarar: çoğu karışıklık, iki kişinin farklı zoom seviyelerinden konuşmasından çıkar.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Kullanıcı akışını diyagramın üstünde yürü:** ekranındaki her adım hangi kutulardan geçiyor?
 - **Sınırı geçen oklar için hata durumlarını tasarla:** gecikme, zaman aşımı, kimlik hatası.
 - **Eksik parçaları (izleme, önbellek, kuyruk, yedeklilik) toplantıda sor.**
 - **Kendi diyagramlarını (kullanıcı akışı, sitemap) da "hangi zoom seviyesindeyiz?" sorusuyla netleştir.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

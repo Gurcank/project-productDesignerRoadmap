@@ -12,7 +12,7 @@
  */
 import { readFileSync } from "node:fs";
 import type { Element, ElementContent, Root, RootContent, Text } from "hast";
-import { visit } from "unist-util-visit";
+import { SKIP, visit } from "unist-util-visit";
 import termIndex from "../data/generated/term-index.json";
 import termLookup from "../data/generated/term-lookup.json";
 import termAliases from "../data/term-aliases.json";
@@ -200,16 +200,31 @@ export function rehypeTermRefs() {
       const { terms, sorted } = termsFor(file?.path, file?.value);
       // One definition per term for the whole lesson: a field of dotted underlines is not a lesson.
       const used = new Set<string>();
-      markTerms(
-        tree,
-        used,
-        (el) => {
-          const cls = el.properties?.className;
-          return Array.isArray(cls) && cls.some((c) => LESSON_SKIP_CLASSES.includes(String(c)));
-        },
-        terms,
-        sorted,
-      );
+      const skipChrome = (el: Element) => {
+        const cls = el.properties?.className;
+        return Array.isArray(cls) && cls.some((c) => LESSON_SKIP_CLASSES.includes(String(c)));
+      };
+
+      /*
+       * Role lenses render twice and, for most readers, folded away. If a term
+       * first appeared in one, its only tooltip would sit where the reader may
+       * never look — so the prose claims terms first, the lenses get what is left.
+       */
+      type Parent = { type: string; name?: string; children: RootContent[] };
+      const lensGroups: { node: Parent; children: RootContent[] }[] = [];
+      visit(tree, (node) => {
+        const candidate = node as unknown as Parent;
+        if (candidate.type !== "mdxJsxFlowElement" || candidate.name !== "Lenses") return;
+        lensGroups.push({ node: candidate, children: candidate.children });
+        candidate.children = [];
+        return SKIP;
+      });
+
+      markTerms(tree, used, skipChrome, terms, sorted);
+      for (const group of lensGroups) {
+        group.node.children = group.children;
+        markTerms(group.node as unknown as Root, used, skipChrome, terms, sorted);
+      }
       return;
     }
 

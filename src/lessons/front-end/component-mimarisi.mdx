@@ -18,11 +18,12 @@ sources:
 skipTerms: ["state"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Tasarım sistemini Figma'da component, variant ve property'lerle kurdun. Geliştirici aynı sistemi kodda component, props ve state ile kuruyor. İki taraf **aynı fikrin iki dili**ni konuşuyor ve iyi ekiplerde adlar ve sınırlar eşleşiyor. Bu ders o eşleşmeyi gösterir.
 
@@ -67,13 +68,15 @@ Tasarımcı olarak her state'in görsel karşılığını tanımlaman gerekir: "
 
 Bir form alanının değerini kimin tuttuğuyla ilgili ayrım: kod tutuyorsa **kontrollü**, tarayıcı kendisi tutuyorsa **kontrolsüz** bileşendir. Kontrollü bileşen her tuşta değeri kodda gördüğü için anlık doğrulama ve dinamik davranış sağlar ama daha çok yeniden çizim üretir. Kontrolsüz olan daha basit ve hızlıdır. "Form uzun; kontrolsüz yaklaşımla yazalım, her tuşta tüm form yeniden çizilmesin."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Figma property'lerini kodun prop adlarıyla eşleştir.**
 - **Her bileşen için state listesini yaz:** normal, hover, focus, loading, disabled, error.
 - **İç içe geçen içerikler için "çerçeve + içerik" ayrımını çiz;** geliştirici bunu children olarak kurar.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

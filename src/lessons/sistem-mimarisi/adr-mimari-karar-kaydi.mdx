@@ -15,6 +15,8 @@ sources:
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Altı ay sonra biri "neden bunu seçmişiz?" diye soruyor. Kimse hatırlamıyor. **Bu, bölümdeki en doğrudan senin işin olan parça:** kod yazmadan da yazabilirsin ve yazmak seni teknik masada ciddiye aldırır.
 
@@ -42,13 +44,15 @@ Bu sitenin mimari kararları da ADR biçiminde kayıtlıdır: her kararın bağl
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Bir tasarım sistemi ya da bileşen kararı için de ADR yaz:** neden bu kütüphane, hangi alternatifleri değerlendirdik?
 - **Her ADR'de en az iki seçenek ve gerçek bir sonuç bölümü yaz;** "zorlaştırdığı şeyler" dürüstçe listelensin.
 - **Kararın koşullarını (ekip büyüklüğü, süre) yaz;** koşullar değiştiğinde yeniden bakmak meşru olsun.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

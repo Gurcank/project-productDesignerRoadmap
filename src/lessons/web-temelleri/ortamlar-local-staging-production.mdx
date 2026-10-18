@@ -14,10 +14,11 @@ sources:
 flags: []
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Staging'e attım, bakabilir misin?" cümlesi, bir tasarımcının duyacağı en sık cümlelerden biri olacak. Bu cümleyi duyduğunda ne yapman gerektiğini, nereye bakacağını ve neyi kontrol edeceğini bilmen gerekiyor.
 
@@ -65,13 +66,15 @@ Staging ile **preview** ortamı aynı değildir: preview genelde her değişikli
 | Staging | Ekip (dışarıya kapalı) | Canlıya benzer, gerçek değil | Son kontrol, tasarım onayı |
 | Production | Herkes | Gerçek veri | Gerçek kullanım |
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarım incelemesini staging'de yap.** Geliştiricinin bilgisayarında ("local'de bak") ya da canlıda yapılan kontrol, ikisi de geç ya da riskli.
 - **Hız ve animasyon akıcılığını production'a benzeyen ortamda değerlendir.** Dev ortamında her şey daha yavaş görünür.
 - Staging'de bulduğun her farkı not al: boşluk, renk, font, durumlar. Canlıya çıktıktan sonra düzeltmek hem pahalı hem görünür.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -15,10 +15,11 @@ sources:
     url: "https://scrumguides.org/scrum-guide.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Son üç sprint velocity 24; bu sprint 35 puan almak gerçekçi değil." Bu cümleyi duyduğunda üç kelimeyi (velocity, puan, sprint) bilmen gerekiyor, ama daha önemlisi **bu sayıların ne için olmadığını** bilmen gerekiyor.
 
@@ -77,14 +78,16 @@ Standup'ın 15 dakika olması bir timebox'tır. Araştırma işlerinde de kullan
 
 Bir tasarımcı için timebox'ın pratik karşılığı: "Bu akış için üç ana varyant çizeceğim, iki gün." Süre dolunca kalan belirsizliği açıkça söylersin; kusursuz çıktı beklenmez.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Kendi işini göreli tahmin et.** "Bu ekran geçen haftakinin iki katı" demek, "6 saat sürer" demekten daha dürüsttür.
 - **Puanı saate çevirmeye karşı çık.** "1 puan = 4 saat" dendiğinde yöntemin işe yaramadığını nazikçe hatırlat.
 - **Velocity hedef olarak istenirse itiraz et.** Gerekçe: puanlar şişer ve sayı anlamını yitirir.
 - **Belirsiz tasarım işlerini timebox'la.** "İki günlük keşif" sınırlı ve ucuz bir adımdır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

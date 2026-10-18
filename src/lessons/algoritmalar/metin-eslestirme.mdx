@@ -16,9 +16,10 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir arama kutusu "kullanıcı ne yazarsa yazsın bulsun" ister. Arkada bu birkaç ayrı mekanizmadır ve her biri ayrı maliyet ve ayrı yanlış-eşleşme riski taşır.
 
@@ -43,14 +44,16 @@ Türkçe eklerle çalışır: *bileşen, bileşenler, bileşenlerin, bileşenler
 
 Eşleşme bulmak yarısıdır; **hangisinin önce geleceği** diğer yarısı. Tipik ağırlıklar: başlıkta geçen > gövdede geçen, tam kelime > kısmi, yeni > eski. Bu bir ürün kararıdır; belirtilmezse aracın varsayılanı kullanılır ve kimse neden o sıralamanın çıktığını açıklayamaz.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Türkçe kökleme desteğini açıkça sor.**
 - **Yazım toleransı isteyip istemediğine karar ver:** yanlış eşleşmeyi kabul ediyor musun?
 - **Sonuç sıralamasının kuralını yaz;** "alakaya göre" tanımsız bir ifadedir.
 - **Eşleşen kelimeyi vurgula;** kullanıcı sonucun neden geldiğini görmeli, bu güveni doğrudan etkiler.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

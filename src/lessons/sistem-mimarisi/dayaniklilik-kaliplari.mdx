@@ -16,9 +16,10 @@ sources:
     url: "https://learn.microsoft.com/en-us/azure/architecture/patterns/retry"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Ödeme isteği gitti, yanıt gelmedi. Ağ mı koptu, sunucu mu yavaş? İstemci bilemez ve tekrar dener. İşlem tekrar çalışırsa çift çekim olur mu? Dört kalıp bu sorulara cevap verir.
 
@@ -42,14 +43,16 @@ Butonu devre dışı bırakmak istemci tarafı bir önlemdir ve **yeterli değil
 
 **Timeout (zaman aşımı)**, bir isteğin ne kadar bekleneceğinin sınırlanmasıdır. Zaman aşımı olmayan bir istek sonsuza kadar bekleyebilir ve kaynakları kilitler. **Tasarım karşılığı:** zaman aşımı süresi kullanıcının ne kadar bekleyeceğini belirler ve bu süre boyunca ne göreceği tasarlanmalıdır. "Zaman aşımını 10 saniye yapalım; kullanıcı sonsuza kadar spinner izlemesin."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Para ve sipariş gibi eylemler için idempotency'yi gereksinim olarak yaz.**
 - **Zaman aşımı sonrası ekranı tasarla:** "tekrar dene" nedir, çift gönderim riski var mı?
 - **Devre kesildiğinde bölümün nasıl gizleneceğini ya da hata göstereceğini çiz.**
 - **Yeniden deneme gerektiren akışlarda kullanıcıya ilerleme/belirsizlik mesajı ver.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

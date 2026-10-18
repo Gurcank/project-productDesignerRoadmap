@@ -30,6 +30,8 @@ skipTerms: ["layout","header"]
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Hero görselinin boyutu, kaç font ağırlığı yüklendiği, animasyonların ağırlığı: hepsi tasarım kararı, hepsi aynı zamanda **ölçülebilir bir hız maliyeti.** Bu ders, o ölçülerin adlarını ve eşiklerini verir.
 
@@ -77,14 +79,16 @@ Bu sitenin ilk yüklemedeki toplam JavaScript'i 60 KB bütçesinin altında tutu
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Hero görselini bir bütçeyle seç:** hedef boyut ve format teslimde yazılı olsun.
 - **Her görsele oran ve alan ayır;** her dinamik bileşene yer ayır (CLS).
 - **Font ağırlığı sayısını sınırla;** yedek fontu birincil fonta yakın seç.
 - **"Yavaş" geri bildiriminde önce TTFB ve LCP'ye bak;** sorun sunucuda mı ön yüzde mi?
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

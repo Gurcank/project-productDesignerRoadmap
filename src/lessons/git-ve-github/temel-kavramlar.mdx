@@ -15,6 +15,8 @@ sources:
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Beş kavram, Git konuşmalarının yarısı.
 
@@ -44,13 +46,15 @@ Bu sitenin kendi kaynak kodu da bir Git deposudur. Bir değişikliğin diff'i, h
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Bir PR'da önce diff'e bak:** boşluk, renk ve metin değerleri token'lardan mı geliyor, elle mi yazılmış?
 - **Tek mantıklı değişiklik = tek commit:** ekibe önerirsin; geri alma ve inceleme kolaylaşır.
 - **"HEAD", "staging" gibi terimleri duyduğunda** nerede olunduğunu anlamak için bu sözlüğe dön.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

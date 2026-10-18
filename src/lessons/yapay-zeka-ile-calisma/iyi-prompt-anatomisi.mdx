@@ -14,9 +14,10 @@ sources:
     url: "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/multishot-prompting"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir talimatın yedi bileşeni var. Hepsi her seferinde gerekmez ama **eksik olan her bileşen, modelin senin yerine karar verdiği bir yer** demektir.
 
@@ -38,13 +39,15 @@ Bir talimatın yedi bileşeni var. Hepsi her seferinde gerekmez ama **eksik olan
 
 "Eşit üç sütunlu ikon + başlık + iki satır gri metin kartı kullanma. Sebepsiz gradient başlık kullanma. Sıralı olmayan içeriğe 01/02/03 numarası verme."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her talimatta yediyi tara:** hangisi yoksa model onun yerine karar veriyor.
 - **Yasak listeni oluştur ve yeniden kullan:** aynı jenerik kalıplar hep gelir; bir kez yaz, kalıcı talimat dosyasına taşı (sonraki derslerde).
 - **Referans ver:** "şuna benzesin, şuna benzemesin" bir moodboard'dur.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

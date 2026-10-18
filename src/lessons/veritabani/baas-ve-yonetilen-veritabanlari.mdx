@@ -19,9 +19,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Tek başına çalışan bir tasarımcı olarak bir ürün çıkarmak istiyorsun ama arka yüz yazamıyorsun. Hazır servisler tam bunun için var. Bu ders, bu seçeneğin getirdiklerini ve risklerini anlatır.
 
@@ -51,13 +52,15 @@ Sınırları: karmaşık iş kuralları, özel performans ihtiyaçları ya da ka
 
 **Ciddi bir risk kaynağıdır:** RLS yapılandırılmadığında ya da yanlış yazıldığında veritabanı internete açık hâle gelebilir. Materyale göre BaaS ile hızlı ilerleyen projelerde en sık görülen güvenlik açığı budur.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **BaaS tercihini "çıkış maliyeti" sorusuyla birlikte ele al:** ödemeli plana geçersek ne olur, taşınabilir mi?
 - **Yayına çıkmadan önce yetki politikalarının (RLS) yazıldığını ve test edildiğini sor.**
 - **Ücretsiz katmanın sınırlarını (duraklatma, kota) kullanıcı deneyimine etkisiyle düşün.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

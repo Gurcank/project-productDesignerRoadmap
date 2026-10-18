@@ -14,9 +14,10 @@ sources:
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 JWT, token tabanlı yaklaşımın en yaygın biçimi. Adını sık duyarsın ve hakkında iki yaygın yanılgı vardır.
 
@@ -37,13 +38,15 @@ Bu iki gerçek JWT'yi çoğu basit web uygulaması için session'dan daha karma�
 
 **Tasarım karşılığı:** jeton yenileme kullanıcıya **görünmez** olmalıdır. Kullanıcının 15 dakikada bir çıkış yapmış olması bir hatadır. Ama refresh token da süresi dolduğunda kullanıcı gerçekten çıkış yapar ve bu anın nasıl yaşandığı (yarım kalan iş kaybolur mu?) tasarlanmalıdır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Jeton süresi doldu" anını tasarla:** yarım kalan iş korunsun, giriş sonrası aynı yere dönülsün.
 - **Hassas veri gerektiren ekranlarda** (örneğin kullanıcı yetkisi gösteren) jetonun içeriğine güvenme; sunucuda doğrulatılması gerekir.
 - **Oturum süresi kararlarını (access/refresh süresi) ürün kararı olarak yaz.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

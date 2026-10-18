@@ -17,9 +17,10 @@ additions:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir sayfada tıklamaya tepki veren, veri çeken, ekranı güncelleyen her şey ya JavaScript'tir ya da JavaScript'e derlenmiştir. **Tarayıcıda çalışan tek** programlama dilidir. Kavramsal tarafı (event, promise, fetch) Front-end bölümünde gördün; burada dil profili var.
 
@@ -41,13 +42,15 @@ Bir sayfada tıklamaya tepki veren, veri çeken, ekranı güncelleyen her şey y
 
 **Alternatifler:** TypeScript (aynı dilin tipli hâli, yeni projelerde varsayılan sayılır) ve WebAssembly (tarayıcıda ağır hesap için; JavaScript'in yerine değil, yanına).
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **İstemcide olan her şey JavaScript bütçesine yazılır.** Her etkileşimli bileşen indirilen kod demektir; "sadece küçük bir animasyon" bir paket getirebilir.
 - **Tarayıcıda çalışan kod gizli değildir.** İstemciye gönderilen hiçbir şey sır sayılmaz: "bunu sadece admin görsün" istemci tarafında çözülmez.
 - **JavaScript kapalıysa ya da geç yüklenirse ne olacak?** İçeriğin sunucudan gelmesi (SSR/SSG) bir tasarım kararıdır, teknik detay değil.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

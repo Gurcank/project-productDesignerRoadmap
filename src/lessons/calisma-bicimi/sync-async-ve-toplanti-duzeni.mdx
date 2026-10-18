@@ -13,11 +13,12 @@ sources:
     url: "https://scrumguides.org/scrum-guide.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Sabah dokuzda başladın ve iki toplantın var: 10:00'da ve 11:30'da. Toplam üç saat değil, bir buçuk saat. Ama öğleye kadar hiçbir şey çizemedin. Neden? Çünkü iki toplantı arasındaki boşluk, **kullanılamaz parçalara** bölünmüş bir zaman.
 
@@ -78,7 +79,8 @@ Uluslararası ekiplerde ve uzaktan çalışma sözleşmelerinde karşına çıka
 
 Mantığı: pencere dardır. Yazıyla halledilebilecek her şeyi pencerenin **dışına** (async'e) taşırsan, pencerede gerçekten aynı anda konuşman gereken konulara yer kalır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarım incelemesini yazılı başlat.** Figma'da yorum bırakmak ya da kısa bir kayıtlı walkthrough, toplantı yerine ilk adım olabilir; sync toplantıyı yalnızca anlaşmazlık varsa yap.
 - **Odak saatlerini takvime koy.** Tasarım derin odak ister; sabahlarını bloke etmek, "yoğunum" demekten daha ikna edicidir.
@@ -86,7 +88,8 @@ Mantığı: pencere dardır. Yazıyla halledilebilecek her şeyi pencerenin **d�
 - **Dar overlap saatlerini karar toplantısına sakla.** Bilgi paylaşımını yazıya taşı.
 - **Kararı her zaman yazıya dök.** Sync toplantı yapsan bile, sonunda üç satırlık özet gönder.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

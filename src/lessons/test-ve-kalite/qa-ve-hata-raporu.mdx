@@ -15,11 +15,12 @@ sources:
 skipTerms: ["Validation","validation"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Sayfa bozuk." Bu bir hata raporu mu? Değil. Ve geliştiricinin saatlerini alacak. Bu ders, **bölümün senin için en önemli kısmı.**
 
@@ -68,14 +69,16 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 İkisi bağımsızdır ve karıştırılır. **Düşük severity + yüksek priority** mümkündür: ana sayfadaki logonun yanlış olması sistemi bozmaz ama herkes görür ve hemen düzeltilir. **Yüksek severity + düşük priority** de mümkündür: nadir bir tarayıcıda veri kaybı, kullanıcı sayısı çok azsa sıraya girebilir. "Severity düşük ama priority yüksek; marka sayfasında ve herkes görüyor."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her hata raporunda dokuz alanı doldur;** özellikle ortam, sıklık ve veri durumunu.
 - **Bir hata raporu şablonu hazırla** ve issue şablonuna koy.
 - **Keşifsel testte uç durum listeni kullan:** uzun isim, boş liste, yavaş bağlantı, geri tuşu, çift tıklama.
 - **Severity ve priority'yi ayrı alanlara yaz.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

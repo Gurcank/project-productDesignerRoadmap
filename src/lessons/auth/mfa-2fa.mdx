@@ -14,9 +14,10 @@ sources:
     url: "https://pages.nist.gov/800-63-4/sp800-63b.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Şifren sızdı. Ama hesabına hâlâ kimse giremiyor, çünkü telefonundaki kod da gerekiyor. Bu, MFA'nın işi.
 
@@ -41,14 +42,16 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 Kullanıcı yedek kodları kaydetmeden akışı bitirebiliyorsa destek yükü ve hesap kaybı kaçınılmazdır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **MFA'yı kademeli sun:** isteğe bağlı, yönetici hesaplarında zorunlu.
 - **Yöntem listesinde güçlü olanı öne çıkar,** SMS'i son seçenek yap.
 - **Kurulum akışının dört parçasını çiz;** yedek kodları kaydetmeden devam edilmesini engelle.
 - **Cihaz kaybı senaryosunu (yedek kod ile giriş, destek yolu) ayrıca tasarla.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -18,9 +18,10 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 **İndeks**, veriyi bulmayı hızlandırmak için tutulan **ikinci bir yapıdır.** Kitabın arkasındaki dizin gibi: kitabın kendisini değiştirmez ama bir kelimenin geçtiği sayfayı taramadan bulmanı sağlar. Veritabanı tarafı Veritabanı bölümünde anlatıldı; burada arayüze yansıyan sonuçları var.
 
@@ -61,14 +62,16 @@ Son madde tasarımı doğrudan ilgilendirir: **"içinde geçsin" araması ile "i
 
 **Alternatifler:** küçük veride indekssiz tarama (erken optimizasyon gerekmez), liste zaten tarayıcıdaysa istemci tarafı arama (anlık), büyük ölçekte ayrı arama motoru, ve statik arama indeksi (içerik derleme anında indekslenir, sunucu gerekmez; bu sitedeki arama bu yaklaşımla çalışır).
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Arama kutusunun neyi aradığını yaz:** başlık, gövde, etiket? "Her yerde" pahalıdır.
 - **Türkçe kökleme desteğini sor;** yoksa arama kullanıcıların yazdığı gibi yazdığında çalışmaz (bu hata değil, eksik gereksinimdir).
 - **Boş sonuç ekranını eylem davetine çevir.**
 - **Her sütuna sıralama koymanın, her sütun için maliyet demek olduğunu hatırla.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -20,6 +20,8 @@ import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir denetim raporu geliyor: "15 ihlal; 9'u 1.4.3, 3'ü 2.4.7, 2'si 1.1.1, 1'i 3.3.2." Rakamlar anlamsız görünüyor. Ama bu numaraları okuyabildiğinde, raporun yarısının **tek bir sorunun** (kontrast) tekrarı olduğunu görürsün. Palet düzeltmesi dokuz maddeyi birden kapatır.
 
@@ -98,14 +100,16 @@ Bu sitenin hedefi WCAG 2.2 AA ve bu bölümün kontrol listeleri sitenin kendi k
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Hedefi yaz:** "WCAG 2.2 Level AA" bir gereksinim cümlesidir, tercih değil.
 - **Denetim raporunu ilkeye göre grupla.** Çoğu rapor birkaç kök sebebe (kontrast, etiket, klavye) dayanır.
 - **WCAG 2.2'nin yeni ölçütlerini tasarımda say:** hedef boyutu, sürükleme alternatifi, yapışkan bar odağı kapatmıyor mu?
 - **"%100 erişilebilir" deme.** Beyanda bilinen eksikleri yaz.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -17,9 +17,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir ekibin nasıl çalıştığını tarif eden ifadeler. Bunları bilmek, bir iş görüşmesinde ekibin kültürünü anlamana da yarar.
 
@@ -49,14 +50,16 @@ Bir ekibin nasıl çalıştığını tarif eden ifadeler. Bunları bilmek, bir i
 
 **Ownership / DRI (Directly Responsible Individual, tek sorumlu)**: her işin **tek bir** sahibi olması ilkesi. "Herkesin sorumluluğu" pratikte "kimsenin sorumluluğu" demektir: herkes başkasının bakacağını varsayar. Tek bir sahip işin takip edilmesini garanti eder. Sahip işi kendisi yapmak zorunda değildir; **bitmesini sağlamakla** yükümlüdür. "Bu maddenin DRI'ı kim? Sahipsiz kalırsa yapılmaz."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **İş görüşmesinde sor:** async mi, toplantı mı? Kararlar yazılı mı? Hata olunca ne olur?
 - **İtirazını karardan önce ve yazılı yap;** karardan sonra destek ver.
 - **Geri alınabilir tasarım kararlarında hızlı ol,** geri alınamayanlarda (marka, veri modeli) yavaşla.
 - **Her tasarım işine tek bir DRI yaz.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

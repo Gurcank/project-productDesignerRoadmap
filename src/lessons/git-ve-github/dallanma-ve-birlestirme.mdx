@@ -14,10 +14,11 @@ sources:
     url: "https://git-scm.com/docs/git-cherry-pick"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import BranchGraph from "~/components/lesson/BranchGraph.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Üç kişi aynı projede çalışıyor. Biri yeni bir tasarımı kodluyor, biri bir hatayı düzeltiyor, biri bir özelliği deniyor. Hiçbiri ötekinin yarım işiyle karşılaşmak istemiyor. Çözüm: dallar.
 
@@ -45,13 +46,15 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 **Cherry-pick (seçerek alma)**, bir daldaki tek bir commit'i dalın tamamını almadan başka bir dala kopyalamaktır. Acil düzeltmelerde işe yarar: kritik bir düzeltmeyi, o dalın geri kalanı hazır değilken canlıya almak. "Yalnızca o düzeltmeyi cherry-pick'leyip release dalına alalım."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Uzun yaşayan tasarım dallarından kaçın:** küçük, sık birleşen PR'lar çakışmayı azaltır.
 - **Çakışmanın tasarım dosyasında değil kodda çıktığını** bil; aynı bileşene iki kişinin dokunduğunu koordine et.
 - **"Hotfix" duyduğunda** cherry-pick'in kritik düzeltmeyi hızlı almak için kullanıldığını hatırla.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

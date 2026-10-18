@@ -16,9 +16,10 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir şeyi bulmanın iki temel yolu var ve aralarındaki fark, index kavramının neden var olduğunu açıklar.
 
@@ -46,13 +47,15 @@ Bir şeyi bulmanın iki temel yolu var ve aralarındaki fark, index kavramının
 - **Her tuşta sorgu atmak pahalıdır.** Bekleme süresi (**debounce**) bir tasarım kararıdır; belirtmezsen geliştirici bir değer seçer.
 - **Sonuç yokken ne göreceği** tasarlanmalı: yazım önerisi, popüler aramalar, filtreyi gevşetme.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Arama kutusunun neyi aradığını yaz:** başlık, gövde, etiket? "Her yerde" pahalı bir cevaptır.
 - **Önek mi, içinde mi?** Tek cümlelik bu karar arkadaki çözümü tamamen değiştirir.
 - **Boş sonuç bir eylem davetidir,** gri bir satır değil.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

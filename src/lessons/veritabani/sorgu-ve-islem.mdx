@@ -14,9 +14,10 @@ sources:
     url: "https://www.postgresql.org/docs/current/tutorial-transactions.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir ekranı açtığında arka planda kaç sorgu gidiyor? Bir ödeme tamamlanırken stok düşüp sipariş oluşmazsa ne olur? İki soru, bu dersin iki yarısı.
 
@@ -38,13 +39,15 @@ Bir ekranı açtığında arka planda kaç sorgu gidiyor? Bir ödeme tamamlanır
 
 Transaction'ların güvence listesine **ACID** denir (Atomicity, Consistency, Isolation, Durability). Dört harfi ezberlemek gerekmez; önemli olan **atomiklik** fikridir: "ya hepsi ya hiçbiri".
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Dashboard sayıları için "bu sayı nasıl hesaplanıyor, ne sıklıkta yenileniyor?" sor.**
 - **Birden fazla adımdan oluşan işlemlerde (sipariş, ödeme) yarım kalmış durumların olmaması gerektiğini vurgula.**
 - **Ekrana yeni bir veri eklerken "bunun için ek sorgu gerekiyor mu?" sor.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

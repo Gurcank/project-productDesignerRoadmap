@@ -18,9 +18,10 @@ flags: ["degisken"]
 skipTerms: ["state","local","url"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Menü açık mı, hangi sekme seçili, sepette ne var? Bu verilerin nerede tutulduğu, uygulamanın nasıl yazıldığını belirler. **Önemli bir çerçeve:** state ikiye ayrılır: sunucudan gelen veri (server state, sonraki ders) ve arayüzün kendi verisi (client state). İkisi farklı araçlar ister ve karıştırmak yaygın bir hatadır.
 
@@ -38,13 +39,15 @@ Context sık değişen veriler için verimsizdir: her değişimde onu tüketen t
 
 **Redux**, en eski ve en yaygın state yönetimi kütüphanesidir; **Redux Toolkit (RTK)** onun resmî ve sadeleştirilmiş kullanım biçimidir. Karmaşık ve çok kişili projelerde katı bir yapı dayatır: veri nasıl, kim tarafından, ne zaman değişir hepsi izlenebilirdir; geliştirici araçları (zaman yolculuğuyla hata ayıklama) güçlüdür. Büyük ve eski React projelerinde çok yaygındır. "Proje zaten Redux kullanıyor; yeni bir kütüphane eklemeyelim." Küçük projeler için ağırdır; sunucudan gelen veriyi Redux'ta tutmak da TanStack Query gibi araçların çıkmasıyla büyük ölçüde gereksizleşti.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Arayüz durumlarını (açık/kapalı, seçili sekme, geçici filtre) listele;** hangilerinin sayfalar arası korunması gerektiğini işaretle.
 - **"Global olsun" isteğini sorgula:** gerçekten uygulamanın her yerinde mi lazım?
 - **State'in kalıcı olup olmayacağını yaz:** yenilemede korunsun mu, URL'e yazılsın mı?
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

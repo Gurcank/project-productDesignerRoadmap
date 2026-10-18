@@ -19,9 +19,10 @@ sources:
 flags: ["degisken", "emin-degil"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Farklı veri şekilleri farklı depolama biçimleri ister. Dört türü ve ne zaman hangisinin seçildiğini bil.
 
@@ -43,13 +44,15 @@ Farklı veri şekilleri farklı depolama biçimleri ister. Dört türü ve ne za
 
 **Vector database**, metin ya da görsellerin sayısal temsillerini (embedding) saklayıp "anlamca en benzer olanı" bulmayı sağlar. Yapay zekâ destekli arama ve öneri sistemlerinin altyapısıdır. Klasik arama kelime eşleşmesine bakar; vektör araması **anlam yakınlığına** bakar: "ucuz laptop" araması "uygun fiyatlı dizüstü bilgisayar" sonucunu getirebilir. "Anlamsal arama istiyorsak vektör aramasına ihtiyacımız var; kelime eşleşmesi yetmez." Bu alan çok hızlı değişiyor; ayrı ürünler yerine mevcut veritabanlarına eklenen özellikler de yaygınlaşıyor.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Tutarlılık gerektiren akışlarda (sipariş, stok, ödeme) ilişkisel veritabanı varsay.**
 - **"Esnek yapı" isteğini sorgula:** hangi alanlar gerçekten değişken?
 - **Arama deneyimini tasarlarken anlamsal aramanın gerekip gerekmediğini sor.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

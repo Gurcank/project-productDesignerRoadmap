@@ -15,9 +15,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Kullanıcı profil fotoğrafı yükledi, 5MB'lık bir telefon fotoğrafı. Bu dosya nerede duruyor, listeye 5MB olarak mı gelecek, başkası onu görebilir mi? Üç sorunun cevabı bu derste.
 
@@ -31,14 +32,16 @@ Tasarım tarafında yükleme akışının tüm durumları gerekir: boyut ve form
 
 **Image CDN (görsel dönüştürme servisi)**, yüklenen görsellerin otomatik olarak yeniden boyutlandırılması, formatının değiştirilmesi (WebP/AVIF) ve kırpılmasıdır; **transcoding** video için aynı işlemin adıdır. Editörün yüklediği 5MB'lık fotoğrafın kullanıcıya 5MB olarak gitmemesini sağlar. Tasarımdaki her farklı boyut (kart, liste, detay) için ayrı sürüm otomatik üretilir. İçerik yoğun sitelerde bulunur; meta-framework'lerin görsel bileşenleri bunu genelde hazır sunar. "Görselleri image CDN'den geçirelim; editörler ne yüklerse yüklesin optimize edilmiş gelsin."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Yükleme alanının altına kabul edilen format ve maksimum boyutu baştan yaz.**
 - **Yükleme ilerlemesini, iptali ve hatayı (boyut aşıldı, format uygun değil) tasarla.**
 - **Özel dosyalar için süreli erişim modelini** (ve süre dolunca ekranda ne göründüğünü) tasarla.
 - **Görsel boyut setlerini (kart, liste, detay) ve oranlarını teslimde belirt.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

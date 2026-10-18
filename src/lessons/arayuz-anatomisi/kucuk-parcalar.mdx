@@ -20,6 +20,8 @@ skipTerms: ["header","fallback"]
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bu bölümün son dersi küçük parçalara ayrılmış. Ama küçük, önemsiz demek değil: en çok erişilebilirlik hatası küçük parçalarda çıkar.
 
@@ -51,14 +53,16 @@ Bu sitede uzun bir dersten çıkıp geri döndüğünde kaldığın kaydırma ko
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Avatar için fallback çiz:** baş harf, renk, ikon.
 - **Önce boşluk dene,** çizgiyi gerekirse ekle.
 - **Her icon button için ad, tooltip ve 24×24 hedefi yaz.**
 - **FAB ve sticky öğeler için alt boşluk bırak.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

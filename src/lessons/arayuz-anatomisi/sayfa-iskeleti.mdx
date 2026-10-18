@@ -21,6 +21,8 @@ import Callout from "~/components/lesson/Callout.astro";
 import PageWire from "~/components/lesson/PageWire.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Şuraya, ürün görselinin altına, ince ince akan bir şeritte müşteri logoları koyalım." Bu cümle anlaşılır ama uzun. "Hero'nun altına logo cloud ekleyelim, marquee olsun" aynı şeyi üç saniyede, yanlış anlaşılmadan söyler. Üstelik yapay zekâya aynı cümleyi verirsen tek seferde doğru çıktı alırsın.
 
@@ -69,14 +71,16 @@ Bu sayfa da aynı iskeleti taşır: üstte yapışkan bir header, geniş ekranda
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her bölgeye bir ad ver** ve tasarım dosyasında o adla etiketle: "Header", "Main", "Footer".
 - **Hangi layout'ların olduğunu baştan listele:** pazarlama, uygulama, giriş. Her ekran bunlardan birine ait olmalı.
 - **Footer'ı boş bırakma.** Yasal bağlantıları (gizlilik, KVKK aydınlatma, erişilebilirlik beyanı) tasarla.
 - **Nav türlerini ayır.** Hangi bağlantının global, hangisinin utility olduğu kararı bilgi mimarisinin parçasıdır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

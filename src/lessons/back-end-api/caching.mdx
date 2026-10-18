@@ -19,6 +19,8 @@ sources:
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Editör bir yazıyı güncelledi; sitede hâlâ eski hâli duruyor. Ya da bir sayfa şaşırtıcı hızlı açılıyor. İkisinin de arkasında aynı şey var: **önbellek.** Caching, performansın en büyük tek kaldıracıdır.
 
@@ -46,13 +48,15 @@ Bu sitenin çevrimdışı katmanı bir önbellek örneğidir ve invalidation'ın
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Eski veri + tazeleniyor" durumu için ince bir gösterge tasarla.**
 - **Editör deneyiminde önizleme ve yayın arasında farkı anlat:** değişiklik hemen görünmeyebilir.
 - **Statik varlıkların (görsel, font) CDN'den geldiğini varsay;** boyutlarını ona göre planla.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

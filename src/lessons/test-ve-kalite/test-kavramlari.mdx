@@ -15,9 +15,10 @@ sources:
 skipTerms: ["Scope","scope","kapsam"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 PR'da bir yorum: "Bu değişiklik kapsamı %84'ten %81'e düşürüyor." Bu ne demek ve ne kadar önemli?
 
@@ -37,13 +38,15 @@ PR'da bir yorum: "Bu değişiklik kapsamı %84'ten %81'e düşürüyor." Bu ne d
 
 **Aşırı mock'lama tehlikelidir:** her şey taklit edilirse test gerçek sistemi değil kendi kurgusunu doğrular. Fixture verisi de gerçekçi olmalıdır: seed verisi için geçerli kural burada da geçer; uzun isimler, boş alanlar ve uç değerler içermelidir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Fixture verisine uç durumlarını ver:** uzun isim, boş alan, çok büyük sayı, yabancı karakter.
 - **Kapsam yüzdesinin yerine "kritik akışlar test edilmiş mi?" sorusunu sor.**
 - **Kararsız testlerin ekibi nasıl etkilediğini** (yeniden çalıştır alışkanlığı) fark et ve düzeltilmesini savun.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

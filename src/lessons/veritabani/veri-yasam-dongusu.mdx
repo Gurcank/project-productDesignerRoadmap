@@ -17,10 +17,11 @@ additions:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Outside from "~/components/lesson/Outside.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir kullanıcı hesabını sildi. Peki veri gerçekten gitti mi? Yoksa "silindi" işaretiyle duruyor mu? Ve bir gün veritabanı bozulursa yedek çalışacak mı? Verinin yaşam döngüsü bu sorulara cevap verir.
 
@@ -48,14 +49,16 @@ Birincil metinde saklama süresi sınırı ("storage limitation") şöyle ifade 
 
 </Outside>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Silme akışlarını tasarlarken "geri alınabilir mi, kalıcı mı?" sor** ve kullanıcıya hangisini yaptığını söyle.
 - **Çöp kutusu süresini ve kalıcı silme anını ekranda belirt.**
 - **Formda her alan için "bunu neden topluyoruz?" sor;** gereksizi çıkar.
 - **Ekip ürünlerinde etkinlik akışını (kim, ne zaman, ne) denetim kaydına bağla.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

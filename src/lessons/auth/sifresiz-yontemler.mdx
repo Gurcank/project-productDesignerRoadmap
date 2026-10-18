@@ -20,11 +20,12 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Şifre unutulur, çalınır, tekrar kullanılır. Bu yüzden sektör şifreyi tamamen ortadan kaldıran ya da ikinci plana atan yöntemlere gidiyor. Üçünü bil.
 
@@ -72,14 +73,16 @@ Kod giriş ekranının bilinen tuzakları:
 
 **Tasarım tarafında en zor kısmı kurtarma akışıdır.** Passkey'i tek yöntem yapmak riskli olabilir; genelde bir yedek yöntem (e-posta OTP, yedek kod) birlikte sunulur. Arayüz metni "passkey" kavramını açıklamalıdır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Magic link için** bekleme ekranı, tekrar gönder, gönderim sayacı ve "e-posta gelmediyse" yardımı tasarla.
 - **OTP ekranında** yapıştırma, otomatik doldurma, geri sayım ve hata davranışını yaz.
 - **SMS yerine mümkünse TOTP/passkey öner.**
 - **Passkey eklerken kurtarma yolunu aynı akışın parçası yap;** kavramı kısa bir cümleyle açıkla.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

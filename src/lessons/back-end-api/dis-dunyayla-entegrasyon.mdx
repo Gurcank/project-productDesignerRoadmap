@@ -14,9 +14,10 @@ sources:
     url: "https://docs.stripe.com/api/idempotent_requests"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Kullanıcı ödemeyi tamamladı, kart çekildi, ama sipariş ekranı hâlâ "ödeme bekleniyor" diyor. Panik. Arka planda ne oluyor olabilir? Cevap, dış dünyayla entegrasyonun nasıl çalıştığında.
 
@@ -36,13 +37,15 @@ Her üçüncü parti bir **bağımlılık ve risktir:** paket boyutu, performans
 
 **API key (API anahtarı)**, bir dış servise kimliğini kanıtlayan gizli dizidir. Servisin seni tanıması ve faturalandırması için vardır. **Kritik ayrım:** bazı servisler iki tür anahtar verir: ön yüze gömülebilen **yayınlanabilir (publishable)** anahtar ve yalnızca sunucuda kalması gereken **gizli (secret)** anahtar. İkincisini ön yüz koduna koymak ciddi bir güvenlik açığıdır ve otomatik tarayıcılar tarafından kısa sürede bulunur. "Bu anahtar gizli; ön yüzde kullanamayız, isteği sunucudan geçirelim."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Ödeme, e-posta, kargo gibi webhook'lu akışlarda "işleniyor" ara durumunu çiz** ve ne kadar süreceğini, kullanıcının ne yapacağını yaz.
 - **Üçüncü parti bileşenlerin (harita, ödeme formu) ağırlığını ve çökme hâlini hesaba kat.**
 - **Gizli bilgi isteyen tasarımlardan kaçın:** anahtar türünü geliştiriciyle teyit et.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -14,9 +14,10 @@ sources:
     url: "https://swagger.io/docs/specification/about/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Bu ekran için gereken veriyi tek bir API çağrısıyla alabilir miyiz?" Bu soruyu sorabilmen için API'nin ne olduğunu ve etrafındaki kavramları bilmelisin.
 
@@ -38,13 +39,15 @@ Tasarımcı için önemi: sözleşme, hangi alanların geleceğini ve **hangiler
 
 Sözleşmeyi habersiz değiştirmek (**breaking change**, kırıcı değişiklik) ön yüzü kırar. **API versioning**, API'nin değişirken eski kullanıcılarını kırmamasını sağlar; genelde adrese sürüm koyarak (`/api/v2/...`). Bir API'yi dışarıya açtıysan kullananları haberdar etmeden değiştiremezsin. **Mobil uygulamalar özellikle kritiktir:** kullanıcı güncellemeyi yüklemediyse eski sürümü kullanmaya devam eder. "Bu değişiklik kırıcı; v2 açalım ve v1 için altı aylık geçiş süresi verelim."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarlamadan önce sözleşmeye (ya da gerçek yanıta) bak:** hangi alanlar zorunlu, hangisi opsiyonel?
 - **Her opsiyonel alan için boş hâlini tasarla.**
 - **Mobil uygulamalı üründe bir alanı kaldırmadan önce sor:** eski sürümler kırılır mı?
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

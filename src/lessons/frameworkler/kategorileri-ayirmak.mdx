@@ -15,11 +15,12 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 > **Bu bölüm en hızlı eskiyen bölümdür.** Buradaki bilgilerin çoğu **ürün durumudur:** hangi kütüphane bakımda, hangisi terk edildi, hangisi varsayılan hâle geldi. Bu bilgiler aylar içinde değişir. Her araçta **eskimeyen kısım** (hangi problemi çözer, ne zaman seçilir, alternatifi nedir) ile **eskiyen kısım** (güncel durumu) ayrıldı. Eskimeyen kısmı öğren; eskiyen kısmı her kullanımdan önce doğrula. Materyalin doğrulama tarihi Eylül 2026'dır.
 
@@ -60,12 +61,14 @@ Not: React teknik olarak bir **kütüphanedir,** framework değil. Ama günlük 
 
 **Runtime (çalışma ortamı)**, JavaScript kodunun fiilen çalıştığı ortamdır: tarayıcı, Node.js, Deno, Bun. JavaScript tarayıcı için tasarlanmıştı; Node.js onu sunucuda da çalıştırılabilir hâle getirdi ve ön yüz ile arka yüzün aynı dilde yazılabilmesini sağladı. "Edge runtime'da bazı Node API'leri çalışmıyor; o kodu ayrı bir yere alalım."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"React seçtik" cümlesinde asıl kararı sor:** hangi meta-framework, hangi rendering stratejisi?
 - **Önerilen şeyin library mi framework mü olduğunu ayırt et:** framework kararları senin tasarım özgürlüğünü (yapı, kalıp) doğrudan etkiler.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

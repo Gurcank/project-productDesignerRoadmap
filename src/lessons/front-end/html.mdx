@@ -13,9 +13,10 @@ sources:
 skipTerms: ["layout"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bu bölümün amacı sana kod yazdırmak değil. Bir geliştirici "bu bileşen client'a düşüyor, o yüzden bundle büyüyor" dediğinde ne dendiğini anlaman ve "bu bölümü server component yapabilir miyiz?" diye sorabilmen. Bu yüzden söz dizimi yok; her terim **karar verirken işine yarayacağı kadar** anlatılıyor.
 
@@ -37,12 +38,14 @@ Her öğe için işlevini ifade eden **doğru elemanı** kullanmak: başlık iç
 
 Bir elemanı akıştan çıkarmak (absolute, fixed konumlandırma) güçlüdür ama responsive davranışı elle yönetmeyi gerektirir; bu yüzden ölçülü kullanılır. "Bu öğe akıştan çıkarılmış; o yüzden altındaki içerik onun altına kaymıyor, üstüne biniyor."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarımını elemanların adıyla düşün:** bu bir başlık, bu bir liste, bu bir buton. "Her şey bir kutu" diye teslim etme.
 - **Akıştan çıkan öğeleri teslimde işaretle** (sabit çubuk, üst üste binen rozet) ve dar ekranda ne olacağını yaz.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

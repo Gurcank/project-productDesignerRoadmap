@@ -15,9 +15,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Fatura geldi: tahminin dört katı. Neden? Çünkü tasarım kararlarının bir fiyat etiketi var.
 
@@ -37,13 +38,15 @@ Veritabanı bölümündeki PlanetScale dersi burada da geçerli: **ücretsiz kat
 
 **Doğru soru:** "bugün bedava mı?" değil, **"ödemeli plana geçtiğimizde maliyeti ne olur ve çıkmak ne kadar zor?"**
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Görsel boyutu ve sayısını maliyet kararı olarak da değerlendir.**
 - **Statik olabilecek sayfaları (pazarlama, blog) dinamik yapmamayı öner.**
 - **Müşteri projelerinde ücretsiz katmanın ticari kullanım koşulunu kontrol et.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

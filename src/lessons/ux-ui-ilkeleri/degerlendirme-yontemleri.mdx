@@ -18,12 +18,13 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Yeni tasarım daha iyi mi?" Bu soruya cevap vermenin birkaç yolu var ve her biri başka bir şeyi ölçüyor. Kullanıcıya sorabilirsin, onu izleyebilirsin, iki sürümü yarıştırabilirsin ya da analitiğe bakabilirsin. Yanlış yöntemi seçersen, doğru görünen yanlış bir cevap alırsın.
 
@@ -137,7 +138,8 @@ Zaman içinde karşılaştırılabilir bir sayı üretir. Standart ölçekler (S
 | Isı haritası / kayıt | Kullanıcı sayfada ne yapıyor? | Davranış sorusu |
 | Anket | Kullanıcı ne düşündüğünü söylüyor? | Karşılaştırma, memnuniyet |
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Soruya göre yöntem seç.** "Neden?" için test, "ne kadar?" için analitik.
 - **Davranışı gözle, beyana güvenme.** "Kolaydı" demesi yetmez; görevi tamamladı mı?
@@ -146,7 +148,8 @@ Zaman içinde karşılaştırılabilir bir sayı üretir. Standart ölçekler (S
 - **Kullanıcı verisi topluyorsan gizliliği düşün.** Isı haritası ve kayıtlarda form alanlarını maskele.
 - **Sıfır testten kaçın.** Üç kişiye gösterilen bir ekran, hiç gösterilmeyen ekrandan her zaman iyidir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

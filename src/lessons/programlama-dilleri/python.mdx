@@ -16,9 +16,10 @@ additions:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Python, okunaklılığı öne alan, genel amaçlı bir dildir. Veri işleme, otomasyon ve yapay zekâda fiilî standarttır.
 
@@ -40,12 +41,14 @@ Python, okunaklılığı öne alan, genel amaçlı bir dildir. Veri işleme, oto
 
 **Alternatifler:** ekip zaten JavaScript biliyorsa back-end için Node.js; yüksek trafikli, basit servisler için Go; yalnızca istatistik ağırlıklı analizde R.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Yapay zekâ ekleyelim" dendiğinde arkada muhtemelen Python vardır** ve bu genelde **ayrı bir servis** demektir: ana uygulamayla ağ üstünden konuşur. Yani gecikme ve hata durumu tasarlanmalıdır.
 - **Model çalıştırmak yavaştır.** Saniyeler sürebilir; "yükleniyor" yerine ilerlemeli ya da arka plana atılmış bir akış tasarlaman gerekebilir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

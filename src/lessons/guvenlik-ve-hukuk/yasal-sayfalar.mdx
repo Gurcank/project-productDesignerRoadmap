@@ -13,9 +13,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 > Bu ders genel bilgilendirmedir, hukuki tavsiye değildir. Hangi sayfaların zorunlu olduğu ülkeye, sektöre ve iş modeline göre değişir; avukat görüşü al.
 
@@ -36,14 +37,16 @@ Bir sitenin altında "Gizlilik", "Kullanım şartları", "İade politikası" ba�
 - Hukuk metinleri genelde tasarımın en ihmal edilen kısmıdır. Okunabilir bir tipografi, makul satır uzunluğu ve iyi bir başlık yapısı bu sayfalarda da gereklidir.
 - **Katmanlı sunum** yaklaşımı işe yarar: özet bir üst katman ve detaya inen bir alt katman. Uzun bir hukuk metnini olduğu gibi dökmek şeffaflık ilkesine hizmet etmez.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Yasal sayfa listesini projenin türüne göre çıkar** (ürün sitesi mi, e-ticaret mi?) ve hukukla birlikte onayla.
 - **Her yasal sayfa için okunabilir bir şablon tasarla:** başlıklar, özet kutusu, bağlantılı içindekiler.
 - **Form ve satın alma anında ilgili sayfaya doğrudan bağlantı koy.**
 - **Erişilebilirlik beyanı sayfasını unutma;** geri bildirim yolu içermelidir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

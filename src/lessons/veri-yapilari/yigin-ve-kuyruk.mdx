@@ -16,11 +16,12 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 İkisi de sıralı yapılardır; farkları **hangi ucundan alındığıdır.**
 
@@ -70,14 +71,16 @@ Kuyruk, hemen yapılmayacak işlerin sıraya konmasıdır: e-posta gönderimi, r
 
 **Alternatifler:** öncelikli kuyruk (premium kullanıcının raporu önce); iş yeterince hızlıysa anlık (senkron) işlem, çünkü kuyruk karmaşıklık ekler; geri alma yerine onay (altyapısı ucuzdur ama deneyim açısından daha kötüdür: **geri alınabilir bir işlem, onay soran bir işlemden neredeyse her zaman iyidir**).
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Yıkıcı her işlem için "geri al mı, onay mı" kararını ver;** geri alma istiyorsan özellik açıklamasına yaz (sonradan eklemek mimari değişikliktir).
 - **Geri alma sınırını ve ileri alma davranışını tanımla.**
 - **Arka plana atılan her iş için üç ekranı tasarla:** kabul, durum, başarısızlık.
 - **Mobilde geri tuşunu test et:** modal, çekmece ve filtre panelleri geri tuşuyla kapanmalı.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

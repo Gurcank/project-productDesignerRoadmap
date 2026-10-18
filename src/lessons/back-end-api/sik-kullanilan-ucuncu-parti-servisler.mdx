@@ -12,9 +12,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bu bölümdeki **kategorileri** öğren; ürün isimleri ve fiyatlandırmaları sürekli değişir. Anılan isimler bir öneri değil, kulak aşinalığı içindir.
 
@@ -30,14 +31,16 @@ Bu bölümdeki **kategorileri** öğren; ürün isimleri ve fiyatlandırmaları 
 
 "Ödeme sayfasının hangi kısmı bizim tasarımımız, hangisi servisin ekranı? Bunu baştan netleştirelim; akış tasarımı buna bağlı."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Ödemede sınırı çiz:** hangi ekranlar senin, hangileri servisin. Özelleştirme seçeneklerini baştan sor.
 - **E-posta şablonlarını da tasarla;** yaygın e-posta istemcilerinin kısıtlarını (görsel, font, genişlik) dikkate al.
 - **SMS/OTP için** kod girişi, yeniden gönderme geri sayımı ve hata hâllerini çiz.
 - **Analitik olaylarını (hangi tıklama ölçülecek) tasarım aşamasında tanımla.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

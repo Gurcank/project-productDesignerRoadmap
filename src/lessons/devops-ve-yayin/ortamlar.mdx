@@ -13,9 +13,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir tasarım değişikliğini müşteriye göstermek istiyorsun, ama canlıya almak da istemiyorsun. Çözüm: preview ortamı.
 
@@ -31,13 +32,15 @@ Her ortamın kendi yapılandırma değerlerine sahip olması ve sırların güve
 
 **Staging'de gerçek servisleri kullanmak tehlikelidir:** test siparişi gerçek kart çekebilir, test e-postası gerçek müşteriye gidebilir. Bu bir tasarım ve süreç kararıdır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her tasarım PR'ında preview linki iste** ve onayı o linkte ver.
 - **Staging'in test servislerini (sahte ödeme, test e-postası) kullandığını doğrula.**
 - **Ortam farklılıklarını test planına yaz:** ödeme, e-posta, analitik farklı ortamlarda farklı davranır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

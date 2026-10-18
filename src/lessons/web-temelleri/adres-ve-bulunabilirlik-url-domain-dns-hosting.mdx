@@ -16,11 +16,12 @@ sources:
 flags: ["degisken", "emin-degil"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
 import UrlAnatomy from "~/components/lesson/UrlAnatomy.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir arkadaşına ürün sayfasını WhatsApp'tan gönderiyorsun. Gönderdiğin şey bir adres: karşı taraf ona dokunuyor ve aynı sayfa açılıyor. Şimdi aynı ürünü, sayfanın içinde açılan bir pencerede (modal) görüyor olsaydın ve pencerenin adresi olmasaydı? Gönderecek bir şey bulamazdın.
 
@@ -59,13 +60,15 @@ Query string tasarımcıyı ilgilendirir. Filtre ya da sıralama seçimlerini ad
 
 Küçük bir ayrım: **URL ≠ domain**. Domain, URL'in yalnızca bir parçasıdır. Teknik literatürde URL'in daha geniş bir üst kategorisi olan URI de geçer, ama günlük konuşmada herkes URL der.
 
-<Callout kind="tasarimci" title="Tasarımcı olarak sen: adres bir tasarım malzemesidir">
+<Lenses>
+<Lens role="product-designer" title="Tasarımcı olarak sen: adres bir tasarım malzemesidir">
 
 - Her "gerçek" ekranın (ürün, makale, profil, filtrelenmiş liste) kendi adresi olmalı mı? Çoğu zaman evet.
 - Adresin kendisi de kullanıcıya konuşur: `/yazilar/web-nedir`, `/post?id=8471`'den hem daha güven verici hem daha okunaklı.
 - Sekme geçişleri, filtreler, sayfa numarası gibi durumların adrese yansıyıp yansımayacağını geliştiriciyle sen konuş.
 
-</Callout>
+</Lens>
+</Lenses>
 
 ### Slug: adresin okunabilir sonu
 

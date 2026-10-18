@@ -18,12 +18,13 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir geliştirici sana diyor ki: "Bunu grup değil frame yap, auto layout uygulayabileyim. Instance detach edilmiş, ana bileşene bağlayalım. Rengi variable'dan alalım, style'dan değil." Bu cümledeki her kelime bir şey ifade ediyor ve hepsini bilmen gerekiyor. Bunlar sadece araç bilgisi değil, **ekiple konuşurken kullanacağın kelimeler.**
 
@@ -107,7 +108,8 @@ Figma'nın kendi dokümantasyonu değişkenlerin style'ların yerine geçmediği
 
 Tasarım-geliştirme aktarımında karşına çıkar. **Değişken bilgi:** Bu özelliklerin kapsamı ve fiyatlandırması değişebilir. "Dev Mode'da token adları görünüyor; ham hex kopyalamayın."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Group değil frame kullan.** Auto layout ve responsive davranış frame üzerinden çalışır.
 - **Her kartı gerçek içerikle dene.** Uzun başlık, kısa başlık; auto layout bozulmuyor mu?
@@ -116,7 +118,8 @@ Tasarım-geliştirme aktarımında karşına çıkar. **Değişken bilgi:** Bu �
 - **Bileşik değerler için style, tek değerler için variable kullan.**
 - **Kütüphane güncellemesini yayınlamadan önce etkilenen ekranları kontrol et.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

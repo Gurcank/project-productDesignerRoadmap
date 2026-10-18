@@ -1,0 +1,27 @@
+---
+/**
+ * One role's view of a lesson: what this means for your job, the questions to
+ * ask, the output to produce, the mistake to avoid. Always inside <Lenses>,
+ * which decides where each lens shows for the chosen role.
+ *
+ * The label carries the role in words, so the box reads without colour.
+ */
+import { ROLE_IDS, ROLE_LABEL, type RoleId } from "~/data/role-ids";
+
+interface Props {
+  role: RoleId;
+  /** Replaces the default "<Rol> olarak sen" label. */
+  title?: string;
+}
+
+const { role, title } = Astro.props;
+if (!(ROLE_IDS as readonly string[]).includes(role)) throw new Error(`<Lens role="${role}">: bilinmeyen rol`);
+
+const DEFAULT_LABEL: Partial<Record<RoleId, string>> = { "product-designer": "Tasarımcı olarak sen" };
+const label = title ?? DEFAULT_LABEL[role] ?? `${ROLE_LABEL[role].name} olarak sen`;
+---
+
+<section class="callout callout--lens lens" data-lens={role}>
+  <p class="callout__label">{label}</p>
+  <div class="callout__body"><slot /></div>
+</section>

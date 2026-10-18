@@ -23,9 +23,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bu alanda 2024-2025'te iki büyük değişiklik oldu ve ikisini de bilmen gerekiyor. Materyale göre kaynaklar yeniden adlandırma tarihlerinde tutarsız; **tarihe değil, mevcut duruma güven** ve kullanmadan önce doğrula.
 
@@ -55,14 +56,16 @@ Motion ile GSAP **rakip değil,** farklı işler için araçlardır. Aynı proje
 
 **Lottie**, tasarım aracında hazırlanmış vektör animasyonlarını web'de oynatan formattır; **Spline** kod yazmadan 3B sahne hazırlamayı sağlar. Tasarımcının geliştiriciye bağımlı olmadan animasyon üretmesini sağlar; **bu senin için doğrudan bir imkândır.** Boş durum illüstrasyonlarında, onboarding animasyonlarında ve hero sahnelerinde karşına çıkar. "Boş durum animasyonunu Lottie olarak verelim; geliştiriciye JSON dosyası yeterli." Lottie dosyaları beklenenden büyük olabilir; dosya boyutunu kontrol et. Araçların fiyatlandırma ve dışa aktarma seçenekleri değişir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her animasyon için hareket azaltma alternatifini tasarla.**
 - **Kaydırma davranışını değiştiren efektleri (yumuşak kaydırma, scroll hijacking) kapatılabilir yap.**
 - **3B ya da ağır animasyon önermeden önce performans bütçesine bak.**
 - **Lottie teslim ederken dosya boyutunu yaz.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

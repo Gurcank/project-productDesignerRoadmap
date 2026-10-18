@@ -17,12 +17,13 @@ additions:
   - "Core Web Vitals (LCP, INP, CLS) ve eşik değerleri; bir tasarım kararının performansa nasıl yansıdığı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Outside from "~/components/lesson/Outside.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
 import FoldFigure from "~/components/lesson/FoldFigure.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir haber sitesini açıyorsun, okumaya başlıyorsun, sonra bir reklam yükleniyor ve metin aşağı kayıyor. Tam o anda bir bağlantıya basmak üzereydin; yanlış yere tıklıyorsun. Bu sinir bozucu olay tesadüf değil: tarayıcının işleyişindeki belirli bir adımın sonucu.
 
@@ -119,7 +120,8 @@ Tasarım kararlarının doğrudan etkisi var: büyük bir hero görseli LCP'yi u
 
 </Outside>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 Bu dersin tasarımcıya bıraktığı üç karar:
 
@@ -127,7 +129,8 @@ Bu dersin tasarımcıya bıraktığı üç karar:
 - **Az yükle.** Font ailesi, ikon seti, görsel sayısı, ilk ekranı geciktiren her şey bir bedel ödetir. İlk görünen ekranı olabildiğince hafif tut.
 - **Doğru animasyonu seç.** Hareketi `transform` ve `opacity` ile kurgulayabilecek şekilde tasarla; boyut ya da konum değişimi gerektiren animasyonlar pahalı olabilir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

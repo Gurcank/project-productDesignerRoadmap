@@ -15,9 +15,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Gece kimsenin girmediği bir siteye sabah ilk giren kişi diğerlerinden yavaş bir deneyim yaşayabilir. Sebebi çoğu zaman sunucunun kendisi değil, onu çalıştırma biçimidir.
 
@@ -37,13 +38,15 @@ Gece kimsenin girmediği bir siteye sabah ilk giren kişi diğerlerinden yavaş 
 
 Edge ortamı sınırlıdır: bazı Node API'leri çalışmaz ve **veritabanı uzaktaysa kazanç kaybolabilir;** kod kullanıcıya yakın olsa da veri hâlâ uzaktadır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"İlk yükleme yavaş" geri bildiriminde cold start'ı da düşün;** sürekli düzgün çalışan sayfalarda ilk isteğin yavaş olması bunun işareti olabilir.
 - **Düzensiz trafikli yeni özellikler için serverless'ın bedeli ve faydasını sor.**
 - **Edge'in veri kaynağına uzaklığını göz önünde tut;** yalnızca kod yakınlığı yetmez.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

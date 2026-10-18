@@ -16,9 +16,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Geliştirici düzenli dosyalarla çalışır; tarayıcı ise küçük, sıkıştırılmış ve optimize edilmiş dosyalar ister. Arada bir **build zinciri** vardır. Bu ders, o zincirin duyduğun adlarını ve tasarıma dokunan sonuçlarını anlatır.
 
@@ -46,12 +47,14 @@ Ana sayfaya giren birinin ayarlar ekranının kodunu indirmesi gereksizdir. Tasa
 
 **Source map**, sıkıştırılmış üretim kodunu okunabilir orijinal koda geri eşleyen dosyadır. Canlıda bir hata oluştuğunda hangi satırdan geldiğini görmeyi sağlar; hata izleme araçları buna dayanır. "Source map'leri Sentry'ye yükleyelim; yoksa hata raporları okunamaz oluyor."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Ağır bileşenleri işaretle** (harita, grafik, video) ve yüklenirken görünecek yer tutucuyu tasarla.
 - **Yeni bir kütüphane önerirken boyut bedelini sor;** her ek kütüphane gönderilen koda eklenir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -12,11 +12,12 @@ sources:
     url: "https://sre.google/sre-book/monitoring-distributed-systems/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Kullanıcı "yavaş" diyor. Panelde her şey yeşil. Neden? Çünkü bildiğin sorunları izliyorsun; ama sorun bildiğin türden değil.
 
@@ -53,13 +54,15 @@ Dağıtık sistemlerde trace olmadan sorunun hangi serviste olduğunu bulmak ço
 
 **Alert fatigue** gerçek bir sorundur: çok fazla uyarı gönderen bir sistemde insanlar uyarıları görmezden gelmeye başlar ve gerçek olay kaçırılır. Uyarı sayısı, eyleme geçilebilir olanlarla sınırlı tutulmalıdır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Kritik kullanıcı akışlarını (giriş, ödeme, kayıt) synthetic izleme listesine yazdır.**
 - **"Yavaş" şikâyetinde segmenti belirt:** hangi cihaz, hangi bölge, hangi sayfa? Bu observability'yi besler.
 - **Uyarı kanallarının gürültüsünü (alert fatigue) ekiple konuş.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

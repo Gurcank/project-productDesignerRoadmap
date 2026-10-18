@@ -13,9 +13,10 @@ sources:
 skipTerms: ["layout"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir kullanıcı ürün detayını açtı, linki arkadaşına gönderdi. Arkadaşı linke tıkladı ve ürün listesine düştü, çünkü detay bir modal içinde açılıyordu ve kendi adresi yoktu. Bu, **routing** konusunun tasarımcıya düşen kısmı.
 
@@ -33,13 +34,15 @@ Tasarımcının burada bir sorumluluğu var: **hangi ekranın kendi URL'i olaca�
 
 **Query param**, URL'e eklenen ek bilgidir (`?filtre=kirmizi`). **Filtre ve sıralama durumunu paylaşılabilir kılar.** **Redirect** ise bir adresin otomatik olarak başka bir adrese gönderilmesidir; site yeniden yapılandırıldığında eski bağlantıların kırılmamasını sağlar ve SEO için kritiktir. "Yeni yapıya geçerken eski URL'lerden kalıcı redirect verelim; sıralamayı kaybetmeyelim."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Sitemap'te her ekran için URL var mı işaretle.** Modal ve drawer içeriği kalıcıysa URL'i olmalı.
 - **Filtre ve sıralama durumunu URL'e yazdırmayı iste.**
 - **Yeniden tasarımda eski URL'lerin listesini çıkar** ve her biri için redirect hedefini yaz.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

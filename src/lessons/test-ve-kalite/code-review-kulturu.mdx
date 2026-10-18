@@ -14,9 +14,10 @@ sources:
     url: "https://www.atlassian.com/agile/software-development/code-reviews"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Pull request mekaniği Git bölümünde anlatıldı. Burada **kültür tarafı** var ve bu, senin de dahil olduğun bir pratik.
 
@@ -40,14 +41,16 @@ Pull request mekaniği Git bölümünde anlatıldı. Burada **kültür tarafı**
 
 **Süre de bir kalite meselesidir:** günlerce bekleyen bir PR, dalın eskimesine, çakışmaya ve yazanın bağlamı unutmasına yol açar. Birçok ekip bir inceleme süresi hedefi koyar.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **İncelemede kendi sorunu (tasarıma uygunluk) odak tut;** diğerlerini ekibe bırak.
 - **Yorumlarını soru olarak yaz ve `nit:` ile ayır.**
 - **İyi uygulanmış bir detayı da yaz;** tasarıma saygı gösteren geri bildirim kültürü kurar.
 - **İnceleme beklemesini kısa tut:** PR'ı gün içinde incele.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

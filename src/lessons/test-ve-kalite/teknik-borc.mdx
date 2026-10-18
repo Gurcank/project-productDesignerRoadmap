@@ -14,9 +14,10 @@ sources:
     url: "https://refactoring.com/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Bu neden bu kadar yavaş ilerliyor?" sorusunun en yaygın cevabı: birikmiş borç.
 
@@ -43,14 +44,16 @@ Bunlar da kayıt altına alınmalı ve bütçelenmelidir.
 
 **Code smell (kod kokusu)**, kendisi hata olmayan ama daha derin bir sorunun işareti olan kalıptır: aşırı uzun fonksiyon, tekrarlanan mantık, çok fazla parametre. **Boy scout rule (izci kuralı)**: "dokunduğun yeri bulduğundan biraz daha temiz bırak." Büyük temizlik projeleri beklemek yerine borcu sürekli ve küçük adımlarla azaltmayı önerir. Büyük temizlik projeleri genelde onaylanmaz; küçük iyileştirmeler ise her PR'da yapılabilir. "Bu dosyaya zaten dokunuyoruz; şu tekrarı da temizleyelim."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarım borcunu bir listede tut** ve düzenli bütçele (her sprint küçük bir pay).
 - **Bilinçli borçlanma kararlarını kaydet:** neden, ne zaman ödenecek?
 - **İzci kuralını tasarım dosyalarına uygula:** dokunduğun bileşeni bir miktar toparla.
 - **Refactor PR'larında "davranış değişmedi" kanıtı iste** (görsel fark yok, testler aynı).
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

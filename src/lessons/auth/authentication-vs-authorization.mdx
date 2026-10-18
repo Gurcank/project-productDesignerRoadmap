@@ -14,11 +14,12 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/403"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Auth, bir üründe **hem en çok kullanılan hem en az tasarlanan** akıştır. Herkes kayıt olur, herkes giriş yapar, herkes şifresini unutur; ama bu ekranlar genelde en sona bırakılır ve varsayılan hâlleriyle kalır.
 
@@ -52,13 +53,15 @@ Bölümdeki kavramlar eskimeyen kategoride. Değişken olanlar: hazır çözüml
 
 Bu ayrım tasarımda somutlaşır: **401** kimlik doğrulama sorunudur (giriş ekranına yönlendir), **403** yetkilendirme sorunudur (giriş ekranı işe yaramaz, ayrı bir ekran gerekir). "Kullanıcı giriş yapmış ama düzenleme yetkisi yok; butonu gizleyelim mi, pasif mi gösterelim?" sorusu da bir yetkilendirme tasarım sorusudur.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her kısıtlı ekran için iki durum çiz:** giriş yapılmamış (401) ve giriş yapılmış ama yetki yok (403).
 - **Yetkisiz eylem için karar ver:** gizle mi, pasif göster mi, "neden yapamıyorsun?" açıklaması ver mi?
 - **Auth ekranlarını en sona bırakma;** akışın kendisi bir ürün parçasıdır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

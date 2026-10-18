@@ -23,6 +23,8 @@ import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import ContrastDemo from "~/components/lesson/ContrastDemo.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir hero görselinin üzerine beyaz başlık koydun. Görselin sol tarafı koyu, sağ tarafı açık bir gökyüzü. Başlığın ilk kelimesi okunuyor, son kelimesi neredeyse görünmüyor. Kontrast "bir sayı" değil, **metnin gerçekten üzerinde durduğu renge** göre değişen bir ölçü.
 
@@ -98,7 +100,8 @@ Bu sitedeki Ayarlar sayfasında yazı boyutunu dört kademede büyütebilirsin; 
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Görsel üzerindeki metne katman koy.** Her bölgede oranı kontrol et.
 - **Her durumu renk + ikon + metinle göster.** Bilgiyi renge bağlama.
@@ -107,7 +110,8 @@ Bu sitedeki Ayarlar sayfasında yazı boyutunu dört kademede büyütebilirsin; 
 - **Sabit yükseklikten kaçın.** Kutular içeriğe göre esnesin; metin `rem` ile.
 - **Koyu tema için kontrastı yeniden hesapla.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

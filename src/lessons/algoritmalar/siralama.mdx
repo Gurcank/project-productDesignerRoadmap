@@ -16,11 +16,12 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Sütun başlığına tıklayıp sıralamak tek bir hareket. Arkada ise listenin tamamına dokunan bir iş.
 
@@ -53,14 +54,16 @@ Sayfalama sıralı bir liste üzerinde çalışır. Sıra belirsizse 2. sayfada 
 </Pane>
 </Compare>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Varsayılan sıralamayı sen belirle ve yaz.** Belirtmezsen veritabanından ne gelirse o gelir ve zamanla değişir.
 - **Eşitlikte ikinci ölçüt ver;** bu tek cümle "satırlar zıplıyor" şikâyetini önler.
 - **Hangi sütunların gerçekten sıralanması gerekiyor?** Hepsi demek, hepsine maliyet demek.
 - **Sayfa numarası mı, sonsuz kaydırma mı?** Bu görsel bir tercih değil, veri tutarlılığı kararıdır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -16,6 +16,8 @@ flags: ["degisken"]
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir PR açtın ve birkaç dakika sonra altında yeşil tikler ya da kırmızı çarpılar belirdi. Bu otomatik kontrollerin arkasında çoğu zaman GitHub Actions var.
 
@@ -40,13 +42,15 @@ Bu sitenin kalite kapıları da benzer biçimde çalışır: içerik doğrulamas
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Kalite kontrollerini (erişilebilirlik taraması, görsel regresyon, performans bütçesi) CI'a ekleme önerisini getir.**
 - **"CI kırıldı" uyarısında kırılan adımı oku;** çoğu zaman sorun tasarımla ilgili (örneğin kontrast taraması) olabilir.
 - **PR şablonu + otomatik kontrol birlikte çalışır:** şablon insan kontrolünü, workflow otomatik kontrolü karşılar.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

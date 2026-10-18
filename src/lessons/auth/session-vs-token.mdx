@@ -12,11 +12,12 @@ sources:
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Giriş yaptın. Sonraki sayfada neden tekrar şifre sormuyor? Sunucu seni nasıl hatırlıyor? İki temel yaklaşım var.
 
@@ -49,13 +50,15 @@ Sunucunun, kullanıcı bilgilerini içeren **imzalı** bir belge verip artık ke
 
 **Yaygın bir yanılgı:** "modern uygulamalar JWT kullanır, session eskidir." Doğru değil. Session, tek bir web uygulaması için çoğu zaman **daha güvenli ve daha basittir;** token'ın avantajları dağıtık sistemlerde ortaya çıkar. Seçim bir takastır: iptal edilebilirlik mi, ölçeklenebilirlik mi?
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Tüm cihazlardan çıkış yap" gibi özellikleri baştan iste;** yaklaşımı seçerken belirleyicidir.
 - **Mobil uygulama da olacaksa** jeton tabanlı yaklaşımın gerekebileceğini ekibe sor.
 - **"JWT mi session mı?" tartışmasında takası sor:** iptal mi ölçek mi?
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

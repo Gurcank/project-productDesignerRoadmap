@@ -27,11 +27,12 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Hazır bileşenlerle çalışıyorsun; bu yüzden bu ders senin için en doğrudan işe yarayan derslerden biri. Ana ayrım tek bir soruda: **kütüphane sana görünüm mü veriyor, yoksa yalnızca davranış mı?**
 
@@ -85,14 +86,16 @@ shadcn/ui bir npm paketi değildir; "sürümünü güncelleyelim" cümlesi burad
 
 "İç panel için MUI kullanalım; tasarım farklılaşması gerekmiyor, hız önemli." **Marka farklılaşmasının önemli olduğu tüketiciye dönük ürünlerde** uygun değildir: varsayılan görünümü tamamen değiştirmek, headless bir temelden başlamaktan genelde daha pahalıdır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **İlk soru: tasarım dilim kütüphaneye uyuyor mu?** Uymuyorsa headless ya da shadcn/ui.
 - **Tasarım sistemi kuruyorsan headless primitif öner:** erişilebilirliğin zor kısmı hazır gelir.
 - **İç panelde styled kütüphane meşrudur;** hız marka özgünlüğünden önemliyse.
 - **Bileşenin davranış kurallarını (odak, Esc, klavye) teslimde yaz,** hangi kütüphane gelirse gelsin eşleştirilebilsin.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

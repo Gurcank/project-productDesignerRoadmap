@@ -18,11 +18,12 @@ sources:
 flags: ["degisken", "emin-degil"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Üç kişilik bir ekip "mikroservise geçelim" diyor. Doğru mu? Bu ders, sistemin kaç parçaya bölüneceği ve parçaların nasıl dağıtılacağı sorusunu anlatır.
 
@@ -67,13 +68,15 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 Amazon Prime Video'nun bir ekibinin dağıtık bir tasarımı tek sürece indirip yaklaşık %90 altyapı maliyeti tasarrufu bildirdiği (2023) ve Twilio Segment'in 140'tan fazla servisi tek kod tabanına geri topladığı yaygın anlatılır. **Bu hikâyeler sıkça abartılır.** Prime Video örneğinde söz konusu olan bir **izleme aracıydı,** Prime Video platformunun tamamı değil; başlangıç noktası da klasik mikroservis değil, serverless bir tasarımdı. "Kuruluşların %X'i mikroservisten geri dönüyor" biçiminde dolaşan yüzdelerin güvenilir bir kaynağa dayanmadığı da belirtiliyor. **Bu rakamları bir tartışmada kullanma;** çıkarılacak ders niteldir: dağıtık mimari, operasyonel maliyetini hak etmek zorundadır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Mikroservise geçelim" önerisinde ekip yapısını sor:** kaç ekip, servis başına sahip var mı?
 - **"Bu ayrılabilir mi?" sorusunu modül sınırı olarak düşün;** önce modüler yapı kurulabilir.
 - **Moda argümanlarına ("modern", "Netflix kullanıyor") takas sorusuyla karşılık ver.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

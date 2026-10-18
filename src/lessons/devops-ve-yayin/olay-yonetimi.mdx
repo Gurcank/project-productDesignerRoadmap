@@ -14,9 +14,10 @@ sources:
     url: "https://www.atlassian.com/incident-management"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Sabah 03:00, ödeme sayfası çalışmıyor. Kimin ne yapacağı o an belirlenmeyecek; önceden belirlenmiş olmalı.
 
@@ -45,13 +46,15 @@ Kriz anında "kim ne yapacak" sorusunu önceden cevaplarlar. Panik anında karar
 
 **Postmortem (olay sonrası değerlendirme)**: bir olaydan sonra ne olduğunu, neden olduğunu ve tekrarlamaması için ne yapılacağını yazan belge. **"Blameless" olması kritiktir:** amaç suçlu bulmak değil, sistemdeki zayıflığı bulmaktır. Suçlama kültüründe insanlar hataları gizler ve sistem öğrenemez. "Postmortem yazalım; asıl soru 'kim yaptı' değil, 'bu nasıl canlıya kadar geldi'." Retrospective ile akrabadır ama farklıdır: retro düzenli ve süreç odaklı, postmortem olaya özel ve teknik odaklıdır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Bakım ekranı, durum sayfası ve genel hata mesajlarını önceden tasarla** ve metinlerini yaz.
 - **Sev1/sev2 olaylarında kullanıcı iletişimini (e-posta, uygulama içi şerit) hazır şablonlarla hazırla.**
 - **Postmortem'e katıl:** kullanıcı deneyimi açısından "bu olay kullanıcıya nasıl yansıdı?" sorusunu sen sor.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

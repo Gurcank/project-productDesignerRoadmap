@@ -14,9 +14,10 @@ sources:
     url: "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Mimari, senin öncelik sıralamanda UI/UX'ten sonra gelen ikinci alan. Bu bölüm iki hedefle yazıldı:
 
@@ -42,13 +43,15 @@ Kararları geri alınabilirliğine göre sınıflamak karar hızını ayarlar:
 
 Mimaride **"iyi" ve "kötü" seçenek yoktur, farklı şeyleri optimize eden seçenekler vardır.** Bir mimari önerisini değerlendirmenin tek dürüst yolu neyi feda ettiğini sormaktır: mikroservis ölçeklenebilirlik kazandırır, basitlik kaybettirir; önbellek hız kazandırır, tazelik kaybettirir; statik üretim hız kazandırır, dinamiklik kaybettirir. "Bunun takası ne? Neyi kaybediyoruz karşılığında?"
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her büyük özellik isteğinde "bu tek yönlü mü çift yönlü mü?" sor.** Veri modeli ve mimari tek yönlüdür; görsel kararlar çoğunlukla çift yönlüdür.
 - **Bir mimari öneriyi "ne kazanıyoruz, neyi kaybediyoruz?" sorusuyla ilk toplantıda sor.**
 - **Tek yönlü kararlarda tasarımcı olarak erken söz al;** sonradan değiştirmek yeniden yazmaktır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

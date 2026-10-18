@@ -16,9 +16,10 @@ sources:
     url: "https://nx.dev/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Depoya yanlış bir şey girdiğinde çıkarmak zordur. Bu yüzden hijyen baştan önemlidir.
 
@@ -40,13 +41,15 @@ Depoya yanlış bir şey girdiğinde çıkarmak zordur. Bu yüzden hijyen başta
 
 Küçük ve tek ürünlü projelerde gereksiz karmaşıklık üretir; araç zinciri ve derleme yapılandırması ağırlaşır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Büyük tasarım varlıklarını (video, yüksek çözünürlüklü görsel) depoya koymadan önce LFS veya ayrı depolama sor.**
 - **Sır içeren dosyaları (`.env`, anahtar) asla tasarım paylaşımlarına koyma.**
 - **Tasarım sistemin varsa monorepo'yu önerinin bir parçası olarak ele al.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

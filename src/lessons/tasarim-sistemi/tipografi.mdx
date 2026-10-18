@@ -21,6 +21,8 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import TypeScaleDemo from "~/components/lesson/TypeScaleDemo.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Web'in içeriğinin ezici çoğunluğu **metindir.** Bu yüzden tipografi kararları, tek tek renk kararlarından daha çok etki eder. Bir sayfanın "profesyonel" ya da "amatör" hissettirmesinde çoğu zaman font seçiminden çok **boyut, aralık ve satır uzunluğu** rol oynar.
 
@@ -107,7 +109,8 @@ Bu site iki yazı tipi ailesi kullanıyor: başlıklarda kitap hissi veren bir s
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Font dosyası sayısını say.** "3 ağırlık, 1 aile" gibi bir bütçe belirle.
 - **Ölçeği token yap, ara değer üretme.** Her boyut ölçekten gelsin.
@@ -115,7 +118,8 @@ Bu site iki yazı tipi ailesi kullanıyor: başlıklarda kitap hissi veren bir s
 - **Okuma sütunu sınırla.** Geniş ekranda uzun metin için `max-width` iste.
 - **Türkçe karakterleri test et.** Seçtiğin fontta `ı İ ğ ş ç ö ü` gerçek metinde nasıl görünüyor?
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

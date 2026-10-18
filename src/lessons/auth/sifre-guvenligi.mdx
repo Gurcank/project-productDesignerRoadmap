@@ -18,9 +18,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bu derste muhtemelen bildiğinin tersi olan bilgiler var. Şifre politikası tavsiyeleri son yıllarda köklü biçimde değişti.
 
@@ -59,14 +60,16 @@ Güvenlik ile UX'in çeliştiği klasik nokta: "bu e-posta kayıtlı değil" dem
 
 **Email verification**, kullanıcının girdiği adrese gerçekten sahip olduğunun kontrol edilmesidir. Sahte kayıtları azaltır ve şifre sıfırlamanın güvenli çalışmasını sağlar. **Tasarım kararı:** doğrulama kayıt akışını kesmeli mi, arka planda mı ilerlemeli? Kesmek tamamlama oranını düşürür. Yaygın orta yol: kullanıcıyı içeri al, doğrulanmamış hesabın bazı işlemlerini kısıtla ve kalıcı bir uyarı şeridi göster. "Doğrulanana kadar yalnızca bir uyarı şeridi gösterelim."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Şifre alanı yardımcı metnini güncel politikaya göre yaz:** uzunluğu öne çıkar, karmaşıklık kuralı listesi koyma.
 - **Yapıştırmayı ve şifre yöneticisini engelleme.**
 - **Sıfırlama akışının beş adımını tasarla** ve e-posta kayıtlı olsun olmasın aynı mesajı göster.
 - **E-posta doğrulamada** kayıt akışını kesmeyen orta yolu (kısıtlı hesap + uyarı şeridi) değerlendir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

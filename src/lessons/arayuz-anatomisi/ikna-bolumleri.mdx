@@ -20,10 +20,11 @@ includeTerms: ["rating", "table"]
 skipTerms: ["yorumlar"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Outside from "~/components/lesson/Outside.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Hero'yu okudun, ürünü anladın. Şimdi aklında başka bir soru var: "Bu gerçekten iyi mi, bana güvenilir mi?" Bir ürün sayfasının dönüşümü çoğunlukla bu soruya verdiği cevaba bağlıdır. Bu soruyu cevaplayan bölümlere **ikna bölümleri** diyoruz.
 
@@ -61,7 +62,8 @@ Güven sorunu bir yana, sahte yorum hukuki bir risktir. ABD'nin tüketici kurumu
 
 **Comparison table (karşılaştırma tablosu)**, ürünü rakiplerle ya da planları birbiriyle karşılaştırır. Karar vermeyi hızlandırır; ama rakip karşılaştırmasında dürüstlük şarttır, tek taraflı ve abartılı tablolar güven kaybettirir. Tablolar mobilde en çok bozulan bileşendir; yatay kaydırma mı, kart görünümüne dönüşme mi olacağı **baştan** kararlaştırılmalıdır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Kanıtı doğrulanabilir yaz:** isim, rakam, tarih. "Binlerce" yerine gerçek sayı.
 - **Testimonial'a isim, unvan ve fotoğraf iste.** Yoksa kullanma.
@@ -70,7 +72,8 @@ Güven sorunu bir yana, sahte yorum hukuki bir risktir. ABD'nin tüketici kurumu
 - **Logoları gri tonlamaya al ve optik olarak dengele.**
 - **Karşılaştırma tablosunun mobil stratejisini ilk taslakta çiz.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

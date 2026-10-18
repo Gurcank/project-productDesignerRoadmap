@@ -18,6 +18,8 @@ flags: ["degisken", "emin-degil"]
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Materyal, 2026'da yaygın görüşe göre **asıl becerinin prompt yazmak değil, bağlamı tasarlamak** olduğunu aktarıyor: yani modelin ne göreceğine karar vermek. Sorunların çoğu kötü prompt'tan değil, eksik bağlamdan doğuyor.
 
@@ -69,14 +71,16 @@ Bu projenin kökündeki `CLAUDE.md` tam olarak böyle bir dosya: dokunulmaz kura
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Token dosyanı, tip tanımını, kabul kriterlerini ve hata çıktısını model görsün.**
 - **"Biz hep şöyle yaparız" bilgilerini yaz;** yazılı olmayan kural yoktur.
 - **Yasak listeni talimat dosyasının sonuna koy.**
 - **Dosya adı ve konumu için aracın güncel dokümantasyonuna bak.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -19,6 +19,8 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir sayfada bir menü açılıyor ve ekranın geri kalanı üzerinde "yüzüyor". Bir modal açılıyor, arkası kararıyor. Bir kart hafifçe yükseliyor. Hepsinde ortak olan şey: **katman ilişkisi.** Bu ders o ilişkiyi tutarlı bir sistem olarak nasıl kurduğunu anlatıyor.
 
@@ -91,7 +93,8 @@ Bu sitede derinlik **dört yüzey seviyesiyle** (koyu temada açıklıkla), aç�
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Elevation seviyelerini tanımla ve kullan.** Yeni bir bileşen "hangi seviyede?" sorusunu cevaplasın.
 - **Koyu tema için derinliği ayrıca tasarla.** Gölge yerine yüzey açıklığı.
@@ -99,7 +102,8 @@ Bu sitede derinlik **dört yüzey seviyesiyle** (koyu temada açıklıkla), aç�
 - **İç içe kutuda radius'u hesapla:** dış = iç + boşluk.
 - **Katman için ad iste.** "Modal" katmanı, `z-index: 300` token'ı.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

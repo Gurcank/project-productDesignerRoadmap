@@ -14,9 +14,10 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 10 satırlık prototipte filtre anında çalışıyor. Canlıda 3.000 satırla dondu. Neden? Cevap tek bir soruda: **bir işlemin maliyeti öğe sayısıyla nasıl büyüyor?** Teknik adı Big-O ama notasyonu bilmene gerek yok; gereken şey büyüme hissi.
 
@@ -38,14 +39,16 @@ En sık karşılaşılan performans felaketi "her öğe için tüm öğeleri tek
 
 Tarayıcı tarafında görünür eşik **INP:** bir tıklamadan sonra ekranın güncellenmesi yaklaşık 200 ms'yi aşarsa kullanıcı gecikmeyi hisseder. Kare büyüyen bir işlem bu bütçeyi tek başına tüketir. Somut sezgi: **10 öğede** hiçbir şey fark etmez, **1.000 öğede** yapı seçimi hissedilmeye başlar, **100.000+ öğede** yanlış yapı arayüzü kullanılamaz hâle getirir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarımda 8 satır göstermen, arkadaki listenin 8 olduğu anlamına gelmez;** filtre tüm veri üzerinde çalışır.
 - **"Hepsini seç" ve "hepsini dışa aktar" gibi istekler ölçekle patlar;** üst sınır sor.
 - **Gerçekçi veriyle prototiple.** Üç satırlık sahte veriyle test edilen tablo canlıda bambaşka davranır.
 - **Bir ekran yavaşsa şunu sor:** bu, veri miktarıyla mı büyüyor?
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

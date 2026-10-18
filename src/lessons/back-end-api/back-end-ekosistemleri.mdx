@@ -18,9 +18,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Arka yüzün hangi dille yazıldığı **seviye 3** bir bilgidir: adını duyduğunda kategorisini bilmen yeterli. Diller ayrıntılı olarak Programlama Dilleri bölümünde işlendi; burada back-end ekosistemlerinin kısa haritası var.
 
@@ -35,12 +36,14 @@ Arka yüzün hangi dille yazıldığı **seviye 3** bir bilgidir: adını duydu�
 
 **Tasarımcı için sonuç:** dil seçimi senin işini nadiren etkiler. Etkilediği tek yer, o ekosistemin hazır çözümleridir; örneğin Django kutudan çıkan bir yönetim paneli getirir ve bu tasarım kapsamını değiştirir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Dil yerine hazır çözümü sor:** yönetim paneli, kimlik doğrulama, form yönetimi kutudan geliyor mu?
 - **Hazır gelen arayüzü (örneğin Django admin) tasarlamadan önce ekibe sor;** özel tasarım gerekmeyebilir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

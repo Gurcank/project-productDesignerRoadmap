@@ -11,9 +11,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Denetim raporunda "A01 altında üç bulgu" yazıyor. Bu ne demek? **OWASP Top 10**, web uygulamalarındaki en kritik güvenlik risklerinin, gerçek veriye dayanarak derlenen listesidir. Güvenlik konuşmasının ortak dilidir: ihale şartnamelerinde, denetim raporlarında ve müşteri güvenlik sorularında referans olarak geçer. **Ezberlemen gerekmez; kategorilerin ne anlattığını bilmen yeter.** "Denetim raporu A01 altında üç bulgu listelemiş; erişim kontrolü sorunumuz var."
 
@@ -38,13 +39,15 @@ Güncel sürüm **OWASP Top 10:2025**'tir ve 2021'den sonraki ilk büyük günce
 
 **A06 Insecure Design** doğrudan seni ilgilendirir: kusur uygulamada değil, **akışın kurgusundadır** (zayıf hesap kurtarma akışı gibi). **A10 Mishandling of Exceptional Conditions** ise durum ekranlarıyla akrabadır: bir sistemin beklenmedik durumu nasıl karşıladığı hem UX hem güvenlik meselesidir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Denetim raporunu okurken kategori adlarını bu tabloyla eşle.**
 - **Akış tasarlarken "bu akışın kendisi kötüye kullanılabilir mi?" sor** (A06): hesap kurtarma, davet, paylaşım.
 - **Hata ve beklenmedik durum ekranlarını güvenli davranışla birlikte tasarla** (A10).
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

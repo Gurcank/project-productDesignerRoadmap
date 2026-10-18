@@ -15,9 +15,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Formlar tasarımcının sürekli temas ettiği bir alan; arkasındaki araçların iki adını bilmek, hata mesajlarını nerede düzelteceğini bilmek demektir.
 
@@ -37,13 +38,15 @@ Zod (çalışma zamanı doğrulama) ile TypeScript (derleme zamanı tip kontrol�
 
 **Formik** ve **Yup**, RHF ve Zod'dan önceki nesil form ve doğrulama kütüphaneleridir. Hâlâ çok sayıda projede kullanılır; adlarını duyduğunda tanıman yeterli. Yeni projelerde tercih edilme oranları düştü; güncel durumlarını kontrol et. "Proje Formik kullanıyor; yeni formları RHF'ye geçirmeden önce tutarlılığı düşünelim."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Hata mesajlarını tek bir listede yaz** (alan, kural, mesaj); geliştirici şemaya bunları koyar.
 - **Doğrulama kurallarını teslimde belirt:** minimum uzunluk, biçim, zorunluluk.
 - **Hata mesajı tonunu gözden geçir:** teknik değil, kullanıcı diliyle.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

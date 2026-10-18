@@ -14,9 +14,10 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir geliştirici "bunu yapmak pahalı" dediğinde ne demek istiyor? Çoğu zaman: seçilen veri yapısı o işi kötü yapıyor. Bu bölüm kod öğretmeyecek. Amacı, **neden pahalı olduğunu** anlayabilmen ve tasarımını buna göre kurabilmen.
 
@@ -51,14 +52,16 @@ Bir yapının iyi mi kötü mü olduğu soyut olarak sorulamaz. Sorulacak soru �
 
 Tarayıcı tarafındaki görünür karşılığı **INP** eşiğidir: bir tıklamadan sonra ekranın güncellenmesi 200 ms'yi aşarsa kullanıcı gecikmeyi fark eder. Yanlış veri yapısı bu bütçeyi tek başına tüketebilir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Bu liste kaç öğe olabilir?" sorusunu tasarım aşamasında sor.** "Bilmiyoruz" bir risktir ve boş durum, yükleniyor, sayfalama tasarımını değiştirir.
 - **Bir etkileşimin anında olmasını istiyorsan söyle.** Sonradan "biraz yavaş" demek mimariyi değiştirmek demektir.
 - **Sıralama ve filtrelemeyi bedavaymış gibi tasarlama.**
 - **"Geri alma" bir veri yapısı kararıdır;** baştan söylenirse ucuzdur.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

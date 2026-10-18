@@ -14,9 +14,10 @@ sources:
 skipTerms: ["Scope","scope","kapsam"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Kısıtlar, modelin senin yerine karar vermesini engelleyen şeydir. Bir web işi için tipik kısıt listesi beş grupta toplanır.
 
@@ -48,13 +49,15 @@ Kısıtlar, modelin senin yerine karar vermesini engelleyen şeydir. Bir web iş
 
 **Önemli:** kısıtları her seferinde yazmak yerine çoğunu **talimat dosyasına taşı;** prompt'ta yalnızca o işe özgü olanları belirt.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Sayıyla yaz:** "boşluklar tutarlı olsun" değil, "4/8/12/16/24/32/48 ölçeği".
 - **Kalıcı olanı dosyaya, bu işe özgü olanı prompt'a koy.**
 - **Kapsam kısıtını atlama:** beklenmedik değişikliklerin önünü o keser.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

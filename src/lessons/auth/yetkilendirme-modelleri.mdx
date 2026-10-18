@@ -14,9 +14,10 @@ sources:
     url: "https://oauth.net/2/scope/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir ekip ürününde "Admin", "Editör", "Görüntüleyici" rolleri var. Ya "yalnızca kendi ekibinin projelerini görsün" gibi bir kural? Yetkilendirme modelleri, kimin neyi yapabileceğini tanımlama biçimleridir.
 
@@ -40,14 +41,16 @@ Bir ekip ürününde "Admin", "Editör", "Görüntüleyici" rolleri var. Ya "yal
 
 **En kritik güvenlik noktası veri yalıtımıdır:** bir kiracının verisinin başka bir kiracıya sızması, bir SaaS ürünü için en ciddi hata sınıfıdır. Her sorguda kiracı filtresinin uygulandığından emin olunmalıdır; veritabanı seviyesinde Row Level Security bunun için kullanılır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Rol matrisini bir tablo olarak tasarla** ve arayüzde kullanıcıya göster (hangi rol ne yapabilir).
 - **Yetkisiz eylem için tek bir kural belirle:** genelde pasif + açıklama ("Yetki için yöneticine başvur").
 - **Rol değişikliğinde bildirim ve etkilerini göster.**
 - **Birden fazla kuruluşa üyelik olasılığını erken sor;** workspace switcher, davet ve faturalama ekranlarını planla.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

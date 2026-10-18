@@ -14,10 +14,11 @@ sources:
     url: "https://scrumguides.org/scrum-guide.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Üç gündür aynı ekran üzerinde çalışıyorsun ve ilerlemiyorsun. İçerik metni gelmemiş, geliştirici bir API bekliyor, yönetici de bir kararı vermemiş. Bunların her birini "sorun var" diye anlatmak mümkün, ama **farklı kelimeler** farklı eylemleri tetikler.
 
@@ -85,14 +86,16 @@ Retro'nun standart gündem maddelerinden biridir. "Üç sprint üst üste carry 
 | **Spike** | Bilmiyorum, öğrenmeliyim | Sınırlı araştırma |
 | **Carry over** | Bitmedi, devrettik | Retro gündemi |
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Bağımlılıkları işe başlamadan önce listele.** İçerik, görsel, onay, API: hangisi sende, hangisi başkasında?
 - **"Blocker"ı hak ettiği anda kullan.** İçerik gelmedi ama başka ekranda çalışabiliyorsan bu bir bağımlılık; hiçbir şey yapamıyorsan blocker.
 - **Erken escalate et.** "Cevap alamadım" ikinci günde söylenir, beşinci günde değil. Yöntem: ne oldu, ne denedim, hangi karar gerekli, ne zamana kadar.
 - **Belirsiz işleri spike'a çevir.** "Bu ne kadar sürer?" sorusuna cevap veremiyorsan, tahmin istemeden önce bir spike iste.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -13,10 +13,11 @@ sources:
     url: "https://www.atlassian.com/agile/product-management"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Proje bir ay sürecekti. Üçüncü haftada biri "bir de şunu ekleyelim" dedi, sonra bir başkası "şu da kolay olur" dedi. Altı hafta sonra hâlâ bitmedi ve kimse "ne zaman bu kadar büyüdü?" sorusuna cevap veremiyor.
 
@@ -88,7 +89,8 @@ Ayrımlar:
 
 Yayın tarihi yaklaşırken yapılan kapsam toplantılarında kullanılır: "Cut line'ı animasyonların üstüne çekelim; gerekirse onlar düşer, akış kalır." Bu cümle tasarımcı için bir güvence: *önceden* neyin düşebileceğini söylemiş olursun, böylece son dakikada akışın kritik parçasını kaybetmezsin.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Önce soruyu sor:** "Bu denemeyle neyi öğreneceğiz?" Soru yoksa MVP de değil, "az özellikli ürün"dür.
 - **POC'u üretime sızdırma.** "Zaten çalışıyor" cümlesi teknik borcun başlangıcıdır.
@@ -96,7 +98,8 @@ Yayın tarihi yaklaşırken yapılan kapsam toplantılarında kullanılır: "Cut
 - **"Bir de şunu ekleyelim" dendiğinde sor:** "Bu kapsamda mı, değilse tarihi birlikte güncelleyelim mi?" Bu soru creep'i bilinçli bir kapsam değişikliğine çevirir.
 - **Cut line'ı baştan çizdir.** "Süre sıkışırsa ilk neyi atarız?" sorusunu proje başında sor.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

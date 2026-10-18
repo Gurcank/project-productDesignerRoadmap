@@ -15,11 +15,12 @@ sources:
     url: "https://martinfowler.com/articles/feature-toggles.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Yeni sürüm hazır. Bunu herkese aynı anda mı açarsın, yoksa önce küçük bir kısmına mı? Dört yaklaşım var ve hepsi aynı soruyu cevaplar: **bir şey ters giderse kaç kullanıcı etkilensin?**
 
@@ -61,13 +62,15 @@ Yeni sürüm hazır. Bunu herkese aynı anda mı açarsın, yoksa önce küçük
 
 **Bayraklar birikir ve teknik borç üretir.** Kullanılmayan bayraklar kodu dallandırır ve test edilmesi gereken durum sayısını katlar. Her bayrağın bir **sahibi** ve bir **kaldırılma tarihi** olmalıdır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Büyük tasarım değişikliklerini flag arkasında kademeli açmayı öner:** önce iç ekip, sonra %10, sonra herkes.
 - **Canary'de hangi metriğin izleneceğini tasarım tarafından da belirle** (dönüşüm, hata, tıklama).
 - **Kullanılmayan bayrakların kaldırılmasını takip et;** eski tasarım dalları kodda kalmasın.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -13,10 +13,11 @@ sources:
     url: "https://www.svpg.com/product-discovery/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Yönetim toplantısında bir slayt gösteriliyor: "Q3'te çok dilli destek, Q4'te yapay zekâ önerileri." Herkes başını sallıyor. Üç ay sonra Q3 geliyor ve çok dilli destek hâlâ başlamadı. Hata nerede? Slaytın bir plan gibi görünmesinde ama bir niyet beyanı olmasında.
 
@@ -61,14 +62,16 @@ Dikkat: **çeyrek her şirkette Ocak'ta başlamaz.** Şirketin **mali yılı** (
 
 "Onboarding teması altında dört epic var; hepsi aynı metriği hedefliyor."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Tema ile konuş, özellikle değil.** "Şu butonu ekleyelim" yerine "ilk gün terk oranını düşürmek" önerisi, tasarıma da alan bırakır.
 - **Tarih istendiğinde aralık ve güven seviyesi ver.** "Muhtemelen Next'te, tahminimiz iki çeyreğe yayılıyor."
 - **Kendi işini Now / Next / Later ile çerçevele.** Hangi tasarım işi netleşti, hangisi hâlâ keşifte?
 - **Q'nun ne zaman başladığını sor.** "Q3'te çıkar" cümlesi mali yıla göre değişir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

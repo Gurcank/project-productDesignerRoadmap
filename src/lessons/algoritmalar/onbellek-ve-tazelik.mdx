@@ -17,6 +17,8 @@ additions:
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Önbellek, bir kez hesaplanan sonucu saklayıp tekrar kullanmaktır. Hız için en güçlü araç ve aynı zamanda **en sinsi hata kaynağı:** sakladığın şey eskidiğinde kullanıcı yanlış bilgiyi görür ve sistem hata vermez. Teknik tarafı Back-end bölümündeki Caching dersinde var; burada tasarıma yansıyan kısmı.
 
@@ -47,14 +49,16 @@ Bu sitenin çevrimdışı katmanı bunun canlı bir örneğidir: içeriği deği
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her ekran için "ne kadar taze olmalı?" sorusunu cevapla,** özellikle para, stok ve izinle ilgili olanlarda.
 - **"Yenile" eylemi gerekiyor mu?** Kullanıcıya tazeliği kontrol etme yolu vermek bazen en ucuz çözümdür.
 - **Veri güncellendiğinde ekranda ne olacağını belirle:** sessiz değişim mi, bildirim mi?
 - **"Bende eski görünüyor" şikâyetini ciddiye al;** kullanıcı için hatadan ayırt edilemez.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

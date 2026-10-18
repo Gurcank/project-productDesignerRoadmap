@@ -14,9 +14,10 @@ additions:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Go, Google'ın, çok sayıda isteği aynı anda karşılayan sunucular için tasarladığı bir dildir. Kasıtlı olarak küçüktür: az özellik, az yol, az tartışma.
 
@@ -39,12 +40,14 @@ Go, Google'ın, çok sayıda isteği aynı anda karşılayan sunucular için tas
 
 **Alternatifler:** ekip JavaScript biliyorsa benzer eşzamanlılık profiliyle Node.js; daha yüksek performans için (çok daha dik öğrenme eğrisiyle) Rust; kurumsal ekosistem gerekiyorsa Java ya da C#.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Bu servisi Go'ya alalım" genelde bir ölçek sorununun cevabıdır,** bir moda değil. Sorulacak soru: hangi sayı bunu tetikledi?
 - **Go'ya geçmek kullanıcı tarafında hiçbir şeyi değiştirmez;** arayüz aynı kalır. Takvimde yer kaplayan ama tasarım çıktısı olmayan bir iştir; yol haritasında görünmez olması normaldir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

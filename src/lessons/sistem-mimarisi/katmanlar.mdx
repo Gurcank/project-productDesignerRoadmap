@@ -12,9 +12,10 @@ sources:
     url: "https://martinfowler.com/bliki/BoundedContext.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir mimari diyagramında genelde üç yatay dilim görürsün: üstte arayüz, ortada iş mantığı, altta veri. Bu en klasik yapının adı katmanlı mimari. Ve arkasındaki ilke, tasarım sistemlerinde de geçerli.
 
@@ -30,13 +31,15 @@ Bir mimari diyagramında genelde üç yatay dilim görürsün: üstte arayüz, o
 
 **Tasarımla akrabalığı var:** bir bileşen kütüphanesindeki iyi bileşen tanımı da aynıdır: kendi içinde bütün, dışarıya net bir arayüz sunan. Aynı ilke, farklı ölçekte.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **İş kuralını sunum katmanında değil ortak yerde tut** diye iste; web ve mobil aynı kuralı kullansın.
 - **Bileşen ve modül sınırlarını iş alanına göre çiz:** sipariş, ödeme, envanter; "butonlar", "formlar" gibi teknik gruplar değil.
 - **Bir modülün başka bir modülün verisine doğrudan dokunduğunu fark edersen** bunu bağlılık sorunu olarak işaretle.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

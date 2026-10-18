@@ -18,10 +18,11 @@ sources:
 skipTerms: ["layout","grid","header"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import LayoutAxes from "~/components/lesson/LayoutAxes.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Header'da logo solda, menü sağda olsun" ile "ana kart iki sütun iki satır kaplasın" iki ayrı yerleşim isteğidir ve iki farklı araçla kurulur. Hangisinin hangisi olduğunu bilmek, tasarım tesliminde niyetini net anlatmanı sağlar.
 
@@ -43,13 +44,15 @@ Karıştırma: *CSS Grid* bir kod tekniğidir; tasarım dosyandaki *layout grid*
 
 **aspect-ratio**, bir kutunun en-boy oranını sabitler. Görsel yüklenmeden önce yer ayrılmasını sağlar; böylece içerik geldiğinde yerleşim kaymaz (performans dersindeki CLS).
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her yerleşim kararına bir ad ver:** "bu sıra flex, bu bölüm grid".
 - **Boşlukları "kartlar arası gap, kart içi padding" diye ayır.**
 - **Görsellere oran tanımla** (16:9, 4:3); geliştirici yer ayırabilsin.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

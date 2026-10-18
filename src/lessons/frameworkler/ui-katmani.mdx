@@ -18,9 +18,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Arayüzü çizen kütüphaneler arasındaki seçim, **doğru cevabı olmayan** bir karardır. Hepsi çalışır; farklılıklar takas noktalarındadır. Bu ders her birinin hangi takası sunduğunu anlatır.
 
@@ -46,13 +47,15 @@ Google tarafından geliştirilen, her şeyi kutudan çıkaran kapsamlı framewor
 
 React'e benzer yazım biçimi olan ama farklı bir reaktivite modeliyle çalışan kütüphanedir. **İnce taneli reaktivite** kullanır: bir değer değiştiğinde tüm bileşeni değil, yalnızca o değeri kullanan parçayı günceller; gereksiz yeniden çizimleri ortadan kaldırır. Ekosistemi küçüktür ve ticari projelerde risk oluşturabilir. Bu bir **seviye 3** terimdir: adını bilmen yeterli.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Ekibin hangisini bildiğini öğren;** tasarım araçlarını ve bileşen kitini ona göre seç.
 - **React dışı bir tercihte ekosistem sorusunu sor:** ihtiyacımız olan hazır bileşen ve entegrasyonlar var mı?
 - **"Daha hızlı/daha yeni" argümanını kendi ürününün ihtiyacıyla tart.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

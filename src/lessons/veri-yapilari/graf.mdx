@@ -14,11 +14,12 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 **Graf**, düğümler ve aralarındaki bağlantılardan oluşur. Ağaçtan farkı, **kısıt olmamasıdır:** bir düğümün birden çok üstü olabilir, döngü olabilir, her şey her şeye bağlanabilir. Sosyal ağlar, "bunu alanlar şunu da aldı", yol tarifi, bağımlılık haritaları hep graftır.
 
@@ -61,14 +62,16 @@ Graf tabanlı öneriler ("bunu alanlar şunu da aldı") istatistiksel bir çıka
 
 **Alternatifler:** ilişki gerçekten tek yönlü hiyerarşiyse ağaç; etiket + filtre (grafın hafif hâli); elle seçim/küratörlük (ölçeklenmez ama kalitesi öngörülebilir, küçük kataloglarda otomatik öneriden iyidir).
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Birden çok yoldan ulaşılabilir mi?" sorusunu sor;** cevabı arkadaki veri modelini ve breadcrumb/URL kararlarını belirler.
 - **Döngü kuralını ve hata mesajını tanımla.**
 - **Graf görselleştirmesinden önce sor:** kullanıcı bu diyagramla hangi kararı verecek? Cevap yoksa liste daha iyidir.
 - **Öneri etiketini mekanizmaya göre yaz.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

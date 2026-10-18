@@ -12,9 +12,10 @@ sources:
     url: "https://docs.github.com/en/get-started/quickstart/fork-a-repo"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Git bilgisayarında çalışır; peki ekip nerede buluşur? Uzak depoda.
 
@@ -36,13 +37,15 @@ Fetch'in ayrı olması, "önce ne değişmiş bir bakayım" imkânı verir. "Pus
 
 **Force push tehlikelidir:** uzaktaki geçmişi zorla üzerine yazar ve başkalarının işini silebilir. Paylaşılan dallarda kullanılmaz; ana dalda ise genelde dal koruması ile tamamen yasaklanır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Yazma yetkin yoksa fork + PR yolunu kullan;** açık kaynak katkıları böyle çalışır.
 - **"Force push" duyduğunda** nedenini ve hangi dalda yapıldığını sor.
 - **Tasarım dosyalarını (Figma dışında) depoya koyuyorsan** push/pull akışına ekibin alışkın olduğundan emin ol.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

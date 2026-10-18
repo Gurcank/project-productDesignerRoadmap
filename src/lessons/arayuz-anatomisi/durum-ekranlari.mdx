@@ -22,6 +22,8 @@ import Callout from "~/components/lesson/Callout.astro";
 import StateCards from "~/components/lesson/StateCards.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Tasarım dosyasında listen mükemmel: on proje, ikonlar, rozetler. Gerçek kullanıcı ise ilk kez giriyor ve hiç projesi yok. Ya da internet yavaş. Ya da sunucu hata verdi. Senin ekranın bu üç durumda ne gösteriyor?
 
@@ -69,7 +71,8 @@ Bağlantı kesilince bu sitenin üstünde "İnternet yok — indirilmiş içerik
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her veri ekranı için beş hâli çiz:** yükleniyor, boş (üç türü), hata, dolu, az veri.
 - **Skeleton'ı gerçek yerleşimle aynı boyutta tasarla.**
@@ -78,7 +81,8 @@ Bağlantı kesilince bu sitenin üstünde "İnternet yok — indirilmiş içerik
 - **404'e arama ve çıkış yolu koy;** header ve footer'ı koru.
 - **Optimistic UI kullanıyorsan hata hâlini ayrıca çiz.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

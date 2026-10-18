@@ -19,12 +19,13 @@ additions:
   - "Aldatıcı tasarım (dark pattern): kullanıcıyı yanıltan ya da zorlayan kalıpların adları ve neden bir kullanılabilirlik sorunu olmadığı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Outside from "~/components/lesson/Outside.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir toplantıda bir tasarımı eleştiriyorsun ve "bana biraz karışık geldi" diyorsun. Karşındaki ikna olmuyor çünkü bir izlenim, tartışılamaz. Aynı şeyi şöyle söylesen: "Dosya yüklenirken hiçbir geri bildirim yok; kullanıcı işlemin çalışıp çalışmadığını bilemiyor, bu Nielsen'in 1 numaralı ilkesine aykırı." Artık savunulabilir bir iddia var.
 
@@ -132,7 +133,8 @@ Bu kalıplar kısa vadede metrik artırabilir ama güveni yıpratır ve bazı ü
 
 </Outside>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Geri bildirimini ilkeye bağla.** "Karışık" yerine "1 numara: sistem durumu görünmüyor" de.
 - **Sorunun ilkesini bul, çözümü sonra düşün.** İlke hata türünü adlandırır; çözümün biçimi ayrı bir iştir.
@@ -140,7 +142,8 @@ Bu kalıplar kısa vadede metrik artırabilir ama güveni yıpratır ve bazı ü
 - **Etkileşimli her öğeye bir signifier ver.** Tıklanabilir olduğu belli olmayan bir öğe yoksayılır.
 - **Kullanıcıyı yanıltan akıştan uzak dur.** Kısa vadeli metrik, uzun vadeli güveni yer.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

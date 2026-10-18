@@ -23,9 +23,10 @@ additions:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bu dördü bir Product Designer'ın günlük işinde nadiren karar konusu olur; ama adı geçtiğinde ne anlama geldiğini bilmek gerekir. Seviye: **kulak aşinalığı.**
 
@@ -45,12 +46,14 @@ Apple'ın dilidir: **iOS, iPadOS, macOS** uygulamaları burada yazılır. Native
 
 Bellek güvenliğini derleme anında garanti etmeyi hedefleyen, çok hızlı bir sistem dilidir. Performansın kritik olduğu altyapıda, tarayıcı motorlarında ve WebAssembly'de görülür. Öğrenmesi zor, yazması yavaştır; sıradan bir web servisi için fazladır. Adı geçtiğinde konu genelde **performans ya da güvenliktir,** özellik değil.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Native mobil, webin ölçeklendirilmiş hâli değildir.** Ayrı platform kuralları, ayrı bileşenler, ayrı yayın süreci vardır; mağaza onayı günler alabilir.
 - **"Tek kod, iki platform" (React Native, Flutter) bir ödünleşimdir:** ortak kod ucuzlar, platforma özgü his zayıflar. Hangisinin daha önemli olduğu bir ürün kararıdır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -14,9 +14,10 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Bu özellik zor" cümlesini sık duyarsın. Zor ne demek? **Algoritma**, bir işi bitirmek için izlenen adımların tarifidir. Veri yapısı verinin **nasıl dizildiği**, algoritma o diziliş üzerinde **ne yapıldığıdır.** İkisi birlikte bir arayüzün neyi anında yapabileceğini belirler.
 
@@ -46,14 +47,16 @@ Bir işlem yavaşsa üç yol vardır ve ilki çoğu zaman en iyisidir:
 
 Tasarımcı olarak en çok etkileyebildiğin yer birincisidir: **isteği küçültmek, kodu hızlandırmaktan ucuzdur.**
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her sıralama ve filtre kuralını yazılı olarak tanımla.** "En alakalı" tanımsızsa sistem bir şey seçer ve kullanıcı bunu rastgelelik olarak görür.
 - **"Kaç öğe?" sorusunu her listede sor;** cevap maliyeti belirler.
 - **Bir etkileşimin anında olması gerekiyorsa söyle;** bu farklı bir çözüm demektir, sonradan hızlandırma değil.
 - **Gecikmeyi gizlemek de bir tasarım aracıdır:** iskelet ekran, iyimser güncelleme, ilerleme göstergesi.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

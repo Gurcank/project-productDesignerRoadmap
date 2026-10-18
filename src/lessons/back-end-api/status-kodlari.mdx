@@ -18,11 +18,12 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Retry-After"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Bu endpoint 429 dönüyor." Bu cümleyi duyduğunda ne olduğunu ve ekranda ne göstermen gerektiğini bilmelisin. Status kodu, sunucunun "ne oldu?" cevabıdır. Üç haneli sayının **ilk hanesi** kategoriyi verir; onu bilmek çoğu durumda yeter.
 
@@ -75,14 +76,16 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 **429 Too Many Requests**, istemcinin kısa sürede çok fazla istek attığı ve geçici olarak sınırlandığı durumdur. Hız sınırlamanın kullanıcıya yansıyan yüzüdür. **Tasarlanması gereken bir durumdur** ama neredeyse hep atlanır: kullanıcı ne kadar beklemesi gerektiğini bilmelidir. Sunucu genelde bir `Retry-After` bilgisi döner ve bu, arayüzde geri sayım olarak gösterilebilir. "429'da 'çok fazla deneme, 30 saniye sonra tekrar deneyin' diyelim; yalnızca 'hata oluştu' yazmayalım."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her kod ailesi için bir ekran ya da mesaj tanımla:** 400/422 form hatası, 401 giriş, 403 yetki yok, 404 bulunamadı, 429 bekleme, 5xx genel hata.
 - **403 için ayrı ekran tasarla;** giriş sayfasına yönlendirme.
 - **429'da bekleme süresini göster.**
 - **5xx'te kullanıcıyı suçlamayan, tekrar dene ve çıkış yolu sunan bir hata tasarla.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -17,9 +17,10 @@ sources:
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Google ile devam et", "Apple ile giriş yap", "Kurumsal hesabınla giriş". Üçü farklı protokollerin yüzü. Bu ders hangisinin ne olduğunu ve tasarıma ne istediğini anlatır.
 
@@ -48,14 +49,16 @@ SSO kurulumu genelde müşterinin IT ekibiyle birlikte yapılır ve **kendi aray
 
 Otomatik birleştirme güvenlik riski taşıyabilir: doğrulanmamış bir e-posta üzerinden hesap ele geçirme. Bu yüzden birleştirme genelde doğrulama ister ve bu doğrulama akışı tasarlanmalıdır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Sosyal girişte "bu e-posta başka bir yöntemle kayıtlı" mesajını tasarla.**
 - **Giriş seçeneklerini 2-3 ile sınırla.**
 - **Kurumsal planlar için SSO yönetici ekranlarını (yapılandırma, alan adı doğrulama, zorunlu SSO kuralı) önceden planla.**
 - **Hesap birleştirme akışında doğrulama adımını çiz.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

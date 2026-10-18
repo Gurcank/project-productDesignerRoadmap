@@ -15,9 +15,10 @@ sources:
     url: "https://web.dev/articles/vitals"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Sistemimiz hızlı" demek bir şey söylemez. Hızlı ne demek? Kime göre? Bu ders, mimari tartışmalarda geçen ölçülerin dilini verir.
 
@@ -52,13 +53,15 @@ SLO genelde SLA'dan **daha sıkı** tutulur ki söz ihlal edilmeden önce uyarı
 
 **Error budget** buradan çıkar: %99,9 hedef, yılda ~8,8 saatlik bir "hata bütçesi" demektir. Bütçe tükenmediyse ekip risk alıp hızlı yayın yapabilir; tükendiyse istikrara odaklanır. Hız ile güvenilirlik arasındaki tartışmayı sayıya bağlar.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Hızlı" yerine bir ölçü iste:** "p95 yükleme 2 saniye altı" gibi.
 - **Hedefin maliyetini sor:** her ek dokuz maliyeti katlar; ürün için gerçekten gerekli mi?
 - **Planlı bakım pencerelerini kesinti bütçesinin parçası olarak gör** ve kullanıcıya duyurusunu tasarla.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

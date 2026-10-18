@@ -14,9 +14,10 @@ sources:
     url: "https://www.w3.org/WAI/test-evaluate/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 **Bu ders pazarlık konusu değil.** Kod okuyabiliyorsun; bu, çıktıyı denetleyebileceğin anlamına gelir ve denetlemek zorundasın.
 
@@ -48,14 +49,16 @@ Materyal, kaynaklarda tekrar eden bir tavsiyeyi aktarıyor: **her yapay zekâ ot
 
 **Nihai ilke:** üretimi hızlandırabilirsin ama **sorumluluğu devredemezsin.** Yayına çıkan şeyin sahibi sensin.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Linki tıkla, sürümü paketin sayfasından doğrula, sayının kaynağını aç.**
 - **Güvenlik ve hukuk iddialarında birincil kaynağa veya uzmana git.**
 - **Her oturum sonunda diff'e bak:** bir bileşen istedin, kaç dosya değişti?
 - **Altı kontrolü bir kontrol listesi yap** ve her arayüz çıktısında çalıştır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -13,11 +13,12 @@ sources:
 flags: ["emin-degil"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Profil adını değiştirdin, "Kaydedildi" gördün, sayfayı yeniledin ve eski ad geri geldi. Sistem bozuk değil. Kullanıcı ise bozuk sanıyor. Bu, tutarlılık konusunun arayüze yansıması.
 
@@ -46,13 +47,15 @@ Profil adını değiştirdin, "Kaydedildi" gördün, sayfayı yeniledin ve eski 
 
 Sık yanlış anlaşılır: "üçünden ikisini seç" diye özetlenir ama teoremin söylediği daha dar; seçim yalnızca **bölünme anında** ortaya çıkar. Teoremin kesin formülasyonu akademik bir tartışma konusudur; günlük kullanımda kaba bir çerçeve olarak geçer.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Hangi veri anında doğru görünmeli, hangisi biraz gecikebilir?** Para ve stok kritik; beğeni sayısı değil.
 - **Kullanıcının kendi eylemini anında yansıt;** toplam sayıların gecikmesi tolere edilebilir.
 - **"Güncelleniyor" durumu için küçük bir gösterge tasarla.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

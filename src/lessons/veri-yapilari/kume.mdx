@@ -14,9 +14,10 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir tabloda üç satır seçtin. "Seçili mi?" kontrolü anında yapılıyor. Arkadaki yapı büyük ihtimalle bir **kümedir.** Küme, aynı öğeyi iki kez tutamayan bir topluluktur: sırası yok, tekrarı yok, tek cevapladığı soru **"bu öğe içinde var mı?"** Sözlüğün değer tutmayan hâli gibi düşün.
 
@@ -51,14 +52,16 @@ Sıra yoktur ("seçtiği sırayla göster" için tek başına yetmez); sayı tut
 
 Üçü farklı davranıştır ve farklı maliyettedir. Görünen sayfayı seçmek ucuzdur; "filtreye uyan 40.000 kaydı seç" ise seçim kümesini tarayıcıya taşımak yerine sunucuya "şu filtreye uyan her şey" diye tarif etmeyi gerektirir. Tasarımda tek bir onay kutusu gibi görünür ama arkada iki ayrı mekanizmadır. Netleştirmezsen geliştirici birini seçer ve kullanıcı diğerini bekler. Aynı şekilde: **seçim filtre değişince ne olacak?** Korunacak mı, sıfırlanacak mı?
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Tümünü seç"in kapsamını yaz** (sayfa mı, filtre sonucu mu) ve seçili sayısını göster ("40.812 kayıt seçildi"); yıkıcı toplu işlemlerde tek güvenlik ağıdır.
 - **Filtre değişince seçime ne olacağına karar ver** ve kullanıcıya söyle.
 - **Tekillik kuralını görünür kıl:** "Bu etiket zaten ekli" sessizce yok saymaktan iyidir.
 - **Sırası olan seçim istiyorsan ayrıca belirt;** küme sırasızdır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

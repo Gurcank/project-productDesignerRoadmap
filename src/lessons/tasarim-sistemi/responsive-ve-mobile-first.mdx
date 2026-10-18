@@ -21,6 +21,8 @@ import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Şu an bu siteyi telefonunda okuyorsun. Aynı sayfa masaüstünde farklı görünüyor: yan menü sabit, içerik sütunu ortada, sağda içindekiler. Telefonda ise menü alttaki bir çubuğa, içerik tek sütuna dönüştü. İkisi **aynı kod, aynı içerik.** Bu davranışın adı responsive.
 
@@ -100,7 +102,8 @@ Bu site mobil için tasarlandı: telefonda alt gezinme çubuğu, okuma ilerleme 
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Mobil ekranla başla.** Neyin gerçekten gerekli olduğuna orada karar ver.
 - **Teslimde en az iki üç boyut ver** ve aradaki davranışı yaz: "900px altında iki sütun".
@@ -108,7 +111,8 @@ Bu site mobil için tasarlandı: telefonda alt gezinme çubuğu, okuma ilerleme 
 - **Bileşenin farklı kapsayıcılardaki hâlini çiz.** Ana alan ve kenar çubuğu.
 - **Akışkan boyuta sınır koy.** Minimum ve maksimum belirt.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

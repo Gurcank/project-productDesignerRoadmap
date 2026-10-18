@@ -11,20 +11,23 @@ sources:
     url: "https://redis.io/docs/latest/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Kullanıcılar rastgele çıkış yapıyor. Hiçbir hata yok, ama bazen oturumun düşüyor. En olası sebep: oturum bilgisi bir sunucunun belleğinde tutuluyor ve ikinci kopya eklendi.
 
 **Stateless** bir servis, istekler arasında kendi belleğinde bilgi tutmaz; her istek kendi içinde bütündür. **Stateful** olan tutar. **Stateless olmak yatay ölçeklemenin ön koşuludur.** Kullanıcının oturum bilgisi tek bir sunucunun belleğinde durursa, ikinci bir sunucu eklendiğinde o kullanıcı oraya düştüğünde çıkış yapmış olur. Çözüm: durumu paylaşılan bir yere taşımak (Redis, veritabanı) ya da jetonda taşımak. "Oturumları sunucu belleğinde tutuyoruz; ikinci kopya ekleyince kullanıcılar rastgele çıkış yapacak. Redis'e taşıyalım."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Rastgele çıkış yapıyorum" şikâyetini oturum yönetimiyle ilişkilendir.**
 - **Oturum süresi ve yenileme davranışını ürün kararı olarak yaz** (ne kadar sonra çıkış, uyarı var mı?).
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -28,6 +28,8 @@ import Callout from "~/components/lesson/Callout.astro";
 import BoxModelFigure from "~/components/lesson/BoxModelFigure.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Tasarımda 16px'lik bir boşluk çizdin; sayfada 24px çıktı. Ya da bir rengi değiştirdin ama ekranda eski renk duruyor. Bunların cevabı CSS'te. Bu ders, CSS'in tasarımcıyı en çok ilgilendiren kavramlarını anlatır.
 
@@ -67,14 +69,16 @@ Bu sitenin renkleri ve boşlukları CSS değişkenleridir; tüm galaksi teması 
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Boşluğu doğru türde adlandır:** kart içi padding, kartlar arası gap/margin.
 - **Her uzun metin alanı için taşma kararını yaz:** kes, üç nokta, kaydır, satır sınırı.
 - **Gizleme taleplerinde ekran okuyucu etkisini sor.**
 - **Renk ve boşlukları token olarak teslim et;** geliştirici bunları değişken yapar.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

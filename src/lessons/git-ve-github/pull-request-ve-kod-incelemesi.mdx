@@ -17,9 +17,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 **Senin en çok temas edeceğin kısım bu.** Bir pull request'a yorum yapmak için kod yazmayı bilmene gerek yok.
 
@@ -45,14 +46,16 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 Üçü de aynı problemi çözer: PR'ları küçük tutmak ve ana dalı kırmadan hızlı ilerlemek. Bunlar platform özellikleridir ve biçimleri değişebilir. "Taslak PR açıp yönü erkenden gösterelim; hazır olunca incelemeye alırız."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **PR'a ekran görüntüsü / karşılaştırma ekle;** incelemeyi ve tasarım onayını kolaylaştırır.
 - **İncelemede kontrol listesi kullan:** ölçüler, durumlar (hover, focus, disabled), responsive, erişilebilirlik.
 - **PR çok büyükse bölünmesini iste.**
 - **Draft PR ile erken yönü göster;** son dakikada büyük değişiklik istemekten iyidir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -14,9 +14,10 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Geliştirme sırasında en sık karşılaşılan hatalardan biri: "CORS hatası alıyoruz." Bu hatanın arkasında web'in en temel güvenlik kuralı var.
 
@@ -36,13 +37,15 @@ Geliştirme sırasında en sık karşılaşılan hatalardan biri: "CORS hatası 
 
 **Tasarım tarafında bir sürtüşme noktasıdır:** sıkı bir CSP, gömülü analitik, harita, video oynatıcı ve font servislerini kırabilir. Bu yüzden hangi üçüncü partilerin kullanılacağı kararı, CSP kararıyla birlikte alınmalıdır. "CSP ekleyelim ama üçüncü parti gömülü bileşenlerin kırılmadığından emin olalım."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Üçüncü parti bileşen (analitik, harita, video, font) eklerken CSP etkisini sor.**
 - **"CORS hatası" duyduğunda güvenlik sorununu değil, kökenler arası erişim yapılandırmasını düşün.**
 - **Güvenliği yalnızca tarayıcı kurallarına bırakma;** yetki kontrolü sunucuda yapılır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

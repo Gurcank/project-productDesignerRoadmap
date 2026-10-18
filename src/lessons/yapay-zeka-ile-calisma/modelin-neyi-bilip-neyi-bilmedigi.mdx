@@ -19,6 +19,8 @@ skipTerms: ["Bottleneck","bottleneck","darboğaz"]
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bu bölüm senin orijinal hedeflerinden biriydi: yapay zekâya profesyonel seviyede prompt yazabilmek. Bölümün tezi tek cümle: **iyi bir prompt bir spec'tir.** Bağlam, kısıt, kabul kriteri ve format; dördü de önceki bölümlerde zaten var. Yani prompt yazmayı öğrenmek ayrı bir beceri değil, **önceki bölümlerde öğrendiğin dili kullanmak.**
 
@@ -59,14 +61,16 @@ Model, bilmediği bir şeyin bilmediğini her zaman fark etmez; eski bilgiyi gü
 
 **Drift (sapma)**, üretilen çıktının istenen şeyden yavaş yavaş uzaklaşması ve bunu yaparken tutarlı ve inandırıcı görünmesidir. Materyal, 2026 itibarıyla yapay zekâ destekli geliştirmenin ana sorununun üretim hızı değil sapma olduğunu aktarıyor: hızlı üretilmiş, kendinden emin ama **yanlış problemi çözen** çıktı. Panzehir, üretimden önce net bir tanım (spec) koymaktır. Uzun oturumlarda ve belirsiz taleplerde karşına çıkar. "Çıktı güzel ama biz bunu istememiştik; sapma var. Tanıma geri dönelim."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Sürüm, fiyat ve API davranışını doğrulamadan kullanma;** paketin kendi sayfasına bak.
 - **Uzayan oturumu özetleyip yenile;** pencereyi doldurmaya çalışma.
 - **Çıktı güzel görünüyor diye doğru sayma:** sapma tam da böyle görünür.
 - **Önce tanım yaz, sonra üret.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

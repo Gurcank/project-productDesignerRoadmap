@@ -2,13 +2,16 @@
 /**
  * A boxed aside inside a lesson. The kind is carried by the label as well as
  * the edge colour, so it still reads without colour (SPEC §6).
+ *
+ * The old "tasarimci" kind ("Tasarımcı olarak sen") became the Product
+ * Designer lens: see Lens.astro and Lenses.astro.
  */
 interface Props {
-  kind?: "ornek" | "dikkat" | "tasarimci";
+  kind?: "ornek" | "dikkat";
   title?: string;
 }
 
-const LABEL = { ornek: "Örnek", dikkat: "Dikkat", tasarimci: "Tasarımcı olarak sen" } as const;
+const LABEL = { ornek: "Örnek", dikkat: "Dikkat" } as const;
 const { kind = "ornek", title } = Astro.props;
 ---
 

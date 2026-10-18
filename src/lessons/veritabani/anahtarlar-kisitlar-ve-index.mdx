@@ -16,9 +16,10 @@ sources:
     url: "https://use-the-index-luke.com/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Aynı adı taşıyan iki kullanıcıyı sistem nasıl ayırır? Bir kullanıcı silinince siparişlerine ne olur? Liste neden 4 saniyede açılıyor? Üç sorunun cevabı bu dersin kavramlarında.
 
@@ -46,14 +47,16 @@ Bu sorunun cevabı bir **ürün kararıdır,** teknik değil: kullanıcı silini
 
 İndeks bedava değildir: okumayı hızlandırır ama **yazmayı yavaşlatır** ve yer kaplar. Her sütuna indeks koymak bir çözüm değil, ayrı bir problemdir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **URL'lerde sayısal ID yerine okunur slug ya da tahmin edilemez kimlik iste.**
 - **Silme akışlarında "ilişkili kayıtlara ne olur?" ürün kararını önceden ver** ve "silinmiş kullanıcı" gibi görünümleri tasarla.
 - **Benzersizlik hatası mesajlarını tasarla;** giriş ekranında bilgi sızdırmamaya dikkat et.
 - **Yavaş filtre/sıralama şikâyetinde "bu sütunda indeks var mı?" sor.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

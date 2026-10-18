@@ -13,9 +13,10 @@ sources:
 skipTerms: ["Scope","scope","kapsam"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 ## Jenerik tasarım
 
@@ -65,12 +66,14 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 **Çözüm:** problem tanımıyla başla, çözümle değil. Ürün Geliştirme bölümündeki problem tanımı ilkesinin aynısıdır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Belirtiyi tanı:** "AI hissi", var olmayan fonksiyon, eski API, fazla dosya değişikliği, sorgulanmamış ilk cevap, işe yaramayan çözüm.
 - **Her tuzağın çözümü bir kısıt ya da alışkanlıktır:** ölçek ve yasak ver, "yeni bağımlılık ekleme" yaz, sürümü belirt, kapsamı daralt, alternatif iste, problemle başla.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

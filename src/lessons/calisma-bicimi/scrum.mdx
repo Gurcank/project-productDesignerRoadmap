@@ -14,10 +14,11 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Scrum uyguluyoruz: iki haftalık sprint, salı planning, cuma review ve retro." Bu cümleyi bir şirketin ilk gününde duyacaksın. Bu ders, o cümlenin her kelimesini açıyor.
 
@@ -127,14 +128,16 @@ Bir ekibin gerçekten Scrum yapıp yapmadığını anlamak için şu kontrol lis
 - Retro'dan sahibi ve tarihi olan aksiyon çıkıyor mu?
 - Sprint ortasında ekibe yeni iş ekleniyor mu?
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Planning'e katıl ve tasarım hazırlık süresini sprint'e yerleştir.** Tasarım gerektiren işin tasarımı sprint'in *önünde* yapılmalı, içinde değil. (Önceki bölümde dual-track'i hatırla.)
 - **Review'da canlı ürün göster.** Tasarım kararlarının gerçek ürünle nasıl göründüğü, ekran görüntüsüyle gösterilemez.
 - **Retro'ya katkı ver.** "Tasarım teslimleri geç geliyor" gibi bir sorunu retroda aksiyona çevir: "Tasarım hazır olma tanımına eklensin."
 - **"Scrum-but" gördüğünde eleştirme, ayır.** Önce neyin uygulandığını, neyin uygulanmadığını anlamaya çalış.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

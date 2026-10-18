@@ -23,6 +23,8 @@ import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 İki farklı siteyi düşün. Birinde bir bağlantıya basıyorsun, ekran bir an beyaza dönüyor ve yeni sayfa geliyor. Diğerinde basıyorsun, içerik anında değişiyor, sanki bir uygulamanın içindesin. İkisi de web sitesi. Fark, **sayfa geçişlerini nasıl yaptıklarında.**
 
@@ -79,13 +81,15 @@ Burada tasarımcıyı ilgilendiren asıl nokta: geçişi JavaScript yaptığı i
 
 "Client-side routing'de sayfa değişince focus'u başlığa taşımamız lazım; yoksa ekran okuyucu kullanıcısı geçişi fark etmiyor" cümlesi, bu yüzden bir tasarım notudur.
 
-<Callout kind="tasarimci" title="SPA, tasarımcıya ne yükler?">
+<Lenses>
+<Lens role="product-designer" title="SPA, tasarımcıya ne yükler?">
 
 - Her ekranın **paylaşılabilir bir adresi** olmalı mı? Çoğu zaman evet; sen söylersin.
 - Geçişte **odak nereye gidecek?** Sen belirtmezsen kimse düşünmez.
 - Yükleme, boş ve hata durumları ayrı ayrı tasarlanmalı: sayfa yenilenmediği için bunlar geçişin *içinde* yaşanır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 ## PWA: web sitesi, uygulama gibi
 

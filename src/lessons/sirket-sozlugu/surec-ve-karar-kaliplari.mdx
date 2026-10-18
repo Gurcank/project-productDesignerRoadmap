@@ -17,9 +17,10 @@ sources:
 skipTerms: ["Scope","scope","kapsam"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 ## Kapsam ve önceliklendirme dili
 
@@ -69,14 +70,16 @@ Aşırıya kaçtığında kalite bahanesine dönüşür. Karşı-kalıp: **"ship
 
 **Scope creep** kapsamın sessizce büyümesidir. **Gold plating** ise kimsenin istemediği hâlde ekibin kendi kendine fazladan iş yapmasıdır; tasarımcılarda ve geliştiricilerde sık görülür: "madem dokunuyorum, şunu da güzelleştireyim." İlki dışarıdan gelen isteklerle, ikincisi içeriden kendiliğinden olur.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Toplantıda renk tartışması başladığında sor:** bu kararın akışa etkisi ne? Akış sorusunu öne çek.
 - **Crit'e hedefi ve karar sorusunu yazarak getir.**
 - **Kapsam daralınca "descope" listesini sen öner:** nice-to-have'leri baştan işaretle.
 - **Kendi gold plating'ini fark et:** bu iyileştirmeyi kimse istedi mi?
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

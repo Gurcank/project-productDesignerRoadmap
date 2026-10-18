@@ -18,11 +18,12 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 **Ağaç**, her öğenin bir üstü ve birden çok altı olduğu yapıdır. Tek bir kök vardır, dallanır, uçlarda yaprak düğümler bulunur. Döngü yoktur: bir düğüm kendi atası olamaz. Bu yapı senin işinde diğerlerinden daha fazla karşına çıkar, çünkü **bilgi mimarisi bir ağaçtır.**
 
@@ -70,14 +71,16 @@ Breadcrumb, kökten mevcut düğüme giden yolu gösterir; ağaç yapısı net d
 
 **Alternatifler:** etiket sistemi (çok boyutlu sınıflandırma), faceted search (filtreleri birleştirerek gezinme), graf (ilişkiler çok yönlüyse), düz liste + güçlü arama (kategori sayısı azsa).
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **IA'yı kart sıralama ve ağaç testiyle doğrula,** varsayımla değil.
 - **"Bir öğe birden fazla kategoride olabilir mi?" sorusunu erken sor;** cevap evet ise breadcrumb, URL ve canonical kararlarını baştan ver.
 - **IA değişikliği bir yönlendirme planıdır;** eski adresleri tasarım teslimatının parçası say.
 - **Derinliği say:** kullanıcının hedefe kaç tıklamada ulaştığı ağacın şeklinin sonucudur.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

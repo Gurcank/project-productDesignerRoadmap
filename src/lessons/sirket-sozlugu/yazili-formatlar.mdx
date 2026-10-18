@@ -15,9 +15,10 @@ sources:
 skipTerms: ["Latency","Request","latency","gecikme","request"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 | Format | Ne için |
 |---|---|
@@ -50,14 +51,16 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 **Kötü haberi geciktirmek en yaygın hatadır.** Erken bildirilen gecikme yönetilebilir bir bilgidir; son anda bildirilen gecikme bir güven sorunudur.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Büyük bir tasarım değişikliğinde RFC aç:** etkilenen herkes yorum yapabilsin.
 - **Kararı ADR olarak kaydet:** alternatifler ve gerekçeyle.
 - **Status update'ini dört parçayla yaz** ve gecikmeyi erken bildir.
 - **Brief verirken hedef ve kısıtı yaz.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

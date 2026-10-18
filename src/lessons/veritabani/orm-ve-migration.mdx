@@ -15,9 +15,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Şema nasıl değişir? Geliştirici veritabanıyla nasıl konuşur? Test verisi neden önemli? Üç sorunun üç cevabı: migration, ORM ve seed.
 
@@ -43,13 +44,15 @@ TypeScript ekosisteminin iki yaygın ORM'i: **Prisma** kendi şema dilini kullan
 
 **Seed**, geliştirme ortamını gerçekçi örnek veriyle doldurmaktır; **schema drift** ise bir ortamdaki şemanın diğerlerinden farklılaşmasıdır. Seed doğrudan senin işine yarar: **gerçekçi seed verisi olmadan tasarımın uç durumları test edilemez.** "Ahmet Yılmaz" ile test edilen bir kart, gerçek veride 60 karakterlik bir şirket unvanıyla karşılaşınca taşar. İyi seed verisi kasten uzun isimler, boş alanlar, aşırı büyük sayılar ve eksik ilişkiler içerir. "Seed verisine çok uzun isimler ve boş açıklamalar da koyalım; tasarımı gerçek koşulda görelim."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Seed verisi için uç durum listesi hazırla:** uzun isim, boş alan, çok büyük sayı, yabancı karakter, eksik ilişki.
 - **Veri modeli değişikliklerini erken iste;** sonradan pahalıdır.
 - **ORM kullanan bir projede yavaş listeleri incelerken üretilen sorguya bakılmasını iste.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

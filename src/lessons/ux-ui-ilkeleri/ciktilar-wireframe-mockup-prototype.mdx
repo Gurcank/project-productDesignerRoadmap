@@ -13,12 +13,13 @@ sources:
     url: "https://www.nngroup.com/articles/usability-testing-101/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Müşteriye bir ekran gösteriyorsun. Sen yapıyı konuşmak istiyorsun: bölümler doğru sırada mı, hangi bilgi önde? Müşteri ise yirmi dakika boyunca "bu mavi biraz koyu olsun" diyor. Yanlış çıktıyı yanlış zamanda gösterdin.
 
@@ -88,14 +89,16 @@ Kelime ayrıca "ürün görselini bir cihaz çerçevesine yerleştirilmiş hâld
 
 Proje başında, müşteriyle yön belirlerken kullanılır. "İki moodboard hazırladım; önce yönü seçelim, sonra ekranlara geçeyim."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Göstereceğin çıktıyı, almak istediğin geri bildirime göre seç.** Yapı konuşacaksan lo-fi, görsel konuşacaksan mockup, akış konuşacaksan prototype.
 - **Toplantıya çıktının amacını söyleyerek gir.** "Bu bir wireframe, renklere bakmayın; yapıya bakın."
 - **Wireframe adımını atlama.** Yapı hataları hi-fi aşamasında bulunursa tüm görsel emek boşa gidebilir.
 - **Prototipi ürüne çevirme.** Geliştirici için ayrı bir teslim (handoff) hazırla.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

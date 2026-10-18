@@ -12,9 +12,10 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Adres çubuğundaki kilit simgesi, ya da kırmızı bir uyarı sayfası. İkisinin arkasında TLS sertifikası var.
 
@@ -26,13 +27,15 @@ Adres çubuğundaki kilit simgesi, ya da kırmızı bir uyarı sayfası. İkisin
 
 **Mixed content (karışık içerik)**, HTTPS bir sayfada HTTP üzerinden yüklenen kaynakların bulunmasıdır. Sayfanın güvenlik garantisini bozar; tarayıcı bu kaynakları engelleyebilir ya da uyarı gösterebilir. Sonuç: görseller yüklenmez, stiller bozulur. Eski siteler HTTPS'e geçirilirken sık görülür. "Bazı görseller yüklenmiyor; mixed content uyarısı var, adresleri HTTPS'e çevirelim."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Yayın kontrol listesine "sertifika otomatik yenileniyor mu?" maddesini ekle.**
 - **Görsellerin ya da gömülü bileşenlerin HTTPS adresinden geldiğini doğrulat;** tasarım dosyasından gelen dış adreslere dikkat.
 - **Sertifika uyarısı ekranını kullanıcıya göstermeden önce önlemeyi hedefle;** o ekran senin kontrolünde değildir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

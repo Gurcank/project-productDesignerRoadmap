@@ -14,11 +14,12 @@ sources:
     url: "https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bu bölüm, kodun bilgisayardan çıkıp kullanıcıya ulaştığı ve orada yaşadığı süreci anlatıyor. Tasarımcı için üç somut bağlantısı var:
 
@@ -53,13 +54,15 @@ Bölümdeki kavramlar eskimeyen, **ürün ve fiyat bilgileri hızlı eskiyen** t
 
 İkisinin farkı bir kültür meselesidir. Continuous Deployment günde onlarca yayın demektir ve ancak güçlü test altyapısı, feature flag ve hızlı geri alma varsa güvenlidir. **"CD yapıyoruz" cümlesi hangisini kastettiğini söylemez; sorulmalıdır.** "CI/CD" kısaltması üç kavramı tek torbaya koyar; çoğu ekip aslında CI + Continuous Delivery yapar, Continuous Deployment değil.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Yayın hızını tasarım kalitesinin bir parçası olarak gör:** küçük düzeltmeler kolay yayınlanıyorsa ince detaylar düzelir.
 - **Kalite kontrollerini (erişilebilirlik, görsel fark, performans bütçesi) hatta koyma önerisini getir.**
 - **"CD" duyduğunda hangisini kastettiğini sor.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

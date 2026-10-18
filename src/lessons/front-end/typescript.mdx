@@ -13,9 +13,10 @@ flags: ["degisken"]
 skipTerms: ["alan adı"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Tasarladığın kartta bir açıklama satırı var. Canlıda bir ürünün açıklaması yok ve kart bozuk görünüyor. Bu bilgi, geliştiricilerin kullandığı bir dosyada baştan yazıyordu: açıklama alanı opsiyonel. TypeScript'i bu yüzden bilmen yararlı.
 
@@ -32,12 +33,14 @@ Tasarladığın kartta bir açıklama satırı var. Canlıda bir ürünün açı
 
 **Type / interface**, bir verinin hangi alanlardan oluştuğunu tanımlar. Tasarımcı için değeri şudur: bir nesnenin **hangi bilgilere sahip olduğunun listesidir**. Bir kart tasarlarken "bu alanda ne var, boş olabilir mi?" sorusunun cevabı tip tanımında yazar. "Tipe baktım: `description` opsiyonel. Boş olduğunda kartın nasıl görüneceğini de tasarlayalım."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarlamadan önce tip tanımına (ya da API yanıtına) bak.** Hangi alan zorunlu, hangisi opsiyonel?
 - **Her opsiyonel alan için "boşken" hâlini çiz.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

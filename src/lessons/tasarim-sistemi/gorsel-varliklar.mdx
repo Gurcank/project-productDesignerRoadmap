@@ -16,11 +16,12 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir ürünün ekranlarını yan yana koy: ikonların bir kısmı çizgisel, bir kısmı dolu, kalınlıkları farklı; fotoğrafların biri sıcak, biri soğuk; illüstrasyonların biri düz renk, biri gölgeli. Her biri ayrı ayrı güzel olabilir, ama birlikte **amatör** görünür. Sorun bireysel kalitede değil, tutarlılıkta.
 
@@ -73,7 +74,8 @@ Lucide, Phosphor, Heroicons, Material Symbols gibi hazır setler yaygın kullan�
 
 **Web'de art direction teknik bir anlam da taşır:** farklı ekran boyutlarında **farklı kırpılmış** görsel sunmak (yalnızca küçültmek değil). Telefonda yüzün kapandığı bir geniş fotoğraf yerine, yüze yakın kırpılmış bir sürüm.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Tek ikon seti seç ve dokümante et.** Boyut, kalınlık, köşe tarzı yazılı olsun.
 - **İkon + etiket kullan.** Evrensel olmayan ikon tek başına bırakılmasın.
@@ -81,7 +83,8 @@ Lucide, Phosphor, Heroicons, Material Symbols gibi hazır setler yaygın kullan�
 - **Görsel için oran belirle.** Kart görselleri aynı oranda olsun; oran tanımlıysa sayfa zıplamaz.
 - **Görsel yönü bir cümleyle yaz.** "Doğal ışık, düşük doygunluk" gibi; stok seçerken ölçüt olur.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

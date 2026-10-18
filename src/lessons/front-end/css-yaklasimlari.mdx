@@ -22,11 +22,12 @@ flags: ["degisken"]
 skipTerms: ["layout", "specificity"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir proje büyüyünce soru gelir: yüzlerce stil kuralını çakışmadan nasıl yönetiriz? Bunun dört yaygın cevabı var. Proje başında seçilir ve sonradan değiştirmesi pahalıdır; bu yüzden isimlerini ve takaslarını bilmek, toplantıda söz sahibi olmanı sağlar.
 
@@ -70,13 +71,15 @@ shadcn/ui gibi kopyala-yapıştır bileşen yaklaşımlarının temelidir. En ya
 
 Bilmen gereken bir durum değişikliği var: kaynaklara göre **styled-components Mart 2025'te bakım moduna geçti** ve bakımcısı yeni projeler için önermediğini belirtti. Sebepler arasında React Server Components ile uyumsuzluk ve çalışma zamanı stil enjeksiyonunun performans maliyeti anılıyor. Kütüphane hâlâ çalışıyor; yani mevcut kodun tehlikede değil. Ama 2026'da yeni bir proje için varsayılan seçim değil. Önerilen yönler: CSS Modules, Tailwind ya da zero-runtime seçenekler. "Bu proje styled-components kullanıyor; devam edelim ama yeni bileşenleri CSS Modules'a alalım." Bu bilgi hızlı değişir; kullanmadan önce güncel durumu kontrol et.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Yaklaşımı sor:** ekip hangisini kullanıyor? Teslim biçimin ona uymalı (Tailwind'de ölçek adları, CSS Modules'ta bileşen sınırları).
 - **Ölçeğini kodla eşleştir:** tasarımdaki boşluk ve renk ölçeği, Tailwind yapılandırmasındaki ölçekle aynı olmalı.
 - **Eski bir projede toptan yeniden yazmayı önerme;** kademeli geçiş yeterli.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

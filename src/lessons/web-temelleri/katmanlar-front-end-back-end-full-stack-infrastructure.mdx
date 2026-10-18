@@ -13,10 +13,11 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Introduction"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Buton mobilde taşıyor." "İndirim hesabı yanlış." "Site kod değişmeden çöktü." Üç farklı sorun; üçü de başka birinin kapısına gider. Bu ders, bir ekipteki iş bölümünün adlarını öğretiyor. Bunları bilmek, bir talebi **kime ileteceğini** bilmek demektir.
 
@@ -78,7 +79,8 @@ Aynı işlev iki yerde de yapılabilir ve sonuçları farklıdır:
 
 Bu ayrım hem güvenlik hem performans kararlarının temelidir. Örneğin form doğrulaması **hem client-side hem server-side** olmalıdır: client-side kullanıcı deneyimi için ("e-posta geçersiz" hemen görünür), server-side güvenlik için (kullanıcı tarayıcıdaki kodu atlatsa bile sunucu kontrol eder).
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 **Bir talep geldiğinde önce katmanını bul:**
 
@@ -88,7 +90,8 @@ Bu ayrım hem güvenlik hem performans kararlarının temelidir. Örneğin form 
 
 Doğru kişiye doğru soruyu sormak, günler kazandırır. Bir de sana düşen iş: ekranda gösterilen her *kural* (örneğin hata mesajı) için "bu kuralı sunucu da biliyor mu?" diye sor. Biliyorsa kullanıcı atlatamaz.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

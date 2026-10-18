@@ -12,9 +12,10 @@ sources:
     url: "https://top10.owasp.org/2025/0x00_2025-Introduction"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Üç ilke, güvenlik kararlarının çoğunun arkasındaki düşünce biçimi.
 
@@ -30,13 +31,15 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 **Fail securely (fail closed)**: bir kontrol hata verdiğinde sistemin **erişimi reddedecek** biçimde davranması. Yetki servisi çöktüğünde herkesi içeri almak yerine kimseyi almamak gerekir. OWASP 2025'teki "beklenmedik durumların kötü yönetilmesi" kategorisi bu tür sorunları kapsar. "Yetki servisi yanıt vermezse erişimi kapatalım ve kullanıcıya açıklayıcı bir hata gösterelim."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Davet ve rol atama akışında varsayılanı en dar yetki yap;** yükseltme bilinçli bir adım olsun.
 - **Güvenlik kontrolünün başarısız olduğu durum için bir hata ekranı tasarla** (erişim reddedildi + ne yapılabilir).
 - **Her kritik eylemde birden fazla katmanın (arayüz, sunucu, veri) koruma sağladığını sor.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

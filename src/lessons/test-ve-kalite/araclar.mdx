@@ -18,9 +18,10 @@ sources:
 flags: ["degisken", "emin-degil"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 > **Araç manzarası hızlı değişir.** Aşağıdakiler materyalin Eylül 2026 tarihli kaynaklarına dayanır; kullanmadan önce güncel durumu doğrula.
 
@@ -36,12 +37,14 @@ Materyal, bir sektör anketinin (State of JS 2025) Playwright ve Cypress arasın
 
 **Testing Library'nin yaklaşımı seni doğrudan ilgilendirir.** Bu kütüphane bileşenleri CSS sınıflarına göre değil **erişilebilir adlara ve rollere göre** bulmayı teşvik eder. Sonuç: erişilebilirlik için yaptığın işler testleri de sağlamlaştırır. **İyi yazılmış bir arayüz, test edilmesi kolay bir arayüzdür.**
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her etkileşimli öğe için erişilebilir adı ve rolünü teslimde belirt;** testler de bunlara bağlanır.
 - **Araç tartışmasına takas sorusuyla katıl:** çapraz tarayıcı desteği, hız, mevcut test seti.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

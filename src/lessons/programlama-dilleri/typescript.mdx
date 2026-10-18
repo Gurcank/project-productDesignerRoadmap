@@ -17,6 +17,8 @@ flags: ["degisken"]
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 TypeScript, ayrı bir dil değil; JavaScript'in üstüne yazılan bir **tip katmanıdır.** Derlenince geriye sade JavaScript kalır. Kavramsal tarafı Front-end bölümünde gördün; burada dil profili var.
 
@@ -44,12 +46,14 @@ Bu site TypeScript ile yazıldı ve içerik şeması çalışma anında da doğr
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Bu alan boş olabilir mi?" sorusunu netleştir:** tipli bir projede boş olabilen her alan açıkça işaretlenir; belirtmezsen geliştirici bir varsayım yapar ve boş durum tasarımın eksik kalır.
 - **API alanını yeniden adlandırmak ucuz değildir,** ama TypeScript'li bir projede en azından görünürdür: hangi ekranların etkilendiği listelenebilir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

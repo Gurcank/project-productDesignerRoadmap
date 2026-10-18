@@ -21,11 +21,12 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Dışarıya açacağımız API REST olsun, ama mobil için GraphQL düşünelim." Bu cümlede bir mimari karar var ve tasarımı etkiliyor. Aynı işi yapmanın farklı yollarını ve bedellerini bil.
 
@@ -78,13 +79,15 @@ Tasarımdaki karşılığı: bir özelliğin "gerçek zamanlı" olması bedava d
 
 **gRPC**, servislerin birbiriyle yüksek hızda konuşması için tasarlanmış, ikili (binary) protokol kullanan yaklaşımdır. JSON'a göre çok daha hızlı serileştirme sunar. Tarayıcıdan doğrudan kullanımı sınırlıdır; asıl yeri **sunucular arası** iletişimdir (mikroservisler). Büyük ölçekli sistemlerde karşına çıkar. **Seviye 3:** adını duyduğunda kategorisini bilmen yeterli.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Dışarıya açılan API'de REST bekle;** iç uçlarda farklı bir stil olabilir.
 - **"Anında" isteğinin gerçek ihtiyacı sor:** 30 saniye gecikme kabul edilir mi?
 - **Ekranın çok sayıda istek attığını duyarsan** under-fetching'i, çok büyük yanıtlarda over-fetching'i hatırla.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

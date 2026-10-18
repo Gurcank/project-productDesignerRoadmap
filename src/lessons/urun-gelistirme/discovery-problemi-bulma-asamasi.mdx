@@ -16,10 +16,11 @@ sources:
 flags: ["emin-degil"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir yönetici sana geliyor: "Ürün listesine bir filtre ekleyelim." Kulağa makul geliyor, tasarlamaya başlayabilirsin. Ama durup sormak gerekiyor: filtre gerçekten kullanıcının çözmek istediği şey mi, yoksa yöneticinin aklına gelen bir çözüm mü?
 
@@ -94,7 +95,8 @@ Ayrım: **JTBD ≠ use case.** Use case sistemle etkileşimi tarif eder; JTBD is
 
 Kesin bir ölçütü yoktur; **elde tutma** (retention) oranı en sık kullanılan göstergedir. "PMF'e ulaşmadan pazarlama bütçesi artırmak riskli; önce elde tutmayı düzeltelim."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 Sana gelen bir talepte şu üç refleksi geliştir:
 
@@ -104,7 +106,8 @@ Sana gelen bir talepte şu üç refleksi geliştir:
 
 Bu üç refleks, tasarımcıyı "ekran çizen" kişiden "doğru ekranı seçmeye yardım eden" kişiye dönüştürür.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -11,9 +11,10 @@ sources:
     url: "https://expressjs.com/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Arka yüz kodu nasıl organize edilir? Bu **seviye 2** terimlerdir: duyduğunda anlaman yeter. Ama bir kuralın nerede yaşadığı, onu kimlerin kullanabileceğini belirler.
 
@@ -31,12 +32,14 @@ Arka yüz kodu sorumluluklara göre bölünür:
 
 Katmanlı ayrım, bir kuralın nerede yaşadığını netleştirir ve test edilebilirliği artırır. "İndirim kuralını nereye yazacağız?" sorusunun cevabı: service katmanına; böylece hem web hem mobil hem arka plan işi aynı kuralı kullanır. "Bu hesaplama controller'da; service'e taşıyalım ki başka yerden de çağrılabilsin."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **İş kuralını (indirim, kargo ücreti) tasarım notunda adlandır;** geliştirici onu tek yere yazsın.
 - **"Her ekranda aynı mı hesaplanıyor?" sorusunu sor:** tutarsız fiyat gösterimlerinin sık sebebi kuralın birden fazla yerde yazılmasıdır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

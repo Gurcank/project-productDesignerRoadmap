@@ -14,9 +14,10 @@ sources:
 skipTerms: ["state"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bu üç kavram React konuşmalarında sürekli geçer. Bunlar derinlemesine öğrenmen gereken şeyler değil: duyduğunda ne dendiğini anlaman yeter. Ama her birinin ardında bir tasarım sonucu var.
 
@@ -32,12 +33,14 @@ Bu üç kavram React konuşmalarında sürekli geçer. Bunlar derinlemesine öğ
 
 **Re-render (yeniden çizim)**, state ya da props değiştiğinde bileşenin kendini yeniden hesaplamasıdır. Normal ve gerekli bir davranıştır. Ama gereksiz yeniden çizimler, özellikle uzun listelerde, arayüzü yavaşlatır ve doğrudan **INP** metriğini etkiler (performans dersinde). "Liste her tuş vuruşunda yeniden çiziliyor; arama girdisi takılıyor."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Takılıyor" geri bildirimini re-render ile ilişkilendir;** uzun liste ve anlık filtre tasarımlarında geliştiriciyle konuş.
 - **Bir etkileşimin tetiklediği isteklerin sayısını sor,** özellikle yazarken güncellenen arama kutularında.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

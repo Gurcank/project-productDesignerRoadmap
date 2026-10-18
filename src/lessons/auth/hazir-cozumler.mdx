@@ -21,9 +21,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 > **Bu ders hızla eskir.** Aşağıdaki bilgiler materyalin Eylül 2026 tarihli doğrulamasına dayanır; kullanmadan önce her projenin kendi sitesinden doğrula.
 
@@ -47,13 +48,15 @@ Materyalde ekosistemde iki hareket raporlanıyor: Auth.js'in Better Auth ile bir
 
 Hazır çözümün **kendi ekranlarını mı** kullanacaksın, yoksa yalnızca arka ucunu alıp arayüzü kendin mi tasarlayacaksın? Bu, marka tutarlılığı ile hız arasındaki takastır ve **proje başında karara bağlanmalıdır;** sonradan değiştirmek pahalıdır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Proje başında sor:** hazır ekran mı, özel ekran mı? Özelleştirme sınırı nerede?
 - **Hazır ekran kullanılacaksa** marka uyumunu (renk, tipografi, metinler) hangi seviyede değiştirebildiğini test et.
 - **Çözümün hangi akışları (magic link, passkey, MFA, hesap birleştirme) kutudan verdiğini** ve hangilerini senin tasarlaman gerektiğini listele.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

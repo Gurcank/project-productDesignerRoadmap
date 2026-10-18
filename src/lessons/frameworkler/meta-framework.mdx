@@ -22,9 +22,10 @@ flags: ["degisken"]
 skipTerms: ["beta","i̇stemci","istemci"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Meta-framework, projenin iskeletini kuran katmandır. **Bu kararın tasarım tarafında doğrudan karşılığı vardır:** hangi rendering stratejisinin mümkün olduğunu, sayfaların ne kadar hızlı açılacağını ve SEO'nun ne kadar kolay olacağını burası belirler. Aşağıdaki "güncel durum" notları materyalin Eylül 2026 tarihli doğrulamasına dayanır ve hızla eskir; kullanmadan önce doğrula.
 
@@ -50,13 +51,15 @@ Varsayılan olarak **sıfır JavaScript** gönderen, içerik odaklı meta-framew
 
 **TanStack Start**, TanStack Router üzerine kurulu, tip güvenliğini merkeze alan yeni bir React meta-framework'üdür. İstemci öncelikli bir varsayılan ve güçlü tip güvenliği sunar. Materyalde 2026 ortası itibarıyla release candidate aşamasında olduğu ve sürümün 1.0 olmadığı anılıyor. **Ticari bir proje için bu bir risktir.**
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Sayfa türlerini yaz:** hangisi statik, hangisi kişiye özel? Bu, meta-framework ve rendering seçimini yönlendirir.
 - **Olgunluğu sor:** 1.0 mı, kim sahibi, satın alma/yön değişikliği riski var mı?
 - **İsim karışıklığında netleş:** "Remix" gibi adlar farklı projelere işaret edebilir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

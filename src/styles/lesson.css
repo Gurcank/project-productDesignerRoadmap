@@ -150,10 +150,6 @@
   background-color: color-mix(in oklab, var(--tone) 8%, var(--c-surface-raised));
 }
 
-.callout--tasarimci {
-  --tone: var(--c-action);
-}
-
 .callout--dikkat {
   --tone: var(--c-progress);
 }
@@ -376,4 +372,43 @@
   margin: 0;
   color: var(--c-text-secondary);
   font-size: var(--text-sm);
+}
+
+/* ---------------------------------------------------------------- lenses */
+/* Role lenses (Lenses.astro). A lens is a callout in the action tone; the
+   label names the role, so it reads without colour. */
+.callout--lens {
+  --tone: var(--c-action);
+}
+
+.lenses {
+  margin-block: var(--spacing-8);
+}
+
+.lenses__primary .lens,
+.lenses__list .lens {
+  margin-block: 0;
+}
+
+.lenses__others {
+  margin-block-start: var(--spacing-3);
+  border: 1px solid var(--c-border-strong);
+  border-radius: var(--radius-lg);
+}
+
+.lenses__summary {
+  display: flex;
+  align-items: center;
+  min-block-size: 44px;
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--c-text);
+  cursor: pointer;
+}
+
+.lenses__list {
+  display: grid;
+  gap: var(--spacing-3);
+  padding: 0 var(--spacing-3) var(--spacing-3);
 }

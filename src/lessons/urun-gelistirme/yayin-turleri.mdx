@@ -13,10 +13,11 @@ sources:
     url: "https://theleanstartup.com/principles"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Yeni bir özelliği bir gecede herkese açtığını düşün. Bir hata çıkarsa, **herkes** o hatayı görür. Aynı özelliği önce ekibe, sonra yüz kişiye, sonra yüzde on kullanıcıya açsan, hata çıktığında etkilenen kişi sayısı çok daha küçük olur.
 
@@ -77,14 +78,16 @@ Bu süreçte **geçiş yolu, uyarı mesajı ve iletişim tasarımı senin işind
 
 "Eski panel üç ay sonra kapanıyor; şimdiden banner koyup yeni panele yönlendirelim."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her aşama için ayrı bir "beklenti" tasarla.** Alpha'da uyarı, beta'da "yeni" etiketi, GA'da sessizlik; kullanıcıya ne söyleyeceğin aşamaya göre değişir.
 - **Beta'da geri bildirim kanalı koy.** Kullanıcı sorunu nereye bildirecek? Bu tasarlanmadıysa beta'nın değeri yarıya düşer.
 - **Dogfooding'i araştırmanın yerine koyma.** Ekibin kendi gözünün kör noktası olduğunu bil.
 - **Kapatılacak bir şeyi tasarlarken kullanıcıyı koru.** Veri kaybı olmasın, geçiş yolu açık olsun, süre yeterli olsun.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

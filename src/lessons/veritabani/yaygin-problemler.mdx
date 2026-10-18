@@ -16,9 +16,10 @@ sources:
     url: "https://use-the-index-luke.com/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Listede her ürünün yazarını da gösterelim." Masum bir tasarım isteği. Geliştirici "bu zor" diyor. Neden? Bu ders o cevabın arkasındaki problemleri anlatır.
 
@@ -42,14 +43,16 @@ ORM'ler bu sorunu kolaylaştırır: tek satırlık masum görünen bir kod arka 
 
 **Connection pool (bağlantı havuzu)**, veritabanına açılan bağlantıların sınırlı sayıda tutulup yeniden kullanılmasıdır. Her bağlantı veritabanı için maliyetlidir ve sayıları sınırlıdır. **Serverless ile bilinen bir çatışması vardır:** her işlev çağrısı yeni bir bağlantı açmaya çalışırsa havuz hızla tükenir; "too many connections" hatası serverless projelerinde sık karşılaşılan bir üretim hatasıdır. Çözüm, havuzlayıcı kullanmaktır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Listeye yeni bir ilişkili alan (yazar, son yorum, sayaç) eklemeden önce maliyetini sor.**
 - **"Başkası az önce aldı" durumunu rezervasyon/stok akışlarında tasarla.**
 - **Performans testini gerçekçi veri hacmiyle iste;** staging'de hızlı olması yetmez.
 - **Trafik artışında beklenen hata ekranlarını tasarla.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

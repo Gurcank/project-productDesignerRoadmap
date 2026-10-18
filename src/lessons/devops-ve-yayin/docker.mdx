@@ -14,9 +14,10 @@ sources:
     url: "https://docs.docker.com/compose/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Bende çalışıyor" cümlesi, yazılım dünyasının en eski şakalarından biri. Docker bu probleme yapısal bir cevap.
 
@@ -34,12 +35,14 @@ Karıştırmayacağın iki şey: **konteyner bir sanal makine değildir;** işle
 
 **Docker Compose**, birden fazla konteyneri (uygulama, veritabanı, önbellek) tek bir yapılandırma dosyasıyla birlikte çalıştırma aracıdır. Yerel geliştirme ortamını tek komutla ayağa kaldırır; yeni birinin projeye katılma süresini günlerden dakikalara indirebilir. "Compose dosyası var; tek komutla uygulama, Postgres ve Redis birlikte kalkıyor."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Yerel kurulum sorununu Docker/Compose ile çözme önerisini bil;** tasarımcı olarak projeyi kendi bilgisayarında çalıştırmak istiyorsan sorun.
 - **Docker terimlerini duyduğunda** image/container ayrımını hatırla.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

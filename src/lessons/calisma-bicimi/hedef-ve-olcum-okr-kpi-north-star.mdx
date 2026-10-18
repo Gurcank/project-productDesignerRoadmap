@@ -17,11 +17,12 @@ additions:
   - "HEART çerçevesi: kullanıcı deneyimi için Google'ın beş boyutlu metrik çerçevesi (Happiness, Engagement, Adoption, Retention, Task success)."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Outside from "~/components/lesson/Outside.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Yönetim sunumunda bir slayt: "Toplam kayıt sayısı 100 bin!" Herkes alkışlıyor. Sen bir soru soruyorsun: "Peki haftalık aktif kullanıcı kaç?" Cevap: 900. İlk sayı güzel görünüyor ama bir şey söylemiyor.
 
@@ -114,7 +115,8 @@ Tasarımcının işine en yakın metrik çerçevelerinden biri **HEART**'tır. G
 
 </Outside>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarımın başarı ölçütünü yayından önce yaz.** "Bu akışı yeniden tasarlıyoruz; başarı = ilk oturumda tamamlama oranı %30'dan %55'e."
 - **Önce baseline al.** Mevcut hâli ölçmeden yeni tasarımı yayınlarsan, sonucu kimse yorumlayamaz.
@@ -122,7 +124,8 @@ Tasarımcının işine en yakın metrik çerçevelerinden biri **HEART**'tır. G
 - **Vanity sorusunu sun.** Bir sayı sunulduğunda "bu değişirse ne yapacağız?" diye sor.
 - **Öncü göstergeyi ara.** Gelir ya da iptal oranı geç haber verir; tasarım değişikliğinin etkisini daha erken gösteren bir sinyal bul.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -12,9 +12,10 @@ sources:
     url: "https://www.sqlite.org/about.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bu bölümün tasarımcı için değeri, ilk bakışta göründüğünden büyük. Sebebi şu: **veri modeli, arayüzün neyi gösterebileceğinin sınırını çizer.**
 
@@ -32,13 +33,15 @@ Bölümdeki kavramlar **eskimeyen** kategoridedir; ilişkisel model elli yıllı
 
 **Persistence (kalıcılık)**, verinin onu üreten süreç sona erdikten sonra da var olmaya devam etmesidir. **Tasarım açısından somut sorusu şudur:** kullanıcı sekmeyi kapatıp geri geldiğinde ne kaybolur? Yarım kalmış bir form kaybolacak mı? Sepet duruyor mu? Filtre seçimleri hatırlanıyor mu? Bunların her biri bir kalıcılık kararıdır ve tasarımda belirtilmelidir. "Uzun formu taslak olarak kaydedelim mi? Kullanıcı yanlışlıkla kapatırsa her şey gitmesin."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her ekran için "bu veri nerede yaşıyor?" sor:** sunucuda mı, tarayıcıda mı, hiçbir yerde mi?
 - **Kalıcılık kararlarını yaz:** yarım form, sepet, filtre, tercih; yenilemede ve başka cihazda ne olur?
 - **Veri modeli sorusunu ekran tasarımıyla birlikte sor:** "birden fazla adres" gibi kararlar sonradan pahalıdır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

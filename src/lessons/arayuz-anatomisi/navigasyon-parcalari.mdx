@@ -24,6 +24,8 @@ import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir e-ticaret sitesine telefondan girdin. Üstte üç çizgi, altta dört sekme, ürün sayfasında bir de "Ana sayfa › Kadın › Bot" yolu var. Hepsi "nasıl gezinirim?" sorusunun cevabı, ama her biri farklı bir ihtiyaca çalışıyor. Bu derste menünün parçalarını ve hangisinin ne zaman seçileceğini öğreneceksin.
 
@@ -88,14 +90,16 @@ Bu sitede hamburger menü yok. Geniş ekranda sol kenarda ikonlu bir menü (üze
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her menü bağlantısı için dört durum çiz:** default, hover, focus, active.
 - **Mobilde karar ver:** 3-5 ana bölüm varsa tab bar, çok bağlantı varsa hamburger; kritik eylem hamburger'in dışında.
 - **Hover'a bağlı menü çizme.** Mega menünün tıklamayla ve klavyeyle de açıldığını teslimde yaz.
 - **Sticky header'ın yüksekliğini tanımla** ve odaklanan öğenin onun altında kalmadığını kontrol ettir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

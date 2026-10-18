@@ -11,9 +11,10 @@ sources:
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Üçü sık karıştırılır ama farklı işler yapar ve farklı yerlerde uygulanır.
 
@@ -33,13 +34,15 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 **Üçü birbirinin yerine geçmez;** doğrulama "bu veri kabul edilebilir mi", temizleme "tehlikeli kısmı çıkar", kaçırma "gösterirken kod sayılmasın" der. Hepsi gerekir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Form kurallarını (uzunluk, biçim, izin verilen değer) tasarımda yaz;** hem istemcide hem sunucuda uygulanır.
 - **Hata mesajlarını** her iki katman için de tasarla; sunucu hatası istemci hatasından farklı görünebilir.
 - **Zengin metin isteğinde izin verilen biçimleri** (kalın, liste, bağlantı) açıkça tanımla.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

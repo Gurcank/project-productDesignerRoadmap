@@ -14,9 +14,10 @@ sources:
     url: "https://keepachangelog.com/en/1.1.0/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir geçmişi okurken "düzeltmeler" yazan elli commit mi görmek istersin, yoksa "fix(auth): şifre sıfırlama bağlantısı süresi düzeltildi" gibi açık satırlar mı? İkincisi bir alışkanlıktır ve otomasyona bile yol açar.
 
@@ -40,13 +41,15 @@ Bir geçmişi okurken "düzeltmeler" yazan elli commit mi görmek istersin, yoks
 
 **Changelog (değişiklik günlüğü, sürüm notları)**, her sürümde neyin değiştiğini insan diliyle anlatan listedir. Kullanıcıya ve ekibe "ne değişti?" sorusunu cevaplar. **Bu aslında bir içerik tasarımı işidir:** commit mesajlarını olduğu gibi dökmek değil, kullanıcının anlayacağı dilde yazmak gerekir. Ürün içi "Yenilikler" bölümü bir özelliğin keşfedilmesini de sağlar. "Changelog'u kullanıcı diliyle yazalım; `refactor(core)` satırlarını kimse anlamıyor."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Changelog'u sen yaz ya da düzenle:** kullanıcı faydası odaklı, kısa cümleler.
 - **Ürün içi "yenilikler" yüzeyini tasarla;** her yeni özellik için kısa duyuru ve ilgili yere bağlantı.
 - **Bağımlılık güncellemelerinde MAJOR sürüm ayrımını bil;** tasarım sistemi paketinin MAJOR güncellemesi tüketen uygulamaları etkiler.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

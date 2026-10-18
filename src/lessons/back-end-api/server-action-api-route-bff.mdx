@@ -14,9 +14,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Form gönderimi için ayrı bir sunucu kurmak mı, yoksa ön yüz projesinin içinde bir sunucu işlevi yazmak mı? Modern meta-framework'ler üç yaklaşım sunar.
 
@@ -34,12 +35,14 @@ Form gönderimi için ayrı bir sunucu kurmak mı, yoksa ön yüz projesinin iç
 
 **BFF (Backend For Frontend)**, her istemci türü (web, mobil) için ona özel şekillendirilmiş ince bir arka yüz katmanıdır. Ön yüzün ihtiyacı olan veriyi tek yerde toplar: üç farklı iç servisten veri çekip tek yanıt hâline getirir. Böylece ön yüz üç ayrı istek atmak zorunda kalmaz (under-fetching). Mikroservis mimarilerinde ve çok istemcili ürünlerde görülür. "Ekran üç ayrı servisten veri istiyor; BFF katmanı ekleyip tek istekte toplayalım."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Server action ile hallederiz" cümlesinde güvenliği hatırla:** doğrulama ve yetki yine gerekli; hata durumlarını tasarla.
 - **Ekran çok sayıda servise bağlıysa** BFF ya da tek istekte toplama önerisinin neden yapıldığını anla.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

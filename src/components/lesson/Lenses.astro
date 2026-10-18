@@ -1,0 +1,51 @@
+---
+/**
+ * The role lenses of a lesson (plan §4.4).
+ *
+ * The lenses are rendered twice from one slot: once in the open, where only the
+ * chosen role's lens shows, and once inside "Diğer roller", where every lens
+ * but the chosen one shows. Which lens shows where is decided by role-css.ts
+ * from `html[data-role]` before first paint — no script, no flash, and the
+ * focus order matches what is on screen. With no role chosen (or no JS) every
+ * lens sits in the collapsed group.
+ *
+ * The second copy is excluded from search so a lens is indexed once.
+ */
+import { ROLE_IDS, type RoleState } from "~/data/role-ids";
+
+const html = await Astro.slots.render("default");
+
+const present = [...html.matchAll(/data-lens="([a-z-]+)"/g)].map((match) => match[1]!);
+const duplicate = present.find((role, index) => present.indexOf(role) !== index);
+if (duplicate) throw new Error(`<Lenses>: "${duplicate}" merceği iki kez var`);
+if (present.length === 0) throw new Error("<Lenses>: içinde hiç <Lens> yok");
+
+// The summary differs by state: "Diğer roller (n)" when your own lens is open
+// above, "Rollere göre bakış (n)" when it is not.
+const states: (RoleState | "none")[] = [...ROLE_IDS, "all", "none"];
+const labels = new Map<string, (RoleState | "none")[]>();
+for (const state of states) {
+  const own = present.includes(state);
+  const count = own ? present.length - 1 : present.length;
+  if (count === 0) continue;
+  const text = own ? `Diğer roller (${count})` : `Rollere göre bakış (${count})`;
+  labels.set(text, [...(labels.get(text) ?? []), state]);
+}
+const withOthers = [...labels.values()].flat();
+---
+
+<div class="lenses">
+  <div class="lenses__primary" set:html={html} />
+  {
+    withOthers.length > 0 && (
+      <details class="lenses__others" data-for-role={withOthers.join(" ")} data-pagefind-ignore>
+        <summary class="lenses__summary">
+          {[...labels].map(([text, owners]) => (
+            <span data-for-role={owners.join(" ")}>{text}</span>
+          ))}
+        </summary>
+        <div class="lenses__list" set:html={html} />
+      </details>
+    )
+  }
+</div>

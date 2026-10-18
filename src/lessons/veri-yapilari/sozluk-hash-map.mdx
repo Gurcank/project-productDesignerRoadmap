@@ -14,9 +14,10 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "3. öğe" diye değil, "`kullanici_42` diye kaydı getir" diye erişmek: **sözlük** (hash map, dictionary; JavaScript'te `Map` ve nesne) veriyi sırayla değil **anahtarla** tutar. Gerçek sözlükle benzerlik isabetlidir: kelimeyi baştan aramazsın, harfinden doğrudan sayfaya gidersin.
 
@@ -44,14 +45,16 @@ Sözlük, anahtarı bir hesaba sokup **verinin nerede durduğunu doğrudan bulur
 
 Sözlükte aynı anahtar iki kez olamaz; ikinci yazma birincinin üstüne yazar ve hata vermez, **sessizce.** Arayüzdeki karşılığı: bir listede öğeleri ayırt etmek için kullanılan anahtar gerçekten tekil değilse öğeler kaybolur ya da karışır. En sık hâli, liste öğelerine anahtar olarak **sıra numarası** verilmesidir; liste sıralanınca ya da filtrelenince yanlış satır güncellenir. Tasarımda fark edebilirsin: **filtreledikten sonra yanlış satırın seçili görünmesi** neredeyse her zaman bu hatadır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her liste öğesinin kalıcı bir kimliği olduğundan emin ol:** "Bu satırı neyle ayırt ediyoruz?" Cevap "sırasıyla" ise hata kapıda.
 - **"Şu kaydı aç" hiç yavaş olmamalı;** yavaşsa sebep veri yapısı değil ağ ya da sorgudur.
 - **"Fiyata göre sırala" ile "şu ürünü aç" iki farklı yapı ister;** ikisini aynı anda ucuza isteyemezsin.
 - **Çok dilli arayüz planlıyorsan metinleri baştan anahtarla.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

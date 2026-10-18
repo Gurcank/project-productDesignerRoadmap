@@ -15,10 +15,11 @@ sources:
     url: "https://www.atlassian.com/agile/project-management/estimation"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Üç özellik var: bir yeni onboarding akışı, ödeme sayfasında küçük bir düzeltme ve bir karanlık mod. Üçü de değerli, ama aynı anda yapamazsınız. Hangisi önce? Bu, ürün ekiplerinin en sık verdiği ve **en çok tartıştığı** karar.
 
@@ -102,14 +103,16 @@ Grooming ve planlama toplantılarında yapılır. "Tasarım tarafı M, geliştir
 
 **Tahmin bir söz değildir.** Tahminin taahhüde dönüştüğü ekiplerde geliştiriciler tahminleri şişirir ve sistem bozulur. Tasarımcı olarak kendi tahminlerini verirken de şunu bil: "M" demek, "bu hafta biter" demek değildir; belirsizliği taşıyan bir aralıktır.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Önceliği kendi zevkinle savunma.** "Bence bu önemli" yerine "bu 3.200 puan aldı, çünkü 4.000 kişiye dokunuyor" demek tartışmayı yapıcı kılar.
 - **Düşük Confidence'ı bir fırsata çevir.** "Bu fikre güvenimiz %50; önce beş görüşme yapalım" önerisi, seni araştırma hattına sokar.
 - **Won't have listesini yazdır.** Bir tasarım kapsamını teslim ederken neyin dışarıda kaldığını yazmak, sonradan gelecek "bu da olacaktı" talebini baştan karşılar.
 - **Grooming'e katıl.** Tasarım gerektiren bir işi sprint'e girmeden önce görmen, "tasarım hazır değil" krizini önler.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

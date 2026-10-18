@@ -16,9 +16,10 @@ sources:
     url: "https://docs.stripe.com/api/idempotent_requests"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Kullanıcı "Sipariş ver" butonuna iki kez bastı. İki sipariş mi oluştu? Cevap, o butonun arkasındaki HTTP metoduna bağlı.
 
@@ -42,13 +43,15 @@ Bu ayrım hem güvenlik hem kullanıcı deneyimi kararlarını belirler. **En so
 
 GET'in veri değiştirmemesi bir **kuraldır,** teknik zorunluluk değil. Veri değiştiren bir GET yazmak mümkündür ama ciddi bir hatadır: tarayıcılar ve önbellekler GET'i güvenli varsayar ve isteği kendiliğinden tekrarlayabilir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Veri değiştiren her eylem için çift gönderimi tasarla:** buton basıldıktan sonra devre dışı + yükleme durumu.
 - **Geliştiriciye sor:** bu istek idempotent mi, değilse bir idempotency key var mı?
 - **Silme ve toplu işlemleri geri alınabilir tasarla;** DELETE idempotent olsa da kullanıcı için geri dönüşü zordur.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

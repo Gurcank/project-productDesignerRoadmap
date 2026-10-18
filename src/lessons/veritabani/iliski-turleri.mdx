@@ -12,9 +12,10 @@ sources:
     url: "https://www.postgresql.org/docs/current/tutorial-join.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Kullanıcı birden fazla ekipte olabilir mi?" Bu soru bir tasarım sorusu gibi duruyor ama bir **ilişki türü** sorusu: ve cevabı arayüzü doğrudan belirliyor. Bu bir tasarım toplantısında konuşulması gereken bir konudur.
 
@@ -32,13 +33,15 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 Ara tabloda **ek bilgi** de tutulabilir ve bu çoğu zaman gerekir: "kullanıcı bu ekibe ne zaman katıldı", "bu ekipteki rolü ne". Bu ihtiyacı önceden fark etmezsen model sonradan değişir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her ilişki için sayıyı sor:** bir tane mi, birden fazla mı? Cevap ekranın tek alan mı liste mi olacağını belirler.
 - **Bire çok ilişkilerde liste, boş durum ve sayfalama tasarla.**
 - **Çoka çok ilişkide ilişkinin kendi bilgisini (rol, tarih) tasarıma kat.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

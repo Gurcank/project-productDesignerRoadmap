@@ -21,6 +21,8 @@ import ContrastDemo from "~/components/lesson/ContrastDemo.astro";
 import Swatches from "~/components/lesson/Swatches.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir arkadaşın gri bir metni açık gri zemine koymuş ve "çok şık" demiş. Sen okuyamıyorsun. O okuyor çünkü gençsin, parlak ekrana bakıyorsun, ya da zaten ne yazdığını biliyorsun. Bir yaşlı kullanıcı güneşin altında okuyamayacak. İşte **renk kararının işlev tarafı:** zevk meselesi değil, ölçülebilir bir kural.
 
@@ -125,7 +127,8 @@ Bu sitenin renk çiftleri kontrast **hesaplanarak** doğrulanıyor: gövde metni
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Önce nötr rampayı kur.** Arayüzün çoğu nötr; renk azlıkta çalışır.
 - **Tek bir vurgu rengi seç** ve yalnızca birincil eylemde kullan.
@@ -133,7 +136,8 @@ Bu sitenin renk çiftleri kontrast **hesaplanarak** doğrulanıyor: gövde metni
 - **Kontrastı hesapla.** Metin 4,5:1, arayüz öğesi 3:1. Dark mode için ayrıca yeniden hesapla.
 - **Rampayı OKLCH ile kurmayı düşün,** ama eski tarayıcı yedeğini ver.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

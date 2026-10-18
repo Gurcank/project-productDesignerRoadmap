@@ -14,11 +14,12 @@ sources:
     url: "https://docs.github.com/en/get-started/using-git/about-git"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Rebase ettim", "conflict çıktı", "main'e merge edildi". Bu cümleler her gün geçer ve kod yazmasan bile içinde olursun. Sebep şu: **Git yalnızca kodun değil, işin de kaydıdır.** Bir özelliğin ne zaman girdiği, kimin neyi değiştirdiği, bir hatanın hangi değişiklikle geldiği: hepsi burada.
 
@@ -61,13 +62,15 @@ Bölümdeki temel kavramlar **eskimeyen** kategoridedir; Git yirmi yıldır ayn�
 
 **Git**, dağıtık bir sürüm kontrol sistemidir: her geliştiricinin bilgisayarında projenin tam geçmişiyle birlikte bir kopyası bulunur. "Dağıtık" olması internet olmadan da çalışabilmeyi ve merkezî sunucu çökse bile geçmişin kaybolmamasını sağlar. Fiilî standarttır. Git olmadan GitHub olmaz, ama GitHub olmadan Git gayet çalışır. "Depo Git'te; GitHub'da barındırıyoruz."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Git geçmişini bir "neden" kaynağı olarak kullan:** bir değerin ne zaman ve neden değiştiğini sor.
 - **Tasarım dosyalarının hangi depoda duracağına ekiple karar ver.**
 - **GitHub'da bir PR'ı açıp diff'e bakmayı bir kez dene;** kod bilmeden de ölçü ve metin değişikliklerini görürsün.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

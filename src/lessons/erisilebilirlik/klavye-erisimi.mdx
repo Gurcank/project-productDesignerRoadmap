@@ -21,6 +21,8 @@ import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Farenizi bırakın. Yalnızca **Tab, Enter, Space ve ok tuşlarıyla** kendi sitenizi kullanmayı deneyin. Sorunların çoğu ilk beş dakikada ortaya çıkar: odak nerede? Menü açılıyor ama kapatılamıyor, modal açılınca odak arkaya kaçıyor, butonlara ulaşılamıyor.
 
@@ -103,7 +105,8 @@ Bu sitede hiçbir yerde odak halkası kaldırılmadı: iki piksel kalınlığın
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Odak durumunu her bileşen için tasarla.** Hover ile aynı değil.
 - **Odak halkası tokenını tanımla.** Kalınlık, renk, boşluk; en az 3:1 kontrast.
@@ -111,7 +114,8 @@ Bu sitede hiçbir yerde odak halkası kaldırılmadı: iki piksel kalınlığın
 - **Modal için üç davranışı yaz:** açılışta odak, açıkken tuzak, kapanışta geri dönüş.
 - **Kendi tasarımını klavyeyle gez.** Eksik odak, ulaşılamayan buton, kaybolan odak ilk dakikalarda görünür.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

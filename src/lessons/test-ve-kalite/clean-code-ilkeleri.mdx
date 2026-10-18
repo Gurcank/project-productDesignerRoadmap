@@ -14,9 +14,10 @@ sources:
     url: "https://google.github.io/eng-practices/review/reviewer/looking-for.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Kod yazmayacaksın; ama bu ilkeler bir PR'ı değerlendirirken ve kendi alanındaki düzeni kurarken işe yarar, çünkü **aynı ilkeler orada da geçerli.**
 
@@ -39,14 +40,16 @@ Hepsi aynı hedefe hizmet eder: kodun okunabilir ve değiştirilebilir kalması.
 
 **İyi yorum "ne yaptığını" değil "neden öyle yaptığını" açıklar.** Ne yaptığı zaten kodda yazıyor; "neden" ise kodda görünmez: hangi kısıt yüzünden, hangi hatayı önlemek için, hangi kararın sonucu olarak. Aynı ilke commit mesajları ve ADR'ler için de geçerlidir. "Yorum 'diziyi döndürüyor' diyor; bunu zaten görüyoruz. Neden bu sırayla döndüğünü yazsın."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Token ve bileşen adlarını anlamlı kıl:** `color-text-danger`, `button-primary`.
 - **PR'da sihirli sayıları (ölçek dışı boşluk, renk) işaretle:** token'dan gelsin.
 - **Bileşen tanımlarında tek sorumluluğu ara:** bir bileşen birden fazla işi mi yapıyor?
 - **Soyutlamayı erken yapma:** iki bileşen benzer görünüyorsa ayrı kalmaya hakları olup olmadığını düşün.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

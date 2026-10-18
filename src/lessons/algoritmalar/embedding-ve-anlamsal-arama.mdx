@@ -17,9 +17,10 @@ additions:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Şifremi unuttum" yazan bir kullanıcı, içinde bu kelimeler geçmeyen "Hesap kurtarma" sayfasını bulabilir mi? Kelime eşleştirmeyen aramada evet. Bu derste mekanizmayı ve bedelini göreceksin.
 
@@ -44,14 +45,16 @@ Bir metin, sayılardan oluşan uzun bir listeye (**vektör**, **embedding**) çe
 
 Çoğu iyi arama **hibrittir:** kelime eşleşmesi kesinliği, anlamsal arama kapsamı verir; sonuçlar birleştirilip sıralanır. Bu sitenin araması kelime tabanlıdır (derleme anında oluşturulmuş statik bir indeks); statik bir sitede vektör altyapısı taşımaya değmez.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Kullanıcı ne arıyor?** Kod/numara arıyorsa birebir eşleşme şart; kavram arıyorsa anlamsal değerli.
 - **Açıklanabilirliği kaybetmeyi göze alıyor musun?** Vurgulama yapılamayan sonuç listesi daha az güven verir.
 - **Boş sonuç yerine yanlış sonuç gelmesi daha mı iyi?** Anlamsal aramada varsayılan budur ve bazı ürünlerde kabul edilebilir olmayabilir.
 - **"Yapay zekâ araması" isteği genelde budur** ve ayrı servis, ayrı gecikme, ayrı hata durumu demektir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

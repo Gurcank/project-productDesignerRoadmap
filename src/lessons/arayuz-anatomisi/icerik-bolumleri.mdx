@@ -22,11 +22,12 @@ includeTerms: ["tabs", "accordion", "timeline", "callout", "marquee", "gallery",
 skipTerms: ["process","yol haritası"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Hero'dan sonra sayfa ürünü anlatmaya başlar. Burada sayfanın çoğu **içerik bölümleri** kalıplarından oluşur. Bu kalıpların adlarını bilmek sayfa kurgusunu hızlıca konuşabilmek demektir; ama her kalıbın bir bedeli ve bir jenerikleşme tehlikesi de vardır.
 
@@ -87,7 +88,8 @@ Numaralandırma (01/02/03) yalnızca **gerçekten sıralı** içerikte anlamlıd
 
 **Callout (vurgu kutusu)**, metin akışı içinde dikkat çekmek için ayrılmış kutudur: ipucu, uyarı, not. Bu sitedeki "Tasarımcı olarak sen" kutuları buna örnektir. Türleri (info, warning, danger) semantik renklerle ayrılır ama yalnızca renkle değil, ikonla da.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Feature grid'i varsayılan seçme.** Önce içeriğin hiyerarşisini sor: biri baskınsa bento ya da alternating düşün.
 - **Numarayı yalnızca gerçek sıra için kullan.**
@@ -95,7 +97,8 @@ Numaralandırma (01/02/03) yalnızca **gerçekten sıralı** içerikte anlamlıd
 - **Kritik mesajı accordion, tab ya da carousel içine koyma.**
 - **FAQ'yu gerçek sorulardan yaz;** tekrar eden soru bir akış sorununu işaret eder.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

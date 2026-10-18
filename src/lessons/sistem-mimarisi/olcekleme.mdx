@@ -11,11 +11,12 @@ sources:
     url: "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Kampanya günü trafik on kat artacak. Sistem buna hazır mı? Ölçekleme iki yönde yapılır.
 
@@ -46,12 +47,14 @@ Kampanya günü trafik on kat artacak. Sistem buna hazır mı? Ölçekleme iki y
 
 **Otomatik ölçekleme anında değildir:** yeni kopyaların açılması zaman alır. Ani zirvelerde (bilet satışı, canlı yayın) **önceden ölçeklendirme** gerekebilir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Önceden bilinen trafik zirvelerini (kampanya, lansman) ekibe önceden bildir;** ölçekleme için süre gerekir.
 - **Zirve anı için kullanıcıya görünen davranışı tasarla:** bekleme odası, sıra, "yoğunluk var" mesajı.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

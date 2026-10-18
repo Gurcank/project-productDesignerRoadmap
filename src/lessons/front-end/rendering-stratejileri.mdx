@@ -25,6 +25,8 @@ import Callout from "~/components/lesson/Callout.astro";
 import RenderWhere from "~/components/lesson/RenderWhere.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Blog yazın bir kullanıcıya milisaniyeler içinde açılıyor; ürün sayfan ise önce boş bir ekran gösterip sonra doluyor. İkisi de "web sayfası" ama HTML'i farklı yerde ve farklı zamanda üretiyorlar. Bu karar, bir web projesinin **hız, SEO ve maliyetini** doğrudan belirler.
 
@@ -68,13 +70,15 @@ Bu site bir SSG örneğidir: sayfaların tamamı derleme anında hazır HTML ola
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Sayfa türüne göre sor:** bu sayfa herkese aynı mı (SSG), kişiye özel mi (SSR), panel mi (CSR)?
 - **Bekleyen bölümler için skeleton ve öncelik sırasını tasarla.**
 - **Etkileşimli parçaların gerçekten gerekli olup olmadığını sor;** her biri JavaScript yükü ve hydration süresi demek.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

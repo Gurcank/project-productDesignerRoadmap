@@ -21,6 +21,8 @@ import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import SpacingDemo from "~/components/lesson/SpacingDemo.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 İki tasarıma bakıyorsun. İkisinde de aynı renkler, aynı font var. Biri "düzenli", öteki "dağınık" hissettiriyor. Fark nerede? Çoğu zaman **boşlukta ve hizada:** biri tutarlı bir sisteme uyuyor, öteki 13px, 17px, 22px gibi rastgele değerlerle dolu.
 
@@ -93,7 +95,8 @@ Bu sitedeki her boşluk 4 tabanlı bir ölçekten geliyor (0,25 rem ile 6 rem ar
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Ölçek dışı değer görürsen yuvarla.** 18px yerine 16 ya da 24.
 - **Boşluğu token olarak teslim et.** Geliştirici `margin: 18px` yerine `--spacing-4` yazsın.
@@ -101,7 +104,8 @@ Bu sitedeki her boşluk 4 tabanlı bir ölçekten geliyor (0,25 rem ile 6 rem ar
 - **Başlık altını üstünden küçük tut.**
 - **Yoğunluğu hedef kitleye göre seç.** Uzman paneli compact, tanıtım sayfası ferah.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

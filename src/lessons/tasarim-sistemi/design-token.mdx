@@ -22,6 +22,8 @@ import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Marka rengi değişti. Yönetici soruyor: "Kaç yerde değişecek?" Geliştirici cevaplıyor: "İki yüz yirmi dört yerde." Bu cevap bir sistem sorunudur. Aynı değer 224 kez yazılmışsa her biri unutulabilir, yanlış yazılabilir, biri kaçabilir.
 
@@ -129,7 +131,8 @@ Olgun tasarım sistemlerinin altyapısında karşına çıkar. **Değişken bilg
 
 "Token'ları DTCG formatında dışa aktarıp Style Dictionary ile CSS değişkenlerine çevirelim."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Ham değer yazma, token kullan.** Figma'da bir rengi seçerken doğrudan hex yerine değişkeni seç.
 - **Adı niyetle koy.** `blue-600` değil `color-action-primary`.
@@ -137,7 +140,8 @@ Olgun tasarım sistemlerinin altyapısında karşına çıkar. **Değişken bilg
 - **Handoff'ta token adını ver.** Geliştirici `#1B4DFF` yerine `--color-action-primary` görsün.
 - **Dark mode'u ayrı bir tasarım işi say.** Renkleri ters çevirmek yetmez; kontrastı yeniden hesapla.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

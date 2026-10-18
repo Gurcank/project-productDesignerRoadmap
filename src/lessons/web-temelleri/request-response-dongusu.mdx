@@ -22,6 +22,8 @@ import Outside from "~/components/lesson/Outside.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bir geliştirici sana "istek 200 dönüyor ama gövde boş" dediğinde ne söylediğini anlamak istiyorsun. Ya da "bu sayfa 84 istek atıyor" dediğinde, bunun yavaşlıkla ne ilgisi olduğunu. Bu ders o cümlelerin sözlüğü.
 
@@ -134,7 +136,8 @@ Genel kural: **2xx başarı, 3xx yönlendirme, 4xx istemci hatası, 5xx sunucu h
 
 </Outside>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 Geliştiriciye şu soruyu sormayı alışkanlık edin: **"Bu ekran için kaç istek atılıyor, hangisini beklerken ne gösteriyoruz?"**
 
@@ -142,7 +145,8 @@ Geliştiriciye şu soruyu sormayı alışkanlık edin: **"Bu ekran için kaç is
 - Yavaş bağlantıda ne olacağını düşün: metro, asansör, kalabalık etkinlik. Bu bir uç senaryo değil, kullanıcının önemli bir kısmının günlük hâlidir.
 - Aynı bilgiyi tek istekte getirmek mümkünse, hız kazanırsın. Bu bir "teknik detay" değil, ekran tasarımının (ne aynı anda gösterilecek) sonucudur.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

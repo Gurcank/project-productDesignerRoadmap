@@ -12,9 +12,10 @@ sources:
     url: "https://sre.google/sre-book/embracing-risk/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Öneri servisi çöktü. Ürün sayfası komple çöktü mü, yoksa yalnızca öneriler bölümü mü kayboldu? İkincisi tasarlanmış bir davranıştır ve **senin işin.**
 
@@ -30,13 +31,15 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 **Graceful degradation (zarif bozulma)**, bir parça çöktüğünde tüm sistemin çökmesi yerine o parçanın işlevinin devre dışı kalıp geri kalanın çalışmaya devam etmesidir. **Doğrudan bir tasarım işidir ve bölümün tasarımcıyı en çok ilgilendiren terimidir.** Öneri servisi çöktüğünde ürün sayfası çökmemeli; yalnızca öneriler bölümü görünmemeli ya da bir hata kutusu göstermelidir. Yani **"hangi bölüm olmadan bu sayfa hâlâ işe yarar?"** sorusu bir tasarım sorusudur. "Yorumlar yüklenmezse yalnızca o bölüm hata göstersin, sayfanın tamamı çökmesin."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her sayfa için bölümleri "kritik / değil" diye işaretle:** hangisi olmadan sayfa işe yarar?
 - **Kritik olmayan bölümler için kendi hata/gizleme hâlini tasarla.**
 - **Diyagramda SPOF'ları ekiple birlikte işaretle** ve her biri için kullanıcının göreceği hata ekranını çiz.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -15,9 +15,10 @@ sources:
 skipTerms: ["state","fallback"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 JavaScript, sayfayı canlı yapan dildir. Kod yazmayacaksın; ama üç kavramın tasarım kararlarına doğrudan dokunduğunu bilmelisin.
 
@@ -37,13 +38,15 @@ Bazı işlemlerin sonucu hemen gelmez: sunucudan veri çekmek gibi. **Promise** 
 
 **fetch**, tarayıcının sunucudan veri istemesini sağlayan işlevdir; **JSON** veri alışverişinin standart metin formatıdır. API'lerle konuşmanın standart yoludur. DevTools'un Network sekmesinde bir isteğin yanıtına bakabilirsin: hangi alanların geldiğini görürsün ve tasarımda o alanlara göre karar verirsin. "Response'a baktım; `avatarUrl` alanı boş dönebiliyor, fallback tasarlayalım."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her veri çeken ekran için bekleme ve hata hâlini çiz.**
 - **Etkileşimli öğeleri gerçek buton/bağlantı olarak tarif et;** klavye otomatik gelsin.
 - **Network sekmesinde gerçek yanıta bak;** hangi alanın boş olabildiğini tasarımda karşıla.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

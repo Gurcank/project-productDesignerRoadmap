@@ -16,9 +16,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Ürün adlarını duyduğunda kategorisini bilmen yeterli. Ürün seçimi senin işini doğrudan etkilemez; etkilediği tek yer, o veritabanının **ne garanti ettiğidir.**
 
@@ -32,12 +33,14 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 **Tasarımcı için sonuç:** ilişkisel bir veritabanı, arayüzde "bu iki kayıt tutarlı olmalı" varsayımını güvenilir kılar; belge veritabanı bunu garanti etmez.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Ürün adını değil, garantiyi sor:** "Bu veritabanı sipariş-stok tutarlılığını kendisi sağlıyor mu?"
 - **Offline ya da yerel çalışan uygulamalarda dosya tabanlı veritabanını (SQLite) tanı.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

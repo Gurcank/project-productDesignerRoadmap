@@ -11,9 +11,10 @@ sources:
     url: "https://code.claude.com/docs/en/best-practices"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Ürün Geliştirme bölümündeki kabul kriteri, prompt yazarken **"bitti" tanımını baştan koymak** anlamına gelir. Bu, iterasyonu en çok azaltan tek uygulamadır.
 
@@ -34,13 +35,15 @@ Bu liste tek tek "evet/hayır" ile kontrol edilebilir; yani **çıktıyı denetl
 
 **Kural:** bir kabul kriteri yazamıyorsan isteğin henüz netleşmemiştir. Bu, modelin değil **senin probleminin** işaretidir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her kriter evet/hayır ile cevaplanabilmeli:** "güzel görünsün" kriter değildir.
 - **Durumları kriter yap:** boş, hata, yükleme, uzun metin.
 - **Yazamıyorsan dur:** önce isteği netleştir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

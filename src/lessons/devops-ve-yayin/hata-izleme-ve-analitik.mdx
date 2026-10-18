@@ -15,9 +15,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Sentry'de bir hata günde 200 kez tetikleniyor ama tek bir destek talebi yok. Kullanıcılar şikâyet etmiyor; sessizce terk ediyor. Üç ölçüm katmanı bunu görmeni sağlar.
 
@@ -44,14 +45,16 @@ Her iki tür de kişisel veri toplayabilir; KVKK/GDPR uyumu ve çerez onayı ger
 
 Başarı ölçütü tanımlanırken onu ölçecek olay da tanımlanmalıdır. "Bu özelliğin başarı ölçütü var ama onu ölçecek olay tanımlı değil; yayına çıkarsak ölçemeyiz." **Her şeyi ölçmek bir strateji değildir:** cevaplanmayacak soru için toplanan veri hem gürültü hem gereksiz bir gizlilik yükümlülüğüdür.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Her özellik tanımına ölçüm planı ekle:** olay adı, tetikleyici, özellikler, cevapladığı soru.
 - **Adlandırma kuralını ekiple belirle** (örneğin `nesne_eylem`).
 - **Her şeyi ölçmeye çalışma;** başarı ölçütünü cevaplayan olaylarla başla.
 - **Hata izleme panelini düzenli kontrol et;** kullanıcı terk ettiği hataları sen görmezsin.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

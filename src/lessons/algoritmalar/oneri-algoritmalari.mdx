@@ -14,9 +14,10 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 "Sana özel", "önerilen", "senin için seçtik": üçü aynı şeyi söylemez ama arayüzde aynı yere konur. Arkadaki mekanizmayı bilmek, hangisini yazacağına karar vermeni sağlar.
 
@@ -46,14 +47,16 @@ Bu yalnızca dürüstlük meselesi değil: doğru etiket, öneri zayıf olduğun
 
 Öneri bölümünün tıklanma oranı yüksek çıkabilir çünkü ekranın iyi bir yerindedir, öneri iyi olduğu için değil. Gerçek soru: *bu bölüm olmasaydı kullanıcı o şeyi zaten bulur muydu?* Bunu ancak karşılaştırmalı bir deneyle (A/B) anlarsın.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Mekanizmayı sor, sonra etiketi yaz:** etiket sistemin yapabildiğinden fazlasını vaat etmemeli.
 - **Soğuk başlangıç ekranını tasarla:** yeni kullanıcı ne görecek? En çok atlanan durum.
 - **Kaç öneri?** Beş iyi öneri, yirmi orta öneriden iyidir; seçenek artışı karar yorgunluğu üretir.
 - **"Neden bunu görüyorum?" sorusuna cevap verebiliyor musun?** Veremiyorsan etiketi zayıflat.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

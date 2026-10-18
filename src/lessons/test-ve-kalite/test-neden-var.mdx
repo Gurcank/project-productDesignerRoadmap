@@ -15,9 +15,10 @@ flags: ["emin-degil"]
 skipTerms: ["Validation","validation","doğrulama"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Bu bölümün senin için iki net çıktısı var:
 
@@ -38,12 +39,14 @@ Geri kalan kısımlar **seviye 2**: kod yazmayacaksın ama bir PR'da "testler k�
 
 Piramidin kesin oranları dogma değildir. Front-end tarafında "testing trophy" adlı bir alternatif model, entegrasyon testlerine daha fazla ağırlık verilmesini savunur; çünkü kullanıcı tek tek fonksiyonları değil, birlikte çalışan parçaları deneyimler. İki model arasındaki tartışmanın güncel durumu doğrulama gerektirir.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **"Bu düzeltmeyi yapmak riskli" cevabını** test altyapısının durumuyla ilişkilendir; test eksikliği tasarım borcunu büyütür.
 - **Test stratejisi toplantısında** kritik kullanıcı akışlarının (kayıt, ödeme) E2E kapsamında olup olmadığını sor.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

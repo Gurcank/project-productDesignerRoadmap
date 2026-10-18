@@ -21,6 +21,8 @@ skipTerms: ["payload"]
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Blogda bir yazı yayınlamak için geliştiriciye mi yazman gerekiyor? İçerik ekibi kendi içeriğini kendi yönetebiliyorsa, arkada bir içerik yönetim sistemi var demektir.
 
@@ -40,13 +42,15 @@ Bu sitedeki dersler MDX ile yazılmıştır: metnin içinde "Tasarımcı olarak 
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **İçerik modelini tasarımla birlikte kur:** her alan için uzunluk sınırı, zorunluluk ve boş durum.
 - **Beklenmedik içeriği tasarla:** çok uzun başlık, görseli olmayan kart, eksik alan.
 - **Headless CMS'in masada olup olmadığını sor** (örneğin PHP/WordPress içerik ekibi varsa).
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

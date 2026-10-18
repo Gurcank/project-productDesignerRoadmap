@@ -14,12 +14,13 @@ sources:
     url: "https://kanbanguides.org/english/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Destek ekibinde çalışıyorsun. İşler her an geliyor: acil bir hata, bir tasarım talebi, bir içerik düzeltmesi. İki haftalık sprint'e sığdırmak imkânsız, çünkü ne gelecek bilemezsin. Böyle bir ekipte Scrum zorlanır, ama başka bir yaklaşım uyar: **Kanban.**
 
@@ -117,14 +118,16 @@ Pano üzerinde bir sütunun sürekli dolu olmasıyla kendini gösterir. "Darboğ
 
 **Scrumban**, Scrum'ın ritüellerini (planning, retro) Kanban'ın akış yönetimiyle (WIP limit, sürekli akış) birleştiren **melez yaklaşımdır.** Gerçek ekiplerin çoğu saf Scrum ya da saf Kanban uygulamaz; bu terim o gerçeği adlandırır. "Sprint'imiz var ama panoda WIP limiti de var; teknik olarak Scrumban."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarım talepleri için Kanban iyi bir seçimdir.** Bir tasarım ekibine sürekli talep geliyorsa, pano ve WIP limiti öncelikleri görünür kılar.
 - **Tasarım aşamalarını panoya ayrı sütun yap.** "Tasarım", "design review" ve "tasarım onayı" ayrı görünürse, takıldığın yer belli olur.
 - **Hız sorununda önce kuyruğa bak.** "Tasarım neden geç?" sorusunun cevabı çoğu zaman çalışma süresi değil, bekleme süresidir.
 - **Yeni işe başlamadan önce yarım işi bitir.** WIP limiti tasarımcı için de geçerli: aynı anda beş akış açık tutmak hepsini yavaşlatır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

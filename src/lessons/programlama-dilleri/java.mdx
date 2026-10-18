@@ -14,9 +14,10 @@ additions:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Java, uzun ömürlü ve çok kişiyle yazılan sistemlerin dilidir: bankalar, sigorta, telekom, kamu. Bir banka uygulamasının arkasında çoğu zaman bir Java servisi bulunur.
 
@@ -38,12 +39,14 @@ Java, uzun ömürlü ve çok kişiyle yazılan sistemlerin dilidir: bankalar, si
 
 **Alternatifler:** aynı ekosistemde çok daha az ayrıntıyla Kotlin; Microsoft dünyasında C#; basit ve yüksek trafikli servislerde Go.
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Java'lı bir kurumda takvim beklentini ayarla.** Küçük görünen bir değişiklik, katmanlı bir mimaride birçok noktaya dokunabilir.
 - **Devralınan sistem tasarımı kısıtlar.** "Bu alanı kaldıralım" isteği, o alana bağlı yıllanmış entegrasyonlar yüzünden reddedilebilir; erken sor.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 

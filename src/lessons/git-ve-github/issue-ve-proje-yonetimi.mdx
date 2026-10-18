@@ -15,9 +15,10 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 Küçük bir ekipte iş takibi için ayrı bir araca gerek var mı? GitHub'ın kendi iş takibi çoğu zaman yeter: iş kaydı, tartışma ve kod aynı yerde durur.
 
@@ -33,13 +34,15 @@ Küçük bir ekipte iş takibi için ayrı bir araca gerek var mı? GitHub'ın k
 
 **Project board (proje panosu)**, issue ve PR'ların sütunlar hâlinde takip edildiği panodur; Kanban panosunun GitHub'daki hâli. Avantajı, kod ile iş takibinin aynı yerde olması. "Jira yerine GitHub Projects kullanalım; iki araç arasında gidip gelmeyelim."
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarım eksikleri için bir issue şablonu tasarla:** ekran görüntüsü, beklenen davranış, cihaz, bağlantı.
 - **PR şablonuna tasarım kontrol listesi ekle:** durumlar, responsive, erişilebilirlik, token kullanımı.
 - **Issue etiketlerini (design, a11y, copy) ekiple kararlaştır.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
