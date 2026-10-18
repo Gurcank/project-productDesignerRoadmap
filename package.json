@@ -9,6 +9,7 @@
     "build:fresh": "tsx scripts/clean.ts && astro build && pagefind --site dist && tsx scripts/offline-manifest.ts",
     "preview": "astro preview",
     "check": "astro check",
+    "test": "tsx --test \"tests/**/*.test.ts\"",
     "clean": "tsx scripts/clean.ts",
     "import": "tsx scripts/import-materials.ts",
     "import:check": "tsx scripts/import-materials.ts --check",

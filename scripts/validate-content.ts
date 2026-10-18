@@ -9,7 +9,7 @@
  *
  * Usage: npm run validate
  */
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 // The site's own resolver, not a copy of its rules: a validator that reimplements
@@ -18,9 +18,14 @@ import process from "node:process";
 import { PARENTHESISED_PATTERN, SECTION_REF_PATTERN, resolveSectionHref } from "../src/lib/section-refs";
 import sectionMap from "../src/data/generated/section-map.json";
 import { DIAGRAM_SECTIONS } from "../src/components/diagrams/sections";
+import { TOPIC_ROOTS } from "../src/data/topic-roots";
+import { makeTopicId, slugFromTopicName } from "../src/lib/topic-id";
+import { AREAS, CATEGORIES, RESERVED_ROOTS } from "../src/data/categories";
+import { PLANET_BY_SLUG } from "../src/data/planets";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
-const TOPICS = path.join(ROOT, "src/content/topics");
+const FROZEN_FILE = path.join(ROOT, "src/data/frozen-topic-ids.json");
+const UPDATE_FROZEN = process.argv.includes("--update-frozen");
 
 /*
  * Chapters the material references but the site has not published yet. They are
@@ -43,54 +48,171 @@ let headingCount = 0;
 let termCardCount = 0;
 let referenceCount = 0;
 
-for (const category of readdirSync(TOPICS)) {
-  for (const fileName of readdirSync(path.join(TOPICS, category))) {
-    const relative = `${category}/${fileName}`;
-    const raw = readFileSync(path.join(TOPICS, category, fileName), "utf8");
-    topicCount += 1;
+/** Every step id, with the files that claim it — two files, one URL, is a bug. */
+const topicFiles = new Map<string, string[]>();
 
-    // --- frontmatter counts match the body -----------------------------------
-    const declared = Number(raw.match(/^cardCount: (\d+)$/m)?.[1] ?? -1);
-    const headings = raw.match(/^### .+$/gm) ?? [];
-    headingCount += headings.length;
-    if (declared !== headings.length) {
-      problems.push({ file: relative, message: `cardCount ${declared}, gerçek başlık ${headings.length}` });
-    }
+for (const topicRoot of TOPIC_ROOTS) {
+  const rootDir = path.join(ROOT, "src", topicRoot.dir);
+  if (!existsSync(rootDir)) continue;
+  for (const category of readdirSync(rootDir)) {
+    for (const fileName of readdirSync(path.join(rootDir, category))) {
+      const relative = `src/${topicRoot.dir}/${category}/${fileName}`;
+      const raw = readFileSync(path.join(rootDir, category, fileName), "utf8");
+      topicCount += 1;
 
-    const declaredCategory = raw.match(/^category: "(.+)"$/m)?.[1];
-    if (declaredCategory !== category) {
-      problems.push({ file: relative, message: `category alanı "${declaredCategory}", klasör "${category}"` });
-    }
+      const id = makeTopicId(category, slugFromTopicName(fileName));
+      topicFiles.set(id, [...(topicFiles.get(id) ?? []), relative]);
 
-    // --- every term card carries a definition --------------------------------
-    // A "### " block whose bullet list uses the labelled convention must have
-    // Tanım; without it the card renders as a loose list and reads as a bug.
-    const blocks = raw.split(/^### /m).slice(1);
-    for (const block of blocks) {
-      const title = block.slice(0, block.indexOf("\n")).trim();
-      const labelled = block.match(/^- \*\*[^*]+:\*\*/gm) ?? [];
-      if (labelled.length < 3) continue; // prose section, not a card
-      termCardCount += 1;
-      if (!/^- \*\*Tanım:\*\*/m.test(block)) {
-        problems.push({ file: relative, message: `"${title}" kartında Tanım alanı yok` });
+      // Each folder holds exactly one kind of step (ADR-019): the "Materyal dışı"
+      // badge reads `origin`, so a written page left in the generated folder would
+      // ship without it — or be deleted by the next import.
+      const origin = raw.match(/^origin: "(.+)"$/m)?.[1] ?? "material";
+      if (origin !== topicRoot.origin) {
+        problems.push({ file: relative, message: `origin "${origin}", bu klasörde "${topicRoot.origin}" olmalı` });
+      }
+
+      // --- frontmatter counts match the body -----------------------------------
+      const declared = Number(raw.match(/^cardCount: (\d+)$/m)?.[1] ?? -1);
+      const headings = raw.match(/^### .+$/gm) ?? [];
+      headingCount += headings.length;
+      if (declared !== headings.length) {
+        problems.push({ file: relative, message: `cardCount ${declared}, gerçek başlık ${headings.length}` });
+      }
+
+      const declaredCategory = raw.match(/^category: "(.+)"$/m)?.[1];
+      if (declaredCategory !== category) {
+        problems.push({ file: relative, message: `category alanı "${declaredCategory}", klasör "${category}"` });
+      }
+
+      // --- every term card carries a definition --------------------------------
+      // A "### " block whose bullet list uses the labelled convention must have
+      // Tanım; without it the card renders as a loose list and reads as a bug.
+      const blocks = raw.split(/^### /m).slice(1);
+      for (const block of blocks) {
+        const title = block.slice(0, block.indexOf("\n")).trim();
+        const labelled = block.match(/^- \*\*[^*]+:\*\*/gm) ?? [];
+        if (labelled.length < 3) continue; // prose section, not a card
+        termCardCount += 1;
+        if (!/^- \*\*Tanım:\*\*/m.test(block)) {
+          problems.push({ file: relative, message: `"${title}" kartında Tanım alanı yok` });
+        }
+      }
+
+      // --- cross references resolve --------------------------------------------
+      const body = raw.replace(/^---[\s\S]*?^---/m, "");
+      const outerPattern = new RegExp(PARENTHESISED_PATTERN.source, "g");
+      for (const outer of body.matchAll(outerPattern)) {
+        const refPattern = new RegExp(SECTION_REF_PATTERN.source, "g");
+        for (const ref of outer[1]!.matchAll(refPattern)) {
+          const [rawRef, section, chapter] = ref;
+          referenceCount += 1;
+          if (resolveSectionHref(section, chapter)) continue;
+
+          const targetChapter = section ? section.split(".")[0]! : chapter!;
+          const problem = { file: relative, message: `çözülmeyen referans (${rawRef})` };
+          if (UNPUBLISHED_CHAPTERS.has(targetChapter)) deferred.push(problem);
+          else problems.push(problem);
+        }
       }
     }
+  }
+}
 
-    // --- cross references resolve --------------------------------------------
-    const body = raw.replace(/^---[\s\S]*?^---/m, "");
-    const outerPattern = new RegExp(PARENTHESISED_PATTERN.source, "g");
-    for (const outer of body.matchAll(outerPattern)) {
-      const refPattern = new RegExp(SECTION_REF_PATTERN.source, "g");
-      for (const ref of outer[1]!.matchAll(refPattern)) {
-        const [rawRef, section, chapter] = ref;
-        referenceCount += 1;
-        if (resolveSectionHref(section, chapter)) continue;
+for (const [id, files] of topicFiles) {
+  if (files.length > 1) problems.push({ file: files.join(" + "), message: `aynı adım kimliği iki dosyada: ${id}` });
+}
 
-        const targetChapter = section ? section.split(".")[0]! : chapter!;
-        const problem = { file: relative, message: `çözülmeyen referans (${rawRef})` };
-        if (UNPUBLISHED_CHAPTERS.has(targetChapter)) deferred.push(problem);
-        else problems.push(problem);
-      }
+/*
+ * Frozen ids (CLAUDE.md rule 3). Progress is stored under the step id, so an id
+ * that disappears — a renamed file, a re-slugged title — silently drops a
+ * reader's progress on that step. The snapshot is append-only: a new step is
+ * frozen explicitly with `--update-frozen`, the moment it is published.
+ */
+const frozen: { note: string; ids: string[] } = existsSync(FROZEN_FILE)
+  ? JSON.parse(readFileSync(FROZEN_FILE, "utf8"))
+  : { note: "", ids: [] };
+const frozenIds = new Set(frozen.ids);
+for (const id of frozen.ids) {
+  if (!topicFiles.has(id)) {
+    problems.push({ file: "src/data/frozen-topic-ids.json", message: `donmuş kimlik kayıp: ${id} — bu adımın ilerlemesi kaybolur` });
+  }
+}
+const unfrozen = [...topicFiles.keys()].filter((id) => !frozenIds.has(id)).sort();
+if (UPDATE_FROZEN && unfrozen.length > 0) {
+  frozen.ids.push(...unfrozen);
+  writeFileSync(FROZEN_FILE, `${JSON.stringify(frozen, null, 2)}\n`, "utf8");
+  console.log(`${unfrozen.length} yeni kimlik donduruldu.`);
+} else {
+  for (const id of unfrozen) {
+    problems.push({ file: "src/data/frozen-topic-ids.json", message: `dondurulmamış yeni kimlik: ${id} — "npm run validate -- --update-frozen"` });
+  }
+}
+
+/*
+ * URL roots. A category lives at /<slug>/, the same level as the site's own
+ * pages; a clash would make one of them unreachable without any build error.
+ */
+const reserved = new Set(RESERVED_ROOTS);
+for (const category of CATEGORIES) {
+  if (reserved.has(category.slug)) {
+    problems.push({ file: "src/data/categories.ts", message: `"${category.slug}" rezerve bir kök, kategori slug'ı olamaz` });
+  }
+}
+for (const entry of readdirSync(path.join(ROOT, "src/pages"), { withFileTypes: true })) {
+  const root = entry.isDirectory() ? entry.name : entry.name.replace(/\.(astro|ts|js|md|mdx)$/, "");
+  if (root === "index" || root.startsWith("[")) continue;
+  if (!reserved.has(root)) {
+    problems.push({ file: `src/pages/${entry.name}`, message: `"${root}" kökü RESERVED_ROOTS listesinde yok` });
+  }
+}
+
+/*
+ * Map visuals. Both lookups fail silently at runtime — an unknown slug falls
+ * back to the Moon, an unknown area builds `var(--c-area-x)` with nothing behind
+ * it — so the gate is here.
+ */
+const tokens = readFileSync(path.join(ROOT, "src/styles/tokens.css"), "utf8");
+const planetStyles = readFileSync(path.join(ROOT, "src/styles/planets.css"), "utf8");
+const categorySlugs = new Set(CATEGORIES.map((category) => category.slug));
+const bodies = new Map<string, string>();
+for (const category of CATEGORIES) {
+  const planet = PLANET_BY_SLUG[category.slug];
+  if (!planet) {
+    problems.push({ file: "src/data/planets.ts", message: `"${category.slug}" kategorisinin gezegeni yok` });
+    continue;
+  }
+  const owner = bodies.get(planet.body);
+  if (owner) problems.push({ file: "src/data/planets.ts", message: `"${planet.body}" iki kategoride: ${owner}, ${category.slug}` });
+  bodies.set(planet.body, category.slug);
+  if (!tokens.includes(`[data-body="${planet.body}"]`)) {
+    problems.push({ file: "src/styles/tokens.css", message: `[data-body="${planet.body}"] paleti yok` });
+  }
+  if (!planetStyles.includes(`[data-pattern="${planet.pattern}"]`)) {
+    problems.push({ file: "src/styles/planets.css", message: `[data-pattern="${planet.pattern}"] deseni yok` });
+  }
+}
+for (const slug of Object.keys(PLANET_BY_SLUG)) {
+  if (!categorySlugs.has(slug)) problems.push({ file: "src/data/planets.ts", message: `"${slug}" diye bir kategori yok` });
+}
+
+// Area hues must stay far enough apart to tell belts apart (no hue is the only
+// cue — the belt title is — but two near-identical tints read as one area).
+const MIN_HUE_GAP = 25;
+const hues: { id: string; hue: number }[] = [];
+for (const area of AREAS) {
+  const hue = tokens.match(new RegExp(`--hue-${area.id}:\\s*(\\d+(?:\\.\\d+)?)`))?.[1];
+  if (!hue) problems.push({ file: "src/styles/tokens.css", message: `--hue-${area.id} yok` });
+  else hues.push({ id: area.id, hue: Number(hue) });
+  if (!new RegExp(`--c-area-${area.id}:`).test(tokens)) {
+    problems.push({ file: "src/styles/tokens.css", message: `--c-area-${area.id} yok` });
+  }
+}
+for (let i = 0; i < hues.length; i += 1) {
+  for (let j = i + 1; j < hues.length; j += 1) {
+    const raw = Math.abs(hues[i]!.hue - hues[j]!.hue) % 360;
+    const gap = Math.min(raw, 360 - raw);
+    if (gap < MIN_HUE_GAP) {
+      problems.push({ file: "src/styles/tokens.css", message: `--hue-${hues[i]!.id} ile --hue-${hues[j]!.id} arası ${gap}° (en az ${MIN_HUE_GAP}°)` });
     }
   }
 }
@@ -118,11 +240,9 @@ if (existsSync(LESSONS)) {
       if (slug === "_index") continue;
       lessonCount += 1;
 
-      const topicDir = path.join(TOPICS, category);
-      const topicFile = existsSync(topicDir)
-        ? readdirSync(topicDir).find((name) => name.replace(/^\d+-/, "").replace(/\.md$/, "") === slug)
-        : undefined;
-      if (!topicFile) problems.push({ file: `src/lessons/${relative}`, message: "bu ders hiçbir adıma karşılık gelmiyor" });
+      if (!topicFiles.has(makeTopicId(category, slug))) {
+        problems.push({ file: `src/lessons/${relative}`, message: "bu ders hiçbir adıma karşılık gelmiyor" });
+      }
 
       const raw = readFileSync(path.join(LESSONS, category, fileName), "utf8");
       if (!/^sources:\s*$/m.test(raw) || !/^\s+- label:/m.test(raw)) {

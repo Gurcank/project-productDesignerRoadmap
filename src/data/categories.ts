@@ -267,6 +267,26 @@ export const CATEGORIES: Category[] = [
 
 export const CATEGORY_BY_SLUG = new Map(CATEGORIES.map((c) => [c.slug, c]));
 
+/**
+ * First URL segments that are not categories (SPEC §2). A category is routed at
+ * `/<slug>/`, so a slug from this list would shadow — or be shadowed by — a page
+ * or a build folder. Some are reserved before their pages exist (`araclar`,
+ * `roller`, `en`). `npm run validate` checks both directions: no category takes
+ * one of these, and every top-level page in src/pages is listed here.
+ */
+export const RESERVED_ROOTS: readonly string[] = [
+  "ara",
+  "sozluk",
+  "araclar",
+  "ayarlar",
+  "roller",
+  "en",
+  "offline",
+  "404",
+  "pagefind",
+  "_astro",
+];
+
 export function categoriesOfArea(area: AreaId): Category[] {
   return CATEGORIES.filter((c) => c.area === area).sort((a, b) => a.order - b.order);
 }

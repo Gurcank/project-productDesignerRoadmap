@@ -1,17 +1,17 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import { CATEGORIES, CATEGORY_BY_SLUG, type Category } from "~/data/categories";
+import { makeTopicId, slugFromTopicName } from "~/lib/topic-id";
 
 export type TopicEntry = CollectionEntry<"topics">;
 
 /** File name carries the order ("05-pull-request..."); the URL should not. */
 export function topicSlug(entry: TopicEntry): string {
-  const base = entry.id.split("/").pop() ?? entry.id;
-  return base.replace(/^\d+-/, "");
+  return slugFromTopicName(entry.id);
 }
 
 /** Progress key and URL path are the same string, so ids stay readable. */
 export function topicId(entry: TopicEntry): string {
-  return `${entry.data.category}/${topicSlug(entry)}`;
+  return makeTopicId(entry.data.category, topicSlug(entry));
 }
 
 export function topicHref(entry: TopicEntry): string {

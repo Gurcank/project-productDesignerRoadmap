@@ -10,10 +10,11 @@
  *   npm run import -- --only=15 rewrite a single chapter
  *   npm run import:check        fail if generated content drifted from source
  */
-import { readFile, writeFile, mkdir, rm } from "node:fs/promises";
+import { readFile, readdir, writeFile, mkdir, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
+import { slugify } from "../src/lib/slugify";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const MATERIALS = path.join(ROOT, "ProductDesignerMaterials");
@@ -64,26 +65,6 @@ const RULES: SourceRule[] = [
 ];
 
 // ----------------------------------------------------------------- utilities
-
-const TURKISH_MAP: Record<string, string> = {
-  ı: "i", İ: "i", ğ: "g", Ğ: "g", ş: "s", Ş: "s",
-  ç: "c", Ç: "c", ö: "o", Ö: "o", ü: "u", Ü: "u", â: "a", î: "i", û: "u",
-};
-
-export function slugify(input: string): string {
-  return (
-    input
-      // Lowercase first: in Turkish "I" becomes "ı", "İ" becomes "i" + combining dot.
-      .toLocaleLowerCase("tr")
-      .normalize("NFD")
-      .replace(/[̀-ͯ]/g, "") // drop combining marks left by "İ"
-      .replace(/[ıİğĞşŞçÇöÖüÜâîû]/g, (ch) => TURKISH_MAP[ch] ?? ch)
-      .replace(/['''`"“”]/g, "")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "")
-      .slice(0, 70)
-  );
-}
 
 /** Strips the "Biten bölüm / Sıradaki bölüm" footer and trailing rules. */
 function stripFooter(body: string): string {
@@ -319,14 +300,37 @@ async function main() {
   if (check) {
     let drifted = 0;
     for (const task of tasks) {
-      const current = existsSync(task.file) ? await readFile(task.file, "utf8") : null;
+      // Line endings are not content: with core.autocrlf the Windows checkout is
+      // CRLF while the importer writes LF, and a byte compare flagged every file.
+      const current = existsSync(task.file) ? (await readFile(task.file, "utf8")).replace(/\r\n/g, "\n") : null;
       if (current !== task.content) {
         drifted += 1;
         console.error(`drift: ${path.relative(ROOT, task.file)}`);
       }
     }
-    if (drifted > 0) {
-      console.error(`\n${drifted} dosya kaynakla ayrışmış. "npm run import" çalıştır.`);
+
+    // A file the importer would not write is a stale page or a hand-written one
+    // in the wrong place — src/content/ is generated and nothing else (ADR-019).
+    let orphans = 0;
+    if (!only) {
+      const expected = new Set(tasks.map((task) => path.resolve(task.file)));
+      for (const dir of [OUT_TOPICS, OUT_CATEGORIES, OUT_QUIZZES]) {
+        if (!existsSync(dir)) continue;
+        for (const name of await readdir(dir, { recursive: true, withFileTypes: true })) {
+          if (!name.isFile()) continue;
+          const file = path.resolve(name.parentPath, name.name);
+          if (expected.has(file)) continue;
+          orphans += 1;
+          console.error(`fazla dosya: ${path.relative(ROOT, file)}`);
+        }
+      }
+    }
+
+    if (drifted > 0 || orphans > 0) {
+      if (drifted > 0) console.error(`\n${drifted} dosya kaynakla ayrışmış. "npm run import" çalıştır.`);
+      if (orphans > 0) {
+        console.error(`\n${orphans} dosyayı içe aktarıcı üretmiyor. Elle yazılan adımlar src/authored/topics/ altında durur.`);
+      }
       process.exit(1);
     }
     console.log(`Tüm üretilmiş içerik kaynakla uyumlu (${tasks.length} dosya).`);
@@ -334,16 +338,12 @@ async function main() {
   }
 
   /*
-   * Full rewrite so removed sections never linger as stale pages — but only for
-   * the categories this importer owns. Categories written for the site by hand
-   * (Programlama Dilleri, Veri Yapıları, Algoritmalar) live in the same
-   * collection and would otherwise be deleted on every import.
+   * Full rewrite so removed sections never linger as stale pages. The importer
+   * owns all of src/content/; steps written for the site live in src/authored/
+   * and are out of its reach (ADR-019).
    */
   if (!only) {
-    for (const rule of RULES) {
-      await rm(path.join(OUT_TOPICS, rule.category), { recursive: true, force: true });
-    }
-    for (const dir of [OUT_CATEGORIES, OUT_QUIZZES]) {
+    for (const dir of [OUT_TOPICS, OUT_CATEGORIES, OUT_QUIZZES]) {
       await rm(dir, { recursive: true, force: true });
     }
   }

@@ -20,7 +20,11 @@ const BUDGETS = {
   jsPerPage: 60 * 1024,
   cssPerPage: 60 * 1024,
   htmlPerPage: 250 * 1024,
+  dataPerPage: 20 * 1024,
 };
+
+/** `<script type="application/json">` and friends carry data, not code. */
+const DATA_SCRIPT = /\btype=["']application\/(?:[\w.+-]+\+)?json["']/;
 
 const gzipped = (file: string) => gzipSync(readFileSync(file)).length;
 const kb = (bytes: number) => `${(bytes / 1024).toFixed(1)} KB`;
@@ -50,6 +54,7 @@ interface PageWeight {
   html: number;
   js: number;
   css: number;
+  data: number;
 }
 
 // Referenced assets are shared between pages, so each is measured once and
@@ -92,10 +97,15 @@ for (const page of pages) {
   const html = readFileSync(page, "utf8");
   let js = 0;
   let css = 0;
+  let data = 0;
 
   // Inline scripts and styles ship with the HTML; count them where they land.
-  for (const match of html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)) {
-    js += gzipSync(Buffer.from(match[1]!, "utf8")).length;
+  // A JSON payload is parsed, never executed, so it has its own budget: counted
+  // as JS it would crowd out the code the 60 KB limit exists to restrain.
+  for (const match of html.matchAll(/<script(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>/g)) {
+    const size = gzipSync(Buffer.from(match[2]!, "utf8")).length;
+    if (DATA_SCRIPT.test(match[1]!)) data += size;
+    else js += size;
   }
   for (const match of html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)) {
     css += gzipSync(Buffer.from(match[1]!, "utf8")).length;
@@ -116,6 +126,7 @@ for (const page of pages) {
     html: gzipped(page),
     js,
     css,
+    data,
   });
 }
 
@@ -126,6 +137,7 @@ const checks = [
   { name: "JS / sayfa", key: "js" as const, budget: BUDGETS.jsPerPage },
   { name: "CSS / sayfa", key: "css" as const, budget: BUDGETS.cssPerPage },
   { name: "HTML / sayfa", key: "html" as const, budget: BUDGETS.htmlPerPage },
+  { name: "Veri / sayfa", key: "data" as const, budget: BUDGETS.dataPerPage },
 ];
 
 console.log(`${weights.length} sayfa ölçüldü (gzip):\n`);

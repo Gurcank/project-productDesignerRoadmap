@@ -40,7 +40,8 @@ npm run preview    # http://localhost:4322
 | `npm run build` / `build:fresh` | Siteyi + arama dizinini + çevrimdışı manifestini üretir (`fresh` önbellekleri de temizler) |
 | `npm run preview` | Derlenmiş siteyi sunar |
 | `npm run check` | TypeScript ve Astro denetimi |
-| `npm run validate` | İçerik doğrulaması (kaynaklar, bağlantılar, slug'lar) |
+| `npm test` | Birim testleri (slug, adım kimliği, çapraz referans kuralları) |
+| `npm run validate` | İçerik doğrulaması (kaynaklar, bağlantılar, donmuş slug'lar, rezerve kökler) |
 | `npm run import` / `import:check` | `ProductDesignerMaterials/` içeriğini `src/content/` altına aktarır / farkı denetler |
 | `npm run budget` | Sayfa başına JS/CSS/HTML bütçesini denetler (JS ≤ 60 KB) |
 
@@ -49,7 +50,9 @@ npm run preview    # http://localhost:4322
 ```text
 ProductDesignerMaterials/   Kaynak materyal (salt okunur)
 src/content/                Materyalden üretilen ham içerik (elle düzenlenmez)
+src/authored/topics/        Site için yazılan adımların kayıtları (materyal dışı kategoriler)
 src/lessons/                Elle yazılmış dersler (MDX), kategori başına bir klasör
+tests/                      Birim testleri (npm test)
 src/data/                   Kategori sırası, gezegen eşlemesi, menü
 src/components/             Harita, menüler, yıldız alanı, ders bileşenleri
 src/styles/tokens.css       Renk ve ölçü token'ları (tek kaynak)

@@ -11,17 +11,17 @@
  * its own pages. Sizes are uncompressed bytes, so the number shown to the
  * reader is an upper bound on what is transferred.
  */
-import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { readdirSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
+// Imported, not regex-scanned: categories.ts has no Astro imports, and a scan of
+// `slug: "…"` would also pick up any other object in that file with a slug field.
+import { CATEGORIES } from "../src/data/categories";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const DIST = path.join(ROOT, "dist");
 
-// Category slugs come from the one source of truth, parsed rather than imported:
-// categories.ts is not runnable here without the Astro virtual modules.
-const categorySource = readFileSync(path.join(ROOT, "src/data/categories.ts"), "utf8");
-const CATEGORY_SLUGS = new Set([...categorySource.matchAll(/slug: "([a-z0-9-]+)"/g)].map((m) => m[1]!));
+const CATEGORY_SLUGS = new Set(CATEGORIES.map((category) => category.slug));
 
 interface Entry {
   url: string;

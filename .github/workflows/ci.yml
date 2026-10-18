@@ -24,6 +24,10 @@ jobs:
       - name: Tip kontrolü
         run: npm run check
 
+      # Pure rules that are storage contracts (slugs, step ids, cross references).
+      - name: Testler
+        run: npm test
+
       # The material is the source of truth; generated content must still match it.
       - name: Kaynak-çıktı ayrışması
         run: npm run import:check

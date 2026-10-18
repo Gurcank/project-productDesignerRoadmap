@@ -347,18 +347,61 @@ metin rengine alındı.
 **Ödünleşim.** Etiketler hover/odakta görünür; keşfedilebilirlik için kapalı hâlde yalnız çizgiler var.
 Dört bağlantı olduğu için kabul edildi; menü büyürse etiketlerin sürekli görünmesi yeniden düşünülmeli.
 
+## ADR-019 — Yazılmış adımlar `src/authored/` altında; kimlikler donmuş bir listede
+
+**Bağlam.** Materyalde olmayan üç kategori (Programlama Dilleri, Veri Yapıları, Algoritmalar) adım
+dosyalarını `src/content/topics/` içinde, `origin: "new"` ile tutuyordu. İçe aktarıcı yalnız kendi
+kategorilerinin klasörlerini silerek onları koruyordu. Bu iki sorun yaratıyordu: CLAUDE.md'nin "
+`src/content/` üretilmiştir" kuralı harfiyen doğru değildi, ve içe aktarıcıya bu adlardan biriyle bir
+kural eklenirse elle yazılmış adımlar sessizce silinirdi. Çok rollü plan ~100 yeni adım getiriyor; bu
+istisna onların hepsini aynı riske sokardı.
+
+**Karar.**
+- Elle yazılan adımlar `src/authored/topics/<kategori>/NN-slug.md` altında. `topics` collection iki
+  klasörü birlikte yükler ([`src/data/topic-roots.ts`](src/data/topic-roots.ts), tek kaynak).
+  Collection kimliği klasör önekini taşır, böylece iki klasör çakışamaz; URL ve ilerleme anahtarı
+  kimlikten değil, kategori + dosya adından gelir ([`src/lib/topic-id.ts`](src/lib/topic-id.ts)).
+- İçe aktarıcı `src/content/{topics,categories,quizzes}` klasörlerinin **tamamını** yeniden yazar.
+  `import:check` hem ayrışmayı hem de içe aktarıcının üretmediği fazla dosyayı yakalar; satır
+  sonlarını karşılaştırmaz (Windows'ta `core.autocrlf` her dosyayı "ayrışmış" gösteriyordu).
+- `validate` her klasörde yalnız kendi `origin` değerine izin verir ve aynı kimliği iki dosyada
+  bulursa kırılır.
+- **Donmuş kimlikler:** [`src/data/frozen-topic-ids.json`](src/data/frozen-topic-ids.json) yalnız
+  büyüyen bir liste. İçindeki bir kimlik sitede yoksa `validate` kırılır; listede olmayan yeni bir
+  kimlik de kırar, ta ki `npm run validate -- --update-frozen` ile bilerek dondurulana kadar.
+  Slug'ın donma anı böylece açık bir adım olur.
+- Aynı turda eklenen iki sessiz hata kapısı: rezerve URL kökleri (`RESERVED_ROOTS`,
+  `src/data/categories.ts`; hem kategori slug'ı hem `src/pages` kökleri denetlenir) ve harita
+  görselleri (her kategorinin gezegeni, her gezegenin paleti ve deseni, her alanın `--hue-*` /
+  `--c-area-*` token'ı ve alan tonları arasında en az 25°). İkisi de çalışma anında hata vermeden
+  bozulurdu: bilinmeyen slug Ay'a, bilinmeyen alan boş bir `var()`'a düşüyordu.
+
+**Taşımanın kanıtı.** `git mv` yalnız yeniden adlandırma gösterdi; 283 HTML dosyasının sha256 özeti
+taşımadan önce ve sonra birebir aynı.
+
+**Ödünleşim.** Collection kimlikleri artık `content/topics/…` ve `authored/topics/…` önekli; kimliği
+doğrudan URL gibi kullanan bir kod yazılırsa yanlış olur — her zaman `topicId()` kullanılır.
+
+---
+
 ```
 ProductDesignerRoadmap/
 ├─ ProductDesignerMaterials/     kaynak — SALT OKUNUR, dokunulmaz
 ├─ SPEC.md  ARCHITECTURE.md  CLAUDE.md
 ├─ scripts/
 │  ├─ import-materials.ts        içe aktarıcı (+ --check, --only=NN)
+│  ├─ validate-content.ts        içerik kapısı (+ --update-frozen)
 │  └─ clean.ts                   iki önbellek konumunu da siler (ADR-011)
+├─ tests/                        saklama sözleşmesi olan kurallar (slug, kimlik, referans)
 ├─ src/
 │  ├─ content/                   topics | categories | quizzes — ÜRETİLMİŞ, elle düzenlenmez
+│  ├─ authored/topics/           site için yazılan adımlar (ADR-019)
+│  ├─ lessons/                   elle yazılmış dersler, MDX (ADR-015)
 │  ├─ content.config.ts          Zod şemaları
 │  ├─ data/
-│  │  ├─ categories.ts           sıra, slug, alan — tek doğru kaynak
+│  │  ├─ categories.ts           sıra, slug, alan, rezerve kökler — tek doğru kaynak
+│  │  ├─ topic-roots.ts          adım klasörleri ve izin verilen origin
+│  │  ├─ frozen-topic-ids.json   yayındaki adım kimlikleri, yalnız büyür
 │  │  └─ generated/              section-map.json, stats.json
 │  ├─ plugins/                   rehype-term-cards, rehype-cross-refs
 │  ├─ lib/                       progress, theme, content, inline-markdown
@@ -377,7 +420,10 @@ ProductDesignerRoadmap/
 | `npm run build` | Statik derleme |
 | `npm run build:fresh` | Önbellekleri temizle + derle — **eklenti değişikliklerinde zorunlu** |
 | `npm run check` | `astro check` (tip kontrolü) |
+| `npm test` | Birim testleri (`tsx --test`, `tests/`) |
 | `npm run clean` | Önbellekleri temizle |
 | `npm run import` | Materyali içeri aktar |
-| `npm run import:check` | Kaynak ile üretilmiş içerik ayrışmış mı |
-| `npm run validate` | İçerik kapısı: sayımlar, kart alanları, çapraz referanslar (Faz 1) |
+| `npm run import:check` | Kaynak ile üretilmiş içerik ayrışmış mı, fazla dosya var mı |
+| `npm run validate` | İçerik kapısı: sayımlar, kart alanları, çapraz referanslar, donmuş kimlikler, rezerve kökler, gezegen ve alan token'ları |
+| `npm run validate -- --update-frozen` | Yeni yayınlanan adımların kimliklerini dondurur |
+| `npm run budget` | Sayfa başına JS / CSS / HTML / veri bütçesi (derlemeden sonra) |
