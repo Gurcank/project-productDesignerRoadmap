@@ -20,8 +20,11 @@ import sectionMap from "../src/data/generated/section-map.json";
 import { DIAGRAM_SECTIONS } from "../src/components/diagrams/sections";
 import { TOPIC_ROOTS } from "../src/data/topic-roots";
 import { makeTopicId, slugFromTopicName } from "../src/lib/topic-id";
-import { AREAS, CATEGORIES, RESERVED_ROOTS } from "../src/data/categories";
+import { AREAS, CATEGORIES, RESERVED_ROOTS, ROUTE_ORDER } from "../src/data/categories";
 import { PLANET_BY_SLUG } from "../src/data/planets";
+import { ROLE_IDS, ROLE_LABEL } from "../src/data/role-ids";
+import { ROLES } from "../src/data/roles";
+import { compileRolePath, type RolePath } from "../src/lib/role-path";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const FROZEN_FILE = path.join(ROOT, "src/data/frozen-topic-ids.json");
@@ -50,6 +53,8 @@ let referenceCount = 0;
 
 /** Every step id, with the files that claim it — two files, one URL, is a bug. */
 const topicFiles = new Map<string, string[]>();
+/** Category → its step file names, for compiling the role paths. */
+const stepFiles = new Map<string, string[]>();
 
 for (const topicRoot of TOPIC_ROOTS) {
   const rootDir = path.join(ROOT, "src", topicRoot.dir);
@@ -62,6 +67,7 @@ for (const topicRoot of TOPIC_ROOTS) {
 
       const id = makeTopicId(category, slugFromTopicName(fileName));
       topicFiles.set(id, [...(topicFiles.get(id) ?? []), relative]);
+      stepFiles.set(category, [...(stepFiles.get(category) ?? []), fileName]);
 
       // Each folder holds exactly one kind of step (ADR-019): the "Materyal dışı"
       // badge reads `origin`, so a written page left in the generated folder would
@@ -225,6 +231,55 @@ for (const section of DIAGRAM_SECTIONS) {
 }
 
 /*
+ * Role paths (src/data/roles.ts). The compiler throws on an unknown category or
+ * step; here every role is compiled so the gate names the role and the slug
+ * instead of a page failing to build.
+ */
+const topicsByCategory = new Map(
+  [...stepFiles].map(([category, files]) => [category, [...files].sort().map(slugFromTopicName)]),
+);
+const routeOrder = ROUTE_ORDER.map((category) => category.slug);
+const compiled: RolePath[] = [];
+for (const role of ROLES) {
+  try {
+    compiled.push(compileRolePath(role, topicsByCategory, routeOrder));
+  } catch (error) {
+    problems.push({ file: "src/data/roles.ts", message: (error as Error).message });
+  }
+}
+for (const id of ROLE_IDS) {
+  if (!ROLES.some((role) => role.id === id)) problems.push({ file: "src/data/roles.ts", message: `"${id}" rolünün yolu yok` });
+}
+for (const route of compiled) {
+  if (!route.stops.some((stop) => stop.tier === "temel")) {
+    problems.push({ file: "src/data/roles.ts", message: `${route.state}: yolda hiç temel durak yok` });
+  }
+}
+
+// The designer route is what every existing reader was walking; a role switch
+// must not quietly reorder it. New categories may slot in anywhere.
+const LEGACY_DESIGNER_ROUTE = [
+  "web-temelleri", "urun-gelistirme", "calisma-bicimi", "sirket-sozlugu", "ux-ui-ilkeleri", "tasarim-sistemi",
+  "erisilebilirlik", "arayuz-anatomisi", "front-end", "programlama-dilleri", "frameworkler", "kutuphaneler",
+  "back-end-api", "veritabani", "veri-yapilari", "algoritmalar", "auth", "guvenlik-ve-hukuk", "sistem-mimarisi",
+  "git-ve-github", "devops-ve-yayin", "test-ve-kalite", "yapay-zeka-ile-calisma",
+];
+const designer = compiled.find((route) => route.state === "product-designer");
+if (designer) {
+  const legacy = new Set(LEGACY_DESIGNER_ROUTE);
+  const kept = designer.stops.map((stop) => stop.category).filter((slug) => legacy.has(slug));
+  if (kept.join() !== LEGACY_DESIGNER_ROUTE.join()) {
+    problems.push({ file: "src/data/roles.ts", message: "product-designer yolu eski 23 kategorinin sırasını bozuyor" });
+  }
+}
+
+// Not an error: a category no route takes seriously is still reachable, but it
+// is worth a second look.
+const orphaned = routeOrder.filter(
+  (slug) => !compiled.some((route) => route.stops.some((stop) => stop.category === slug && stop.tier !== "istege-bagli")),
+);
+
+/*
  * Lessons (ADR-015): each must replace a step that exists — a typo in the file
  * name would silently leave the term-card view in place — and must name a
  * primary source. The schema already demands one; this reports the file.
@@ -260,6 +315,17 @@ console.log(
   `${topicCount} konu · ${headingCount} başlık · ${termCardCount} terim kartı · ` +
     `${referenceCount} çapraz referans · ${DIAGRAM_SECTIONS.length} diyagram · ${lessonCount} ders`,
 );
+
+console.log("\nRol yolları (temel / önerilen / isteğe bağlı ders · durak, hazırlanan):");
+for (const route of compiled) {
+  const count = (tier: string) => route.steps.filter((step) => step.tier === tier).length;
+  const pending = route.stops.filter((stop) => !stop.published).length;
+  console.log(
+    `  ${ROLE_LABEL[route.state].name.padEnd(17)} ${String(count("temel")).padStart(3)} / ${String(count("onerilen")).padStart(3)} / ` +
+      `${String(count("istege-bagli")).padStart(3)} · ${route.stops.length} durak, ${pending} hazırlanıyor`,
+  );
+}
+if (orphaned.length > 0) console.log(`  Hiçbir yolda en az önerilen olmayan kategori: ${orphaned.join(", ")}`);
 
 if (deferred.length > 0) {
   const byRef = new Map<string, number>();

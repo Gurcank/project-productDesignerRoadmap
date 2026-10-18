@@ -19,7 +19,9 @@ yazılan adımlar `src/authored/topics/` altında durur (`origin: "new"`); içe 
 **3. Slug'lar donmuştur.** İlerleme kayıtları `kategori/adim-slug` anahtarına bağlı. Slug değişirse
 kullanıcının o adımdaki ilerlemesi kaybolur. Slug değiştirmen gerekiyorsa **önce sor**. Yayındaki her
 kimlik `src/data/frozen-topic-ids.json` içinde; biri kaybolursa `npm run validate` kırılır. Yeni adım
-yayına girerken `npm run validate -- --update-frozen` ile dondurulur — liste yalnız büyür.
+yayına girerken `npm run validate -- --update-frozen` ile dondurulur — liste yalnız büyür. **Rol
+kimlikleri de donmuştur** (`src/data/role-ids.ts`): `pdr.role.v1` ve paylaşılan `?rol=` linkleri
+onlara bağlı. `pdr.*` saklama anahtarları yeni adla bile değişmez — tarihsel ad alanıdır.
 
 **4. Materyalde olmayan hiçbir bilgi kaynaksız yayınlanmaz.** Yeni içerik "materyal dışı" rozeti ve
 en az bir birincil kaynak linki taşır. Şablon SPEC §7'de.

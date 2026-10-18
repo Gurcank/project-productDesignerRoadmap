@@ -50,6 +50,12 @@ devam · tam metin arama (Pagefind) · terim sözlüğü · kart içi terim tan�
 (koyu / açık / sistem, varsayılan koyu) · ilerleme yedekleme (JSON dışa/içe aktarma) · satır içi
 diyagramlar.
 
+**Var — roller (Faz 1).** Yedi rol yolu (Product Designer, Product Manager, Product Owner, Project
+Manager, Scrum Master, Business Analyst, UX Researcher) ve rolsüz **Keşif modu**. Ana sayfada rol
+seçici, role göre çizilen harita (durak numarası + temel / önerilen / isteğe bağlı rozeti, yol dışı
+gezegen küçük ve soluk), rolün yüzdesi ve **Sıradaki adımın** kartı; Ayarlar'da rol seçimi; yedekte
+rol. Paylaşılabilir `/?rol=<id>`. Henüz yazılmamış sekiz kategori haritada "hazırlanıyor" olarak durur.
+
 **Var — mobil.** Alt gezinme çubuğu · okuma ilerleme çubuğu · adımlar arası kaydırma · ana ekrana
 eklenebilir manifest · **çevrimdışı okuma** (ADR-012). Çevrimdışı katmanı yalnız üretim
 derlemesinde etkindir; `astro dev` altında service worker kaydedilmez, kalmış olan sökülür —
@@ -74,8 +80,10 @@ eşlemesi orada; başka hiçbir yerde tekrarlanmaz.
 | Alan | Kategoriler (sıra = materyal bölüm sırası) |
 |---|---|
 | Temel | 1 Web Temelleri |
-| Ürün ve Ekip | 2 Ürün Geliştirme · 3 Çalışma Biçimi · 18 Şirket Ortamı Sözlüğü |
-| Tasarım | 4 UX/UI Süreç ve İlkeler · 5 Tasarım Sistemi · 6 Erişilebilirlik · 7 Arayüz Anatomisi |
+| Ürün ve Ekip | 2 Ürün Geliştirme · 3 Çalışma Biçimi · 18 Şirket Ortamı Sözlüğü · *[hazırlanıyor]* İletişim ve Paydaş Yönetimi |
+| Strateji ve Ürün | *[hazırlanıyor]* Ürün Yönetimi · Ürün Analitiği ve Deney · İş Modeli ve Strateji |
+| Teslimat | *[hazırlanıyor]* Proje Yönetimi · Çevik Pratikler · İş Analizi |
+| Tasarım | 4 UX/UI Süreç ve İlkeler · *[hazırlanıyor]* Kullanıcı Araştırması · 5 Tasarım Sistemi · 6 Erişilebilirlik · 7 Arayüz Anatomisi |
 | Mühendislik | 8 Front-end · **Programlama Dilleri** · 9a Framework'ler · 9b Kütüphaneler · 10 Back-end ve API · 11 Veritabanı · **Veri Yapıları** · **Algoritmalar** |
 | Sistem ve Operasyon | 14 Sistem Mimarisi · 12 Auth · 13 Güvenlik ve Hukuk · 15 Git ve GitHub · 16 DevOps ve Yayın · 17 Test ve Kalite |
 | Yapay Zekâ | 19 AI ile Profesyonel Çalışma |
@@ -103,8 +111,9 @@ Veritabanı'ndan (11) sonra: N+1, index ve sorgu maliyeti orada anlatılıyor.
 /en/...                                    [henüz yok] aynı yapı, arayüz İngilizce
 ```
 
-Rezerve kökler: `ara`, `sozluk`, `araclar`, `ayarlar`, `en`. Son ikisi — `araclar` ve `en` — yalnız
-rezerve; rota üretilmiyor. Üst menüdeki Araçlar bağlantısı bu yüzden `ready: false` ile gizli.
+Rezerve kökler (`RESERVED_ROOTS`, `src/data/categories.ts`; `validate` denetler): `ara`, `sozluk`,
+`araclar`, `ayarlar`, `roller`, `en`, `offline`, `404`, `pagefind`, `_astro`. `araclar`, `roller` ve
+`en` yalnız rezerve; rota üretilmiyor. Üst menüdeki Araçlar bağlantısı bu yüzden `ready: false` ile gizli.
 Slug'lar Türkçe ve **sabittir** — materyal güncellense bile değişmez, çünkü ilerleme kayıtları
 onlara bağlı. Slug değişirse o adımın ilerlemesi kaybolur.
 
@@ -152,7 +161,8 @@ alanı (§4) bu sayfalar için ayrılmış, henüz hiçbir şey yazmıyor.
 }
 ```
 
-- Tek anahtar: `pdr.progress.v1`.
+- Tek anahtar: `pdr.progress.v1`. Seçili rol ayrı bir tercih anahtarında (`pdr.role.v1`, ADR-018);
+  rol değişince ilerleme kaydı değişmez. Yedek dosyası rolü `prefs.role` olarak taşır.
 - **Okurken Zod ile doğrulanır.** Bozuksa sıfırlanır ve kullanıcıya bildirilir — dışarıdan gelen
   her girdi çalışma zamanında doğrulanır, `localStorage` dışarıdır.
 - Tik → anında yerel kayıt → ilgili tüm görünümler (yan menü, kategori yüzdesi, ana sayfa halkası)

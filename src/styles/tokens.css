@@ -52,6 +52,8 @@
      shouts. They orient (where am I on the map); they never carry state. */
   --hue-temel: 195;
   --hue-urun-ekip: 290;
+  --hue-strateji-urun: 320;
+  --hue-teslimat: 100;
   --hue-tasarim: 350;
   --hue-muhendislik: 250;
   --hue-sistem-operasyon: 150;
@@ -122,6 +124,8 @@
 
   --c-area-temel: oklch(0.8 0.12 var(--hue-temel));
   --c-area-urun-ekip: oklch(0.8 0.12 var(--hue-urun-ekip));
+  --c-area-strateji-urun: oklch(0.8 0.12 var(--hue-strateji-urun));
+  --c-area-teslimat: oklch(0.8 0.12 var(--hue-teslimat));
   --c-area-tasarim: oklch(0.8 0.12 var(--hue-tasarim));
   --c-area-muhendislik: oklch(0.8 0.12 var(--hue-muhendislik));
   --c-area-sistem-operasyon: oklch(0.8 0.12 var(--hue-sistem-operasyon));
@@ -167,3 +171,11 @@
 [data-body="phobos"] { --pa: #7d6c5c; --pb: #9e8b77; --pc: #4d4136; }
 [data-body="eris"] { --pa: #dcd8e6; --pb: #f6f4fb; --pc: #a9a2bd; }
 [data-body="sun"] { --pa: #ffb547; --pb: #fff3c4; --pc: #ff7a2f; }
+[data-body="deimos"] { --pa: #b29a86; --pb: #d6c2b0; --pc: #6f5d50; }
+[data-body="titania"] { --pa: #a9a4ab; --pb: #d3cfd6; --pc: #6d6874; }
+[data-body="oberon"] { --pa: #94796e; --pb: #bea596; --pc: #5c4741; }
+[data-body="miranda"] { --pa: #b9c1c8; --pb: #e2e7eb; --pc: #7a858f; }
+[data-body="haumea"] { --pa: #e6e1de; --pb: #ffffff; --pc: #b5524a; }
+[data-body="makemake"] { --pa: #c98d6b; --pb: #e6bc98; --pc: #8a4f35; }
+[data-body="sedna"] { --pa: #b24c3d; --pb: #d6775f; --pc: #6e2a20; }
+[data-body="iapetus"] { --pa: #e6dcc6; --pb: #fffaf0; --pc: #3d3029; }

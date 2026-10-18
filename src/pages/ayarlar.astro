@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import OfflineDownload from "~/components/OfflineDownload.astro";
+import RolePicker from "~/components/RolePicker.astro";
 import { getPublishedCategories } from "~/lib/content";
 
 const published = await getPublishedCategories();
@@ -91,6 +92,12 @@ const SIZES = [
         </details>
       </section>
 
+      {/* ----------------------------------------------------------- role */}
+      <section class="card card--wide glass" aria-labelledby="rol">
+        <h2 id="rol" class="card__title">Rolün</h2>
+        <RolePicker variant="settings" />
+      </section>
+
       {/* ----------------------------------------------------- appearance */}
       <section class="card glass" aria-labelledby="gorunum">
         <h2 id="gorunum" class="card__title">Görünüm</h2>
@@ -140,7 +147,9 @@ const SIZES = [
 </BaseLayout>
 
 <script>
-  import { initProgress, $progress, $storageError, exportJson, importJson, reset } from "~/lib/progress";
+  import { initProgress, $progress, $storageError, reset } from "~/lib/progress";
+  import { exportBackup, importBackup } from "~/lib/backup";
+  import { $role } from "~/lib/role";
 
   initProgress();
 
@@ -160,8 +169,9 @@ const SIZES = [
 
   let objectUrl: string | null = null;
 
-  $progress.subscribe((progress) => {
-    const json = exportJson();
+  // The backup carries the role too, so it is rebuilt when either changes.
+  const refreshBackup = () => {
+    const json = exportBackup();
     if (exportArea) exportArea.value = json;
 
     if (download) {
@@ -170,6 +180,11 @@ const SIZES = [
       objectUrl = URL.createObjectURL(new Blob([json], { type: "application/json" }));
       download.href = objectUrl;
     }
+  };
+  $role.subscribe(refreshBackup);
+
+  $progress.subscribe((progress) => {
+    refreshBackup();
 
     const done = Object.values(progress.topics).filter((topic) => topic.done).length;
     const checked = Object.values(progress.checklists).filter(Boolean).length;
@@ -205,7 +220,7 @@ const SIZES = [
       if (status) status.textContent = "İptal edildi.";
       return;
     }
-    const error = importJson(text);
+    const error = importBackup(text);
     if (status) status.textContent = error ?? `${source} geri yüklendi.`;
   };
 

@@ -384,6 +384,55 @@ doğrudan URL gibi kullanan bir kod yazılırsa yanlış olur — her zaman `top
 
 ---
 
+## ADR-017 — Roller: tek bilgi tabanı üzerinde yollar
+
+**Bağlam.** Site Product Designer için kurulmuştu. Kullanıcı Product Manager, Project Manager, Product
+Owner, Scrum Master, Business Analyst ve UX Researcher için de yol istedi; konular ortak, öncelikler
+farklı.
+
+**Alternatifler.** Rol başına ayrı bölüm (`/urun-yoneticisi/...`): ortak konular kopyalanır, ilerleme
+bölünür. Tek harita + yalnız etiket: rol kendi sırasını göremez.
+
+**Karar.**
+- Ders bir kez yazılır. Rol bir **yoldur**: [`src/data/roles.ts`](src/data/roles.ts) içinde sıralı
+  kategori listesi, her durak için bir öncelik (temel / önerilen / isteğe bağlı) ve gerekirse konu
+  bazlı istisna (`topics`, `"atla"` dahil). Yolda olmayan kategori "yol dışı"dır ama açıktır.
+- Yollar build'de [`src/lib/role-path.ts`](src/lib/role-path.ts) ile gerçek adımlara karşı derlenir;
+  aynı derleyici `validate` ve testlerde çalışır. Henüz adımı olmayan kategori durak olarak kalır
+  ("hazırlanıyor" gezegeni) ama adım vermez.
+- Tarayıcıya yalnız sıkıştırılmış biçim gider ([`role-payload.ts`](src/lib/role-payload.ts): id'ler
+  bir kez, her yol indeks listesi + harf başına öncelik). Sekiz yolun tamamı ana sayfada ~16 KB ham, 3,8 KB gzip; bütçede "veri" sayılır.
+- **Sıradaki adımın** ([`next-step.ts`](src/lib/next-step.ts)): son açılan ders bitmemişse o; değilse
+  oradan ileri, sonra başa dönerek ilk bitmemiş temel/önerilen adım; onlar bitince isteğe bağlı. Rol
+  yüzdesi temel + önerilen üzerinden; isteğe bağlı ayrı sayılır.
+- İlerleme ortak ve **değişmedi**: kimlik `kategori/slug`, rol değişince `pdr.progress.v1` bayt bayt
+  aynı kalır (tarayıcıda sınandı). Product Designer yolu eski 23 kategorinin sırasını korur; `validate`
+  bunu denetler.
+- Harita: gezegenler yerinden oynamaz. Rol yalnız çizginin sırasını, durak rozetini ("3 · Temel") ve
+  yol dışı gezegenin görünüşünü (küçük, soluk disk, kesikli yörünge; ad kontrastı korunur) değiştirir.
+  DOM'u yeniden sıralamak ya da CSS `order` odak sırasını görselden ayırırdı.
+
+**Ödünleşim.** Rozetler her rol için statik render edilir (31 gezegende ~150 küçük span). Yol verisi
+elle yazılmış bir öncelik yargısıdır; derslerin v2 yazımında konu bazlı istisnalar gözden geçirilir.
+
+## ADR-018 — Rol ilk boyamadan önce: `html[data-role]` + üretilmiş CSS
+
+**Karar.** Rol ayrı bir tercih anahtarında (`pdr.role.v1`), ilerleme şemasında değil: şema v1 kalır,
+`updatedAt` yalnız ilerleme değişince oynar, head betiği JSON ayrıştırmadan okur. BaseLayout'taki
+satır içi betik `?rol=` → `localStorage` sırasıyla rolü bulur ve `html[data-role]` yazar; ilerlemesi
+olup rolü olmayan okur Product Designer'a geçirilir ve ana sayfada bir kez not görür
+(`pdr.role.auto`). Role bağlı her parça statik render edilir ve `data-for-role="…"` taşır;
+[`role-css.ts`](src/lib/role-css.ts) üretilen kısa bir `<style>` ile diğerlerini gizler. Rol yoksa —
+JS kapalıyken de — durum `none`'dır: harita Keşif modunda tam listedir, seçici gizlenir.
+
+Yedek dosyası rolü `prefs.role` olarak taşır ([`backup.ts`](src/lib/backup.ts)). Zod bilinmeyen
+anahtarı attığı için eski build yeni yedeği, yeni build eski yedeği okur (test edildi).
+
+**Ödünleşim.** Betik satır içi ve senkron kalmak zorunda (ADR-007 ile aynı neden). Her rol durumu
+HTML'de durduğu için sayfa biraz büyür; bütçe ve DOM boyutu izlenir.
+
+---
+
 ```
 ProductDesignerRoadmap/
 ├─ ProductDesignerMaterials/     kaynak — SALT OKUNUR, dokunulmaz
