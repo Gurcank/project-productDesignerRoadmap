@@ -1,4 +1,4 @@
-# Proje kuralları — Product Designer Yol Haritası
+# Proje kuralları — SeeYourNextStep
 
 > Global `~/.claude/CLAUDE.md` geçerli. Bu dosya onu **ezmez, üzerine ekler**; çelişki varsa bu
 > dosya kazanır. Burada yalnız bu projeye özgü, koddan veya git geçmişinden okunamayan kurallar var.

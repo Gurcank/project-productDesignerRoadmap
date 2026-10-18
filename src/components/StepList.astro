@@ -1,5 +1,8 @@
 ---
+import { getCollection } from "astro:content";
 import { topicMinutes, topicHref, topicId, type TopicEntry } from "~/lib/content";
+import { TIER_LABEL } from "~/data/roles";
+import { getStepTiers, groupStates } from "~/lib/routes";
 import Checkbox from "~/components/ui/Checkbox.astro";
 
 interface Props {
@@ -18,6 +21,21 @@ interface Props {
 }
 
 const { topics, activeId, categorySlug, categoryTitle, quizHref, titleHref, titleLabel, meter = true } = Astro.props;
+
+// A lesson states its own reading time; the step file can only estimate one.
+const lessonMinutes = new Map((await getCollection("lessons")).map((entry) => [entry.id, entry.data.minutes]));
+const minutesOf = (topic: TopicEntry) => lessonMinutes.get(topicId(topic)) ?? topicMinutes(topic);
+
+const stepTiers = await getStepTiers();
+/** One label per tier, shared by every role that gives the step that tier. */
+const tiersOf = (id: string) =>
+  groupStates(
+    (stepTiers.get(id) ?? []).map(({ state, tier }) => ({ state, value: tier })),
+    (tier) => tier,
+  );
+/** "product-manager:t scrum-master:i", read by the category page's start button. */
+const tierAttr = (id: string) =>
+  (stepTiers.get(id) ?? []).map(({ state, tier }) => `${state}:${TIER_LABEL[tier].code}`).join(" ");
 ---
 
 <nav class="steps" aria-labelledby={`steps-${categorySlug}`} data-steps={categorySlug}>
@@ -36,7 +54,7 @@ const { topics, activeId, categorySlug, categoryTitle, quizHref, titleHref, titl
       topics.map((topic, index) => {
         const id = topicId(topic);
         return (
-          <li class="step" data-step={id}>
+          <li class="step" data-step={id} data-tiers={tierAttr(id)}>
             <Checkbox
               class="step__check"
               id={`check-${id}`}
@@ -48,8 +66,16 @@ const { topics, activeId, categorySlug, categoryTitle, quizHref, titleHref, titl
               <span class="step__index" aria-hidden="true">
                 {index + 1}
               </span>
-              <span class="step__text">{topic.data.title}</span>
-              <span class="step__time">{topicMinutes(topic)} dk</span>
+              <span class="step__text">
+                <span class="step__title">{topic.data.title}</span>
+                {tiersOf(id).map((group) => (
+                  <span class="step__tier" data-tier={TIER_LABEL[group.value].code} data-for-role={group.states.join(" ")}>
+                    <span class="sr-only">Rolün için: </span>
+                    {TIER_LABEL[group.value].label}
+                  </span>
+                ))}
+              </span>
+              <span class="step__time">{minutesOf(topic)} dk</span>
             </a>
           </li>
         );
@@ -234,6 +260,31 @@ const { topics, activeId, categorySlug, categoryTitle, quizHref, titleHref, titl
     font-size: var(--text-xs);
     font-variant-numeric: tabular-nums;
     color: var(--c-text-muted);
+  }
+
+  /* The step's tier on the chosen route, in words. Fill style is the second
+     cue: solid for temel, outline for önerilen, dashed for isteğe bağlı. */
+  .step__tier {
+    display: table;
+    margin-block-start: var(--spacing-1);
+    padding: 0 var(--spacing-2);
+    border: 1px solid var(--c-text-secondary);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--c-text);
+  }
+
+  .step__tier[data-tier="t"] {
+    border-color: var(--c-text);
+    background-color: var(--c-text);
+    color: var(--c-surface);
+  }
+
+  .step__tier[data-tier="i"] {
+    border-style: dashed;
+    color: var(--c-text-secondary);
   }
 
   /* Completion is never colour-only: the tick plus a muted label carries it. */

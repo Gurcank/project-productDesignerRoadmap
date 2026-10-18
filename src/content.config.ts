@@ -73,4 +73,29 @@ const lessons = defineCollection({
   }),
 });
 
-export const collections = { topics, categories, quizzes, lessons };
+/**
+ * The Roller pages (ADR-017): one file per role id in src/data/role-ids.ts. The
+ * route itself lives in src/data/roles.ts; this is the description of the job.
+ * Everything here is outside the material, so sources are mandatory.
+ */
+const roles = defineCollection({
+  loader: glob({ pattern: "*.mdx", base: "./src/roles" }),
+  schema: z.object({
+    /** Over what time span the role's decisions mostly play out. */
+    horizon: z.string(),
+    /** What the role is answerable for. */
+    accountable: z.array(z.string()).min(1),
+    /** Decisions the role shapes but does not own. */
+    contributes: z.array(z.string()).default([]),
+    /** Decisions that belong to someone else, said plainly. */
+    notOwner: z.array(z.string()).default([]),
+    /** What the role typically produces. */
+    artifacts: z.array(z.string()).min(1),
+    neighbours: z.array(z.object({ role: z.string(), difference: z.string() })).default([]),
+    sources: z.array(z.object({ label: z.string(), url: z.string().url() })).min(1),
+    /** When the facts on the page were last checked (certifications drift). */
+    checked: z.string(),
+  }),
+});
+
+export const collections = { topics, categories, quizzes, lessons, roles };

@@ -1,4 +1,4 @@
-# ARCHITECTURE — Product Designer Yol Haritası
+# ARCHITECTURE — SeeYourNextStep
 
 > **Ne** yapıldığı [SPEC.md](SPEC.md)'de. Bu belge **nasıl** yapıldığını ve **neden öyle** yapıldığını
 > tutar. Her karar ADR biçiminde: bağlam → alternatifler → karar → ödünleşim.
@@ -424,6 +424,14 @@ olup rolü olmayan okur Product Designer'a geçirilir ve ana sayfada bir kez not
 (`pdr.role.auto`). Role bağlı her parça statik render edilir ve `data-for-role="…"` taşır;
 [`role-css.ts`](src/lib/role-css.ts) üretilen kısa bir `<style>` ile diğerlerini gizler. Rol yoksa —
 JS kapalıyken de — durum `none`'dır: harita Keşif modunda tam listedir, seçici gizlenir.
+
+**Mercekler** aynı mekanizmayı kullanır. `<Lenses>` slotunu iki kez basar: açıkta yalnız seçili rolün
+`<Lens>`'i, "Diğer roller" `<details>`'ı içinde öbürleri görünür; hangisinin nerede görüneceğini yine
+üretilmiş CSS söyler, HTML dizgisi işlenmez. İkinci kopya Pagefind'den hariçtir. Terim eklentisi
+(`rehype-term-refs`) önce düzyazıyı işaretler, mercekler kalanı alır; yoksa bir terimin tek ipucu
+katlanmış bir merceğe düşebilirdi. 232 "Tasarımcı olarak sen" kutusu
+[`scripts/codemods/callout-to-lens.ts`](scripts/codemods/callout-to-lens.ts) ile mekanik olarak
+Product Designer merceğine çevrildi; derlenmiş metin öncesiyle birebir aynı (span boşlukları hariç).
 
 Yedek dosyası rolü `prefs.role` olarak taşır ([`backup.ts`](src/lib/backup.ts)). Zod bilinmeyen
 anahtarı attığı için eski build yeni yedeği, yeni build eski yedeği okur (test edildi).

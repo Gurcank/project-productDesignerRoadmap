@@ -380,6 +380,7 @@ export const RESERVED_ROOTS: readonly string[] = [
   "404",
   "pagefind",
   "_astro",
+  "manifest.webmanifest",
 ];
 
 export function categoriesOfArea(area: AreaId): Category[] {

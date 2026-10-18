@@ -1,11 +1,13 @@
-# Product Designer Yol Haritası
+# SeeYourNextStep
 
-Bir product designer'ın yazılım ekibiyle aynı dili konuşabilmesi için hazırlanmış, Türkçe, kişisel bir öğrenme sitesi. Web'in nasıl çalıştığından yapay zekâ ile çalışmaya kadar **23 kategori, 234 ders ve 803 terim** var. Ana sayfa bir gezegen haritası: her kategori bir gök cismi, ilerlemen halkalarla görünür.
+Ürün ekibindeki roller için Türkçe bir öğrenme haritası: **sıradaki adımını gör.** Product Designer, Product Manager, Product Owner, Project Manager, Scrum Master, Business Analyst ve UX Researcher için ayrı yollar, tek bir ortak bilgi tabanı üzerinde. Şu an **23 kategori, 234 ders ve 803 terim** yayında; sekiz yeni kategori hazırlanıyor. Ana sayfa bir gezegen haritası: her kategori bir gök cismi, rolünün yolu bir takımyıldızı.
 
 ## Özellikler
 
+- **Rol yolları:** rolünü seç; harita kendi yolunu çizer, her durakta önceliği (temel / önerilen / isteğe bağlı) gösterir ve "Sıradaki adımın" kartı seni bir sonraki derse götürür. İlerleme bütün rollerde ortaktır.
+- **Roller bölümü:** yedi rolün tanımı, neyden hesap verdiği, neye karar vermediği ve komşu rollerden farkı; yanlarında çalışan diğer roller.
 - **Gezegen haritası:** gezegenleri basılı tutup kendi alanında sürükleyebilirsin; üzerine gelince tamamlanma halkası çıkar.
-- **Dersler:** her adım bir ders anlatımı. "Tasarımcı olarak sen" kutuları, özet, kendini yoklama soruları ve kaynaklar içerir. Metindeki terimlerin üzerine gelince tanımı açılır.
+- **Dersler:** her adım bir ders anlatımı. Rolüne göre mercek kutuları ("Tasarımcı olarak sen", "Product Manager olarak sen" …), özet, kendini yoklama soruları ve kaynaklar içerir. Metindeki terimlerin üzerine gelince tanımı açılır.
 - **Sözlük ve arama:** 803 terimlik sözlük, tüm derslerde tam metin arama (Pagefind).
 - **Çevrimdışı:** siteyi cihazına indirip internetsiz okuyabilirsin (service worker).
 - **İlerleme:** yalnızca tarayıcında saklanır (`localStorage`); Ayarlar'dan yedeklenir ve geri yüklenir.

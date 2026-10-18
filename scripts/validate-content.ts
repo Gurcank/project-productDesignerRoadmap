@@ -273,6 +273,21 @@ if (designer) {
   }
 }
 
+// Every role has its page, and a page only points at roles that exist.
+for (const id of ROLE_IDS) {
+  const file = path.join(ROOT, "src/roles", `${id}.mdx`);
+  if (!existsSync(file)) {
+    problems.push({ file: `src/roles/${id}.mdx`, message: "rol sayfası yok" });
+    continue;
+  }
+  const raw = readFileSync(file, "utf8");
+  for (const match of raw.matchAll(/^\s+- role: "([^"]+)"/gm)) {
+    if (!(ROLE_IDS as readonly string[]).includes(match[1]!)) {
+      problems.push({ file: `src/roles/${id}.mdx`, message: `bilinmeyen komşu rol "${match[1]}"` });
+    }
+  }
+}
+
 // Not an error: a category no route takes seriously is still reachable, but it
 // is worth a second look.
 const orphaned = routeOrder.filter(

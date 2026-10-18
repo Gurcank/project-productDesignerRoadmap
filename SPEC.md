@@ -1,4 +1,4 @@
-# SPEC — Product Designer Yol Haritası
+# SPEC — SeeYourNextStep
 
 > Bu belge **ne** yapıldığını tanımlar. **Nasıl** yapıldığı [ARCHITECTURE.md](ARCHITECTURE.md)'de.
 > Kararlar değiştiğinde bu dosya güncellenir; kod ile belge çelişirse belge yanlıştır, düzeltilir.
@@ -253,10 +253,10 @@ kriteri olarak kullanılır. Site, anlattığı kuralları uygular.
 ## 7. Yazılacak yeni içerik
 
 Kural: her sayfa **"materyal dışı"** rozetiyle yayınlanır, en az bir birincil kaynak linki taşır,
-**kod öğretmez**, Product Designer kararlarına bağlanır.
+**kod öğretmez**, rol merceklerine bağlanır (her temel/önerilen rol için bir `<Lens>`).
 
 Şablon: *ne olduğu · nerede ve neden kullanılır · hangi problemi çözer · güçlü yanlar · zayıf
-yanlar · alternatifler · bir Product Designer'ın bilmesi gerekenler.*
+yanlar · alternatifler · rol mercekleri.*
 
 - **Programlama Dilleri (11 adım, yazıldı):** dil seçimi neden ürün kararıdır · JavaScript ·
   TypeScript · Python · Java · C# · Go · PHP · SQL · karşılaştırma tablosu, artı Ruby/Swift/Kotlin/

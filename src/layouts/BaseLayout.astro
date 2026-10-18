@@ -14,8 +14,13 @@ interface Props {
   section?: NavId;
 }
 
-const { title, description = "Product Designer yol haritası — kişisel öğrenme sitesi.", section } = Astro.props;
-const fullTitle = title === "Yol haritası" ? "Product Designer Yol Haritası" : `${title} · PD Yol Haritası`;
+const {
+  title,
+  description = "SeeYourNextStep — ürün ekibindeki roller için Türkçe öğrenme haritası: sıradaki adımını gör.",
+  section,
+} = Astro.props;
+const SITE_NAME = "SeeYourNextStep";
+const fullTitle = title === "Yol haritası" ? `${SITE_NAME} — sıradaki adımını gör` : `${title} · ${SITE_NAME}`;
 
 // Astro.site comes from astro.config; falls back so a preview build still works.
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href;
@@ -72,7 +77,7 @@ const SERVICE_WORKER_SCRIPT = import.meta.env.PROD
     {/* Launch checklist 21.9: the link preview is what people actually see when
         the URL is pasted into a chat, and it is invisible until it is wrong. */}
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Product Designer Yol Haritası" />
+    <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:locale" content="tr_TR" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />

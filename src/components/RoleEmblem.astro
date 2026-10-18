@@ -1,0 +1,94 @@
+---
+/**
+ * A role's constellation. Roles are told apart by shape, never by colour —
+ * colour belongs to the map's areas — so every emblem uses the same two tokens:
+ * starlight for the stars, the route-line tone for the lines between them.
+ *
+ * Each shape hints at the job: a pen nib, a compass, an ordered list, a plan
+ * with dependencies, a loop, a lens, an eye. Decorative: the role's name is
+ * always next to it in text.
+ */
+import type { RoleState } from "~/data/role-ids";
+
+interface Props {
+  role: RoleState;
+  size?: "sm" | "lg";
+}
+
+const { role, size = "sm" } = Astro.props;
+
+type Shape = { stars: [number, number][]; lines: [number, number][] };
+
+const ring = (count: number, r: number, offset = -90): [number, number][] =>
+  Array.from({ length: count }, (_, i) => {
+    const a = ((offset + (360 / count) * i) * Math.PI) / 180;
+    return [Math.round(32 + r * Math.cos(a)), Math.round(32 + r * Math.sin(a))];
+  });
+
+const SHAPES: Record<RoleState, Shape> = {
+  // Pen nib
+  "product-designer": { stars: [[32, 6], [48, 30], [32, 58], [16, 30], [32, 32]], lines: [[0, 1], [1, 2], [2, 3], [3, 0], [0, 4]] },
+  // Compass rose: one question, four directions
+  "product-manager": { stars: [[32, 6], [32, 58], [6, 32], [58, 32], [32, 32]], lines: [[4, 0], [4, 1], [4, 2], [4, 3]] },
+  // An ordered list
+  "product-owner": {
+    stars: [[12, 14], [52, 14], [12, 32], [42, 32], [12, 50], [30, 50]],
+    lines: [[0, 1], [2, 3], [4, 5], [0, 2], [2, 4]],
+  },
+  // A plan: three bars and the dependencies between them
+  "project-manager": {
+    stars: [[6, 16], [30, 16], [22, 32], [46, 32], [38, 48], [58, 48]],
+    lines: [[0, 1], [2, 3], [4, 5], [1, 2], [3, 4]],
+  },
+  // The sprint loop
+  "scrum-master": { stars: ring(5, 24), lines: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 0]] },
+  // A magnifying lens
+  "business-analyst": {
+    stars: [[26, 6], [44, 24], [26, 42], [8, 24], [38, 38], [58, 58]],
+    lines: [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5]],
+  },
+  // An eye: watching what people do
+  "ux-researcher": { stars: [[4, 32], [32, 14], [60, 32], [32, 50], [32, 32]], lines: [[0, 1], [1, 2], [2, 3], [3, 0]] },
+  // Keşif: open sky
+  all: { stars: [[10, 14], [30, 8], [52, 18], [44, 40], [20, 46], [36, 56]], lines: [[0, 1], [1, 2], [2, 3], [3, 5], [5, 4]] },
+};
+
+const shape = SHAPES[role];
+---
+
+<svg class:list={["emblem", `emblem--${size}`]} viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+  {
+    shape.lines.map(([a, b]) => (
+      <line x1={shape.stars[a]![0]} y1={shape.stars[a]![1]} x2={shape.stars[b]![0]} y2={shape.stars[b]![1]} />
+    ))
+  }
+  {shape.stars.map(([x, y]) => <circle cx={x} cy={y} r="2.6" />)}
+</svg>
+
+<style>
+  .emblem {
+    flex: none;
+    overflow: visible;
+  }
+
+  .emblem--sm {
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+  }
+
+  .emblem--lg {
+    inline-size: 5.5rem;
+    block-size: 5.5rem;
+  }
+
+  line {
+    stroke: var(--c-route-line);
+    stroke-width: 1.25;
+    stroke-linecap: round;
+  }
+
+  circle {
+    fill: var(--c-star);
+    filter: drop-shadow(0 0 3px var(--c-star-cool));
+  }
+</style>

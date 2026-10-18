@@ -5,4 +5,4 @@ Allow: /
 # Pagefind'in arama dizini içerik değil, parçalanmış veri.
 Disallow: /pagefind/
 
-Sitemap: https://product-designer-roadmap.pages.dev/sitemap-index.xml
+Sitemap: https://seeyournextstep.pages.dev/sitemap-index.xml

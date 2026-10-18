@@ -10,12 +10,12 @@
  * what is cached changes, not on every deploy: a new build produces new hashed
  * asset URLs anyway, and old ones are swept below.
  */
-const VERSION = "pdr-v5";
+const VERSION = "pdr-v6";
 const PAGES = `${VERSION}-pages`;
 const ASSETS = `${VERSION}-assets`;
 
 // Enough to render something useful the very first time the network is gone.
-const PRECACHE = ["/", "/offline/"];
+const PRECACHE = ["/", "/roller/", "/offline/"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -114,7 +114,11 @@ self.addEventListener("fetch", (event) => {
           .then((response) => {
             if (response.ok) {
               const copy = response.clone();
-              caches.open(PAGES).then((cache) => cache.put(request, copy));
+              // Stored without the query: "/?rol=scrum-master" is the same static
+              // page as "/", and one copy per shared link would only fill the cache.
+              const key = new URL(request.url);
+              key.search = "";
+              caches.open(PAGES).then((cache) => cache.put(key.href, copy));
             }
             return response;
           })
