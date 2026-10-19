@@ -161,6 +161,37 @@ bir yıl içinde kampüslerden günde 2.000 sipariş. Projeler: ikinci dalga (3 
 kampüsler, kampüs sadakat puanı. Program yöneticisi Leyla. Ödeme altyapısı yenileme projesi
 programın dışında, portföyde ondan önce sıralandı.
 
+## Takımların çalışma biçimi
+
+Çevik Pratikler dersleri bu rakamları kullanır.
+
+**Sipariş takımı Scrum çalışır.** İki haftalık sprint, pazartesi başlar. Planlama pazartesi 10.00–12.00,
+Daily Scrum her gün 09.45'te 15 dakika, review ve retro ikinci haftanın cuması (review 14.00–15.00,
+retro 15.30–16.30). Refinement her çarşamba 1 saat. Geliştiriciler: Ece, Burak, Can, Zeynep (QA) ve
+sprintte iş aldığında Selin.
+
+- Son altı sprintin tamamlanan story sayısı: 9, 7, 10, 8, 6, 9. Son üç sprintin velocity'si 24, 22,
+  26 puan (ortalama 24).
+- Son on haftanın haftalık throughput'u (biten öğe): 4, 6, 3, 5, 7, 4, 5, 6, 2, 5.
+- Ürün hedefi (çeyrek): "Tekrar eden siparişi kolaylaştır" (OKR ile aynı yön).
+- Sprint 14 hedefi: "Müşteri son siparişini tek dokunuşla tekrarlayabilsin."
+
+**Panel takımı Kanban çalışır.** Dükkânlardan gelen istekler ve hatalar sürekli akar. Pano:
+Gelen → Analiz (WIP 2) → Geliştirme (WIP 3) → Test (WIP 2) → Yayında. Hizmet seviyesi beklentisi
+(SLE): "İşlerin %85'i 8 gün ya da daha kısa sürede biter." Son dört haftada ortalama WIP 5, haftalık
+ortalama throughput 5 öğe (iş günü başına 1): Little Yasası'na göre ortalama cycle time 5 iş günü.
+
+**Favori sipariş için story map:** faaliyetler Uygulamayı aç → Siparişi seç → Öde → Teslim al.
+Yürüyen iskelet (ilk sürüm): ana ekranda "Son siparişini tekrarla" düğmesi, kayıtlı kartla ödeme,
+hazır bildirimi. Sonraki sürümler: favori listesi, tekrar etmeden önce düzenleme, zamanlanmış sipariş.
+
+**Çalışma sözleşmesinden:** ortak çalışma saatleri 10.00–16.00; toplantısız çarşamba öğleden sonra;
+bir PR en geç bir iş günü içinde incelenir; Daily Scrum'a gelemeyen, panoya yazılı not bırakır.
+
+**Bir retro (Sprint 13):** Sailboat formatı. Rüzgâr: Zeynep'in erken test senaryoları. Çapa: kasa
+tedarikçisinden geç gelen API değişiklikleri. Eylem: "Tedarikçinin API değişikliklerini Ayşe her salı
+panoya işler" (sahibi Ayşe, Sprint 14 sonunda kontrol).
+
 ## Paydaşlar
 
 | Paydaş | İlgi | Etki |

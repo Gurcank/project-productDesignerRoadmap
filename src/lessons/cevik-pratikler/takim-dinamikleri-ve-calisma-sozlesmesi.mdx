@@ -1,0 +1,167 @@
+---
+summary: "Google'ın Project Aristotle araştırmasına göre takımı etkili yapan, takımda kimin olduğundan çok nasıl birlikte çalıştığıdır; en önemlisi psikolojik güvenliktir. Çalışma sözleşmesi bunun yazılı kurallarıdır."
+outcomes:
+  - "Project Aristotle'ın bulduğu beş takım dinamiğini önem sırasıyla sayabilirsin."
+  - "Psikolojik güvenliğin ne olduğunu ve neden en önemli dinamik olduğunu açıklayabilirsin."
+  - "Takımınla birlikte uygulanabilir bir çalışma sözleşmesi yazabilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Google re:Work — Understand team effectiveness (Project Aristotle)"
+    url: "https://rework.withgoogle.com/intl/en/guides/understand-team-effectiveness"
+  - label: "Atlassian Team Playbook — Working Agreements"
+    url: "https://www.atlassian.com/team-playbook/plays/working-agreements"
+additions:
+  - "Takım etkililiğinin beş dinamiği ve etkisi bulunmayan değişkenler (Google, Project Aristotle)"
+  - "Çalışma sözleşmesinin tanımı, zamanı ve yararları (Atlassian)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Selin sipariş takımına katılalı üç hafta olmuştu. Bir şeyi fark etti: Daily'de takılan kimse "takıldım" demiyordu. Bir gün Can, iki gündür çözemediği bir hatayı ancak sprintin son günü söyledi. Kimse kızmadı, ama kimse de şaşırmadı.
+
+Takım yetenekliydi. Ama yetenekli kişilerin bir arada olması, iyi bir takım olmaya yetmiyordu. Bu ders, bir takımı etkili kılanın ne olduğunu ve bunun nasıl yazıya geçirileceğini anlatır.
+
+## Takımı etkili yapan nedir?
+
+Google, takımlarını inceleyen bir araştırma yaptı ve ona **Project Aristotle** adını verdi. Ad, Aristoteles'in "bütün, parçalarının toplamından büyüktür" sözüne bir göndermedir. Bulgular 2016'da yayımlandı.
+
+Araştırmacıların vardığı sonuç şuydu: önemli olan, takımda kimin olduğundan çok **takımın nasıl birlikte çalıştığıdır.** Önem sırasıyla beş dinamik öne çıktı.
+
+<Layers
+  label="Project Aristotle'a göre takım etkililiğinin beş dinamiği"
+  caption="Beş dinamik önem sırasıyla yukarıdan aşağı dizilidir. En üstte psikolojik güvenlik durur: hata kabul etmenin, soru sormanın, yeni fikir önermenin cezalandırılmayacağına güvenmek. Ardından güvenilirlik gelir: işin zamanında ve kaliteli bitmesi. Sonra yapı ve netlik: beklentilerin, sürecin ve hedeflerin açık olması. Son ikisi anlam ve etkidir: işin kişi için bir amacı olması ve bir fark yarattığına inanmak."
+  layers={[
+    { title: "1 · Psikolojik güvenlik", sub: "hata, soru, fikir cezalandırılmaz", tone: "accent" },
+    { title: "2 · Güvenilirlik", sub: "iş zamanında ve kaliteli biter" },
+    { title: "3 · Yapı ve netlik", sub: "beklenti, süreç, hedef açık" },
+    { title: "4 · Anlam", sub: "işin kişi için bir amacı var" },
+    { title: "5 · Etki", sub: "işin bir fark yarattığına inanmak", tone: "progress" },
+  ]}
+/>
+
+**Psikolojik güvenlik** (psychological safety), takım üyelerinin birbirlerine karşı risk alırken kendilerini güvende hissetmesidir. Böyle bir takımda kimse, bir hatayı kabul ettiği, bir soru sorduğu ya da yeni bir fikir önerdiği için mahcup edilmeyeceğinden ya da cezalandırılmayacağından emindir.
+
+Can'ın iki gün sustuğu hata, bu dinamiğin eksikliğiydi.
+
+**Yapı ve netlik** için hedeflerin belirli, zorlayıcı ve ulaşılabilir olması gerekir. Google bunun için çoğu zaman OKR kullanır. OKR'ı [Hedef ve ölçüm](/calisma-bicimi/hedef-ve-olcum-okr-kpi-north-star/) dersi anlatıyor.
+
+### Sanıldığı kadar önemli olmayanlar
+
+Araştırmacılar, Google'daki takım etkililiğiyle anlamlı bir bağı olmayan değişkenleri de buldu. Bunlar aynı ofiste oturmak, uzlaşmayla karar vermek ve takım üyelerinin dışa dönüklüğüdür. Bireysel performans, iş yükü, kıdem, takım büyüklüğü ve şirketteki süre de bu listededir.
+
+**Yetenekli kişiler ≠ etkili takım.** Bireysel performansın bile takım etkililiğiyle anlamlı bir bağı çıkmadı. Kimin takımda olduğu değil, nasıl çalıştıkları belirleyiciydi.
+
+## Çalışma sözleşmesi
+
+**Çalışma sözleşmesi** (working agreement), bir takımın birlikte nasıl çalışacağına, iletişim kuracağına ve iş birliği yapacağına dair ortak kurallarıdır. Takım aynı yerde de olsa, farklı saat dilimlerinde de olsa geçerlidir.
+
+Atlassian'ın takım oyun kitabı bu atölyeyi 2–10 kişiyle, yaklaşık bir saatte önerir. Sözleşme özellikle yeni biri katıldığında, bir yeniden yapılanmadan sonra ya da çalışma koşulları değiştiğinde işe yarar.
+
+Atlassian'ın kendi deneyinde bu atölyeyi yapan çalışanların %74'ü, takımda daha iyi çalışmak için istedikleri değişiklikleri dile getirme konusunda kendilerini güçlü hissetti. Atlassian'ın araştırması ve akademik yazın, çalışma sözleşmelerinin şunlara yardım ettiğini söyler:
+
+- daha az ve daha amaçlı toplantı, ve hangi toplantının yazılı yapılabileceğini bilmek,
+- açık iletişim ve daha az yanlış anlama,
+- daha iyi çatışma çözümü,
+- psikolojik güvenliğin artması,
+- yeni üyelerin daha hızlı uyum sağlaması.
+
+İyi bir sözleşme maddesi somuttur. "Birbirimize saygı duyarız" bir değerdir. "Bir PR en geç bir iş günü içinde incelenir" bir sözleşme maddesidir. Toplantı ve iletişim düzenini [Sync, async ve toplantı düzeni](/calisma-bicimi/sync-async-ve-toplanti-duzeni/) dersi anlatıyor.
+
+<Case>
+
+Selin gözlemini bir sonraki retroya getirdi. Kaan bir çalışma sözleşmesi atölyesi önerdi:
+
+1. **Soruyla açtı:** "Bu takımda bir hatayı söylemek ne kadar kolay?" Herkes 1'den 5'e bir sayı yazdı. Ortalama 2 çıktı.
+2. **1-2-4-All ile maddeleri topladı:** en çok tekrar eden konu, takılınca yardım istemekti.
+3. **Somut madde yazdılar:** "Yarım günden uzun takılan kişi yardım ister. Yardım istemek bir zayıflık değildir." Can bu maddeyi kendisi önerdi.
+4. **Diğer maddeler:** ortak çalışma saatleri 10.00–16.00, toplantısız çarşamba öğleden sonrası, bir iş günü içinde PR incelemesi.
+5. **Gözden geçirme tarihi koydular:** sözleşme her üç sprintte bir retroda okunacak.
+
+Üç sprint sonra aynı soruyu tekrar sordular. Ortalama 4'e çıkmıştı.
+
+</Case>
+
+<Tool slug="calisma-sozlesmesi" />
+
+<Lenses>
+<Lens role="scrum-master">
+
+- **Psikolojik güvenliği ölç, tahmin etme.** Basit, anonim bir soru bile takımın durumunu gösterir.
+- **Sözleşmeyi retroya bağla.** Düzenli okunmayan sözleşme birkaç ay içinde unutulur.
+- **Hatayı ilk sen kabul et.** Bir kolaylaştırıcının kendi hatasını açıkça söylemesi, diğerlerine izin verir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kötü haberi ödüllendir.** Bir story'nin yetişmeyeceğini erken söyleyen geliştiriciye teşekkür et; geç öğrenmek daha pahalıdır.
+- **Netliği sen sağlarsın.** Yapı ve netlik dinamiğinin büyük kısmı açık bir ürün hedefi ve sıralı bir backlog'dur.
+
+</Lens>
+<Lens role="product-manager">
+
+- **İşin anlamını ve etkisini görünür kıl.** Ürün sonuçlarını takımla paylaşmak, son iki dinamiği doğrudan besler.
+- **Takımın sözleşmesine saygı göster.** Toplantısız saatlere toplantı koymak, sözleşmenin ciddiyetini bozar.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Yeni proje ekibiyle ilk hafta sözleşme yaz.** Geçici ekipler, ortak kuralları en çok ihtiyaç duyan ekiplerdir.
+- **Güvenilirliği yalnız takvimle ölçme.** Söz verilen işin kaliteli bitmesi de güvenilirliğin parçasıdır.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **"Bilmiyorum" demenin güvenli olduğu bir ortamı destekle.** Gereksinimdeki belirsizlik ancak söylenirse çözülür.
+- **Kararların yazıldığı yeri sözleşmeye koy.** "Kararlar kartın altına yazılır" maddesi analizin izini korur.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Tasarım eleştirisinin kurallarını sözleşmeye ekle.** Eleştirinin kişiye değil işe yönelmesi, psikolojik güvenliğin bir uygulamasıdır.
+- **Odak zamanını koru.** Tasarım derin dikkat ister; toplantısız saatler senin için de var.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Project Aristotle'a göre takımı etkili kılan, kimin olduğundan çok nasıl birlikte çalışıldığıdır.
+- Beş dinamik, önem sırasıyla: psikolojik güvenlik, güvenilirlik, yapı ve netlik, anlam, etki.
+- Psikolojik güvenlik, hata kabul etmenin, soru sormanın ve fikir önermenin cezalandırılmayacağına güvenmektir.
+- Aynı ofiste oturmak, takım büyüklüğü, kıdem ve bireysel performans Google'da etkililikle anlamlı bir bağ göstermedi.
+- Çalışma sözleşmesi takımın ortak kurallarıdır; somut maddeler içerir ve düzenli gözden geçirilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Project Aristotle'ın bulduğu beş dinamik, önem sırasıyla nedir?">
+
+Psikolojik güvenlik, güvenilirlik, yapı ve netlik, anlam ve etki.
+
+</SelfCheck>
+
+<SelfCheck question="'Birbirimize saygı duyarız' neden iyi bir çalışma sözleşmesi maddesi değildir?">
+
+Somut değildir: neyin yapılacağını ve uyulup uyulmadığını söylemez. İyi bir madde bir davranışı tarif eder, örneğin "Bir PR en geç bir iş günü içinde incelenir."
+
+</SelfCheck>
+
+<SelfCheck question="Bir geliştirici iki gün takıldığı hatayı sprintin son günü söyledi. Hangi dinamik eksik ve ne yaparsın?">
+
+Psikolojik güvenlik eksik olabilir: takılmayı söylemek güvenli hissettirmiyordur. Kişiyi suçlamadan, bunu takım olarak konuşursun. Örneğin "yarım günden uzun takılan kişi yardım ister" gibi bir sözleşme maddesi yazarsınız ve yardım istemeyi açıkça desteklersin.
+
+</SelfCheck>
+
+<SelfCheck question="Bir yönetici 'En iyi geliştiricileri bir araya getirirsek en iyi takımı kurarız' diyor. Araştırmaya göre ne dersin?">
+
+Project Aristotle'da bireysel performansın Google'daki takım etkililiğiyle anlamlı bir bağı çıkmadı. Belirleyici olan takımın nasıl birlikte çalıştığıydı; en başta psikolojik güvenlik. İyi kişiler gereklidir, ama yeterli değildir.
+
+</SelfCheck>

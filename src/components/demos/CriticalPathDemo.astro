@@ -174,7 +174,7 @@ const status = (d: number) => (d === deadline ? "tampon kalmıyor." : d < deadli
     font-variant-numeric: tabular-nums;
   }
 
-  .cp__flag {
+  .cp :global(.cp__flag) {
     color: var(--c-progress-text);
   }
 
@@ -182,7 +182,7 @@ const status = (d: number) => (d === deadline ? "tampon kalmıyor." : d < deadli
     color: var(--c-text-secondary);
   }
 
-  .cp__summary strong {
+  .cp__summary :global(strong) {
     color: var(--c-text);
   }
 </style>

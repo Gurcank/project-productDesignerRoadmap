@@ -252,6 +252,19 @@
     "proje-yonetimi/standartlar-ve-sertifikalar",
     "proje-yonetimi/tahmin",
     "proje-yonetimi/tedarikci-ve-sozlesme",
-    "proje-yonetimi/yaklasim-secimi"
+    "proje-yonetimi/yaklasim-secimi",
+    "cevik-pratikler/akis-metrikleri-ve-cfd",
+    "cevik-pratikler/anti-paternler",
+    "cevik-pratikler/kolaylastirma-teknikleri",
+    "cevik-pratikler/manifesto-ve-12-ilke",
+    "cevik-pratikler/olcekleme-safe-less-spotify",
+    "cevik-pratikler/ongoru-velocity-ve-monte-carlo",
+    "cevik-pratikler/product-owner-isi",
+    "cevik-pratikler/refinement-invest-ve-story-bolme",
+    "cevik-pratikler/retro-formatlari",
+    "cevik-pratikler/scrum-master-isi",
+    "cevik-pratikler/scrum-rehberi",
+    "cevik-pratikler/story-mapping",
+    "cevik-pratikler/takim-dinamikleri-ve-calisma-sozlesmesi"
   ]
 }

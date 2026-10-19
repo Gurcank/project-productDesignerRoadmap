@@ -1,0 +1,206 @@
+---
+summary: "Refinement, backlog öğelerini bir sprintte bitirilebilecek kadar küçük ve net hâle getirir. INVEST iyi bir story'nin altı özelliğini sayar; bölme kalıpları büyük bir işi, her biri değer taşıyan dikey dilimlere ayırır."
+outcomes:
+  - "Refinement'ın ne olduğunu ve bir öğenin ne zaman 'seçime hazır' sayıldığını söyleyebilirsin."
+  - "Bir story'yi INVEST ile değerlendirebilirsin."
+  - "Büyük bir story'yi bölme kalıplarıyla dikey dilimlere ayırabilirsin."
+  - "Kabul kriterlerini Given-When-Then ile örneklere çevirebilirsin."
+minutes: 10
+standard: 2
+sources:
+  - label: "Scrum Guide (Kasım 2020) — Product Backlog"
+    url: "https://scrumguides.org/scrum-guide.html"
+  - label: "Bill Wake — INVEST in Good Stories, and SMART Tasks (2003)"
+    url: "https://xp123.com/invest-in-good-stories-and-smart-tasks/"
+  - label: "Humanizing Work — The Guide to Splitting User Stories"
+    url: "https://www.humanizingwork.com/the-humanizing-work-guide-to-splitting-user-stories/"
+  - label: "Scrum.org — Ready or Not? Demystifying the Definition of Ready"
+    url: "https://www.scrum.org/resources/blog/ready-or-not-demystifying-definition-ready-scrum"
+  - label: "Cucumber — Gherkin Reference"
+    url: "https://cucumber.io/docs/gherkin/reference/"
+additions:
+  - "Refinement ve seçime hazır olmak (Scrum Guide)"
+  - "INVEST ve 3C (Bill Wake, Ron Jeffries)"
+  - "Dokuz bölme kalıbı ve bölmeyi değerlendirme (Humanizing Work)"
+  - "Hazır tanımının riskleri (Scrum.org)"
+  - "Given-When-Then (Gherkin)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Backlog'un en üstünde tek bir kart vardı: "Favori sipariş." Deniz onu bir sonraki sprinte almak istedi. Burak karta baktı: "Bu bir sprintte bitmez. Favori listesi, düzenleme, zamanlanmış sipariş… İçinde beş özellik var."
+
+Can bir öneri yaptı: "Önce veritabanını yapalım, sonra arayüzü." Ayşe başını salladı: "O zaman sprintin sonunda müşteriye gösterecek hiçbir şeyimiz olmaz." Bu ders, büyük bir kartı her biri müşteriye bir şey veren parçalara bölmeyi anlatır.
+
+## Refinement: hazır olmak
+
+**Refinement**, ürün backlog'u öğelerini daha küçük ve daha kesin öğelere bölmek ve ayrıntılandırmaktır. Scrum Rehberi'ne göre süregelen bir faaliyettir: öğelere açıklama, sıra ve boyut eklenir. Boyutlamadan, işi yapacak Geliştiriciler sorumludur.
+
+Rehber "hazır" kelimesini bir kez kullanır: bir sprintte bitirilebilecek öğeler, sprint planlamada **seçime hazır** sayılır. Öğeler bu şeffaflığa genellikle refinement'tan sonra ulaşır.
+
+Sipariş takımı refinement'ı her çarşamba bir saat yapar. Amaç, önümüzdeki bir iki sprintin öğelerini hazır hâle getirmektir.
+
+**Hazır tanımı ≠ kapı.** Birçok takım bir "hazır tanımı" (Definition of Ready) listesi kullanır. Rehberde yoktur; isteğe bağlı bir pratiktir. Scrum.org'daki bir yazı bazı uyarı işaretleri sayar. Listeye tam uyulmadı diye işe başlanmaz. Liste yalnız PO'ya ya da analiste aittir. Bitti tanımından çok hazır tanımına dikkat edilir. Liste bir hatırlatma olarak kalmalıdır.
+
+## INVEST: iyi bir story'nin altı özelliği
+
+Bill Wake 2003'te iyi bir story'nin özelliklerini **INVEST** kısaltmasıyla topladı:
+
+| Harf | Özellik | Anlamı |
+|---|---|---|
+| I | Bağımsız (Independent) | Herhangi bir sırada planlanıp yapılabilir. Her zaman mümkün değildir. |
+| N | Konuşulabilir (Negotiable) | Bir sözleşme değildir; ayrıntılar geliştirme sırasında birlikte oluşur. |
+| V | Değerli (Valuable) | Müşteri için değerlidir; yalnız geliştirici için değil. |
+| E | Tahmin edilebilir (Estimable) | Sıralamaya yetecek kadar tahmin edilebilir. |
+| S | Küçük (Small) | En çok birkaç kişi-haftalık iştir. |
+| T | Test edilebilir (Testable) | Nasıl test edileceği bilinecek kadar anlaşılmıştır. |
+
+Ron Jeffries'e göre bir story'nin üç parçası vardır: **kart** (fiziksel ortam), **konuşma** (kartın etrafındaki tartışma) ve **onay** (onu doğrulayan testler). Alistair Cockburn kartları "gelecekteki bir konuşmanın sözü" olarak tanımlar. Story'nin yazımını [Gereksinimler: epic, user story, acceptance criteria](/urun-gelistirme/gereksinimler-epic-user-story-acceptance-criteria/) dersi anlatıyor.
+
+## Dikey dilim
+
+Bir story'yi bir pasta gibi düşün: ağ katmanı, veri katmanı, iş mantığı ve arayüz üst üste. Can'ın önerisi pastayı **yatay** kesmekti: önce bütün veri katmanı. Ama arayüzü olmayan bir veri katmanının müşteriye değeri yoktur.
+
+Wake'e göre en iyi yol, pastayı **dikey** kesmektir: her dilim bütün katmanlardan geçer ve küçük ama çalışan bir şey verir. Humanizing Work'ün rehberi bölünemeyen story'lerin çoğunun aslında story kılığına girmiş görevler ya da bileşenler olduğunu söyler.
+
+## Bölme kalıpları
+
+Humanizing Work dokuz kalıp önerir:
+
+1. **İş akışı adımları:** bir akışın adımlarını ayrı story'ler yap.
+2. **İşlemler:** oluşturma, okuma, güncelleme ve silmeyi ayır.
+3. **İş kuralı çeşitleri:** aynı işi farklı kurallarla yapan varyantları ayır.
+4. **Veri çeşitleri:** farklı veri türlerini ayır.
+5. **Veri giriş yöntemleri:** önce basit giriş, sonra gelişmiş olanı.
+6. **Büyük çaba:** ilk örnek pahalıysa, ilkini ayır; gerisi ucuzdur.
+7. **Basit ya da karmaşık:** "Bunun en basit sürümü ne?" diye sor.
+8. **Performansı ertele:** önce çalışsın, sonra hızlansın.
+9. **Keşif (spike) ayır:** uygulama belirsizse, önce zaman kutulu bir keşif yap.
+
+<Tree
+  label="Favori sipariş epic'inin dikey dilimleri"
+  caption="Favori sipariş epic'i yedi dikey dilime bölündü. İlki en basit sürümdür: son siparişi tek dokunuşla tekrarlamak. İki dilim iş kuralı çeşididir: kayıtlı kart yoksa ne olur, ürün bitmişse ne olur. Favori listesi işlemlere göre ayrıldı. Tekrar etmeden önce düzenlemek, akışın ayrı bir adımıdır. Zamanlanmış sipariş büyük bir çabadır ve sonraya kaldı. Hız iyileştirmesi de ertelendi. Her dilim tek başına müşteriye bir şey verir."
+  root={{
+    title: "Favori sipariş (epic)",
+    tone: "accent",
+    children: [
+      { title: "Son siparişi tekrarla", sub: "basit sürüm · ilk sprint", tone: "progress" },
+      { title: "Kart yoksa kart seçimine git", sub: "iş kuralı çeşidi" },
+      { title: "Biten ürünü sepetten çıkar", sub: "iş kuralı çeşidi" },
+      { title: "Favoriye ekle ve sil", sub: "işlemler" },
+      { title: "Tekrar etmeden önce düzenle", sub: "iş akışı adımı" },
+      { title: "Zamanlanmış sipariş", sub: "büyük çaba · sonraya" },
+      { title: "Tekrar siparişi hızlandır", sub: "performansı ertele" },
+    ],
+  }}
+/>
+
+### Hangi bölme daha iyi?
+
+Bir story çoğu zaman birkaç kalıpla bölünebilir. Rehber iki ölçüt verir:
+
+- **Bir parçayı geri plana atmana ya da hiç yapmamana izin veren bölmeyi seç.** Değerin çoğu işlevin küçük bir kısmından gelir; bölme düşük değerli parçayı görünür kılmalı.
+- **Birbirine yakın boyutta parçalar veren bölmeyi seç.** 8 puanlık bir story'yi dört 2'liğe bölmek, 5 ve 3'e bölmekten daha kullanışlıdır. PO'ya daha çok sıralama özgürlüğü verir.
+
+## Kabul kriterlerini örneğe çevirmek
+
+Bir story'nin "onay" parçası çoğu zaman kabul kriterleridir. **Given-When-Then** biçimi bunları somut örneklere çevirir. Gherkin adlı dilin Türkçe karşılıkları da vardır:
+
+- **Diyelim ki** (Given): başlangıç durumu.
+- **Eğer ki** (When): bir olay ya da eylem.
+- **O zaman** (Then): gözlenebilir bir sonuç.
+
+*Diyelim ki* Ada'nın kayıtlı kartı yok. *Eğer ki* son siparişini tekrarlarsa, *o zaman* kart seçme ekranını görür. Cucumber her örnek için 3–5 adım önerir ve arayüzü değil davranışı anlatmayı ister.
+
+<Case>
+
+Çarşamba refinement'ında Deniz, "Favori sipariş" kartını masaya koydu:
+
+1. **INVEST'e baktılar:** değerliydi ama küçük değildi; tahmin de edilemiyordu.
+2. **Can'ın yatay bölmesini sınadılar:** "veritabanı" story'si müşteriye değer vermiyordu; Ayşe'nin itirazı haklıydı.
+3. **"En basit sürüm ne?" diye sordular:** son siparişi tek dokunuşla tekrarlamak. Bu ilk dilim oldu ve Sprint 14'ün hedefine dönüştü.
+4. **Kuralları ayırdılar:** kart silinmişse ve ürün bitmişse ne olacağı ayrı story'ler oldu. Zeynep'in 1-2-4-All'da bulduğu riskler buradan geldi.
+5. **Örnek yazdılar:** Ayşe her kural için bir Gherkin örneği yazdı.
+6. **Sonraya bıraktılar:** zamanlanmış sipariş backlog'un altına indi. Deniz yanına not düştü: "Kullanım verisi gelince yeniden bakılacak."
+
+</Case>
+
+<Tool slug="gherkin-story" />
+
+<Tool slug="dor-dod" />
+
+<Lenses>
+<Lens role="product-owner">
+
+- **Bölmeyi değere göre yap.** Hiç yapılmayabilecek parçayı görünür kılan bölme, en iyi bölmedir.
+- **İlk dilimi sprint hedefine çevir.** En basit sürüm, çoğu zaman en iyi sprint hedefidir.
+- **Boyutu takıma bırak.** Rehbere göre boyutlamadan Geliştiriciler sorumludur.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Refinement'ı düzenli yap.** Rehber onu süregelen bir faaliyet olarak tanımlar; sprint planlamaya sıkıştırılınca planlama uzar.
+- **Hazır listesinin kapıya dönüşmesini izle.** "Listede eksik var, başlamıyoruz" cümlesi bir uyarı işaretidir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Kuralları ayrı story'lere böl.** İş kuralı çeşitleri kalıbı, analistin en doğal aracıdır.
+- **Her kural için bir örnek yaz.** Given-When-Then, kuralı test edilebilir kılar ve tartışmayı somutlaştırır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Epic'i ürün sonucuna bağla.** Hangi dilim ürün hedefine en çok katkı veriyor, onu öne çıkar.
+- **Ertelenen dilimin ölçütünü yaz.** "Kullanım verisi gelince" gibi bir koşul, backlog'u şişirmeden fikri saklar.
+
+</Lens>
+<Lens role="product-designer">
+
+- **En basit sürümün de tasarımı vardır.** İlk dilim için boş, hata ve yüklenme durumlarını hazır et.
+- **Dikey dilime göre tasarla.** Bütün özelliğin ekranlarını bir kerede vermek yerine, ilk dilimin akışını uçtan uca bitir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Refinement öğeleri küçültür ve netleştirir; bir sprintte bitebilecek öğe seçime hazırdır.
+- Hazır tanımı Scrum Rehberi'nde yoktur; bir kapıya dönüşmemelidir.
+- INVEST: bağımsız, konuşulabilir, değerli, tahmin edilebilir, küçük, test edilebilir.
+- Story'ler dikey bölünür; her dilim bütün katmanlardan geçer ve müşteriye bir şey verir.
+- Dokuz bölme kalıbı vardır; en iyi bölme düşük değerli parçayı görünür kılar ve benzer boyutlu parçalar verir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="INVEST'in harfleri neyi anlatır?">
+
+Bağımsız, konuşulabilir, değerli, tahmin edilebilir, küçük ve test edilebilir.
+
+</SelfCheck>
+
+<SelfCheck question="'Önce veritabanını, sonra arayüzü yapalım' bölmesi neden iyi bir story bölmesi değildir?">
+
+Pastayı yatay keser: veritabanı katmanı tek başına müşteriye değer vermez. İyi bir bölme dikeydir; her dilim bütün katmanlardan geçer ve çalışan bir şey üretir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir story iki şekilde bölünebiliyor: 5 ve 3 puanlık iki parça ya da dört tane 2 puanlık parça. Hangisini seçersin?">
+
+Dört tane 2 puanlık parçayı. Benzer boyutlu parçalar PO'ya sıralamada daha çok özgürlük verir. Ayrıca parçalardan biri düşük değerliyse onu geri plana atmak kolaylaşır.
+
+</SelfCheck>
+
+<SelfCheck question="Takım, 'hazır tanımı'ndaki bir madde eksik diye en önemli story'ye sprint boyunca başlamadı. Ne dersin?">
+
+Hazır tanımı bir kapıya dönüşmüş. Scrum Rehberi'nde böyle bir kural yoktur; liste bir hatırlatma olmalı. Eksik madde sprintin ilk gününde konuşulur ve iş başlar. Bu durumu retroda konuşup listenin nasıl kullanıldığını düzeltmek gerekir.
+
+</SelfCheck>

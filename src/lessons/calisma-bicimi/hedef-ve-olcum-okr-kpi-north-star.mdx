@@ -5,7 +5,8 @@ outcomes:
   - "Bir özellik için yayından önce başarı ölçütü ve baseline belirleyebilirsin."
   - "Bir metriğin vanity olup olmadığını tek soruyla test edebilirsin."
   - "Öncü ve ardıl gösterge farkını bir örnekle anlatabilirsin."
-minutes: 14
+minutes: 11
+standard: 2
 sources:
   - label: "Google re:Work — Set goals with OKRs"
     url: "https://rework.withgoogle.com/en/guides/set-goals-with-okrs"
@@ -21,28 +22,26 @@ import Outside from "~/components/lesson/Outside.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
 
-Yönetim sunumunda bir slayt: "Toplam kayıt sayısı 100 bin!" Herkes alkışlıyor. Sen bir soru soruyorsun: "Peki haftalık aktif kullanıcı kaç?" Cevap: 900. İlk sayı güzel görünüyor ama bir şey söylemiyor.
+Yatırımcı sunumunda bir slayt: "Uygulama 400 bin kez indirildi!" Herkes alkışlıyor. Elif bir soru soruyor: "Peki aylık aktif müşteri kaç?" Cevap: 38.000. İlk sayı güzel görünüyor ama ürün hakkında bir şey söylemiyor.
 
 Bu ders ekibin **doğru yöne gidip gitmediğini** anlama araçlarını anlatıyor. Ürün tarafındaki en sık karıştırılan terim kümesi burasıdır; farkları bilmek seni ayırır.
 
 ## OKR: odak ve ölçülebilirlik
 
-**OKR** (Objectives and Key Results, hedefler ve anahtar sonuçlar), nitel bir **hedef** (Objective) ile o hedefe ulaşıldığını kanıtlayacak **sayısal sonuçların** (Key Results) birlikte yazıldığı hedef koyma yöntemidir. İki şeyi zorunlu kılar: **odak** (az sayıda hedef) ve **ölçülebilirlik** (hedefin tuttuğunu neyin kanıtlayacağı).
+**OKR** (Objectives and Key Results, hedefler ve anahtar sonuçlar) bir hedef koyma yöntemidir. Nitel bir **hedef** (Objective), o hedefe ulaşıldığını kanıtlayacak **sayısal sonuçlarla** (Key Results) birlikte yazılır. İki şeyi zorunlu kılar: **odak** (az sayıda hedef) ve **ölçülebilirlik** (hedefin tuttuğunu neyin kanıtlayacağı).
 
 Objective ilham verici ve niteldir; Key Result sayısal ve tartışmasızdır. Genelde çeyreklik döngüde işler; çeyrek başında şirket ve ekip hedefleri belirlenirken karşına çıkar.
 
-Bir örnek:
+Demlik'in bu çeyrekteki OKR'ı:
 
-> **Objective:** Yeni kullanıcı ilk günden değer görsün.
->
-> **KR1:** İlk oturumda proje oluşturma oranı %30'dan %55'e çıksın.
->
-> **KR2:** Onboarding tamamlama süresi 8 dakikadan 4 dakikaya insin.
+- **Objective:** Tekrar eden siparişi artır.
+- **KR1:** İlk siparişten sonraki 30 günde ikinci sipariş verenlerin oranı %41'den %50'ye çıksın.
 
-**Key Result ≠ task.** "Onboarding'i yeniden tasarla" bir **görevdir,** key result değildir: key result *sonucu* ölçer, yapılan *işi* değil. **En yaygın OKR hatası budur.** Bir de: OKR'ın performans değerlendirmesine bağlanması ekibi kolay hedefler yazmaya iter ve yöntemi bozar.
+**Key Result ≠ task.** "Favori sipariş özelliğini yap" bir **görevdir,** key result değildir: key result *sonucu* ölçer, yapılan *işi* değil. **En yaygın OKR hatası budur.** Bir de: OKR'ın performans değerlendirmesine bağlanması ekibi kolay hedefler yazmaya iter ve yöntemi bozar.
 
 OKR, Peter Drucker'ın MBO (Management by Objectives) fikrinden yola çıkarak Intel'de Andy Grove tarafından geliştirildi (1970'ler; *High Output Management*, 1983). John Doerr 1999'da Google'a taşıdı ve 2018'de *Measure What Matters* kitabıyla yaygınlaştırdı.
 
@@ -58,14 +57,12 @@ KPI ile Key Result farkı: KPI *sürekli izlenen sağlık göstergesi*, Key Resu
 
 **North star metric** (kuzey yıldızı metriği), ürünün kullanıcıya sağladığı asıl değeri en iyi temsil eden **tek metriktir.** Şirketin tamamını tek bir yöne hizalar. İyi bir north star, kullanıcı gerçekten fayda gördüğünde artar; kullanıcı kandırıldığında artmaz. Bu yüzden seçimi stratejik bir karardır: "izlenen video dakikası" ile "kullanıcının tamamladığı ders sayısı" farklı ürünler üretir.
 
-"North star'ımız kayıt sayısı değil, ilk hafta içinde ekibiyle proje paylaşan kullanıcı sayısı."
-
 Gelir genelde iyi bir north star değildir. Çünkü kullanıcı değerinin *sonucudur,* kendisi değil; ve kısa vadede kullanıcıya zarar vererek de artırılabilir.
 
 <StepFlow
   arrows={false}
   label="Hedeften göstergeye: metrik katmanları"
-  caption="Üstteki daha stratejik ve yavaş değişir, alttaki daha taktik ve sık ölçülür. Her katman bir üsttekine hizmet etmelidir."
+  caption="Üstteki daha stratejik ve yavaş değişir, alttaki daha taktik ve sık ölçülür. Her katman bir üsttekine hizmet etmelidir: bir özelliğin başarı ölçütü bir KPI'ı ya da bir key result'ı, o da north star'ı besler."
   steps={[
     { title: "North star", sub: "Tek, uzun vadeli değer ölçütü", tone: "progress" },
     { title: "OKR / Key Result", sub: "Bu çeyrekte neyi değiştireceğiz?", tone: "accent" },
@@ -78,9 +75,7 @@ Gelir genelde iyi bir north star değildir. Çünkü kullanıcı değerinin *son
 
 **Success metric** (başarı ölçütü), belirli bir özellik ya da değişikliğin **işe yarayıp yaramadığını** ölçecek metriktir. PRD'nin zorunlu parçasıdır. **Yayından önce** belirlenmelidir; sonradan seçilirse ekip iyi görünen metriği seçer ve öğrenme olmaz.
 
-"Bu iş bittiğinde başarılı olduğunu nasıl anlayacağız?" sorusunun cevabıdır. "Success metric: filtre kullanan oturumlarda ürün sayfasına geçiş oranı. Ölçüm iki hafta sonra."
-
-**Baseline** (başlangıç değeri), bir değişiklik yapılmadan **önceki** mevcut ölçüm değeridir. Karşılaştırma noktası olmadan "arttı" ya da "azaldı" denemez. **En sık yapılan ölçüm hatası, baseline almadan değişiklik yapmaktır.** "Değişikliği yayınlamadan önce iki hafta baseline toplayalım." A/B testlerinde ve iyileştirme çalışmalarında temeldir.
+**Baseline** (başlangıç değeri), bir değişiklik yapılmadan **önceki** mevcut ölçüm değeridir. Karşılaştırma noktası olmadan "arttı" ya da "azaldı" denemez. **En sık yapılan ölçüm hatası, baseline almadan değişiklik yapmaktır.** A/B testlerinde ve iyileştirme çalışmalarında temeldir.
 
 ## Öncü ve ardıl göstergeler
 
@@ -89,19 +84,19 @@ Gelir genelde iyi bir north star değildir. Çünkü kullanıcı değerinin *son
 - **Ardıl:** gelir, aylık aktif kullanıcı, iptal oranı. Doğrudur ama **geç haber verir;** gördüğünde müdahale şansı azalmıştır.
 - **Öncü:** ilk hafta kullanım sıklığı, onboarding tamamlama. **Erken uyarı verir.**
 
-"İptal oranı lagging; onu beklemek yerine ilk hafta aktifliğini leading gösterge olarak izleyelim." İyi bir dashboard ikisini birlikte içerir.
+İyi bir dashboard ikisini birlikte içerir.
 
 ## Vanity metric: iyi görünen ama karar değiştirmeyen
 
-**Vanity metric** (gösteriş metriği), iyi görünen ama **karar değiştirmeyen** metriktir. Toplam kayıt sayısı, toplam indirme, sayfa görüntülenme: hepsi sürekli artar ve hiçbiri ürünün iyi olup olmadığını söylemez. Sunumlarda ve pazarlama materyallerinde bolca görürsün.
+**Vanity metric** (gösteriş metriği), iyi görünen ama **karar değiştirmeyen** metriktir. Toplam kayıt sayısı, toplam indirme, sayfa görüntülenme: hepsi sürekli artar ve hiçbiri ürünün iyi olup olmadığını söylemez.
 
-Test şu: **"Bu sayı değişirse ne yapacağımı değiştirir mi?"** Cevap hayırsa vanity metriktir. "Toplam kayıt 100 bin ama haftalık aktif 900; ilk sayı vanity metric."
+Test şu: **"Bu sayı değişirse ne yapacağımı değiştirir mi?"** Cevap hayırsa vanity metriktir.
 
-Onu anlamlı hâle getirmek için bir **zaman aralığı ve aktiflik** eklenir: "son 7 günde en az bir kez giriş yapan kullanıcı sayısı" ya da "kayıt olduktan sonra ilk haftada değer eylemini tamamlayan kullanıcı oranı."
+Onu anlamlı hâle getirmek için bir **zaman aralığı ve aktiflik** eklenir. Örneğin: "son 30 günde en az bir sipariş veren müşteri sayısı". Ya da: "ilk siparişten sonraki 30 günde ikinci siparişi verenlerin oranı".
 
 <Outside source="Google Research — HEART çerçevesi" href="https://research.google/pubs/measuring-the-user-experience-on-a-large-scale-user-centered-metrics-for-web-applications/">
 
-Tasarımcının işine en yakın metrik çerçevelerinden biri **HEART**'tır. Google'da geliştirilen bu çerçeve, kullanıcı deneyimini beş boyutta ölçmeyi önerir:
+Kullanıcı deneyimini ölçmeye en yakın metrik çerçevelerinden biri **HEART**'tır. Google'da geliştirilen bu çerçeve, kullanıcı deneyimini beş boyutta ölçmeyi önerir:
 
 | Boyut | Soru | Örnek ölçü |
 |---|---|---|
@@ -111,18 +106,65 @@ Tasarımcının işine en yakın metrik çerçevelerinden biri **HEART**'tır. G
 | **R**etention | Geri dönüyor mu? | 30 gün sonra hâlâ aktif oran |
 | **T**ask success | Hedefine ulaşabiliyor mu? | Görev tamamlama oranı, hata oranı |
 
-Çerçevenin kendisi bir ölçüt listesi değil, "hangi hedef için hangi sinyali seçeceğini düşünme" yöntemidir: önce hedefi, sonra sinyali, en son metriği belirlersin. Bu yüzden tasarım çalışmalarının başarı ölçütünü belirlerken yardımcı olur.
+Çerçevenin kendisi bir ölçüt listesi değil, "hangi hedef için hangi sinyali seçeceğini düşünme" yöntemidir: önce hedefi, sonra sinyali, en son metriği belirlersin. Bu yüzden bir tasarım ya da ürün değişikliğinin başarı ölçütünü belirlerken yardımcı olur.
 
 </Outside>
+
+<Case>
+
+Sprint 14'ten önce Elif favori sipariş özelliğinin ölçüm planını yazdı:
+
+1. **OKR'a bağladı:** özellik, "30 günde ikinci sipariş %41'den %50'ye" key result'ına hizmet ediyordu.
+2. **Başarı ölçütünü yayından önce seçti:** "Son siparişi tekrarla" düğmesiyle verilen siparişlerin, tüm tekrar eden siparişlere oranı.
+3. **Baseline aldı:** yayından önceki iki haftada tekrar eden siparişlerin hepsi menüden aranarak veriliyordu; oran sıfır, ikinci sipariş oranı %41.
+4. **Öncü göstergeyi seçti:** düğmeyi ilk hafta en az bir kez kullanan müşteri oranı. Key result 30 gün sonra görünecekti; bu gösterge bir hafta içinde.
+5. **Vanity testini yaptı:** "Düğmeye toplam tıklama" sayısını listeden çıkardı. Bu sayı değişse de hiçbir kararı değiştirmeyecekti.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
 
-- **Tasarımın başarı ölçütünü yayından önce yaz.** "Bu akışı yeniden tasarlıyoruz; başarı = ilk oturumda tamamlama oranı %30'dan %55'e."
+- **Tasarımın başarı ölçütünü yayından önce yaz.** "Bu akışı yeniden tasarlıyoruz; başarı = ödeme adımını tamamlama oranı."
 - **Önce baseline al.** Mevcut hâli ölçmeden yeni tasarımı yayınlarsan, sonucu kimse yorumlayamaz.
-- **Görev değil sonuç yaz.** "Yeni onboarding çiz" bir task; "ilk gün terk oranını %20 düşür" bir key result.
-- **Vanity sorusunu sun.** Bir sayı sunulduğunda "bu değişirse ne yapacağız?" diye sor.
-- **Öncü göstergeyi ara.** Gelir ya da iptal oranı geç haber verir; tasarım değişikliğinin etkisini daha erken gösteren bir sinyal bul.
+- **HEART ile sinyal seç.** Önce hedefi, sonra sinyali, en son metriği belirle.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Key result'a görev yazma.** "Özelliği yap" bir task; "ikinci sipariş oranını %50'ye çıkar" bir key result.
+- **Vanity sorusunu sor.** Bir sayı sunulduğunda "bu değişirse ne yapacağız?" diye sor.
+- **North star'ı stratejiyle seç.** Gelir genelde iyi bir north star değildir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Sprint hedefini key result'a bağla.** Sprint hedefi, çeyreğin sonucuna doğru bir adım olmalı.
+- **Öncü göstergeyle sıra güncelle.** Bir hafta içinde görülen sinyal, 30 gün beklemeden backlog'u düzeltmeni sağlar.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Proje hedefini ürün metriğine bağla.** Kampüs lansmanının başarısı yalnız "açıldı" değil, günlük sipariş sayısıdır.
+- **KPI'ı sağlık göstergesi olarak raporla.** Proje sırasında kritik bir KPI eşiğin altına düşüyorsa bu bir risktir.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **OKR'ın performans değerlendirmesine bağlanmasına karşı çık.** Bağlandığında takım kolay hedef yazar.
+- **Netlik takımın etkililiğidir.** Hedeflerin belirli, zorlayıcı ve ulaşılabilir olması, takım dinamiklerinden biridir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Ölçüm gereksinimini erken yaz.** Başarı ölçütü için hangi olayın kaydedilmesi gerektiği bir gereksinimdir.
+- **Baseline verisinin nereden geleceğini netleştir.** Veri yoksa önce onu toplamak bir iş paketidir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Nicel metriği nitel bulguyla eşle.** Tamamlama oranı düştüyse nedenini görüşmeler söyler.
+- **Happiness boyutunu ihmal etme.** HEART'ın ilk harfi, çoğu zaman araştırmanın ölçtüğü şeydir.
 
 </Lens>
 </Lenses>
@@ -147,6 +189,18 @@ Key Result bir sonucu ölçer ve sayısaldır; task yapılacak işi tarif eder. 
 
 <SelfCheck question={"\"Toplam kayıt sayısı 100 bin\" ifadesi neden vanity metric olabilir? Onu anlamlı hâle getirmek için ne eklersin?"}>
 
-Sürekli artan, hiç azalmayan ve karar değiştirmeyen bir sayı olduğu için. Anlamlı hâle getirmek için bir zaman aralığı ve aktiflik eklenir: "son 7 günde en az bir kez giriş yapan kullanıcı sayısı" ya da "kayıt olduktan sonra ilk haftada değer eylemini tamamlayan kullanıcı oranı".
+Sürekli artan, hiç azalmayan ve karar değiştirmeyen bir sayı olduğu için. Anlamlı hâle getirmek için bir zaman aralığı ve aktiflik eklenir. Örneğin: "son 7 günde en az bir kez giriş yapan kullanıcı sayısı". Ya da: "kayıt olduktan sonra ilk haftada değer eylemini tamamlayan kullanıcı oranı".
+
+</SelfCheck>
+
+<SelfCheck question="İptal oranı neden ardıl bir göstergedir? Onun yerine erken uyarı için neyi izlersin?">
+
+İptal olduktan sonra görünür; o zaman müdahale şansı azalmıştır. Erken uyarı için öncü bir gösterge izlenir: örneğin ilk hafta kullanım sıklığı ya da onboarding tamamlama.
+
+</SelfCheck>
+
+<SelfCheck question="Bir özellik yayınlandı, iki hafta sonra 'işe yaradı mı?' diye soruluyor ama baseline alınmamış. Ne olur, ne yaparsın?">
+
+Karşılaştırma noktası olmadığı için artış ya da düşüş söylenemez; ekip iyi görünen bir sayıyı seçme eğilimine girer. Mümkünse yayından önceki dönemin verisini geriye dönük çıkarırsın. Bir dahaki sefere başarı ölçütü ve baseline yayından önce yazılır.
 
 </SelfCheck>

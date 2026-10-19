@@ -1,0 +1,165 @@
+---
+summary: "İyi bir retrospektif beş aşamadan geçer: ortamı hazırla, veri topla, içgörü üret, ne yapacağına karar ver, kapat. Format takımın ihtiyacına göre seçilir; sonuç her zaman sahibi olan bir iki eylemdir."
+outcomes:
+  - "Bir retroyu beş aşamaya göre planlayabilirsin."
+  - "Takımın durumuna uygun bir format seçebilirsin."
+  - "Retrodan sahibi ve kontrol tarihi olan eylemler çıkarabilirsin."
+minutes: 8
+standard: 2
+sources:
+  - label: "Retromat (Corinna Baldauf) — What is a retrospective?"
+    url: "https://retromat.org/blog/guide-what-is-a-retrospective/"
+  - label: "Retromat — Sailboat / Speedboat (#19)"
+    url: "https://retromat.org/en/?id=19"
+  - label: "Retromat — Mad Sad Glad (#7), 5 Whys (#8), Start Stop Continue (#12)"
+    url: "https://retromat.org/en/?id=7-8-12"
+  - label: "Scrum Guide (Kasım 2020) — Sprint Retrospective"
+    url: "https://scrumguides.org/scrum-guide.html"
+additions:
+  - "Retrospektifin beş aşaması ve temel kuralı (Retromat, 'Agile Retrospectives' kitabından)"
+  - "Retro formatları: Mad Sad Glad, Başla-Bırak-Sürdür, Sailboat, 5 Neden, Zaman çizgisi (Retromat)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Sipariş takımının retroları altı aydır aynıydı. Tahtaya üç sütun çiziliyordu: "İyi gitti", "Kötü gitti", "Ne yapacağız". Herkes not yapıştırıyor, notlar okunuyor, toplantı bitiyordu. Son üç retroda "Daily çok uzun" notu üç kez çıktı. Hiçbir şey değişmedi.
+
+Kaan sorunun format olmadığını biliyordu. Retro bir yapıya sahip değildi ve bir eylemle bitmiyordu. Bu ders o yapıyı anlatır.
+
+## Retro ne için?
+
+Scrum Rehberi'ne göre sprint retrospektifinin amacı **kaliteyi ve etkililiği artırmanın yollarını planlamaktır.** Takım geçen sprinti kişiler, etkileşimler, süreçler, araçlar ve bitti tanımı açısından inceler. En yararlı değişiklikleri belirler; en etkili olanlar bir sonraki sprint backlog'una bile eklenebilir. Bir aylık sprintte en çok üç saat sürer.
+
+En basit hâliyle retro üç soru sorar: Ne iyi gitti? Ne iyi gitmedi? Neyi farklı yapacağız?
+
+**Retro ≠ suçlama oyunu.** Bazı kolaylaştırıcılar retroyu **temel kuralla** (Retrospective Prime Directive) açar. Kural şöyle der: ne bulursak bulalım, herkesin yapabileceğinin en iyisini yaptığına içtenlikle inanırız. Herkes bunu o an bildikleriyle, becerileriyle, elindeki imkânlarla ve içinde bulunduğu durumda yaptı.
+
+**Retro ≠ kapanış değerlendirmesi.** Projenin sonunda yapılan öğrenilen dersler toplantısı uzundur ve bir kez yapılır. Çevik takımlarda retro kısa ve sıktır: örneğin iki haftalık bir sprintin sonunda 90 dakika. Sorun, proje hâlâ sürerken çözülebilir. Kapanıştaki değerlendirmeyi [Kapanış ve öğrenilen dersler](/proje-yonetimi/kapanis-ve-ogrenilen-dersler/) dersi anlatıyor.
+
+## Beş aşama
+
+Retroların çoğu, "Agile Retrospectives" kitabının önerdiği beş aşamayı izler.
+
+<Layers
+  label="Bir retrospektifin beş aşaması"
+  caption="Önce ortam hazırlanır: herkes toplantıya gelir, hedef söylenir. Sonra veri toplanır: sprintte ne olduğu, herkesin gördüğüyle ortak bir resme dönüşür. Ardından içgörü üretilir: neden öyle oldu, hangi örüntü var? Dördüncü aşamada birkaç konu seçilir ve somut eylemlere çevrilir. Son aşamada eylemler tekrar okunur, toplantı net bir sonla kapanır. Çoğu bozuk retro, üçüncü ve dördüncü aşamayı atlar."
+  layers={[
+    { title: "1 · Ortamı hazırla", sub: "herkes gelsin, hedef söylensin" },
+    { title: "2 · Veri topla", sub: "ne oldu? ortak bir resim" },
+    { title: "3 · İçgörü üret", sub: "neden oldu? örüntüler", tone: "accent" },
+    { title: "4 · Ne yapacağına karar ver", sub: "bir iki somut eylem", tone: "progress" },
+    { title: "5 · Kapat", sub: "eylemleri oku, retroyu değerlendir" },
+  ]}
+/>
+
+Sipariş takımının eski retrosu yalnız ikinci aşamadan ibaretti. Veri toplanıyor, ama neden sorulmuyor ve karar verilmiyordu.
+
+## Format seçmek
+
+Retromat adlı site, beş aşamanın her biri için yüzlerce etkinlik toplar. Aynı formatı aylarca kullanmak, retroyu ezbere çevirir. Format, takımın o sprintteki ihtiyacına göre seçilir.
+
+| Format | Ne zaman işe yarar? | Nasıl? |
+|---|---|---|
+| **Mad Sad Glad** | Duygular konuşulmadan sorun çözülemeyecekse | Kızdıran, üzen, sevindiren olaylar ayrı panolara yazılır, kümelenir |
+| **Başla, Bırak, Sürdür** | Somut davranış değişikliği isteniyorsa | Öneriler üç sütuna yazılır, nokta oylamasıyla seçilir |
+| **Sailboat** (yelkenli) | Hedefe ne yaklaştırıyor, ne geri tutuyor görmek için | Rüzgâr ileri iten güçleri, çapa geri çekenleri gösterir |
+| **Zaman çizgisi** | Uzun ya da karmaşık bir sprintten sonra | Önemli olaylar sırayla bir çizgiye dizilir |
+| **5 Neden** | Bir sorunun kök nedenini bulmak için | Küçük gruplar "Bu neden oldu?" sorusunu tekrar tekrar sorar |
+
+İlk dört format veri toplar. 5 Neden ise içgörü üretir: veri toplandıktan sonra, en çok oy alan sorunun üzerinde kullanılır.
+
+## Eylem: retronun tek ürünü
+
+Somut bir eylem çıkmayan ya da çıkan eylemi kimsenin yapmadığı bir retro zaman kaybıdır. İyi bir eylemin üç özelliği vardır:
+
+- **Bir sahibi var.** "Takım" bir sahip değildir.
+- **Kontrol edilebilir.** "Daha iyi iletişim" değil: "Tedarikçinin API değişikliklerini her salı panoya işle."
+- **Az.** Bir iki eylem yapılır; on eylemden hiçbiri yapılmaz.
+
+Bir önceki retronun eylemleri, bir sonraki retronun ilk gündem maddesidir.
+
+<Case>
+
+Kaan Sprint 13 retrosunu beş aşamaya göre kurdu:
+
+1. **Ortamı hazırla (5 dk):** temel kuralı okudu; herkes sprinti tek kelimeyle anlattı.
+2. **Veri topla (15 dk), Sailboat:** rüzgâr olarak Zeynep'in önceden yazdığı test senaryoları ve çarşamba odak zamanı yazıldı. Çapada en çok not, kasa tedarikçisinden habersiz gelen API değişikliklerindeydi.
+3. **İçgörü üret (15 dk), 5 Neden:** değişiklikler tedarikçiden Leyla'ya e-postayla geliyor, takıma ulaşmıyordu.
+4. **Karar ver (15 dk):** iki eylem çıktı. Ayşe her salı değişiklikleri panoya işleyecekti. Kaan da Daily 15 dakikayı geçerse ayrıntıyı sonraya alacaktı.
+5. **Kapat (10 dk):** eylemler okundu; retronun kendisi için kısa bir artı ve delta toplandı.
+
+Sprint 14'ün retrosu bu iki eylemle başladı. İkisi de yapılmıştı.
+
+</Case>
+
+<Tool slug="retro-panosu" />
+
+<Lenses>
+<Lens role="scrum-master">
+
+- **Formatı her sprint değiştirme, ama ezbere de bırakma.** Takımın durumuna göre seç; Retromat'ta beş aşamanın her biri için etkinlik var.
+- **Üçüncü ve dördüncü aşamaya zaman ayır.** Bozuk retroların çoğu veri toplamada kalır.
+- **Eylemleri bir sonraki retronun başında kontrol et.** Yapılmayan eylem, retronun konusu olur.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Retroya katıl.** Rehbere göre bütün Scrum Takımı katılır; PO'suz retroda backlog kaynaklı sorunlar konuşulamaz.
+- **Etkili iyileştirmeyi backlog'a al.** Rehber, en etkili iyileştirmelerin bir sonraki sprint backlog'una eklenebileceğini söyler.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Retroları kapanışın ham malzemesi yap.** Sprint eylemlerinin kaydı, kapanışta öğrenilen dersleri yazmayı kolaylaştırır.
+- **Takımın retrosuna rapor için girme.** Retro takımın güvenli alanıdır; davet edildiğinde gel.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Tasarımla ilgili sürtünmeyi veriyle getir.** "Tasarım geç kaldı" değil: hangi story, kaç gün, neden.
+- **Rüzgârı da yaz.** İyi giden tasarım alışkanlıkları görünür olursa sürdürülür.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Retronun amacı kaliteyi ve etkililiği artırmanın yollarını planlamaktır; bir suçlama oyunu değildir.
+- Beş aşama: ortamı hazırla, veri topla, içgörü üret, ne yapacağına karar ver, kapat.
+- Format takımın ihtiyacına göre seçilir: Mad Sad Glad, Başla-Bırak-Sürdür, Sailboat, Zaman çizgisi, 5 Neden.
+- Retronun tek ürünü, sahibi olan, kontrol edilebilen bir iki eylemdir.
+- Bir önceki retronun eylemleri bir sonrakinin ilk gündem maddesidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir retrospektifin beş aşaması nedir?">
+
+Ortamı hazırla, veri topla, içgörü üret, ne yapacağına karar ver ve retroyu kapat.
+
+</SelfCheck>
+
+<SelfCheck question="Sailboat ile 5 Neden aynı aşamada mı kullanılır?">
+
+Hayır. Sailboat veri toplar: neyin ileri ittiğini, neyin geri çektiğini görünür kılar. 5 Neden içgörü üretir: toplanan verideki en önemli sorunun kök nedenine iner. Genellikle önce Sailboat, sonra 5 Neden gelir.
+
+</SelfCheck>
+
+<SelfCheck question="Takım üç retrodur aynı sorunu yazıyor ama hiçbir şey değişmiyor. Ne yaparsın?">
+
+Retronun üçüncü ve dördüncü aşamaları muhtemelen atlanıyor. Sorunun kök nedenini 5 Neden gibi bir etkinlikle ararsın. Sonra tek bir eylem yazdırırsın: sahibi ve kontrol tarihi olan. Bir sonraki retroya o eylemin kontrolüyle başlarsın.
+
+</SelfCheck>
+
+<SelfCheck question="Bir yönetici, rapor için her retroya katılmak istiyor. Ne dersin?">
+
+Retro, takımın sorunları açıkça konuşabildiği bir yerdir; rapor toplama amacıyla katılım bu açıklığı bozabilir. Takımın kararına bırakırsın. Yöneticinin bakış açısının gerektiği bir konu varsa o retroya özellikle davet edilir. Takım yöneticileri dışarıda tutmayı seçerse onlarla ayrıca, düzenli retrolar yapmak bir seçenektir.
+
+</SelfCheck>

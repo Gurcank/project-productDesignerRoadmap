@@ -1,0 +1,187 @@
+---
+summary: "Scrum Rehberi kısa ama kesindir: ampirizm ve yalın düşünce, üç sütun, beş değer, üç sorumluluk, beş olay, üç eser ve her esere bağlı bir taahhüt. Yaygın pratiklerin bir kısmı ise rehberde hiç geçmez."
+outcomes:
+  - "Scrum'ın neden çalıştığını ampirizmin üç sütunuyla açıklayabilirsin."
+  - "Üç eseri ve onlara bağlı üç taahhüdü eşleştirebilirsin."
+  - "Sprint boyunca hangi kuralların geçerli olduğunu ve kimin sprinti iptal edebileceğini söyleyebilirsin."
+  - "Rehberde olmayan yaygın pratikleri ayırt edebilirsin."
+minutes: 9
+standard: 2
+sources:
+  - label: "Scrum Guide (Kasım 2020)"
+    url: "https://scrumguides.org/scrum-guide.html"
+  - label: "Scrum.org — Ready or Not? Demystifying the Definition of Ready"
+    url: "https://www.scrum.org/resources/blog/ready-or-not-demystifying-definition-ready-scrum"
+additions:
+  - "Scrum teorisi, değerler, sorumluluklar, olaylar, eserler ve taahhütler (Scrum Guide 2020)"
+  - "Definition of Ready'nin Scrum'ın parçası olmaması (Scrum.org)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Deeper from "~/components/lesson/Deeper.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Yeni katılan Can, ilk sprint planlamasında üç şey sordu. "Story point Scrum'ın kuralı mı?" "Daily'de herkes üç soruyu cevaplamak zorunda mı?" "Hazır tanımı olmayan bir story sprinte alınabilir mi?" Ekipte herkesin bir cevabı vardı, ama cevaplar birbirini tutmuyordu.
+
+Üç sorunun ortak bir cevabı var: rehbere bakmak. Scrum Rehberi kısa bir belgedir ve Scrum'ın tanımı yalnız oradadır. Bu ders rehberi dikkatle okur. Hem ne dediğine hem de ne demediğine bakar.
+
+## Scrum neden çalışır?
+
+Rehber Scrum'ı şöyle tanımlar: insanların, takımların ve kurumların karmaşık sorunlara uyarlanabilir çözümlerle değer üretmesine yardım eden **hafif bir çerçeve**. Çerçeve bilerek eksik bırakılmıştır. Yalnız gerekli parçaları tanımlar; geri kalanını kullananların ortak aklına bırakır.
+
+Scrum iki düşünceye dayanır:
+
+- **Ampirizm** (empiricism): bilgi deneyimden gelir; kararlar gözleneni temel alır.
+- **Yalın düşünce** (lean thinking): israfı azaltır, öze odaklanır.
+
+Ampirizmin üç **sütunu** vardır:
+
+1. **Şeffaflık:** iş ve süreç, işi yapanlara da işi alanlara da görünür olmalıdır.
+2. **Denetim:** eserler ve hedefe doğru ilerleme sık ve dikkatle incelenir.
+3. **Uyarlama:** bir şey kabul edilebilir sınırların dışına çıkarsa, olabildiğince çabuk düzeltilir.
+
+Rehber üçünü birbirine bağlar. Şeffaflık olmadan denetim yanıltıcıdır. Uyarlama olmadan denetim anlamsızdır.
+
+Scrum'ın **beş değeri** de vardır: bağlılık, odak, açıklık, saygı ve cesaret. Değerler yaşandığında sütunlar canlanır ve güven oluşur.
+
+## Takım ve sorumluluklar
+
+Scrum Takımı bir Scrum Master, bir Product Owner ve Geliştiricilerden oluşur. İçinde alt takım ya da hiyerarşi yoktur. Genellikle 10 ya da daha az kişidir. Takım **çapraz işlevlidir**: her sprintte değer üretmek için gereken bütün beceriler içindedir. Ve **kendi kendini yönetir**: kimin neyi, ne zaman ve nasıl yapacağına içeride karar verir.
+
+Rehber üç **sorumluluk** (accountability) tanımlar: Geliştiriciler, Product Owner ve Scrum Master. "Rol" değil "sorumluluk" kelimesi bilerek seçilmiştir: bir kişinin unvanı değil, neyden hesap verdiği tanımlanır. PO ve SM'nin işini bu bölümdeki ayrı dersler anlatıyor.
+
+## Olaylar, eserler ve taahhütler
+
+**Sprint**, diğer bütün olayları içine alan bir kaptır. Süresi sabittir ve en çok bir aydır. Biri biter bitmez yenisi başlar. İçinde dört olay vardır: sprint planlama, Daily Scrum, sprint review ve sprint retrospektifi. Sprint'in kendisiyle birlikte **beş olay** eder.
+
+| Olay | Amaç | Bir aylık sprintte en çok |
+|---|---|---|
+| Sprint planlama | Neden değerli, ne yapılacak, nasıl yapılacak | 8 saat |
+| Daily Scrum | Sprint hedefine ilerlemeyi denetlemek, planı uyarlamak | 15 dakika |
+| Sprint review | Sonucu paydaşlarla incelemek, sonrasını belirlemek | 4 saat |
+| Sprint retrospektifi | Kaliteyi ve etkililiği artırmanın yollarını planlamak | 3 saat |
+
+Daha kısa sprintlerde bu süreler genellikle daha kısadır.
+
+Scrum'ın üç **eseri** (artifact) vardır. Her biri bir **taahhüt** taşır. Taahhüt, eserin neye göre ölçüleceğini söyler.
+
+<Layers
+  label="Üç eser ve üç taahhüt"
+  caption="Ürün backlog'unun taahhüdü ürün hedefidir: backlog'daki her şey o uzun vadeli hedefe hizmet eder. Sprint backlog'unun taahhüdü sprint hedefidir: sprintin tek amacı. Artımın taahhüdü bitti tanımıdır: bir iş bu tanımı karşılamadan artımın parçası sayılmaz. Yukarıdan aşağı ufuk kısalır: aylar, iki hafta, tek bir parça."
+  layers={[
+    { title: "Ürün backlog'u → ürün hedefi", sub: "uzun vadeli hedef; biri bitmeden diğeri alınmaz", tone: "accent" },
+    { title: "Sprint backlog'u → sprint hedefi", sub: "sprintin tek amacı; iş değişir, hedef kalır" },
+    { title: "Artım → bitti tanımı", sub: "tanımı karşılamayan iş artım sayılmaz", tone: "progress" },
+  ]}
+/>
+
+## Sprint boyunca geçerli kurallar
+
+Rehber sprint için dört kural koyar:
+
+- Sprint hedefini tehlikeye atacak değişiklik yapılmaz.
+- Kalite düşmez.
+- Ürün backlog'u gerektikçe iyileştirilir.
+- Kapsam, öğrenildikçe Product Owner'la netleştirilir ve yeniden konuşulur.
+
+Sprint hedefi geçersiz hâle gelirse sprint iptal edilebilir. **İptal yetkisi yalnız Product Owner'dadır.**
+
+Bitti tanımını karşılamayan bir iş yayınlanamaz, review'da gösterilemez bile. Ürün backlog'una geri döner.
+
+## Rehberin söylemedikleri
+
+Can'ın üç sorusuna dönelim. Üçünün de cevabı rehberde yok, çünkü üçü de rehberde geçmez.
+
+- **Story point ve velocity** rehberde yoktur. Rehber yalnız Geliştiricilerin boyutlamadan sorumlu olduğunu söyler; nasıl yapılacağını söylemez.
+- **Daily'nin üç sorusu** 2020 sürümünde kaldırıldı. Geliştiriciler istedikleri yapıyı seçer; yeter ki sprint hedefine odaklansın ve ertesi gün için eyleme dönük bir plan çıksın.
+- **Hazır tanımı** (Definition of Ready) rehberde yoktur. Rehber yalnız bir sprintte bitirilebilecek öğelerin seçime hazır sayıldığını söyler. Scrum.org'un bir yazısı hazır tanımını isteğe bağlı, tamamlayıcı bir pratik olarak anlatır ve bir kapıya dönüşmemesi için uyarır.
+
+Bunlar yasak değildir. Ama "Scrum böyle der" diye savunulamazlar. Rehberin son notu da açıktır: Scrum'ın yalnız bir kısmını uygulamak mümkündür, ama sonuç Scrum değildir.
+
+<Case>
+
+Kaan, Can'ın sorularını bir sonraki retroda rehberle cevapladı:
+
+1. **Story point:** rehberde yok. Takım kullanmaya devam etti, çünkü planlamada işine yarıyordu. Ama "Scrum gerektiriyor" cümlesini bıraktı.
+2. **Üç soru:** rehberden kalktığını gösterdi. Takım Daily'yi panonun üzerinden, sağdan sola, yani bitmeye en yakın işten başlayarak yapmaya karar verdi.
+3. **Hazır tanımı:** takımın kısa bir hazırlık listesi vardı. Kaan bunun bir kapı değil, refinement için bir hatırlatma olduğunu yazdırdı.
+4. **Sprint hedefi:** Sprint 14'ün hedefi yazılmamıştı. Deniz bir hedef önerdi, takımla birlikte son hâline getirdi: "Müşteri son siparişini tek dokunuşla tekrarlayabilsin."
+
+</Case>
+
+<Tool slug="sprint-hedefi" />
+
+<Lenses>
+<Lens role="scrum-master">
+
+- **Rehberi ezbere değil, yanında taşı.** "Scrum böyle der" tartışmalarının çoğu iki dakikalık bir okumayla biter.
+- **Sütunları denetle.** Pano gerçeği göstermiyorsa (şeffaflık), review gösteri olmuşsa (denetim) ya da retrodan değişiklik çıkmıyorsa (uyarlama) Scrum çalışmaz.
+- **Ekleri adıyla an.** Story point ve hazır tanımı takımın seçimidir; öyle söyle.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Sprint hedefini sen önerirsin, takım birlikte son hâline getirir.** Planlama bitmeden hedef yazılmış olmalı.
+- **İptal yetkisi sende.** Hedef geçersiz olduysa sprinti sürdürmek israftır; ama iptal nadir ve gerekçeli bir karar olmalı.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Ürün hedefini PO'yla birlikte netleştir.** Rehbere göre takım bir ürün hedefini bitirmeden ya da bırakmadan diğerine geçmez.
+- **Review'a paydaş olarak gel.** Review bir sunum değil, ne yapılacağına birlikte karar verilen bir çalışma oturumudur.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Tarih sözünü sprint hedefine bağla.** Sprint hedefi, takımın iki haftalık taahhüdüdür; proje kilometre taşlarını onunla hizala.
+- **Sprintin ortasına iş ekletme.** Hedefi tehlikeye atan değişiklik kurala aykırıdır; acil işi PO'yla konuş.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Scrum ampirizme ve yalın düşünceye dayanan, bilerek eksik bırakılmış hafif bir çerçevedir.
+- Ampirizmin üç sütunu şeffaflık, denetim ve uyarlamadır; beş değer bağlılık, odak, açıklık, saygı ve cesarettir.
+- Beş olay vardır: sprint ve içindeki planlama, Daily Scrum, review ve retrospektif.
+- Üç eserin üç taahhüdü vardır: ürün hedefi, sprint hedefi ve bitti tanımı.
+- Story point, velocity, daily'nin üç sorusu ve hazır tanımı rehberde geçmez; takımın seçimidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Ampirizmin üç sütunu nedir ve birbirine nasıl bağlıdır?">
+
+Şeffaflık, denetim ve uyarlama. Şeffaflık denetimi mümkün kılar; şeffaflık olmadan denetim yanıltıcıdır. Denetim uyarlamayı mümkün kılar; uyarlama olmadan denetim anlamsızdır.
+
+</SelfCheck>
+
+<SelfCheck question="Scrum'ın üç eseri ve onlara bağlı taahhütler nelerdir?">
+
+Ürün backlog'u ve ürün hedefi, sprint backlog'u ve sprint hedefi, artım ve bitti tanımı.
+
+</SelfCheck>
+
+<SelfCheck question="Sprintin ortasında bir yönetici takıma acil bir iş eklemek istiyor. Rehbere göre ne yapılır?">
+
+Sprint hedefini tehlikeye atacak değişiklik yapılmaz. Kapsam, öğrenildikçe Product Owner'la yeniden konuşulabilir. Yönetici isteğini PO'ya iletir; PO, hedefi bozmadan nelerin değişebileceğini takımla konuşur. Hedef geçersiz olduysa sprinti yalnız PO iptal edebilir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir ekip 'Story point kullanmıyorsanız Scrum yapmıyorsunuz' diyor. Doğru mu?">
+
+Hayır. Story point rehberde geçmez. Rehber yalnız Geliştiricilerin boyutlamadan sorumlu olduğunu söyler. Story point kullanmak bir seçimdir; Scrum'ın şartı değildir.
+
+</SelfCheck>
+
+<Deeper title="Rehberin kısa tarihi">
+
+Ken Schwaber ve Jeff Sutherland Scrum'ı ilk kez 1995'te OOPSLA konferansında birlikte sundu. Rehberin ilk sürümü 2010'da yazıldı. O zamandan beri küçük, işlevsel güncellemelerle gelişti. 2020 sürümü "Geliştirme Takımı" ayrımını kaldırıp tek bir Scrum Takımı tanımladı ve rolleri sorumluluk olarak yeniden adlandırdı.
+
+</Deeper>

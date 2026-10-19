@@ -67,6 +67,12 @@ content koleksiyonu eklediysen de dev sunucusu yeniden başlatılmalı.
 **Diyagram etiketi sığmazsa build kırılır** (`primitives/util.ts`). Dev'de belirti: ders sayfası
 açılır ama gövde boştur; sebep sunucu günlüğündedir ("Diyagram etiketi sığmıyor").
 
+**Betiğin oluşturduğu öğe kapsamlı CSS almaz.** Demo betiği `document.createElement` ile öğe
+üretiyorsa, o öğenin kuralı `<style>` içinde `.kok :global(.oge)` olarak yazılır. Yoksa ilk çizim
+doğru görünür, ilk etkileşimden sonra öğeler stilsiz kalır ve hata da vermez.
+
+**Paragrafı sıra sayısıyla başlatma.** "7. haftada…" Markdown'da numaralı liste olur; yazıyla yaz.
+
 **Astro 7 markdown eklentileri.** `markdown.rehypePlugins` artık kabul edilmiyor; `processor:
 unified({...})` kullanılıyor. Nedeni ve ödünleşimi ADR-010'da.
 

@@ -171,6 +171,49 @@ const PM_FOR_BUSINESS_ANALYST: TopicTiers = {
   "program-portfoy-ve-pmo": I,
 };
 
+/**
+ * Çevik Pratikler is Önerilen for four roles; the steps that are a Scrum Master's
+ * or Product Owner's craft (flow metrics, the SM's job, scaling) are left for later
+ * on their paths. Çalışma Biçimi is Önerilen for UX Researcher as a whole, but its
+ * estimation and Kanban mechanics are not.
+ */
+const AGILE_FOR_PRODUCT_DESIGNER: TopicTiers = {
+  "scrum-rehberi": I,
+  "product-owner-isi": I,
+  "scrum-master-isi": I,
+  "akis-metrikleri-ve-cfd": I,
+  "ongoru-velocity-ve-monte-carlo": I,
+  "olcekleme-safe-less-spotify": I,
+  "anti-paternler": I,
+};
+
+const AGILE_FOR_PRODUCT_MANAGER: TopicTiers = {
+  "scrum-master-isi": I,
+  "retro-formatlari": I,
+  "akis-metrikleri-ve-cfd": I,
+};
+
+const AGILE_FOR_PROJECT_MANAGER: TopicTiers = {
+  "product-owner-isi": I,
+  "refinement-invest-ve-story-bolme": I,
+  "story-mapping": I,
+};
+
+const AGILE_FOR_BUSINESS_ANALYST: TopicTiers = {
+  "scrum-rehberi": I,
+  "scrum-master-isi": I,
+  "retro-formatlari": I,
+  "akis-metrikleri-ve-cfd": I,
+  "ongoru-velocity-ve-monte-carlo": I,
+  "olcekleme-safe-less-spotify": I,
+  "anti-paternler": I,
+};
+
+const WAYS_OF_WORKING_FOR_RESEARCHER: TopicTiers = {
+  "tahmin-ve-olcum-story-point-velocity-capacity": I,
+  kanban: I,
+};
+
 export const ROLES: RoleDefinition[] = [
   {
     id: "product-designer",
@@ -190,7 +233,7 @@ export const ROLES: RoleDefinition[] = [
       entry("arayuz-anatomisi", T),
       entry("urun-yonetimi", O),
       entry("urun-analitigi", O),
-      entry("cevik-pratikler", O),
+      entry("cevik-pratikler", O, AGILE_FOR_PRODUCT_DESIGNER),
       entry("front-end", O),
       entry("programlama-dilleri", I),
       entry("frameworkler", I),
@@ -226,7 +269,7 @@ export const ROLES: RoleDefinition[] = [
       entry("is-ve-strateji", T),
       entry("ux-ui-ilkeleri", O),
       entry("erisilebilirlik", O),
-      entry("cevik-pratikler", O),
+      entry("cevik-pratikler", O, AGILE_FOR_PRODUCT_MANAGER),
       entry("proje-yonetimi", O, PM_FOR_PRODUCT_MANAGER),
       entry("is-analizi", O),
       entry("web-temelleri", O),
@@ -291,7 +334,7 @@ export const ROLES: RoleDefinition[] = [
       entry("sirket-sozlugu", T),
       entry("iletisim-ve-paydaslar", T),
       entry("proje-yonetimi", T),
-      entry("cevik-pratikler", O),
+      entry("cevik-pratikler", O, AGILE_FOR_PROJECT_MANAGER),
       entry("is-analizi", O),
       entry("is-ve-strateji", O),
       entry("web-temelleri", O),
@@ -360,7 +403,7 @@ export const ROLES: RoleDefinition[] = [
       entry("urun-analitigi", O),
       entry("is-ve-strateji", O),
       entry("proje-yonetimi", O, PM_FOR_BUSINESS_ANALYST),
-      entry("cevik-pratikler", O),
+      entry("cevik-pratikler", O, AGILE_FOR_BUSINESS_ANALYST),
       entry("web-temelleri", O),
       entry("back-end-api", O, { ...BACKEND_MECHANICS, "http-metodlari": O }),
       entry("veritabani", O, {
@@ -393,7 +436,7 @@ export const ROLES: RoleDefinition[] = [
       entry("urun-gelistirme", T),
       entry("sirket-sozlugu", T),
       entry("erisilebilirlik", T),
-      entry("calisma-bicimi", O),
+      entry("calisma-bicimi", O, WAYS_OF_WORKING_FOR_RESEARCHER),
       entry("iletisim-ve-paydaslar", O),
       entry("urun-analitigi", O),
       entry("urun-yonetimi", O),

@@ -200,7 +200,7 @@ const area = `${upper} ${[...CONE_STAGES].reverse().map((s, i) => `${xAt(CONE_ST
     color: var(--c-text-secondary);
   }
 
-  .cone__result strong {
+  .cone__result :global(strong) {
     color: var(--c-text);
     font-variant-numeric: tabular-nums;
   }

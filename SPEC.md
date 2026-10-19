@@ -61,8 +61,9 @@ eklenebilir manifest · **çevrimdışı okuma** (ADR-012). Çevrimdışı katma
 derlemesinde etkindir; `astro dev` altında service worker kaydedilmez, kalmış olan sökülür —
 gerekçesi ve bedeli ADR-012'de.
 
-**Var — Araçlar (Faz 3–4).** `/araclar/`: doldurulmuş örnekli 11 şablon (PRD, RACI, risk kaydı;
-proje tüzüğü, iş gerekçesi, WBS, takvim, RAID, değişiklik talebi, durum raporu, kapanış raporu),
+**Var — Araçlar (Faz 3–5).** `/araclar/`: doldurulmuş örnekli 16 şablon (PRD, RACI, risk kaydı;
+proje tüzüğü, iş gerekçesi, WBS, takvim, RAID, değişiklik talebi, durum raporu, kapanış raporu;
+sprint hedefi, çalışma sözleşmesi, retro panosu, hazır ve bitti tanımı, Gherkin story),
 Markdown ve Türkçe Excel'de açılan CSV indirmeleri (ADR-021).
 
 **Var — Proje Yönetimi (Faz 4).** Materyal dışı ilk tam kategori: 18 v2 ders (yaşam döngüsü,
@@ -70,6 +71,12 @@ standartlar, tüzük, WBS, tahmin, kritik yol, Gantt, kaynak, EVM, risk, RAID, d
 RAG raporu, tedarik, kapanış, program/portföy), 3 demo (belirsizlik konisi, kritik yol, EVM),
 10 soruluk yazılmış quiz, 30 terim. Kapsam haritası `docs/icerik/kapsam-proje-yonetimi.md`;
 birincil kaynak Watt, *Project Management* (CC BY 4.0).
+
+**Var — Çevik Pratikler (Faz 5).** 13 v2 ders (Manifesto ve 12 ilke, Scrum Rehberi, PO ve SM'nin işi,
+kolaylaştırma, retro formatları, refinement ve story bölme, story mapping, akış metrikleri ve CFD,
+Monte Carlo öngörü, takım dinamikleri, ölçekleme, anti-paternler), Monte Carlo demosu, 10 soruluk quiz,
+27 terim. Çalışma Biçimi'nin 7 dersi v2'ye taşındı; Scrum dersindeki "beş toplantı" hatası
+düzeltildi (beş olay = sprint + dört olay). Kapsam haritası `docs/icerik/kapsam-cevik-pratikler.md`.
 
 **Henüz yok — planlı, yapılmadı.** EN arayüz (`/en/`, `src/i18n`): kullanıcı ertelemeyi seçti,
 şu an TR tek dil · Araçlar'da kontrol listeleri, proje akış haritası, çalışma takvimi ve diğer

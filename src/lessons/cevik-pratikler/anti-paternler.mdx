@@ -1,0 +1,149 @@
+---
+summary: "Anti-patern, iyi niyetle yapılan ama çerçevenin amacını bozan bir uygulamadır. Çoğu, Scrum ya da Kanban rehberindeki bir kuralın sessizce atlanmasıdır; hangi kuralın atlandığını bilmek, düzeltmenin de yolunu gösterir."
+outcomes:
+  - "Yaygın Scrum ve Kanban anti-paternlerini tanıyabilirsin."
+  - "Her anti-paternin hangi kuralı ve hangi ampirik sütunu bozduğunu söyleyebilirsin."
+  - "Bir anti-paterni suçlamadan, kuralın amacından yola çıkarak düzeltmeyi önerebilirsin."
+minutes: 8
+standard: 2
+sources:
+  - label: "Scrum Guide (Kasım 2020)"
+    url: "https://scrumguides.org/scrum-guide.html"
+  - label: "The Kanban Guide (Mayıs 2025)"
+    url: "https://kanbanguides.org/the-kanban-guide/2025.5/"
+  - label: "Scrum.org — Ready or Not? Demystifying the Definition of Ready"
+    url: "https://www.scrum.org/resources/blog/ready-or-not-demystifying-definition-ready-scrum"
+additions:
+  - "Anti-paternlerin Scrum Guide ve Kanban Guide kurallarıyla eşleştirilmesi"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Elif, başka bir şirkette çalışan bir arkadaşının cümlesini aktardı: "Biz de Scrum yapıyoruz ama işe yaramıyor." Sorduğunda arkadaşı anlattı. Sprint hedefi yoktu. Daily, yöneticiye durum raporuydu. Review bir slayt sunumuydu. Retro iki ayda bir yapılıyordu.
+
+Bunların her biri tek başına küçük bir esneme gibi görünür. Ama Scrum Rehberi'nin son notu açıktır: Scrum'ın yalnız bir kısmını uygulamak mümkündür, ama sonuç Scrum değildir. Bu ders en yaygın esnemeleri ve atladıkları kuralı anlatır.
+
+## Anti-patern nedir?
+
+**Anti-patern**, bir sorunu çözmek için yaygın olarak kullanılan, ama çözdüğünden daha fazla sorun yaratan bir uygulamadır. Çevik takımlarda çoğu anti-patern bir kuralın atlanmasıdır. Kural genellikle bir ampirik sütunu korur: şeffaflık, denetim ya da uyarlama.
+
+Scrum Rehberi bu sütunları birbirine bağlar: şeffaflık olmadan denetim yanıltıcıdır; uyarlama olmadan denetim anlamsızdır. Bu yüzden bir anti-paterni tanımanın en iyi yolu, hangi sütunu bozduğunu sormaktır.
+
+<Layers
+  label="Anti-paternlerin bozduğu üç sütun"
+  caption="Bazı anti-paternler şeffaflığı bozar: pano gerçeği göstermez, sorun görünmez. Bazıları denetimi bozar: hedef olmadığı ya da review bir sunuma dönüştüğü için neyin incelendiği belli olmaz. Bazıları da uyarlamayı bozar: retro yapılır ama hiçbir şey değişmez. Alttaki sütun bozulduğunda üsttekiler de çalışmaz: görünmeyen şey denetlenemez, denetlenmeyen şey düzeltilemez."
+  layers={[
+    { title: "Uyarlama bozulur", sub: "eylemsiz retro, aynı sorun tekrar eder", tone: "progress" },
+    { title: "Denetim bozulur", sub: "hedefsiz sprint, slayt review'ı" },
+    { title: "Şeffaflık bozulur", sub: "rapor Daily'si, gizli WIP, 'neredeyse bitti'", tone: "accent" },
+  ]}
+/>
+
+## Scrum anti-paternleri
+
+| Anti-patern | Atlanan kural (Scrum Rehberi) | Bozulan sütun |
+|---|---|---|
+| **Hedefsiz sprint** | Sprint hedefi, sprint planlama bitmeden yazılmış olmalıdır. | Denetim |
+| **Rapor Daily'si** | Daily Scrum, Geliştiricilerin sprint hedefine ilerlemeyi denetlediği ve ertesi gün için plan çıkardığı bir olaydır. | Şeffaflık |
+| **Slayt review'ı** | Review bir çalışma oturumudur; takım onu bir sunuma indirgememelidir. | Denetim |
+| **Eylemsiz retro** | Retro en yararlı değişiklikleri belirler; en etkili olanlar hemen ele alınır. | Uyarlama |
+| **Sprint ortasında iş ekleme** | Sprint hedefini tehlikeye atacak değişiklik yapılmaz. | Denetim |
+| **Product Owner komitesi** | PO bir kişidir, komite değildir. | Şeffaflık |
+| **"Neredeyse bitti"** | Bitti tanımını karşılamayan iş review'da gösterilemez; backlog'a döner. | Şeffaflık |
+
+İki anti-patern rehberde açıkça geçmez, ama yaygındır:
+
+- **Velocity'yi takımlar arasında karşılaştırmak.** Story point ve velocity rehberde yoktur. Story point göreli bir ölçüdür; iki takımın puanı aynı şeyi ölçmez. Velocity'nin bir performans göstergesi olmadığını [Tahmin ve ölçüm](/calisma-bicimi/tahmin-ve-olcum-story-point-velocity-capacity/) dersi anlatıyor.
+- **Hazır tanımını kapıya çevirmek.** Scrum.org'daki bir yazı uyarı işaretlerini sayar: listeye tam uyulmadı diye işe başlanmaması ve bitti tanımından çok hazır tanımına dikkat edilmesi.
+
+## Kanban anti-paternleri
+
+Kanban'ın da sık atlanan kuralları vardır:
+
+- **WIP'siz Kanban.** Kanban Rehberi'ne göre takım, iş akışındaki öğe sayısını **açıkça kontrol etmek zorundadır.** WIP kontrolü olmayan bir pano, Kanban değil, bir yapılacaklar listesidir.
+- **Metriksiz Kanban.** Rehber dört akış metriğini zorunlu tutar: WIP, throughput, iş öğesi yaşı ve cycle time. Ölçülmeyen akış iyileştirilemez.
+- **Yaşlanan kartlar.** Aktif yönetim, öğelerin SLE'ye bakarak gereksiz yere yaşlanmamasını sağlamayı içerir. Haftalardır aynı sütunda duran kart, kimsenin bakmadığı bir sorundur.
+
+**Anti-patern ≠ kötü niyet.** Rapor Daily'si çoğu zaman bir yöneticinin bilgi ihtiyacından, PO komitesi paydaşları kırmama isteğinden doğar. Düzeltme, kişiyi değil, kuralın amacını konuşarak yapılır.
+
+<Case>
+
+Elif arkadaşına bir liste gönderdi. Sonra kendi takımına da aynı gözle baktı:
+
+1. **Hedef:** Sprint 13'te hedef yazılmamıştı. Sprint 14'ten beri planlama hedef yazılmadan bitmiyor.
+2. **Daily:** bir dönem Daily'ye Hakan da katılıp durum soruyordu. Kaan, Hakan'a durumu review'da ve haftalık durum raporunda göstermeyi önerdi; Daily yeniden Geliştiricilerin oldu.
+3. **Review:** review'lar canlı üründe yapılıyordu. Ama paydaşlar konuşmuyordu. Deniz review'ın sonuna "sırada ne var?" sorusunu koydu.
+4. **Panel takımı:** test sütununun WIP limiti vardı, ama aşıldığında kimse durmuyordu. Takım kuralı iş akışı tanımına yazdı.
+5. **Bulamadıkları:** velocity karşılaştırması yoktu; iki takım farklı yöntemle çalıştığı için bu hiç gündeme gelmemişti.
+
+Elif'in arkadaşına son cümlesi şuydu: "Scrum işe yaramıyor değil; Scrum'ın yarısı işe yaramıyor."
+
+</Case>
+
+<Lenses>
+<Lens role="scrum-master">
+
+- **Her anti-paterni bir kurala bağla.** "Böyle yapmayalım" yerine "rehber bunu şu yüzden istiyor" demek, tartışmayı kişiden amaca taşır.
+- **Önce şeffaflığı düzelt.** Görünmeyen sorun denetlenemez; diğer düzeltmeler oradan başlar.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Hedefsiz sprinte izin verme.** Sprint hedefini önermek senin işin; hedef yoksa sprint bir görev listesidir.
+- **Review'ı bir karar oturumuna çevir.** Paydaşlara "sırada ne var?" sorusunu sormak, sunumu çalışmaya dönüştürür.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Takımlar arası velocity karşılaştırmasını durdur.** Ürün sonuçlarını karşılaştır; story point'i değil.
+- **Bilgi ihtiyacını doğru olaydan karşıla.** Durumu Daily'den değil, review'dan ve raporlardan öğren.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Raporlama için takımın olaylarını kullanma.** Daily'yi bir durum toplantısına çevirmek, Geliştiricilerin planlama alanını bozar.
+- **Sprint ortası değişikliği PO'dan geçir.** Acil bir proje isteği bile sprint hedefini bozmadan konuşulmalıdır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Anti-patern, iyi niyetle yapılan ama çerçevenin amacını bozan bir uygulamadır.
+- Çoğu anti-patern bir kuralın atlanmasıdır ve bir ampirik sütunu bozar: şeffaflık, denetim ya da uyarlama.
+- Yaygın Scrum anti-paternleri: hedefsiz sprint, rapor Daily'si, slayt review'ı, eylemsiz retro, sprint ortasında iş ekleme, PO komitesi, "neredeyse bitti".
+- Yaygın Kanban anti-paternleri: WIP kontrolü olmaması, akış metriklerinin ölçülmemesi, yaşlanan kartların görmezden gelinmesi.
+- Düzeltme, kişiyi suçlayarak değil, kuralın amacını konuşarak yapılır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Rapor Daily'si' hangi kuralı atlar ve hangi sütunu bozar?">
+
+Daily Scrum'ın Geliştiricilerin sprint hedefine ilerlemeyi denetlediği ve ertesi gün için plan çıkardığı bir olay olmasını atlar. Toplantı bir yöneticiye rapora dönüşünce takım sorunlarını açıkça söylemez; şeffaflık bozulur.
+
+</SelfCheck>
+
+<SelfCheck question="Bir panoda sütunlar var ama WIP limiti yok. Bu Kanban mıdır?">
+
+Kanban Rehberi'ne göre değildir. Rehber, iş akışındaki öğe sayısının açıkça kontrol edilmesini zorunlu tutar. WIP kontrolü olmayan bir pano bir yapılacaklar listesidir.
+
+</SelfCheck>
+
+<SelfCheck question="Review'da iki story 'neredeyse bitti' diye gösterildi. Ne olması gerekirdi?">
+
+Bitti tanımını karşılamayan iş review'da gösterilemez; ürün backlog'una geri döner. "Neredeyse bitti" demek, paydaşlara gerçekte olmayan bir ilerleme gösterir ve şeffaflığı bozar.
+
+</SelfCheck>
+
+<SelfCheck question="Bir yönetici iki takımın velocity'sini karşılaştırıp düşük olana baskı yapıyor. Ne dersin?">
+
+Story point göreli bir ölçüdür; iki takımın puanı aynı şeyi ölçmez. Velocity bir planlama aracıdır, performans göstergesi değildir. Baskı, takımları puanları şişirmeye iter ve ölçüyü anlamsızlaştırır. Bunun yerine ürün sonuçlarını ya da sprint hedeflerine ulaşmayı birlikte incelemeyi önerirsin.
+
+</SelfCheck>

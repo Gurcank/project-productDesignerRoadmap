@@ -1,0 +1,228 @@
+---
+/**
+ * "When will these items be done?" as a Monte Carlo forecast: the team's real
+ * weekly throughput in, a distribution of finishing weeks out. Each bar says
+ * how many of the simulated futures finished by that week, cumulatively, so
+ * the bar where the line crosses 85% is the answer to "how sure do you want
+ * to be?". The point the demo makes is the lesson's: the honest answer is a
+ * range with a probability, and its width is feedback about the system.
+ *
+ * Seeded, so the server-rendered example and the script agree; without
+ * JavaScript the figure is a worked example.
+ */
+import DemoFrame from "./DemoFrame.astro";
+import { forecastWeeks } from "~/lib/demos/monte-carlo";
+
+interface Props {
+  history: number[];
+  remaining: number;
+  caption: string;
+}
+
+const { history, remaining, caption } = Astro.props;
+const f = forecastWeeks(history, remaining)!;
+const weeks = [...f.histogram.keys()].sort((a, b) => a - b);
+let running = 0;
+const bars = weeks.map((w) => {
+  running += f.histogram.get(w)!;
+  return { w, pct: Math.round((running / f.runs) * 100) };
+});
+const percent = (n: number) => `%${n}`;
+---
+
+<DemoFrame
+  title="Monte Carlo öngörüsü"
+  hint="Kalan öğe sayısını ya da geçmiş haftaların throughput'unu değiştir; 5.000 olası gelecek yeniden hesaplanır."
+  caption={caption}
+>
+  <div class="mc" data-mc>
+    <div class="mc__inputs">
+      <label class="mc__field">
+        <span>Kalan öğe</span>
+        <input type="number" min="1" max="500" step="1" inputmode="numeric" value={remaining} data-mc-remaining />
+      </label>
+      <label class="mc__field mc__field--wide">
+        <span>Son haftaların throughput'u <small>(virgülle)</small></span>
+        <input type="text" inputmode="numeric" value={history.join(", ")} data-mc-history />
+      </label>
+    </div>
+
+    <p class="mc__result" aria-live="polite" data-mc-result>
+      %50 olasılıkla <strong>{f.percentile(50)} hafta</strong> ya da daha kısa; %85 olasılıkla <strong>{f.percentile(85)} hafta</strong>; %95 olasılıkla <strong>{f.percentile(95)} hafta</strong>.
+    </p>
+
+    <ol class="mc__bars" aria-label="Haftaya göre bitmiş olma olasılığı" data-mc-bars>
+      {
+        bars.map((b) => (
+          <li class:list={["mc__bar", { "is-85": b.pct >= 85 && bars.find((x) => x.pct >= 85)!.w === b.w }]}>
+            <span class="mc__week">{b.w}. hafta</span>
+            <span class="mc__track">
+              <span class="mc__fill" style={`inline-size: ${b.pct}%`} />
+            </span>
+            <span class="mc__pct">{percent(b.pct)}</span>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</DemoFrame>
+
+<script>
+  import { forecastWeeks } from "~/lib/demos/monte-carlo";
+
+  for (const root of document.querySelectorAll<HTMLElement>("[data-mc]")) {
+    const remainingInput = root.querySelector<HTMLInputElement>("[data-mc-remaining]")!;
+    const historyInput = root.querySelector<HTMLInputElement>("[data-mc-history]")!;
+    const result = root.querySelector<HTMLElement>("[data-mc-result]")!;
+    const list = root.querySelector<HTMLElement>("[data-mc-bars]")!;
+    let last = result.textContent ?? "";
+    const strong = (text: string) => Object.assign(document.createElement("strong"), { textContent: text });
+    const update = () => {
+      const history = historyInput.value.split(/[,;\s]+/).filter(Boolean).map(Number);
+      const f = forecastWeeks(history, Math.round(Number(remainingInput.value)));
+      if (!f) {
+        const text = "En az bir haftası sıfırdan büyük bir throughput geçmişi ve kalan öğe sayısı gir.";
+        if (text !== last) result.replaceChildren(text);
+        last = text;
+        list.replaceChildren();
+        return;
+      }
+      const [p50, p85, p95] = [50, 85, 95].map((p) => f.percentile(p));
+      const text = `${p50}-${p85}-${p95}`;
+      if (text !== last) {
+        result.replaceChildren("%50 olasılıkla ", strong(`${p50} hafta`), " ya da daha kısa; %85 olasılıkla ", strong(`${p85} hafta`), "; %95 olasılıkla ", strong(`${p95} hafta`), ".");
+        last = text;
+      }
+      const weeks = [...f.histogram.keys()].sort((a, b) => a - b);
+      let running = 0;
+      let marked = false;
+      list.replaceChildren(
+        ...weeks.map((w) => {
+          running += f.histogram.get(w)!;
+          const pct = Math.round((running / f.runs) * 100);
+          const li = document.createElement("li");
+          li.className = "mc__bar";
+          if (!marked && pct >= 85) {
+            li.classList.add("is-85");
+            marked = true;
+          }
+          const fill = Object.assign(document.createElement("span"), { className: "mc__fill" });
+          fill.style.inlineSize = `${pct}%`;
+          const track = Object.assign(document.createElement("span"), { className: "mc__track" });
+          track.append(fill);
+          li.append(Object.assign(document.createElement("span"), { className: "mc__week", textContent: `${w}. hafta` }), track, Object.assign(document.createElement("span"), { className: "mc__pct", textContent: `%${pct}` }));
+          return li;
+        }),
+      );
+    };
+    root.addEventListener("input", update);
+  }
+</script>
+
+<style>
+  .mc {
+    display: grid;
+    gap: var(--spacing-4);
+  }
+
+  .mc__inputs {
+    display: grid;
+    grid-template-columns: minmax(8rem, 10rem) minmax(0, 1fr);
+    gap: var(--spacing-3);
+  }
+
+  @media (max-width: 30rem) {
+    .mc__inputs {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .mc__field {
+    display: grid;
+    gap: var(--spacing-1);
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .mc__field small {
+    font-size: var(--text-xs);
+    color: var(--c-text-muted);
+  }
+
+  .mc__field input {
+    min-block-size: 44px;
+    inline-size: 100%;
+    padding-inline: var(--spacing-2);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface);
+    color: var(--c-text);
+    font: inherit;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mc__field input:focus-visible {
+    outline: 2px solid var(--c-focus);
+    outline-offset: 2px;
+  }
+
+  .mc__result {
+    color: var(--c-text-secondary);
+  }
+
+  .mc__result :global(strong) {
+    color: var(--c-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mc__bars {
+    display: grid;
+    gap: var(--spacing-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .mc :global(.mc__bar) {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr) 6rem;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mc :global(.mc__track) {
+    block-size: 0.875rem;
+    border-radius: var(--radius-full);
+    background-color: var(--c-surface-sunken);
+    overflow: hidden;
+  }
+
+  .mc :global(.mc__fill) {
+    display: block;
+    block-size: 100%;
+    background-color: var(--c-action);
+  }
+
+  .mc :global(.mc__pct) {
+    text-align: end;
+  }
+
+  .mc :global(.mc__bar.is-85) {
+    color: var(--c-text);
+    font-weight: 600;
+  }
+
+  .mc :global(.mc__bar.is-85 .mc__fill) {
+    background-color: var(--c-progress);
+  }
+
+  .mc :global(.mc__bar.is-85 .mc__pct::after) {
+    content: " ← %85";
+    font-weight: 400;
+    color: var(--c-progress-text);
+  }
+
+</style>

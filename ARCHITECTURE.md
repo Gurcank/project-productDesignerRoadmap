@@ -457,7 +457,10 @@ bileşendi. Yüzlerce derse görsel eklemek için her şekli baştan çizmek öl
   edilir; JS'siz de öğretir. Kartlar yeniden dizilmez (görsel sıra = odak sırası). RICE demosu 574
   bayt gzip. Faz 4'te üç demo daha: belirsizlik konisi (737 B), kritik yol (1.093 B, `Network`
   ilkeliyle aynı `criticalPath` fonksiyonunu kullanır) ve kazanılmış değer (786 B). Duyurular
-  (`aria-live`) yalnız sonuç değişince yapılır, her tuş vuruşunda değil.
+  (`aria-live`) yalnız sonuç değişince yapılır, her tuş vuruşunda değil. Faz 5'te Monte Carlo öngörüsü
+  (1.008 B; tohumlu üreteç, sunucu ve betik aynı sayıları verir). Betiğin oluşturduğu öğeler Astro'nun
+  kapsamlı CSS özniteliğini taşımaz; onların kuralları `:global()` ile kök sınıfın altına yazılır
+  (`.mc :global(.mc__bar)`). Faz 5'te ilk etkileşimden sonra stilsiz kalan çubuklarla yakalandı.
 - **İllüstrasyonlar** (`src/assets/illustrations/*.svg`): yalnız `il-*` sınıfları; renkler
   `--c-illu-*` token'larından. `<Illustration>` satır içi gömer (public/ değil: SW hash'siz
   dosyayı sonsuza dek tutar). `validate` ham renk, öznitelik rengi, betik/dış referans, viewBox ve 12

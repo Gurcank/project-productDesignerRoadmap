@@ -1,0 +1,160 @@
+---
+summary: "Product Owner ürünün değerini en çoklamaktan ve ürün backlog'unun yönetiminden hesap verir. İşin bir kısmını devredebilir ama hesap onda kalır; tek bir kişidir, komite değildir."
+outcomes:
+  - "Product Owner'ın backlog yönetimindeki dört işini sayabilirsin."
+  - "Hangi işin devredilebileceğini, hangisinin devredilemeyeceğini ayırabilirsin."
+  - "PO'nun kararlarının nerede görünür olduğunu ve neden kurumca saygı görmesi gerektiğini açıklayabilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Scrum Guide (Kasım 2020) — Product Owner, Sprint Planning, Product Backlog"
+    url: "https://scrumguides.org/scrum-guide.html"
+additions:
+  - "Product Owner'ın sorumlulukları ve yetkisi (Scrum Guide 2020)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+
+Pazartesi sabahı Deniz'in masasında üç istek vardı. Satış ekibi grup siparişini istiyordu. Hakan kampüs indiriminin öne alınmasını istiyordu. Müşteri hizmetleri de bildirim hatasının hemen düzeltilmesini istiyordu. Üçü de "acil" diye gelmişti. Üçü de doğrudan geliştiricilere de yazılmıştı.
+
+Deniz'in işi bu üç isteği yapmak değildi. Hangisinin önce geleceğine karar vermek ve bu kararı herkesin görebileceği bir yerde tutmaktı. Bu ders, Product Owner'ın işini Scrum Rehberi'nin tanımıyla anlatır.
+
+## Değeri en çoklamak
+
+Scrum Rehberi'ne göre **Product Owner**, Scrum Takımı'nın çalışmasıyla ortaya çıkan ürünün **değerini en çoklamaktan** hesap verir. Bunun nasıl yapılacağı kurumdan kuruma, takımdan takıma ve kişiden kişiye değişir. Rehber yöntemi değil, sorumluluğu tanımlar.
+
+PO ayrıca **ürün backlog'unun etkili yönetiminden** hesap verir. Bu dört iş demektir:
+
+1. **Ürün hedefini** geliştirmek ve açıkça iletmek.
+2. Ürün backlog'u öğelerini oluşturmak ve açıkça iletmek.
+3. Ürün backlog'u öğelerini **sıralamak**.
+4. Ürün backlog'unun şeffaf, görünür ve anlaşılır olmasını sağlamak.
+
+Sıralama tekniklerini, yani RICE'ı ve benzerlerini [Backlog ve önceliklendirme](/urun-gelistirme/backlog-ve-onceliklendirme/) dersi anlatıyor. Bu ders sıralamanın kimde olduğunu ve neden orada olduğunu anlatır.
+
+## Devretmek ve hesap vermek
+
+PO bu işleri kendisi yapabilir ya da başkasına devredebilir. **Ama hesap her durumda PO'da kalır.** Bir iş analisti story'leri yazabilir. Geliştiriciler kabul kriterlerini ayrıntılandırabilir. Sıralama kararı ise yine PO'nundur.
+
+<Spectrum
+  label="Product Owner'ın işlerinde devredebilirlik"
+  caption="Sol uçta PO'nun devredemeyeceği kararlar durur: backlog'un sırası ve ürün hedefi. Ortada PO'nun önerip takımla birlikte son hâline getirdiği sprint hedefi var. Sağ uçta başkasının yapabileceği işler durur: story yazmak ve kabul kriterlerini ayrıntılandırmak. Hangi uçta olursa olsun, sonuçtan PO hesap verir. Boyutlama bu çizginin dışındadır: onu Geliştiriciler yapar."
+  left={{ title: "Kararı PO verir", sub: "devredilmez" }}
+  right={{ title: "Başkası yapabilir", sub: "hesap PO'da" }}
+  marks={[
+    { label: "Backlog sırası", at: 0.06 },
+    { label: "Ürün hedefi", at: 0.2 },
+    { label: "Sprint hedefi önerisi", at: 0.45 },
+    { label: "Story yazmak", at: 0.75 },
+    { label: "Kabul kriteri ayrıntısı", at: 0.92 },
+  ]}
+/>
+
+**Boyutlama PO'nun işi değildir.** Rehbere göre işi yapacak Geliştiriciler boyutlamadan sorumludur. PO, ödünleşimleri anlamalarına ve seçmelerine yardım ederek onları etkileyebilir.
+
+## Tek kişi, komite değil
+
+Rehber açıktır: **Product Owner bir kişidir, bir komite değildir.** Birçok paydaşın ihtiyacını backlog'da temsil edebilir. Ama backlog'u değiştirmek isteyen biri, bunu **PO'yu ikna ederek** yapar.
+
+Bunun bir ön koşulu vardır: PO'nun başarılı olması için **bütün kurumun kararlarına saygı göstermesi** gerekir. Bu kararlar iki yerde görünür:
+
+- ürün backlog'unun içeriğinde ve sırasında,
+- sprint review'da incelenen artımda.
+
+Satış ekibi grup siparişini doğrudan geliştiricilere yazdığında, PO'nun kararı atlanmış olur. Takımın iki ayrı sıralaması olur: biri backlog'da, biri mesaj kutularında.
+
+## Bir sprintte PO
+
+PO'nun sprint içindeki işleri de rehberde yazılıdır:
+
+- **Sprint planlamada** ürünün bu sprintte değerini nasıl artırabileceğini önerir. Takım birlikte bir sprint hedefi belirler.
+- Katılımcıların en önemli öğeleri ve onların ürün hedefiyle bağını konuşmaya **hazır gelmesini** sağlar.
+- Sprint boyunca kapsam, öğrenildikçe **PO'yla** netleştirilir ve yeniden konuşulur.
+- Sprint hedefi geçersiz olursa sprinti **yalnız PO** iptal edebilir.
+- Sprintte bir işi kendisi de yapıyorsa, Daily Scrum'a Geliştirici olarak katılır.
+
+**PO ≠ PM.** İki unvan birçok kurumda karışır. Farkı, kimin neye karar verdiğini [Roller](/roller/product-owner/) bölümü anlatıyor.
+
+<Case>
+
+Deniz pazartesi sabahı üç isteği şöyle ele aldı:
+
+1. **Görünür kıldı:** üçünü de backlog'a yazdı ve isteyenleri etiketledi. Geliştiricilere "Bu istekler backlog'da; sıra benden" diye yazdı.
+2. **Ürün hedefine baktı:** çeyreğin hedefi tekrar eden siparişi kolaylaştırmaktı. Grup siparişi bu hedefe hizmet etmiyordu; ikinci sıraya indi.
+3. **Bildirim hatasını öne aldı:** hata, hazır bildirimini engelliyordu. Bu da tekrar eden siparişi doğrudan etkiliyordu.
+4. **Hakan'ı ikna yoluna davet etti:** kampüs indirimini Hakan'la konuştu. Proje takvimine göre 8. haftaya yetişmesi gerektiği için iki sprint sonrasına yerleştirdi ve gerekçesini backlog öğesine yazdı.
+5. **Review'da gösterdi:** iki hafta sonra artım review'da paydaşlara gösterildi. Satış ekibi, grup siparişinin neden beklediğini oradan öğrendi.
+
+</Case>
+
+<Tool slug="sprint-hedefi" />
+
+<Lenses>
+<Lens role="product-owner">
+
+- **Sıranın tek kaynağı ol.** Takıma başka kanaldan iş geliyorsa, önce o kanalı backlog'a bağla.
+- **Kararının gerekçesini öğenin üzerine yaz.** Gerekçesi görünmeyen sıra, her hafta yeniden tartışılır.
+- **Devret, ama hesabı bırakma.** Story'yi analist yazabilir; "neden şimdi?" sorusunu sen cevaplarsın.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Ürün hedefini PO'yla birlikte kur.** Rehbere göre takım bir ürün hedefini bitirmeden ya da bırakmadan diğerine geçmez.
+- **İsteğini backlog üzerinden ilet.** PM'in bile geliştiriciye doğrudan iş yazması PO'nun kararını atlar.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **PO'ya backlog yönetimi teknikleri öner.** Rehber, SM'nin PO'ya ürün hedefi ve backlog yönetimi için teknik bulmada yardım ettiğini söyler.
+- **Yan kapıdan gelen işi görünür kıl.** Takıma doğrudan iş yazılıyorsa bunu retroda ya da paydaşlarla konuş.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Story'yi sen yazabilirsin, sırayı PO verir.** Devredilen işin hesabı PO'dadır; çalışmanı onun kararına hazırlık olarak gör.
+- **Öğeyi "anlaşılır" kıl.** Backlog'un şeffaf ve anlaşılır olması PO'nun dört işinden biridir; bunda en büyük katkı senden gelir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Product Owner ürünün değerini en çoklamaktan ve backlog'un etkili yönetiminden hesap verir.
+- Backlog yönetimi dört iştir: ürün hedefi, öğeleri oluşturmak ve iletmek, sıralamak, backlog'u şeffaf tutmak.
+- PO işleri devredebilir, ama hesap onda kalır; boyutlama ise Geliştiricilerin işidir.
+- PO bir kişidir, komite değildir; backlog'u değiştirmek isteyen PO'yu ikna eder.
+- PO'nun kararları backlog'un sırasında ve review'daki artımda görünür; kurumun bu kararlara saygı göstermesi gerekir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Product Owner'ın ürün backlog'u yönetimindeki dört işi nedir?">
+
+Ürün hedefini geliştirmek ve iletmek, backlog öğelerini oluşturmak ve iletmek, öğeleri sıralamak, backlog'un şeffaf, görünür ve anlaşılır olmasını sağlamak.
+
+</SelfCheck>
+
+<SelfCheck question="Bir iş analisti story'lerin hepsini yazıyor. Story'lerden kim hesap verir?">
+
+Product Owner. PO işleri başkasına devredebilir, ama hesap her durumda onda kalır.
+
+</SelfCheck>
+
+<SelfCheck question="Üç bölüm yöneticisi 'ürün kurulu' kurup backlog'u birlikte sıralamak istiyor. Rehbere göre ne dersin?">
+
+Product Owner bir kişidir, komite değildir. Yöneticiler ihtiyaçlarını PO'ya getirir ve onu ikna etmeye çalışır; PO birçok paydaşın ihtiyacını backlog'da temsil eder. Sıralama kararı tek bir kişide kalmazsa takım iki sıralama arasında kalır.
+
+</SelfCheck>
+
+<SelfCheck question="Satış ekibi bir özelliği doğrudan geliştiriciye yazdı ve geliştirici başladı. Sorun nedir, ne yapılmalı?">
+
+PO'nun sıralama kararı atlanmıştır; takımın iki ayrı önceliği olur. İstek backlog'a taşınır, PO sırasını belirler ve gerekçesini yazar. Kurumun PO'nun kararlarına saygı göstermesi, PO'nun başarılı olmasının ön koşuludur.
+
+</SelfCheck>

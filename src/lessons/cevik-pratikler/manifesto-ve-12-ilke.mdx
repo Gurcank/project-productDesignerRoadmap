@@ -1,0 +1,184 @@
+---
+summary: "Agile Manifesto dört değer ve on iki ilkeden oluşur. Değerler bir tercih sırası verir; ilkeler o tercihi günlük işe çevirir. Scrum ve Kanban bu ilkelerin uygulamalarıdır."
+outcomes:
+  - "Manifesto'nun dört değerini ve 'soldakini daha değerli bulmak' ifadesinin anlamını açıklayabilirsin."
+  - "On iki ilkeyi dört temaya ayırıp kendi takımında nasıl göründüğünü söyleyebilirsin."
+  - "Bir uygulamanın agile olup olmadığını ilkelere bakarak tartışabilirsin."
+minutes: 8
+standard: 2
+sources:
+  - label: "Manifesto for Agile Software Development"
+    url: "https://agilemanifesto.org/"
+  - label: "Çevik Yazılım Geliştirme Manifestosu (resmî Türkçe çeviri)"
+    url: "https://agilemanifesto.org/iso/tr/manifesto.html"
+  - label: "Principles behind the Agile Manifesto"
+    url: "https://agilemanifesto.org/principles.html"
+additions:
+  - "Agile Manifesto'nun dört değeri ve on iki ilkesi"
+  - "Türkçe çeviride sol ve sağ tarafın yer değiştirmesi"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Retroda Burak sert bir cümle kurdu: "Agile'da dokümantasyon yazılmaz, o yüzden PRD'yi okumuyorum." Ayşe hemen itiraz etti: "Manifesto öyle demiyor." Kimse metnin tam olarak ne dediğini hatırlamıyordu.
+
+Agile Manifesto 2001'de 17 yazılımcının imzasıyla yayımlandı. Tamamı birkaç cümledir. Ama en çok alıntılanan, en az okunan metinlerden biridir. Bu ders onu cümle cümle okur.
+
+## Dört değer
+
+Manifesto dört karşılaştırma yapar. İmzacılar şunlara değer verdiklerini söyler:
+
+| Daha değerli | Değerli ama daha az |
+|---|---|
+| Bireyler ve etkileşimler | Süreçler ve araçlar |
+| Çalışan yazılım | Kapsamlı dokümantasyon |
+| Müşteriyle iş birliği | Sözleşme pazarlığı |
+| Değişime karşılık vermek | Bir plana bağlı kalmak |
+
+Ardından gelen cümle en önemlisidir: sağdaki maddelerin de değeri vardır, ama soldakiler daha değerlidir. Manifesto dokümantasyonu, süreci ya da planı reddetmez. İkisi çatıştığında hangisinin öne geçeceğini söyler.
+
+**Burak'ın cümlesi bu yüzden yanlıştı.** Manifesto "kapsamlı" dokümantasyondan çalışan yazılımı daha değerli bulur. Dokümantasyonu yasaklamaz.
+
+Bir not: resmî Türkçe çeviride cümle yapısı yüzünden taraflar yer değiştirir. "Süreçler ve araçlardan ziyade bireyler ve etkileşimlere" der ve "sağ taraftaki maddeleri daha değerli bulmaktayız" diye biter. İngilizcede soldaki, Türkçede sağdaki madde daha değerlidir. Anlam aynıdır.
+
+## On iki ilke
+
+Değerlerin altında on iki ilke durur. Teker teker ezberlemek yerine dört temada okumak daha kolaydır.
+
+**Değer ve teslimat:**
+
+1. En yüksek öncelik, değerli yazılımı erken ve sürekli teslim ederek müşteriyi memnun etmektir.
+2. Çalışan yazılım sık teslim edilir: birkaç haftadan birkaç aya kadar, kısa olan tercih edilir.
+3. Çalışan yazılım, ilerlemenin birincil ölçüsüdür.
+
+**Değişim:**
+
+4. Gereksinimlerdeki değişiklik, geliştirmenin geç bir aşamasında bile karşılanır. Değişim, müşterinin rekabet avantajı için kullanılır.
+
+**İnsanlar ve iş birliği:**
+
+5. İş insanları ve geliştiriciler proje boyunca her gün birlikte çalışır.
+6. Projeler motive bireylerin etrafında kurulur. Onlara ortam ve destek verilir, işi yapacaklarına güvenilir.
+7. Bilgiyi takıma ve takım içinde aktarmanın en verimli ve etkili yolu yüz yüze konuşmadır.
+8. Sürdürülebilir bir tempo korunur: sponsorlar, geliştiriciler ve kullanıcılar aynı hızı süresiz sürdürebilmelidir.
+9. En iyi mimariler, gereksinimler ve tasarımlar kendi kendini örgütleyen takımlardan çıkar.
+
+**Teknik özen ve iyileştirme:**
+
+10. Teknik mükemmelliğe ve iyi tasarıma sürekli özen, çevikliği artırır.
+11. Sadelik, yani yapılmayan işin miktarını en çoklama sanatı, esastır.
+12. Takım düzenli aralıklarla nasıl daha etkili olabileceğini düşünür ve davranışını buna göre ayarlar.
+
+<Layers
+  label="Değerden pratiğe"
+  caption="En üstte dört değer bir tercih sırası verir. Ortada on iki ilke o tercihi davranışa çevirir: sık teslim, değişime açıklık, sürdürülebilir tempo, düzenli iyileştirme. En altta Scrum, Kanban ve XP gibi çerçeveler ve pratikler durur. Bir pratik değerlere ve ilkelere hizmet etmiyorsa, adı agile olsa bile ruhu değildir."
+  shape="pyramid"
+  layers={[
+    { title: "4 değer", sub: "tercih sırası", tone: "accent" },
+    { title: "12 ilke", sub: "tercih davranışa dönüşür" },
+    { title: "Çerçeveler ve pratikler", sub: "Scrum, Kanban, XP", tone: "progress" },
+  ]}
+/>
+
+**Agile ≠ Scrum.** Agile bir değerler ve ilkeler kümesidir. Scrum ve Kanban, bu ilkeleri uygulamanın iki yoludur. "Agile yapıyoruz" cümlesi tek başına hiçbir pratiği anlatmaz.
+
+Manifesto'nun hangi sorunun cevabı olarak doğduğunu, yani waterfall ile farkını [Waterfall ve agile](/calisma-bicimi/waterfall-ve-agile/) dersi anlatıyor.
+
+## İlkeler bugün nasıl okunur?
+
+İlkeler 2001'de yazılım için yazıldı. Bazı kelimeleri bugün daha geniş okunur.
+
+- **"Yazılım"**, çoğu takım için çalışan, kullanılabilir bir ürün parçasıdır. Bir araştırma raporu da, bir tasarım prototipi de değerli bir sonuç olabilir.
+- **"Yüz yüze"**, dağıtık takımlarda canlı, eşzamanlı konuşmadır. İlkenin özü, yazılı belgelerin bir konuşmanın yerini tutmamasıdır.
+- **"Sadelik"**, en az okunan ilkedir. Yapılmayan iş de bir kazançtır: backlog'dan çıkarılan her madde, bitirilecek işi azaltır.
+
+<Case>
+
+Kaan, Burak ile Ayşe'nin tartışmasını bir retro etkinliğine çevirdi:
+
+1. **Metni okuttu:** dört değeri ve son cümleyi tahtaya yazdı. Burak "soldakini daha değerli" ifadesini o gün ilk kez gördü.
+2. **İlkeyi seçtirdi:** ekip, en çok zorlandığı ilkeyi oyladı. Kazanan 8. ilke oldu: sürdürülebilir tempo. Son iki sprintte üç akşam fazla mesai yapılmıştı.
+3. **PRD'yi yeniden konuştu:** Elif, PRD'yi iki sayfaya indirmeyi ve her sprint başında 15 dakika birlikte okumayı önerdi. Belge kalacak, ama yerini konuşma alacaktı.
+4. **Eylem:** "Bir sprintte en fazla bir akşam fazla mesai; aşılırsa Kaan retroda konuyu açar." Sahibi Kaan.
+
+</Case>
+
+<Lenses>
+<Lens role="scrum-master">
+
+- **İlkeleri retronun ölçütü yap.** "Bu sprintte hangi ilkeden uzaklaştık?" sorusu, şikâyeti yöne çevirir.
+- **Değerlerin son cümlesini hatırlat.** "Agile'da X yapılmaz" cümlelerinin çoğu, o cümle okunmadığı için kurulur.
+
+</Lens>
+<Lens role="product-owner">
+
+- **1. ve 3. ilke senin pusulan.** Değerli olanı erken teslim etmek ve ilerlemeyi çalışan ürünle ölçmek, backlog sıranın gerekçesidir.
+- **11. ilkeyi uygula.** Backlog'dan çıkardığın her madde, takıma verdiğin zamandır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Değişime açıklık, yön değiştirmek demek değildir.** 4. ilke geç gelen değişikliği karşılamayı söyler; ama nedenini ürün hedefine bağlamak senin işin.
+- **İş insanı olarak her gün masada ol.** 5. ilke, kararları takıma uzaktan iletmek yerine birlikte almayı ister.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Plan yapmak manifestoya aykırı değildir.** Manifesto plana bağlı kalmaktansa değişime karşılık vermeyi daha değerli bulur; planı değil.
+- **Sürdürülebilir tempoyu takvimde koru.** Tamponsuz bir takvim, 8. ilkeyi ilk gecikmede bozar.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Belgen konuşmanın yerine geçmesin, onu desteklesin.** 7. ilke, gereksinimin takıma bir konuşmayla aktarılmasını ister.
+- **Geç gelen gereksinimi engel değil, bilgi olarak gör.** Etkisini çıkar, kararı PO'ya bırak.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Çalışan prototip de bir ilerleme ölçüsüdür.** Ama 3. ilke son kullanıcının eline geçen ürünü kasteder; prototipi yayına bağla.
+- **Teknik mükemmellik tasarım için de geçerli.** 10. ilke, tutarlı bir tasarım sisteminin çevikliği artırdığını söyler.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Agile Manifesto 2001'de yayımlandı; dört değer ve on iki ilkeden oluşur.
+- Değerler bir tercih sırasıdır: sağdakinin de değeri vardır, ama soldaki daha değerlidir. Türkçe çeviride taraflar yer değiştirir.
+- On iki ilke dört temada okunabilir: değer ve teslimat, değişim, insanlar ve iş birliği, teknik özen ve iyileştirme.
+- Agile bir değerler kümesidir; Scrum ve Kanban onu uygulamanın yollarıdır.
+- "Sadelik, yapılmayan işin miktarını en çoklamaktır" en az okunan ama en güçlü ilkedir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Manifesto'nun dört değerinden hangisi dokümantasyonla ilgilidir ve ne der?">
+
+"Kapsamlı dokümantasyondan çok çalışan yazılım." Dokümantasyonun değeri vardır; ama ikisi çatıştığında çalışan yazılım daha değerlidir. Dokümantasyon yasaklanmaz.
+
+</SelfCheck>
+
+<SelfCheck question="'Sadelik, yapılmayan işin miktarını en çoklama sanatıdır' ilkesi bir backlog için ne anlama gelir?">
+
+Backlog'daki her maddeyi yapmak zorunda değilsin. Değeri düşük maddeleri çıkarmak, takımın değerli işe daha hızlı ulaşmasını sağlar. Yapılmayan iş de bir kazançtır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir yönetici 'Agile'ız, o yüzden plan yapmıyoruz ve tarih vermiyoruz' diyor. Manifesto'ya göre ne cevap verirsin?">
+
+Manifesto plana bağlı kalmaktansa değişime karşılık vermeyi daha değerli bulur; plan yapmayı reddetmez. Plan yapılır ve öğrenildikçe güncellenir. Ayrıca 1. ve 2. ilke sık ve erken teslim ister; bu da bir zaman ritmi demektir.
+
+</SelfCheck>
+
+<SelfCheck question="Takım iki sprint üst üste akşamları fazla mesai yaptı ve hedefe ulaştı. Hangi ilke tehlikede?">
+
+8. ilke: sürdürülebilir tempo. Sponsorlar, geliştiriciler ve kullanıcılar aynı hızı süresiz sürdürebilmelidir. Fazla mesaiyle tutturulan hedef, sonraki sprintlerin hızından ödünç alınmıştır.
+
+</SelfCheck>

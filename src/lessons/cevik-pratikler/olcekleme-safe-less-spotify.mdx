@@ -1,0 +1,161 @@
+---
+summary: "Birden çok takım tek bir ürün üzerinde çalışınca koordinasyon gerekir. LeSS Scrum'ı az ekle ölçekler; SAFe roller, olaylar ve bir planlama ritmi ekler. 'Spotify modeli' ise kopyalanacak bir çerçeve değildir."
+outcomes:
+  - "Scrum Rehberi'nin büyüyen bir takım için ne önerdiğini söyleyebilirsin."
+  - "LeSS ile SAFe'in temel yaklaşımlarını karşılaştırabilirsin."
+  - "'Spotify modeli'nin neden bir çerçeve olarak kopyalanmaması gerektiğini açıklayabilirsin."
+minutes: 7
+standard: 2
+flags: ["degisken"]
+sources:
+  - label: "Scrum Guide (Kasım 2020) — Scrum Team"
+    url: "https://scrumguides.org/scrum-guide.html"
+  - label: "LeSS — Introduction to LeSS"
+    url: "https://less.works/less/framework/introduction"
+  - label: "SAFe — Agile Release Train"
+    url: "https://framework.scaledagile.com/agile-release-train"
+  - label: "SAFe — PI Planning"
+    url: "https://framework.scaledagile.com/pi-planning"
+  - label: "Jeremiah Lee — Spotify's Failed #SquadGoals (2020)"
+    url: "https://www.jeremiahlee.com/posts/failed-squad-goals/"
+additions:
+  - "LeSS'in tanımı, özellik takımları ve LeSS / LeSS Huge sınırı (less.works)"
+  - "SAFe: Agile Release Train ve PI Planning (framework.scaledagile.com, 2026-10-19'da doğrulandı)"
+  - "Spotify modelinin hiç tam uygulanmadığı (Jeremiah Lee)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+
+Hakan bir konferanstan döndü ve bir slayt gösterdi: kabileler, mangalar, loncalar. "Spotify böyle çalışıyor. Kampüs programı büyüyor, biz de böyle yapalım." Demlik'te iki ürün takımı vardı. Kampüs programıyla üçüncüsü gelecekti.
+
+Kaan slayda baktı ve iki soru sordu: "Bunu Spotify gerçekten uyguladı mı? Ve üç takımın böyle bir yapıya ihtiyacı var mı?" Bu ders iki soruyu da cevaplar.
+
+## Takım büyüyünce
+
+Scrum Rehberi'ne göre bir Scrum Takımı genellikle 10 ya da daha az kişidir. Rehber küçük takımların daha iyi iletişim kurduğunu ve daha üretken olduğunu söyler. Takım fazla büyürse, aynı ürüne odaklanan birkaç uyumlu Scrum Takımı'na bölünmeyi düşünmelidir. Bu takımlar **aynı ürün hedefini, aynı ürün backlog'unu ve aynı Product Owner'ı** paylaşmalıdır.
+
+Rehber bunun ötesine geçmez. Birden çok takımın nasıl birlikte çalışacağı için **ölçekleme çerçeveleri** geliştirilmiştir. İkisi yaygındır: LeSS ve SAFe.
+
+## LeSS: Scrum'ı ölçeklemek
+
+**LeSS** (Large-Scale Scrum), Craig Larman ve Bas Vodde'nin 2005'ten beri birlikte geliştirdiği bir çerçevedir. Kendi tanımı kısadır: tek bir ürün üzerinde birlikte çalışan birçok takıma uygulanmış Scrum.
+
+LeSS'in iddiası, yeni ya da geliştirilmiş bir Scrum olmamasıdır. Altta takımlar için Scrum, üstte bambaşka bir katman da değildir. Scrum'ın ilkelerini büyük bir bağlamda olabildiğince sade uygulamaya çalışır.
+
+- Takımlar 3–9 kişilik **özellik takımlarıdır**: çapraz işlevli, bileşenler arası, kullanıcı deneyiminden koda her şeyi yapar.
+- Takımlar aynı sprintin sonunda **tek bir ortak ürün** teslim eder.
+- Ürün, gerçek müşterilerin kullandığı uçtan uca bir çözümdür; bir bileşen, platform ya da katman değildir.
+
+İki boyutu vardır: **LeSS** 2–8 takım, **LeSS Huge** 8'den fazla takım için. Sekiz sihirli bir sayı değil, gözleme dayalı bir üst sınırdır. Bir noktada tek bir Product Owner ürünün bütününü kavrayamaz ve backlog bir kişinin yönetemeyeceği kadar büyür.
+
+## SAFe: bir işletim modeli
+
+**SAFe** (Scaled Agile Framework), kendini yalın ve çevik pratikleri bir kurumda ölçeklemek için bir işletim modeli olarak tanımlar. Bugün "Core SAFe" ve yapay zekâ odaklı "AI-Native SAFe" olarak iki biçimde sunulur.
+
+SAFe'in temel yapı taşı **Agile Release Train**'dir (ART). ART, çevik takımlardan oluşan uzun ömürlü bir takımlar takımıdır ve genellikle 50–125 kişiden oluşur. Ortak bir vizyona ve yol haritasına hizalanır. Takımların yanında yeni roller tanımlar: Product Management, System Architect, Release Train Engineer (RTE) ve Business Owners.
+
+ART'ın ritmini **PI Planning** belirler. Bütün ART'ın katıldığı, genellikle iki gün süren ve 8–12 haftada bir yapılan bir planlama olayıdır. Takımlar birlikte bir plan yapar ve bir dizi PI hedefine bağlanır. Olayı Release Train Engineer yönetir.
+
+<Spectrum
+  label="Ölçekleme yaklaşımları, Scrum'a eklenen yapının miktarına göre"
+  caption="Sol uçta tek takımlı Scrum durur: rehberdeki üç sorumluluk ve beş olay. LeSS, aynı ürün üzerindeki 2–8 takıma Scrum'ı az ekle uygular; LeSS Huge daha büyük gruplar içindir. SAFe ise Agile Release Train, yeni roller ve 8–12 haftalık bir planlama ritmi ekler. Sağa gittikçe koordinasyon için eklenen rol ve olay artar."
+  left={{ title: "Az ek yapı", sub: "Scrum'a yakın" }}
+  right={{ title: "Çok ek yapı", sub: "yeni rol ve olaylar" }}
+  marks={[
+    { label: "Tek takım Scrum", at: 0.05 },
+    { label: "LeSS 2–8 takım", at: 0.3 },
+    { label: "LeSS Huge", at: 0.52 },
+    { label: "SAFe ART", at: 0.85 },
+  ]}
+/>
+
+**Ölçekleme çerçevesi ≠ ilk adım.** Bir çerçeve seçmeden önce sorulması gereken soru şudur: takımlar gerçekten tek bir ürün üzerinde mi çalışıyor, yoksa bağımsız mı çalışabilirler? Bağımsız ürünlerde çalışan takımların ortak bir çerçeveye ihtiyacı olmayabilir.
+
+## Spotify miti
+
+Spotify 2012'de çalışma biçimini bir yazı ve bir videoyla paylaştı. Takımlara **manga** (squad), manga gruplarına **kabile** (tribe) denir. Aynı uzmanlıktaki mühendisler kabile içinde **bölümler** (chapter) altında toplanır; ilgi alanı topluluklarına **lonca** (guild) denir. Bu yapı "Spotify modeli" diye yayıldı.
+
+Jeremiah Lee, Spotify'da çalıştıktan sonra 2020'de yazdığı yazıda şunu anlatır: manga modeli hep bir **hedefti** ve hiçbir zaman tam uygulanmadı. Spotify'da 2011–2017 arasında çevik koç olan Joakim Sundén'e göre yazıldığı sırada bile öyle çalışmıyorlardı; yazı yarı hedef, yarı yaklaşık bir tarifti. Yazının ortak yazarı Anders Ivarsson da insanların onu kopyalanacak bir çerçeve sanmasından endişe ettiğini söyler.
+
+Lee'nin vardığı sonuç açıktır: Spotify "Spotify modeli"ni kullanmıyor; sen de kullanmamalısın.
+
+<Case>
+
+Kaan, Hakan'ın slaydına bir sayfalık bir cevap yazdı:
+
+1. **Spotify:** modelin yazarları ve Spotify'da çalışanlar, modelin hiç tam uygulanmadığını ve kopyalanmaması gerektiğini söylüyordu.
+2. **Takım sayısı:** Demlik'te üç takım olacaktı. Sipariş ve panel takımları iki ayrı ürün üzerinde çalışıyordu; kampüs takımı da kendi işine sahip olacaktı.
+3. **Gerçek ihtiyaç:** ortak tedarikçi ve ödeme kuruluşu gibi bağımlılıklar vardı. Bunlar için bir çerçeve değil, iki haftada bir yarım saatlik bir takımlar arası koordinasyon toplantısı yetiyordu.
+4. **Ne zaman yeniden bakılacak:** üç ya da daha fazla takım aynı ürün üzerinde, aynı backlog'la çalışmaya başlarsa LeSS'e bakılacaktı.
+
+Hakan slaydı bir kenara koydu. Ama koordinasyon toplantısı ertesi hafta başladı.
+
+</Case>
+
+<Lenses>
+<Lens role="scrum-master">
+
+- **Çerçeveden önce sorunu adlandır.** "Neyi koordine edemiyoruz?" sorusunun cevabı, çoğu zaman bir çerçeveden daha küçük bir çözümdür.
+- **Kopyalama isteğine kaynakla cevap ver.** Spotify modeli için yazarların kendi uyarıları en ikna edici cevaptır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Bir ürün, bir backlog, bir PO.** Rehber de LeSS de aynı ürün üzerindeki takımların tek backlog ve tek PO paylaşmasını ister.
+- **Takımları bileşene göre değil, özelliğe göre düşün.** Uçtan uca özellik takımları, takımlar arası devri azaltır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Ürün sınırını çiz.** Ölçekleme sorusunun çoğu, "bu tek bir ürün mü, iki ürün mü?" sorusudur.
+- **PI Planning'e katılacaksan ürün hedefleriyle gel.** SAFe'te planlama, ortak bir vizyon ve yol haritasına hizalanır.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Proje takvimini PI ritmine hizala.** SAFe kullanan bir kurumda planlama 8–12 haftada bir PI Planning'de yapılır; olayı Release Train Engineer yönetir.
+- **Programı çerçeveyle karıştırma.** Bir program birden çok projeyi yönetir; ölçekleme çerçevesi birden çok takımın birlikte nasıl çalışacağını anlatır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Scrum Rehberi büyüyen takımın aynı ürün hedefi, backlog ve PO'yu paylaşan birkaç takıma bölünmesini önerir.
+- LeSS, tek bir ürün üzerinde çalışan birçok takıma uygulanmış Scrum'dır: 2–8 takım için LeSS, daha fazlası için LeSS Huge.
+- SAFe bir işletim modelidir: Agile Release Train (genellikle 50–125 kişi), yeni roller ve 8–12 haftada bir PI Planning ekler.
+- "Spotify modeli" hiç tam uygulanmadı; yazarları onun kopyalanmamasını söyler.
+- Bir çerçeve seçmeden önce, takımların gerçekten tek bir ürün üzerinde çalışıp çalışmadığı sorulmalıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Scrum Rehberi'ne göre bir takım çok büyürse ne yapılır?">
+
+Aynı ürüne odaklanan birkaç uyumlu Scrum Takımı'na bölünmesi düşünülür. Bu takımlar aynı ürün hedefini, aynı ürün backlog'unu ve aynı Product Owner'ı paylaşır.
+
+</SelfCheck>
+
+<SelfCheck question="LeSS ile SAFe'in yaklaşımı nasıl ayrılır?">
+
+LeSS, Scrum'ı büyük bir bağlamda olabildiğince sade uygulamaya çalışır; üstüne ayrı bir katman eklemez. SAFe ise Agile Release Train, yeni roller ve PI Planning gibi olaylarla daha çok yapı ekleyen bir işletim modelidir.
+
+</SelfCheck>
+
+<SelfCheck question="Yönetim 'Spotify modelini' uygulamak istiyor. Ne dersin?">
+
+Modelin yazarları ve Spotify'da çalışanlar onun hiç tam uygulanmadığını ve bir çerçeve gibi kopyalanmaması gerektiğini söylüyor. Önce çözülmek istenen sorunu adlandırırsın: hangi koordinasyon eksik? Sonra o soruna uygun, en küçük çözümü önerirsin.
+
+</SelfCheck>
+
+<SelfCheck question="Üç takım üç ayrı ürün üzerinde çalışıyor ve birkaç ortak bağımlılıkları var. Bir ölçekleme çerçevesine ihtiyaçları var mı?">
+
+Büyük olasılıkla yok. Ölçekleme çerçeveleri aynı ürün üzerinde çalışan takımlar içindir. Ortak bağımlılıklar için düzenli bir takımlar arası koordinasyon ve açık bir bağımlılık kaydı çoğu zaman yeterlidir.
+
+</SelfCheck>

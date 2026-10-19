@@ -1,0 +1,176 @@
+[
+  {
+    "term": "Ampirizm",
+    "english": "Empiricism",
+    "definition": "Bilginin deneyimden geldiği ve kararların gözlenene dayandığı yaklaşım. Scrum'ın üç sütunu şeffaflık, denetim ve uyarlamadır.",
+    "topic": "scrum-rehberi"
+  },
+  {
+    "term": "Sprint hedefi",
+    "english": "Sprint Goal",
+    "definition": "Sprintin tek amacı; sprint backlog'unun taahhüdü. Planlama bitmeden yazılır; iş değişebilir, hedef kalır.",
+    "topic": "scrum-rehberi"
+  },
+  {
+    "term": "Ürün hedefi",
+    "english": "Product Goal",
+    "definition": "Ürünün gelecekteki bir durumunu anlatan uzun vadeli hedef; ürün backlog'unun taahhüdü. Biri bitmeden ya da bırakılmadan diğeri alınmaz.",
+    "topic": "scrum-rehberi"
+  },
+  {
+    "term": "Bitti tanımı",
+    "english": "Definition of Done",
+    "definition": "Artımın kalite ölçütlerini karşıladığı durumun yazılı tanımı. Karşılamayan iş yayınlanamaz, review'da gösterilemez.",
+    "topic": "scrum-rehberi",
+    "aliases": ["Definition of Done", "DoD"]
+  },
+  {
+    "term": "Hazır tanımı",
+    "english": "Definition of Ready",
+    "definition": "Bir öğenin sprinte alınmadan önce karşılaması beklenen koşullar listesi. Scrum Rehberi'nde yoktur; bir kapıya dönüşmemelidir.",
+    "topic": "refinement-invest-ve-story-bolme",
+    "aliases": ["Definition of Ready", "DoR"]
+  },
+  {
+    "term": "Refinement",
+    "english": "Backlog refinement",
+    "definition": "Ürün backlog'u öğelerini daha küçük ve kesin öğelere bölmek, açıklama, sıra ve boyut eklemek. Süregelen bir faaliyettir.",
+    "topic": "refinement-invest-ve-story-bolme",
+    "aliases": ["backlog refinement"]
+  },
+  {
+    "term": "INVEST",
+    "english": "INVEST",
+    "definition": "İyi bir user story'nin altı özelliği: bağımsız, konuşulabilir, değerli, tahmin edilebilir, küçük, test edilebilir (Bill Wake, 2003).",
+    "topic": "refinement-invest-ve-story-bolme",
+    "acronym": true
+  },
+  {
+    "term": "Dikey dilim",
+    "english": "Vertical slice",
+    "definition": "Bütün katmanlardan (arayüz, mantık, veri) geçen ve tek başına müşteriye bir şey veren küçük story parçası.",
+    "topic": "refinement-invest-ve-story-bolme"
+  },
+  {
+    "term": "Gherkin",
+    "english": "Gherkin",
+    "definition": "Kabul kriterlerini Given-When-Then (Diyelim ki – Eğer ki – O zaman) adımlarıyla somut örneklere çeviren dil.",
+    "topic": "refinement-invest-ve-story-bolme",
+    "aliases": ["Given-When-Then"]
+  },
+  {
+    "term": "Story map",
+    "english": "Story mapping",
+    "definition": "Backlog'u kullanıcının yolculuğuna göre soldan sağa, önceliğe göre yukarıdan aşağı dizen harita (Jeff Patton).",
+    "topic": "story-mapping",
+    "aliases": ["story mapping"]
+  },
+  {
+    "term": "Yürüyen iskelet",
+    "english": "Walking skeleton",
+    "definition": "Uçtan uca çalışan en küçük sistem: story map'te her faaliyetin en gerekli story'si. İlk o inşa edilir.",
+    "topic": "story-mapping",
+    "aliases": ["walking skeleton"]
+  },
+  {
+    "term": "İş akışı tanımı",
+    "english": "Definition of Workflow",
+    "definition": "Kanban'da iş öğelerinin, başlangıç ve bitişin, aşamaların, WIP kontrolünün, kuralların ve SLE'nin ortak tanımı.",
+    "topic": "akis-metrikleri-ve-cfd"
+  },
+  {
+    "term": "Hizmet seviyesi beklentisi",
+    "english": "Service level expectation (SLE)",
+    "definition": "Bir işin baştan sona ne kadar süreceğine dair süre ve olasılıktan oluşan öngörü: \"İşlerin %85'i 8 günde biter.\"",
+    "topic": "akis-metrikleri-ve-cfd",
+    "aliases": ["SLE"]
+  },
+  {
+    "term": "İş öğesi yaşı",
+    "english": "Work item age",
+    "definition": "Bir işin başladığı andan bugüne geçen süre. İş bitmeden görülebildiği için erken uyarı verir.",
+    "topic": "akis-metrikleri-ve-cfd"
+  },
+  {
+    "term": "Little Yasası",
+    "english": "Little's Law",
+    "definition": "WIP = throughput × cycle time. Throughput aynı kalırken WIP artarsa, her iş ortalamada daha geç biter.",
+    "topic": "akis-metrikleri-ve-cfd"
+  },
+  {
+    "term": "Kümülatif akış diyagramı",
+    "english": "Cumulative flow diagram (CFD)",
+    "definition": "Her aşamaya o güne kadar giren iş sayısını gösteren grafik. Dikey mesafe WIP'i, yatay mesafe cycle time'ı gösterir.",
+    "topic": "akis-metrikleri-ve-cfd",
+    "aliases": ["CFD"]
+  },
+  {
+    "term": "Çekme sistemi",
+    "english": "Pull system",
+    "definition": "Yeni bir işe ancak kapasite olduğuna dair açık bir işaret varsa başlanan sistem; WIP kontrolünün sonucudur.",
+    "topic": "akis-metrikleri-ve-cfd"
+  },
+  {
+    "term": "Monte Carlo simülasyonu",
+    "english": "Monte Carlo simulation",
+    "definition": "Takımın geçmiş throughput'undan binlerce olası gelecek üreterek 'ne zaman biter?' sorusunu olasılıkla cevaplayan yöntem.",
+    "topic": "ongoru-velocity-ve-monte-carlo",
+    "aliases": ["Monte Carlo"]
+  },
+  {
+    "term": "Psikolojik güvenlik",
+    "english": "Psychological safety",
+    "definition": "Takımda hata kabul etmenin, soru sormanın ve fikir önermenin cezalandırılmayacağına güvenmek. Project Aristotle'da en önemli dinamik.",
+    "topic": "takim-dinamikleri-ve-calisma-sozlesmesi"
+  },
+  {
+    "term": "Çalışma sözleşmesi",
+    "english": "Working agreement",
+    "definition": "Bir takımın birlikte nasıl çalışacağına, iletişim kuracağına ve iş birliği yapacağına dair yazılı, ortak kuralları.",
+    "topic": "takim-dinamikleri-ve-calisma-sozlesmesi"
+  },
+  {
+    "term": "LeSS",
+    "english": "Large-Scale Scrum",
+    "definition": "Tek bir ürün üzerinde birlikte çalışan birçok takıma uygulanmış Scrum. 2–8 takım için LeSS, daha fazlası için LeSS Huge.",
+    "topic": "olcekleme-safe-less-spotify",
+    "acronym": true
+  },
+  {
+    "term": "Agile Release Train",
+    "english": "Agile Release Train (ART)",
+    "definition": "SAFe'te çevik takımlardan oluşan, genellikle 50–125 kişilik uzun ömürlü bir takımlar takımı.",
+    "topic": "olcekleme-safe-less-spotify"
+  },
+  {
+    "term": "PI Planning",
+    "english": "PI Planning",
+    "definition": "SAFe'te bütün Agile Release Train'in katıldığı, genellikle iki gün süren ve 8–12 haftada bir yapılan planlama olayı.",
+    "topic": "olcekleme-safe-less-spotify"
+  },
+  {
+    "term": "Retrospektifin temel kuralı",
+    "english": "Retrospective Prime Directive",
+    "definition": "Ne bulursak bulalım, herkesin o an bildikleri ve imkânlarıyla yapabileceğinin en iyisini yaptığına inanmak.",
+    "topic": "retro-formatlari",
+    "aliases": ["Prime Directive"]
+  },
+  {
+    "term": "1-2-4-All",
+    "english": "1-2-4-All",
+    "definition": "Önce tek başına, sonra ikili, dörtlü ve bütün grupla düşünülen, yaklaşık 15 dakikalık kolaylaştırma yapısı (Liberating Structures).",
+    "topic": "kolaylastirma-teknikleri"
+  },
+  {
+    "term": "Lean Coffee",
+    "english": "Lean Coffee",
+    "definition": "Gündemi katılımcıların toplantının başında yazıp oyladığı, yapılandırılmış ama gündemsiz toplantı.",
+    "topic": "kolaylastirma-teknikleri"
+  },
+  {
+    "term": "Anti-patern",
+    "english": "Anti-pattern",
+    "definition": "İyi niyetle yapılan ama çerçevenin amacını bozan uygulama; çoğu zaman bir kuralın sessizce atlanmasıdır.",
+    "topic": "anti-paternler"
+  }
+]

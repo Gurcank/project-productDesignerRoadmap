@@ -1,0 +1,150 @@
+---
+summary: "Scrum Master, Scrum'ın kurulmasından ve takımın etkililiğinden hesap verir. Takıma, Product Owner'a ve kuruma hizmet eden bir liderdir: engelleri kendisi kaldırmak zorunda değildir, kaldırılmasını sağlar."
+outcomes:
+  - "Scrum Master'ın neyden hesap verdiğini rehberin cümleleriyle söyleyebilirsin."
+  - "SM'nin takıma, PO'ya ve kuruma nasıl hizmet ettiğini örneklerle ayırabilirsin."
+  - "Bir engelde 'kaldırmak' ile 'kaldırılmasını sağlamak' arasındaki farkı açıklayabilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Scrum Guide (Kasım 2020) — Scrum Master"
+    url: "https://scrumguides.org/scrum-guide.html"
+additions:
+  - "Scrum Master'ın sorumlulukları ve üç hizmet alanı (Scrum Guide 2020)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Kaan iki takımın Scrum Master'ıydı ve günü toplantı ayarlamakla geçiyordu. Takvim davetleri, oda rezervasyonları, Daily'de not tutmak, Jira'da kartları sürüklemek. Bir gün Ece sordu: "Sen olmasan bu toplantıları kim ayarlardı?" Kaan'ın aklına gelen cevap rahatsız ediciydi: "Herhangi biri."
+
+Scrum Master bir toplantı sekreteri değildir. Ama işin tanımı bilinmeyince boşluk idari işlerle dolar. Bu ders, Scrum Rehberi'nin Scrum Master'dan ne beklediğini anlatır.
+
+## Neyden hesap verir?
+
+Rehbere göre Scrum Master iki şeyden hesap verir:
+
+1. **Scrum'ın rehberde tanımlandığı gibi kurulmasından.** Bunu takımın ve kurumun içinde herkese Scrum'ın teorisini ve pratiğini anlatarak yapar.
+2. **Scrum Takımı'nın etkililiğinden.** Bunu takımın kendi pratiklerini, Scrum çerçevesi içinde iyileştirmesini sağlayarak yapar.
+
+Rehber Scrum Master'ı "takıma ve daha geniş kuruma hizmet eden gerçek liderler" olarak tanımlar. Yetkisi bir unvandan değil, hizmetten gelir.
+
+## Üç hizmet alanı
+
+<Layers
+  label="Scrum Master'ın üç hizmet alanı"
+  caption="Scrum Master üç katmana hizmet eder. En içte Scrum Takımı: kendi kendini yönetmeyi öğretir, engellerin kaldırılmasını sağlar, olayların zaman kutusunda ve verimli geçmesini sağlar. Ortada Product Owner: ürün hedefi ve backlog yönetimi için teknik bulur, paydaş iş birliğini kolaylaştırır. Dışta kurum: Scrum'a geçişe liderlik eder, paydaşlarla takımlar arasındaki engelleri kaldırır. Dışa doğru etki alanı genişler."
+  shape="pyramid"
+  layers={[
+    { title: "Takıma", sub: "koçluk, engel, olay", tone: "accent" },
+    { title: "Product Owner'a", sub: "backlog teknikleri, paydaşlar" },
+    { title: "Kuruma", sub: "geçiş, eğitim, engeller", tone: "progress" },
+  ]}
+/>
+
+**Takıma hizmet:**
+
+- Takım üyelerine kendi kendini yönetme ve çapraz işlevlilik konusunda koçluk yapmak.
+- Takımın, bitti tanımını karşılayan yüksek değerli artımlar üretmeye odaklanmasına yardım etmek.
+- Takımın ilerlemesini engelleyen sorunların **kaldırılmasını sağlamak**.
+- Bütün Scrum olaylarının yapılmasını, olumlu ve verimli geçmesini, zaman kutusunun içinde kalmasını sağlamak.
+
+**Product Owner'a hizmet:**
+
+- Ürün hedefini tanımlamak ve backlog'u yönetmek için etkili teknikler bulmasına yardım etmek.
+- Takımın açık ve kısa backlog öğelerine neden ihtiyaç duyduğunu anlamasına yardım etmek.
+- Karmaşık bir ortamda deneye dayalı ürün planlamasını kurmaya yardım etmek.
+- İstendiğinde ya da gerektiğinde paydaşlarla iş birliğini kolaylaştırmak.
+
+**Kuruma hizmet:**
+
+- Kurumun Scrum'a geçişine liderlik etmek, eğitmek ve koçluk yapmak.
+- Kurum içinde Scrum uygulamalarını planlamak ve önermek.
+- Çalışanların ve paydaşların karmaşık iş için deneye dayalı yaklaşımı anlamasına yardım etmek.
+- Paydaşlarla Scrum Takımları arasındaki engelleri kaldırmak.
+
+## Engel: kaldırmak değil, kaldırılmasını sağlamak
+
+Rehberin seçtiği fiil önemlidir: Scrum Master engellerin **kaldırılmasını sağlar** (causing the removal). Her engeli kendisi kaldırmak zorunda değildir.
+
+Bir takım kendi kendini yönetiyorsa, çözebileceği engeli kendisi çözer. Scrum Master, takımın çözemeyeceği engeli doğru kişiye taşır. Her engeli SM'nin çözdüğü bir takım, kendi kendini yönetmeyi öğrenmez.
+
+**Scrum Master ≠ yönetici.** Takımın içinde hiyerarşi yoktur. SM kimseye iş atamaz, performans değerlendirmez. **Scrum Master ≠ toplantı sekreteri.** Olayların yapılmasını sağlamak, davetleri göndermek değil, olayın amacına ulaşmasını sağlamaktır. Komşu rollerle farkını [Roller](/roller/scrum-master/) bölümü anlatıyor.
+
+<Case>
+
+Kaan bir sprint boyunca günlüğünü üç sütuna böldü: takım, PO, kurum. Sonuç şaşırtıcıydı: zamanının çoğu hiçbir sütuna girmeyen idari işlere gidiyordu.
+
+1. **İdari işi takıma geri verdi:** Daily'yi Ece kolaylaştırmaya başladı; davetler tekrar eden takvim kaydına bağlandı.
+2. **Takıma koçluk:** Daily'nin bir durum raporuna dönüştüğünü gösterdi. Takım odak sorusunu değiştirdi: "Sprint hedefine bugün ne yaklaştırır?"
+3. **PO'ya hizmet:** Deniz'in backlog'unda 140 öğe vardı. Kaan ona bir saatlik bir backlog temizliği önerdi; öğe sayısı 60'a indi.
+4. **Kuruma hizmet:** kasa tedarikçisinin API değişiklikleri takıma habersiz geliyordu. Kaan bunu Leyla ile ve tedarikçiyle konuştu. Ayşe her salı değişiklikleri panoya işlemeye başladı.
+
+Üç ay sonra Ece'nin sorusuna yeni bir cevap vardı: "Toplantıları herkes ayarlayabilir. Ben toplantıların neden işe yaramadığına bakıyorum."
+
+</Case>
+
+<Tool slug="calisma-sozlesmesi" />
+
+<Lenses>
+<Lens role="scrum-master">
+
+- **Zamanını üç hizmet alanına göre say.** Hiçbirine girmeyen iş, başkasının yapabileceği iştir.
+- **Engeli çözmeden önce sor: takım bunu kendisi çözebilir mi?** Çözebiliyorsa senin işin onu çözebilir hâle getirmektir.
+- **Kurum engelini görünür kıl.** Takımın dışından gelen engel, takımın içinde konuşularak çözülmez.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Scrum Master'dan backlog tekniği iste.** Rehber, SM'nin PO'ya ürün hedefi ve backlog yönetimi için teknik bulmada yardım ettiğini söyler.
+- **Paydaş toplantısını birlikte kolaylaştırın.** Zor bir sıralama konuşmasında SM tarafsız bir kolaylaştırıcıdır.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Scrum Master'ı proje sekreteri olarak kullanma.** Raporlama ve takvim işleri senin ya da bir PMO'nun işidir.
+- **Takımlar arası engellerde birlikte çalışın.** Tedarikçi ve dış bağımlılıklar hem projenin hem takımın engelidir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Scrum Master, Scrum'ın kurulmasından ve takımın etkililiğinden hesap verir.
+- Rehber onu takıma ve kuruma hizmet eden gerçek bir lider olarak tanımlar.
+- Üç hizmet alanı vardır: Scrum Takımı, Product Owner ve kurum.
+- SM engellerin kaldırılmasını sağlar; takımın çözebileceği engeli takıma bırakır.
+- Scrum Master yönetici ya da toplantı sekreteri değildir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Scrum Rehberi'ne göre Scrum Master hangi iki şeyden hesap verir?">
+
+Scrum'ın rehberde tanımlandığı gibi kurulmasından ve Scrum Takımı'nın etkililiğinden.
+
+</SelfCheck>
+
+<SelfCheck question="Scrum Master Product Owner'a nasıl hizmet eder? İki örnek ver.">
+
+Ürün hedefini tanımlamak ve backlog'u yönetmek için teknik bulmasına yardım eder. Takımın açık ve kısa backlog öğelerine neden ihtiyaç duyduğunu anlatır. Deneye dayalı ürün planlamasını kurmaya ve paydaş iş birliğini kolaylaştırmaya da yardım eder.
+
+</SelfCheck>
+
+<SelfCheck question="Takımın test ortamı iki gündür çalışmıyor. Scrum Master ne yapar?">
+
+Önce takımın bunu kendisi çözüp çözemeyeceğine bakar. Çözebiliyorsa çözmesini kolaylaştırır. Çözemiyorsa, örneğin ortam başka bir ekibin sorumluluğundaysa, engeli o ekibe ya da gereken yöneticiye taşır ve kaldırılmasını sağlar.
+
+</SelfCheck>
+
+<SelfCheck question="Bir yönetici Scrum Master'dan her sprint sonunda takım üyelerinin performansını raporlamasını istiyor. Ne dersin?">
+
+Scrum Master takımın yöneticisi değildir; takım içinde hiyerarşi yoktur. Bireysel performans raporlamak, takımın kendi kendini yönetmesini ve güvenini bozar. SM yöneticiye takımın etkililiğini, örneğin sprint hedeflerine ulaşma ve artımları, birlikte incelemeyi önerebilir.
+
+</SelfCheck>
