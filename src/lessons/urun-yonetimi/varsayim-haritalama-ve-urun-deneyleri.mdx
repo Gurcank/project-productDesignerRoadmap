@@ -1,0 +1,166 @@
+---
+summary: "Bütün bir fikri değil, onun dayandığı varsayımları test et. Varsayımlar önem ve kanıta göre haritalanır; en riskli olanlar ucuz testlerle ve önceden yazılmış bir başarı ölçütüyle sınanır."
+outcomes:
+  - "Bir çözümün varsayımlarını beş türe göre çıkarabilirsin."
+  - "Varsayımları önem ve kanıta göre haritalayıp en riskli olanı seçebilirsin."
+  - "Uygun test türünü seçip başarı ölçütünü testten önce yazabilirsin."
+minutes: 8
+standard: 2
+sources:
+  - label: "Product Talk — Teresa Torres, Assumption Testing (2023)"
+    url: "https://www.producttalk.org/assumption-testing/"
+  - label: "Product Talk — Teresa Torres, Opportunity Solution Trees (2023)"
+    url: "https://www.producttalk.org/opportunity-solution-trees/"
+additions:
+  - "Beş varsayım türü, dört test türü, başarı ölçütünü önceden yazmak (Teresa Torres)"
+  - "Varsayım haritalama: önem ve kanıt (David Bland, Torres'in aktarımıyla)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Matrix2x2 from "~/components/diagrams/primitives/Matrix2x2.astro";
+
+Üç çözüm masadaydı: son siparişi tekrarla, favori listesi, zamanlanmış sipariş. Burak önerdi: "Üçünü de küçük küçük yapalım, hangisi tutarsa onu büyütürüz."
+
+Elif hesapladı: üç özellik, en az altı sprint, sonra ölçmek için bir ay. Çeyrek biterdi. "Üç fikri yapmak yerine," dedi, "her birinin doğru olmak zorunda olduğu şeyleri test edelim. İki haftada." Bu ders, fikir yerine varsayımı test etmeyi anlatır.
+
+## Fikri değil, varsayımı test et
+
+Teresa Torres'e göre bir **varsayım**, doğru olabilecek ya da olmayabilecek bir inançtır; ürün takımları için, fikrin başarılı olması için doğru olması gereken şeylerdir. Varsayım ne kadar özgülse, test etmesi o kadar kolaydır.
+
+Torres bütün fikri test etmenin iki sorununu sayar: çok iş ve çok zaman ister, ve başarısız olunca nedenini söylemez. Bir varsayım testi başarısız olunca ise neyin değişmesi gerektiği tam olarak bellidir.
+
+Torres varsayımları beş türe ayırır:
+
+| Tür | Sorduğu soru | Demlik örneği |
+|---|---|---|
+| İstek | Müşteri bunu istiyor mu, değer için gerekeni yapar mı? | Sabah müşterileri tek dokunuşla tekrar etmek ister |
+| Kullanılabilirlik | Müşteri onu kullanabilir mi? | Müşteri düğmeyi ana ekranda fark eder |
+| Yapılabilirlik | Onu yapabilir miyiz? | Son siparişin ürünleri hâlâ menüde |
+| İş uygunluğu | İşimiz için iyi mi? | Tekrar sipariş sepeti küçültmez |
+| Etik | Bir zarar verme ihtimali var mı? | Zamanlanmış sipariş istenmeden ödeme almaz |
+
+Torres'e göre bir varsayımın hangi türe girdiğini tartışmaya değmez. Türlerin işe yaradığı yer, her türden varsayım üretip riskleri gözden kaçırmamaktır. Varsayımları bulmanın iyi bir yolu, müşterinin yolculuğunu adım adım yürümektir.
+
+## En riskli varsayım: önem ve kanıt
+
+Torres, David Bland'ın *Testing Business Ideas* kitabındaki **varsayım haritalama** alıştırmasını aktarır. Her varsayıma iki soru sorulur: fikrin başarısı için ne kadar önemli, ve elimizde onu destekleyen ne kadar kanıt var?
+
+<Matrix2x2
+  label="Varsayım haritası: önem ve kanıt"
+  caption="Varsayımlar iki eksende yerleşir: fikrin başarısı için önemi ve eldeki kanıt. Sol üst köşe, önemli ama kanıtı az varsayımlardır; en riskli olanlar bunlardır ve önce test edilir. V2, düğmenin fark edilmesi, burada duruyor. V4, sepetin küçülmemesi, ve V3, ürünlerin menüde olması, ortaya yakın. V1, müşterilerin tekrar etmek istemesi, önemli ama veriyle zaten güçlü; sağ üstte. V5, zamanlanmış siparişin etik varsayımı, bu sürümde önemi düşük olduğu için sol altta."
+  x={{ title: "Eldeki kanıt", low: "az", high: "çok" }}
+  y={{ title: "Önem", low: "düşük", high: "yüksek" }}
+  quadrants={[
+    { title: "Önce test et", sub: "önemli, kanıtı az", tone: "progress" },
+    { title: "İlerle", sub: "önemli, kanıtı güçlü" },
+    { title: "Not al", sub: "önemsiz, kanıtı az" },
+    { title: "Bırak", sub: "önemsiz, kanıtı güçlü" },
+  ]}
+  points={[
+    { label: "V2", x: 0.15, y: 0.68 },
+    { label: "V4", x: 0.3, y: 0.57 },
+    { label: "V3", x: 0.42, y: 0.72 },
+    { label: "V1", x: 0.85, y: 0.65 },
+    { label: "V5", x: 0.2, y: 0.15 },
+  ]}
+/>
+
+En riskli varsayımlar, fikrin başarısı için kritik olan ama güvende olduğunu gösteren kanıtı az olanlardır. Testin amacı daha çok kanıt toplamaktır.
+
+## Test türleri ve başarı ölçütü
+
+Torres'e göre yüzlerce test yapılabilir ama çoğu dört türe girer:
+
+- **Prototip testi:** bir anı canlandırıp müşterinin davranışını gözlemek.
+- **Tek soruluk anket:** geçmişteki ya da şimdiki davranışı hızlıca ölçmek.
+- **Veri madenciliği:** varsayımdaki riski eldeki veriyle değerlendirmek.
+- **Mühendislik keşfi** (research spike): bir şeyin ne kadar zor yapılacağını anlamak için kısa bir teknik çalışma.
+
+**Başarı ölçütünü testten önce yaz.** Torres'in önerisi, takım olarak "çözümün başarılı olması için ne görmemiz gerekir?" sorusunu cevaplayıp kuma bir çizgi çekmektir. Çizgi sonuçtan sonra çekilirse, her sonuç "fena değil" görünür. Bir başka kolaylık da çözümleri birbiriyle karşılaştırmaktır: soru "bu sonuç yeterince iyi mi?" yerine "hangi çözüm daha iyi görünüyor?" olur.
+
+**Varsayım testi ≠ A/B testi.** Torres bu yüzden "deney" yerine "varsayım testi" der. Gerçek, randomize kontrollü deneyler ya da A/B testleri genellikle ancak bir şey inşa edildikten sonra ve yeterli trafik varsa yapılabilir. Keşifte amaç, yanlış şeyi inşa ettiğimizi inşa etmeden önce öğrenmektir. Testlerin çoğunun beklentinin altında kalması normaldir.
+
+<Case>
+
+Takım iki haftada beş varsayımla çalıştı. Başarı ölçütleri testlerden önce yazıldı:
+
+1. **V1, istek:** veri. Ölçüt: aktiflerin en az %40'ı hep aynı ürünü alıyor. Sonuç: %54.
+2. **V2, kullanılabilirlik:** sekiz kişiyle prototip testi. Ölçüt: en az 6'sı düğmeyi 10 saniyede bulur. Sonuç: 7/8.
+3. **V3, yapılabilirlik:** veri. Ölçüt: son siparişlerin en az %85'inde ürünlerin hepsi menüde. Sonuç: %91. Kalan %9 için "biten ürünü çıkar" story'si yazıldı.
+4. **V4, iş uygunluğu:** veri. Ölçüt: ortalama sepet %10'dan fazla düşmez. Sonuç: 158 TL, %4 düşüş.
+5. **V5, etik:** test edilmedi. Kural yazıldı: her zamanlanmış siparişten 30 dakika önce bildirim.
+
+Favori listesinin en riskli varsayımı da aynı prototip oturumunda sınandı: sekiz kişiden üçü favori kaydetti, ölçüt beşti. Karar: önce "son siparişi tekrarla".
+
+</Case>
+
+<Tool slug="deney-karti" />
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Çizgiyi önceden çek.** Başarı ölçütü testten sonra yazılırsa karar değil yorum olur.
+- **İş uygunluğu varsayımını unutma.** Müşteri seviyor diye iş için iyi olduğu kanıtlanmış olmaz.
+- **Başarısız testi bir kazanç say.** İnşa etmeden önce öğrenilen "hayır", en ucuz hayırdır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Test sonucunu backlog'a çevir.** Geçen varsayım bir story'ye, kalan bir yeniden tasarıma dönüşür.
+- **Kalan riskleri kabul kriterine yaz.** Yüzde dokuzluk bir kenar durum da bir story'dir.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Prototip testini kullanılabilirlik varsayımına göre tasarla.** Bütün akışı değil, riskli anı canlandır.
+- **Testin bulgusunu tasarıma taşı.** Düğmeyi "kampanya" sanan katılımcı, bir metin kararına dönüşür.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Test yöntemini varsayıma göre seç.** Davranışı gözleyen bir test, "kullanır mıydınız?" sorusundan güçlüdür.
+- **Katılımcı sayısını ölçütle birlikte yaz.** "8'den 6'sı" gibi bir çizgi, sonucu tartışmaya kapatır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Bütün fikri değil, onun doğru olmak zorunda olduğu varsayımları test et.
+- Beş varsayım türü: istek, kullanılabilirlik, yapılabilirlik, iş uygunluğu, etik.
+- En riskli varsayımlar önemli ama kanıtı az olanlardır; önce onlar test edilir.
+- Dört test türü: prototip testi, tek soruluk anket, veri madenciliği, mühendislik keşfi.
+- Başarı ölçütü testten önce yazılır; A/B testi genellikle inşa ettikten sonraya kalır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Neden bütün fikri değil de varsayımları test ederiz?">
+
+Bütün fikri test etmek çok iş ve zaman ister; başarısız olunca da nedenini söylemez. Tek bir varsayımın testi hızlıdır ve başarısız olunca neyin değişmesi gerektiğini gösterir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir varsayım fikrin başarısı için çok önemli ama eldeki kanıt çok az. Haritada nerede durur ve ne yaparsın?">
+
+Sol üstte, "önce test et" köşesinde. En riskli varsayım budur; onu en ucuz testle ve önceden yazılmış bir başarı ölçütüyle sınarım.
+
+</SelfCheck>
+
+<SelfCheck question="Test bitti; 8 kişiden 5'i düğmeyi buldu. Takım 'fena değil' diyor. Ne eksik?">
+
+Önceden yazılmış bir başarı ölçütü. Çizgi testten önce çekilseydi, sonucun geçip geçmediği tartışmasız olurdu. Sonuçtan sonra her sonuç kabul edilebilir görünür.
+
+</SelfCheck>
+
+<SelfCheck question="Bir yönetici 'önce A/B testi yapalım' diyor ama özellik henüz yok. Ne önerirsin?">
+
+A/B testi ancak bir şey inşa edildikten ve yeterli trafik olduktan sonra yapılabilir. Keşifte önce en riskli varsayımları prototip, veri ya da kısa bir anketle sınamayı öneririm; inşa ettikten sonra A/B testi sonucu doğrulamak için kullanılabilir.
+
+</SelfCheck>

@@ -278,6 +278,18 @@
     "is-analizi/is-kurallari-ve-karar-tablolari",
     "is-analizi/iyi-gereksinim-use-case-ve-user-story",
     "is-analizi/izlenebilirlik",
-    "is-analizi/veri-gereksinimleri"
+    "is-analizi/veri-gereksinimleri",
+    "urun-yonetimi/buyume-donguleri-ve-plg",
+    "urun-yonetimi/deger-onerisi-ve-konumlandirma",
+    "urun-yonetimi/kano-deger-efor-ve-gecikme-maliyeti",
+    "urun-yonetimi/lansman-ve-gtm",
+    "urun-yonetimi/pm-isi-ve-dort-risk",
+    "urun-yonetimi/prd-anatomisi",
+    "urun-yonetimi/sonuc-odakli-yol-haritasi",
+    "urun-yonetimi/surekli-kesif-ve-firsat-cozum-agaci",
+    "urun-yonetimi/trade-off-ve-hayir-demek",
+    "urun-yonetimi/varsayim-haritalama-ve-urun-deneyleri",
+    "urun-yonetimi/vizyon-ve-strateji",
+    "urun-yonetimi/yasam-dongusu-ve-ozellik-emekliligi"
   ]
 }

@@ -1,0 +1,178 @@
+[
+  {
+    "term": "Dört büyük risk",
+    "english": "Four big risks",
+    "definition": "Bir ürün fikrinin dört riski: değer, kullanılabilirlik, yapılabilirlik ve iş uygunluğu (Marty Cagan).",
+    "topic": "pm-isi-ve-dort-risk"
+  },
+  {
+    "term": "İş uygunluğu riski",
+    "english": "Business viability risk",
+    "definition": "Çözümün işin farklı yönleri için de işe yarayıp yaramadığı: kanal, sözleşme, yasa, müşteri edinme maliyeti, gelir, marka.",
+    "topic": "pm-isi-ve-dort-risk"
+  },
+  {
+    "term": "Ürün vizyonu",
+    "english": "Product vision",
+    "definition": "Yaratılmak istenen geleceğin, genellikle 2–5 yıl ileriye bakan ikna edici anlatımı. Şartname değildir.",
+    "topic": "vizyon-ve-strateji"
+  },
+  {
+    "term": "Ürün stratejisi",
+    "english": "Product strategy",
+    "definition": "Vizyonu gerçeğe çevirirken hangi problemlerin çözüleceğini seçmek: odak, içgörü, eylem ve yönetim.",
+    "topic": "vizyon-ve-strateji"
+  },
+  {
+    "term": "Ürün ilkeleri",
+    "english": "Product principles",
+    "definition": "Ürünün bağlı kalacağı değerleri söyleyen kısa cümleler; genellikle vizyonla birlikte yazılır.",
+    "topic": "vizyon-ve-strateji"
+  },
+  {
+    "term": "Değer önerisi tuvali",
+    "english": "Value Proposition Canvas",
+    "definition": "Bir segmentin işlerini, acılarını ve kazanımlarını, sunulan şeyin giderdiği acılar ve yarattığı kazanımlarla eşleştiren tuval (Strategyzer).",
+    "topic": "deger-onerisi-ve-konumlandirma",
+    "aliases": [
+      "Value Proposition Canvas"
+    ]
+  },
+  {
+    "term": "Ürün konumlandırması",
+    "english": "Positioning",
+    "definition": "Ürünün, iyi tanımlanmış bir müşteri grubunun çok önemsediği bir şeyi sunmakta nasıl lider olduğunu tanımlamak (April Dunford).",
+    "topic": "deger-onerisi-ve-konumlandirma"
+  },
+  {
+    "term": "Rakip alternatifler",
+    "english": "Competitive alternatives",
+    "definition": "Ürünümüz olmasaydı müşterinin yapacağı şey. Konumlandırmanın başlangıç noktasıdır.",
+    "topic": "deger-onerisi-ve-konumlandirma"
+  },
+  {
+    "term": "Pazar kategorisi",
+    "english": "Market category",
+    "definition": "Ürünün değerinin hedef müşteriye apaçık görüneceği bağlam; kazanılmak istenen pazarın tanımı.",
+    "topic": "deger-onerisi-ve-konumlandirma"
+  },
+  {
+    "term": "Fırsat-çözüm ağacı",
+    "english": "Opportunity solution tree",
+    "definition": "Tepede sonuç, altında müşteri fırsatları, sonra çözümler ve varsayım testleri olan keşif ağacı (Teresa Torres).",
+    "topic": "surekli-kesif-ve-firsat-cozum-agaci",
+    "aliases": [
+      "Opportunity solution tree",
+      "OST"
+    ]
+  },
+  {
+    "term": "Ürün sonucu",
+    "english": "Product outcome",
+    "definition": "Üründe ölçülen bir müşteri davranışı ya da duygusu. Fırsat-çözüm ağacının tepesine genellikle bu konur.",
+    "topic": "surekli-kesif-ve-firsat-cozum-agaci"
+  },
+  {
+    "term": "Ürün üçlüsü",
+    "english": "Product trio",
+    "definition": "Keşfi birlikte yürüten PM, tasarımcı ve mühendis.",
+    "topic": "surekli-kesif-ve-firsat-cozum-agaci",
+    "aliases": [
+      "Product trio"
+    ]
+  },
+  {
+    "term": "Varsayım testi",
+    "english": "Assumption test",
+    "definition": "Bir fikrin tek bir varsayımındaki riski sınayan küçük, yapılandırılmış etkinlik; başarı ölçütü önceden yazılır.",
+    "topic": "varsayim-haritalama-ve-urun-deneyleri"
+  },
+  {
+    "term": "Varsayım haritalama",
+    "english": "Assumption mapping",
+    "definition": "Varsayımları fikrin başarısı için önemine ve eldeki kanıta göre yerleştirip en riskliyi bulma alıştırması (David Bland).",
+    "topic": "varsayim-haritalama-ve-urun-deneyleri"
+  },
+  {
+    "term": "Kano modeli",
+    "english": "Kano model",
+    "definition": "Özellikleri memnuniyete etkisine göre olmazsa olmaz, performans, çekici, kayıtsız ve ters diye ayıran model (Noriaki Kano).",
+    "topic": "kano-deger-efor-ve-gecikme-maliyeti",
+    "aliases": [
+      "Kano"
+    ]
+  },
+  {
+    "term": "Gecikme maliyeti",
+    "english": "Cost of Delay",
+    "definition": "Beklemenin sonuçlara etkisi; değeri ve aciliyeti birleştirir.",
+    "topic": "kano-deger-efor-ve-gecikme-maliyeti",
+    "aliases": [
+      "Cost of Delay"
+    ]
+  },
+  {
+    "term": "WSJF",
+    "english": "Weighted Shortest Job First",
+    "definition": "Göreli gecikme maliyetini göreli iş süresine bölerek sıralama yapan önceliklendirme modeli (SAFe).",
+    "topic": "kano-deger-efor-ve-gecikme-maliyeti"
+  },
+  {
+    "term": "Sonuç odaklı yol haritası",
+    "english": "Outcome-based roadmap",
+    "definition": "Özellik ve tarih yerine çözülecek problemleri ve hedeflenen ölçüleri sıralayan yol haritası.",
+    "topic": "sonuc-odakli-yol-haritasi"
+  },
+  {
+    "term": "Now-Next-Later",
+    "english": "Now-Next-Later roadmap",
+    "definition": "Yol haritasını tarih yerine üç ufka dizen biçim; kesinlik yakın ufukta yüksek, uzakta düşüktür (Janna Bastow).",
+    "topic": "sonuc-odakli-yol-haritasi"
+  },
+  {
+    "term": "Lansman katmanı",
+    "english": "Launch tier",
+    "definition": "Lansmanları beklenen pazar ve iş etkisine göre ayıran ve kaynağı buna göre dağıtan sınıflama.",
+    "topic": "lansman-ve-gtm",
+    "aliases": [
+      "Launch tier"
+    ]
+  },
+  {
+    "term": "Büyüme döngüsü",
+    "english": "Growth loop",
+    "definition": "Çıktının yeniden girdiye yatırıldığı kapalı sistem: bir kullanıcı grubunun bir sonrakini nasıl getirdiği.",
+    "topic": "buyume-donguleri-ve-plg",
+    "aliases": [
+      "Growth loop"
+    ]
+  },
+  {
+    "term": "Ürün odaklı büyüme",
+    "english": "Product-led growth",
+    "definition": "Ürünün kendisini edinmenin, aktivasyonun ve elde tutmanın ana aracı yapan strateji; kullanıcı ürünü kendisi dener.",
+    "topic": "buyume-donguleri-ve-plg",
+    "aliases": [
+      "Product-led growth",
+      "PLG"
+    ]
+  },
+  {
+    "term": "Ürün yaşam döngüsü",
+    "english": "Product life cycle",
+    "definition": "Bir ürünün geçtiği düşünülen dört evre: tanıtım, büyüme, olgunluk, düşüş. Her evre farklı strateji ister.",
+    "topic": "yasam-dongusu-ve-ozellik-emekliligi"
+  },
+  {
+    "term": "Özellik emekliliği",
+    "english": "Feature retirement",
+    "definition": "Tutmayan bir özelliği adım adım kaldırmak: doğrula, yeni kullanıcılara kapat, deneyenlerden gizle, kalanlara tarihle duyur.",
+    "topic": "yasam-dongusu-ve-ozellik-emekliligi"
+  },
+  {
+    "term": "Özellik şantajı",
+    "english": "Feature blackmail",
+    "definition": "\"Bu özelliği yapmazsanız ayrılırız\" baskısı; tek müşteriye özel değer çoğundan alınır (Des Traynor).",
+    "topic": "trade-off-ve-hayir-demek"
+  }
+]

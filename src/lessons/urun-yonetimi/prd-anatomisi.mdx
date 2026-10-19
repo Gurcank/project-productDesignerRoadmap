@@ -1,0 +1,147 @@
+---
+summary: "İyi bir PRD bir özelliğin neden, kimin için ve ne kadarının yapılacağını tek sayfada toplar. Hedef, arka plan, varsayımlar, hikâyeler, tasarım, sorular ve yapmadıklarımızdan oluşur ve yaşayan bir belgedir."
+outcomes:
+  - "Bir PRD'nin bölümlerini ve her birinin cevapladığı soruyu sayabilirsin."
+  - "Brief ile PRD'yi, PRD ile ayrıntılı şartnameyi ayırt edebilirsin."
+  - "Çevik bir PRD'nin anti-paternlerini tanıyabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "Atlassian — How to create a product requirements document (PRD)"
+    url: "https://www.atlassian.com/agile/product-management/requirements"
+  - label: "Atlassian — How to write a product brief"
+    url: "https://www.atlassian.com/agile/product-management/product-brief"
+additions:
+  - "PRD'nin bölümleri, çevik PRD ve anti-paternler (Atlassian)"
+  - "Brief ile PRD farkı (Atlassian)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Varsayım testleri bitmişti; "Son siparişini tekrarla" yapılacaktı. Deniz sordu: "Bunun PRD'si var mı? Ece hangi kenar durumlarını düşünmesi gerektiğini soruyor, Zeynep test senaryolarını."
+
+Elif'in elinde bir one-pager, bir fırsat-çözüm ağacı ve beş deney kartı vardı. Hepsi doğruydu ama dağınıktı. Takımın tek bir sayfaya ihtiyacı vardı: neden yapıyoruz, ne yapıyoruz, ne yapmıyoruz? Bu ders o sayfayı, PRD'yi bölüm bölüm anlatır. Belge türlerinin karşılaştırması [Belgeler: spec, PRD, one-pager, brief](/urun-gelistirme/belgeler-spec-prd-one-pager-brief/) dersinde.
+
+## PRD nedir, ne değildir?
+
+Atlassian'ın tanımıyla **ürün gereksinimleri belgesi** (PRD), inşa edilecek ürünün ya da özelliğin amacını, özelliklerini, işlevlerini ve davranışını tanımlar. Ekipler arası tek bir doğru kaynaktır.
+
+Çevik bir PRD her ayrıntıyı önceden yazmaz. Atlassian'a göre amacı, PO, tasarımcı ve geliştiriciler arasında **ortak bir anlayış** kurmaktır. Ortak anlayış olunca PO üst düzey gereksinime odaklanır, uygulamanın ayrıntısını işi yapacak takıma bırakır.
+
+**Brief ≠ PRD.** Atlassian'a göre brief, yapma kararından önce yazılır ve üst düzeydir: problem, kimin için, hedeflenen sonuç, açık sorular. PRD, yapma ya da derinlemesine keşfetme kararından sonra yazılır ve daha ayrıntılıdır. Demlik'te one-pager brief'in yerini tutar; ondan sonra PRD gelir.
+
+## Bölümler
+
+Atlassian, ekip içinde tutarlı bir şablon kullanmayı ve şu bölümlerle "tam yetecek kadar" bağlam vermeyi önerir:
+
+<Layers
+  label="Bir PRD'nin bölümleri"
+  caption="Bir PRD yukarıdan aşağı sekiz bölümden oluşur. Künye: kimler katılıyor, durum ne, hedef sürüm ne. Hedefler: takımın ve işin amaçları. Arka plan ve stratejik uyum: neden şimdi, stratejiye nasıl bağlanıyor. Varsayımlar. Kullanıcı hikâyeleri ve başarı ölçüleri. Etkileşim ve tasarım bağlantıları. Açık sorular. Ve en sonda yapmadıklarımız: kapsam dışında bırakılanlar."
+  layers={[
+    { title: "Künye", sub: "katılımcılar, durum, hedef sürüm" },
+    { title: "Hedefler", sub: "takımın ve işin amaçları", tone: "accent" },
+    { title: "Arka plan ve stratejik uyum", sub: "neden, neden şimdi" },
+    { title: "Varsayımlar", sub: "teknoloji, iş, kullanıcı" },
+    { title: "Kullanıcı hikâyeleri", sub: "kabul kriteri, başarı ölçüsü" },
+    { title: "Etkileşim ve tasarım", sub: "akış ve prototip bağlantıları" },
+    { title: "Sorular", sub: "karar ya da araştırma bekleyenler" },
+    { title: "Yapmadıklarımız", sub: "kapsam dışı, belki sonra", tone: "progress" },
+  ]}
+/>
+
+Atlassian bu yaklaşımın üç faydasını sayar. Sayfa, bir epic'le ilgili her şeyin "iniş sayfası" olur. Her seferinde aynı biçime uymak zorunda olmadığı için esnektir. Ayrıntı linklerle dışarıda tutulur ve okuyan kişi gerektikçe derine iner.
+
+**Yapmadıklarımız boş bırakılmaz.** Bu bölüm takımı odakta tutar. Şimdi kapsam dışında olan ama ileride düşünülebilecek her şey burada açıkça yazılır.
+
+## Anti-paternler
+
+Atlassian çevik bir ortamda PRD'nin şu hâllere düştüğünü uyarır:
+
+- İş başlamadan bütün proje çok ayrıntılı biçimde şartnameye dökülmüş.
+- İş başlamadan bütün takımlardan sıkı bir onay isteniyor.
+- Tasarımcılar ve geliştiriciler gereksinimin güncellendiğini bilmiyor.
+- Gereksinim hiç güncellenmiyor, çünkü herkes imzalamıştı.
+- PO gereksinimleri takımın katılımı olmadan yazıyor.
+
+PRD yaşayan bir belgedir. Takımla birlikte yazılır, kısa tutulur ve iş ilerledikçe güncellenir.
+
+<Case>
+
+Elif PRD'yi Deniz, Selin ve Ece ile bir saatte yazdı. Var olan parçalar sayfaya taşındı:
+
+1. **Hedef:** one-pager'daki sonuç, 30 günde ikinci sipariş %41 → %50; özelliğin kendi ölçüsü ayrı yazıldı.
+2. **Arka plan:** fırsat-çözüm ağacındaki hedef fırsat ve %54 verisi.
+3. **Varsayımlar:** deney kartlarından; her birinin yanında sonucu.
+4. **Hikâyeler:** üç story; biri V3'ten gelen "biten ürünü sepetten çıkar".
+5. **Sorular:** Ece'nin sorusu, "Panel tükenen ürün bilgisini gerçek zamanlı veriyor mu?", bir sahiple tabloya girdi.
+6. **Yapmadıklarımız:** favori listesi, zamanlanmış sipariş, web sitesi.
+
+Zeynep test senaryolarını hikâyelerin kabul kriterlerinden çıkardı. İki hafta sonra soru tablosunun yarısı cevaplanmış, PRD üç kez güncellenmişti.
+
+</Case>
+
+<Tool slug="prd" />
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Hedef ve arka planı sen yaz.** Neden ve neden şimdi sorularının cevabı PRD'nin omurgasıdır.
+- **Yapmadıklarımızı en baştan yaz.** Kapsam konuşması bu bölümle başlar ve biter.
+- **Takımla birlikte yaz.** Tek başına yazılan PRD, okunmayan PRD'dir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Hikâyeleri PRD'ye bağla, kopyalama.** Backlog'daki öğeler tek kaynak olsun; PRD onlara link versin.
+- **Soru tablosunu refinement'ta kullan.** Cevaplanmamış soru, sprinte giren belirsizliktir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Varsayımları ve kuralları ayrı yaz.** Varsayım doğrulanmayı bekler; kural karar verilmiş bir şeydir.
+- **Ayrıntıyı linkle dışarıda tut.** Karar tablosu ya da use case PRD'ye eklenmez, bağlanır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- PRD inşa edilecek şeyin amacını, özelliklerini ve davranışını tanımlar ve ekip için tek kaynaktır.
+- Brief yapma kararından önce, PRD sonra yazılır; PRD daha ayrıntılıdır.
+- Sekiz bölüm: künye, hedefler, arka plan, varsayımlar, hikâyeler, tasarım, sorular, yapmadıklarımız.
+- Çevik PRD her ayrıntıyı önceden yazmaz; ortak anlayış kurar ve ayrıntıyı linkle verir.
+- PRD yaşayan bir belgedir; takımla yazılır ve güncellenir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Brief ile PRD arasındaki fark nedir?">
+
+Brief yapma kararından önce yazılır, üst düzeydir ve "devam mı, dur mu?" sorusunu konuşturur. PRD yapma ya da derinlemesine keşfetme kararından sonra yazılır ve hedefleri, varsayımları, hikâyeleri, tasarımı ve kapsamı daha ayrıntılı tanımlar.
+
+</SelfCheck>
+
+<SelfCheck question="'Yapmadıklarımız' bölümü neden önemlidir?">
+
+Takımı odakta tutar ve kapsam beklentilerini netleştirir. Yazılmazsa her paydaş kendi beklentisini kapsamın içinde sanır.
+
+</SelfCheck>
+
+<SelfCheck question="PRD bütün takımlarca imzalandı ve o günden beri değişmedi. Ne sorun olabilir?">
+
+Atlassian'ın saydığı anti-paternlerden biri: gereksinim hiç güncellenmiyor. İş ilerledikçe öğrenilenler PRD'ye girmiyorsa, takım eski bir anlayışla çalışıyordur.
+
+</SelfCheck>
+
+<SelfCheck question="Bir PO PRD'yi tek başına yazıp takıma gönderiyor. Neden riskli?">
+
+Çevik PRD'nin amacı ortak anlayıştır. Takım katılmazsa sorular ve kenar durumlar geç ortaya çıkar; takım da uygulama kararlarını verecek bağlamdan yoksun kalır.
+
+</SelfCheck>

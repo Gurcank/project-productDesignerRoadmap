@@ -1,0 +1,145 @@
+---
+summary: "Sonuç odaklı yol haritası özellik ve tarih yerine çözülecek problemleri ve hedeflenen sonuçları sıralar. Now-Next-Later üç ufuk kullanır: kesinlik yakın ufukta yüksek, uzak ufukta düşüktür."
+outcomes:
+  - "Çıktı odaklı bir yol haritası satırını sonuç odaklı bir satıra çevirebilirsin."
+  - "Now, Next ve Later sütunlarına neyin, hangi ayrıntıyla gireceğini söyleyebilirsin."
+  - "Yol haritasını fırsat-çözüm ağacına ve çeyrek hedeflerine bağlayabilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "ProdPad — Janna Bastow, Why I Invented the Now-Next-Later Roadmap (2022)"
+    url: "https://www.prodpad.com/blog/invented-now-next-later-roadmap/"
+  - label: "Product Talk — Teresa Torres, Opportunity Solution Trees (2023)"
+    url: "https://www.producttalk.org/opportunity-solution-trees/"
+  - label: "SVPG — Marty Cagan, The Four Big Risks (2017)"
+    url: "https://www.svpg.com/four-big-risks/"
+additions:
+  - "Now-Next-Later yol haritasının kökeni, sütunları ve kullanımı (Janna Bastow)"
+  - "Yol haritasının fırsat-çözüm ağacıyla bağlantısı (Teresa Torres)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Yatırımcı sunumundan bir gün önce Hakan, Elif'ten "çeyreğin yol haritasını" istedi. Elif'in önceki çeyrekteki slaydı aklındaydı: on iki özellik, her birinin yanında bir ay. Altısı o ay çıkmamıştı; ikisi çıkmış ama kimse kullanmamıştı.
+
+Bu kez farklı bir slayt hazırladı. Üzerinde tek bir özellik adı ve tek bir tarih yoktu; üç problem, üç ölçü ve "neden bu sırada?" sorusunun cevabı vardı. Bu ders, o slaytı anlatır. Yol haritasının temel dili [Roadmap ve planlama](/urun-gelistirme/roadmap-ve-planlama/) dersinde.
+
+## Çıktı yerine sonuç
+
+Klasik yol haritası bir **çıktı** listesidir: hangi özellik, hangi ayda. Sonuç odaklı yol haritası ise **sonuçları** sıralar: hangi problemi çözmeye ve hangi ölçüyü hareket ettirmeye çalışıyoruz?
+
+| Çıktı odaklı satır | Sonuç odaklı satır |
+|---|---|
+| Mart: Favori listesi | Now: Tekrar siparişi kolaylaştır (30 günde ikinci sipariş %41 → %50) |
+| Nisan: Yeni ödeme ekranı | Next: Ödemeyi yarıda bırakmayı azalt (%22 → %15) |
+| Haziran: Grup siparişi | Later: Arkadaşlarla birlikte sipariş |
+
+Fark yalnız biçimde değildir. Çıktı satırı çözümü baştan sabitler; ölçü hareket etmezse bile özellik "teslim edildi" sayılır. Sonuç satırı çözümü takıma bırakır ve başarıyı ölçüyle tanımlar. Marty Cagan'ın deyişiyle iş, özellik ya da yol haritası değil, sonuç üretmektir.
+
+## Now, Next, Later
+
+Janna Bastow, **Now-Next-Later** yol haritasını zaman çizelgeli yol haritalarına bir tepki olarak geliştirdiğini anlatır. Önceki şirketlerinde planlama, mühendisler için yapılmış uzun araçlarda duruyordu. Tarihler kaydıkça her yol haritası konuşması tarih pazarlığına dönüşüyordu. Bir paydaşın on saniyede okuyabileceği bir şey istedi: tarihleri kaldırdı ve üç sütun çizdi.
+
+<Layers
+  label="Now, Next, Later: kesinlik azalarak"
+  caption="Üç ufuk yukarıdan aşağı sıralanır ve aşağı indikçe kesinlik azalır. Now: şu anda üzerinde çalışılan, ayrıntılı ve parçalara bölünmüş işler. Next: Now bitince başlayacak, daha az ayrıntılı ve Now'ın sonucuna bağlı olabilecek işler. Later: problemi belli ama çözümü henüz belli olmayan, uzaktaki büyük işler."
+  layers={[
+    { title: "Now", sub: "şimdi · ayrıntılı, parçalanmış", tone: "progress" },
+    { title: "Next", sub: "sonra · daha az ayrıntı, Now'a bağlı", tone: "accent" },
+    { title: "Later", sub: "ileride · problem belli, çözüm değil" },
+  ]}
+/>
+
+Bastow'a göre sütunlar eşit büyüklükte olmak zorunda değildir ve taşa yazılmamıştır. Format kesinliği zamana yayar: Now kesin, Later olasılıklarla doludur. Bu, erken taahhüt yerine daha kesin olma şansı verir.
+
+Bastow kullanımı üç adımda anlatır:
+
+1. **Problem düzeyinde önceliklendir.** Fikirleri değil problemleri sırala; fikirler, özellikler ve deneyler problemin altına eklenir.
+2. **Girişimleri tanımla:** prototipler, deneyler ve geliştirmeye giden çözüm. Gerçekten tarih gereken bir girişim varsa, tarihi yol haritasında söyle.
+3. **İş hedeflerine bağla.** Her satır bir hedefe hizmet etmelidir.
+
+## Ağaca ve hedefe bağlamak
+
+Teresa Torres'e göre sonuç odaklı bir yol haritası, fırsat-çözüm ağacındaki fırsatları ve çözümleri, bir sonra keşfedilecek sonuçları içerebilir. Tarihli bir yol haritası ise ancak varsayım testlerinden geçmiş çözümleri göstermelidir.
+
+Yol haritası, çeyrek hedefleriyle aynı dili konuşur: Now satırının ölçüsü çoğu zaman çeyreğin anahtar sonucudur. Hedeflerin kendisi [Hedef ve ölçüm: OKR, KPI, North Star](/calisma-bicimi/hedef-ve-olcum-okr-kpi-north-star/) dersinde.
+
+**Tarihsiz ≠ plansız.** Kampüs lansmanı gibi gerçek bir son tarih varsa, o satıra tarih yazılır. Kural, her satıra tarih yazmamaktır, tarihi yasaklamak değil.
+
+<Case>
+
+Elif'in slaytı üç satırdı:
+
+1. **Now: Tekrar siparişi kolaylaştır.** Ölçü: 30 günde ikinci sipariş %41 → %50. Girişimler: son siparişi tekrarla, sipariş hazır bildirimi. Kesinlik yüksek: varsayımlar test edildi.
+2. **Next: Ödemeyi yarıda bırakmayı azalt.** Ölçü: %22 → %15. Girişim: kayıtlı kart seçimini sadeleştirmek. Keşifte.
+3. **Later: Arkadaşlarla birlikte sipariş; kampüs sabahları.** Ölçü henüz yok. Mert önce beş görüşme yapacak.
+
+Hakan sordu: "Grup siparişi ne zaman?" Elif cevapladı: "Later'da. Hangi problemi çözdüğünü bilmeden tarih vermek, size yanlış bir söz vermek olur." Kampüs satırına ise dönem başı tarihini yazdı; o tarih gerçekti.
+
+</Case>
+
+<Tool slug="now-next-later" />
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Satırları sonuçla yaz.** "Favori listesi" değil, "tekrar siparişi kolaylaştır, %41 → %50".
+- **Tarih istendiğinde nedenini sor.** Gerçek bir son tarih varsa yaz; yoksa ufkunu ve kesinliğini söyle.
+- **Later'ı düzenli temizle.** Later bir bekleme odası değil; artık önemli olmayan satırları sil.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Ürün hedefini Now satırından türet.** Scrum'daki ürün hedefi çoğu zaman Now'ın ölçüsüdür.
+- **Backlog'un tepesi Now'a, ortası Next'e bakar.** Later'daki fikirler backlog'u şişirmez.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Now'ın kalabalıklaşmasını izle.** Takım aynı anda çalışabileceğinden fazla işi Now'a koyuyorsa, öncelik yoktur.
+- **Sprint hedefini yol haritasına bağla.** Takım, sprint hedefinin hangi sonuca hizmet ettiğini bilmeli.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Sonuç odaklı yol haritası özellik ve tarih yerine problemleri ve hedeflenen ölçüleri sıralar.
+- Now ayrıntılı ve kesin, Next daha az ayrıntılı, Later problemi belli ama çözümü belirsiz işlerdir.
+- Öncelik problem düzeyinde verilir; girişimler problemin altına yazılır ve her satır bir hedefe bağlanır.
+- Yol haritası fırsat-çözüm ağacından ve çeyrek hedeflerinden beslenir.
+- Gerçek bir son tarih varsa yazılır; kural her satıra tarih yazmamaktır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Mart: Favori listesi' satırını sonuç odaklı nasıl yazarsın?">
+
+"Now: Tekrar siparişi kolaylaştır; 30 günde ikinci sipariş %41'den %50'ye." Favori listesi, bu sonucu hareket ettirebilecek girişimlerden biri olarak satırın altına yazılır.
+
+</SelfCheck>
+
+<SelfCheck question="Later sütunundaki bir iş için neden ayrıntılı bir plan yapılmaz?">
+
+Uzaktaki işin çözümü henüz belli değildir; ayrıntılı plan yapmak, belki hiç yapılmayacak bir şeye zaman harcamak olur. Bastow'a göre iş yaklaştıkça keşfedilir ve ayrıntılandırılır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir yönetici her satıra bir tarih istiyor. Ne yaparsın?">
+
+Gerçek son tarihi olan satırlara, örneğin dönem başına bağlı bir lansmana, tarihi yazarım. Diğerleri için ufkunu ve kesinlik düzeyini söylerim. Kesin olmayan bir işe tarih yazmak, tutulması zor bir söz vermektir.
+
+</SelfCheck>
+
+<SelfCheck question="Fırsat-çözüm ağacı ile yol haritası nasıl bağlanır?">
+
+Ağaçtaki sonuç, yol haritasının satırıdır; hedef fırsat ve test edilmiş çözümler o satırın girişimleridir. Henüz keşfedilmemiş sonuçlar Next ya da Later'a girer.
+
+</SelfCheck>

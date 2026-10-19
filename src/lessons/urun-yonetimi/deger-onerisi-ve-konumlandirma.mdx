@@ -1,0 +1,171 @@
+---
+summary: "Değer önerisi tuvali müşterinin işlerini, acılarını ve kazanımlarını sunduğun şeyle eşleştirir. Konumlandırma ise ürünün, iyi tanımlanmış bir müşteri grubu için neyin lideri olduğunu söyler."
+outcomes:
+  - "Bir müşteri segmenti için işleri, acıları ve kazanımları yazıp değer haritasıyla eşleştirebilirsin."
+  - "Konumlandırmanın ne olduğunu ve ne olmadığını ayırt edebilirsin."
+  - "Konumlandırmanın beş bileşenini doğru sırayla çıkarabilirsin."
+minutes: 8
+standard: 2
+sources:
+  - label: "Strategyzer — The Value Proposition Canvas"
+    url: "https://www.strategyzer.com/library/the-value-proposition-canvas"
+  - label: "April Dunford — A Quickstart Guide to Positioning (2021)"
+    url: "https://www.aprildunford.com/post/a-quickstart-guide-to-positioning"
+additions:
+  - "Değer önerisi tuvali: müşteri profili ve değer haritası (Strategyzer)"
+  - "Konumlandırmanın tanımı, beş bileşeni ve sırası (April Dunford)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Bir yatırımcı toplantısında Demlik'e aynı soru üçüncü kez soruldu: "Siz bir yemek siparişi uygulaması mısınız? O pazarda devler var."
+
+Elif cevap verirken fark etti: soruyu soran kişi Demlik'i yanlış bir rafa koymuştu. O rafta Demlik'ten kurye, geniş restoran seçeneği ve eve teslimat bekleniyordu. Demlik'in hiçbiri yoktu, olması da gerekmiyordu. Bu ders, ürünün kime ne değer verdiğini yazmayı ve onu doğru rafa koymayı anlatır.
+
+## Değer önerisi tuvali
+
+Strategyzer'ın **değer önerisi tuvali** (Value Proposition Canvas) iki taraftan oluşur. Tuval her seferinde tek bir müşteri segmentini anlatır.
+
+**Müşteri profili:**
+
+- **İşler** (jobs): müşterinin yapmaya çalıştığı şey.
+- **Acılar** (pains): yol boyunca önüne çıkan engeller.
+- **Kazanımlar** (gains): ulaşmak istediği sonuçlar.
+
+**Değer haritası:** sunduğun ürün ve hizmetleri listele, sonra her birinin hangi acıyı giderdiğini ve hangi kazanımı yarattığını adlandır.
+
+<Tree
+  label="Demlik'in değer önerisi tuvali"
+  caption="Tuvalin iki tarafı vardır. Müşteri profili sabah müşterisini anlatır: işi sabah kahvesini yolda almak; acıları kuyruk, her sabah siparişi baştan kurmak ve ödemede kart karmaşası; kazanımı kahvenin geldiğinde hazır olması. Değer haritası Demlik'in sunduklarını anlatır: önceden sipariş ve ödeme kuyruğu giderir, son siparişi tekrarla baştan kurmayı giderir, hazır bildirimi bekleme yerine hazır kahve kazanımı yaratır."
+  root={{
+    title: "Sabah müşterisi için Demlik",
+    tone: "accent",
+    children: [
+      {
+        title: "Müşteri profili",
+        children: [
+          { title: "İş", sub: "sabah kahvesini yolda almak" },
+          { title: "Acılar", sub: "kuyruk, baştan kurmak, kart karmaşası" },
+          { title: "Kazanım", sub: "kahve geldiğinde hazır" },
+        ],
+      },
+      {
+        title: "Değer haritası",
+        tone: "progress",
+        children: [
+          { title: "Önceden sipariş ve ödeme", sub: "acı giderir: kuyruk" },
+          { title: "Son siparişi tekrarla", sub: "acı giderir: baştan kurmak" },
+          { title: "Hazır bildirimi", sub: "kazanım yaratır: hazır kahve" },
+        ],
+      },
+    ],
+  }}
+/>
+
+Strategyzer'a göre **uyum**, müşteri teyit edene kadar bir iddiadır. Çizdiğin eşleşmeleri kanıta karşı test eder, gerekirse düzeltirsin.
+
+**Özellik ≠ değer.** "Son siparişi tekrarla" bir özelliktir. Değeri, müşterinin her sabah siparişi baştan kurma acısını gidermesidir. Değer haritasında özellik, giderdiği acı ya da yarattığı kazanımla birlikte yazılmazsa yarım kalır.
+
+## Konumlandırma
+
+April Dunford'un tanımıyla **konumlandırma**, ürününün iyi tanımlanmış bir müşteri grubunun çok önemsediği bir şeyi sunmakta nasıl lider olduğunu tanımlar.
+
+Dunford önce neyin konumlandırma olmadığını söyler: mesaj değildir, slogan değildir, marka hikâyesi değildir, vizyon değildir.
+
+Konumlandırma bir **bağlam** kurar, bir filmin açılış sahnesi gibi. Bir ürünü "CRM" diye tanıtırsan dinleyen kişi hemen varsayımlar yapar: rakibin büyük bir CRM şirketidir, alıcı satış müdürüdür, fiyatı ondan düşüktür. İyi konumlandırma doğru varsayımları, kötü konumlandırma yanlış varsayımları tetikler.
+
+Dunford'un kendi hikâyesi bunu gösterir. Çalıştığı bir şirket bir veritabanını bir masaüstü veritabanının rakibi olarak satmaya çalışmış, yoğun bir pazarlama çabasına rağmen ancak 200 kopya satabilmişti. Yüz müşteriyle konuştu: 94'ü ürünü kullanmıyordu, 6'sı onunla işini dönüştürmüştü. Ürün "mobil cihazlar için gömülü veritabanı" olarak yeniden konumlandı ve büyüdü.
+
+## Beş bileşen ve sırası
+
+Dunford konumlandırmayı beş bileşene ayırır ve sıranın önemli olduğunu söyler:
+
+1. **Rakip alternatifler:** ürünümüz olmasa müşteri ne yapardı?
+2. **Farklılaştıran özellikler:** bizde olup alternatiflerde olmayan ne?
+3. **Değer:** bu özellikler müşteriye ne kazandırıyor? "E ne olmuş?" sorusu.
+4. **Hedef müşteri:** bu değeri en çok kim önemsiyor?
+5. **Pazar kategorisi:** değerin hedef müşteriye apaçık görüneceği bağlam; kazanmak istediğimiz pazarın tanımı.
+
+Dunford'a göre klasik "boşluk doldurma" konumlandırma cümlesi tehlikelidir, çünkü her boşluğa tek bir cevap varmış gibi davranır. Oysa bir ürün birçok farklı kategoride konumlanabilir.
+
+<Case>
+
+Elif ve pazarlamadan bir arkadaşı, Dunford'un sırasını izledi:
+
+1. **Rakip alternatifler:** kuyrukta beklemek, dükkânı telefonla aramak, yemek teslimat uygulamaları, büyük zincirlerin kendi uygulamaları.
+2. **Farklılaştırıcılar:** 140 bağımsız dükkân tek uygulamada; gel-al, kurye ücreti yok; sipariş doğrudan dükkânın kasasına düşüyor.
+3. **Değer:** kahve hazır, kuyruk yok, mahalledeki sevdiğin dükkândan.
+4. **Hedef müşteri:** bağımsız dükkânlara düzenli giden sabah müşterisi.
+5. **Pazar kategorisi:** "mahalle kahvecileri için önceden sipariş", "yemek siparişi" değil.
+
+Bir sonraki yatırımcı toplantısında soru değişti: "Kaç dükkânınız var ve ne kadarı tekrar sipariş alıyor?" Bu, Demlik'in cevap vermek istediği soruydu.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Konumlandırmayı rakip alternatiflerden başlat.** Ofiste kulağa iyi gelen ama müşteride farklılaşmayan bir konumlandırma işe yaramaz.
+- **Kategoriyi bilinçli seç.** Yanlış raf, ürünün sahip olmadığı özellikleri beklenti hâline getirir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Backlog'daki öğeleri değer haritasına bağla.** Hangi acıyı gideriyor ya da hangi kazanımı yaratıyor?
+- **Farklılaştırıcıyı koru.** Kategorinin "olmazsa olmaz"larını kopyalamak yerine, farklılaştıran özelliği derinleştir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **İşleri ve acıları gereksinimlerin kaynağı olarak kullan.** Her paydaş gereksinimi bir acıya ya da kazanıma bağlanabilmeli.
+- **Uyumu kanıtla test et.** Tuvaldeki her eşleşme, bir veri ya da gözlemle desteklenmeli.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Müşteri profilini görüşmelerden doldur.** İşler, acılar ve kazanımlar masada değil, sahada bulunur.
+- **"En çok kim önemsiyor?" sorusuna veri getir.** Hedef müşteri tanımı araştırmanın en değerli çıktılarındandır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Değer önerisi tuvali tek bir segment için işleri, acıları ve kazanımları, sunduğun şeyin giderdiği acılar ve yarattığı kazanımlarla eşleştirir.
+- Uyum, müşteri teyit edene kadar bir iddiadır.
+- Konumlandırma, ürünün iyi tanımlanmış bir müşteri grubu için neyin lideri olduğunu söyler; mesaj ya da slogan değildir.
+- Beş bileşen: rakip alternatifler, farklılaştırıcılar, değer, hedef müşteri, pazar kategorisi.
+- Sıra rakip alternatiflerle başlar; kategori en son seçilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Değer önerisi tuvalinin iki tarafında ne var?">
+
+Müşteri profilinde müşterinin işleri, acıları ve kazanımları; değer haritasında sunulan ürün ve hizmetler, bunların giderdiği acılar ve yarattığı kazanımlar.
+
+</SelfCheck>
+
+<SelfCheck question="Bir ekip arkadaşın 'konumlandırmamız yeni sloganımız' diyor. Ne dersin?">
+
+Slogan konumlandırma değildir. Konumlandırma, ürünün kimin için neyin lideri olduğunu ve hangi bağlamda değerlendirileceğini belirler. Slogan ve mesaj bu kararın üstüne kurulur.
+
+</SelfCheck>
+
+<SelfCheck question="Dunford neden rakip alternatiflerden başlamayı önerir?">
+
+Farklılaştırıcı ancak alternatiflere göre farklılaştırıcıdır. Özelliklerden başlanırsa ofiste iyi görünen ama müşterinin gözünde farklılaşmayan bir konumlandırma çıkar.
+
+</SelfCheck>
+
+<SelfCheck question="Demlik kendini 'yemek siparişi' kategorisine koysa ne olurdu?">
+
+Müşteriler ve yatırımcılar kurye, eve teslimat ve geniş restoran seçeneği beklerdi; rakip olarak o pazarın devleri görülürdü. Demlik'in güçlü yanları, kuyruksuz gel-al ve bağımsız dükkânlar, bu bağlamda görünmezdi.
+
+</SelfCheck>

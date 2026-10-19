@@ -1,0 +1,186 @@
+---
+summary: "Fırsat-çözüm ağacı bir sonuca giden yolları görünür kılar: tepede sonuç, altında müşteri fırsatları, en altta çözümler ve varsayım testleri. Fırsat bir çözüm değildir; aynı fırsat için birden çok çözüm karşılaştırılır."
+outcomes:
+  - "İş sonucu, ürün sonucu ve kullanım metriğini ayırıp ağacın tepesine doğru sonucu koyabilirsin."
+  - "Bir fırsatı çözümden ayırıp kılık değiştirmiş çözümleri yakalayabilirsin."
+  - "Hedef fırsat seçip onun için üç çözüm karşılaştırabilirsin."
+minutes: 8
+standard: 2
+skipTerms: ["yalın"]
+sources:
+  - label: "Product Talk — Teresa Torres, Opportunity Solution Trees (2023)"
+    url: "https://www.producttalk.org/opportunity-solution-trees/"
+additions:
+  - "Fırsat-çözüm ağacı, üç sonuç türü, fırsat ve çözüm ayrımı, fırsat değerlendirme (Teresa Torres)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Sipariş takımına çeyrek başında bir sonuç verildi: ilk siparişten sonra 30 gün içinde ikinci sipariş verenler %41'den %50'ye çıkacak. Toplantının ilk on dakikasında masada yedi çözüm vardı: favori listesi, sadakat puanı, indirim kuponu, bildirim, grup siparişi…
+
+Mert sordu: "Bu çözümler hangi müşteri problemini çözüyor? Hangisi daha çok kişiye dokunuyor?" Kimse bilmiyordu, çünkü çözümler problemlerden önce gelmişti. Bu ders, sonuçtan çözüme giden yolu bir ağaç olarak çizmeyi anlatır.
+
+## Ağacın katmanları
+
+Teresa Torres'in **fırsat-çözüm ağacı** (opportunity solution tree), istenen bir sonuca giden olası yolları görselleştirmenin yalın bir yoludur:
+
+- **Kök: sonuç.** Takımın iş değeri yaratma yolunu gösteren ölçü.
+- **Fırsat alanı:** sonucu hareket ettirecek müşteri ihtiyaçları, acı noktaları ve istekleri.
+- **Çözüm alanı:** üzerinde düşünülen çözümler.
+- **Varsayım testleri:** hangi çözümün müşteriye ve işe değer yaratacağını sınayan testler.
+
+Torres ağacı bir **ürün üçlüsünün** (PM, tasarımcı, mühendis) birlikte kurduğu bir takım etkinliği olarak anlatır. Ağaç düşünceyi dışarı çıkarır; takım neyin ne zaman yapılacağında anlaşmayı kolaylaştırır.
+
+Torres üç önkoşul sayar. Hedef müşteri ve değer önerisi hakkında bir teori olmalı. Sonuç net tanımlanmalı. İlk ağaçtan önce en az 3–4 hikâye temelli müşteri görüşmesi yapılmalı. Fırsatlar masada uydurulmaz.
+
+## Tepeye hangi sonuç?
+
+Torres *Continuous Discovery Habits* kitabında üç tür sonuç ayırır:
+
+| Tür | Neyi ölçer? | Demlik örneği |
+|---|---|---|
+| İş sonucu | İşin sağlığı: gelir, pazar payı, kayıp | Aylık gelir |
+| Ürün sonucu | Üründe bir müşteri davranışı ya da duygusu | 30 günde ikinci sipariş oranı |
+| Kullanım metriği | Tek bir özelliğin benimsenmesi | "Son siparişi tekrarla" düğmesine basanlar |
+
+Torres genel kural olarak tepeye bir **ürün sonucu** koymayı önerir. İş sonucunu takım nasıl etkileyeceğini her zaman bilemez. Kullanım metriği ise keşif için fazla dardır.
+
+Neden tepede müşteri değeri değil de iş değeri? Torres örnek olarak Google Reader'ı verir: çok sevilen ve yoğun kullanılan bir üründü, ama Google için yeterli değer üretmediği için kapatıldı. İş değeri, müşteriye zaman içinde hizmet etme hakkını kazandırır. Fırsat alanı ise sonuca müşteri odaklı bir yoldan ulaşmayı sağlar.
+
+## Fırsat ≠ çözüm
+
+Torres'in tanımıyla **fırsat**, karşılanmamış bir müşteri ihtiyacı, acı noktası ya da isteğidir. **Çözüm** ise o fırsatı karşılamak için sunulan bir ürün, özellik, hizmet ya da süreçtir. Torres'in örneği: "Acıktım" ve "yemek yapacak vaktim yok" fırsattır; paket sipariş vermek ya da restorana gitmek çözümdür.
+
+Kılık değiştirmiş çözümleri yakalamak için tek bir soru yeter: **"Bu fırsatı karşılamanın birden çok yolu var mı?"** "Favori listesi istiyorum" cümlesinin tek bir karşılığı vardır, demek ki bir çözümdür. "Neden?" diye sorunca altındaki fırsat çıkar: "her sabah aynı şeyi baştan seçiyorum."
+
+<Tree
+  label="Sipariş takımının fırsat-çözüm ağacı"
+  caption="Ağacın tepesinde ürün sonucu var: 30 günde ikinci sipariş yüzde 41'den yüzde 50'ye. Altında üç an duruyor: sipariş vermeden önce, sipariş verirken, teslim alırken. Her anın altında görüşmelerden gelen fırsatlar var. Hedef fırsat 'her sabah aynı şeyi baştan seçiyorum'; onun altında üç çözüm karşılaştırılıyor: son siparişi tekrarla, favori listesi ve zamanlanmış sipariş."
+  root={{
+    title: "2. sipariş: %41 → %50",
+    sub: "ürün sonucu",
+    tone: "accent",
+    children: [
+      {
+        title: "Sipariş vermeden önce",
+        children: [
+          {
+            title: "Her sabah aynı şeyi baştan seçiyorum",
+            sub: "hedef fırsat",
+            tone: "progress",
+            children: [
+              { title: "Son siparişi tekrarla" },
+              { title: "Favori listesi" },
+              { title: "Zamanlanmış sipariş" },
+            ],
+          },
+          { title: "Sevdiğim dükkân açık mı bilmiyorum" },
+        ],
+      },
+      {
+        title: "Sipariş verirken",
+        children: [{ title: "Kartımı her seferinde seçiyorum" }, { title: "Arkadaşlarla birleşemiyoruz" }],
+      },
+      { title: "Teslim alırken", children: [{ title: "Kahvem hazır mı bilmiyorum" }] },
+    ],
+  }}
+/>
+
+## Fırsat seçmek, çözüm karşılaştırmak
+
+Torres fırsatları dört grup ölçütle değerlendirir:
+
+- **Fırsatın büyüklüğü:** kaç müşteriyi, ne sıklıkla etkiliyor?
+- **Pazar etkenleri:** bu fırsatı karşılamak ürünün pazardaki yerini nasıl etkiler?
+- **Şirket etkenleri:** misyona, vizyona ve stratejiye uyuyor mu?
+- **Müşteri etkenleri:** müşteri için ne kadar önemli, mevcut çözümlerden ne kadar memnun?
+
+**Efor bu aşamada sorulmaz.** Efor bir çözümün özelliğidir; aynı fırsatın hem kolay hem zor çözümleri olabilir. Torres, zor görünen bir fırsatı seçip çok basit bir çözüm bulan takımlar gördüğünü anlatır.
+
+Hedef fırsat seçilince çözümler yalnız onun için üretilir ve genellikle **üç tanesi** karşılaştırılır. Karar araştırmaları, seçenekleri karşılaştırınca daha iyi karar verildiğini gösterir. Torres'e göre her çözümü backlog'a koymak bir bahistir; keşif o bahsin riskini azaltır.
+
+<Case>
+
+Mert'in sekiz öğrenci görüşmesi ve önceki çeyrekten altı müşteri görüşmesiyle takım ağacı kurdu:
+
+1. **Sonuç tepeye yazıldı:** 30 günde ikinci sipariş %41 → %50. Bir ürün sonucu.
+2. **Fırsatlar üç anın altına gruplandı.** Masadaki yedi çözümden ikisi kılık değiştirmiş çözümdü; altlarındaki fırsat bulundu.
+3. **Hedef fırsat seçildi:** "Her sabah aynı şeyi baştan seçiyorum." Aktif müşterilerin %54'ü son beş siparişinde hep aynı ürünü alıyordu; strateji de sabah müşterisine odaklanıyordu.
+4. **Üç çözüm yazıldı:** son siparişi tekrarla, favori listesi, zamanlanmış sipariş.
+5. **Sırada varsayımlar vardı:** her çözümün en riskli varsayımı test edilecekti.
+
+Sadakat puanı ağaçta bir yer bulamadı; hiçbir fırsatı doğrudan karşılamıyordu. Elif onu Later'a bıraktı.
+
+</Case>
+
+<Tool slug="firsat-cozum-agaci" />
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Tepeye ürün sonucu koy.** İş sonucu takım için fazla uzak, kullanım metriği fazla dardır.
+- **Takım başına bir sonuç.** Birden çok takım aynı sonuçtaysa onu segmente ya da yolculuk adımına göre böl.
+- **Çözümü yalnız hedef fırsat için üret.** Bütün ağaca çözüm üretmek odağı dağıtır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Backlog'daki her öğeyi ağaçta bir yere bağla.** Hiçbir fırsata bağlanmayan öğe neden orada?
+- **Ağacı refinement'ta kullan.** Bir story'nin hangi fırsatı karşıladığı, sıralama tartışmasını kısaltır.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Üçlünün parçasısın.** Fırsat alanını görüşmelerden birlikte kur; çözüm üretimine en çok katkıyı sen verirsin.
+- **Üç çözümü gerçekten farklı tasarla.** Aynı fikrin üç tonu karşılaştırma değildir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Fırsatların kaynağı sensin.** Hikâye temelli görüşmeler olmadan ağaç uydurmaya döner.
+- **Fırsatları müşterinin cümlesiyle yaz.** "Kahvem hazır mı bilmiyorum" bir ekip yorumundan daha güçlüdür.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Fırsat-çözüm ağacında tepede sonuç, altında fırsatlar, sonra çözümler ve varsayım testleri vardır.
+- Tepeye genellikle bir ürün sonucu konur: üründe ölçülen bir müşteri davranışı.
+- Fırsat karşılanmamış bir ihtiyaç, acı ya da istektir; birden çok yolla karşılanamıyorsa kılık değiştirmiş bir çözümdür.
+- Fırsatlar büyüklük, pazar, şirket ve müşteri etkenleriyle değerlendirilir; efor bu aşamada sorulmaz.
+- Hedef fırsat için genellikle üç çözüm karşılaştırılır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Aylık gelir', '30 günde ikinci sipariş oranı' ve 'düğmeye basanlar' hangi sonuç türleridir?">
+
+Aylık gelir bir iş sonucu, 30 günde ikinci sipariş oranı bir ürün sonucu, düğmeye basanlar bir kullanım metriğidir. Ağacın tepesine genellikle ürün sonucu konur.
+
+</SelfCheck>
+
+<SelfCheck question="'Grup siparişi özelliği istiyoruz' bir fırsat mı?">
+
+Hayır, bir çözümdür; tek bir karşılığı vardır. "Neden?" diye sorulunca altındaki fırsat çıkar, örneğin "arkadaşlarla tek siparişte birleşemiyoruz". O fırsatın birden çok çözümü olabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir takım arkadaşın 'bu fırsat çok zor, seçmeyelim' diyor. Ne dersin?">
+
+Efor bir çözümün özelliğidir, fırsatın değil. Aynı fırsatın hem kolay hem zor çözümleri olabilir. Fırsatı büyüklüğüne, stratejiye uyumuna ve müşteri için önemine göre seçeriz; eforu çözümleri karşılaştırırken sorarız.
+
+</SelfCheck>
+
+<SelfCheck question="Neden hedef fırsat için tek değil üç çözüm üretilir?">
+
+Seçenekleri karşılaştırınca daha iyi karar verilir. Tek çözümde soru "bu iyi mi?" olur ve cevaplanması zordur; üç çözümde soru "hangisi daha iyi?" olur ve varsayım testleri bunu cevaplar.
+
+</SelfCheck>

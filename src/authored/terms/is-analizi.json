@@ -10,7 +10,9 @@
     "english": "Business Analysis Body of Knowledge",
     "definition": "IIBA'nın iş analizi rehberi. İşi altı bilgi alanına böler; IIBA'nın standardı bunlara dağılmış 30 görev tanımlar.",
     "topic": "babok-haritasi",
-    "aliases": ["BABOK Guide"]
+    "aliases": [
+      "BABOK Guide"
+    ]
   },
   {
     "term": "Bilgi alanı",
@@ -35,7 +37,10 @@
     "english": "5 Whys",
     "definition": "Tek bir sorun cümlesine beş kez 'neden?' diye sorup belirtiden kök nedene inen teknik.",
     "topic": "is-ihtiyaci-ve-kok-neden",
-    "aliases": ["5 Whys", "5 neden"]
+    "aliases": [
+      "5 Whys",
+      "5 neden"
+    ]
   },
   {
     "term": "Beyan edilmiş gereksinim",
@@ -44,11 +49,13 @@
     "topic": "is-ihtiyaci-ve-kok-neden"
   },
   {
-    "term": "Çıkarma",
+    "term": "Gereksinim çıkarma",
     "english": "Elicitation",
     "definition": "Gereksinimi paydaşlardan ve başka kaynaklardan yinelemeli olarak türetmek: görüşme, gözlem, anket, atölye, prototip, belge incelemesi.",
     "topic": "gereksinim-cikarma-teknikleri",
-    "aliases": ["Elicitation"]
+    "aliases": [
+      "Elicitation"
+    ]
   },
   {
     "term": "Gereksinim atölyesi",
@@ -73,7 +80,9 @@
     "english": "Functional requirement",
     "definition": "Çözümün sahip olması gereken yetenek: nasıl davranacağı ve hangi bilgiyi yöneteceği.",
     "topic": "gereksinim-turleri",
-    "aliases": ["Functional requirement"]
+    "aliases": [
+      "Functional requirement"
+    ]
   },
   {
     "term": "Geçiş gereksinimi",
@@ -98,7 +107,9 @@
     "english": "Scenario Outline",
     "definition": "Gherkin'de aynı adımları bir örnekler tablosundaki farklı değerlerle tekrar çalıştıran yapı.",
     "topic": "given-when-then",
-    "aliases": ["Scenario Outline"]
+    "aliases": [
+      "Scenario Outline"
+    ]
   },
   {
     "term": "BPMN",
@@ -110,29 +121,34 @@
     "term": "Kulvar",
     "english": "Lane",
     "definition": "BPMN'de hangi görevden kimin sorumlu olduğunu gösteren şerit. Kulvarlar bir havuzun içinde durur.",
-    "topic": "bpmn-temelleri",
-    "aliases": ["Swimlane"]
+    "topic": "bpmn-temelleri"
   },
   {
     "term": "Boşluk analizi",
     "english": "Gap analysis",
     "definition": "Mevcut durumla istenen gelecek durumu karşılaştırıp ele alınması gereken farkları belirlemek.",
     "topic": "as-is-to-be-ve-bosluk-analizi",
-    "aliases": ["Gap analysis"]
+    "aliases": [
+      "Gap analysis"
+    ]
   },
   {
     "term": "İş kuralı",
     "english": "Business rule",
     "definition": "İşin kontrolündeki, belirli ve test edilebilir yönerge; davranışı yönlendirir ya da karara ölçüt olur.",
     "topic": "is-kurallari-ve-karar-tablolari",
-    "aliases": ["Business rule"]
+    "aliases": [
+      "Business rule"
+    ]
   },
   {
     "term": "Karar tablosu",
     "english": "Decision table",
     "definition": "Bir kararın girdilerini, çıktılarını ve her satırda bir kuralı toplayan tablo. Eksik ve çakışan kuralları görünür kılar.",
     "topic": "is-kurallari-ve-karar-tablolari",
-    "aliases": ["Decision table"]
+    "aliases": [
+      "Decision table"
+    ]
   },
   {
     "term": "DMN",
@@ -145,28 +161,37 @@
     "english": "System context diagram",
     "definition": "Sistemi tek bir kutu olarak ortaya, onunla etkileşen kişi ve sistemleri etiketli ilişkilerle çevresine koyan çizim.",
     "topic": "baglam-diyagrami-ve-kapsam",
-    "aliases": ["Context diagram"]
+    "aliases": [
+      "Context diagram"
+    ]
   },
   {
     "term": "Veri sözlüğü",
     "english": "Data dictionary",
     "definition": "Veri hakkındaki bilgilerin merkezî deposu: her alanın anlamı, ilişkisi, kaynağı, kullanımı ve biçimi.",
     "topic": "veri-gereksinimleri",
-    "aliases": ["Data dictionary"]
+    "aliases": [
+      "Data dictionary"
+    ]
   },
   {
     "term": "İzlenebilirlik",
     "english": "Traceability",
     "definition": "Gereksinimleri ihtiyaçtan uygulanan çözüme ve teste kadar izleyebilmek; değişikliğin etkisini gösterir.",
     "topic": "izlenebilirlik",
-    "aliases": ["Traceability"]
+    "aliases": [
+      "Traceability"
+    ]
   },
   {
     "term": "Kullanıcı kabul testi",
     "english": "User acceptance testing",
     "definition": "Çözümü kullanacak kişilerin, kabul kriterlerine karşı sistemi kabul edip etmediğini belirlemek için yaptığı test.",
     "topic": "cozum-degerlendirme-ve-uat",
-    "aliases": ["UAT", "User acceptance testing"]
+    "aliases": [
+      "UAT",
+      "User acceptance testing"
+    ]
   },
   {
     "term": "Geçerleme",

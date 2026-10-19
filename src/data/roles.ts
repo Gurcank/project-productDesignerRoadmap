@@ -187,6 +187,60 @@ const AGILE_FOR_PRODUCT_DESIGNER: TopicTiers = {
   "anti-paternler": I,
 };
 
+const PRODUCT_MGMT_FOR_PRODUCT_DESIGNER: TopicTiers = {
+  "vizyon-ve-strateji": I,
+  "deger-onerisi-ve-konumlandirma": I,
+  "kano-deger-efor-ve-gecikme-maliyeti": I,
+  "sonuc-odakli-yol-haritasi": I,
+  "prd-anatomisi": I,
+  "lansman-ve-gtm": I,
+  "buyume-donguleri-ve-plg": I,
+  "yasam-dongusu-ve-ozellik-emekliligi": I,
+  "trade-off-ve-hayir-demek": I,
+};
+
+const PRODUCT_MGMT_FOR_PRODUCT_OWNER: TopicTiers = {
+  "pm-isi-ve-dort-risk": O,
+  "deger-onerisi-ve-konumlandirma": O,
+  "lansman-ve-gtm": O,
+  "buyume-donguleri-ve-plg": I,
+  "yasam-dongusu-ve-ozellik-emekliligi": O,
+};
+
+const PRODUCT_MGMT_FOR_SCRUM_MASTER: TopicTiers = {
+  "pm-isi-ve-dort-risk": I,
+  "deger-onerisi-ve-konumlandirma": I,
+  "surekli-kesif-ve-firsat-cozum-agaci": I,
+  "varsayim-haritalama-ve-urun-deneyleri": I,
+  "kano-deger-efor-ve-gecikme-maliyeti": I,
+  "prd-anatomisi": I,
+  "lansman-ve-gtm": I,
+  "buyume-donguleri-ve-plg": I,
+  "yasam-dongusu-ve-ozellik-emekliligi": I,
+};
+
+const PRODUCT_MGMT_FOR_BUSINESS_ANALYST: TopicTiers = {
+  "pm-isi-ve-dort-risk": I,
+  "vizyon-ve-strateji": I,
+  "surekli-kesif-ve-firsat-cozum-agaci": I,
+  "varsayim-haritalama-ve-urun-deneyleri": I,
+  "sonuc-odakli-yol-haritasi": I,
+  "lansman-ve-gtm": I,
+  "buyume-donguleri-ve-plg": I,
+  "yasam-dongusu-ve-ozellik-emekliligi": I,
+};
+
+const PRODUCT_MGMT_FOR_UX_RESEARCHER: TopicTiers = {
+  "vizyon-ve-strateji": I,
+  "kano-deger-efor-ve-gecikme-maliyeti": I,
+  "sonuc-odakli-yol-haritasi": I,
+  "prd-anatomisi": I,
+  "lansman-ve-gtm": I,
+  "buyume-donguleri-ve-plg": I,
+  "yasam-dongusu-ve-ozellik-emekliligi": I,
+  "trade-off-ve-hayir-demek": I,
+};
+
 const BA_FOR_PRODUCT_MANAGER: TopicTiers = {
   "babok-haritasi": I,
   "gereksinim-turleri": I,
@@ -273,7 +327,7 @@ export const ROLES: RoleDefinition[] = [
       entry("tasarim-sistemi", T),
       entry("erisilebilirlik", T),
       entry("arayuz-anatomisi", T),
-      entry("urun-yonetimi", O),
+      entry("urun-yonetimi", O, PRODUCT_MGMT_FOR_PRODUCT_DESIGNER),
       entry("urun-analitigi", O),
       entry("cevik-pratikler", O, AGILE_FOR_PRODUCT_DESIGNER),
       entry("front-end", O),
@@ -341,7 +395,7 @@ export const ROLES: RoleDefinition[] = [
       entry("cevik-pratikler", T),
       entry("sirket-sozlugu", T),
       entry("iletisim-ve-paydaslar", T),
-      entry("urun-yonetimi", T),
+      entry("urun-yonetimi", T, PRODUCT_MGMT_FOR_PRODUCT_OWNER),
       entry("is-analizi", T, BA_FOR_PRODUCT_OWNER),
       entry("urun-analitigi", O),
       entry("is-ve-strateji", O),
@@ -408,7 +462,7 @@ export const ROLES: RoleDefinition[] = [
       entry("urun-gelistirme", T),
       entry("sirket-sozlugu", T),
       entry("iletisim-ve-paydaslar", T),
-      entry("urun-yonetimi", O),
+      entry("urun-yonetimi", O, PRODUCT_MGMT_FOR_SCRUM_MASTER),
       entry("proje-yonetimi", O, PM_FOR_SCRUM_MASTER),
       entry("test-ve-kalite", O, QUALITY_MECHANICS),
       entry("devops-ve-yayin", O, DEVOPS_MECHANICS),
@@ -438,7 +492,7 @@ export const ROLES: RoleDefinition[] = [
       entry("sirket-sozlugu", T),
       entry("iletisim-ve-paydaslar", T),
       entry("test-ve-kalite", T, QUALITY_MECHANICS),
-      entry("urun-yonetimi", O),
+      entry("urun-yonetimi", O, PRODUCT_MGMT_FOR_BUSINESS_ANALYST),
       entry("kullanici-arastirmasi", O),
       entry("ux-ui-ilkeleri", O),
       entry("erisilebilirlik", O),
@@ -481,7 +535,7 @@ export const ROLES: RoleDefinition[] = [
       entry("calisma-bicimi", O, WAYS_OF_WORKING_FOR_RESEARCHER),
       entry("iletisim-ve-paydaslar", O),
       entry("urun-analitigi", O),
-      entry("urun-yonetimi", O),
+      entry("urun-yonetimi", O, PRODUCT_MGMT_FOR_UX_RESEARCHER),
       entry("is-analizi", O, BA_FOR_UX_RESEARCHER),
       entry("guvenlik-ve-hukuk", O, { ...SECURITY_MECHANICS, ...PRIVACY_CORE }),
       entry("arayuz-anatomisi", O),

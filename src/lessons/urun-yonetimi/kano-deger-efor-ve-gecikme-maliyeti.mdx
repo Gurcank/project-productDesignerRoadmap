@@ -1,0 +1,162 @@
+---
+summary: "Kano modeli bir özelliğin memnuniyeti nasıl etkilediğini, değer/efor matrisi neyin ucuz kazanç olduğunu, gecikme maliyeti de beklemenin neye mal olduğunu gösterir. WSJF gecikme maliyetini işin süresine böler."
+outcomes:
+  - "Bir özelliği Kano kategorilerine yerleştirip kategorinin zamanla değiştiğini açıklayabilirsin."
+  - "Fikirleri değer/efor matrisine yerleştirip bir başlangıç sırası çıkarabilirsin."
+  - "Gecikme maliyetini ve WSJF'yi hesaplayıp aciliyeti sıralamaya katabilirsin."
+minutes: 9
+standard: 2
+skipTerms: ["duration","gecikme","yalın"]
+sources:
+  - label: "Folding Burritos — The Complete Guide to the Kano Model"
+    url: "https://foldingburritos.com/blog/kano-model/"
+  - label: "Wikipedia — Kano model"
+    url: "https://en.wikipedia.org/wiki/Kano_model"
+  - label: "Black Swan Farming — Cost of Delay"
+    url: "https://blackswanfarming.com/cost-of-delay/"
+  - label: "SAFe — Weighted Shortest Job First"
+    url: "https://framework.scaledagile.com/wsjf"
+additions:
+  - "Kano modeli: kategoriler, çift soru, hayranlığın zamanla çürümesi (Folding Burritos, Wikipedia)"
+  - "Gecikme maliyeti ve CD3 (Black Swan Farming)"
+  - "WSJF'nin tanımı ve bileşenleri (SAFe)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Matrix2x2 from "~/components/diagrams/primitives/Matrix2x2.astro";
+
+RICE puanları çıkmıştı: bildirim önde, favori sipariş ikinci, grup siparişi ve sadakat puanı geride. Ama Mert'in anketinden gelen bir bulgu masayı karıştırdı: müşterilerin çoğu sipariş hazır bildirimini "olması gereken" bir şey olarak görüyordu, sadakat puanını ise "olsa güzel olur".
+
+Aynı gün Leyla kampüs takviminden bir hatırlatma gönderdi: lansmana on hafta kalmıştı. Öğrenciler ders arasında kahvelerinin hazır olup olmadığını bilmek isteyecekti. Bu ders, RICE'ın göremediği iki şeyi anlatır: bir özelliğin memnuniyete nasıl etki ettiği ve beklemenin neye mal olduğu. RICE'ın kendisi [Backlog ve önceliklendirme](/urun-gelistirme/backlog-ve-onceliklendirme/) dersinde.
+
+## Kano modeli
+
+Japon araştırmacı Noriaki Kano 1984'te bir makale yayımladı. Makale müşteri memnuniyetini iki eksenle düşünmeyi önerir: bir özelliğin ne kadar iyi sağlandığı ve müşterinin ne kadar memnun olduğu. İlişki her özellik için aynı değildir:
+
+| Kategori | Davranışı | Örnek |
+|---|---|---|
+| **Olmazsa olmaz** (must-be) | Yoksa müşteri çok rahatsız olur; varsa yalnız nötr kalır | Araçta fren, otel odasında yatak |
+| **Performans** (one-dimensional) | Ne kadar çok, o kadar memnun | İnternet hızı, pil ömrü |
+| **Çekici** (attractive) | Beklenmez; varsa sevindirir, yoksa rahatsız etmez | Süt kutusunda sütün sıcaklığını gösteren işaret |
+| **Kayıtsız** (indifferent) | Ne iyi ne kötü | Kutunun kaplamasının kalınlığı |
+| **Ters** (reverse) | Çok olunca bazı müşterileri rahatsız eder | Gereğinden fazla özellik |
+
+Folding Burritos'un rehberi Kano'nun anketini anlatır: her özellik için **iki soru** sorulur. Biri özellik varken ne hissedileceğini, diğeri yokken ne hissedileceğini sorar. Cevaplar aynı beş seçenekten seçilir: hoşuma gider, beklerim, nötrüm, katlanırım, hoşuma gitmez. İki cevabın birleşimi özelliğin kategorisini verir.
+
+**Kategoriler kalıcı değildir.** Rehbere göre çekici özellikler zamanla performansa, sonra olmazsa olmaza döner. 2007'de insanları şaşırtan akıcı dokunmatik ekran bugün temel bir beklentidir. Bir Kano analizi o anın fotoğrafıdır.
+
+## Değer ve efor
+
+En yalın karşılaştırma, her fikri iki soruya göre yerleştirmektir: ne kadar değer üretir, ne kadar efor ister?
+
+<Matrix2x2
+  label="Dört fikir: değer ve efor"
+  caption="Dört fikir değer ve efora göre yerleşti. Sipariş hazır bildirimi düşük eforlu ve orta-yüksek değerli; hemen yapılacaklar köşesinde. Favori sipariş yüksek değerli ve orta eforlu; aynı köşenin sınırında. Sadakat puanı orta değerli ama eforu yüksek. Grup siparişi düşük değerli ve eforu yüksek; şimdilik kaçınılacaklar köşesinde."
+  x={{ title: "Efor", low: "düşük", high: "yüksek" }}
+  y={{ title: "Değer", low: "düşük", high: "yüksek" }}
+  quadrants={[
+    { title: "Önce yap", sub: "yüksek değer, düşük efor", tone: "progress" },
+    { title: "Planla", sub: "yüksek değer, yüksek efor" },
+    { title: "Boşlukta yap", sub: "düşük değer, düşük efor" },
+    { title: "Kaçın", sub: "düşük değer, yüksek efor" },
+  ]}
+  points={[
+    { label: "Bildirim", x: 0.15, y: 0.6 },
+    { label: "Favori", x: 0.38, y: 0.72 },
+    { label: "Sadakat", x: 0.85, y: 0.6 },
+    { label: "Grup", x: 0.75, y: 0.15 },
+  ]}
+/>
+
+Matris bir başlangıçtır. Değeri neye göre ölçtüğünü yazmazsan, her kişi kendi değerini koyar. Demlik'te değer, çeyreğin sonucuna katkıdır: 30 günde ikinci sipariş oranı.
+
+## Gecikme maliyeti ve WSJF
+
+Black Swan Farming'e göre **gecikme maliyeti** (cost of delay), zamanın ulaşmak istediğimiz sonuçlar üzerindeki etkisini anlatmanın yoludur. Değeri ve aciliyeti birleştirir; insanlar bu ikisini ayırmakta iyi değildir. Bir şeyi bir hafta erken almak, çoğu zaman onu biraz daha ucuza yapmaktan daha değerlidir.
+
+Sitenin aktardığı Maersk Line örneğinde bir özellik toplam 38 hafta kuyrukta bekledi. Gecikme maliyeti haftada 200.000 dolardan fazlaydı; bekleme yaklaşık 8 milyon dolarlık kayıp gelir demekti.
+
+Gecikme maliyeti işin süresine bölününce bir sıra çıkar. Black Swan Farming buna **CD3** (Cost of Delay Divided by Duration) der. SAFe'in **WSJF**'si (Weighted Shortest Job First) aynı fikri göreli puanlarla uygular: göreli gecikme maliyeti ÷ göreli iş süresi. SAFe'de gecikme maliyetinin üç bileşeni vardır: kullanıcı ve iş değeri, zaman kritikliği, risk azaltma ya da fırsat sağlama. WSJF batık maliyetleri yok sayar; önemli olan bundan sonrasıdır.
+
+**Değer ≠ aciliyet.** Değerli bir iş beklemeye dayanabilir; daha az değerli ama acil bir iş beklerse fırsat kaçar. Bir son tarih, örneğin dönem başı, zaman kritikliğini yükseltir.
+
+<Case>
+
+Elif dört fikri üç yöntemle yan yana koydu:
+
+1. **Kano (Mert'in 240 kişilik anketi):** hazır bildirimi olmazsa olmaz, favori sipariş performans, sadakat puanı çekici. Grup siparişi çoğunluk için kayıtsız; ama öğrencilerin üçte biri için çekici.
+2. **Değer ve efor:** bildirim ve favori sipariş "önce yap" köşesinde.
+3. **WSJF** (göreli, 1–10):
+
+| Fikir | Değer | Zaman kritikliği | Risk / fırsat | Gecikme maliyeti | Süre | WSJF |
+|---|---|---|---|---|---|---|
+| Hazır bildirimi | 5 | 8 | 2 | 15 | 1 | 15,0 |
+| Favori sipariş | 8 | 3 | 5 | 16 | 3 | 5,3 |
+| Grup siparişi | 3 | 2 | 3 | 8 | 5 | 1,6 |
+| Sadakat puanı | 5 | 1 | 2 | 8 | 5 | 1,6 |
+
+Bildirimin zaman kritikliği kampüs lansmanından geliyordu; olmazsa olmaz olduğunu da Kano söylüyordu. Elif bildirimi favori siparişle aynı sprinte aldı. Sadakat puanı çekiciydi ama pahalıydı ve beklemeye dayanabilirdi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Olmazsa olmazı ayrıca listele.** Onlar seni öne geçirmez, ama yoksa geride bırakır.
+- **Aciliyeti açıkça puanla.** Zaman kritikliği yazılmazsa, son tarih yaklaşınca herkes panikle öncelik değiştirir.
+- **Yöntemleri yan yana kullan.** Tek bir puan karar değildir; üç yöntem aynı şeyi söylüyorsa güvenin artar.
+
+</Lens>
+<Lens role="product-owner">
+
+- **WSJF'yi göreli puanla.** Kesin sayı aramak yerine fikirleri birbirine göre sırala.
+- **Süreyi takımdan al.** WSJF'nin paydasını, işi yapacak olanlar tahmin eder.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Kano anketinin sorularını özellik dilinde değil davranış dilinde yaz.** Müşteri teknik adı bilmeyebilir.
+- **Zaman kritikliğinin kaynağını belgele.** Bir sözleşme, yasal tarih ya da dönem başı; kaynağı olmayan aciliyet sorgulanmalı.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Kano modeli özellikleri olmazsa olmaz, performans, çekici, kayıtsız ve ters diye ayırır; çift soruluk bir anketle ölçülür.
+- Çekici özellikler zamanla performansa, sonra olmazsa olmaza döner.
+- Değer/efor matrisi bir başlangıç sırası verir; değerin neye göre ölçüldüğü yazılmalıdır.
+- Gecikme maliyeti değeri ve aciliyeti birleştirir; CD3 ve WSJF onu işin süresine böler.
+- WSJF'de gecikme maliyeti: kullanıcı ve iş değeri, zaman kritikliği, risk azaltma ya da fırsat.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Olmazsa olmaz bir özellik ile çekici bir özellik arasındaki fark nedir?">
+
+Olmazsa olmaz yoksa müşteri çok rahatsız olur, varsa yalnız nötr kalır. Çekici özellik beklenmez; varsa sevindirir, yoksa kimse rahatsız olmaz.
+
+</SelfCheck>
+
+<SelfCheck question="Üç yıl önce müşterileri şaşırtan bir özelliğin bugünkü Kano kategorisi neden farklı olabilir?">
+
+Kategoriler kalıcı değildir. Rakipler kopyaladıkça ve teknoloji yaygınlaştıkça çekici özellikler performansa, sonra olmazsa olmaza döner. Analiz yapıldığı anın fotoğrafıdır.
+
+</SelfCheck>
+
+<SelfCheck question="İki iş aynı değerde; biri iki haftada biter, diğeri altı haftada. Gecikme maliyetleri de eşit. WSJF hangisini önce koyar?">
+
+İki haftalık olanı. WSJF gecikme maliyetini süreye böler; eşit maliyette kısa iş daha yüksek puan alır ve önce yapılır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir yönetici 'bu fikir çok değerli, hemen başlayalım' diyor. Gecikme maliyeti açısından ne sorarsın?">
+
+Beklemenin neye mal olduğunu sorarım: bir son tarih ya da kaçacak bir fırsat var mı? Değerli ama beklemeye dayanabilen bir iş, acil ve daha küçük bir işten sonra gelebilir.
+
+</SelfCheck>

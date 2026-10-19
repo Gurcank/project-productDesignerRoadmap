@@ -1,0 +1,161 @@
+---
+summary: "Strateji seçimdir; her evet başka bir şeye hayır demektir. İyi fikirleri reddetmek, yaygın 'evet' gerekçelerini tanımak ve hayırı gerekçesi ve alternatifiyle söylemek PM'in en zor işlerindendir."
+outcomes:
+  - "Bir 'evet'in neye mal olduğunu trade-off olarak anlatabilirsin."
+  - "Özellik eklemek için kullanılan yaygın gerekçeleri tanıyıp sorgulayabilirsin."
+  - "İyi bir fikre gerekçesi ve alternatifiyle hayır diyebilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Intercom — Des Traynor, Product strategy means saying no (2013)"
+    url: "https://www.intercom.com/blog/product-strategy-means-saying-no/"
+  - label: "SVPG — Marty Cagan, Product Strategy – Overview (2020)"
+    url: "https://www.svpg.com/product-strategy-overview/"
+additions:
+  - "Özellik eklemek için kullanılan on iki gerekçe ve iyi bir hayır (Des Traynor)"
+  - "Kötü strateji ve seçimden kaçınmak (Rumelt, Cagan'ın aktarımıyla)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Matrix2x2 from "~/components/diagrams/primitives/Matrix2x2.astro";
+
+Bir çeyrekte Elif'in masasına dört talep geldi. Bir yatırımcı eve teslimat istedi. Sekiz dükkânlı en büyük müşteri Köşe Kahve, kendine özel bir sadakat sistemi istedi. Biri rakipte gördüğü aylık kahve aboneliğini önerdi. Burak da "iki saatlik iş" diye karanlık modu.
+
+Dördü de kötü fikir değildi. Dördüne de evet demek, sipariş takımının çeyreğini dağıtmak demekti. Bu ders, iyi bir fikre hayır demeyi anlatır.
+
+## Her evet bir hayırdır
+
+Takımın zamanı sınırlıdır. Bir şeye evet demek, o zamanı başka bir şeyden almaktır. **Trade-off**, bu seçimin açıkça yapılmasıdır: neyi kazanıyoruz, karşılığında neyi bırakıyoruz?
+
+Marty Cagan, ürün stratejisini anlatırken Richard Rumelt'in bir düşüncesini aktarır: kötü strateji çoğu zaman bir hesap hatası değil, seçim yapmanın zorluğundan kaçmaktır. Liderler yarışan değerler ve taraflar arasında seçim yapamayınca, her şeye biraz evet denir ve hiçbir şey ilerlemez.
+
+Des Traynor, Intercom'daki 2013 tarihli yazısını şu cümleyle açar: ürün kuruyorsan hayır demekte çok iyi olmalısın; "belki" ya da "sonra" değil, hayır. Traynor'a göre büyük bir ürün, birbirine gevşekçe bağlı kullanışlı özellikler yığını değil, sınırları iyi tanımlanmış tutarlı bir bütündür.
+
+## Evetin kılıkları
+
+Traynor, ürüne özellik sokmak için sık kullanılan on iki gerekçe sayar. Bunlardan bazıları Demlik'in masasına da gelmişti:
+
+| Gerekçe | Traynor'un uyarısı |
+|---|---|
+| "Birkaç dakikalık iş" | İşin küçüklüğü bir özelliği ürüne almanın nedeni olamaz; küçük eklemeler de gizli karmaşıklık getirir. |
+| "Bu müşteri ayrılmak üzere" | Özellik şantajıdır; tek bir müşteriye fazladan değer, çoğundan alınır. |
+| "İsteğe bağlı yaparız" | Ayarlar çoğaldıkça ürünün tanımı zayıflar. |
+| "Rakiplerde var" | Bu iyi bir fikir olduğunu göstermez; rakibi kopyalayan dünün özelliğini yarın sunar. |
+| "Yapmazsak başkası yapar" | Ürünün bir yerde bittiğini kabul etmekten kaçmaktır. |
+| "Veri iyi görünüyor" | Seçici analiz olabilir; ürüne bir oyun ekleyince de etkileşim artar. |
+| "Çok kişi istiyor" | Asıl soru: değerli mi, bizim kapsamımızda mı, müşterilerin çoğu kullanacak mı? |
+| "Başka planımız yok" | Boş zaman, teknik borcu ödemek için kullanılır. |
+
+Traynor'a göre kötü fikirleri elemek kolaydır. Gerçek ürün kararı, iyi bir fikre bakıp şunu diyebilmektir: "Bu gerçekten iyi bir fikir, müşterilerin neden seveceğini anlıyorum. Ama yapmayacağız. Bunun yerine şunu yapıyoruz."
+
+<Matrix2x2
+  label="Dört talep: değer ve stratejiye uyum"
+  caption="Dört talep ve takımın şu anki işi, değer ve stratejiye uyuma göre yerleşti. Son siparişi tekrarla sağ üstte: hem değerli hem stratejiye uygun. Eve teslimat sol üstte: bazı müşteriler için değerli ama stratejinin 'yapmayacaklarımız' listesinde. Köşe Kahve'nin özel sadakat sistemi ve aylık abonelik sol altta. Karanlık mod sağ altta: stratejiye aykırı değil ama değeri düşük."
+  x={{ title: "Stratejiye uyum", low: "düşük", high: "yüksek" }}
+  y={{ title: "Değer", low: "düşük", high: "yüksek" }}
+  quadrants={[
+    { title: "İyi fikir, bizim değil", sub: "gerekçeli hayır" },
+    { title: "Evet", sub: "şimdi yap", tone: "progress" },
+    { title: "Hayır", sub: "nazik ama net" },
+    { title: "Belki sonra", sub: "boşlukta değerlendir" },
+  ]}
+  points={[
+    { label: "Tekrar", x: 0.8, y: 0.65 },
+    { label: "Teslimat", x: 0.15, y: 0.62 },
+    { label: "Köşe Kahve", x: 0.3, y: 0.2 },
+    { label: "Abonelik", x: 0.1, y: 0.08 },
+    { label: "Karanlık", x: 0.72, y: 0.15 },
+  ]}
+/>
+
+## İyi bir hayır
+
+İyi bir hayır dört şey içerir:
+
+1. **Fikri ciddiye aldığını göster.** Neden değerli olabileceğini söyle.
+2. **Gerekçeyi stratejiye bağla.** Kişisel zevkine değil, yazılı odağa ve sonuca.
+3. **Ne yaptığını söyle.** Traynor'un cümlesindeki gibi: "bunun yerine şunu yapıyoruz."
+4. **Kapıyı nasıl açık tuttuğunu söyle**, gerçekten açıksa: hangi koşulda yeniden bakılır?
+
+**Hayır ≠ asla.** Strateji değişirse cevap da değişebilir. Ama "belki sonra" diye yol haritasının dibine bırakılan bir talep, verilmemiş bir karardır.
+
+<Case>
+
+Elif dört talebe yazılı cevap verdi:
+
+1. **Eve teslimat (yatırımcı):** "Bazı müşteriler için değerli olduğunu biliyoruz. Ama bu yıl düzenli sabah müşterisine odaklandık ve eve teslimat 'yapmayacaklarımız' listesinde. Gel-al bizi teslimat uygulamalarından ayıran şey. Strateji yıl sonunda yeniden gözden geçirilecek."
+2. **Köşe Kahve'nin özel sadakat sistemi:** "Sizi kaybetmek istemeyiz. Ama tek bir müşteriye özel sistem, 140 dükkânın ürününü karmaşıklaştırır. Bunun yerine sizin sabah müşterileriniz için 'son siparişi tekrarla'yı ilk açılan dükkânlar arasına alıyoruz."
+3. **Aylık abonelik (rakipte var):** "Rakibin neden yaptığını bilmiyoruz. Bizim verimiz bu fırsatı göstermiyor; Later'a bile girmiyor."
+4. **Karanlık mod (Burak):** "Küçük görünüyor ama her ekranda iki durum demek. Bu çeyrek değil. Sprintte boşluk kalırsa önce teknik borca bakıyoruz."
+
+Lansmandan bir ay sonra Köşe Kahve'nin sahibi yeniden yazdı: dükkânlarındaki tekrar siparişler artmıştı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Hayırı yazılı ver.** Gerekçesi yazılı bir hayır, aynı talep üç ay sonra geldiğinde tartışmayı baştan başlatmaz.
+- **Her hayırı stratejiye bağla.** Odak yazılı değilse hayırın dayanağı da yoktur.
+- **"Bunun yerine" cümlesini unutma.** Ne yaptığını söylemeyen hayır, bir duvar gibi algılanır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Backlog'u bekleme odası yapma.** Yapılmayacağı belli bir öğeyi gerekçesiyle kapat.
+- **Ürün hedefini kalkan olarak kullan.** "Bu, ürün hedefimize hangi yoldan hizmet ediyor?" sorusu çoğu tartışmayı kısaltır.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Sprint ortasındaki "küçük ek işleri" görünür kıl.** "İki saatlik iş"ler sprint hedefini sessizce yer.
+- **Boş zamanın kuralını sözleşmeye yaz.** Takım boşta kalınca ne yapacağını önceden bilmeli: teknik borç, test, temizlik.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Talebin altındaki ihtiyacı çıkar.** "Özel sadakat sistemi" bir çözümdür; Köşe Kahve'nin asıl ihtiyacı sabah müşterilerini tutmaktı.
+- **Reddedilen talebi kaydet.** Hangi talebin neden reddedildiği, sonraki analizin kaynağıdır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Her evet, takımın zamanını başka bir şeyden alır; trade-off bu seçimin açıkça yapılmasıdır.
+- Kötü strateji çoğu zaman seçim yapmaktan kaçmaktır.
+- "Birkaç dakikalık iş", "rakipte var", "bu müşteri ayrılıyor" gibi gerekçeler bir özelliği ürüne almanın nedeni değildir.
+- İyi bir hayır fikri ciddiye alır, stratejiye dayanır, ne yapıldığını söyler ve koşulu belirtir.
+- "Belki sonra" diye bekletilen talep, verilmemiş bir karardır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Traynor'a göre zor ürün kararı nedir?">
+
+Kötü fikirleri elemek değil, iyi bir fikre bakıp "bu gerçekten iyi ama yapmayacağız, bunun yerine şunu yapıyoruz" diyebilmektir.
+
+</SelfCheck>
+
+<SelfCheck question="Büyük bir müşteri 'bu özelliği yapmazsanız ayrılırız' diyor. Ne yaparsın?">
+
+Talebin altındaki ihtiyacı anlamaya çalışırım. Traynor buna özellik şantajı der: tek bir müşteriye özel değer, çoğundan alınır. İhtiyacı ürünün genel yönüyle karşılayan bir alternatif önerir, gerekçemi stratejiye bağlarım.
+
+</SelfCheck>
+
+<SelfCheck question="'Rakiplerde var' neden tek başına bir gerekçe değildir?">
+
+Rakibin neden yaptığını, işe yarayıp yaramadığını ya da onu kaldırmayı planlayıp planlamadığını bilmeyiz. Kopyalamak, ürünü her zaman bir adım geriden getirir. Asıl soru, bizim müşterimiz ve stratejimiz için değerli olup olmadığıdır.
+
+</SelfCheck>
+
+<SelfCheck question="İyi bir hayırın dört parçası nedir?">
+
+Fikrin değerini kabul etmek, gerekçeyi yazılı stratejiye bağlamak, onun yerine ne yapıldığını söylemek ve varsa hangi koşulda yeniden bakılacağını belirtmek.
+
+</SelfCheck>

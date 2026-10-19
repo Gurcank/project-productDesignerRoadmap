@@ -76,6 +76,14 @@ doğru görünür, ilk etkileşimden sonra öğeler stilsiz kalır ve hata da ve
 bağlanmıştı. Yeni dersten sonra `dist/<kategori>/*/index.html` içindeki `data-term` eşleşmelerini oku;
 yanlış olanı o dersin `skipTerms`'üne yaz ve `build:fresh` çalıştır.
 
+**Dev açıkken eklenen ders bazen görünmez.** Yeni bir `.mdx` dev sunucusu çalışırken eklenince sayfa
+bazen dersi değil adım metnini ("Ders anlatımı src/lessons/… dosyasındadır") gösterir; hata da vermez.
+Dev sunucusunu yeniden başlat. Kontrol: sayfada `<figure>` var mı.
+
+**Matrix2x2 noktası başlık alanına düşmesin.** Her çeyreğin üst kısmında başlık ve alt yazı durur; üst
+çeyreklerde y ≈ 0,8–1, alt çeyreklerde y ≈ 0,3–0,5 bu alana denk gelir ve nokta yazının üstüne biner.
+Noktaları üst çeyreklerde 0,55–0,75, alt çeyreklerde 0,05–0,25 arasına koy; 768'de ekranda bak.
+
 **Paragrafı sıra sayısıyla başlatma.** "7. haftada…" Markdown'da numaralı liste olur; yazıyla yaz.
 
 **Astro 7 markdown eklentileri.** `markdown.rehypePlugins` artık kabul edilmiyor; `processor:

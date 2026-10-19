@@ -295,6 +295,109 @@ yarısı iptal). 14 senaryo geçti; 8. kuralda kupon müşteriye bildirilmedi, d
 **Sonra ne oldu:** üç ay sonra iadeyle ilgili destek talepleri ayda 140'a indi; amaç tuttu. İki dükkân
 stok bitince hâlâ müşteriyi telefonla arıyordu (kurum sınırlaması); Ayşe B7'yi önerdi.
 
+## Ürün kararları (sipariş takımı)
+
+Ürün Yönetimi dersleri bu rakamları kullanır. Karar sahibi **Elif** (PM); araştırma **Mert**.
+
+**Vizyon (üç yıl):** "Bağımsız kahve dükkânlarında hiç kimse kahvesi için kuyrukta beklemesin."
+**Ürün ilkeleri:** (1) Bir sipariş en çok üç dokunuş sürer. (2) Dükkânın düzenini bozmayız: her
+özellik önce bir baristanın iş akışında denenir. (3) Müşteriye sürpriz ücret yok.
+
+**Strateji (bu yıl):** odak, düzenli sabah müşterisi. İçgörü: aktif müşterilerin %54'ü son beş
+siparişinde hep aynı ürünü aldı; ilk siparişten sonra 30 günde ikinci sipariş %41. **Yapmayacaklarımız:**
+eve teslimat (kurye), kampüs dışında yeni şehir, zincir kafeler için özel uygulama.
+
+**Değer önerisi tuvali (sabah müşterisi):** işler — sabah kahvesini yolda almak, derse ya da işe geç
+kalmamak. Acılar — kuyruk, her sabah aynı siparişi baştan kurmak, ödemede kart karmaşası (%22 yarıda
+bırakma), kahvenin hazır olup olmadığını bilmemek. Kazanımlar — kahve geldiğinde hazır, dükkânın onu
+tanıması. Değer haritası: önceden sipariş ve ödeme (kuyruk), son siparişi tekrarla (baştan kurmak),
+hazır bildirimi (bekleme).
+
+**Konumlandırma:** rakip alternatifler — kuyrukta beklemek, dükkânı telefonla aramak, yemek teslimat
+uygulamaları, büyük zincirlerin kendi uygulamaları. Farklılaştırıcılar — 140 bağımsız dükkân tek
+uygulamada, gel-al (kurye ücreti yok), dükkânın kasasına doğrudan düşen sipariş. Pazar kategorisi —
+"mahalle kahvecileri için önceden sipariş", "yemek siparişi" değil.
+
+**Fırsat-çözüm ağacı:** sonuç (ürün sonucu) — 30 günde ikinci sipariş %41 → %50. Anlar: sipariş
+vermeden önce, sipariş verirken, teslim alırken. Fırsatlar — "her sabah aynı şeyi baştan seçiyorum",
+"kartımı her seferinde seçiyorum", "kahvem hazır mı bilmiyorum, erken gidip bekliyorum", "arkadaşlarla
+tek siparişte birleşemiyoruz", "sevdiğim dükkân açık mı bilmiyorum". Hedef fırsat: "her sabah aynı şeyi
+baştan seçiyorum". Üç çözüm: son siparişi tekrarla, favori listesi, zamanlanmış sipariş.
+
+**Varsayım testleri (iki hafta):**
+
+| Kimlik | Tür | Varsayım | Test | Başarı ölçütü (önceden) | Sonuç |
+|---|---|---|---|---|---|
+| V1 | İstek | Sabah müşterileri tek dokunuşla tekrar etmek ister | Veri: son beş sipariş | Aktiflerin en az %40'ı hep aynı ürünü alıyor | %54, geçti |
+| V2 | Kullanılabilirlik | Müşteri ana ekrandaki düğmeyi fark eder | Prototip testi, 8 kişi | 8'den en az 6'sı 10 saniyede bulur | 7/8, geçti |
+| V3 | Yapılabilirlik | Son siparişin ürünleri hâlâ menüde | Veri: son siparişler | En az %85'inde ürünlerin hepsi menüde | %91, geçti (kalan %9 için "biten ürünü çıkar" story'si) |
+| V4 | İş uygunluğu | Tekrar sipariş sepeti küçültmez | Veri: tekrar eden siparişler | Ortalama sepet %10'dan fazla düşmez | 158 TL (165'e göre −%4), geçti |
+| V5 | Etik | Zamanlanmış sipariş istenmeden ödeme almaz | Test edilmedi | — | Kural: her zamanlanmış siparişten 30 dk önce bildirim |
+
+Karar: önce "son siparişi tekrarla"; zamanlanmış sipariş sonraki sürümde.
+
+**Kano anketi (240 aktif müşteri):** sipariş hazır bildirimi — must-be; favori sipariş — performance;
+sadakat puanı — attractive; grup siparişi — çoğunluk için indifferent, öğrencilerin üçte biri için
+attractive.
+
+**Gecikme maliyeti ve WSJF (göreli, 1–10):**
+
+| Fikir | Değer | Zaman kritikliği | Risk azaltma / fırsat | Gecikme maliyeti | Süre | WSJF |
+|---|---|---|---|---|---|---|
+| Sipariş hazır bildirimi | 5 | 8 | 2 | 15 | 1 | 15,0 |
+| Favori sipariş (son siparişi tekrarla) | 8 | 3 | 5 | 16 | 3 | 5,3 |
+| Grup siparişi | 3 | 2 | 3 | 8 | 5 | 1,6 |
+| Sadakat puanı | 5 | 1 | 2 | 8 | 5 | 1,6 |
+
+Bildirimin zaman kritikliği kampüs lansmanından gelir: öğrenciler ders arasında hazır olduğunu bilmek
+ister. Elif bildirimi (1 puanlık iş) favori siparişle aynı sprinte aldı.
+
+**Yol haritası (Now–Next–Later):** Now — "Tekrar siparişi kolaylaştır" (%41 → %50; son siparişi
+tekrarla, hazır bildirimi). Next — "Ödemeyi yarıda bırakmayı azalt" (%22 → %15). Later — "Arkadaşlarla
+birlikte sipariş" ve "Kampüs sabahları".
+
+**Lansman katmanları:** kampüs lansmanı — 1. katman; "Son siparişini tekrarla" — 2. katman (uygulama içi
+duyuru, en az üç siparişi olan müşterilere e-posta, mağaza notu, Panel'de dükkânlara not; önce %10
+kullanıcı, sonra herkes); iade kuralı — 3. katman (Panel'de not, destek eğitimi).
+
+**Büyüme döngüsü:** dükkân Demlik'e katılır → kasadaki QR kartıyla müşterilerini davet eder → müşteri
+uygulamayı indirip sipariş verir → uygulamadaki "dükkân öner" ile gittiği başka dükkânı önerir → yeni
+dükkân katılır. Geçen yıl katılan dükkânların %30'u müşteri önerisiyle geldi. Demlik Panel'in ilk ayı
+ücretsiz; dükkân kurulumu kendisi yapabilir.
+
+**Yaşam döngüsü ve emeklilik:** Demlik büyüme evresinde. "Masaya servis" özelliği (müşteri masadan
+sipariş verir, barista getirir) 140 dükkânın 12'sinde açık, siparişlerin %3'ü; yoğun kullanan 4 dükkân.
+Karar: kaldırmak. Yeni dükkânlara kapatıldı; 8 az kullanan dükkânda gizlendi; 4 dükkâna üç ay önceden
+haber verildi, alternatif: masadaki QR'dan gel-al siparişi ve isimle çağırma.
+
+**Ayrıntılar (derslerde geçen sabitler):**
+
+- Strateji yazılmadan önce ofis duvarında kırka yakın fikir vardı; otuzu "şimdi değil" oldu.
+- Önceki çeyreğin yol haritası slaydı: on iki özellik, her birinin yanında bir ay; altısı o ay
+  çıkmadı, ikisi çıktı ama kullanılmadı. Slaytta "Mart'ta favori listesi, Nisan'da yeni ödeme
+  ekranı, Haziran'da grup siparişi" yazıyordu.
+- Mert'in sekiz öğrenci görüşmesinin beşinde "her seferinde aynı şeyi arıyorum" geçti. Fırsat-çözüm
+  ağacı bu sekiz görüşmeye ve önceki çeyrekten altı müşteri görüşmesine dayanır. Menüde arama
+  yapanların çoğu, son siparişlerinde zaten aldıkları ürünü arıyordu.
+- V2 prototip testinde düğmeyi bulamayan katılımcı onu "kampanya" sandı; Selin düğmeyi sipariş
+  içeriğiyle gösterdi ("Orta boy filtre kahve · Moda"). Favori listesinin varsayımı aynı oturumda
+  sınandı: sekiz kişiden üçü favori kaydetti (ölçüt beşti).
+- Ödeme adımı araştırması (Mert): analitik, bırakanların çoğunun kart seçim ekranında ayrıldığını
+  gösterdi; beş kişilik testte dördü hangi kartın seçili olduğunu söyleyemedi. Kartının süresi dolan
+  müşteriler bankadan uyarı alıyor ama Demlik'te kartı güncellemenin yolunu bulamıyordu.
+- "Son siparişini tekrarla" yayını: bir hafta ekip içi kullanım (ofisin karşısındaki dükkândan);
+  Can, düğmenin kapalı dükkânlarda da göründüğünü buldu. Sonra %10 kullanıcı bir hafta, durdurma
+  koşulu hatalı siparişlerin %1'i geçmesi; sonra herkes. Lansman ölçüsü: ilk ayda sabah
+  müşterilerinin %25'i düğmeyi en az bir kez kullanır.
+- Tekrar sipariş her zaman son siparişin dükkânına gider (spec kuralı).
+- Kampüs lansmanına on hafta kala Leyla, öğrencilerin hazır bildirimine ihtiyacını hatırlattı.
+- "Dükkân öner" düğmesi profil sayfasının en altındaydı; bir sonraki çeyreğin aday işi.
+- Demlik'te mali yıl Ocak'ta başlar.
+
+**"Hayır" listesi (bir çeyrekte gelen talepler):** yatırımcıdan eve teslimat; sekiz dükkânlı en büyük
+müşteri "Köşe Kahve"den kendine özel sadakat sistemi; rakipte var diye aylık kahve aboneliği; bir
+geliştiriciden "iki saatlik iş" diye karanlık mod. Elif'in cevabı her biri için yazılı.
+
 ## Paydaşlar
 
 | Paydaş | İlgi | Etki |

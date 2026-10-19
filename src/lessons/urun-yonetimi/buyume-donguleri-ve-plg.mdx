@@ -1,0 +1,131 @@
+---
+summary: "Huni tek yönlüdür; büyüme döngüsü ise bir kullanıcı grubunun bir sonrakini nasıl getirdiğini anlatır. Ürün odaklı büyümede ürünün kendisi edinmenin, aktivasyonun ve elde tutmanın ana aracıdır."
+outcomes:
+  - "'Ürünümüz nasıl büyüyor?' sorusunun neden önemli olduğunu ve hunilerin sınırlarını anlatabilirsin."
+  - "Bir ürünün büyüme döngüsünü adım adım çizebilirsin."
+  - "Ürün odaklı büyümenin ne olduğunu ve neyi gerektirdiğini açıklayabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "Reforge — Growth Loops are the New Funnels (2018)"
+    url: "https://www.reforge.com/blog/growth-loops"
+  - label: "ProductLed — Wes Bush, Product-Led Growth (2023)"
+    url: "https://productled.com/blog/product-led-growth-definition"
+additions:
+  - "Hunilerin üç sorunu ve büyüme döngüsü (Balfour, Winters, Kwok, Chen; Reforge)"
+  - "Ürün odaklı büyümenin tanımı ve faydaları (Wes Bush)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Cycle from "~/components/diagrams/primitives/Cycle.astro";
+
+Hakan yönetim toplantısında masadakilere aynı soruyu sordu: "Demlik nasıl büyüyor?" Pazarlama "reklamla" dedi. Satış "dükkânları tek tek ziyaret ederek". Elif "tekrar siparişle". Finans "komisyon artıyor" diye cevap verdi.
+
+Dört cevabın dördü de doğruydu ama hiçbiri bütün değildi; birbirine nasıl bağlandıkları da belli değildi. Bu ders, bir ürünün nasıl büyüdüğünü tek bir resimde anlatmanın yolunu anlatır.
+
+## En önemli soru
+
+Reforge'daki 2018 tarihli yazının yazarları Brian Balfour, Casey Winters, Kevin Kwok ve Andrew Chen'dir. Yazı bir alıştırma önerir: şirkette beş kişiden "Ürününüz nasıl büyüyor?" sorusunu tahtaya çizmelerini isteyin. Sonuç neredeyse hep aynıdır:
+
+- Herkes farklı bir cevap verir.
+- Cevap bulmacanın yalnız bir parçasını anlatır.
+- Cevap girdiyi (kullanım) değil çıktıyı (para) anlatır.
+
+Herkesin resmi farklıysa öncelik, ölçü ve strateji konuşmaları aynı zeminde yapılamaz.
+
+## Huninin sınırları
+
+Bu soruya en sık verilen cevap bir **huni** çizimidir. Yazarlara göre Dave McClure'un AARRR hunisi iyi bir başlangıçtı ama en hızlı büyüyen ürünlerin nasıl büyüdüğünü anlatmaz; döngünün yalnız bir adımını açıklar. Huninin üç sorunu vardır:
+
+1. **Stratejik silolar:** ürün, kanal ve gelir modeli ayrı ayrı düşünülür. Oysa kanalların kurallarını biz koymayız; ürünü kanala uydururuz.
+2. **İşlevsel silolar:** pazarlama edinmeye, ürün elde tutmaya, satış gelire sahip olur. Her ekip kendi metriğini ötekiler pahasına optimize eder.
+3. **Tek yön:** üstten koyarsın, alttan alırsın. Alttan çıkanın üste yeniden yatırılması, yani bileşik etki yoktur.
+
+## Büyüme döngüsü
+
+Yazarlara göre en hızlı büyüyen ürünler huniyle değil **döngülerle** daha iyi anlatılır. Döngü, girdinin bir süreçten geçip daha çok çıktı ürettiği ve o çıktının yeniden girdiye yatırıldığı kapalı bir sistemdir. Döngünün sorusu şudur: **bir kullanıcı grubu bir sonrakini nasıl getiriyor?**
+
+Yazının örneği Pinterest'tir: kullanıcı kaydolur, ilgili içerikle ürünü kullanmaya başlar, içerik kaydeder; bu, Pinterest'e kalite sinyali verir. Pinterest kaliteli içeriği arama motorlarına dağıtır; yeni bir kullanıcı içeriği aramada bulur ve kaydolur.
+
+<Cycle
+  label="Demlik'in büyüme döngüsü"
+  caption="Demlik'in döngüsü dört adımdır. Bir dükkân Demlik'e katılır. Dükkân kasadaki QR kartıyla kendi müşterilerini davet eder. Müşteri uygulamayı indirip sipariş verir. Müşteri uygulamadaki 'dükkân öner' ile gittiği başka bir dükkânı önerir ve o dükkân da katılır. Geçen yıl katılan dükkânların yüzde otuzu bu yoldan geldi."
+  steps={[
+    { title: "Dükkân katılır", tone: "accent" },
+    { title: "Müşterisini davet eder", sub: "kasadaki QR kartı" },
+    { title: "Müşteri sipariş verir" },
+    { title: "Başka dükkânı önerir", sub: "'dükkân öner'", tone: "progress" },
+  ]}
+  back="yeni dükkân"
+/>
+
+Yazarlar bir tuzağa da dikkat çeker: bir ürün için çok sayıda döngü çizmek kolaydır, ama bu çoğu zaman sürdürülemez, zayıf döngüler demektir. Asıl işi birkaç güçlü döngü yapar.
+
+## Ürün odaklı büyüme
+
+Wes Bush'un tanımıyla **ürün odaklı büyüme** (product-led growth, PLG), müşteri edinmenin, aktivasyonun ve elde tutmanın ana aracı olarak ürünün kendisini kullanan bir iş stratejisidir. Kullanıcı bir satış görüşmesi yerine ürünü ücretsiz bir sürümle ya da deneme süresiyle kendisi dener. Ürünle anlamlı bir sonuç yaşarsa ücretli plana geçmek doğal bir adım olur. Etkileşim, gelirden önce gelir.
+
+Bush'a göre bu yaklaşım satış döngüsünü kısaltabilir, müşteri edinme maliyetini düşürebilir ve ürünü kendi kendine öğrenilebilir yapmaya zorlar. Ama yalnız bir fiyat kararı değildir: bütün kurumun kullanıcının başarısına odaklandığı bir kültür değişikliği ister.
+
+**Büyüme ≠ edinme.** Yeni kullanıcı getirmek döngünün yalnız bir adımıdır. Kullanıcı kalmıyorsa ya da bir sonraki kullanıcıyı getirmiyorsa, döngü dönmez.
+
+<Case>
+
+Elif Hakan'ın sorusuna bir sonraki toplantıda tek bir çizimle cevap verdi:
+
+1. **Ana döngü:** dükkân katılır → müşterisini davet eder → müşteri sipariş verir → başka bir dükkânı önerir. Geçen yıl katılan dükkânların %30'u müşteri önerisiyle gelmişti.
+2. **Dört cevap yerine oturdu:** reklam yeni müşteri getiriyordu; satış ziyaretleri dükkân getiriyordu; tekrar sipariş döngünün hızını belirliyordu; komisyon çıktıydı.
+3. **Panel'de ürün odaklı bir adım:** Demlik Panel'in ilk ayı ücretsizdi ve dükkân kurulumu kendisi yapabiliyordu. Satış ekibi en çok yardım isteyen dükkânlara zaman ayırdı.
+4. **Bir zayıf halka:** "dükkân öner" düğmesi profil sayfasının en altındaydı. Bir sonraki çeyreğin aday işleri arasına girdi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Büyümeyi tek resimde çiz.** Herkes farklı bir huni çiziyorsa, öncelik konuşması aynı zeminde yapılamaz.
+- **Döngünün en zayıf halkasını bul.** Bütün adımları birden iyileştirmek yerine döngüyü yavaşlatan adıma odaklan.
+- **Az ama güçlü döngü.** On zayıf döngü bir güçlü döngünün yerini tutmaz.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- "Ürünümüz nasıl büyüyor?" sorusuna herkesin aynı cevabı vermesi gerekir; yoksa öncelikler ayrışır.
+- Huni stratejik ve işlevsel silolar yaratır ve tek yönlüdür; bileşik etkiyi göstermez.
+- Büyüme döngüsü, çıktının yeniden girdiye yatırıldığı kapalı bir sistemdir: bir kullanıcı grubu bir sonrakini getirir.
+- Ürün odaklı büyümede ürünün kendisi edinmenin, aktivasyonun ve elde tutmanın ana aracıdır.
+- PLG bir fiyat kararı değil, kurum çapında bir kültür değişikliğidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Reforge yazarlarına göre hunilerin üç sorunu nedir?">
+
+Stratejik silolar: ürün, kanal ve gelir modeli ayrı düşünülür. İşlevsel silolar: her ekip kendi metriğini ötekiler pahasına optimize eder. Tek yönlülük: çıktı yeniden girdiye yatırılmaz, bileşik etki yoktur.
+
+</SelfCheck>
+
+<SelfCheck question="Bir büyüme döngüsünü tanımlayan soru nedir?">
+
+Bir kullanıcı grubu bir sonraki kullanıcı grubunu nasıl getiriyor? Döngü, bir çevrimin çıktısının bir sonraki çevrime nasıl yeniden yatırıldığını gösterir.
+
+</SelfCheck>
+
+<SelfCheck question="Takım reklam bütçesini ikiye katladı ama kullanıcılar ilk siparişten sonra geri gelmiyor. Döngü açısından ne dersin?">
+
+Edinme artıyor ama döngünün sonraki adımları çalışmıyor. Kullanıcı kalmıyor ve kimseyi getirmiyorsa, her yeni kullanıcı için yeniden para harcanır. Önce tekrar siparişi ve öneri adımını güçlendirmek gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Ürün odaklı büyüme yalnız 'ücretsiz deneme' eklemek midir?">
+
+Hayır. Wes Bush'a göre ürünün edinme, aktivasyon ve elde tutmanın ana aracı olmasıdır. Kullanıcının ürünle kendi başına anlamlı bir sonuç yaşayabilmesi ve bütün ekiplerin buna odaklanması gerekir.
+
+</SelfCheck>
