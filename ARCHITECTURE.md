@@ -455,7 +455,9 @@ bileşendi. Yüzlerce derse görsel eklemek için her şekli baştan çizmek öl
 - **Demolar** ([`src/components/demos/`](src/components/demos)): `DemoFrame` içinde, mantığı
   `src/lib/demos/*.ts` altında test edilen saf fonksiyonlarda. Sunucuda çözülmüş örnekle render
   edilir; JS'siz de öğretir. Kartlar yeniden dizilmez (görsel sıra = odak sırası). RICE demosu 574
-  bayt gzip.
+  bayt gzip. Faz 4'te üç demo daha: belirsizlik konisi (737 B), kritik yol (1.093 B, `Network`
+  ilkeliyle aynı `criticalPath` fonksiyonunu kullanır) ve kazanılmış değer (786 B). Duyurular
+  (`aria-live`) yalnız sonuç değişince yapılır, her tuş vuruşunda değil.
 - **İllüstrasyonlar** (`src/assets/illustrations/*.svg`): yalnız `il-*` sınıfları; renkler
   `--c-illu-*` token'larından. `<Illustration>` satır içi gömer (public/ değil: SW hash'siz
   dosyayı sonsuza dek tutar). `validate` ham renk, öznitelik rengi, betik/dış referans, viewBox ve 12

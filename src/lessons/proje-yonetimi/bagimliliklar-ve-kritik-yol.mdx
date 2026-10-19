@@ -1,0 +1,190 @@
+---
+summary: "İşler arasındaki bağımlılıklar bir ağ oluşturur. Bu ağdaki en uzun yol, kritik yol, projenin en kısa süresidir; kritik yoldaki her gecikme projeyi geciktirir."
+outcomes:
+  - "Dört bağımlılık türünü ve bağımlılığın nereden geldiğini ayırabilirsin."
+  - "Basit bir ağda kritik yolu ve her işin bolluğunu bulabilirsin."
+  - "Bir gecikmenin projeyi etkileyip etkilemeyeceğini kritik yola bakarak söyleyebilirsin."
+minutes: 9
+standard: 2
+sources:
+  - label: "Watt, Project Management (2. baskı) — 10. Project Schedule Planning"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-10-project-schedule-planning-project-management/"
+additions:
+  - "Bağımlılık türleri (FS, SS, FF, SF), zorunlu, isteğe bağlı ve dış bağımlılıklar, öne alma ve gecikme"
+  - "Faaliyet düğümlü ağ, kritik yol ve bolluk"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Deeper from "~/components/lesson/Deeper.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Network from "~/components/diagrams/primitives/Network.astro";
+import CriticalPathDemo from "~/components/demos/CriticalPathDemo.astro";
+
+Öğrenci işleri protokolü bir hafta gecikti. Elif telaşla Leyla'ya yazdı: "Lansman kayıyor mu?" Bir gün sonra tedarikçiden haber geldi: entegrasyon da bir hafta gecikecekti. Bu kez Leyla telaşlandı.
+
+İki gecikme aynı büyüklükteydi. Ama biri lansmanı etkilemedi, öteki etkiledi. Farkı anlamak için işlerin birbirine nasıl bağlı olduğuna bakmak gerekir.
+
+## Bağımlılık nedir?
+
+Bir işin başlaması ya da bitmesi başka bir işe bağlıysa, iki iş arasında bir **bağımlılık** (dependency) vardır. Önce gelen işe **öncül** (predecessor), sonra gelene **ardıl** (successor) denir.
+
+Dört tür bağımlılık vardır:
+
+| Tür | Anlamı | Demlik'ten örnek |
+|---|---|---|
+| **Bitiş-başlangıç** (FS) | A bitmeden B başlamaz. En yaygın türdür. | Şartname bitmeden entegrasyon başlamaz. |
+| **Başlangıç-başlangıç** (SS) | A başlamadan B başlamaz; ikisi birlikte başlar. | Kurulum başlayınca eğitim de başlar. |
+| **Bitiş-bitiş** (FF) | A bitmeden B bitmez; ikisi birlikte biter. | Menüler, kafe sözleşmeleri bitmeden kesinleşmez. |
+| **Başlangıç-bitiş** (SF) | A başlamadan B bitmez. En nadir türdür. | Eski kasa, yeni sistem çalışmaya başlamadan kapatılmaz. |
+
+Bağımlılıkların kaynağı da farklıdır. **Zorunlu** bağımlılık işin doğasından gelir: test edilecek bir şey olmadan test yapılamaz. **İsteğe bağlı** bağımlılık deneyimden ya da tercihten gelir: "Önce pilot, sonra 12 kafe" bir tercihtir. **Dış** bağımlılık projenin dışındaki birine bağlıdır: ödeme kuruluşunun mağaza kodları gibi.
+
+İsteğe bağlı bir bağımlılık, zaman daraldığında gevşetilebilecek ilk yerdir. Zorunlu olan gevşetilemez.
+
+Bazen iki iş arasına bilerek boşluk konur. Buna **gecikme** (lag) denir: kurulumdan sonra cihazların bir gece denenmesi gibi. Tersine, bir işi öncülü bitmeden başlatmaya **öne alma** (lead) denir.
+
+Ekip içi dilde bağımlılık, blocker ve eskalasyon [Engeller, bağımlılıklar ve belirsizlik](/calisma-bicimi/engeller-bagimliliklar-ve-belirsizlik/) dersinde anlatılıyor. Bu ders bağımlılıkların takvime etkisini anlatır.
+
+## Ağ ve kritik yol
+
+İşler ve bağımlılıkları bir **ağ diyagramında** (network diagram) çizilir. Her kutu bir iştir, her ok bir bağımlılıktır. Bu çizime faaliyet düğümlü ağ (activity on node) denir.
+
+Ağda başlangıçtan bitişe birçok yol vardır. Bunların **en uzunu kritik yoldur** (critical path). Kritik yol, projenin bitebileceği en kısa süreyi verir. Kritik yoldaki her iş zamanında bitmelidir. Birinde kaybedilen bir hafta, projeden kaybedilen bir haftadır.
+
+<Network
+  label="Kampüs projesinin takvim ağı ve kritik yolu"
+  caption="Üç iş zinciri aynı anda başlar: kasa şartnamesi, öğrenci işleri protokolü ve kafe sözleşmeleri. Pilot kafe, entegrasyon testi, öğrenci kartı indirimi ve kurulum bitmeden başlayamaz. En uzun zincir şartname, entegrasyon geliştirme, entegrasyon testi, pilot ve açılıştan oluşur: toplam 13 hafta. Bu kritik yoldur. Protokol ve indirim zincirinin 1 hafta, sözleşme ve kurulum zincirinin 2 hafta bolluğu vardır."
+  unit="hf"
+  activities={[
+    { id: "A", label: "Şartname", duration: 2 },
+    { id: "P", label: "Protokol", duration: 3 },
+    { id: "S", label: "Sözleşme", duration: 3 },
+    { id: "B", label: "Geliştirme", duration: 4, after: ["A"] },
+    { id: "D", label: "İndirim", duration: 4, after: ["P"] },
+    { id: "K", label: "Kurulum", duration: 3, after: ["S"] },
+    { id: "C", label: "Test", duration: 2, after: ["B"] },
+    { id: "T", label: "Pilot", duration: 2, after: ["C", "D", "K"] },
+    { id: "Y", label: "Açılış", duration: 3, after: ["T"] },
+  ]}
+/>
+
+## Bolluk
+
+Kritik yolda olmayan işlerin bir esnekliği vardır. Bir işin projeyi geciktirmeden ne kadar kayabileceğine **bolluk** (slack ya da float) denir.
+
+Protokol ve indirim zinciri 7 haftada biter. Pilot ise 8. haftada başlar. Aradaki 1 hafta, bu zincirin bolluğudur. Protokol bir hafta gecikirse pilot yine zamanında başlar. Elif'in telaşı bu yüzden gereksizdi.
+
+Entegrasyonun bolluğu ise sıfırdı. Tedarikçinin bir haftalık gecikmesi, doğrudan pilotu ve lansmanı bir hafta kaydırır. Leyla'nın telaşı bu yüzden yerindeydi.
+
+**Bolluk ≠ boş zaman.** Bolluk, gecikmeyi emen bir tampondur. Harcandığında yok olur. Bir zincirin bolluğu bitince o zincir de kritik olur.
+
+<CriticalPathDemo
+  deadline={14}
+  activities={[
+    { id: "A", label: "Kasa şartnamesi", duration: 2 },
+    { id: "B", label: "Entegrasyon geliştirme", duration: 4, after: ["A"] },
+    { id: "C", label: "Entegrasyon testi", duration: 2, after: ["B"] },
+    { id: "P", label: "Öğrenci işleri protokolü", duration: 3 },
+    { id: "D", label: "Öğrenci kartı indirimi", duration: 4, after: ["P"] },
+    { id: "S", label: "Kafe sözleşmeleri", duration: 3 },
+    { id: "K", label: "Kurulum ve eğitim", duration: 3, after: ["S"] },
+    { id: "T", label: "Pilot kafe", duration: 2, after: ["C", "D", "K"] },
+    { id: "Y", label: "12 kafeye açılış", duration: 3, after: ["T"] },
+  ]}
+  caption="Başlangıçta proje 13 hafta sürer ve dönem başına 1 hafta tampon kalır. Protokolü 4 haftaya çıkarırsan bolluğu yer, ama proje süresi değişmez. Entegrasyonu 5 haftaya çıkarırsan proje 14 haftaya uzar ve tampon biter. Protokolü 5 haftaya çıkarırsan kritik yol değişir: artık protokol ve indirim zinciri en uzunudur."
+/>
+
+<Case>
+
+Leyla iki gecikmeyi ağa koydu:
+
+1. **Protokol +1 hafta:** protokol ve indirim zinciri 8 haftaya çıktı. Pilot 8. haftada başladığı için proje süresi değişmedi. Ama bu zincirin bolluğu sıfıra indi: artık o da kritikti.
+2. **Entegrasyon +1 hafta:** proje 14 haftaya uzadı. Dönem başına tampon kalmadı.
+3. **Ne yaptı:** "Önce pilot, sonra açılış" bağımlılığının isteğe bağlı olduğunu biliyordu. B planı olarak pilotu bir hafta kısaltıp açılışla üst üste bindirmeyi yazdı. Riski arttırdığı için kararı Hakan'a bıraktı.
+4. **Kime ne söyledi:** Elif'e "Protokol gecikmesi lansmanı etkilemiyor, ama artık hiç payımız yok" dedi. Hakan'a, entegrasyon gecikmesini aynı gün haber verdi.
+
+</Case>
+
+<Tool slug="takvim" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Her gecikmeyi önce ağa koy.** Telaş ya da rahatlık, ancak kritik yola bakınca haklı çıkar.
+- **Dış bağımlılıkların sahibini erken uyar.** Ödeme kuruluşu senin takvimini bilmiyorsa, onun gecikmesi senin sürprizin olur.
+- **İsteğe bağlı bağımlılıkları işaretle.** Zaman daraldığında gevşetebileceğin yerler bunlardır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Kritik yoldaki ürün işini bil.** Uygulamadaki bir iş kritik yoldaysa, ona eklenen her kapsam lansmanı kaydırır.
+- **Kapsam kararını bolluğa göre ver.** Bolluğu olan bir işe küçük bir ekleme yapılabilir; kritik olana yapılamaz.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Sprinti bağımlılıklara göre sırala.** Başka bir işi bekleten story'yi öne al.
+- **Bolluğun bittiğini takıma söyle.** Dün bolluğu olan iş bugün kritik olabilir; öncelik de değişir.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Takımlar arası bağımlılıkları görünür kıl.** Bir takımın blocker'ı çoğu zaman başka bir takımın sıradaki işidir.
+- **Dış bağımlılık için eskalasyonu hızlandır.** Kritik yoldaki bir bekleme, takımın kendi başına çözebileceği bir engel değildir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Bağımlılık, bir işin başka bir işe bağlı olmasıdır; en yaygın türü bitiş-başlangıçtır.
+- Bağımlılık zorunlu, isteğe bağlı ya da dış olabilir; zaman daralınca ilk gevşetilen isteğe bağlı olanlardır.
+- Ağdaki en uzun yol kritik yoldur ve projenin en kısa süresini verir.
+- Kritik yoldaki bir gecikme projeyi doğrudan geciktirir; diğer işlerdeki gecikme önce bolluğu yer.
+- Bolluk harcandıkça azalır; bolluğu biten zincir de kritik olur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Kritik yol neden ağdaki en uzun yoldur da en kısa yol değildir?">
+
+Çünkü proje, bütün yollar bitmeden bitemez. En uzun yol bitene kadar proje sürer; yani en uzun yol, projenin bitebileceği en kısa süreyi belirler.
+
+</SelfCheck>
+
+<SelfCheck question="'Önce pilot, sonra 12 kafe' hangi tür bağımlılıktır ve bu neden önemlidir?">
+
+İsteğe bağlı bir bağımlılıktır: işin doğasından değil, deneyimden ve tercihten gelir. Önemlidir, çünkü zaman daraldığında gevşetilebilecek yerlerden biridir. Gevşetmenin bedeli de genelde daha fazla risktir.
+
+</SelfCheck>
+
+<SelfCheck question="Bolluğu 2 hafta olan bir iş 3 hafta gecikti. Proje ne kadar gecikir?">
+
+1 hafta. İlk 2 hafta bolluk tarafından emilir; üçüncü hafta projeyi geciktirir. Bu arada o zincir kritik yola girer.
+
+</SelfCheck>
+
+<SelfCheck question="Bir ekip üyesi 'Bizim işimiz kritik yolda değil, rahat olabiliriz' diyor. Ne cevap verirsin?">
+
+Bolluk kalıcı değildir. Başka bir gecikme ya da bu işin kendi gecikmesi bolluğu yiyebilir ve iş kritik olur. Rahatlık değil, bolluğun ne kadar kaldığını izlemek gerekir.
+
+</SelfCheck>
+
+<Deeper title="İleri ve geri geçiş: bolluk nasıl hesaplanır?">
+
+Kritik yol iki geçişle bulunur.
+
+**İleri geçiş:** baştan sona gidilir. Her işin en erken başlangıcı, öncüllerinin en geç biteninin bitişidir. En erken bitiş, en erken başlangıca süre eklenerek bulunur. Son işin en erken bitişi projenin süresidir.
+
+**Geri geçiş:** sondan başa gidilir. Her işin en geç bitişi, ardıllarının en geç başlangıçlarından en erken olanıdır. En geç başlangıç, en geç bitişten süre çıkarılarak bulunur.
+
+**Bolluk = en geç başlangıç − en erken başlangıç.** Bolluğu sıfır olan işler kritik yolu oluşturur.
+
+Eski bir yöntem olan ok düğümlü ağ (AOA), işleri kutularla değil oklarla çizer. Yalnız bitiş-başlangıç bağımlılığını gösterebilir; bu yüzden bugün faaliyet düğümlü ağ daha çok kullanılır. PERT bu eski ailenin en bilinen örneğidir.
+
+</Deeper>

@@ -1,0 +1,192 @@
+---
+summary: "İş gerekçesi bir projenin neden yapılması gerektiğini seçenekleriyle anlatır; sponsor onu onaylar. Proje tüzüğü projeyi resmen başlatır ve proje yöneticisine yetki verir."
+outcomes:
+  - "Bir iş gerekçesinin bölümlerini sayabilir ve seçenekleri karşılaştırabilirsin."
+  - "Bir proje tüzüğünün ne işe yaradığını ve içinde ne olduğunu anlatabilirsin."
+  - "Proje hedefini SMART ölçütleriyle yazabilirsin."
+minutes: 9
+standard: 2
+sources:
+  - label: "Watt, Project Management (2. baskı) — 7. Project Initiation"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-7-project-initiation-project-management/"
+additions:
+  - "İş gerekçesinin içeriği, sponsor onayı ve fizibilite çalışması"
+  - "Ağırlıklı karar matrisi"
+  - "Proje tüzüğünün bölümleri ve SMART hedef"
+  - "NPV, ROI ve geri ödeme analizi"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Deeper from "~/components/lesson/Deeper.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Hakan'ın ilk cümlesi bir çözümdü: "Kampüs kafelerine Demlik'i açalım." Leyla bir adım geri gitti ve sordu: "Hangi sorunu çözüyoruz?"
+
+Cevap, ders aralarındaki 10 dakikada uzayan kuyruktu. Sorunu böyle yazınca başka çözümler de görünür oldu. Belki kasa entegrasyonu gerekmeyecekti. Belki hiçbir şey yapmamak daha ucuzdu. Projeye başlamadan önce bu soruların cevabı yazıya geçer. İlk belgesi iş gerekçesi, ikincisi proje tüzüğüdür.
+
+## İş gerekçesi: neden bu proje?
+
+**İş gerekçesi** (business case), bir sorunu ya da fırsatı ayrıntılı tanımlayan ve önerilen çözümü seçen belgedir. İçinde şunlar bulunur:
+
+- sorunun ya da fırsatın tanımı, varsayımlar ve kısıtlar,
+- olası seçeneklerin listesi,
+- her seçeneğin faydaları, maliyetleri ve riskleri,
+- seçilen çözüm ve gerekçesi,
+- ana gereksinimler,
+- takvim ve maliyet içeren özet bir uygulama planı.
+
+İş gerekçesini **sponsor** onaylar. Sponsor, projenin yapılmaya değer olup olmadığına karar veren kişidir. Onaydan sonra bir **fizibilite çalışması** yapılır: seçilen çözüm gerçekten uygulanabilir mi? Bu çalışma onaylanınca planlama başlar. Projenin değmediği ortaya çıkarsa proje burada biter.
+
+İnsanlar çoğu zaman ihtiyacı anlamadan çözüme atlar. İş gerekçesi bu acelenin ilacıdır. Önce sorun, sonra seçenekler, en son çözüm yazılır.
+
+### Seçenekleri karşılaştırmak
+
+Seçenekler bir **ağırlıklı karar matrisi** (weighted decision matrix) ile karşılaştırılabilir. Önce ölçütler yazılır ve her birine önemine göre bir ağırlık verilir. Sonra her seçenek her ölçütte puanlanır. Puan ağırlıkla çarpılır ve toplanır.
+
+| Ölçüt (ağırlık) | Hiçbir şey yapma | Ayrı tablet | Kasa entegrasyonu |
+|---|---|---|---|
+| Kuyruğu kısaltır (×3) | 1 | 4 | 5 |
+| Personele az yük (×2) | 5 | 2 | 4 |
+| Düşük maliyet (×2) | 5 | 4 | 2 |
+| Dönem başına yetişir (×1) | 5 | 5 | 3 |
+| **Toplam** | **28** | **29** | **30** |
+
+Toplamlar birbirine yakın. Bu bir uyarıdır: hangi ağırlık biraz değişse sıra değişir mi? Matris kararı vermez; kararın neye dayandığını görünür kılar. Hakan, kafe personelinin iki ekrana bakmayacağını bildiği için entegrasyonu seçti ve bunu gerekçeye yazdı.
+
+<Layers
+  label="Fikirden plana: başlatma evresinin belgeleri"
+  caption="Başlatma evresi geniş başlar, dar biter. Önce bir ihtiyaç ve birçok olası çözüm vardır. İş gerekçesi bunları birkaç seçeneğe indirir ve birini seçer. Fizibilite seçilen çözümün uygulanabilir olduğunu gösterir. Tüzük de tek bir projeyi resmen başlatır. Genişlik, masadaki seçenek sayısını gösterir."
+  shape="funnel"
+  layers={[
+    { title: "İhtiyaç", sub: "sorun ya da fırsat" },
+    { title: "İş gerekçesi", sub: "seçenekler ve öneri", tone: "accent" },
+    { title: "Fizibilite", sub: "yapılabilir mi?" },
+    { title: "Proje tüzüğü", sub: "resmî başlangıç", tone: "progress" },
+  ]}
+/>
+
+## Proje tüzüğü: projeyi başlatan belge
+
+**Proje tüzüğü** (project charter), projenin resmen var olduğunu söyleyen belgedir. Üç işi vardır:
+
+1. Projenin ne olduğunu ve neden yapıldığını herkese aynı biçimde anlatır.
+2. Projenin genel kapsamını çizer.
+3. **Proje yöneticisine yetki verir.** Leyla'nın başka ekiplerden zaman isteyebilmesi bu yetkiye dayanır.
+
+Bir tüzükte genellikle projenin kimliği, kısa tanımı, hedefi ve kapsamı bulunur. Bunlara kilometre taşları, teslimatlar, varsayımlar ve kısıtlar eklenir. Sonda iş ihtiyacı, ön maliyet tahmini, riskler ve onay imzaları yer alır.
+
+**İş gerekçesi ≠ tüzük.** İş gerekçesi "neden yapmalıyız?" sorusunu cevaplar ve bir karar ister. Tüzük ise "yapıyoruz, kurallar bunlar" der ve projeyi başlatır.
+
+### Hedefi SMART yazmak
+
+Tüzükteki hedef **SMART** olmalıdır:
+
+- **Specific (belirli):** neyin değişeceği açık.
+- **Measurable (ölçülebilir):** başarıyı bir sayı gösterir.
+- **Acceptable (kabul edilebilir):** paydaşlar hedefe katılıyor.
+- **Realistic (gerçekçi):** eldeki kaynakla ulaşılabilir.
+- **Time based (zamana bağlı):** bir bitiş tarihi var.
+
+"Kampüslerde büyüyelim" bir dilektir. "Dönem başında 12 kampüs kafesinde Demlik'le sipariş alınabilsin" ise bir hedeftir.
+
+<Case>
+
+Leyla tüzüğü bir sayfada topladı:
+
+1. **Hedef:** dönem başında (14. hafta) 12 kampüs kafesinde Demlik'le sipariş alınabilsin; öğrenci kartıyla %10 indirim çalışsın.
+2. **İş ihtiyacı:** ders arasında uzayan kuyruk. Beklenen fayda: ilk dönemin sonunda günde 600 sipariş.
+3. **Kapsam:** kasa entegrasyonu, öğrenci kartı indirimi, kampüs menüleri, kafe kurulumu ve eğitim. **Kapsam dışı:** kampüs dışı kafeler, sadakat puanı.
+4. **Kilometre taşları:** şartname onayı (2. hafta), pilot başarılı (10. hafta), lansman (14. hafta).
+5. **Kısıtlar:** 14 hafta, 2,4 milyon TL.
+6. **Varsayım:** öğrenci kartı numaraları bir arayüzle doğrulanabilir.
+7. **Yetki:** Leyla, bütçe içinde tedarikçiye iş verebilir; kapsam değişikliği için Hakan'ın onayı gerekir.
+
+Hakan imzaladı. Proje o gün başladı.
+
+</Case>
+
+<Tool slug="is-gerekcesi" />
+
+<Tool slug="proje-tuzugu" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Tüzükte yetkini açıkça yaz.** Neye tek başına karar verebileceğin, neye sponsorun onayı gerektiği yazılı değilse her karar tartışmaya döner.
+- **"Kapsam dışı" satırını boş bırakma.** En çok tartışma, kimsenin yazmadığı sınırlarda çıkar.
+- **İmzasız tüzükle başlama.** İmza, sponsorun projeye bağlandığının kanıtıdır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **İş gerekçesindeki faydayı ürün metriğine bağla.** "Günde 600 sipariş" hangi ürün hedefini besliyor?
+- **Seçenekler listesine katkı ver.** Daha ucuz bir ürün çözümü varsa en iyi zaman bu belge yazılırken söylemektir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Tüzükteki kapsamı oku.** Takımına hangi işin geleceğini ve hangisinin kapsam dışı olduğunu buradan öğrenirsin.
+- **Varsayımları sorgula.** "Kart numaraları doğrulanabilir" gibi bir varsayım yanlışsa backlog'un büyür.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **İş gerekçesinin sorun tanımını sen keskinleştirirsin.** Çözüm değil, ölçülebilir bir sorun yazılmalı.
+- **Ana gereksinimleri çıkar.** Gerekçedeki gereksinim listesi sonraki analizinin iskeletidir.
+- **Karar matrisinin ölçütlerini paydaşlarla birlikte belirle.** Ağırlıkları tek kişi verirse matris tarafsız görünür ama değildir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- İş gerekçesi sorunu, seçenekleri, fayda ve maliyetleri yazar ve bir çözüm önerir; sponsor onaylar.
+- Ağırlıklı karar matrisi seçenekleri karşılaştırır; karar vermez, kararın dayanağını gösterir.
+- Fizibilite çalışması çözümün uygulanabilir olduğunu gösterince planlama başlar.
+- Proje tüzüğü projeyi resmen başlatır, kapsamını çizer ve proje yöneticisine yetki verir.
+- Tüzükteki hedef SMART yazılır: belirli, ölçülebilir, kabul edilebilir, gerçekçi, zamana bağlı.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Proje tüzüğünün üç işi nedir?">
+
+Projenin ne olduğunu ve neden yapıldığını herkese aynı biçimde anlatmak, genel kapsamını çizmek ve proje yöneticisine yetki vermek.
+
+</SelfCheck>
+
+<SelfCheck question="'Kampüs öğrencileri için daha iyi bir deneyim sunmak' neden SMART bir hedef değildir?">
+
+Belirli değil (ne değişecek?), ölçülebilir değil (hangi sayı?) ve bir tarihi yok. "Dönem başında 12 kafede sipariş alınabilsin" bu üç eksiği kapatır.
+
+</SelfCheck>
+
+<SelfCheck question="Karar matrisinde iki seçeneğin toplamı 29 ve 30 çıktı. Ne yaparsın?">
+
+Fark çok küçük; matrisin sonucu tek başına karar için yeterli değil. Ağırlıkları biraz değiştirip sıranın değişip değişmediğine bakarsın. Sonra kararı, matrisin yakalayamadığı bir gerekçeyle birlikte yazıya geçirirsin.
+
+</SelfCheck>
+
+<SelfCheck question="Bir yönetici 'tüzük bürokrasi, doğrudan işe başlayalım' diyor. Ne kaybedilir?">
+
+Proje yöneticisinin yetkisi yazılı olmaz; başka ekiplerden zaman istemek her seferinde pazarlığa döner. Kapsam sınırları yazılı olmadığı için her yeni istek "zaten projedeydi" diye içeri girer. Tüzük kısa olabilir; ama olmalıdır.
+
+</SelfCheck>
+
+<Deeper title="Finansal ölçütler: NPV, ROI, geri ödeme">
+
+İş gerekçesindeki maliyet ve fayda çoğu zaman üç ölçütle değerlendirilir.
+
+**Net bugünkü değer** (NPV, net present value): bugün kazanılan bir lira, bir yıl sonra kazanılandan daha değerlidir. NPV, gelecekteki bütün giriş ve çıkışları bugünün parasına çevirip toplar. Sıfırdan büyükse yatırım değer katar. Sıfırdan küçükse değer kaybettirir.
+
+**Yatırım getirisi** (ROI, return on investment): faydadan maliyet çıkarılır ve sonuç maliyete bölünür. 100 lira yatırıp 110 lira geri alırsan getiri %10'dur.
+
+**Geri ödeme analizi** (payback): yatırımın kendini kaç dönemde geri ödediğini gösterir. Toplam fayda, toplam maliyeti geçtiği noktada geri ödeme tamamlanır.
+
+</Deeper>

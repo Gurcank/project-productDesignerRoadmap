@@ -51,6 +51,8 @@ Sıra sabittir. Lint bu sırayı denetler.
 - Hızla eskiyen bilgi (sürüm, ücret, sertifika koşulu, yasa maddesi) `flags: ["degisken"]` taşır ve
   "kullanmadan önce doğrula" der.
 - Materyalde olmayan bilgi `<Outside>` ile işaretlenir ve `additions` alanında listelenir.
+- Paragrafı sıra sayısıyla başlatma: "7. haftada…" Markdown'da numaralı liste olur. Yazıyla yaz:
+  "Yedinci haftada…"
 
 ## Ölçülen kapılar (`npm run lint:lessons`)
 

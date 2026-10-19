@@ -1,0 +1,164 @@
+---
+summary: "Durum raporu projenin nerede olduğunu kısa ve dürüst biçimde anlatır ve okurundan bir karar ister. Kırmızı, sarı, yeşil (RAG) derecesi teslimata ne kadar güvenildiğini tek bakışta gösterir."
+outcomes:
+  - "Bir iletişim planının hangi soruları cevapladığını sayabilirsin."
+  - "RAG derecelerini anlamlarıyla birlikte kullanabilirsin."
+  - "Önce sonucu, sonra ayrıntıyı ve en sonda beklenen kararı veren bir durum raporu yazabilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Watt, Project Management (2. baskı) — 15. Communications Planning"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-15-communications-planning-project-management/"
+  - label: "gov.scot — Deposit Return Scheme assurance report (2021), Delivery Confidence Assessment"
+    url: "https://www.gov.scot/publications/deposit-return-scheme-assurance-action-plan-sept-2021/pages/2/"
+additions:
+  - "İletişim planı ve bilgi ihtiyacı analizi (Watt, bölüm 15)"
+  - "Beş kademeli teslimat güveni değerlendirmesi (RAG) tanımları (gov.scot)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+
+Altıncı haftanın raporu yeşildi. 7. haftanınki de yeşil olacaktı; Leyla'nın ilk taslağında öyleydi. Tedarikçi "test ortamı yarın hazır" demişti, bir hafta daha beklemek mantıklı görünüyordu.
+
+Sonra Leyla kendine sordu: Hakan bu raporu okuyup bir karar verecek mi? Yeşil bir rapordan karar çıkmaz. Ama tedarikçi bir hafta daha gecikirse, karar vermek için de geç kalınmış olur. Rengi sarıya çevirdi ve rapora bir soru ekledi.
+
+## İletişim planı
+
+Watt'a göre bir proje yöneticisinin işinin %90'ı iletişimdir. Amaç, doğru mesajın doğru kişiye doğru zamanda gitmesidir.
+
+Bunun için bir **iletişim planı** (communication plan) yazılır. Plan şu soruları cevaplar:
+
+- Hangi paydaşın hangi bilgiye ihtiyacı var?
+- Bu bilgi ne zaman ve ne sıklıkla gönderilecek?
+- Hangi biçimde ve hangi kanaldan?
+
+İlk adım **bilgi ihtiyacı analizidir**: paydaşlar iyi karar verebilmek için neye ihtiyaç duyar? Proje çok bilgi üretir. Paydaşları hepsine boğmak istemezsin. Ama karar verebilecekleri kadar bilgi de vermelisin.
+
+Bu ihtiyaçlar planlamanın olabildiğince başında belirlenir. Böylece her belge yazılırken kime ve nasıl gideceği bilinir. Paydaşları haritalamayı ve iletişim planını derinlemesine İletişim ve Paydaşlar bölümü anlatacak.
+
+## Durum raporu
+
+**Durum raporu** (status report), iletişim planının en sık kullanılan parçasıdır. Okuru çoğu zaman sponsor ve yönetimdir. İyi bir rapor şu sırayı izler:
+
+1. **Önce sonuç:** genel durum ve tek cümlelik özet.
+2. **Sonra ayrıntı:** takvim, bütçe ve kapsam; bu dönem yapılanlar, gelecek dönem yapılacaklar.
+3. **En büyük riskler ve sorunlar:** RAID kaydından en fazla üç tane.
+4. **Beklenen karar:** kimden, neyi, ne zamana kadar istiyorsun?
+
+İletişim iyi haber de taşır, kötü haber de. Bilgi vermek her zaman pembe bir tablo çizmek demek değildir.
+
+## RAG: kırmızı, sarı, yeşil
+
+Durum raporlarının çoğu bir renkle başlar. Bu derecelendirmeye **RAG** (red, amber, green) denir. Renk, teslimata ne kadar güvenildiğini tek bakışta gösterir.
+
+Birleşik Krallık'ta kamu projelerinin güvence incelemelerinde kullanılan **teslimat güveni değerlendirmesi** (delivery confidence assessment) beş kademe tanımlar:
+
+| Derece | Anlamı |
+|---|---|
+| Yeşil | Zamanında, bütçesinde ve istenen kalitede teslimat çok olası görünüyor; teslimatı tehdit eden büyük bir sorun yok. |
+| Sarı-yeşil | Teslimat olası. Ama risklerin büyük sorunlara dönüşmemesi için sürekli dikkat gerekiyor. |
+| Sarı | Teslimat mümkün, ama yönetimin ilgilenmesi gereken ciddi sorunlar var. Hemen ele alınırsa çözülebilir görünüyorlar. |
+| Sarı-kırmızı | Teslimat şüpheli; birkaç ana alanda büyük riskler ya da sorunlar var. Acil eylem gerekiyor. |
+| Kırmızı | Teslimat ulaşılamaz görünüyor; büyük sorunlar yönetilebilir ya da çözülebilir görünmüyor. Proje yeniden planlanmalı ya da yaşayabilirliği yeniden değerlendirilmeli. |
+
+<Spectrum
+  label="Teslimat güveninin beş kademesi ve kampüs projesinin 7. haftası"
+  caption="Sol uçta yeşil, sağ uçta kırmızı durur. Aradaki üç kademe, sorunun ne kadar büyüdüğünü ve kimin ilgilenmesi gerektiğini anlatır. Kampüs projesi 7. haftada sarıdadır: entegrasyon bir hafta gecikti ve bütçe aşım eğiliminde, ama sorunlar hemen ele alınırsa çözülebilir görünüyor."
+  left={{ title: "Yeşil", sub: "teslimat çok olası" }}
+  right={{ title: "Kırmızı", sub: "ulaşılamaz görünüyor" }}
+  marks={[
+    { label: "Sarı-yeşil", at: 0.25 },
+    { label: "Sarı: kampüs, 7. hafta", at: 0.5 },
+    { label: "Sarı-kırmızı", at: 0.75 },
+  ]}
+/>
+
+Birçok ekip bunu üç renge indirir: yeşil, sarı, kırmızı. Kaç kademe kullandığın önemli değildir. Önemli olan, her rengin ne anlama geldiğini projenin başında paydaşlarla yazılı olarak anlaşmaktır. Yoksa herkes kendi sarısını kullanır.
+
+**Kırmızı ≠ başarısızlık.** Kırmızı bir yardım çağrısıdır: "Bunu ekip olarak çözemiyoruz, senin kararın gerekiyor." Sorunu bir hafta yeşil göstermek, onu çözmek için bir haftayı kaybetmektir. Dışı yeşil, içi kırmızı olan bu raporlara "karpuz rapor" denir.
+
+<Case>
+
+Leyla 7. haftanın raporunu yeniden yazdı:
+
+1. **İlk satır:** "Genel durum: SARI. Entegrasyon bir hafta gecikti; lansman hâlâ tutuyor ama tampon kalmadı. Bu hafta senden bir karar istiyoruz."
+2. **Takvim sarı:** SPI 0,85; pilot 11. haftaya kayabilir.
+3. **Bütçe sarı:** CPI 0,89; bu gidişle 2,71 milyon TL.
+4. **Kapsam yeşil:** üç kafe ikinci dalgaya alındı.
+5. **Beklenen karar:** "9. haftaya kadar: kampanyayı küçültmek mi, yönetim rezervini kullanmak mı?"
+
+Hakan raporu okuduğu gün aradı. Kararı ertesi gün verdi. Yeşil bir rapor olsaydı arama 9. haftada gelecekti.
+
+</Case>
+
+<Tool slug="durum-raporu" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Renklerin anlamını başta yazılı anlaş.** Sarının ne demek olduğu tartışmaya açıksa rapor da tartışmaya açıktır.
+- **Her raporda bir karar sor ya da "karar gerekmiyor" yaz.** Okur ne yapacağını ilk paragrafta bilmeli.
+- **Kötü haberi erken ver.** Sarıyı bir hafta erken söylemek, kırmızıyı önleyebilir.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Proje raporundaki ürün etkisini oku.** Takvim sarısı lansman hedefini, dolayısıyla ürün metriğini etkiler mi?
+- **Kararda ürün seçeneğini getir.** Kapsamı küçültmek, rezerv kullanmaktan daha iyi bir seçenek olabilir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Takımın ilerlemesini rapora sen taşırsın.** Sprint sonuçları proje raporunun "bu dönem" satırını besler.
+- **Sarıyı takıma çevir.** Proje sarıya döndüyse takımın önceliği değişebilir; bunu sprint planlamasında söyle.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Takımın kötü haber verme güvenliğini koru.** Kırmızıyı söylediği için suçlanan bir ekip bir dahaki sefere yeşil yazar.
+- **Sprint panosunu raporla tutarlı tut.** Panoda kırmızı, raporda yeşil varsa biri yanlıştır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- İletişim planı kimin hangi bilgiye, ne zaman ve hangi biçimde ihtiyaç duyduğunu yazar.
+- Durum raporu önce sonucu, sonra ayrıntıyı, en sonda beklenen kararı verir.
+- RAG, teslimata ne kadar güvenildiğini gösterir; Birleşik Krallık kamu projeleri beş kademe kullanır.
+- Renklerin anlamı projenin başında paydaşlarla yazılı olarak anlaşılır.
+- Kırmızı bir yardım çağrısıdır; kötü haberi erken vermek, seçenekleri açık tutar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="İletişim planı hangi üç soruyu cevaplar?">
+
+Hangi paydaşın hangi bilgiye ihtiyacı var, bu bilgi ne zaman gönderilecek ve hangi biçimde, hangi kanaldan iletilecek.
+
+</SelfCheck>
+
+<SelfCheck question="Sarı ile sarı-kırmızı arasındaki fark nedir?">
+
+Sarıda teslimat mümkündür; ciddi sorunlar vardır ama hemen ele alınırsa çözülebilir görünür. Sarı-kırmızıda teslimat şüphelidir; birkaç ana alanda büyük riskler ya da sorunlar vardır ve acil eylem gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir proje yöneticisi 'Tedarikçi yarın toparlar, bu hafta da yeşil yazalım' diyor. Ne söylersin?">
+
+Rapor bugünkü durumu anlatır, umudu değil. Gecikme varsa ve lansmanı etkileyebilirse renk en az sarıdır. Tedarikçi gerçekten toparlarsa gelecek hafta yeşile dönülür. Toparlamazsa, sponsor bir hafta erken haberdar olmuş olur.
+
+</SelfCheck>
+
+<SelfCheck question="Sponsor her hafta raporu okuyor ama hiç tepki vermiyor. Raporda ne eksik olabilir?">
+
+Beklenen karar. Rapor sponsordan bir şey istemiyorsa okunur ve dosyalanır. Karar gerekiyorsa açıkça yazılır: kimden, neyi, ne zamana kadar. Gerekmiyorsa bu da yazılır.
+
+</SelfCheck>

@@ -1,0 +1,49 @@
+---
+title: "RAID kaydı"
+summary: "Riskleri, varsayımları, sorunları ve bağımlılıkları tek tabloda izler; her satırın bir sahibi ve bir sonraki adımı vardır."
+kind: "tablo"
+roles: ["project-manager", "product-owner", "scrum-master", "business-analyst"]
+lessons: ["proje-yonetimi/raid-kaydi", "proje-yonetimi/risk-yonetimi"]
+sources:
+  - label: "Asana — RAID log"
+    url: "https://asana.com/resources/raid-log"
+  - label: "Watt, Project Management (2. baskı) — 16. Risk Management Planning"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-16-risk-management-planning-project-management/"
+table:
+  columns: ["No", "Tür", "Açıklama", "Etkisi", "Sahip", "Sonraki adım", "Tarih", "Durum"]
+  example:
+    - ["R1", "Risk", "Tedarikçi entegrasyonu geç teslim eder", "Pilot ve lansman kayar", "Leyla", "Her hafta çalışan demo iste", "Her pazartesi", "Açık"]
+    - ["R2", "Risk", "Öğrenci işleri protokolü dönem başına yetişmez", "İndirim lansmanda olmaz", "Hakan", "Haftalık görüşme; indirimsiz açılış B planı", "Her perşembe", "Açık"]
+    - ["A1", "Varsayım", "Öğrenci kartı numaraları bir arayüzle doğrulanabilir", "Yanlışsa indirim elle yapılır", "Ayşe", "Öğrenci işlerinden arayüz belgesini al", "3. hafta", "Doğrulanıyor"]
+    - ["A2", "Varsayım", "Kafeler bizim verdiğimiz tableti kullanır", "Yanlışsa kurulum süresi uzar", "Ozan", "Sözleşmeye yaz", "3. hafta", "Doğrulandı"]
+    - ["I1", "Sorun", "Tedarikçinin test ortamı hazır değil (R1 gerçekleşti)", "Entegrasyon testi 1 hafta gecikti", "Leyla", "Tedarikçiyle eskalasyon toplantısı", "6. hafta", "Açık"]
+    - ["D1", "Bağımlılık", "Ödeme kuruluşunun kampüs mağaza kodları", "Kodlar gelmeden ödeme açılmaz", "Elif", "Talebi 4. haftada gönder", "8. hafta", "Bekleniyor"]
+    - ["D2", "Bağımlılık", "Öğrenci işlerinden geçerli kart listesi", "Liste gelmeden indirim test edilemez", "Ayşe", "Protokole ek olarak iste", "5. hafta", "Bekleniyor"]
+  blankRows: 10
+---
+
+## Ne zaman kullanılır?
+
+Planlamada açılır ve proje boyunca yaşar. Haftalık durum toplantısında satır satır gözden geçirilir. Kapanışta öğrenilen dersler için ham malzemedir.
+
+## Harfler
+
+- **R, risk:** henüz olmamış, olursa projeyi etkileyecek belirsiz bir olay.
+- **A, varsayım:** doğru kabul edip plana koyduğun, ama henüz kanıtlanmamış bilgi. Yanlış çıkan varsayım bir sorun doğurur.
+- **I, sorun** (issue): gerçekleşmiş ve şimdi çözülmesi gereken bir problem.
+- **D, bağımlılık:** projenin, başkasının teslim edeceği bir şeye bağlı olması.
+
+Bazı ekipler A'yı **eylem** (action), D'yi **karar** (decision) olarak kullanır. Hangisini seçtiğini kaydın başına yaz; yarı yarıya karıştırma.
+
+## Nasıl doldurulur?
+
+1. **Her satıra tek bir sahip yaz.** "Ekip" bir sahip değildir.
+2. **Etkiyi yaz.** "Ne olur?" sorusuna cevap vermeyen satır önceliklendirilemez.
+3. **Bir sonraki adımı ve tarihini yaz.** Durum sütunu "açık" diye aylarca kalmasın.
+4. **Risk gerçekleşince sorun satırı aç** ve hangi riskten geldiğini not et. Böylece kapanışta hangi risklerin gerçekleştiği görünür.
+
+## Sık hatalar
+
+- **Riski ve sorunu karıştırmak.** Risk olabilecek, sorun olmuş şeydir; ikisinin yanıtı farklıdır.
+- **Varsayımları hiç doğrulamamak.** Her varsayımın bir doğrulama tarihi olsun.
+- **Bağımlılığın karşı tarafına haber vermemek.** Kayıtta yazan bağımlılığı karşı taraf bilmiyorsa o bir dilektir.

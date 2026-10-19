@@ -61,8 +61,15 @@ eklenebilir manifest · **çevrimdışı okuma** (ADR-012). Çevrimdışı katma
 derlemesinde etkindir; `astro dev` altında service worker kaydedilmez, kalmış olan sökülür —
 gerekçesi ve bedeli ADR-012'de.
 
-**Var — Araçlar (Faz 3).** `/araclar/`: doldurulmuş örnekli şablonlar (PRD, RACI, risk kaydı),
+**Var — Araçlar (Faz 3–4).** `/araclar/`: doldurulmuş örnekli 11 şablon (PRD, RACI, risk kaydı;
+proje tüzüğü, iş gerekçesi, WBS, takvim, RAID, değişiklik talebi, durum raporu, kapanış raporu),
 Markdown ve Türkçe Excel'de açılan CSV indirmeleri (ADR-021).
+
+**Var — Proje Yönetimi (Faz 4).** Materyal dışı ilk tam kategori: 18 v2 ders (yaşam döngüsü,
+standartlar, tüzük, WBS, tahmin, kritik yol, Gantt, kaynak, EVM, risk, RAID, değişiklik, kalite,
+RAG raporu, tedarik, kapanış, program/portföy), 3 demo (belirsizlik konisi, kritik yol, EVM),
+10 soruluk yazılmış quiz, 30 terim. Kapsam haritası `docs/icerik/kapsam-proje-yonetimi.md`;
+birincil kaynak Watt, *Project Management* (CC BY 4.0).
 
 **Henüz yok — planlı, yapılmadı.** EN arayüz (`/en/`, `src/i18n`): kullanıcı ertelemeyi seçti,
 şu an TR tek dil · Araçlar'da kontrol listeleri, proje akış haritası, çalışma takvimi ve diğer

@@ -1,0 +1,52 @@
+{
+  "category": "proje-yonetimi",
+  "sources": [
+    { "label": "Watt, Project Management (2. baskı), BCcampus", "url": "https://opentextbc.ca/projectmanagement/" },
+    { "label": "PMI — What Is Project Management?", "url": "https://www.pmi.org/about/what-is-project-management" },
+    { "label": "Construx — The Cone of Uncertainty", "url": "https://www.construx.com/books/the-cone-of-uncertainty/" },
+    { "label": "Asana — RAID log", "url": "https://asana.com/resources/raid-log" },
+    { "label": "gov.scot — Delivery Confidence Assessment tanımları", "url": "https://www.gov.scot/publications/deposit-return-scheme-assurance-action-plan-sept-2021/pages/2/" }
+  ],
+  "items": [
+    {
+      "question": "Yönetici, müşteri destek ekibinin her gün gelen talepleri cevaplamasını 'proje' olarak yönetmek istiyor. Ne dersin?",
+      "answer": "Bu bir operasyondur: sürekli tekrar eder, bitişi yoktur. Proje araçları (kapanış tarihi, tek seferlik bütçe) ona uymaz. Ama destek sistemini yeni bir araca taşımak gibi başı ve sonu belli bir iyileştirme proje olarak yönetilebilir."
+    },
+    {
+      "question": "Bir projede donanım alımı, bir tedarikçi sözleşmesi ve kullanıcılarla denenerek şekillenecek bir uygulama özelliği var. Hangi yaklaşımla yönetirsin?",
+      "answer": "Hibrit. Donanım ve sözleşme, gereksinimi belli ve değişikliği pahalı işlerdir: öngörücü yönetilir. Belirsiz özellik kısa döngülerle, uyarlanabilir yönetilir. İki tarafın buluşacağı tarih açıkça yazılır."
+    },
+    {
+      "question": "Ekip iş kırılım yapısında 'Lansman' altına yalnız 'pilot' ve 'açılış' yazdı; öğrenci işleriyle yapılması gereken protokol hiçbir yerde yok. Hangi kural bunu yakalar ve ne yaparsın?",
+      "answer": "Yüzde yüz kuralı: alt parçalar toplandığında üst teslimatın tamamını vermelidir. Protokolsüz indirim çalışmadığı için lansman eksik kalır. Eksik iş paketi eklenir ve bir sahibe verilir."
+    },
+    {
+      "question": "Tedarikçi, şartname yazılmadan önce '900.000 TL, sabit' diyor. Sponsor rakamı hemen takvime ve bütçeye yazmak istiyor. Ne önerirsin?",
+      "answer": "İlk fikir aşamasındaki bir tahmin belirsizlik konisine göre dörtte bir ile dört katı arasında sapabilir. Rakamı bir aralık olarak yaz ve ne zaman daralacağını söyle. Kesin söz ve sabit fiyatlı sözleşme, şartname yazılıp kapsam netleşince verilir."
+    },
+    {
+      "question": "Bolluğu 1 hafta olan bir iş 1 hafta gecikti; kritik yoldaki bir iş de 1 hafta gecikti. Proje ne kadar gecikir?",
+      "answer": "1 hafta. Bolluklu işin gecikmesi bolluğu yer ama projeyi geciktirmez; o zincir artık kritik olur. Kritik yoldaki işin gecikmesi ise projeyi doğrudan 1 hafta geciktirir."
+    },
+    {
+      "question": "7. haftada PV 1.200.000, EV 1.020.000, AC 1.150.000 TL. Sponsor 'Plandan az harcadık, bütçenin altındayız' diyor. Haklı mı?",
+      "answer": "Hayır. CPI = EV ÷ AC ≈ 0,89: harcanan her lira 0,89 liralık iş üretti, yani bütçe aşılıyor. SPI = EV ÷ PV = 0,85: takvimin de gerisinde. Daha az harcandı, ama daha da az iş yapıldı."
+    },
+    {
+      "question": "Risk kaydındaki tedarikçi gecikmesi gerçekleşti. Proje yöneticisi risk satırını 'gerçekleşti' diye kapatıp geçti. Eksik olan ne?",
+      "answer": "Bir sorun satırı. Gerçekleşen risk artık çözülmesi gereken bir sorundur: sahibi, eylemi ve tarihi olmalıdır. Hangi riskten geldiği de yazılır ki kapanışta yanıtların neden yetmediği görülsün."
+    },
+    {
+      "question": "Sponsor koridorda 'Üç kafe daha ekleyelim, ne olacak ki?' diyor. Proje yöneticisi olarak ne yaparsın?",
+      "answer": "Ne evet ne hayır: bir değişiklik talebi yazıp etkisini çıkarırsın. Kapsam, takvim, bütçe, risk ve kaliteye ne olur? Seçenekleri (kabul, ret, sonraya bırakma) karar verecek kişiye ya da kurula götürürsün ve kararı kayda geçirirsin."
+    },
+    {
+      "question": "Tedarikçi gecikti ama 'yarın toparlarız' diyor. Proje yöneticisi bu haftaki raporu yine yeşil yazmak istiyor. Ne söylersin?",
+      "answer": "Rapor bugünkü durumu anlatır, umudu değil. Gecikme lansmanı etkileyebilirse renk en az sarıdır ve sponsordan beklenen karar yazılır. Kötü haberi erken vermek seçenekleri açık tutar; kırmızı ya da sarı bir yardım çağrısıdır."
+    },
+    {
+      "question": "Lansman bitti, ekip ertesi gün başka işlere dağıldı. İki hafta sonra muhasebe tedarikçiye son ödemenin yapılıp yapılmayacağını soruyor. Ne atlandı?",
+      "answer": "Kapanış. Resmî kabul alınmamış, eksik iş listesi kapanmamış, sözleşme kapatılmamış ve öğrenilen dersler yazılmamış. Bitmek ile kapanmak farklıdır; kapanış takvime konmalıdır."
+    }
+  ]
+}

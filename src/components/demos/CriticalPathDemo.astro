@@ -1,0 +1,188 @@
+---
+/**
+ * Critical path, live: change how long one piece of work takes and watch the
+ * project's length, the slack of the others and the critical path move. The
+ * point is the lesson's: a week lost on the critical path is a week lost on
+ * the project; a week lost elsewhere is first eaten by slack.
+ *
+ * Rows never move (focus order = visual order). Server-rendered with the
+ * computed schedule, so without JavaScript it is a worked example.
+ */
+import DemoFrame from "./DemoFrame.astro";
+import { criticalPath, type Activity } from "~/lib/demos/critical-path";
+
+interface Props {
+  activities: Activity[];
+  caption: string;
+  /** The date the project must finish by, in units from 0. */
+  deadline: number;
+  unit?: string;
+}
+
+const { activities, caption, deadline, unit = "hafta" } = Astro.props;
+const { items, duration } = criticalPath(activities);
+const path = items.filter((i) => i.critical).sort((a, b) => a.es - b.es).map((i) => i.id).join(" → ");
+const status = (d: number) => (d === deadline ? "tampon kalmıyor." : d < deadline ? `${deadline - d} ${unit} tampon kalıyor.` : `son tarihi ${d - deadline} ${unit} kaçırıyor.`);
+---
+
+<DemoFrame
+  title="Kritik yol"
+  hint="Bir işin süresini değiştir; projenin süresi, bolluklar ve kritik yol yeniden hesaplanır."
+  caption={caption}
+>
+  <div class="cp" data-cp data-deadline={deadline} data-unit={unit} data-activities={JSON.stringify(activities)}>
+    <ul class="cp__list">
+      {
+        items.map((item) => (
+          <li class:list={["cp__row", { "is-critical": item.critical }]} data-cp-row={item.id}>
+            <label class="cp__field">
+              <span class="cp__name">
+                <span class="cp__id">{item.id}</span> {item.label}
+              </span>
+              <span class="cp__input">
+                <input type="number" min="0" max="52" step="1" inputmode="numeric" value={item.duration} data-cp-input={item.id} />
+                <small>{unit}</small>
+              </span>
+            </label>
+            <p class="cp__meta" data-cp-meta>
+              {item.after?.length ? `${item.after.join(", ")} bitince` : "Hemen"} · {item.es}–{item.ef}. {unit} · bolluk {item.slack}
+              {item.critical && <strong class="cp__flag"> · kritik</strong>}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="cp__summary" aria-live="polite" data-cp-summary>
+      Proje <strong>{duration} {unit}</strong> sürer; {status(duration)} Kritik yol: <strong>{path}</strong>.
+    </p>
+  </div>
+</DemoFrame>
+
+<script>
+  import { criticalPath, type Activity } from "~/lib/demos/critical-path";
+
+  for (const root of document.querySelectorAll<HTMLElement>("[data-cp]")) {
+    const base = JSON.parse(root.dataset.activities ?? "[]") as Activity[];
+    const deadline = Number(root.dataset.deadline);
+    const unit = root.dataset.unit ?? "";
+    const summary = root.querySelector<HTMLElement>("[data-cp-summary]")!;
+    let last = summary.textContent ?? "";
+    const strong = (text: string) => Object.assign(document.createElement("strong"), { textContent: text });
+    const update = () => {
+      const activities = base.map((a) => {
+        const raw = root.querySelector<HTMLInputElement>(`[data-cp-input="${a.id}"]`)?.value ?? "";
+        const n = Math.max(0, Math.round(Number(raw)));
+        return { ...a, duration: Number.isFinite(n) ? n : a.duration };
+      });
+      const { items, duration } = criticalPath(activities);
+      for (const item of items) {
+        const row = root.querySelector<HTMLElement>(`[data-cp-row="${item.id}"]`)!;
+        row.classList.toggle("is-critical", item.critical);
+        const meta = row.querySelector<HTMLElement>("[data-cp-meta]")!;
+        meta.replaceChildren(`${item.after?.length ? `${item.after.join(", ")} bitince` : "Hemen"} · ${item.es}–${item.ef}. ${unit} · bolluk ${item.slack}`);
+        if (item.critical) meta.append(Object.assign(document.createElement("strong"), { className: "cp__flag", textContent: " · kritik" }));
+      }
+      const path = items.filter((i) => i.critical).sort((a, b) => a.es - b.es).map((i) => i.id).join(" → ");
+      const tail = duration === deadline ? "tampon kalmıyor." : duration < deadline ? `${deadline - duration} ${unit} tampon kalıyor.` : `son tarihi ${duration - deadline} ${unit} kaçırıyor.`;
+      const text = `Proje ${duration} ${unit} sürer; ${tail} Kritik yol: ${path}.`;
+      // Announce only when the outcome changes, not on every keystroke that leaves it the same.
+      if (text !== last) {
+        summary.replaceChildren("Proje ", strong(`${duration} ${unit}`), ` sürer; ${tail} Kritik yol: `, strong(path), ".");
+        last = text;
+      }
+    };
+    root.addEventListener("input", update);
+  }
+</script>
+
+<style>
+  .cp {
+    display: grid;
+    gap: var(--spacing-3);
+  }
+
+  .cp__list {
+    display: grid;
+    gap: var(--spacing-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cp__row {
+    display: grid;
+    gap: var(--spacing-1);
+    padding: var(--spacing-2) var(--spacing-3);
+    border: 1px solid var(--c-border-strong);
+    border-inline-start-width: 4px;
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-sunken);
+  }
+
+  .cp__row.is-critical {
+    border-color: var(--c-progress);
+  }
+
+  .cp__field {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-2);
+  }
+
+  .cp__name {
+    font-weight: 600;
+    color: var(--c-text);
+  }
+
+  .cp__id {
+    display: inline-block;
+    min-inline-size: 1.5em;
+    font-family: var(--font-display);
+    color: var(--c-action);
+  }
+
+  .cp__input {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--text-sm);
+    color: var(--c-text-muted);
+  }
+
+  .cp__input input {
+    inline-size: 5rem;
+    min-block-size: 44px;
+    padding-inline: var(--spacing-2);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface);
+    color: var(--c-text);
+    font: inherit;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cp__input input:focus-visible {
+    outline: 2px solid var(--c-focus);
+    outline-offset: 2px;
+  }
+
+  .cp__meta {
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cp__flag {
+    color: var(--c-progress-text);
+  }
+
+  .cp__summary {
+    color: var(--c-text-secondary);
+  }
+
+  .cp__summary strong {
+    color: var(--c-text);
+  }
+</style>

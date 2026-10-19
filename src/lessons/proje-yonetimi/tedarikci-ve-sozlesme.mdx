@@ -1,0 +1,146 @@
+---
+summary: "Bir işi kendin mi yapacaksın, satın mı alacaksın? Satın alacaksan teklifi nasıl isteyeceğini ve hangi sözleşmeyi imzalayacağını kapsamın netliği belirler; sözleşme türü riskin kimde kalacağını seçer."
+outcomes:
+  - "Yap ya da al kararının hangi sorulara dayandığını anlatabilirsin."
+  - "RFQ ile RFP'yi ayırabilirsin."
+  - "Sabit fiyat, maliyet artı ve zaman-malzeme sözleşmelerinde riskin kimde olduğunu söyleyebilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Watt, Project Management (2. baskı) — 13. Procurement Management"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-13-procurement-management-project-management/"
+  - label: "Watt, Project Management (2. baskı) — 18. Project Completion"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-18-project-completion-project-management/"
+additions:
+  - "Yap ya da al analizi, tedarik planı, RFQ ve RFP (Watt, bölüm 13)"
+  - "Sabit fiyat, maliyet artı ve zaman-malzeme sözleşmeleri (Watt, bölüm 13)"
+  - "Sözleşme kapanışı (Watt, bölüm 18)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+
+Kasa entegrasyonu için iki teklif geldi. Birinci tedarikçi "900.000 TL, sabit" diyordu. İkincisi "saati 2.000 TL; ne kadar sürerse" diyordu. Hakan hemen birinciyi seçmek istedi: "Sabit fiyat, sürpriz yok."
+
+Leyla emin değildi. Şartname daha yazılmamıştı. Kapsam belirsizken verilen sabit bir fiyat, ya içine büyük bir pay koymuştu ya da ileride değişiklik talepleriyle büyüyecekti. Bir sözleşme yalnız fiyatı değil, riski de paylaştırır.
+
+## Yap ya da al
+
+İlk soru şudur: bu işi kendimiz mi yapacağız, dışarıdan mı alacağız? Buna **yap ya da al analizi** (make-or-buy analysis) denir. Bu karar, bir çözümü sıfırdan kurmak ile hazırını satın almak arasında da verilebilir.
+
+Kararı, projedeki diğer büyük kararları belirleyen etkenler belirler; örneğin maliyet, süre ve ekibin bu işteki becerisi. Kampüs projesinde kasa entegrasyonu dışarıdan alındı, çünkü Demlik'in ekibi kafelerin kasa sistemlerini tanımıyordu. Öğrenci kartı indirimi içeride yapıldı, çünkü Demlik'in kendi ürününün parçasıydı.
+
+Satın almaya karar verilince bir **tedarik planı** yazılır. Plan her mal ya da hizmet için uygun sözleşmeyi seçer. Teklifin nasıl isteneceğini ve nasıl değerlendirileceğini de yazar.
+
+## Teklif istemek: RFQ ve RFP
+
+**Fiyat teklifi isteği** (RFQ, request for quote) fiyata odaklanır. Ne alınacağı iyi tanımlıdır ve birçok yerden alınabilir. Kalite ve takvim şartlarını karşılayan en düşük fiyat genellikle kazanır. Kafelere alınacak tabletler ve yazıcılar böyle bir alımdır.
+
+**Teklif isteği** (RFP, request for proposal) fiyatı da hesaba katar, ama asıl odağı kalite ve takvim şartlarını karşılamaktır. Bir RFP'ye cevap hazırlamak teklif veren için pahalıdır. Bu yüzden RFP, işi kazanma şansı olmayan bir firmaya gönderilmez. Kasa entegrasyonu bir RFP işidir.
+
+**RFQ ≠ RFP.** RFQ "bu belli şeyi kaça verirsin?" diye sorar. RFP "bu sorunu nasıl çözersin ve kaça?" diye sorar.
+
+## Sözleşme türleri
+
+Üç ana sözleşme türü vardır. Aralarındaki fark, maliyet artarsa riskin kimde kaldığıdır.
+
+**Sabit fiyat** (fixed-price): mal ya da hizmet anlaşılan bir fiyata verilir. Sözleşme genellikle kaliteyi, zamanlamayı ve fiyatı yazar. İşin kapsamı çok açıksa ve değişmesi beklenmiyorsa, maliyeti öngörülebilir kılar. İşi yönetme sorumluluğu tedarikçidedir.
+
+**Maliyet artı** (cost-reimbursable ya da cost-plus): müşteri, tedarikçinin işi yaparken katlandığı maliyeti öder; üzerine bir ücret eklenir. İşin kapsamı ya da maliyeti iyi bilinmiyorsa kullanılır. Maliyet artışının riski tedarikçide çok azdır.
+
+**Zaman ve malzeme** (T&M, time and materials): müşteri çalışılan zamanı anlaşılan bir saat ücretiyle, kullanılan malzemeyi de gerçek maliyetiyle öder. Kapsamı küçük ama belirsizliği olan işlerde kullanılır. Risk tedarikçide değil, projededir.
+
+<Spectrum
+  label="Kapsamın netliğine göre sözleşme türü"
+  caption="Kapsam ne kadar belliyse sabit fiyat o kadar uygundur ve risk tedarikçiye geçer. Kapsam belirsizleştikçe zaman-malzeme ya da maliyet artı sözleşmeler uygun olur ve risk projede kalır. Kasa entegrasyonu şartname yazılmadan önce belirsiz bir iştir; şartnameden sonra sabit fiyata uygun hâle gelir."
+  left={{ title: "Kapsam belli", sub: "sabit fiyat" }}
+  right={{ title: "Kapsam belirsiz", sub: "zaman-malzeme, maliyet artı" }}
+  marks={[
+    { label: "Tablet ve yazıcı alımı", at: 0.06 },
+    { label: "Şartnameli entegrasyon", at: 0.3 },
+    { label: "Şartnamesiz entegrasyon", at: 0.7 },
+    { label: "Kasa sistemleri analizi", at: 0.92 },
+  ]}
+/>
+
+**Sabit fiyat ≠ risksiz.** Kapsam belirsizken sabit fiyat isteyen müşteri, riski tedarikçiye attığını düşünür. Tedarikçi ise bu riski ya fiyata ekler ya da kapsam netleştikçe değişiklik talebiyle geri alır.
+
+## Sözleşme kapanışı
+
+Projeler gibi sözleşmeler de kapanır. **Sözleşme kapanışı**, sözleşmenin şartlarının tamamlanıp karara bağlanmasıdır. Teslim edilen iş beklentiyi karşılamıyorsa tedarikçi önce düzeltir, sonra resmî kabul verilir.
+
+Kapanıştan önce kalan küçük işler bir **eksik iş listesine** (punch list) yazılır. Kalite denetimlerini sona bırakmak iyi bir fikir değildir; tedarikçiye düzeltme fırsatı süreç içinde verilmelidir.
+
+<Case>
+
+Leyla, kasa entegrasyonunu iki sözleşmeye böldü:
+
+1. **Keşif, yap ya da al:** ikinci tedarikçi, kasa sistemlerinin incelenmesini zaman ve malzeme ile yapmayı önerdi. Leyla bu işi içeride yaptırdı: Ayşe, panel takımından kafe sistemlerini tanıyordu. İki haftada, tedarikçilerin teknik ekipleriyle şartnameyi yazdı.
+2. **RFP:** şartname bitince iki tedarikçiye de RFP gönderildi. Kalite ve takvim şartları önceden puanlandı.
+3. **Sabit fiyat:** kazanan tedarikçiyle 900.000 TL'ye sabit fiyatlı sözleşme imzalandı. Artık kapsam belliydi; fiyatın içinde büyük bir belirsizlik payı yoktu.
+4. **Ara teslimler:** sözleşmeye haftalık çalışan demo ve test ortamı için bir tarih yazıldı.
+5. **Tabletler:** RFQ ile üç satıcıdan fiyat alındı; garantisi en iyi olan en düşük fiyatlı teklif seçildi.
+
+</Case>
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Sözleşme türünü kapsamın netliğine göre seç.** Belirsiz kapsama sabit fiyat, riski saklamaktır.
+- **Belirsiz işi böl.** Önce kısa bir zaman-malzeme keşfi, sonra sabit fiyat; ikisi de daha dürüst olur.
+- **Ara teslimleri sözleşmeye yaz.** Son tarihten önce görülebilen her teslim, gecikmeyi erken gösterir.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Yap ya da al kararına ürün gözüyle bak.** Ürünün çekirdeği olan bir parçayı dışarıdan almak, gelecekte onu değiştirme hızını tedarikçiye bağlar.
+- **RFP'deki kalite şartlarını sen yazdır.** Puanlama yalnız fiyata kalırsa ürün deneyimi kaybeder.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Sabit fiyatın ön koşulu senin şartnamendir.** Şartname ne kadar netse, fiyattaki belirsizlik payı o kadar küçük olur.
+- **RFP'nin gereksinim bölümünü sen yazarsın.** Teklifleri karşılaştırılabilir kılan, gereksinimlerin aynı biçimde sorulmasıdır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Yap ya da al analizi, bir işi kendin yapmakla dışarıdan almak arasında karar verir.
+- RFQ, iyi tanımlı bir şeyin fiyatını sorar; RFP, bir sorunun nasıl çözüleceğini ve kaça çözüleceğini sorar.
+- Sabit fiyatta risk tedarikçidedir ve kapsam belli olmalıdır.
+- Maliyet artı ve zaman-malzeme belirsiz kapsamlar içindir; maliyet riski projede kalır.
+- Sözleşme de kapanır: eksik iş listesi tamamlanır, resmî kabul verilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Sabit fiyatlı sözleşme hangi durumda en uygundur?">
+
+İşin kapsamı çok açıksa ve değişmesi beklenmiyorsa. O zaman maliyet öngörülebilir olur ve işi yönetme sorumluluğu tedarikçidedir.
+
+</SelfCheck>
+
+<SelfCheck question="RFQ ile RFP arasındaki fark nedir?">
+
+RFQ fiyata odaklanır; alınacak şey iyi tanımlıdır ve şartları karşılayan en düşük fiyat genellikle kazanır. RFP fiyatı da hesaba katar ama asıl olarak kalite ve takvim şartlarını karşılamaya odaklanır; cevap hazırlamak pahalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Kapsamı belirsiz bir iş için sponsor 'Sabit fiyat isteyin, sürpriz olmasın' diyor. Ne önerirsin?">
+
+Belirsiz kapsamda sabit fiyat, riskin fiyata eklenmesi ya da sonradan değişiklik talepleriyle geri gelmesi demektir. İşi bölmeyi önerirsin: önce kısa, üst sınırı olan bir zaman-malzeme keşfi; kapsam netleşince sabit fiyat.
+
+</SelfCheck>
+
+<SelfCheck question="Tedarikçi teslim etti, ama iki küçük hata var. Sözleşmeyi kapatır mısın?">
+
+Hemen değil. Hatalar bir eksik iş listesine yazılır ve tedarikçi düzeltir. Liste kapanınca resmî kabul verilir ve sözleşme kapatılır. Bunu sona bırakmamak için kalite denetimleri süreç boyunca yapılmalıdır.
+
+</SelfCheck>

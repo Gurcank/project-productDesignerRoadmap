@@ -1,0 +1,172 @@
+---
+summary: "Proje bütçesi maliyet kalemlerinden ve beklenmedik artışlar için ayrılan ihtiyattan oluşur. Kazanılmış değer yöntemi takvim ve bütçe durumunu üç sayıyla ölçer ve bu gidişle projenin kaça mal olacağını tahmin eder."
+outcomes:
+  - "Bir proje bütçesini kalemlerine, ihtiyatına ve yönetim rezervine ayırabilirsin."
+  - "PV, EV ve AC'den takvim ve maliyet sapmasını hesaplayabilirsin."
+  - "SPI ve CPI'yı yorumlayıp tamamlanma maliyetini tahmin edebilirsin."
+minutes: 8
+standard: 2
+sources:
+  - label: "Watt, Project Management (2. baskı) — 12. Budget Planning"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-12-budget-planning-project-management/"
+additions:
+  - "İhtiyat (contingency) ve yönetim rezervi (Watt, bölüm 12)"
+  - "Kazanılmış değer: PV, EV, AC, SV, CV, SPI, CPI, ETC, EAC (Watt, bölüm 12)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Chart from "~/components/diagrams/primitives/Chart.astro";
+import EvmCalculator from "~/components/demos/EvmCalculator.astro";
+
+Yedinci haftanın sonunda muhasebe bir rapor gönderdi: "Bugüne kadar 1.150.000 TL harcandı. Plana göre 1.200.000 TL harcanmış olmalıydı." Hakan memnundu: "Bütçenin altındayız."
+
+Leyla aynı rapora baktı ve memnun değildi. Harcamanın plandan az olması iyi bir haber olabilirdi. Ama belki de yapılması gereken iş yapılmamıştı. Harcanan para tek başına hiçbir şey söylemez. Bu ders, ne kadar iş yapıldığını da hesaba katan yöntemi anlatır.
+
+## Bütçe neyden oluşur?
+
+Proje bütçesi, iş paketlerinin maliyet tahminlerinin toplamıdır. Kampüs projesinin 2,4 milyon TL'lik bütçesi şöyle:
+
+| Kalem | TL |
+|---|---|
+| Kasa entegrasyonu (tedarikçi, sabit fiyat) | 900.000 |
+| Uygulama değişiklikleri (iç ekip zamanı) | 600.000 |
+| Kafe hazırlığı (12 kafe) | 360.000 |
+| Lansman kampanyası | 240.000 |
+| Proje yönetimi | 120.000 |
+| İhtiyat | 180.000 |
+| **Toplam** | **2.400.000** |
+
+Son satır diğerlerinden farklıdır.
+
+## İhtiyat ve yönetim rezervi
+
+Çoğu projede beklenmedik bir şey olur ve maliyet tahminin üstüne çıkar. Hangi işin pahalıya patlayacağını önceden bilemezsin. Ama bazılarının patlayacağını varsaymak akıllıcadır.
+
+Çözüm, her tahmini şişirmek değildir. Bunun yerine, planlanmamış ama istatistiksel olarak beklenen artışlar için ayrı bir para ayrılır. Buna **ihtiyat** (contingency reserve) denir. İhtiyat bütçenin içindedir ve risk analizine göre belirlenir. Kampüs projesinde 180.000 TL'dir.
+
+**Yönetim rezervi** (management reserve) ise başka bir şey içindir: projenin kapsamını değiştiren ihtiyaçlar. Bir fırsat da olabilir, bir sorun da. Bu para yöneticinin takdirindedir ve proje bütçesinin dışında durur. Kampüs projesinde Hakan'ın elinde 120.000 TL'dir.
+
+**İhtiyat ≠ yönetim rezervi.** İhtiyat, beklenen ama yeri bilinmeyen artışlar içindir ve bütçenin içindedir. Yönetim rezervi kapsamı değiştiren durumlar içindir ve bütçenin dışındadır. Kampüs projesinde ihtiyatı tüzük gereği Leyla, yönetim rezervini Hakan kullanır.
+
+Tahminler hiç aşılmıyorsa bu da bir işarettir: tahmin yöntemi fazla cömerttir ve gözden geçirilmelidir.
+
+## Kazanılmış değer
+
+**Kazanılmış değer** (EV, earned value) yönteminin fikri basittir: harcanan parayı, yapılması gereken işle ve yapılan işle karşılaştırmak. Bunun için üç sayı gerekir:
+
+- **Planlanan değer** (PV, planned value): bugüne kadar yapılması planlanan işin bütçedeki karşılığı. 7. haftada 1.200.000 TL.
+- **Kazanılmış değer** (EV, earned value): bugüne kadar gerçekten yapılan işin bütçedeki karşılığı. 1.020.000 TL.
+- **Gerçekleşen maliyet** (AC, actual cost): o iş için gerçekten harcanan para. 1.150.000 TL.
+
+Hakan yalnız PV ile AC'yi karşılaştırdı. Oysa asıl soru, harcanan 1.150.000 TL'ye karşılık ne kadar iş yapıldığıydı.
+
+<Chart
+  label="Kampüs projesinde ilk yedi haftanın planlanan değeri, kazanılmış değeri ve gerçekleşen maliyeti"
+  caption="Üç çizgi de birikimlidir ve bin TL cinsindendir. Planlanan değer 7. haftada 1.200'e ulaşıyor. Kazanılmış değer 1.020'de kalıyor: plandan daha az iş yapıldı. Gerçekleşen maliyet ise 1.150: yapılan iş, bütçesinden daha pahalıya mal oldu. Kazanılmış değer çizgisi iki çizginin de altında; proje hem takvimin gerisinde hem de bütçeyi aşıyor."
+  x={{ title: "Hafta", labels: ["0", "1", "2", "3", "4", "5", "6", "7"] }}
+  y={{ title: "Bin TL", max: 1200 }}
+  series={[
+    { name: "Planlanan (PV)", values: [0, 120, 260, 420, 600, 780, 990, 1200], tone: "plain", dashed: true },
+    { name: "Kazanılmış (EV)", values: [0, 120, 250, 400, 560, 720, 880, 1020], tone: "progress" },
+    { name: "Gerçekleşen (AC)", values: [0, 125, 265, 430, 600, 790, 980, 1150], tone: "accent" },
+  ]}
+/>
+
+## Dört oran
+
+Üç sayıdan dört ölçü çıkar:
+
+| Ölçü | Formül | 7. hafta | Anlamı |
+|---|---|---|---|
+| Takvim sapması (SV) | EV − PV | −180.000 TL | Negatifse takvimin gerisindesin. |
+| Maliyet sapması (CV) | EV − AC | −130.000 TL | Negatifse bütçeyi aşıyorsun. |
+| Takvim performansı (SPI) | EV ÷ PV | 0,85 | 1'in altındaysa gerisindesin: planlanan işin %85'i yapıldı. |
+| Maliyet performansı (CPI) | EV ÷ AC | 0,89 | 1'in altındaysa aşıyorsun: her 1 TL, 0,89 TL'lik iş üretti. |
+
+Hakan'ın "bütçenin altındayız" yorumu yanlıştı. Daha az harcanmıştı, ama daha da az iş yapılmıştı.
+
+## Bu gidişle kaça mal olur?
+
+Toplam bütçeye **BAC** (budget at completion) denir: 2.400.000 TL. Kalan işin maliyeti, bugünkü verimlilik sürerse şöyle tahmin edilir:
+
+**Kalan iş için tahmin (ETC) = (BAC − EV) ÷ CPI**
+
+**Tamamlanma tahmini (EAC) = AC + ETC**
+
+Kampüs projesinde kalan iş 1.380.000 TL'lik. CPI 0,89 iken bu iş yaklaşık 1.556.000 TL tutar. EAC yaklaşık **2,71 milyon TL**'dir. Bu gidişle proje bütçeyi 300.000 TL'den fazla aşar. 180.000 TL'lik ihtiyat bunu karşılamaz.
+
+<EvmCalculator
+  start={{ bac: 2400000, pv: 1200000, ev: 1020000, ac: 1150000 }}
+  caption="Başlangıç değerleri kampüs projesinin 7. haftasıdır: SPI 0,85, CPI 0,89, tamamlanma tahmini yaklaşık 2,71 milyon TL. Kazanılmış değeri planlanan değere eşitlersen takvim sapması sıfırlanır. Gerçekleşen maliyeti kazanılmış değerin altına indirirsen CPI 1'i geçer ve tamamlanma tahmini bütçenin altına düşer."
+/>
+
+<Case>
+
+Leyla, Hakan'a 7. haftanın tablosunu üç cümleyle anlattı:
+
+1. **Takvim:** "Planlanan işin %85'ini yaptık. Gecikmenin kaynağı tedarikçinin test ortamı."
+2. **Bütçe:** "Harcadığımız her lirayla 89 kuruşluk iş çıkarıyoruz. Bu gidişle proje yaklaşık 2,71 milyon TL'ye kapanır."
+3. **Karar:** "İhtiyat 180.000 TL ve aşımı karşılamıyor. İki seçenek var: kampanyayı küçültmek ya da yönetim rezervinden kullanmak."
+
+Hakan rezervi seçti. Ama bir şart koydu: CPI her hafta durum raporunda olacaktı.
+
+</Case>
+
+<Tool slug="durum-raporu" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Harcamayı tek başına raporlama.** "Bütçenin altındayız" cümlesi, yapılan iş söylenmeden anlamsızdır.
+- **İhtiyatı şişirilmiş tahminlere dağıtma.** Ayrı tut; ne zaman, ne için kullanıldığını kaydet.
+- **EAC'yi erken söyle.** Aşım 7. haftada söylenirse seçenek vardır; 13. haftada yalnız özür kalır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Ekip zamanı da maliyettir.** Uygulama değişikliklerine giden iç ekip saati bütçenin bir kalemi; kapsam eklemek bu kalemi büyütür.
+- **Aşım kararında kapsam seçeneğini getir.** Rezerv kullanmak yerine neyin çıkarılabileceğini en iyi sen bilirsin.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Bütçe iş paketlerinin maliyet tahminleri ile ihtiyatın toplamıdır.
+- İhtiyat, beklenen maliyet artışları için bütçenin içinde ayrılır; yönetim rezervi kapsamı değiştiren durumlar için bütçenin dışında tutulur.
+- Kazanılmış değer üç sayıyla çalışır: planlanan değer, kazanılmış değer, gerçekleşen maliyet.
+- SPI = EV ÷ PV ve CPI = EV ÷ AC; 1'in altı geride ya da aşımda demektir.
+- EAC = AC + (BAC − EV) ÷ CPI, bu gidişle projenin kaça mal olacağını tahmin eder.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="İhtiyat ile yönetim rezervinin farkı nedir?">
+
+İhtiyat bütçenin içindedir ve planlanmamış ama beklenen maliyet artışları için ayrılır. Yönetim rezervi bütçenin dışındadır, kapsamı değiştiren durumlar içindir ve yöneticinin takdirindedir.
+
+</SelfCheck>
+
+<SelfCheck question="PV 500, EV 400, AC 350. Proje takvimin neresinde, bütçenin neresinde?">
+
+SPI = 400 ÷ 500 = 0,8: takvimin gerisinde. CPI = 400 ÷ 350 ≈ 1,14: bütçenin altında. Daha az iş yapılmış, ama yapılan iş bütçesinden ucuza mal olmuş.
+
+</SelfCheck>
+
+<SelfCheck question="Sponsor 'harcamamız plandan az, demek ki iyi gidiyoruz' diyor. Ne sorarsın?">
+
+"Planlanan işin ne kadarı yapıldı?" diye sorarsın. Harcama plandan az olabilir, çünkü iş de plandan az yapılmıştır. Kazanılmış değeri hesaplamadan harcamanın iyi mi kötü mü olduğu söylenemez.
+
+</SelfCheck>
+
+<SelfCheck question="CPI 0,9 olan bir projede ekip 'son haftalarda toparlarız' diyor. Tamamlanma tahmini neden buna güvenmez?">
+
+EAC formülü, bugünkü maliyet verimliliğinin devam edeceğini varsayar. Ekip toparlayabilir; ama bunun bir nedeni yoksa geçmiş verimlilik gelecek için en iyi tahmindir. Toparlanma bekleniyorsa bunun planı ve gerekçesi yazılmalı.
+
+</SelfCheck>

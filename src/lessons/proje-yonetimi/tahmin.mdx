@@ -1,0 +1,161 @@
+---
+summary: "Süre ve maliyet benzer işlerden, birim fiyattan ya da iş paketlerinin toplamından tahmin edilir. Üç nokta tahmini belirsizliği sayıya döker; belirsizlik konisi tahminin ne kadar yanılabileceğini gösterir."
+outcomes:
+  - "Analog, parametrik ve aşağıdan yukarı tahmini ayırabilir, hangisinin ne zaman uygun olduğunu söyleyebilirsin."
+  - "Üç nokta tahminiyle beklenen süreyi hesaplayabilirsin."
+  - "Belirsizlik konisine bakarak bir tahmine ne zaman söz verilebileceğini anlatabilirsin."
+minutes: 9
+standard: 2
+sources:
+  - label: "Watt, Project Management (2. baskı) — 12. Budget Planning"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-12-budget-planning-project-management/"
+  - label: "Construx (Steve McConnell) — The Cone of Uncertainty"
+    url: "https://www.construx.com/books/the-cone-of-uncertainty/"
+  - label: "Wikipedia — Three-point estimation"
+    url: "https://en.wikipedia.org/wiki/Three-point_estimation"
+additions:
+  - "Analog, parametrik ve aşağıdan yukarı tahmin (Watt, bölüm 12)"
+  - "Üç nokta tahmini: E = (a + 4m + b) / 6"
+  - "Belirsizlik konisi ve taahhüt zamanı (Construx)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import EstimationCone from "~/components/demos/EstimationCone.astro";
+
+İlk toplantıda tedarikçi kasa entegrasyonu için bir rakam verdi: "Yaklaşık 900.000 TL, dört hafta." Hakan rahatladı ve rakamı not aldı.
+
+Leyla not almadı. Henüz bir şartname yoktu. Tedarikçi kafelerin hangi kasa sürümünü kullandığını bile bilmiyordu. O rakam tek bir sayıydı, ama arkasında geniş bir belirsizlik vardı. Bu ders o belirsizliği görünür kılmayı anlatır.
+
+## Üç tahmin yöntemi
+
+Bir işin süresini ya da maliyetini tahmin etmenin üç yaygın yolu var.
+
+**Analog tahmin** (analogous estimating): benzer bir geçmiş projeye bakılır ve fark kadar düzeltilir. Hızlıdır, ama yalnız gerçekten benzer bir iş varsa işe yarar. Demlik geçen yıl İzmir'de bir lansman kampanyası yaptı; kampüs kampanyasının bütçesi ondan yola çıkılarak yazıldı.
+
+**Parametrik tahmin** (parametric estimating): bir birim maliyet ya da süre, miktarla çarpılır. Kafe başına kurulum 30.000 TL ise 12 kafe 360.000 TL tutar. Birim değer güvenilirse doğrudur.
+
+**Aşağıdan yukarı tahmin** (bottom-up estimating): her iş paketi ayrı tahmin edilir ve toplanır. En doğru yöntemdir, ama en çok zamanı alır. Bunun için önce bir iş kırılım yapısı gerekir.
+
+**Göreli ≠ mutlak tahmin.** Bu yöntemler hafta ve lira gibi mutlak birimlerle çalışır. Çevik ekiplerin story point ile yaptığı göreli tahmini [Tahmin ve ölçüm](/calisma-bicimi/tahmin-ve-olcum-story-point-velocity-capacity/) dersi anlatıyor.
+
+## Üç nokta tahmini
+
+Tek bir sayı, belirsizliği gizler. **Üç nokta tahmini** (three-point estimation) bunun yerine üç sayı ister:
+
+- **a, iyimser:** her şey yolunda giderse.
+- **m, en olası:** en çok beklenen durum.
+- **b, kötümser:** işler ters giderse.
+
+Bunlardan bir **beklenen değer** hesaplanır. PERT dağılımı varsayımıyla formül şudur:
+
+**E = (a + 4m + b) ÷ 6**
+
+En olası değere dört kat ağırlık verilir, ama iki uç da hesaba girer. Belirsizliğin büyüklüğü de yaklaşık olarak **(b − a) ÷ 6** ile ölçülür.
+
+Tedarikçinin entegrasyon tahmini iyimser 3, en olası 4, kötümser 8 haftaydı. Beklenen süre (3 + 16 + 8) ÷ 6 = **4,5 hafta** çıkar. Kötümser uç, iyimser uçtan çok daha uzaktadır. Bu yüzden beklenen değer, en olası değerden büyüktür. Gecikme, erken bitmekten daha olasıdır.
+
+## Belirsizlik konisi
+
+Bir tahminin ne kadar yanılabileceği, projenin hangi aşamada olduğuna bağlıdır. Steve McConnell bunu **belirsizlik konisi** (cone of uncertainty) ile gösterir.
+
+İlk fikir aşamasında usta bir tahminci bile 4 kat yukarıda ya da 4 kat aşağıda olabilir. En düşük ile en yüksek uç arasında 16 kat fark vardır. Ürün tanımı onaylanınca aralık 0,5 ile 2 kata iner. Gereksinimler tamamlanınca 0,67 ile 1,5 kata, arayüz tasarımı bitince 0,8 ile 1,25 kata daralır.
+
+<EstimationCone
+  estimate={900000}
+  unit="TL"
+  caption="Tedarikçinin 900.000 TL tahmini, ilk fikir aşamasında gerçekte 225.000 ile 3.600.000 TL arasında bir yer demektir. Gereksinimler tamamlandığında aynı rakam yaklaşık 600.000 ile 1.350.000 TL arasına iner. Koni zamanla değil kararlarla daralır: aşamalar takvimdeki haftalar değil, alınan kararlardır. Koni en iyi durumu gösterir; daha kötü tahmin her zaman mümkündür."
+/>
+
+Koninin üç dersi var:
+
+1. **Koni zamanla değil, kararla daralır.** "Bir hafta daha düşün, tahmini iyileştir" işe yaramaz. Tahminin belirsizliği, projenin belirsizliğinden gelir. Ürünü tanımlamak, gereksinimleri yazmak ve "bunu yapmayacağız" demek belirsizliği azaltır.
+2. **Erken taahhüt pahalıdır.** İlk fikir aşamasında verilen kesin söz, 2 ila 4 kat hata payı taşır. McConnell'e göre anlamlı taahhüt, projenin yaklaşık %30'unda mümkün olur.
+3. **Koni en iyi durumdur.** Proje karar almazsa koni daralmaz; belirsizlik bir bulut gibi sonuna kadar kalır.
+
+<Case>
+
+Leyla, tedarikçiyle tahmini adım adım daralttı:
+
+1. **İlk fikir:** "Yaklaşık 900.000 TL." Leyla bunu Hakan'a bir aralık olarak yazdı ve "şartnameden sonra kesinleşecek" diye not düştü.
+2. **Şartname (2. hafta):** kasa sürümleri ve arayüz yazıldı. Tedarikçi iş paketlerini ayrı ayrı tahmin etti: aşağıdan yukarı toplam yine 900.000 TL çıktı. Ama artık arkasında bir döküm vardı.
+3. **Süre için üç nokta:** 3, 4 ve 8 hafta. Beklenen 4,5 hafta. Takvimde 4 hafta duruyordu; projenin bir haftalık tamponu bu farkı karşılıyordu.
+4. **Taahhüt:** sabit fiyatlı sözleşme şartnameden sonra imzalandı, önce değil.
+
+</Case>
+
+<Tool slug="takvim" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Erken rakamı aralık olarak yaz.** "900.000" değil, "şu an 225.000 ile 3,6 milyon arası; şartnameden sonra daralacak."
+- **Taahhüdü koninin daraldığı ana bağla.** Söz vermeden önce hangi kararın alınması gerektiğini sponsora söyle.
+- **Kötümser ucu sor.** İyimser ve en olası tahmini herkes verir; asıl bilgi kötümser uçtadır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Koniyi daraltan kararları sen alırsın.** Ürün tanımı ve "yapmayacaklarımız" listesi belirsizliği en çok azaltan iki karardır.
+- **Erken tahmini yol haritasına kesin tarih olarak koyma.** Aralığı ve ne zaman daralacağını yaz.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Takımın göreli tahminini mutlak söze çevirirken dikkat et.** Story point ile hafta arasındaki köprü belirsizlik taşır.
+- **Belirsiz işi böl.** Bir story'nin tahmini çok genişse onu küçültmek de koniyi daraltır.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Tek sayı baskısına karşı takımı koru.** Takımdan kesin tarih isteniyorsa, aralık vermeyi ve gerekçesini kolaylaştır.
+- **Tahmin ile söz arasındaki farkı konuştur.** Tahmin bir olasılıktır, söz bir taahhüttür.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinimleri tamamlamak, koniyi daraltan kararlardan biridir.** Yazdığın her net kural, tahminin aralığını küçültür.
+- **"Yapmayacağız" listesini de yaz.** Kapsam dışında kalan her madde belirsizliği azaltır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Analog tahmin benzer işten, parametrik tahmin birim değerden, aşağıdan yukarı tahmin iş paketlerinin toplamından gelir.
+- Aşağıdan yukarı tahmin en doğrusudur, ama bir WBS ve en çok zamanı gerektirir.
+- Üç nokta tahmini: E = (a + 4m + b) ÷ 6; kötümser uç uzaksa beklenen değer en olasıdan büyük çıkar.
+- Belirsizlik konisi: ilk fikirde tahmin 4 kat sapabilir; koni zamanla değil kararlarla daralır.
+- Kesin söz, koni daraldıktan sonra verilir; erken rakam bir aralık olarak yazılır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Aşağıdan yukarı tahminin en büyük artısı ve eksisi nedir?">
+
+Artısı en doğru yöntem olması, çünkü her iş paketi ayrı ayrı tahmin edilir. Eksisi en çok zamanı alması ve önce bir iş kırılım yapısı gerektirmesi.
+
+</SelfCheck>
+
+<SelfCheck question="İyimser 2, en olası 3, kötümser 10 gün. Beklenen süre nedir ve neden en olası değerden büyüktür?">
+
+(2 + 4×3 + 10) ÷ 6 = 24 ÷ 6 = 4 gün. Kötümser uç en olası değerden çok uzakta olduğu için beklenen değeri yukarı çeker.
+
+</SelfCheck>
+
+<SelfCheck question="Yönetici, fikir aşamasındaki bir projeye 'bir hafta daha çalışın, tahmini kesinleştirin' diyor. Bu neden işe yaramaz ve yerine ne önerirsin?">
+
+Tahminin belirsizliği projenin belirsizliğinden gelir; aynı bilgiyle bir hafta daha düşünmek koniyi daraltmaz. Yerine belirsizliği azaltacak kararları önerirsin: ürün tanımını onaylamak, gereksinimleri yazmak, kapsam dışını belirlemek. Bu arada rakamı bir aralık olarak verirsin.
+
+</SelfCheck>
+
+<SelfCheck question="Tedarikçi şartname yazılmadan önce sabit fiyat teklif ediyor. Risk nerede?">
+
+Fiyat ilk fikir aşamasında verildiği için 4 kata kadar sapabilir. Tedarikçi bu riski ya fiyata ekler, ya da işler zorlaşınca değişiklik talepleriyle geri alır. Şartnameden sonra, koni daralınca imzalamak iki taraf için de daha güvenlidir.
+
+</SelfCheck>

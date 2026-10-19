@@ -131,6 +131,46 @@ const PRODUCT_ALGORITHMS: TopicTiers = {
   "filtreleme-ve-sayfalama": O,
 };
 
+/**
+ * Proje Yönetimi is Önerilen for four roles as a whole, but not every step is:
+ * a Scrum Master does not need earned value, a Product Owner does not sign
+ * supplier contracts. These are the steps each of them can leave for later.
+ */
+const PM_FOR_PRODUCT_MANAGER: TopicTiers = {
+  "standartlar-ve-sertifikalar": I,
+  "raid-kaydi": I,
+};
+
+const PM_FOR_PRODUCT_OWNER: TopicTiers = {
+  "standartlar-ve-sertifikalar": I,
+  "butce-ve-kazanilmis-deger": I,
+  "tedarikci-ve-sozlesme": I,
+  "program-portfoy-ve-pmo": I,
+};
+
+const PM_FOR_SCRUM_MASTER: TopicTiers = {
+  "standartlar-ve-sertifikalar": I,
+  "is-gerekcesi-ve-proje-tuzugu": I,
+  "kapsam-ve-wbs": I,
+  "gantt-ve-kilometre-taslari": I,
+  "butce-ve-kazanilmis-deger": I,
+  "degisiklik-kontrolu": I,
+  "kalite-ve-kabul": I,
+  "tedarikci-ve-sozlesme": I,
+  "program-portfoy-ve-pmo": I,
+};
+
+const PM_FOR_BUSINESS_ANALYST: TopicTiers = {
+  "standartlar-ve-sertifikalar": I,
+  "bagimliliklar-ve-kritik-yol": I,
+  "gantt-ve-kilometre-taslari": I,
+  "kaynak-ve-kapasite": I,
+  "butce-ve-kazanilmis-deger": I,
+  "durum-raporu": I,
+  "kapanis-ve-ogrenilen-dersler": I,
+  "program-portfoy-ve-pmo": I,
+};
+
 export const ROLES: RoleDefinition[] = [
   {
     id: "product-designer",
@@ -187,7 +227,7 @@ export const ROLES: RoleDefinition[] = [
       entry("ux-ui-ilkeleri", O),
       entry("erisilebilirlik", O),
       entry("cevik-pratikler", O),
-      entry("proje-yonetimi", O),
+      entry("proje-yonetimi", O, PM_FOR_PRODUCT_MANAGER),
       entry("is-analizi", O),
       entry("web-temelleri", O),
       entry("back-end-api", O, BACKEND_MECHANICS),
@@ -223,7 +263,7 @@ export const ROLES: RoleDefinition[] = [
       entry("kullanici-arastirmasi", O),
       entry("ux-ui-ilkeleri", O),
       entry("erisilebilirlik", O),
-      entry("proje-yonetimi", O),
+      entry("proje-yonetimi", O, PM_FOR_PRODUCT_OWNER),
       entry("test-ve-kalite", T, QUALITY_MECHANICS),
       entry("guvenlik-ve-hukuk", T, { ...SECURITY_MECHANICS, "bot-ve-kotuye-kullanim": O, "savunma-ilkeleri": O }),
       entry("web-temelleri", O),
@@ -284,7 +324,7 @@ export const ROLES: RoleDefinition[] = [
       entry("sirket-sozlugu", T),
       entry("iletisim-ve-paydaslar", T),
       entry("urun-yonetimi", O),
-      entry("proje-yonetimi", O),
+      entry("proje-yonetimi", O, PM_FOR_SCRUM_MASTER),
       entry("test-ve-kalite", O, QUALITY_MECHANICS),
       entry("devops-ve-yayin", O, DEVOPS_MECHANICS),
       entry("web-temelleri", O),
@@ -319,7 +359,7 @@ export const ROLES: RoleDefinition[] = [
       entry("erisilebilirlik", O),
       entry("urun-analitigi", O),
       entry("is-ve-strateji", O),
-      entry("proje-yonetimi", O),
+      entry("proje-yonetimi", O, PM_FOR_BUSINESS_ANALYST),
       entry("cevik-pratikler", O),
       entry("web-temelleri", O),
       entry("back-end-api", O, { ...BACKEND_MECHANICS, "http-metodlari": O }),

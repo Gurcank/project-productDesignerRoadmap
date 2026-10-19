@@ -1,0 +1,269 @@
+---
+/**
+ * The cone of uncertainty, live: type one estimate, pick how far the project
+ * has come, and read the honest range around the number. The lesson's point
+ * is that the range narrows by decisions, not by time — so the stages are
+ * named after decisions, and the drawing is not to time scale.
+ *
+ * Server-rendered at the first stage, so without JavaScript the figure and its
+ * table are a worked example.
+ */
+import DemoFrame from "./DemoFrame.astro";
+import { CONE_STAGES, coneRange } from "~/lib/demos/cone";
+
+interface Props {
+  caption: string;
+  estimate: number;
+  /** What the estimate counts: "TL", "hafta". */
+  unit: string;
+}
+
+const { caption, estimate, unit } = Astro.props;
+const format = (n: number) => n.toLocaleString("tr-TR");
+const first = coneRange(estimate, CONE_STAGES[0]!);
+
+// Drawing: stages evenly spaced (decisions, not weeks); log2 vertical scale
+// so 4× above and ¼ below are the same distance from the estimate.
+const X0 = 40;
+const X1 = 330;
+const MID = 100;
+const K = 40;
+const xAt = (i: number) => X0 + (i / (CONE_STAGES.length - 1)) * (X1 - X0);
+const yAt = (factor: number) => MID - Math.log2(factor) * K;
+const upper = CONE_STAGES.map((s, i) => `${xAt(i)},${yAt(s.high)}`).join(" ");
+const lower = CONE_STAGES.map((s, i) => `${xAt(i)},${yAt(s.low)}`).join(" ");
+const area = `${upper} ${[...CONE_STAGES].reverse().map((s, i) => `${xAt(CONE_STAGES.length - 1 - i)},${yAt(s.low)}`).join(" ")}`;
+---
+
+<DemoFrame
+  title="Belirsizlik konisi"
+  hint="Tahmini yaz, projenin geldiği aşamayı seç; tahminin gerçekte söylediği aralığı gör."
+  caption={caption}
+>
+  <div class="cone" data-cone data-unit={unit}>
+    <label class="cone__field">
+      <span>Tahmin <small>({unit})</small></span>
+      <input type="number" min="1" step="1" inputmode="numeric" value={estimate} data-cone-estimate />
+    </label>
+
+    <fieldset class="cone__stages">
+      <legend>Projenin geldiği aşama</legend>
+      {
+        CONE_STAGES.map((stage, i) => (
+          <label class="cone__stage">
+            <input type="radio" name="cone-stage" value={stage.id} checked={i === 0} data-low={stage.low} data-high={stage.high} />
+            <span>{stage.label}</span>
+          </label>
+        ))
+      }
+    </fieldset>
+
+    <p class="cone__result" aria-live="polite" data-cone-result>
+      Gerçek değer büyük olasılıkla <strong>{format(first.low)}</strong> ile <strong>{format(first.high)}</strong> {unit} arasında.
+      En yüksek uç en düşüğün <strong>{String(first.spread).replace(".", ",")} katı</strong>.
+    </p>
+
+    <svg class="cone__svg" viewBox="0 0 360 200" role="img" aria-label="Koni: ilk fikirde tahminin dörtte biri ile dört katı arası; iş bittiğinde tek değer.">
+      <polygon class="cone__area" points={area} />
+      <polyline class="cone__edge" points={upper} />
+      <polyline class="cone__edge" points={lower} />
+      <line class="cone__axis" x1={X0} x2={X1} y1={MID} y2={MID} />
+      <text class="cone__tick" x="4" y={yAt(4) + 4}>4×</text>
+      <text class="cone__tick" x="4" y={MID + 4}>1×</text>
+      <text class="cone__tick" x="4" y={yAt(0.25) + 4}>¼×</text>
+      {
+        CONE_STAGES.map((stage, i) => (
+          <g data-cone-mark={stage.id} class:list={["cone__mark", { "is-on": i === 0 }]}>
+            <line x1={xAt(i)} x2={xAt(i)} y1={yAt(stage.high)} y2={yAt(stage.low)} />
+            <circle cx={xAt(i)} cy={yAt(stage.high)} r="4" />
+            <circle cx={xAt(i)} cy={yAt(stage.low)} r="4" />
+            <text x={xAt(i)} y="194" text-anchor="middle">{i + 1}</text>
+          </g>
+        ))
+      }
+    </svg>
+    <ol class="cone__key">
+      {CONE_STAGES.map((stage) => <li>{stage.label}: {String(stage.low).replace(".", ",")}× – {String(stage.high).replace(".", ",")}×</li>)}
+    </ol>
+  </div>
+</DemoFrame>
+
+<script>
+  import { CONE_STAGES, coneRange } from "~/lib/demos/cone";
+
+  for (const root of document.querySelectorAll<HTMLElement>("[data-cone]")) {
+    const unit = root.dataset.unit ?? "";
+    const input = root.querySelector<HTMLInputElement>("[data-cone-estimate]")!;
+    const result = root.querySelector<HTMLElement>("[data-cone-result]")!;
+    const strong = (text: string) => Object.assign(document.createElement("strong"), { textContent: text });
+    const update = () => {
+      const id = root.querySelector<HTMLInputElement>('input[name="cone-stage"]:checked')?.value;
+      const stage = CONE_STAGES.find((s) => s.id === id) ?? CONE_STAGES[0]!;
+      const r = coneRange(Number(input.value.replace(",", ".")), stage);
+      for (const mark of root.querySelectorAll<SVGElement>("[data-cone-mark]")) mark.classList.toggle("is-on", mark.dataset.coneMark === stage.id);
+      result.replaceChildren();
+      if (r.spread === 0) {
+        result.append("Bir tahmin yaz.");
+      } else if (r.spread === 1) {
+        result.append("İş bitti: artık tahmin değil, ", strong(`${r.low.toLocaleString("tr-TR")} ${unit}`), " gerçek değer.");
+      } else {
+        result.append(
+          "Gerçek değer büyük olasılıkla ",
+          strong(r.low.toLocaleString("tr-TR")),
+          " ile ",
+          strong(r.high.toLocaleString("tr-TR")),
+          ` ${unit} arasında. En yüksek uç en düşüğün `,
+          strong(`${String(r.spread).replace(".", ",")} katı`),
+          ".",
+        );
+      }
+    };
+    root.addEventListener("input", update);
+    root.addEventListener("change", update);
+  }
+</script>
+
+<style>
+  .cone {
+    display: grid;
+    gap: var(--spacing-4);
+  }
+
+  .cone__field {
+    display: grid;
+    gap: var(--spacing-1);
+    max-inline-size: 16rem;
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .cone__field small {
+    font-size: var(--text-xs);
+    color: var(--c-text-muted);
+  }
+
+  .cone__field input {
+    min-block-size: 44px;
+    padding-inline: var(--spacing-2);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface);
+    color: var(--c-text);
+    font: inherit;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cone__stages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .cone__stages legend {
+    margin-block-end: var(--spacing-2);
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .cone__stage {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    min-block-size: 44px;
+    padding-inline: var(--spacing-3);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    color: var(--c-text);
+    cursor: pointer;
+  }
+
+  .cone__stage:has(input:checked) {
+    border-color: var(--c-action);
+    background-color: color-mix(in oklab, var(--c-action) 18%, transparent);
+  }
+
+  .cone__stage input {
+    accent-color: var(--c-action);
+  }
+
+  .cone__field input:focus-visible,
+  .cone__stage:has(input:focus-visible) {
+    outline: 2px solid var(--c-focus);
+    outline-offset: 2px;
+  }
+
+  .cone__result {
+    color: var(--c-text-secondary);
+  }
+
+  .cone__result strong {
+    color: var(--c-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cone__svg {
+    inline-size: 100%;
+    max-inline-size: 36rem;
+    block-size: auto;
+  }
+
+  .cone__area {
+    fill: color-mix(in oklab, var(--c-action) 14%, transparent);
+  }
+
+  .cone__edge {
+    fill: none;
+    stroke: var(--c-action);
+    stroke-width: 2;
+  }
+
+  .cone__axis {
+    stroke: var(--c-route-line);
+    stroke-dasharray: 4 4;
+  }
+
+  .cone__tick,
+  .cone__mark text {
+    fill: var(--c-text-muted);
+    font-family: var(--font-sans);
+    font-size: 11px;
+  }
+
+  .cone__mark line {
+    stroke: transparent;
+    stroke-width: 3;
+  }
+
+  .cone__mark circle {
+    fill: var(--c-surface-raised);
+    stroke: var(--c-route-line);
+    stroke-width: 1.5;
+  }
+
+  .cone__mark.is-on line {
+    stroke: var(--c-progress);
+  }
+
+  .cone__mark.is-on circle {
+    fill: var(--c-progress);
+    stroke: var(--c-progress);
+  }
+
+  .cone__mark.is-on text {
+    fill: var(--c-text);
+    font-weight: 600;
+  }
+
+  .cone__key {
+    display: grid;
+    gap: var(--spacing-1);
+    padding-inline-start: var(--spacing-6);
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+    font-variant-numeric: tabular-nums;
+  }
+</style>

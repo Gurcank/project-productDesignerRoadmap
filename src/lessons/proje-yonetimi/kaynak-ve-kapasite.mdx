@@ -1,0 +1,146 @@
+---
+summary: "Aynı kişi aynı hafta iki işe atanırsa takvim kâğıtta kalır. Kaynak dengeleme bu aşırı yüklemeyi çözer: önce işi bölüp kaydırarak, olmazsa süre, maliyet ya da kapsamdan ödeyerek."
+outcomes:
+  - "Bir takvimde kaynak aşırı yüklemesini bulabilirsin."
+  - "Kaynak dengelemenin ne olduğunu ve bedelini anlatabilirsin."
+  - "Ortak kullanılan kişilerin kapasitesini planlarken nelere dikkat edeceğini söyleyebilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Watt, Project Management (2. baskı) — 11. Resource Planning"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-11-resource-planning-project-management/"
+additions:
+  - "Kaynak aşırı yüklemesi ve kaynak dengeleme (Watt, bölüm 11)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Chart from "~/components/diagrams/primitives/Chart.astro";
+
+Takvim kâğıtta kusursuzdu. Entegrasyon testi 7. haftada başlıyordu, öğrenci kartı indiriminin testi de aynı hafta yapılacaktı. İki satırın sahibi aynıydı: Zeynep.
+
+Zeynep takvime baktı ve sakince sordu: "7. haftada 60 saat mi çalışacağım?" Ağ diyagramı bunu göstermiyordu. Ağ işleri ve süreleri bilir, insanları bilmez.
+
+## Kaynak ve kapasite
+
+Bir projede **kaynak** (resource), işi yapmak için gereken insan, ekipman ya da malzemedir. Bu derste kaynak çoğunlukla insandır.
+
+**Kapasite**, bir kaynağın belli bir sürede verebileceği iştir. Zeynep haftada 40 saat çalışır; bu onun kapasitesidir. Takvimdeki işlerin ona yüklediği saat bu sayıyı geçerse **aşırı yükleme** (over-allocation) vardır.
+
+Aşırı yüklenmiş bir takvim yalnız kâğıtta çalışır. Gerçekte işlerden biri gecikir; hangisinin gecikeceğine de kimse karar vermemiştir.
+
+Çevik ekiplerin sprint kapasitesini nasıl hesapladığını [Tahmin ve ölçüm](/calisma-bicimi/tahmin-ve-olcum-story-point-velocity-capacity/) dersi anlatıyor. Bu ders, bir projede birden çok işe ve ekibe yayılan kişilerin yükünü anlatır.
+
+## Kaynak dengeleme
+
+Planlama yapılırken bazı işler aynı anda planlanır. Gereken kaynak eldekinden fazlaysa ya da aynı kişi iki işte birden gerekiyorsa, işlerin sırayla yapılması gerekir. Bu çatışmaları çözmeye **kaynak dengeleme** (resource leveling) denir.
+
+Dengeleme şu sırayla düşünülür:
+
+1. **İşi böl ve kaydır.** Bir işin bağımsız bir parçası daha boş bir haftaya taşınabilir mi?
+2. **Bolluğu kullan.** Kritik yolda olmayan bir iş, bolluğu kadar ileri itilebilir. Proje süresi değişmez.
+3. **Bedelini öde.** İlk ikisi yetmezse dengeleme, üçlü kısıttan birinden ödenir: süre uzar, ek kaynak için maliyet artar ya da kapsam küçülür.
+
+Proje yazılımları dengelemeyi otomatik yapabilir. Ama yazılım genellikle tek bir şey bilir: kaynak boşalana kadar işi geciktirmek. Bölmeyi ve kapsamı düşünmek senin işindir.
+
+<Chart
+  label="Zeynep'in haftalık iş yükü, dengelemeden önce ve sonra"
+  caption="Zeynep'in kapasitesi haftada 40 saattir. Dengelemeden önce 7. haftada iki test aynı anda düşüyor ve yük 60 saate çıkıyor. 6. haftada ise 20 saatlik boşluk var. İndirim testinin test senaryolarını yazmak indirimin bitmesini beklemez; bu 20 saatlik parça 6. haftaya taşınınca iki hafta da 40 saate iner. Proje süresi değişmez, kimse fazla mesai yapmaz."
+  kind="bar"
+  x={{ title: "Hafta", labels: ["4. hf", "5. hf", "6. hf", "7. hf", "8. hf", "9. hf"] }}
+  y={{ title: "Saat", max: 60 }}
+  series={[
+    { name: "Önce", values: [10, 20, 20, 60, 30, 20], tone: "plain" },
+    { name: "Sonra", values: [10, 20, 40, 40, 30, 20], tone: "progress" },
+  ]}
+/>
+
+**Dengeleme ≠ sıkıştırma.** Dengeleme yükü zamana yayar ve genelde süreyi korur ya da uzatır. Süreyi kısaltmak için kritik yola kaynak eklemek ayrı bir karardır ve maliyeti vardır.
+
+## Ortak kullanılan kişiler
+
+Bir kaynak aynı anda birden çok projede ya da ekipte çalışabilir. Bu durumda dengeleme tek bir projenin içinde yapılamaz.
+
+Demlik'te Mert iki takımın ortak araştırmacısı, Kaan iki takımın ortak Scrum Master'ıdır. Kampüs projesi Mert'ten öğrenci görüşmeleri isterse, sipariş takımının araştırması yavaşlar. Bunu planda görmenin yolu, ortak kişilerin yükünü bütün işleriyle birlikte tek bir yerde izlemektir.
+
+Hedef her kaynağın %100 kullanılmasıdır, ama Watt'ın da belirttiği gibi buna ulaşmak pek olası değildir. Bir kişiyi tam kapasiteyle planlamak, ilk gecikmede bütün takvimi kaydırır.
+
+<Case>
+
+Leyla, Zeynep'in itirazından sonra takvimi kişi kişi kontrol etti:
+
+1. **Yükü çıkardı:** her iş paketinin sahibini ve haftalık saatini yazdı. Zeynep 7. haftada 60 saatteydi.
+2. **Bolluğa baktı:** indirimin 1 haftalık bolluğu vardı. Ama indirim testini 8. haftaya itmek, oradaki entegrasyon testiyle yine çakışıyordu. Bolluk yetmedi.
+3. **İşi böldü:** test senaryolarını yazmak indirimin bitmesini beklemiyordu. Bu 20 saatlik parça, Zeynep'in boş olduğu 6. haftaya taşındı.
+4. **Ortak kişileri sordu:** Mert'ten istenen 8 öğrenci görüşmesini Elif'le konuştu. Görüşmeler, sipariş takımının araştırma planına eklendi; iki ayrı iş olarak değil.
+
+Takvimin süresi değişmedi. Ama artık insanlar da ona sığıyordu.
+
+</Case>
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Takvimi kişi kişi kontrol et.** Ağ diyagramı insanları bilmez; aşırı yüklemeyi ancak saatleri toplayınca görürsün.
+- **Dengelemeye bölmekle başla.** Yazılımın otomatik dengelemesi çoğu zaman yalnız gecikme üretir.
+- **Ortak kişilerin diğer işlerini sor.** Bir kişinin projendeki yükü, toplam yükünün yalnız bir parçasıdır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Ortak kaynağın önceliğini sen netleştirirsin.** Araştırmacı iki işe bölünecekse hangisinin önce geleceği bir ürün kararıdır.
+- **Kapsam küçültmeyi bir seçenek olarak masada tut.** Dengeleme bazen yalnız kapsamdan ödenebilir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Projeye ayrılan saati sprint kapasitesinden düş.** Zeynep'in 7. haftası projeye gidiyorsa sprintte o kadar daha az test kapasitesi vardır.
+- **Bağımsız parçaları öne al.** Test senaryosu yazmak gibi beklemeyen işler, dar haftaları rahatlatır.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Aşırı yüklemeyi erken söylet.** Zeynep itiraz etmeseydi sorun 7. haftada fark edilirdi; takımın "bu sığmaz" deme alışkanlığını destekle.
+- **Ortak kişileri iki takımın planlamasında görünür kıl.** Mert ve Kaan'ın yükü iki ayrı panoda yarım yarım görünüyorsa, bütünü kimse görmez.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Kapasite, bir kaynağın belli bir sürede verebileceği iştir; aşan yük aşırı yüklemedir.
+- Aşırı yüklenmiş takvim yalnız kâğıtta çalışır; hangi işin gecikeceğine kimse karar vermemiş olur.
+- Kaynak dengeleme çatışmayı çözer: önce işi böl ve kaydır, sonra bolluğu kullan.
+- Bunlar yetmezse dengelemenin bedeli süre, maliyet ya da kapsamdan ödenir.
+- Birden çok işte çalışan kişilerin yükü, bütün işleriyle birlikte tek bir yerde izlenir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Kaynak dengeleme nedir?">
+
+Bir takvimde kaynakların zamana göre dengesiz kullanımını inceleyip aşırı yüklemeleri ve çatışmaları çözmektir. Aynı kişi aynı anda iki işte gerekiyorsa işler sırayla yapılacak biçimde yeniden planlanır.
+
+</SelfCheck>
+
+<SelfCheck question="Ağ diyagramı neden aşırı yüklemeyi göstermez?">
+
+Ağ diyagramı işleri, sürelerini ve bağımlılıklarını gösterir; işleri kimin yaptığını ve o kişinin başka hangi işleri olduğunu göstermez. Aşırı yükleme ancak her kişinin haftalık yükü toplanınca görünür.
+
+</SelfCheck>
+
+<SelfCheck question="Bir geliştirici 6. haftada %150 yüklü. İşlerinden birinin 2 hafta bolluğu var. Ne yaparsın?">
+
+Önce bolluğu olan işi ileri itmeyi denersin; bolluk yettiği sürece proje süresi değişmez. İtildiği hafta başka bir işle çakışıyor mu, ona da bakarsın. Çakışıyorsa işi bölmeyi, sonra da ek kaynak ya da kapsam seçeneklerini değerlendirirsin.
+
+</SelfCheck>
+
+<SelfCheck question="Proje yazılımı 'otomatik dengele' düğmesine basınca proje iki hafta uzadı. Ne düşünürsün?">
+
+Yazılım çoğunlukla işleri kaynak boşalana kadar geciktirerek dengeler. İki haftalık uzama bir seçenektir ama tek seçenek değildir. İşleri bölmek, bolluğu kullanmak, ek kaynak ya da kapsam küçültmek daha ucuz olabilir; bu kararı yazılıma bırakmazsın.
+
+</SelfCheck>

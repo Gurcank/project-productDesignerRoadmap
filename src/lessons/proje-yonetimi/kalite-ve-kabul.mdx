@@ -1,0 +1,156 @@
+---
+summary: "Kalite, söz verilen gereksinimleri karşılamaktır; lüks olmak değildir. Kalite baştan planlanır, uygulamada ölçülür, ve proje ancak paydaş sonucu kabul kriterlerine göre resmen kabul ettiğinde biter."
+outcomes:
+  - "Kaliteyi sınıftan (grade) ayırabilirsin."
+  - "Kalite planlaması, kalite kontrolü ve kalite güvencesinin farkını anlatabilirsin."
+  - "Ölçülebilir kabul kriterleri yazıp resmî kabulü planlayabilirsin."
+minutes: 8
+standard: 2
+sources:
+  - label: "Watt, Project Management (2. baskı) — 14. Quality Planning"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-14-quality-planning-project-management/"
+  - label: "Watt, Project Management (2. baskı) — 18. Project Completion"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-18-project-completion-project-management/"
+additions:
+  - "Kalitenin tanımı, kalite ve sınıf, kalite planı, kontrol ve güvence (Watt, bölüm 14)"
+  - "Kabul kriterleri ve resmî kabul (Watt, bölüm 18)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Pilot kafenin ikinci gününde kafe işletmecisi aradı: "Sistem çalışıyor ama yazıcı fişi çok küçük basıyor. Barista okuyamıyor." Tedarikçi itiraz etti: "Şartnamede fiş boyutu yazmıyordu."
+
+İkisi de haklıydı. Fiş, yazılı gereksinime uygundu. Ama kafenin beklentisini karşılamıyordu. Kalite bu ikisinin arasında bir yerde durur. Proje de, birisi "Evet, aldım, tamam" diyene kadar bitmez.
+
+## Kalite nedir?
+
+Gündelik dilde kalite "iyi" ya da "pahalı" demektir. Proje yönetiminde anlamı daha dardır: **kalite** (quality), hem yazılı hem de örtük gereksinimlere uygunluktur. Sonunda bir ürünün kalitesi tek bir soruyla ölçülür: yapacağını söylediğin şeyi mi yaptın?
+
+Yazılı gereksinim şartnamededir. **Örtük gereksinim** ise kimsenin yazmadığı ama herkesin beklediği şeydir: baristanın fişi okuyabilmesi gibi. Müşterilerin, yazılı bir şartnameye dökülmesi zor beklentileri olur. Bunları dinleyerek anlamak, kalitenin bir parçasıdır.
+
+### Kalite ≠ sınıf
+
+Ürünler ya da süreçler bir **sınıfa** (grade) ayrılabilir. Benzinin oktan derecesi bir sınıftır. Kalite ise ürünün kendi sınıfının gereksinimlerini ne kadar iyi karşıladığıdır.
+
+Düşük sınıf bir ürün de kaliteli olmalıdır: beklendiği gibi çalışmalı, güvenli olmalı ve makul bir süre dayanmalıdır. Kampüs kafelerine verilen basit tablet, mağazalardaki pahalı kasa ekranından daha düşük bir sınıftır. Ama siparişi hatasız gösteriyorsa kalitelidir. Pahalı ekran siparişi kaybediyorsa kalitesizdir.
+
+Bu ayrım bir kapsam tartışmasını netleştirir. "Daha kaliteli olsun" isteği çoğu zaman "daha yüksek sınıf olsun" demektir ve bir maliyeti vardır.
+
+## Kaliteyi planlamak ve ölçmek
+
+Kalite projenin sonunda test edilerek eklenmez. Baştan planlanır ve yol boyunca ölçülür.
+
+<Layers
+  label="Kalitenin dört adımı"
+  caption="Kalite planlaması projenin başında neyin, nasıl ölçüleceğini ve kusurların nasıl önleneceğini yazar. Kalite kontrolü uygulamada ürünü ölçer: sonuçlar kabul edilen sınırlar içinde mi? Kalite güvencesi bir adım geri çekilir: planın ve kontrollerin gerçekten işleyip işlemediğine bakar. En sonda paydaş, sonucu kabul kriterlerine göre resmen kabul eder."
+  layers={[
+    { title: "Kalite planlaması", sub: "neyi, nasıl ölçeceğiz?" },
+    { title: "Kalite kontrolü", sub: "ürün sınırlar içinde mi?" },
+    { title: "Kalite güvencesi", sub: "plan ve kontroller işliyor mu?" },
+    { title: "Resmî kabul", sub: "paydaş kriterlere göre onaylar", tone: "progress" },
+  ]}
+/>
+
+**Kalite planlaması:** başlangıçta eldeki bütün bilgiyle kalitenin nasıl ölçüleceğine ve kusurların nasıl önleneceğine karar verilir. Şirketin bir kalite politikası ve uyulması gereken kurallar varsa plan onlara uyar. Kalite faaliyetlerinin maliyeti de bu planda hesaplanır.
+
+**Kalite kontrolü:** uygulamada ürün ve hizmetlerden örnekler alınır ve ölçülür. Sonuç, planda belirlenen sınırlar içinde mi? Değilse neden?
+
+**Kalite güvencesi:** amacı, kalite planının ve kontrollerin düzgün işlediğine güven yaratmaktır. Plan izlenmemişse ya ekip eğitilir ya da plan değiştirilir.
+
+**Kontrol ≠ güvence.** Kontrol ürüne bakar: bu fiş doğru mu? Güvence sürece bakar: fişleri doğru kontrol ediyor muyuz?
+
+Yazılım tarafında testin nasıl yapıldığını [Test ve Kalite](/test-ve-kalite/) bölümü anlatıyor.
+
+## Kabul kriterleri ve resmî kabul
+
+Proje, söz verilen şey yapıldığında, bütün paydaşlar memnun olduğunda ve **kabul kriterleri** karşılandığında biter. Kabul kriteri, sonucun kabul edilmesi için sağlaması gereken ölçülebilir şartlardır.
+
+Kabul kriterleri sonda değil, başta yazılır. Sonda yazılan kriter, o gün ne yapılmışsa onu anlatır.
+
+Kriterler karşılanınca paydaştan **resmî kabul** (formal acceptance) istenir. Resmî kabul yazılıdır: kim, ne zaman, neyi kabul etti. Sözlü bir "olmuş" kabul değildir.
+
+Bir user story'nin kabul kriterlerini [Gereksinimler: epic, user story, acceptance criteria](/urun-gelistirme/gereksinimler-epic-user-story-acceptance-criteria/) dersi anlatıyor. Proje kabulü daha büyüktür: bir projenin bütün sonucunu kapsar.
+
+<Case>
+
+Leyla, fiş sorununu bir kalite dersine çevirdi:
+
+1. **Örtük gereksinimi yazdı:** "Fiş, baristanın 50 cm mesafeden okuyabileceği boyutta basılır." Bir değişiklik talebiyle şartnameye eklendi.
+2. **Pilotun kabul kriterlerini hatırlattı.** Bunlar 2. haftada yazılmıştı:
+   - İki hafta boyunca siparişlerin %98'i kasaya hatasız düşer.
+   - Sipariş, ödemeden sonra 5 saniye içinde kafede görünür.
+   - 50 test siparişinde öğrenci indirimi hatasız uygulanır.
+   - Kafe personelinin hepsi eğitimi tamamlar.
+3. **Ölçtü:** pilotun sonunda dört kriter de karşılandı. Fiş düzeltmesi pilotun ikinci haftasında yayına girdi.
+4. **Resmî kabul istedi:** kafe işletmecisi ve Hakan, pilot raporunu imzaladı.
+
+</Case>
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Kabul kriterlerini başta yazdır.** Sonda yazılan kriter tartışma çıkarır, başta yazılan tartışmayı bitirir.
+- **Örtük beklentileri sor.** "Bunu kim kullanacak, nerede, nasıl?" sorusu yazılmamış gereksinimleri ortaya çıkarır.
+- **Resmî kabulü yazılı al.** İmza, projenin bittiğinin tek kanıtıdır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Sınıf kararını sen verirsin.** "Daha kaliteli" isteği çoğu zaman daha yüksek sınıf demektir; bedelini ve gerekip gerekmediğini sen tartarsın.
+- **Kabul kriterine ürün sonucunu ekle.** "Sipariş kasaya düşüyor" teknik bir kabuldür; "öğrenciler kullanıyor" ürün kabulüdür.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Proje kabulünü story kabul kriterlerine böl.** Pilotun kriterleri, takımın Definition of Done'ına yansımalı.
+- **Örtük gereksinimleri backlog'a yaz.** Fiş boyutu gibi küçük bir beklenti, yazılmadıkça yapılmaz.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Örtük gereksinimleri yakalamak senin işin.** Kullanım ortamını gözlemlemek, yazılmamış beklentileri bulmanın en iyi yoludur.
+- **Kabul kriterini ölçülebilir yaz.** "Okunabilir fiş" değil: "50 cm'den okunabilir."
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Kalite, yazılı ve örtük gereksinimlere uygunluktur: yapacağını söylediğin şeyi yaptın mı?
+- Sınıf ile kalite ayrıdır: düşük sınıf bir ürün de kaliteli olmalıdır.
+- Kalite baştan planlanır; kontrol ürünü ölçer, güvence sürecin işleyip işlemediğine bakar.
+- Kabul kriterleri başta, ölçülebilir biçimde yazılır.
+- Proje, paydaş sonucu kriterlere göre yazılı olarak kabul ettiğinde biter.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Proje yönetiminde kalite ne demektir?">
+
+Hem yazılı hem de örtük gereksinimlere uygunluk. Sonunda bir ürünün kalitesi, yapacağını söylediğin şeyi yapıp yapmadığınla ölçülür.
+
+</SelfCheck>
+
+<SelfCheck question="Kalite kontrolü ile kalite güvencesi arasındaki fark nedir?">
+
+Kalite kontrolü ürüne bakar: ölçülen sonuçlar kabul sınırları içinde mi? Kalite güvencesi sürece bakar: kalite planı ve kontroller gerçekten işliyor mu?
+
+</SelfCheck>
+
+<SelfCheck question="Sponsor 'Kafelere daha kaliteli bir tablet alalım' diyor. Ne sorarsın?">
+
+Bugünkü tabletin bir kalite sorunu mu var, yoksa daha yüksek bir sınıf mı isteniyor? Tablet gereksinimleri karşılıyorsa kalitelidir; daha pahalısı bir sınıf yükseltmesidir ve maliyeti bir kapsam kararıdır. Sorun varsa hangi gereksinimin karşılanmadığını yazarsın.
+
+</SelfCheck>
+
+<SelfCheck question="Proje bitti, kafe işletmecisi telefonda 'Her şey yolunda' dedi. Proje kabul edildi mi?">
+
+Hayır. Resmî kabul yazılıdır ve kabul kriterlerine dayanır: kim, ne zaman, neyi kabul etti. Telefondaki memnuniyet iyi bir işarettir, ama kayıt yerine geçmez.
+
+</SelfCheck>
