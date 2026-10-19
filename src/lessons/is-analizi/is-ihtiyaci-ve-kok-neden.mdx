@@ -1,0 +1,165 @@
+---
+summary: "İhtiyaç çözülecek sorundur, çözümün adı değildir. İhtiyaç nitel bir hedefe, hedef ölçülebilir amaçlara bağlanır. Beş neden tekniği belirtiden kök nedene iner."
+outcomes:
+  - "Bir talebin içindeki çözümü ayıklayıp altındaki ihtiyacı yazabilirsin."
+  - "İhtiyacı, hedefi ve amacı birbirinden ayırıp birbirine bağlayabilirsin."
+  - "Bir atölyede beş neden tekniğini yürütüp kök nedeni bulabilirsin."
+minutes: 8
+standard: 2
+skipTerms: ["yalın"]
+sources:
+  - label: "BABOK Guide — Ek A: Sözlük (IIBA)"
+    url: "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"
+  - label: "NASA SE Handbook 4.1 — Stakeholder Expectations Definition"
+    url: "https://www.nasa.gov/reference/4-1-stakeholder-expectations-definition/"
+  - label: "Atlassian Team Playbook — 5 Whys Analysis"
+    url: "https://www.atlassian.com/team-playbook/plays/5-whys"
+additions:
+  - "İş ihtiyacı, hedef, amaç ve iş gereksinimi tanımları (BABOK sözlüğü)"
+  - "İhtiyaç → hedef → amaç izlenebilirliği (NASA SE Handbook)"
+  - "Beş neden oyunu (Atlassian Team Playbook)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Destek ekibinin lideri, Ayşe'yle ilk görüşmede net konuştu: "Bize Panel'de bir 'tam iade' düğmesi lazım. Müşteri yazınca basarız, iş biter."
+
+Ayşe not aldı ama düğmeyi yazmadı. Bir düğme bir çözümdü. Altındaki soru başkaydı: müşteriler neden destek ekibine yazıyordu? Bu ders, bir talebin içinden ihtiyacı çıkarmayı ve o ihtiyacın kök nedenine inmeyi anlatır.
+
+## İhtiyaç bir çözüm değildir
+
+BABOK **iş ihtiyacını** (business need) stratejik ya da taktik önemi olan, ele alınması gereken bir sorun ya da fırsat olarak tanımlar. Dikkat: bir sorun ya da fırsat. Bir düğme, bir ekran ya da bir sistem değil.
+
+NASA'nın sistem mühendisliği el kitabı ihtiyacı tek bir soruyla tanımlar: **"Hangi sorunu çözmeye çalışıyoruz?"** El kitabına göre iyi bir ihtiyaç tekildir ve çözülecek soruna dayanır, ama çözümün kendisi değildir.
+
+Paydaşların söylediği ilk şey çoğu zaman bir çözümdür. BABOK buna **beyan edilmiş gereksinim** (stated requirement) der: bir paydaşın dile getirdiği ama henüz analiz edilmemiş gereksinim. Sözlüğe göre bunlar çoğu zaman gerçek ihtiyaçtan çok bir isteği yansıtır.
+
+**Talep ≠ ihtiyaç.** "Tam iade düğmesi" bir taleptir. Altındaki ihtiyaç şudur: "Müşteri ve dükkân, bir iptalde ne kadar iade yapılacağını önceden ve aynı şekilde bilmeli." Düğme bu ihtiyacın olası çözümlerinden yalnız biridir, belki de en iyisi değildir.
+
+## İhtiyaç → hedef → amaç
+
+İhtiyaç yazıldıktan sonra iki adım daha gelir:
+
+- **Hedef** (business goal): kurumun ulaşmak ve korumak istediği durum. BABOK'a göre genellikle nitel ifade edilir. "İade kararı her yerde aynı olsun."
+- **Amaç** (business objective): hedefe ulaşıldığını gösteren nesnel, ölçülebilir sonuç. "Üç ay içinde iadeyle ilgili destek talepleri ayda 310'dan 150'nin altına insin."
+
+<Layers
+  label="İhtiyaçtan amaca"
+  caption="Dört katman yukarıdan aşağı birbirine bağlanır. En üstte ihtiyaç: müşteri ve dükkân iadeyi önceden bilemiyor. Altında hedef: iade kararı tek ve her yerde aynı olsun. Altında amaç: üç ayda iadeyle ilgili talepler ayda 310'dan 150'nin altına insin. En altta çözüm gereksinimleri, örneğin karar tablosu ve otomatik bildirim. Bir katman üsttekine hizmet etmiyorsa kümeden çıkarılır."
+  layers={[
+    { title: "İhtiyaç", sub: "iade önceden bilinmiyor", tone: "accent" },
+    { title: "Hedef (nitel)", sub: "iade kararı tek ve aynı" },
+    { title: "Amaç (ölçülebilir)", sub: "310 → 150'nin altı, üç ayda", tone: "progress" },
+    { title: "Çözüm gereksinimleri", sub: "karar tablosu, bildirim, otomatik iade" },
+  ]}
+/>
+
+NASA'nın kuralı basittir: ihtiyaç → hedef → amaç zinciri izlenebilir olmalıdır. Bir hedef hiçbir ihtiyaca hizmet etmiyorsa ya da bir amaç hiçbir hedefe hizmet etmiyorsa, kümede yeri yoktur.
+
+BABOK bu üçünü birlikte **iş gereksinimi** (business requirement) olarak toplar: bir değişimin neden başlatıldığını ve başarının nasıl ölçüleceğini anlatan hedefler, amaçlar ve sonuçlar.
+
+## Kök neden: beş neden
+
+Bir sorunun **kök nedeni**, BABOK'a göre daha derin bir nedeni olmayan nedendir; genellikle olası birkaç nedenden biridir. **Kök neden analizi**, sorunun altındaki nedenleri anlamak için yapılan yapılandırılmış bir incelemedir.
+
+En yalın tekniği **beş nedendir** (5 Whys). Atlassian'ın ekip oyun kitabındaki tarif şöyle:
+
+1. **Tek bir sorun cümlesi seç.** Birden çok sorunu aynı anda sorgulama.
+2. **Beş kez "neden?" diye sor.** Her cevap bir sonraki sorunun konusu olur.
+3. **Kök nedene bir çözüm öner.** Belirtiye değil.
+
+Oyun 3–8 kişiyle, 5 dakika hazırlık ve 30 dakikalık bir oturumla oynanır. Sayıya takılma: amaç, cevabın elinde tutabileceğin bir nedene inmesidir. Sözlüğün dediği gibi kök neden çoğu zaman birkaç nedenden biridir; zincir dallanırsa her dalı ayrı sor.
+
+**Belirti ≠ neden.** "Destek talepleri çok" bir belirtidir. Belirtiyi tedavi eden çözüm (daha çok destek personeli, daha hızlı düğme) sorunu taşır, çözmez.
+
+<Case>
+
+Ayşe, Ozan, destek ekibinin lideri ve finanstan biriyle 30 dakikalık bir beş neden oturumu yaptı. Sorun cümlesi: "Müşteriler iade için destek ekibine yazıyor."
+
+1. **Neden?** Bekledikleri iadeyi alamıyorlar.
+2. **Neden?** Uygulama "tam iade" diyor; destek el kitabı "hazırlanan siparişe iade yok" diyor.
+3. **Neden iki metin farklı?** Üç metni üç ayrı ekip, farklı zamanlarda yazdı.
+4. **Neden ayrı ekipler yazdı?** İade kuralının bir sahibi yok.
+5. **Neden sahibi yok?** İade, ilk yıl bir destek politikası olarak başladı; hiç ürün gereksinimi olarak yazılmadı.
+
+Kök neden: **iade kuralının tek bir kaynağı ve sahibi yok.** Tam iade düğmesi bunu çözmezdi; yalnız destek ekibinin çelişkili kuralı daha hızlı uygulamasını sağlardı. Ozan kuralın sahibi oldu. Ayşe ihtiyacı, hedefi ve amacı BRD'nin ilk sayfasına yazdı.
+
+</Case>
+
+<Tool slug="brd" />
+
+<Lenses>
+<Lens role="business-analyst">
+
+- **Her talebi "hangi sorunu çözüyor?" diye çevir.** Cevabı ihtiyaç olarak yaz, talebi olası çözümlerden biri olarak not et.
+- **Zinciri kur.** İhtiyaç, hedef ve amaç birbirine bağlı değilse, sonradan gelen bir gereksinimin neden var olduğunu kimse açıklayamaz.
+- **Beş nedeni karışık bir grupla yap.** Tek bir ekip kendi alanının dışındaki nedeni görmez.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Amaç, önceliklendirmenin ölçütüdür.** Backlog'daki her öğeye "310'u 150'ye indirmeye katkısı ne?" diye bakabilirsin.
+- **Kuralın sahibi olmayı kabul et.** Kök neden sahipsizlikse, çözüm bir sahiptir.
+
+</Lens>
+<Lens role="product-manager">
+
+- **İhtiyacı stratejiye bağla.** Hangi ürün hedefine hizmet ettiğini yazmayan bir ihtiyaç, yol haritasında yer bulamaz.
+- **Amacı ölçülebilir yaz.** Bir başlangıç değeri, bir hedef değeri ve bir tarih.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Proje tüzüğünün "neden"i buradan gelir.** İş gerekçesindeki sorun ve fayda, ihtiyaç ve amaçla aynı dili konuşmalı.
+- **Amaç projenin bitişinden sonra ölçülür.** Kapanışta kimin, ne zaman ölçeceğini yaz.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Talebin altındaki davranışı ara.** "Düğme istiyoruz" diyen paydaşın günlük işinde neyin zor olduğunu gözlemle.
+- **Kanıt sağla.** Destek taleplerini okumak, bir ihtiyacı varsayımdan veriye taşır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- İhtiyaç bir sorun ya da fırsattır; bir düğme, ekran ya da sistem değildir.
+- Paydaşın ilk söylediği çoğu zaman bir çözümdür; BABOK buna beyan edilmiş gereksinim der.
+- Hedef nitel, amaç ölçülebilirdir; ihtiyaç → hedef → amaç zinciri izlenebilir olmalıdır.
+- Kök neden, daha derin nedeni olmayan nedendir; çoğu zaman birkaç nedenden biridir.
+- Beş neden: tek bir sorun cümlesi seç, beş kez "neden?" diye sor, kök nedene çözüm öner.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Panel'e bir tam iade düğmesi ekleyin' bir ihtiyaç mı?">
+
+Hayır, bir çözüm önerisidir; BABOK'un deyimiyle beyan edilmiş bir gereksinim. İhtiyaç, düğmenin çözmeye çalıştığı sorundur: müşteri ve dükkânın iadeyi önceden ve aynı şekilde bilememesi.
+
+</SelfCheck>
+
+<SelfCheck question="'Müşteri memnuniyeti artsın' bir hedef mi, amaç mı?">
+
+Hedef. Nitel bir durumu anlatır. Amaç olması için ölçülebilir olmalı: hangi ölçü, başlangıç değeri, hedef değeri ve tarih.
+
+</SelfCheck>
+
+<SelfCheck question="Bir beş neden oturumunda zincir üçüncü soruda ikiye ayrıldı. Ne yaparsın?">
+
+İki dalı da ayrı ayrı sorgularım. Kök neden çoğu zaman birkaç olası nedenden biridir; tek bir zincire zorlamak öteki nedeni gözden kaçırır.
+
+</SelfCheck>
+
+<SelfCheck question="Takım bir hedef yazdı ama hiçbir ihtiyaca bağlayamıyor. NASA'nın kuralına göre ne olmalı?">
+
+Hedef kümeden çıkarılır ya da hizmet ettiği ihtiyaç bulunup yazılır. Bir ihtiyaca hizmet etmeyen hedef, işe gerekçesiz bir kapsam ekler.
+
+</SelfCheck>

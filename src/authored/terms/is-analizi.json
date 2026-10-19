@@ -1,0 +1,177 @@
+[
+  {
+    "term": "İş analizi",
+    "english": "Business analysis",
+    "definition": "İhtiyaçları tanımlayıp paydaşlara değer üreten çözümler önererek değişimi mümkün kılma pratiği (BABOK). Unvan değil, bir iştir.",
+    "topic": "babok-haritasi"
+  },
+  {
+    "term": "BABOK",
+    "english": "Business Analysis Body of Knowledge",
+    "definition": "IIBA'nın iş analizi rehberi. İşi altı bilgi alanına böler; IIBA'nın standardı bunlara dağılmış 30 görev tanımlar.",
+    "topic": "babok-haritasi",
+    "aliases": ["BABOK Guide"]
+  },
+  {
+    "term": "Bilgi alanı",
+    "english": "Knowledge area",
+    "definition": "BABOK'un iş analizini böldüğü altı alandan biri: planlama, çıkarma, yaşam döngüsü, strateji, analiz ve tasarım, çözüm değerlendirme.",
+    "topic": "babok-haritasi"
+  },
+  {
+    "term": "İş ihtiyacı",
+    "english": "Business need",
+    "definition": "Stratejik ya da taktik önemi olan, ele alınacak bir sorun ya da fırsat. Bir çözümün adı değildir.",
+    "topic": "is-ihtiyaci-ve-kok-neden"
+  },
+  {
+    "term": "Kök neden",
+    "english": "Root cause",
+    "definition": "Daha derin bir nedeni olmayan neden; çoğu zaman birkaç olası nedenden biri. Belirtiyi değil kök nedeni çözen değişim kalıcıdır.",
+    "topic": "is-ihtiyaci-ve-kok-neden"
+  },
+  {
+    "term": "Beş neden",
+    "english": "5 Whys",
+    "definition": "Tek bir sorun cümlesine beş kez 'neden?' diye sorup belirtiden kök nedene inen teknik.",
+    "topic": "is-ihtiyaci-ve-kok-neden",
+    "aliases": ["5 Whys", "5 neden"]
+  },
+  {
+    "term": "Beyan edilmiş gereksinim",
+    "english": "Stated requirement",
+    "definition": "Bir paydaşın dile getirdiği, henüz analiz edilmemiş gereksinim. Çoğu zaman gerçek ihtiyaçtan çok bir isteği yansıtır.",
+    "topic": "is-ihtiyaci-ve-kok-neden"
+  },
+  {
+    "term": "Çıkarma",
+    "english": "Elicitation",
+    "definition": "Gereksinimi paydaşlardan ve başka kaynaklardan yinelemeli olarak türetmek: görüşme, gözlem, anket, atölye, prototip, belge incelemesi.",
+    "topic": "gereksinim-cikarma-teknikleri",
+    "aliases": ["Elicitation"]
+  },
+  {
+    "term": "Gereksinim atölyesi",
+    "english": "Requirements workshop",
+    "definition": "Seçilmiş paydaşların tarafsız bir kolaylaştırıcıyla gereksinimi birlikte tanımladığı ya da netleştirdiği toplantı.",
+    "topic": "gereksinim-cikarma-teknikleri"
+  },
+  {
+    "term": "İş gereksinimi",
+    "english": "Business requirement",
+    "definition": "Bir değişimin neden başlatıldığını ve başarının nasıl ölçüleceğini anlatan hedefler, amaçlar ve sonuçlar.",
+    "topic": "gereksinim-turleri"
+  },
+  {
+    "term": "Paydaş gereksinimi",
+    "english": "Stakeholder requirement",
+    "definition": "Belirli bir paydaşın ya da grubun ihtiyacı. İş gereksinimiyle çözüm gereksinimi arasında köprü kurar.",
+    "topic": "gereksinim-turleri"
+  },
+  {
+    "term": "İşlevsel gereksinim",
+    "english": "Functional requirement",
+    "definition": "Çözümün sahip olması gereken yetenek: nasıl davranacağı ve hangi bilgiyi yöneteceği.",
+    "topic": "gereksinim-turleri",
+    "aliases": ["Functional requirement"]
+  },
+  {
+    "term": "Geçiş gereksinimi",
+    "english": "Transition requirement",
+    "definition": "Bugünden yarına geçmek için gereken ve değişim bitince gerekmeyen yetenek ya da koşul: eğitim, veri taşıma, eski metinleri kaldırmak.",
+    "topic": "gereksinim-turleri"
+  },
+  {
+    "term": "Use case",
+    "english": "Use case",
+    "definition": "Bir aktörün belirli bir hedefe ulaşmak için sistemle arasında geçen gözlenebilir etkileşim; ana senaryo ve uzantılarla yazılır.",
+    "topic": "iyi-gereksinim-use-case-ve-user-story"
+  },
+  {
+    "term": "Aktör",
+    "english": "Actor",
+    "definition": "Bir çözümle etkileşimde belirli bir rolü oynayan insan, cihaz ya da sistem.",
+    "topic": "iyi-gereksinim-use-case-ve-user-story"
+  },
+  {
+    "term": "Senaryo taslağı",
+    "english": "Scenario Outline",
+    "definition": "Gherkin'de aynı adımları bir örnekler tablosundaki farklı değerlerle tekrar çalıştıran yapı.",
+    "topic": "given-when-then",
+    "aliases": ["Scenario Outline"]
+  },
+  {
+    "term": "BPMN",
+    "english": "Business Process Model and Notation",
+    "definition": "OMG'nin süreç çizim standardı (2.0.2, 2014; ISO/IEC 19510). Olaylar, etkinlikler, kapılar ve akışlarla çizer.",
+    "topic": "bpmn-temelleri"
+  },
+  {
+    "term": "Kulvar",
+    "english": "Lane",
+    "definition": "BPMN'de hangi görevden kimin sorumlu olduğunu gösteren şerit. Kulvarlar bir havuzun içinde durur.",
+    "topic": "bpmn-temelleri",
+    "aliases": ["Swimlane"]
+  },
+  {
+    "term": "Boşluk analizi",
+    "english": "Gap analysis",
+    "definition": "Mevcut durumla istenen gelecek durumu karşılaştırıp ele alınması gereken farkları belirlemek.",
+    "topic": "as-is-to-be-ve-bosluk-analizi",
+    "aliases": ["Gap analysis"]
+  },
+  {
+    "term": "İş kuralı",
+    "english": "Business rule",
+    "definition": "İşin kontrolündeki, belirli ve test edilebilir yönerge; davranışı yönlendirir ya da karara ölçüt olur.",
+    "topic": "is-kurallari-ve-karar-tablolari",
+    "aliases": ["Business rule"]
+  },
+  {
+    "term": "Karar tablosu",
+    "english": "Decision table",
+    "definition": "Bir kararın girdilerini, çıktılarını ve her satırda bir kuralı toplayan tablo. Eksik ve çakışan kuralları görünür kılar.",
+    "topic": "is-kurallari-ve-karar-tablolari",
+    "aliases": ["Decision table"]
+  },
+  {
+    "term": "DMN",
+    "english": "Decision Model and Notation",
+    "definition": "OMG'nin karar modelleme standardı: karar tablolarını da içeren bir notasyon ve ifade dili; BPMN ile birlikte kullanılır.",
+    "topic": "is-kurallari-ve-karar-tablolari"
+  },
+  {
+    "term": "Bağlam diyagramı",
+    "english": "System context diagram",
+    "definition": "Sistemi tek bir kutu olarak ortaya, onunla etkileşen kişi ve sistemleri etiketli ilişkilerle çevresine koyan çizim.",
+    "topic": "baglam-diyagrami-ve-kapsam",
+    "aliases": ["Context diagram"]
+  },
+  {
+    "term": "Veri sözlüğü",
+    "english": "Data dictionary",
+    "definition": "Veri hakkındaki bilgilerin merkezî deposu: her alanın anlamı, ilişkisi, kaynağı, kullanımı ve biçimi.",
+    "topic": "veri-gereksinimleri",
+    "aliases": ["Data dictionary"]
+  },
+  {
+    "term": "İzlenebilirlik",
+    "english": "Traceability",
+    "definition": "Gereksinimleri ihtiyaçtan uygulanan çözüme ve teste kadar izleyebilmek; değişikliğin etkisini gösterir.",
+    "topic": "izlenebilirlik",
+    "aliases": ["Traceability"]
+  },
+  {
+    "term": "Kullanıcı kabul testi",
+    "english": "User acceptance testing",
+    "definition": "Çözümü kullanacak kişilerin, kabul kriterlerine karşı sistemi kabul edip etmediğini belirlemek için yaptığı test.",
+    "topic": "cozum-degerlendirme-ve-uat",
+    "aliases": ["UAT", "User acceptance testing"]
+  },
+  {
+    "term": "Geçerleme",
+    "english": "Validation (requirements)",
+    "definition": "Bir çıktının amaçlanan kullanıma ve paydaşın ihtiyacına uygun olduğunu kontrol etmek: 'doğru şeyi mi yapıyoruz?'",
+    "topic": "cozum-degerlendirme-ve-uat"
+  }
+]

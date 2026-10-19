@@ -192,6 +192,109 @@ bir PR en geç bir iş günü içinde incelenir; Daily Scrum'a gelemeyen, panoya
 tedarikçisinden geç gelen API değişiklikleri. Eylem: "Tedarikçinin API değişikliklerini Ayşe her salı
 panoya işler" (sahibi Ayşe, Sprint 14 sonunda kontrol).
 
+## İade kuralları analizi
+
+İş Analizi dersleri bu rakamları kullanır. Analizi panel takımında **Ayşe** (BA) yürütür; karar
+sahibi **Ozan** (PO).
+
+**Bugünkü durum:** iade kuralı üç yerde yazılı ve üçü birbirini tutmuyor: uygulamadaki iptal metni,
+Demlik Panel'in yardım sayfası ve destek ekibinin el kitabı. Müşteri iptal isteğini destek ekibine
+yazar; destek dükkânı arar, sonra iadeyi Panel'den elle başlatır. Ödeme kuruluşu iadeyi 1–3 iş
+gününde karta yansıtır.
+
+**Sipariş durumları:** Alındı → Hazırlanıyor → Hazır → Teslim edildi. İptal ilk üç durumda olabilir.
+
+**Sayılar:** geçen ay iadeyle ilgili 310 destek talebi geldi. Ayşe 60 tanesini okudu: 26'sı
+"beklediğim iadeyi alamadım", 18'i "dükkân iptal etti ama haberim olmadı", 16'sı başka konular.
+
+**Beş neden (Ayşe'nin atölyesi):**
+
+1. Müşteriler neden şikâyet ediyor? Bekledikleri iadeyi alamıyorlar.
+2. Neden? Uygulama "tam iade" diyor, destek el kitabı "hazırlanan siparişe iade yok" diyor.
+3. Neden iki metin farklı? Üçünü üç ayrı ekip, farklı zamanlarda yazdı.
+4. Neden ayrı ekipler yazdı? İade kuralının bir sahibi yok.
+5. Neden sahibi yok? İade, ilk yıl bir destek politikası olarak başladı; hiçbir zaman ürün gereksinimi
+   olarak yazılmadı.
+
+Kök neden: **iade kuralının tek bir kaynağı ve sahibi yok.**
+
+**İhtiyaç → hedef → amaç:**
+
+- İhtiyaç: müşteri ve dükkân, bir iptalde ne kadar iade yapılacağını önceden ve aynı şekilde bilmeli.
+- Hedef: iade kararı tek bir kurala bağlı ve her yerde aynı olsun.
+- Amaç: üç ay içinde iadeyle ilgili destek taleplerini ayda 310'dan 150'nin altına indirmek.
+
+**Çıkarma (elicitation):** dört dükkân çalışanıyla görüşme; iki dükkânda sabah yoğunluğunda gözlem;
+üç metnin doküman analizi; 60 destek talebinin okunması; Ozan, destek ekibi lideri ve finansla bir
+atölye (kolaylaştırıcı Kaan). **Gözlemden çıkan:** stok bittiğinde çalışanlar siparişi iptal etmiyor,
+müşteriyi telefonla arayıp başka ürün öneriyor. Görüşmelerde bunu kimse söylememişti.
+
+**İade kararı (karar tablosu, UNIQUE):**
+
+| # | Sipariş durumu | İptal eden | Stok sorunu | İade | %20 kupon |
+|---|---|---|---|---|---|
+| 1 | Alındı | Müşteri | – | Tam | Hayır |
+| 2 | Alındı | Dükkân | Hayır | Tam | Hayır |
+| 3 | Alındı | Dükkân | Evet | Eksik ürün kadar | Hayır |
+| 4 | Hazırlanıyor | Müşteri | – | Yok | Hayır |
+| 5 | Hazırlanıyor | Dükkân | Hayır | Tam | Evet |
+| 6 | Hazırlanıyor | Dükkân | Evet | Eksik ürün kadar | Hayır |
+| 7 | Hazır | Müşteri | – | Yok | Hayır |
+| 8 | Hazır | Dükkân | – | Tam | Evet |
+
+3 durum × 2 iptal eden × 2 stok = 12 olasılık; sekiz kural hepsini tam bir kez karşılar. "Stok
+sorunu" yalnız dükkân bir ürünü veremediğinde "Evet" olur; o zaman sipariş kalan ürünlerle sürer.
+
+**Gereksinimlerden örnekler:**
+
+| Kimlik | Tür | Metin |
+|---|---|---|
+| İG-1 | İş | Üç ay içinde iadeyle ilgili destek talepleri ayda 310'dan 150'nin altına iner. |
+| PG-1 | Paydaş | Dükkân çalışanı, iptal etmeden önce müşterinin ne kadar iade alacağını görür. |
+| PG-2 | Paydaş | Müşteri, iptal düğmesine basmadan önce ne kadar iade alacağını görür. |
+| FG-1 | İşlevsel | Sistem iade tutarını "İade kararı" tablosuna göre hesaplar. |
+| FG-2 | İşlevsel | Sistem iadeyi ödeme kuruluşuna iptal anında otomatik gönderir. |
+| FG-3 | İşlevsel | Sistem, kupon gereken iptalde %20 kuponu müşterinin hesabına ekler. |
+| FG-4 | İşlevsel | Sistem, dükkân iptal ettiğinde müşteriye sebebiyle birlikte bildirim gönderir. |
+| İOG-1 | İşlevsel olmayan | İade kararı iptalden sonra en geç 5 saniye içinde müşterinin ekranında görünür. |
+| GG-1 | Geçiş | Yayından önce eski yardım sayfası ve el kitabındaki iade metinleri kaldırılır; destek ekibi bir saatlik eğitim alır. |
+
+**Bağlam:** "Demlik iade" sistemi müşteriden ve dükkân çalışanından iptal alır, destek ekibine
+itirazları gösterir, ödeme kuruluşuna iadeyi gönderir, finansa gün sonu iade raporu verir.
+**Kapsam dışı:** müşterinin bankasına yaptığı ödeme itirazları (chargeback) ve kupon kampanyaları.
+
+**Veri:** yeni varlık **İade** (iade no, sipariş no, tutar, sebep, uygulanan kural no, durum:
+başlatıldı / tamamlandı / başarısız, oluşturulma zamanı). Kart bilgisi tutulmaz; müşteriye sipariş
+üzerinden bağlanır.
+
+**UAT (iki hafta önce yayın):** üç pilot dükkânın çalışanları ve iki destek uzmanı, bir hafta,
+15 senaryo (12 kombinasyon + 3 uç durum: ödeme kuruluşu yanıt vermez, aynı siparişe iki iptal, gece
+yarısı iptal). 14 senaryo geçti; 8. kuralda kupon müşteriye bildirilmedi, düzeltildi. Çalışanlar
+"Kısmi iade" ifadesini anlamadı; metin "Eksik ürünlerin tutarı iade edilir" oldu.
+
+**Ayrıntılar (derslerde geçen sabitler):**
+
+- Bütün dükkânlarda günde 30–40 iptal olur. Örneklerdeki müşteri Ada, Moda şubesi, 165 TL'lik sipariş;
+  kupon sipariş tutarının %20'si, yani 33 TL (Ozan'ın kararı).
+- Use case "Siparişi dükkân olarak iptal et": ödeme kuruluşu yanıt vermezse sistem 3 kez dener, sonra
+  iadeyi "başarısız" kaydeder ve destek ekibine uyarı düşer (5a); aynı siparişe ikinci iptal reddedilir (5b).
+- Boşluklar: B1 tek kural kaynağı, B2 müşteriye bildirim, B3 otomatik iade, B4 çalışanın tutarı görmesi,
+  B5 eksik ürün işaretleme, B6 finansa gün sonu raporu, B7 telefonla ürün önerisini sisteme taşımak.
+  İlk sürüm B1–B5 (B5, karar tablosunun 3. ve 6. kuralı ona dayandığı için öne alındı), ikinci sürüm B6,
+  B7 sonraki çeyreğin adayı. Varsayım "ödeme kuruluşu kısmi iadeyi otomatik kabul eder" ilk sprintten
+  önce doğrulandı.
+- Story'ler: S-41 (çalışan tutarı görür), S-42 (karar tablosu), S-43 (otomatik iade), S-44 (kupon),
+  S-45 (bildirim), S-46 (eski metinler ve eğitim), S-47 (müşteri tutarı görür; sipariş takımına gitti).
+  Otomatik testler T-K1…T-K8 (kural başına bir), yük testi P-1, kabul senaryoları UAT-01…UAT-15.
+- Veri sözlüğü: iade_no (IA-…), siparis_no, tutar, sebep (stok sorunu / müşteri isteği / dükkân kapalı /
+  diğer; eskiden serbest metindi), kural_no (1–8), durum, olusturma. Müşterinin telefonu iade kaydına
+  alınmadı. Saklama süresi hukuka soruldu, açık soru.
+- Sprint ortasında finans kuponun %15'e inmesini istedi; Ozan etki analizini görüp değişikliği bir
+  sonraki sürüme bıraktı.
+
+**Sonra ne oldu:** üç ay sonra iadeyle ilgili destek talepleri ayda 140'a indi; amaç tuttu. İki dükkân
+stok bitince hâlâ müşteriyi telefonla arıyordu (kurum sınırlaması); Ayşe B7'yi önerdi.
+
 ## Paydaşlar
 
 | Paydaş | İlgi | Etki |

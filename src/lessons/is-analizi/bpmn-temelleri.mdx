@@ -1,0 +1,160 @@
+---
+summary: "BPMN iş süreçlerini herkesin okuyabileceği standart bir notasyonla çizer: olaylar, etkinlikler, kapılar ve akışlar. Kulvarlar kimin ne yaptığını, havuzlar ayrı katılımcıları gösterir."
+outcomes:
+  - "BPMN'in dört temel öğesini ve kapı türlerini tanıyabilirsin."
+  - "Havuz, kulvar, sıra akışı ve mesaj akışını ayırt edebilirsin."
+  - "Bir süreci sade bir BPMN çizimiyle anlatabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "OMG — Business Process Model and Notation (BPMN 2.0.2)"
+    url: "https://www.omg.org/spec/BPMN"
+  - label: "ISO/IEC 19510:2013 — Business Process Model and Notation"
+    url: "https://www.iso.org/standard/62652.html"
+  - label: "Camunda — BPMN Reference"
+    url: "https://camunda.com/bpmn/reference/"
+  - label: "Camunda — What is BPMN?"
+    url: "https://camunda.com/bpmn/"
+additions:
+  - "BPMN'in sürümü, amacı ve ISO standardı (OMG, ISO)"
+  - "Olay, etkinlik, kapı, akış, havuz ve kulvar (Camunda BPMN başvurusu)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Swimlane from "~/components/diagrams/primitives/Swimlane.astro";
+
+Ayşe iade sürecini önce düzyazıyla anlatmayı denedi: "Çalışan ürün bitince müşteriyi arar, ulaşamazsa iptal eder, sonra müşteri destek ekibine yazar, destek dükkânı arar…" Üçüncü cümlede finanstan gelen soru geldi: "Peki iade kimde başlıyor? Ben nerede devreye giriyorum?"
+
+Düzyazı bir sırayı anlatır ama kimin ne yaptığını ve yolların nerede ayrıldığını göstermekte zorlanır. Bu ders, süreçleri BPMN ile çizmeyi anlatır.
+
+## BPMN nedir?
+
+**BPMN** (Business Process Model and Notation), OMG'nin (Object Management Group) yayımladığı süreç çizim standardıdır. 2.0 sürümü Aralık 2010'da, bugünkü 2.0.2 sürümü Ocak 2014'te yayımlandı. Aynı metin ISO/IEC 19510:2013 olarak uluslararası standarttır.
+
+OMG'ye göre BPMN iş süreci diyagramlarının fiilî standardıdır. İki amacı vardır: süreci tasarlayan, yöneten ve uygulayan paydaşların doğrudan kullanabilmesi ve bir yazılıma çevrilebilecek kadar kesin olması. ISO'nun özeti de aynı şeyi söyler: ilk taslağı çizen analistten, onu uygulayan geliştiriciye ve süreci izleyecek iş insanına kadar herkesin okuyabileceği bir notasyon.
+
+## Dört temel öğe
+
+Camunda'nın BPMN başvurusu öğeleri dört şekle toplar:
+
+| Öğe | Şekil | Anlamı | Örnek |
+|---|---|---|---|
+| **Olay** (event) | Daire | Bir şey olur: başlangıç, ara ya da bitiş | "Ürün bitti", "İade tamamlandı" |
+| **Etkinlik** (activity) | Dikdörtgen | Yapılan bir iş: görev ya da alt süreç | "İptal sebebini seç" |
+| **Kapı** (gateway) | Eşkenar dörtgen | Yolların ayrıldığı ya da birleştiği yer | "Kupon gerekli mi?" |
+| **Sıra akışı** (sequence flow) | Ok | Etkinliklerin sırası | — |
+
+Kapıların türü yolların nasıl ayrıldığını söyler:
+
+- **Dışlayıcı kapı** (exclusive, XOR): yollardan yalnız biri seçilir. "Kupon gerekli mi? Evet ya da hayır."
+- **Paralel kapı** (parallel, AND): bütün yollar aynı anda başlar. "İadeyi gönder ve bildirimi hazırla."
+- **Kapsayıcı kapı** (inclusive, OR): yollardan biri ya da birkaçı seçilir.
+- **Olaya dayalı kapı** (event-based): hangi olayın önce geleceğini bekler.
+
+## Havuz, kulvar ve mesaj
+
+**Kulvar** (lane), "hangi görevden kim sorumlu?" sorusuna cevap verir. Kulvarlar bir **havuzun** (pool) içinde durur. Camunda'nın benzetmesiyle havuz, süreci yöneten bir orkestra şefi gibidir.
+
+İki ayrı kuruluş, örneğin Demlik ve ödeme kuruluşu, ayrı havuzlarda çizilir. Aralarındaki iletişim sıra akışıyla değil, kesikli bir **mesaj akışıyla** (message flow) gösterilir. Bir havuz öbürünün içindeki sırayı yönetemez; yalnız mesaj gönderebilir.
+
+<Swimlane
+  label="Gelecek durum: dükkânın siparişi iptal etmesi"
+  caption="Süreç, dükkân çalışanı kulvarında 'ürün bitti' olayıyla başlar. Çalışan iptal sebebini seçer ve onaylar. Demlik kulvarında karar tablosu uygulanır. Ardından bir dışlayıcı kapı gelir: kupon gerekli mi? Evet ise Demlik kuponu ekler. İki yol da iadeyi gönderme ve bildirim adımında birleşir. Süreç müşteri kulvarında, bildirimin alınmasıyla biter. Ödeme kuruluşu ayrı bir kuruluş olduğu için gerçek BPMN'de ayrı bir havuzdur ve Demlik ona mesaj akışıyla iade isteği gönderir; bu sade çizimde gösterilmedi."
+  lanes={["Dükkân çalışanı", "Demlik", "Müşteri"]}
+  steps={[
+    { id: "s", lane: 0, col: 0, title: "Ürün bitti", kind: "start" },
+    { id: "a", lane: 0, col: 1, title: "Sebep seç, iptali onayla" },
+    { id: "b", lane: 1, col: 2, title: "Karar tablosunu uygula" },
+    { id: "d", lane: 1, col: 3, title: "Kupon gerekli mi?", kind: "decision" },
+    { id: "k", lane: 1, col: 4, title: "Kupon ekle" },
+    { id: "n", lane: 1, col: 5, title: "İadeyi gönder, bildir", tone: "progress" },
+    { id: "e", lane: 2, col: 5, title: "Bildirim alındı", kind: "end" },
+  ]}
+  flows={[
+    { from: "s", to: "a" },
+    { from: "a", to: "b" },
+    { from: "b", to: "d" },
+    { from: "d", to: "k", label: "evet" },
+    { from: "d", to: "n", label: "hayır" },
+    { from: "k", to: "n" },
+    { from: "n", to: "e" },
+  ]}
+/>
+
+## Ne kadar ayrıntı?
+
+BPMN'in yüzlerce öğesi vardır. Camunda'nın başvurusu, görev türleri gibi bazı öğelerin teknik olarak çalıştırılacak süreçler için tasarlandığını ve pratikte seyrek kullanıldığını söyler.
+
+İş analizinde sade başla: olaylar, görevler, dışlayıcı kapı, kulvarlar. Çizim, okuyan herkesin "ben nerede devreye giriyorum?" sorusunu cevaplıyorsa yeterince ayrıntılıdır. Süreç bir iş akışı motorunda çalıştırılacaksa ayrıntı geliştiriciyle birlikte artırılır.
+
+**BPMN ≠ ekran akışı.** BPMN işin sırasını ve sorumluluğunu çizer; hangi ekranda hangi düğmeye basıldığını değil. Ekran akışı tasarımın işidir.
+
+<Case>
+
+Ayşe iki çizim yaptı:
+
+1. **Mevcut durum.** Dört kulvar: çalışan, müşteri, destek ekibi, finans. Gözlemden gelen telefonla arama adımı ilk kez bir kutu oldu. Finans, kendi kulvarının en sonda ve elle eşleştirme yaptığını görünce "işte bu" dedi.
+2. **Gelecek durum.** Destek ekibinin kulvarı neredeyse boşaldı; yalnız başarısız iadeler kaldı. Ödeme kuruluşu ayrı bir havuz oldu.
+
+İki çizimi yan yana koyunca boşluklar görünür oldu. Bir sonraki adım onları listelemekti.
+
+</Case>
+
+<Tool slug="as-is-to-be" />
+
+<Lenses>
+<Lens role="business-analyst">
+
+- **Önce mevcut durumu çiz.** Gözlemden gelen gayriresmî adımlar, yalnız mevcut durum çiziminde görünür.
+- **Az öğeyle başla.** Okuyucu bir şekli tanımıyorsa, çizim bir bilmeceye döner.
+- **Kulvarları paydaşlarla gözden geçir.** Herkes kendi kulvarındaki adımları doğrulasın.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kulvarlara bakarak kapsamı tartış.** Hangi kulvarın işi değişiyor, hangisi aynı kalıyor?
+- **Kapılar karar noktalarıdır.** Her dışlayıcı kapının arkasında bir iş kuralı vardır; kuralın sahibi sensin.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- BPMN, OMG'nin süreç çizim standardıdır; güncel sürüm 2.0.2 (2014), aynı zamanda ISO/IEC 19510.
+- Dört temel öğe: olay (daire), etkinlik (dikdörtgen), kapı (eşkenar dörtgen), sıra akışı (ok).
+- Dışlayıcı kapı bir yol, paralel kapı bütün yollar, kapsayıcı kapı bir ya da birkaç yol seçer.
+- Kulvar kimin sorumlu olduğunu gösterir; ayrı kuruluşlar ayrı havuzlardadır ve mesaj akışıyla konuşur.
+- İş analizinde sade başla: çizim herkesin "ben neredeyim?" sorusunu cevaplıyorsa yeterlidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Dışlayıcı kapı ile paralel kapı arasındaki fark nedir?">
+
+Dışlayıcı kapıda yollardan yalnız biri seçilir. Paralel kapıda bütün yollar aynı anda başlar.
+
+</SelfCheck>
+
+<SelfCheck question="Demlik ile ödeme kuruluşu neden aynı havuzda iki kulvar olarak değil, iki ayrı havuz olarak çizilir?">
+
+İki ayrı kuruluştur; Demlik ödeme kuruluşunun iç sürecini yönetemez. Ayrı havuzlar bunu gösterir ve aralarındaki iletişim mesaj akışıyla çizilir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir analist ilk çizimine on farklı görev türü ve beş olay türü koymuş. Paydaşlar okuyamıyor. Ne önerirsin?">
+
+Sadeleştirmeyi. İş analizi çizimi için olay, görev, dışlayıcı kapı ve kulvar çoğu zaman yeter. Ayrıntılı türler, süreç bir iş akışı motorunda çalıştırılacaksa geliştiriciyle birlikte eklenir.
+
+</SelfCheck>
+
+<SelfCheck question="Mevcut durum çizimini neden gelecek durumdan önce yapmalı?">
+
+Bugün işi ayakta tutan gayriresmî adımlar, örneğin telefonla arama, yalnız mevcut durumda görünür. Atlanırsa yeni süreç bu işi kimseye vermez ve sorun geri döner.
+
+</SelfCheck>

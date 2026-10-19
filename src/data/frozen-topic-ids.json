@@ -265,6 +265,19 @@
     "cevik-pratikler/scrum-master-isi",
     "cevik-pratikler/scrum-rehberi",
     "cevik-pratikler/story-mapping",
-    "cevik-pratikler/takim-dinamikleri-ve-calisma-sozlesmesi"
+    "cevik-pratikler/takim-dinamikleri-ve-calisma-sozlesmesi",
+    "is-analizi/as-is-to-be-ve-bosluk-analizi",
+    "is-analizi/babok-haritasi",
+    "is-analizi/baglam-diyagrami-ve-kapsam",
+    "is-analizi/bpmn-temelleri",
+    "is-analizi/cozum-degerlendirme-ve-uat",
+    "is-analizi/gereksinim-cikarma-teknikleri",
+    "is-analizi/gereksinim-turleri",
+    "is-analizi/given-when-then",
+    "is-analizi/is-ihtiyaci-ve-kok-neden",
+    "is-analizi/is-kurallari-ve-karar-tablolari",
+    "is-analizi/iyi-gereksinim-use-case-ve-user-story",
+    "is-analizi/izlenebilirlik",
+    "is-analizi/veri-gereksinimleri"
   ]
 }

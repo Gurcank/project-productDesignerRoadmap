@@ -1,0 +1,153 @@
+---
+summary: "İş analizi, ihtiyaçları tanımlayıp değer üreten çözümler önererek değişimi mümkün kılar. BABOK bu işi altı bilgi alanı ve 30 görevle anlatır; görevler sırayla değil, işin gerektirdiği düzende yapılır."
+outcomes:
+  - "İş analizinin BABOK'taki tanımını ve tanımdaki altı anahtar kelimeyi söyleyebilirsin."
+  - "Altı bilgi alanının her birinin hangi soruya cevap verdiğini anlatabilirsin."
+  - "Analistin bir unvan değil, bir iş olduğunu ve görevlerin neden sıralı olmadığını açıklayabilirsin."
+minutes: 8
+standard: 2
+sources:
+  - label: "BABOK Guide — Ek A: Sözlük (IIBA)"
+    url: "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"
+  - label: "IIBA — Business Analysis Standard: bilgi alanları ve görevler"
+    url: "https://www.iiba.org/knowledgehub/the-business-analysis-standard/5-applying-business-analysis-tasks/5-3-business-analysis-knowledge-areas/"
+additions:
+  - "İş analizinin ve iş analistinin tanımı (BABOK sözlüğü)"
+  - "Altı bilgi alanı ve 30 görev (IIBA Business Analysis Standard)"
+  - "Uyarlanabilir yaklaşım ve Agile Extension (BABOK sözlüğü)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Ozan, panel takımının Product Owner'ı, Ayşe'ye kısa bir mesaj yazdı: "İade kuralları her yerde farklı. Doğrusunu bir sayfaya yaz, yeter."
+
+Ayşe sayfayı yazmadan önce birkaç soru sordu. Hangi kural doğru? Kim karar veriyor? Destek ekibi bugün ne yapıyor? Yeni kural yayına girince eski metinlere ne olacak? Başarılı olduğunu nereden anlayacağız? Bir sayfa yazmak işin küçük bir parçasıydı. Bu ders, iş analizinin bütününü bir haritada gösterir.
+
+## İş analizi nedir?
+
+BABOK Guide, IIBA'nın (International Institute of Business Analysis) iş analizi rehberidir. İş analizini şöyle tanımlar: bir kurumun bağlamında, **ihtiyaçları** tanımlayıp **paydaşlara** **değer** üreten **çözümler** önererek **değişimi** mümkün kılma pratiği.
+
+Tanımdaki altı kelime işin kendisidir:
+
+| Kelime | Anlamı | Ayşe'nin işinde |
+|---|---|---|
+| Değişim | Bir ihtiyaca karşılık yapılan dönüşüm | Tek ve tutarlı bir iade kuralı |
+| İhtiyaç | Ele alınacak bir sorun ya da fırsat | Müşteri ve dükkân iadeyi önceden bilemiyor |
+| Çözüm | İhtiyacı karşılamanın belirli bir yolu | Karar tablosu ve otomatik iade |
+| Paydaş | Değişimle, ihtiyaçla ya da çözümle ilişkisi olan kişi ya da grup | Müşteri, dükkân, destek, finans |
+| Değer | Paydaş için bir şeyin önemi ve yararı | Daha az şikâyet, daha az telefon |
+| Bağlam | Değişimi etkileyen ve ondan etkilenen koşullar | Ödeme kuruluşunun 1–3 günlük iadesi |
+
+**Analist bir unvan değildir.** Sözlüğe göre iş analisti, unvanı ne olursa olsun iş analizi yapan herkestir. Bir Product Owner kabul kriteri yazarken, bir UX Researcher bir ihtiyacı netleştirirken de iş analizi yapar.
+
+## Altı bilgi alanı
+
+BABOK işi altı **bilgi alanına** (knowledge area) böler. IIBA'nın Business Analysis Standard'ı bu alanlara dağılmış 30 görev tanımlar.
+
+<Tree
+  label="BABOK'un altı bilgi alanı"
+  caption="İş analizi altı bilgi alanına ayrılır. Planlama ve izleme, analiz işinin kendisini düzenler. Çıkarma ve iş birliği paydaşlardan bilgi toplar. Gereksinim yaşam döngüsü, gereksinimleri izler, sıralar ve onaylatır. Strateji analizi bugünü ve hedeflenen geleceği tanımlar. Gereksinim analizi ve tasarım, ihtiyacı modellere ve çözüm seçeneklerine çevirir. Çözüm değerlendirme, yayındaki çözümün değerini ölçer. Görev sayıları sırasıyla beş, beş, beş, dört, altı ve beştir."
+  root={{
+    title: "İş analizi",
+    tone: "accent",
+    children: [
+      { title: "Planlama ve izleme", sub: "5 görev · işi düzenle" },
+      { title: "Çıkarma ve iş birliği", sub: "5 görev · bilgiyi topla" },
+      { title: "Gereksinim yaşam döngüsü", sub: "5 görev · izle, sırala, onayla" },
+      { title: "Strateji analizi", sub: "4 görev · bugün ve yarın" },
+      { title: "Gereksinim analizi ve tasarım", sub: "6 görev · modelle, seçenek sun", tone: "progress" },
+      { title: "Çözüm değerlendirme", sub: "5 görev · değeri ölç" },
+    ],
+  }}
+/>
+
+| Alan (İngilizcesi) | Cevap verdiği soru | Görevlerden örnek |
+|---|---|---|
+| Planlama ve izleme (Business Analysis Planning and Monitoring) | Analizi nasıl yapacağız, kimi ne zaman dahil edeceğiz? | Paydaş katılımını planla; bilgi yönetimini planla |
+| Çıkarma ve iş birliği (Elicitation and Collaboration) | Paydaşlar ne biliyor, ne istiyor? | Çıkarmaya hazırlan; çıkarmayı yap; sonuçları teyit et |
+| Gereksinim yaşam döngüsü (Requirements Life Cycle Management) | Gereksinimler doğduktan sonra nasıl yönetilir? | İzle; sırala; değişikliği değerlendir; onaylat |
+| Strateji analizi (Strategy Analysis) | Neredeyiz, nereye gitmek istiyoruz, aradaki risk ne? | Mevcut durumu analiz et; gelecek durumu tanımla |
+| Gereksinim analizi ve tasarım (Requirements Analysis and Design Definition) | İhtiyaç hangi gereksinimlere ve çözüm seçeneklerine dönüşüyor? | Belirt ve modelle; doğrula; geçerle; seçenekleri tanımla |
+| Çözüm değerlendirme (Solution Evaluation) | Çözüm beklenen değeri veriyor mu? | Performansı ölç; sınırlamaları değerlendir; eylem öner |
+
+Bu bölümün dersleri bu alanları izler. Kök neden ve gelecek durum strateji analizine, çıkarma teknikleri ikinci alana, gereksinim türleri ve modeller beşinci alana, izlenebilirlik dördüncü alana, UAT altıncı alana denk gelir.
+
+## Görevler sıralı değil
+
+Altı alan bir şelale değildir. Standard, görevlerin işin ihtiyacına en uygun sırayla uygulanabileceğini söyler. Ayşe bir gün gözlem yapar, ertesi gün bir kuralı modeller, bir sonraki gün yeni bir paydaş bulup planı günceller.
+
+Sözlük bunu **uyarlanabilir yaklaşım** (adaptive approach) olarak da tanımlar. Çözüm, öğrenme ve keşif döngüleriyle ve geri bildirimle şekillenir; kararlar olabildiğince geç verilir. IIBA, Agile Alliance ile birlikte 2013'te BABOK'un çevik eki olan Agile Extension'ı yayımladı.
+
+**Analiz ≠ şartname yazmak.** Belge, analizin çıktılarından yalnız biridir. Ayşe'nin asıl işi, Ozan'ın doğru kararı vermesini sağlayacak bilgiyi bulmak ve herkesin aynı şeyi anlamasını sağlamaktır.
+
+<Case>
+
+Ayşe iade işini altı alana yerleştirdi ve her biri için bir soru yazdı:
+
+1. **Planlama ve izleme:** kimlerle konuşacağım? Müşteri, dükkân çalışanı, destek ekibi, finans. Karar Ozan'da.
+2. **Strateji analizi:** bugün iade nasıl yürüyor, olması gereken ne? Sorunun kök nedeni ne?
+3. **Çıkarma ve iş birliği:** dükkân çalışanlarıyla görüşme, iki dükkânda gözlem, 60 destek talebini okuma.
+4. **Gereksinim analizi ve tasarım:** kuralları bir karar tablosunda topla, süreci çiz.
+5. **Gereksinim yaşam döngüsü:** her gereksinime bir kimlik ver, testlere bağla, Ozan'a onaylat.
+6. **Çözüm değerlendirme:** yayından üç ay sonra destek taleplerine bak.
+
+Sıra bu değildi; gözlemden çıkan bir bulgu onu iki kez planlamaya geri gönderdi. Ama hiçbir alanı atlamadı.
+
+</Case>
+
+<Lenses>
+<Lens role="business-analyst">
+
+- **Haritayı bir kontrol listesi gibi kullan.** Her işte altı alana bak; atladığın bir alan, sonradan çıkan bir sürprizdir.
+- **Önce planla.** Kimin karar verdiğini ve kiminle konuşacağını yazmadan çıkarmaya başlama.
+- **Belgeyi amaç sanma.** Çıktın ortak anlayış ve doğru karardır; belge onun taşıyıcısıdır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Bu işin bir kısmını sen de yapıyorsun.** Kabul kriteri yazmak, bir talebin nedenini sormak iş analizidir.
+- **Kararı sen ver, bilgiyi analistten iste.** Analist seçenekleri ve etkilerini getirir; sıralama ve onay senin.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- İş analizi ihtiyaçları tanımlayıp değer üreten çözümler önererek değişimi mümkün kılar.
+- Tanımın altı kelimesi: değişim, ihtiyaç, çözüm, paydaş, değer, bağlam.
+- İş analisti, unvanı ne olursa olsun bu işi yapan herkestir.
+- BABOK altı bilgi alanı tanımlar; Business Analysis Standard bunlara dağılmış 30 görev sayar.
+- Görevler sıralı değildir; uyarlanabilir yaklaşımda çözüm öğrenme döngüleriyle şekillenir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="BABOK'a göre iş analizinin tanımı nedir?">
+
+Bir kurumun bağlamında, ihtiyaçları tanımlayıp paydaşlara değer üreten çözümler önererek değişimi mümkün kılma pratiği.
+
+</SelfCheck>
+
+<SelfCheck question="Takımında 'iş analisti' unvanlı kimse yok. Bu, iş analizi yapılmadığı anlamına mı gelir?">
+
+Hayır. BABOK'a göre iş analisti, unvanı ne olursa olsun iş analizi yapan herkestir. Kabul kriteri yazan PO, ihtiyacı netleştiren araştırmacı ya da kuralları toplayan geliştirici de bu işi yapar.
+
+</SelfCheck>
+
+<SelfCheck question="Bir analist, 'önce bütün çıkarmayı bitireyim, sonra modellemeye geçerim' diyor. Ne dersin?">
+
+Bilgi alanları bir sıra değildir; Standard görevlerin işin ihtiyacına göre sıralanabileceğini söyler. Modellerken çıkan sorular yeni bir çıkarma turu gerektirir. Kısa döngüler, eksikleri erken gösterir.
+
+</SelfCheck>
+
+<SelfCheck question="Ayşe'nin 'yayından üç ay sonra destek taleplerine bakmak' adımı hangi bilgi alanına girer?">
+
+Çözüm değerlendirme. Bu alan, yayındaki çözümün beklenen değeri verip vermediğini ölçer.
+
+</SelfCheck>

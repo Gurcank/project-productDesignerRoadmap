@@ -1,0 +1,153 @@
+---
+summary: "Bağlam diyagramı sistemi ortaya, onunla etkileşen kişi ve sistemleri çevresine koyar. Kapsamı projenin başında herkesle aynı resim üzerinde konuşmanın en hızlı yoludur."
+outcomes:
+  - "Kapsamın ve bağlam diyagramının ne olduğunu açıklayabilirsin."
+  - "Bir sistemin bağlam diyagramını etiketli ilişkilerle çizebilirsin."
+  - "Diyagramdan kapsam içi ve dışı listesini, arayüz gereksinimlerini çıkarabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "Wikipedia — System context diagram"
+    url: "https://en.wikipedia.org/wiki/System_context_diagram"
+  - label: "BABOK Guide — Ek A: Sözlük (IIBA)"
+    url: "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"
+  - label: "NASA SE Handbook — Appendix C: How to Write a Good Requirement"
+    url: "https://www.nasa.gov/reference/appendix-c-how-to-write-a-good-requirement/"
+additions:
+  - "Kapsam tanımı (BABOK sözlüğü)"
+  - "Sistem bağlam diyagramı ve Kossiakoff ile Sweet'in tanımı (Wikipedia)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Hub from "~/components/diagrams/primitives/Hub.astro";
+
+Atölyenin ilk on dakikasında finanstan gelen kişi bir şey fark etti: "Benim gün sonu raporum bu işin içinde mi? Kimse bana sormadı." Destek ekibinin lideri başka bir şey sordu: "Müşteri bankasına itiraz ederse o da bu işe giriyor mu?"
+
+İki soru da aynı soruydu: bu işin sınırı nerede? Ayşe tahtaya bir kutu çizdi, ortasına "Demlik iade" yazdı ve herkesten kutuyla konuşan her şeyi etrafına çizmesini istedi. Bu ders, kapsamı bir bağlam diyagramıyla konuşmayı anlatır.
+
+## Kapsam
+
+BABOK **kapsamı** (scope) kontrolün, değişimin, bir çözümün ya da bir ihtiyacın sınırları diye tanımlar. Kapsam bir listeden önce bir sınırdır: neyin içeride, neyin dışarıda olduğu.
+
+Kapsam konusu sitede iki derste daha var. Proje tarafı [Kapsam ve WBS](/proje-yonetimi/kapsam-ve-wbs/) dersinde, ürün tarafı [Kapsam, MVP, PoC ve kapsam kayması](/urun-gelistirme/kapsam-mvp-poc-scope-creep/) dersinde. Bu ders sınırı çizmenin bir aracını anlatır.
+
+## Bağlam diyagramı
+
+**Sistem bağlam diyagramı** (system context diagram), sistem ile çevresi arasındaki sınırı tanımlar ve sistemle etkileşen bütün varlıkları gösterir. Wikipedia'daki maddenin aktardığı Kossiakoff ve Sweet tanımına göre sistem, iç ayrıntısı olmadan ortaya konur. Çevresini onunla etkileşen sistemler, ortamlar ve faaliyetler sarar. Amaç, eksiksiz bir gereksinim ve kısıt kümesi için düşünülmesi gereken dış etkenlere ve olaylara dikkat çekmektir.
+
+Üç kuralı vardır:
+
+- **Sistem tek bir kutudur.** İçinde ne olduğu çizilmez; diyagram sınırı konuşur, tasarımı değil.
+- **Çevredeki her varlık etiketli bir kutudur.** Kişiler, gruplar, başka sistemler.
+- **Her ilişki etiketlidir.** "Müşteri sipariş verir" gibi sade bir dil. Etiketsiz bir çizgi bir soru bırakır.
+
+<Hub
+  label="Demlik iade: bağlam diyagramı"
+  caption="Ortada Demlik iade sistemi tek bir kutu olarak durur. Üstte üç kişi ya da grup vardır: müşteri iptal eder ve bildirim alır; dükkân çalışanı iptal eder ve iade tutarını görür; destek ekibi başarısız iadeleri görür. Altta üç sistem ya da ekip vardır: ödeme kuruluşu iade isteğini alır; finans gün sonu iade raporunu alır; sipariş sistemi siparişin durumunu verir. Müşterinin bankasına yaptığı ödeme itirazları diyagramda yoktur, çünkü kapsam dışıdır."
+  center={{ title: "Demlik iade", sub: "sistem sınırı" }}
+  top={[
+    { title: "Müşteri", rel: "iptal eder, bildirim alır" },
+    { title: "Dükkân çalışanı", rel: "iptal eder, tutarı görür" },
+    { title: "Destek ekibi", rel: "başarısızları görür" },
+  ]}
+  bottom={[
+    { title: "Ödeme kuruluşu", rel: "iade isteği alır", tone: "progress" },
+    { title: "Finans", rel: "iade raporu alır" },
+    { title: "Sipariş sistemi", rel: "durum bilgisi verir" },
+  ]}
+/>
+
+Wikipedia'ya göre bağlam diyagramı genellikle projenin başında kapsamda anlaşmak için kullanılır ve çoğu zaman bir gereksinim belgesinin parçasıdır. Sade dili sayesinde teknik olmayan paydaşlar da onu okuyup düzeltebilir.
+
+## Diyagramdan listeye
+
+Diyagram çizildikten sonra iki liste çıkar:
+
+**Kapsam içi ve kapsam dışı.** Diyagramda olan her şey içeridedir. Konuşulan ama diyagrama girmeyen her şey açıkça "kapsam dışı" diye yazılır. Kapsam dışı yazılmazsa herkes kendi beklentisini içeride sanır.
+
+**Arayüz gereksinimleri.** Her çizgi, sistemle dış dünya arasında bir alışveriştir. NASA'nın eksiksizlik listesinde "arayüz" ayrı bir gereksinim alanıdır. Her çizgi için sor: ne gidiyor, ne geliyor, ne sıklıkla, ne olursa başarısız sayılır?
+
+**Diyagram ≠ mimari.** Bağlam diyagramı sistemin içini göstermez. Kaç servis olduğu, hangi veritabanının kullanıldığı tasarımın konusudur. Diyagramda bunlar görünüyorsa, sınır konuşması tasarım konuşmasına kaymıştır.
+
+<Case>
+
+Atölyede diyagram üç turda oluştu:
+
+1. **İlk tur:** müşteri, dükkân çalışanı, ödeme kuruluşu. Herkesin aklına ilk gelenler.
+2. **İkinci tur:** finans kendini ekletti; gün sonu raporu bir arayüz gereksinimi oldu. Sipariş sistemi de eklendi: iade kararı siparişin durumuna bakmadan verilemezdi.
+3. **Üçüncü tur:** destek ekibinin sorusu cevaplandı. Ödeme itirazları (chargeback) bankanın sürecidir; kapsam dışı. Kupon kampanyaları da kapsam dışı.
+
+Altı çizgi altı arayüz gereksinimine dönüştü. Ayşe kapsam dışı listesini BRD'nin üçüncü bölümüne yazdı; Ozan onayladı.
+
+</Case>
+
+<Tool slug="brd" />
+
+<Lenses>
+<Lens role="business-analyst">
+
+- **Diyagramı ilk atölyede çiz.** Sınırı herkesle aynı resim üzerinde konuşmak, haftalarca süren yanlış anlamayı önler.
+- **Her çizgiyi bir arayüz gereksinimine çevir.** Ne gidiyor, ne geliyor, ne olursa başarısız?
+- **Kapsam dışını yaz.** Sorulan ama dışarıda kalan her şey bir satırdır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kapsam dışı bir karardır.** Onu sen onaylarsın; sonradan gelen "bu da olsun" talebini bu listeye bakarak konuşursun.
+- **Yeni bir kutu kapsam değişikliğidir.** Diyagrama bir varlık eklenmesi, backlog'a yeni işler ekler.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Diyagramı paydaş haritasıyla karşılaştır.** Diyagramda olan ama hiç konuşulmamış bir grup, unutulmuş bir paydaştır.
+- **Dış sistemlere dikkat.** Ödeme kuruluşu gibi bir dış sistemin kısıtı, ürünün ne vaat edebileceğini belirler.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Her dış varlık bir bağımlılık adayıdır.** Ödeme kuruluşu ve sipariş sistemi takvime bağımlılık olarak girer.
+- **Kapsam dışı listesini değişiklik kontrolünde kullan.** Yeni bir talep o listedeyse, bu bir değişiklik talebidir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Kapsam, kontrolün, değişimin, bir çözümün ya da ihtiyacın sınırıdır.
+- Bağlam diyagramı sistemi tek bir kutu olarak ortaya, etkileşen varlıkları çevresine koyar.
+- Her varlık ve her ilişki etiketlidir; sistemin içi çizilmez.
+- Diyagramdan kapsam içi ve dışı listesi ve her çizgi için bir arayüz gereksinimi çıkar.
+- Diyagram projenin başında, kapsamda anlaşmak için çizilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bağlam diyagramının ortasındaki kutunun içine neden ayrıntı çizilmez?">
+
+Diyagramın amacı sistemle çevresi arasındaki sınırı ve etkileşimleri göstermektir. İç ayrıntı, konuşmayı sınırdan tasarıma kaydırır.
+
+</SelfCheck>
+
+<SelfCheck question="Atölyede 'ödeme itirazları' konuşuldu ama diyagrama girmedi. Ne yaparsın?">
+
+Kapsam dışı listesine açıkça yazarım. Yazılmazsa bazı paydaşlar onu kapsamın içinde sanmaya devam eder.
+
+</SelfCheck>
+
+<SelfCheck question="Diyagramdaki 'Finans ← iade raporu alır' çizgisi gereksinimlere nasıl yansır?">
+
+Bir arayüz gereksinimi olur: raporda hangi alanlar var, ne sıklıkla ve hangi saatte gönderiliyor, rapor gönderilemezse ne oluyor. Bu sorular finansla birlikte cevaplanır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir geliştirici bağlam diyagramına üç mikroservis ve bir veritabanı ekledi. Ne dersin?">
+
+Bunlar sistemin içidir; bağlam diyagramına girmez. Diyagram sınırı konuşur. Mimari ayrı bir çizimde, tasarım aşamasında konuşulur.
+
+</SelfCheck>

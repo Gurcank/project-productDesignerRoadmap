@@ -1,0 +1,40 @@
+---
+title: "Kullanıcı kabul testi (UAT) planı"
+summary: "Çözümü kullanacak kişilerin gerçek işlerinden senaryolar yazar; her senaryoyu bir gereksinime bağlar, beklenen sonucu ve test edenin kararını kaydeder."
+kind: "tablo"
+roles: ["business-analyst", "product-owner", "project-manager", "product-manager"]
+lessons: ["is-analizi/cozum-degerlendirme-ve-uat"]
+sources:
+  - label: "ISTQB Glossary — user acceptance testing"
+    url: "https://glossary.istqb.org/en_US/term/user-acceptance-testing"
+  - label: "BABOK Guide — Ek A: Sözlük (IIBA)"
+    url: "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"
+table:
+  columns: ["No", "Senaryo", "Ön koşul", "Adımlar", "Beklenen sonuç", "Gereksinim", "Test eden", "Sonuç", "Not"]
+  example:
+    - ["UAT-01", "Müşteri, alınan siparişi iptal eder (kural 1)", "Sipariş 'Alındı'", "Müşteri uygulamadan iptal eder", "Tam iade; kupon yok; iade tutarı iptalden önce görünür", "FG-1, FG-2, PG-2", "Destek uzmanı", "Geçti", ""]
+    - ["UAT-05", "Dükkân, hazırlanan siparişi stok sorunu olmadan iptal eder (kural 5)", "Sipariş 'Hazırlanıyor'", "Çalışan sebep seçer ve onaylar", "Tam iade ve %20 kupon; müşteriye sebep bildirilir", "FG-1, FG-3, FG-4", "Moda şubesi çalışanı", "Geçti", ""]
+    - ["UAT-06", "Dükkân, bir ürünü bitmiş siparişi iptal eder (kural 6)", "Sipariş 'Hazırlanıyor', iki ürün", "Çalışan bir ürünü eksik işaretler", "Yalnız eksik ürünün tutarı iade edilir; sipariş sürer", "FG-1, FG-4", "Moda şubesi çalışanı", "Geçti", "'Kısmi iade' ifadesi anlaşılmadı; metin değişti"]
+    - ["UAT-08", "Dükkân, hazır siparişi iptal eder (kural 8)", "Sipariş 'Hazır'", "Çalışan iptal eder", "Tam iade ve %20 kupon; müşteriye bildirim", "FG-1, FG-3, FG-4", "Pilot dükkân çalışanı", "Kaldı", "Kupon eklendi ama bildirimde yazmıyor; düzeltildi, yeniden test geçti"]
+    - ["UAT-13", "Ödeme kuruluşu yanıt vermez", "Test ortamında ödeme kuruluşu kapalı", "Çalışan iptal eder", "3 deneme; iade 'başarısız'; destek uyarı görür; müşteriye 'işleniyor'", "FG-2", "Destek uzmanı", "Geçti", ""]
+    - ["UAT-14", "Aynı siparişe iki iptal", "Sipariş 'Hazırlanıyor'", "Çalışan ve müşteri aynı anda iptal eder", "Yalnız ilk iptal işlenir; ikincisi reddedilir", "FG-1", "Destek uzmanı", "Geçti", ""]
+  blankRows: 15
+---
+
+## Ne zaman kullanılır?
+
+Çözüm sistem testinden geçtikten sonra ve yayından önce. UAT, "doğru mu yaptık?" sorusunu değil, "işimizi bununla yapabiliyor muyuz?" sorusunu cevaplar. ISTQB'nin tanımıyla, hedeflenen kullanıcıların sistemi kabul edip etmediğini belirlemek için yapılan bir kabul testidir.
+
+## Nasıl doldurulur?
+
+1. **Test edenleri gerçek kullanıcılardan seç.** Geliştirici ya da analist değil; çözümü her gün kullanacak kişiler.
+2. **Senaryoları gerçek işten yaz.** Karar tablosunun her kuralı ve en az birkaç uç durum.
+3. **Her senaryoyu bir gereksinime bağla.** Böylece hangi gereksinimin kabul edildiği görünür.
+4. **Beklenen sonucu önceden yaz.** Test eden sonucu beklentiyle karşılaştırır, yorumlamaz.
+5. **"Kaldı"yı da, anlaşılmayanı da kaydet.** Kullanıcının takıldığı bir ifade, sistem doğru çalışsa bile bir bulgudur.
+
+## Sık hatalar
+
+- **UAT'yi bir gösteri toplantısına çevirmek.** Kullanıcı izlemez, kendisi kullanır.
+- **Yalnız mutlu yolu test etmek.** Gerçek iş uç durumlarla doludur.
+- **Kabul kriterini UAT sırasında yazmak.** Kriter önceden yazılmazsa "kabul" bir his olur.

@@ -1,0 +1,160 @@
+---
+summary: "Given-When-Then bir kuralı somut örneklere çevirir. Arka plan tekrar eden başlangıcı, senaryo taslağı aynı kuralın farklı değerlerini tek örnekte toplar; Then her zaman gözlenebilir bir sonuçtur."
+outcomes:
+  - "Bir iş kuralını Given-When-Then örneklerine çevirebilirsin."
+  - "Arka plan ve senaryo taslağıyla tekrarı azaltabilirsin."
+  - "Kötü bir senaryoyu bildirimsel ve gözlenebilir hâle getirebilirsin."
+minutes: 8
+standard: 2
+sources:
+  - label: "Cucumber — Gherkin Reference"
+    url: "https://cucumber.io/docs/gherkin/reference/"
+  - label: "Cucumber — Gherkin localisation (Türkçe anahtar kelimeler)"
+    url: "https://cucumber.io/docs/gherkin/languages/"
+additions:
+  - "Kural, örnek, arka plan, senaryo taslağı ve örnekler tablosu (Gherkin başvurusu)"
+  - "Gherkin'in Türkçe anahtar kelimeleri (Cucumber)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Karar tablosu hazırdı: sekiz kural. Emre, panel takımının geliştiricisi, beşinci kurala baktı: "Hazırlanıyor, dükkân, stok sorunu yok: tam iade ve kupon. Peki kupon ne zaman görünür? Müşteri iptali nereden öğrenir? Bildirimde ne yazar?"
+
+Tablo kuralı söylüyordu, ama kuralın müşterinin gözünden nasıl göründüğünü söylemiyordu. Ayşe her kural için bir örnek yazmaya karar verdi. Bu ders, kuralları Given-When-Then örneklerine çevirmeyi anlatır.
+
+## Kural ve örnek
+
+Given-When-Then, Gherkin adlı yapılandırılmış dilin adımlarıdır. Temeli [Gereksinimler: epic, user story, acceptance criteria](/urun-gelistirme/gereksinimler-epic-user-story-acceptance-criteria/) dersinde, story'yle birlikte kullanımı [Refinement, INVEST ve story bölme](/cevik-pratikler/refinement-invest-ve-story-bolme/) dersinde. Bu ders bir analistin elinde nasıl kullanıldığına iner.
+
+Gherkin'de bir dosya bir **özellik** (Feature) anlatır. Özelliğin içinde **kurallar** (Rule), her kuralın altında onu gösteren **örnekler** (Example ya da Scenario) olur. Bir örneğin adımları:
+
+- **Diyelim ki** (Given): başlangıç durumu.
+- **Eğer ki** (When): bir olay ya da eylem.
+- **O zaman** (Then): beklenen sonuç. Gherkin başvurusuna göre gözlenebilir bir çıktı olmalıdır: kullanıcının gördüğü bir mesaj, bir rapor. Bir veritabanı kaydı değil.
+
+<Layers
+  label="Gherkin'in katmanları"
+  caption="Gherkin dört katmandan oluşur. En üstte özellik vardır: iade. Altında kurallar: örneğin dükkân hazırlanan siparişi iptal ederse tam iade ve kupon verilir. Her kuralın altında onu gösteren örnekler vardır. En altta her örneğin adımları durur: diyelim ki, eğer ki, o zaman."
+  layers={[
+    { title: "Özellik", sub: "İade", tone: "accent" },
+    { title: "Kural", sub: "dükkân iptali: tam iade ve kupon" },
+    { title: "Örnek", sub: "Ada'nın hazırlanan siparişi iptal edildi" },
+    { title: "Adımlar", sub: "diyelim ki · eğer ki · o zaman", tone: "progress" },
+  ]}
+/>
+
+**Kural ≠ örnek.** Kural geneldir: "Dükkân hazırlanan siparişi stok sorunu olmadan iptal ederse tam iade ve %20 kupon." Örnek somuttur: Ada, 165 TL'lik sipariş, Moda şubesi. Somut değerler belirsizliği ortaya çıkarır. "Kupon ne kadar?" sorusu ancak 165 TL yazınca sorulur: %20'si mi, yoksa sabit bir tutar mı?
+
+## Tekrarı azaltmak: arka plan ve taslak
+
+Sekiz kural için sekiz örnek yazınca aynı satırlar tekrar eder. Gherkin'in iki aracı vardır:
+
+**Arka plan** (Background): bir dosyadaki bütün örneklerde ortak olan "Diyelim ki" adımları. Her örneğin başında çalışır. "Diyelim ki Ada'nın Moda şubesinde 165 TL'lik bir siparişi var."
+
+**Senaryo taslağı** (Scenario Outline) ve **örnekler** tablosu (Examples): aynı adımları farklı değerlerle tekrar çalıştırır. Adımlarda açılı ayraç içinde bir yer tutucu yazılır, değerler tabloya konur.
+
+```gherkin
+# language: tr
+Özellik: İade
+
+  Arka Plan:
+    Diyelim ki Ada'nın Moda şubesinde 165 TL'lik bir siparişi var
+
+  Senaryo taslağı: Siparişin durumuna göre iade
+    Diyelim ki sipariş "<durum>" durumunda
+    Eğer ki "<iptal eden>" siparişi iptal ederse
+    O zaman Ada "<iade>" iade bildirimi alır
+    Ve Ada'nın hesabında "<kupon>" kupon görünür
+
+    Örnekler:
+      | durum        | iptal eden | iade   | kupon |
+      | Alındı       | Müşteri    | 165 TL | yok   |
+      | Hazırlanıyor | Müşteri    | 0 TL   | yok   |
+      | Hazırlanıyor | Dükkân     | 165 TL | 33 TL |
+      | Hazır        | Dükkân     | 165 TL | 33 TL |
+```
+
+Örnekler tablosu karar tablosuna çok benzer; ama her satır bir test olarak çalıştırılabilir.
+
+## İyi senaryo, kötü senaryo
+
+Gherkin başvurusu bir öneride bulunur: senaryoyu, bilgisayarların olmadığı **1922'de** yazıyormuş gibi yaz. O zaman da geçerli olacak bir senaryo, arayüzü değil davranışı anlatır.
+
+| Kötü | Neden | İyi |
+|---|---|---|
+| Eğer ki "İptal" düğmesine tıklar ve "Evet"e basarsa | Arayüzü anlatıyor; ekran değişince senaryo bozulur | Eğer ki dükkân siparişi iptal ederse |
+| O zaman refunds tablosuna bir satır eklenir | Gözlenebilir değil | O zaman Ada 165 TL iade bildirimi alır |
+| Diyelim ki Ada uygulamayı açar, giriş yapar, siparişlere gider… | Başlangıç durumu bir eylem dizisine dönmüş | Diyelim ki Ada'nın hazırlanan bir siparişi var |
+
+<Case>
+
+Ayşe sekiz kuralın her biri için bir örnek yazdı ve tabloları birleştirdi:
+
+1. **Arka plan:** Ada, Moda şubesi, 165 TL. Bütün örneklerde ortak.
+2. **İki senaryo taslağı:** biri müşteri iptali, biri dükkân iptali. Stok sorunu olan kurallar için ayrı bir taslak: "eksik ürün kadar" iade.
+3. **Somut değer bir soru doğurdu:** kupon 165 TL'nin %20'si, yani 33 TL mi? Ozan onayladı: kupon, sipariş tutarının %20'si.
+4. **Emre'nin soruları "O zaman" adımlarına girdi:** bildirimde iptal sebebi, iade tutarı ve 1–3 iş günü yazar.
+
+Zeynep örnekleri otomatik teste çevirdi. Sekiz kural, sekiz test: T-K1'den T-K8'e.
+
+</Case>
+
+<Tool slug="gherkin-story" />
+
+<Lenses>
+<Lens role="business-analyst">
+
+- **Her kurala en az bir örnek.** Örneği yazılamayan kural henüz anlaşılmamıştır.
+- **Somut değer kullan.** "Bir tutar" değil, "165 TL". Belirsizliği ortaya çıkaran şey sayıdır.
+- **Örnekleri geliştirici ve QA ile birlikte yaz.** Üç bakış, tek kişinin göremediği durumları bulur.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Örnekleri kabul kriteri olarak kullan.** Story'nin bitip bitmediği, örneklerin geçip geçmediğiyle ölçülür.
+- **Örnekten çıkan soruya hemen karar ver.** "Kupon 33 TL mi?" sorusu sprintin ortasında değil, refinement'ta cevaplanmalı.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Given-When-Then bir kuralı somut örneklere çevirir; örnekler hem şartname hem testtir.
+- Gherkin'de özellik, kural, örnek ve adımlar katman katmandır.
+- "O zaman" adımı gözlenebilir bir sonuç olmalıdır; sistemin içini anlatmaz.
+- Arka plan ortak başlangıcı, senaryo taslağı ve örnekler tablosu aynı kuralın farklı değerlerini toplar.
+- Senaryo arayüzü değil davranışı anlatır: 1922'de de geçerli olacak gibi yaz.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'O zaman iade kaydı veritabanına yazılır' adımında sorun ne?">
+
+Gözlenebilir değil. Kullanıcı ya da paydaş veritabanını görmez. Gözlenebilir bir sonuç yazılmalı: "O zaman Ada 165 TL iade bildirimi alır."
+
+</SelfCheck>
+
+<SelfCheck question="Sekiz örneğin her biri aynı üç 'Diyelim ki' satırıyla başlıyor. Ne yaparsın?">
+
+Ortak satırları bir arka plana (Background) taşırım. Arka plan dosyadaki her örnekten önce çalışır; örnekler yalnız farklı olanı anlatır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir kuralı soyut yazmak ('bir tutar iade edilir') yerine neden somut değer kullanmalı?">
+
+Somut değer belirsizliği ortaya çıkarır. "165 TL" yazınca kuponun yüzde mi sabit tutar mı olduğu, kuruşların nasıl yuvarlanacağı gibi sorular sorulur. Soyut cümlede bu sorular gizli kalır.
+
+</SelfCheck>
+
+<SelfCheck question="Senaryo taslağıyla karar tablosu arasındaki benzerlik ve fark ne?">
+
+İkisi de girdileri ve sonuçları satır satır listeler. Karar tablosu kuralın kendisidir ve eksiksizliği gösterir. Senaryo taslağının her satırı ise çalıştırılabilir bir testtir ve kuralın kullanıcıya nasıl göründüğünü anlatır.
+
+</SelfCheck>

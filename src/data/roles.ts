@@ -187,6 +187,48 @@ const AGILE_FOR_PRODUCT_DESIGNER: TopicTiers = {
   "anti-paternler": I,
 };
 
+const BA_FOR_PRODUCT_MANAGER: TopicTiers = {
+  "babok-haritasi": I,
+  "gereksinim-turleri": I,
+  "given-when-then": I,
+  "bpmn-temelleri": I,
+  "is-kurallari-ve-karar-tablolari": I,
+  "veri-gereksinimleri": I,
+  izlenebilirlik: I,
+};
+
+const BA_FOR_PRODUCT_OWNER: TopicTiers = {
+  "babok-haritasi": I,
+  izlenebilirlik: I,
+  "bpmn-temelleri": O,
+  "as-is-to-be-ve-bosluk-analizi": O,
+  "is-kurallari-ve-karar-tablolari": O,
+  "veri-gereksinimleri": O,
+};
+
+const BA_FOR_PROJECT_MANAGER: TopicTiers = {
+  "babok-haritasi": I,
+  "gereksinim-cikarma-teknikleri": I,
+  "iyi-gereksinim-use-case-ve-user-story": I,
+  "given-when-then": I,
+  "bpmn-temelleri": I,
+  "as-is-to-be-ve-bosluk-analizi": I,
+  "is-kurallari-ve-karar-tablolari": I,
+  "veri-gereksinimleri": I,
+};
+
+const BA_FOR_UX_RESEARCHER: TopicTiers = {
+  "babok-haritasi": I,
+  "gereksinim-turleri": I,
+  "iyi-gereksinim-use-case-ve-user-story": I,
+  "given-when-then": I,
+  "bpmn-temelleri": I,
+  "is-kurallari-ve-karar-tablolari": I,
+  "veri-gereksinimleri": I,
+  izlenebilirlik: I,
+  "baglam-diyagrami-ve-kapsam": I,
+};
+
 const AGILE_FOR_PRODUCT_MANAGER: TopicTiers = {
   "scrum-master-isi": I,
   "retro-formatlari": I,
@@ -271,7 +313,7 @@ export const ROLES: RoleDefinition[] = [
       entry("erisilebilirlik", O),
       entry("cevik-pratikler", O, AGILE_FOR_PRODUCT_MANAGER),
       entry("proje-yonetimi", O, PM_FOR_PRODUCT_MANAGER),
-      entry("is-analizi", O),
+      entry("is-analizi", O, BA_FOR_PRODUCT_MANAGER),
       entry("web-temelleri", O),
       entry("back-end-api", O, BACKEND_MECHANICS),
       entry("sistem-mimarisi", O, ARCHITECTURE_MECHANICS),
@@ -300,7 +342,7 @@ export const ROLES: RoleDefinition[] = [
       entry("sirket-sozlugu", T),
       entry("iletisim-ve-paydaslar", T),
       entry("urun-yonetimi", T),
-      entry("is-analizi", T),
+      entry("is-analizi", T, BA_FOR_PRODUCT_OWNER),
       entry("urun-analitigi", O),
       entry("is-ve-strateji", O),
       entry("kullanici-arastirmasi", O),
@@ -335,7 +377,7 @@ export const ROLES: RoleDefinition[] = [
       entry("iletisim-ve-paydaslar", T),
       entry("proje-yonetimi", T),
       entry("cevik-pratikler", O, AGILE_FOR_PROJECT_MANAGER),
-      entry("is-analizi", O),
+      entry("is-analizi", O, BA_FOR_PROJECT_MANAGER),
       entry("is-ve-strateji", O),
       entry("web-temelleri", O),
       entry("test-ve-kalite", O, QUALITY_MECHANICS),
@@ -440,7 +482,7 @@ export const ROLES: RoleDefinition[] = [
       entry("iletisim-ve-paydaslar", O),
       entry("urun-analitigi", O),
       entry("urun-yonetimi", O),
-      entry("is-analizi", O),
+      entry("is-analizi", O, BA_FOR_UX_RESEARCHER),
       entry("guvenlik-ve-hukuk", O, { ...SECURITY_MECHANICS, ...PRIVACY_CORE }),
       entry("arayuz-anatomisi", O),
       entry("web-temelleri", O),

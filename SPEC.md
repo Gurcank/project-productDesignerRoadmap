@@ -54,16 +54,17 @@ diyagramlar.
 Manager, Scrum Master, Business Analyst, UX Researcher) ve rolsüz **Keşif modu**. Ana sayfada rol
 seçici, role göre çizilen harita (durak numarası + temel / önerilen / isteğe bağlı rozeti, yol dışı
 gezegen küçük ve soluk), rolün yüzdesi ve **Sıradaki adımın** kartı; Ayarlar'da rol seçimi; yedekte
-rol. Paylaşılabilir `/?rol=<id>`. Henüz yazılmamış sekiz kategori haritada "hazırlanıyor" olarak durur.
+rol. Paylaşılabilir `/?rol=<id>`. Henüz yazılmamış kategoriler (şu an beş) haritada "hazırlanıyor" olarak durur.
 
 **Var — mobil.** Alt gezinme çubuğu · okuma ilerleme çubuğu · adımlar arası kaydırma · ana ekrana
 eklenebilir manifest · **çevrimdışı okuma** (ADR-012). Çevrimdışı katmanı yalnız üretim
 derlemesinde etkindir; `astro dev` altında service worker kaydedilmez, kalmış olan sökülür —
 gerekçesi ve bedeli ADR-012'de.
 
-**Var — Araçlar (Faz 3–5).** `/araclar/`: doldurulmuş örnekli 16 şablon (PRD, RACI, risk kaydı;
+**Var — Araçlar (Faz 3–6).** `/araclar/`: doldurulmuş örnekli 22 şablon (PRD, RACI, risk kaydı;
 proje tüzüğü, iş gerekçesi, WBS, takvim, RAID, değişiklik talebi, durum raporu, kapanış raporu;
-sprint hedefi, çalışma sözleşmesi, retro panosu, hazır ve bitti tanımı, Gherkin story),
+sprint hedefi, çalışma sözleşmesi, retro panosu, hazır ve bitti tanımı, Gherkin story; BRD, use case,
+as-is/to-be, karar tablosu, izlenebilirlik matrisi, UAT),
 Markdown ve Türkçe Excel'de açılan CSV indirmeleri (ADR-021).
 
 **Var — Proje Yönetimi (Faz 4).** Materyal dışı ilk tam kategori: 18 v2 ders (yaşam döngüsü,
@@ -77,6 +78,13 @@ kolaylaştırma, retro formatları, refinement ve story bölme, story mapping, a
 Monte Carlo öngörü, takım dinamikleri, ölçekleme, anti-paternler), Monte Carlo demosu, 10 soruluk quiz,
 27 terim. Çalışma Biçimi'nin 7 dersi v2'ye taşındı; Scrum dersindeki "beş toplantı" hatası
 düzeltildi (beş olay = sprint + dört olay). Kapsam haritası `docs/icerik/kapsam-cevik-pratikler.md`.
+
+**Var — İş Analizi (Faz 6).** 13 v2 ders (BABOK haritası, iş ihtiyacı ve kök neden, çıkarma teknikleri,
+gereksinim türleri, iyi gereksinim ve use case, Given-When-Then, BPMN, as-is/to-be ve boşluk analizi,
+iş kuralları ve karar tabloları, bağlam diyagramı, veri gereksinimleri, izlenebilirlik, UAT), yeni `Hub`
+diyagram ilkeli, 10 soruluk quiz, 27 terim. Bütün dersler tek bir analizi izler: Demlik'in iade kuralları.
+Kapsam haritası `docs/icerik/kapsam-is-analizi.md`; birincil kaynak BABOK sözlüğü ve IIBA Business
+Analysis Standard'ın açık sayfaları (tam metin üyelik ister, kullanılmadı).
 
 **Henüz yok — planlı, yapılmadı.** EN arayüz (`/en/`, `src/i18n`): kullanıcı ertelemeyi seçti,
 şu an TR tek dil · Araçlar'da kontrol listeleri, proje akış haritası, çalışma takvimi ve diğer
@@ -98,7 +106,7 @@ eşlemesi orada; başka hiçbir yerde tekrarlanmaz.
 | Temel | 1 Web Temelleri |
 | Ürün ve Ekip | 2 Ürün Geliştirme · 3 Çalışma Biçimi · 18 Şirket Ortamı Sözlüğü · *[hazırlanıyor]* İletişim ve Paydaş Yönetimi |
 | Strateji ve Ürün | *[hazırlanıyor]* Ürün Yönetimi · Ürün Analitiği ve Deney · İş Modeli ve Strateji |
-| Teslimat | *[hazırlanıyor]* Proje Yönetimi · Çevik Pratikler · İş Analizi |
+| Teslimat | Proje Yönetimi · Çevik Pratikler · İş Analizi (materyal dışı, bu site için yazıldı) |
 | Tasarım | 4 UX/UI Süreç ve İlkeler · *[hazırlanıyor]* Kullanıcı Araştırması · 5 Tasarım Sistemi · 6 Erişilebilirlik · 7 Arayüz Anatomisi |
 | Mühendislik | 8 Front-end · **Programlama Dilleri** · 9a Framework'ler · 9b Kütüphaneler · 10 Back-end ve API · 11 Veritabanı · **Veri Yapıları** · **Algoritmalar** |
 | Sistem ve Operasyon | 14 Sistem Mimarisi · 12 Auth · 13 Güvenlik ve Hukuk · 15 Git ve GitHub · 16 DevOps ve Yayın · 17 Test ve Kalite |

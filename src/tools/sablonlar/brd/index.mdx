@@ -1,0 +1,35 @@
+---
+title: "İş gereksinimleri belgesi (BRD)"
+summary: "Bir değişimin neden yapıldığını, kapsamını ve başarının nasıl ölçüleceğini; paydaşları, gereksinimleri türlerine göre ve kimlikleriyle tek belgede toplar."
+kind: "belge"
+roles: ["business-analyst", "product-owner", "product-manager", "project-manager"]
+lessons: ["is-analizi/is-ihtiyaci-ve-kok-neden", "is-analizi/gereksinim-turleri", "is-analizi/baglam-diyagrami-ve-kapsam"]
+sources:
+  - label: "BABOK Guide — Ek A: Sözlük (IIBA)"
+    url: "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"
+  - label: "NASA SE Handbook 4.1 — Stakeholder Expectations Definition"
+    url: "https://www.nasa.gov/reference/4-1-stakeholder-expectations-definition/"
+---
+
+## Ne zaman kullanılır?
+
+Bir değişim birden çok paydaşı etkiliyorsa ve "neden yapıyoruz, nereye kadar yapıyoruz?" sorusunun yazılı bir cevabı gerekiyorsa. BRD işin **nedenini** ve sınırını anlatır; ekranların ve teknik çözümün ayrıntısı PRD'de ya da story'lerde durur.
+
+## Bölümler
+
+1. **Sorun ve ihtiyaç:** tek cümlelik ihtiyaç ve onu gösteren veriler. İhtiyaç bir çözüm değildir.
+2. **Hedef ve amaçlar:** hedef nitel, amaç ölçülebilir. Her amaç bir hedefe, her hedef ihtiyaca bağlanır.
+3. **Kapsam:** bağlam diyagramı, kapsam içi ve kapsam dışı listesi.
+4. **Paydaşlar:** kim, ilgisi ne, kararlarda rolü ne.
+5. **Gereksinimler:** iş, paydaş, çözüm (işlevsel ve işlevsel olmayan) ve geçiş gereksinimleri. Her birinin bir kimliği ve kaynağı olur.
+6. **İş kuralları:** karar tabloları ya da kural listesi.
+7. **Varsayımlar ve kısıtlar:** doğru kabul edilen ama doğrulanmamış bilgiler; değiştirilemeyen sınırlar.
+8. **Açık sorular:** kimin, ne zamana kadar cevaplayacağıyla.
+9. **Onay:** kim onayladı, hangi sürümü, ne zaman.
+
+## Sık hatalar
+
+- **Çözümle başlamak.** "Bir iade butonu" bir ihtiyaç değil, bir çözümdür. Önce sorunu yaz.
+- **Ölçülemeyen amaç.** "Müşteri memnuniyeti artsın" bir hedeftir; amaç bir sayı ve bir tarih ister.
+- **Kapsam dışını boş bırakmak.** Kapsam dışı yazılmazsa, herkes kendi beklentisini kapsamın içinde sanır.
+- **Gereksinime kimlik vermemek.** Kimliksiz gereksinim teste ve değişikliğe bağlanamaz.

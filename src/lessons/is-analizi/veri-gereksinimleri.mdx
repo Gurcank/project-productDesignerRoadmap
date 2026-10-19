@@ -1,0 +1,163 @@
+---
+summary: "Veri gereksinimi, sistemin hangi bilgiyi hangi anlamda, hangi biçimde ve ne kadar süre tuttuğunu söyler. Varlıklar, ilişkiler ve veri sözlüğü bunu yazılı kılar; kişisel veride KVKK ilkeleri de gereksinimdir."
+outcomes:
+  - "Bir iş için varlıkları, özniteliklerini ve ilişkilerini çıkarabilirsin."
+  - "Bir veri sözlüğü satırını eksiksiz yazabilirsin."
+  - "Kişisel veriyi tanıyıp KVKK ilkelerini gereksinime çevirebilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Wikipedia — Data dictionary"
+    url: "https://en.wikipedia.org/wiki/Data_dictionary"
+  - label: "KVKK — 6698 sayılı Kişisel Verilerin Korunması Kanunu (İngilizce çeviri)"
+    url: "https://www.kvkk.gov.tr/Icerik/6649/Personal-Data-Protection-Law"
+  - label: "BABOK Guide — Ek A: Sözlük (IIBA)"
+    url: "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"
+additions:
+  - "Veri sözlüğünün tanımı (IBM Dictionary of Computing, Wikipedia aracılığıyla)"
+  - "Kişisel veri, açık rıza, veri sorumlusu ve işleme ilkeleri (KVKK md. 3, 4, 5)"
+  - "Durum diyagramı tanımı (BABOK sözlüğü)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Finanstan gelen kişi, ilk gün sonu iade raporunun taslağına baktı ve bir sorun buldu: "Bu raporda iadenin neden yapıldığı yok. Bir dükkân ayda 40 iade yapıyorsa, stoktan mı, yoksa başka bir şeyden mi, bilmem lazım."
+
+Emre, Panel'deki eski iade kaydına baktı. Bir "sebep" alanı vardı ama serbest metindi: "stok yok", "Stok bitti", "ürün kalmadı", "-". Saymak imkânsızdı. Bu ders, bir sistemin tuttuğu veriyi gereksinim olarak yazmayı anlatır.
+
+## Varlık, öznitelik, ilişki
+
+Veri gereksinimi üç soruyla başlar:
+
+- **Varlık:** sistem hangi şeyler hakkında bilgi tutuyor? Müşteri, sipariş, iade, kupon.
+- **Öznitelik:** her şey hakkında hangi bilgiler tutuluyor? İadenin tutarı, sebebi, durumu.
+- **İlişki:** şeyler birbirine nasıl bağlı? Bir siparişin en çok bir iadesi olur; bir iade en çok bir kupon doğurur.
+
+<Tree
+  label="İade verisinin varlıkları"
+  caption="Dört varlık zincir hâlinde bağlıdır. Bir müşterinin birçok siparişi olur; müşterinin adı ve telefonu kişisel veridir. Her siparişin numarası, dükkânı, tutarı ve durumu vardır. Bir siparişin en çok bir iadesi olur; iadenin tutarı, sebebi, uygulanan kural numarası ve durumu tutulur. Bir iade en çok bir kupon doğurur; kuponun oranı yüzde yirmidir. İade kaydı kart bilgisi tutmaz."
+  root={{
+    title: "Müşteri",
+    sub: "ad, telefon · kişisel veri",
+    tone: "accent",
+    children: [
+      {
+        title: "Sipariş",
+        sub: "no, dükkân, tutar, durum",
+        children: [
+          {
+            title: "İade (en çok 1)",
+            sub: "tutar, sebep, kural no, durum",
+            tone: "progress",
+            children: [{ title: "Kupon (en çok 1)", sub: "oran %20, tutar" }],
+          },
+        ],
+      },
+    ],
+  }}
+/>
+
+İlişkinin sayısı bir iş kuralıdır. "Bir siparişin en çok bir iadesi olur" cümlesi, use case'teki 5b uzantısının (aynı siparişe ikinci iptal) veri tarafıdır.
+
+## Veri sözlüğü
+
+Wikipedia'daki maddenin aktardığı IBM tanımına göre **veri sözlüğü** (data dictionary), veri hakkındaki bilgilerin merkezî deposudur: anlamı, başka verilerle ilişkisi, kaynağı, kullanımı ve biçimi.
+
+| Alan | Anlamı | Biçim | Kaynak | Zorunlu | Örnek |
+|---|---|---|---|---|---|
+| iade_no | İadenin tekil kimliği | Metin, "IA-" ile başlar | Sistem üretir | Evet | IA-20481 |
+| siparis_no | İadenin ait olduğu sipariş | Sipariş kimliği | Sipariş sistemi | Evet | SP-88812 |
+| tutar | Müşteriye geri ödenen tutar | TL, iki ondalık | Karar tablosu | Evet | 165,00 |
+| sebep | İptalin nedeni | Liste: stok sorunu, müşteri isteği, dükkân kapalı, diğer | Çalışan ya da müşteri seçer | Evet | stok sorunu |
+| kural_no | Kararı veren karar tablosu satırı | 1–8 | Karar tablosu | Evet | 5 |
+| durum | İadenin yaşam döngüsündeki yeri | Liste: başlatıldı, tamamlandı, başarısız | Sistem | Evet | tamamlandı |
+| olusturma | İadenin başlatıldığı an | Tarih ve saat, İstanbul saati | Sistem | Evet | 14.03 09:42 |
+
+**Serbest metin ≠ veri.** "Sebep" alanı serbest metin kalırsa sayılamaz, filtrelenemez, rapora girmez. Bir alan bir karar ya da rapor için kullanılacaksa değerleri bir listeden seçilir.
+
+BABOK bir varlığın yaşam döngüsünü gösteren çizime **durum diyagramı** (state diagram) der. İadenin durumları basittir: başlatıldı → tamamlandı ya da başarısız. Ama her geçişin bir kuralı vardır: başarısız bir iade kim tarafından, nasıl yeniden başlatılır?
+
+## Kişisel veri bir gereksinimdir
+
+6698 sayılı Kişisel Verilerin Korunması Kanunu'nun 3. maddesine göre **kişisel veri**, kimliği belirli ya da belirlenebilir gerçek kişiye ilişkin her türlü bilgidir. Müşterinin adı ve telefonu kişisel veridir; bir sipariş numarası da, müşteriye bağlanabildiği için öyledir.
+
+Kanunun 4. maddesi işleme ilkelerini sayar. Her biri bir veri gereksinimine dönüşür:
+
+| İlke (md. 4) | Gereksinim sorusu |
+|---|---|
+| Hukuka ve dürüstlük kurallarına uygunluk | Bu veriyi işlemenin hukuki dayanağı ne? |
+| Doğru ve gerektiğinde güncel olma | Yanlış veri nasıl düzeltilir? |
+| Belirli, açık ve meşru amaçlar | Bu alan hangi amaçla tutuluyor? |
+| Amaçla bağlantılı, sınırlı ve ölçülü olma | Amaç için bu alan gerçekten gerekli mi? |
+| Gerekli süre kadar saklama | Bu veri ne zaman silinir ya da anonim hâle getirilir? |
+
+Kanunun 5. maddesi kişisel verinin, sayılan istisnalar dışında, ilgili kişinin **açık rızası** olmadan işlenemeyeceğini söyler. Hangi istisnanın geçerli olduğu bir hukuk sorusudur; analist soruyu sorar, cevabı hukukla birlikte yazar. Ürün tarafı [KVKK ve GDPR'ın ürün tarafına yansıması](/guvenlik-ve-hukuk/kvkk-ve-gdprin-urun-tarafina-yansimasi/) dersinde.
+
+<Case>
+
+Ayşe ve Emre iade için bir veri sözlüğü yazdı:
+
+1. **Sebep listeye döndü.** Eski serbest metin dört değere indi. Finans artık dükkân başına "stok sorunu" iadelerini sayabiliyor.
+2. **Kural numarası eklendi.** Finansın ve destek ekibinin sorusu "bu iade neden bu tutarda?" idi. Kural numarası cevabı tek bir sayıyla veriyor.
+3. **Kart bilgisi tutulmadı.** Demlik kart bilgisi saklamaz; iade, sipariş numarası üzerinden ödeme kuruluşuna gider.
+4. **Ölçülülük sorusu bir alanı sildi.** İlk taslakta iade kaydında müşterinin telefonu da vardı. Amaç için gerekli değildi; müşteriye sipariş üzerinden ulaşılıyordu.
+5. **Saklama süresi açık soru olarak kaldı.** Ayşe soruyu hukuka sordu; cevap gelene kadar BRD'de "açık sorular" bölümünde durdu.
+
+</Case>
+
+<Lenses>
+<Lens role="business-analyst">
+
+- **Raporu tersten oku.** Bir rapor ya da karar için hangi alan gerekiyorsa, o alanın biçimi ve kaynağı sözlükte olmalı.
+- **Serbest metne itiraz et.** Sayılacak, filtrelenecek bir alan listeden seçilir.
+- **Her kişisel veri alanına "neden?" diye sor.** Amaçla bağlantısı yoksa o alan tutulmaz.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Veri kararları ürün kararlarıdır.** Bir alanın listeye dönmesi raporlamayı mümkün kılar; önceliği buna göre ver.
+- **Saklama süresini açık soru olarak bırakma.** Hukuktan cevap gelmeden yayın planını kesinleştirme.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Veri gereksinimi varlıkları, öznitelikleri ve ilişkileri yazar; ilişkinin sayısı bir iş kuralıdır.
+- Veri sözlüğü her alanın anlamını, biçimini, kaynağını ve ilişkisini tek yerde toplar.
+- Sayılacak ya da filtrelenecek alan serbest metin değil, bir listedir.
+- Kişisel veri, kimliği belirli ya da belirlenebilir kişiye ilişkin her bilgidir; KVKK'nın ilkeleri gereksinime dönüşür.
+- Hukuki dayanak ve saklama süresi gibi sorular hukukla birlikte cevaplanır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir veri sözlüğü satırında hangi bilgiler olmalı?">
+
+Alanın anlamı, biçimi, kaynağı, başka verilerle ilişkisi ve kullanımı. Pratikte zorunlu olup olmadığı ve bir örnek değer de eklenir.
+
+</SelfCheck>
+
+<SelfCheck question="'İptal sebebi' alanı serbest metin. Finans dükkân başına stok iadelerini saymak istiyor. Ne önerirsin?">
+
+Alanı bir değer listesine çevirmeyi: stok sorunu, müşteri isteği, dükkân kapalı, diğer. Serbest metin sayılamaz; "stok yok" ve "Stok bitti" farklı değerler olarak kalır.
+
+</SelfCheck>
+
+<SelfCheck question="Sipariş numarası kişisel veri midir?">
+
+Müşteriye bağlanabildiği sürece evet. KVKK kimliği belirlenebilir bir kişiye ilişkin her bilgiyi kişisel veri sayar. Kanun anonimleştirmeyi de verinin başka verilerle eşleştirilerek bile bir kişiye bağlanamaz hâle getirilmesi diye tanımlar. Yani başka bir tabloyla eşleşip kişiyi gösteren veri kişisel veridir.
+
+</SelfCheck>
+
+<SelfCheck question="İade kaydına müşterinin telefonunu eklemek istiyorlar. Hangi ilke sorulmalı?">
+
+Amaçla bağlantılı, sınırlı ve ölçülü olma ilkesi. Müşteriye sipariş üzerinden ulaşılabiliyorsa, telefonu iade kaydında ayrıca tutmanın amacı yoktur.
+
+</SelfCheck>

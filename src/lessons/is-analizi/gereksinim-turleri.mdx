@@ -1,0 +1,162 @@
+---
+summary: "BABOK dört tür gereksinim sayar: iş, paydaş, çözüm ve geçiş. Çözüm gereksinimi işlevsel ve işlevsel olmayan diye ikiye ayrılır. Her tür ayrı bir soruya cevap verir ve bir üsttekine bağlanır."
+outcomes:
+  - "Dört gereksinim türünü tanımlayıp her birine bir örnek verebilirsin."
+  - "İşlevsel ve işlevsel olmayan gereksinimi ayırabilirsin."
+  - "Kısıtı, varsayımı ve beyan edilmiş gereksinimi gereksinimden ayırabilirsin."
+minutes: 8
+standard: 2
+skipTerms: ["doğrulama"]
+sources:
+  - label: "BABOK Guide — Ek A: Sözlük (IIBA)"
+    url: "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"
+  - label: "NASA SE Handbook — Appendix C: How to Write a Good Requirement"
+    url: "https://www.nasa.gov/reference/appendix-c-how-to-write-a-good-requirement/"
+additions:
+  - "İş, paydaş, çözüm ve geçiş gereksinimi; kısıt ve varsayım (BABOK sözlüğü)"
+  - "Eksiksizlik için gereksinim alanları listesi (NASA SE Handbook, Ek C)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Atölyenin sonunda duvarda 40 yapışkan not vardı. "Talepler 150'nin altına insin." "Çalışan iade tutarını görsün." "İade 5 saniyede görünsün." "Eski yardım sayfası kalksın." "Ödeme kuruluşu 3 güne kadar sürüyor."
+
+Hepsi "gereksinim" diye yazılmıştı. Ama biri bir iş sonucu, biri bir ekran davranışı, biri bir hız ölçüsü, biri bir kerelik bir temizlik, sonuncusu da hiç değiştirilemeyecek bir gerçekti. Bu ders gereksinimleri türlerine ayırmayı ve bunun neden işe yaradığını anlatır.
+
+## Dört tür
+
+BABOK gereksinimleri dört türe ayırır. Her biri farklı bir soruya cevap verir:
+
+| Tür | Cevap verdiği soru | Demlik'ten örnek |
+|---|---|---|
+| **İş gereksinimi** | Değişim neden yapılıyor, başarı nasıl ölçülecek? | İG-1: Üç ayda iade talepleri ayda 310'dan 150'nin altına iner. |
+| **Paydaş gereksinimi** | Belirli bir paydaşın ya da grubun neye ihtiyacı var? | PG-1: Dükkân çalışanı iptal etmeden önce iade tutarını görür. |
+| **Çözüm gereksinimi** | Çözüm hangi yeteneğe ve niteliğe sahip olmalı? | FG-2: Sistem iadeyi ödeme kuruluşuna iptal anında gönderir. |
+| **Geçiş gereksinimi** | Bugünden yarına geçmek için geçici olarak ne gerekir? | GG-1: Eski iade metinleri yayından önce kaldırılır; destek ekibi eğitim alır. |
+
+Sözlük paydaş gereksinimini iş gereksinimi ile çözüm gereksinimi arasında bir **köprü** olarak anlatır. Zincir yukarıdan aşağı akar: iş gereksinimi bir sonuç ister, paydaş gereksinimleri o sonuca kimin neye ihtiyacı olduğunu söyler, çözüm gereksinimleri de bunu karşılayacak yeteneği tanımlar.
+
+**Geçiş gereksinimi** geçicidir: değişim tamamlanınca artık gerekmez. Eğitim, veri taşıma, eski sistemi bir süre paralel çalıştırmak, eski metinleri kaldırmak bu türe girer. En sık unutulan türdür; unutulduğunda yeni sistem çalışır ama eski kural yaşamaya devam eder.
+
+<Tree
+  label="Gereksinim türleri"
+  caption="Gereksinimler dört türe ayrılır. İş gereksinimi değişimin nedenini ve başarı ölçüsünü verir. Paydaş gereksinimi, belirli bir paydaşın ihtiyacını anlatır ve iş gereksinimiyle çözüm gereksinimi arasında köprü kurar. Çözüm gereksinimi ikiye ayrılır: işlevsel olanlar davranışı ve yönetilen bilgiyi, işlevsel olmayanlar performans ve kalite niteliklerini anlatır. Geçiş gereksinimi geçicidir ve değişim bitince gerekmez."
+  root={{
+    title: "Gereksinimler",
+    tone: "accent",
+    children: [
+      { title: "İş", sub: "neden, başarı ölçüsü" },
+      { title: "Paydaş", sub: "kimin neye ihtiyacı var" },
+      {
+        title: "Çözüm",
+        sub: "yetenek ve nitelik",
+        tone: "progress",
+        children: [
+          { title: "İşlevsel", sub: "davranış ve bilgi" },
+          { title: "İşlevsel olmayan", sub: "performans, kalite" },
+        ],
+      },
+      { title: "Geçiş", sub: "geçici, bitince gerekmez" },
+    ],
+  }}
+/>
+
+## İşlevsel ve işlevsel olmayan
+
+**İşlevsel gereksinim**, BABOK'a göre çözümün sahip olması gereken bir yetenektir: nasıl davranacağı ve hangi bilgiyi yöneteceği. "Sistem iade tutarını karar tablosuna göre hesaplar."
+
+**İşlevsel olmayan gereksinim** ise performans ya da kalite niteliklerini anlatır. Sözlüğe göre genellikle ölçülebilirdir ve tek bir özelliği değil, çözümün tasarımını bir bütün olarak sınırlar. "İade kararı iptalden sonra en geç 5 saniye içinde müşterinin ekranında görünür."
+
+**Ölçülemeyen nitelik ≠ gereksinim.** "Hızlı olsun" bir dilektir. NASA'nın el kitabı "hızlı", "kolay", "kullanıcı dostu" gibi kelimeleri doğrulanamayan terimler arasında sayar. Bir sayı, bir birim ve bir koşul yazılmadan test edilemez. Konunun temeli [Gereksinimler: epic, user story, acceptance criteria](/urun-gelistirme/gereksinimler-epic-user-story-acceptance-criteria/) dersinde.
+
+İşlevsel olmayan gereksinimler çoğu zaman sorulmadığı için eksik kalır. NASA'nın eksiksizlik listesinden bazı alanlar hatırlatıcı olarak kullanılabilir: performans, arayüz, güvenlik, işletilebilirlik, eğitim, personel. Her biri için "bu işte bir şey söylememiz gerekiyor mu?" diye sor.
+
+## Gereksinim olmayanlar
+
+Duvardaki her not bir gereksinim değildir:
+
+- **Kısıt** (constraint): değiştirilemeyen ve olası çözümleri sınırlayan bir etken. "Ödeme kuruluşu iadeyi 1–3 iş gününde karta yansıtır." Bunu Demlik değiştiremez; ama çözüm buna göre tasarlanır.
+- **Varsayım** (assumption): doğru olduğuna inanılan ama doğrulanmamış bir etken. "Ödeme kuruluşu kısmi iadeyi de otomatik kabul eder." Her varsayımın bir doğrulama tarihi ve sahibi olmalı.
+- **Beyan edilmiş gereksinim**: paydaşın söylediği, henüz analiz edilmemiş istek. "Tam iade düğmesi." Analiz edilince ya bir gereksinime dönüşür ya da bir çözüm seçeneği olarak kalır.
+
+<Case>
+
+Ayşe 40 notu türlerine ayırdı:
+
+1. **İş:** 1 not. Destek taleplerinin 150'nin altına inmesi.
+2. **Paydaş:** 9 not. Çalışanın, müşterinin, destek ekibinin, finansın ihtiyaçları.
+3. **İşlevsel:** 14 not. Hesaplama, iade gönderme, kupon, bildirim.
+4. **İşlevsel olmayan:** 3 not. Biri "iade hızlı görünsün" idi; Ayşe paydaşla konuşup "5 saniye" sayısını ekledi.
+5. **Geçiş:** 2 not. Eski metinler ve destek eğitimi. Atölyede kimse bunları gereksinim saymamıştı.
+6. **Kısıt ve varsayım:** 4 not. Ayrı bir listeye taşındı.
+7. **Kalan 7 not:** üçü aynı şeyi söylüyordu, dördü çözüm önerisiydi. Çözümler "seçenekler" listesine gitti.
+
+Her gereksinim türünün baş harfiyle bir kimlik aldı: İG, PG, FG, İOG, GG.
+
+</Case>
+
+<Tool slug="brd" />
+
+<Lenses>
+<Lens role="business-analyst">
+
+- **Türü kimliğe yaz.** İG-1, PG-1, FG-1: tür, gereksinimi okuyan herkese bağlamını söyler.
+- **Geçişi ayrıca sor.** "Yayın günü eski şeylere ne olacak?" sorusu, unutulan gereksinimleri bulur.
+- **Varsayımları gereksinimden ayır.** Her birine sahip ve doğrulama tarihi ver.
+
+</Lens>
+<Lens role="product-owner">
+
+- **İş gereksinimini backlog'un tepesine as.** Her story'nin hangi iş gereksinimine hizmet ettiğini bilmek, sıralamayı kolaylaştırır.
+- **İşlevsel olmayanı story'nin kabul kriterine koy.** "5 saniye" bir story'nin bitti tanımının parçası olmalı.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Geçiş gereksinimleri senin planına girer.** Eğitim, veri taşıma ve eski sistemin kapatılması zaman ve bütçe ister.
+- **Kısıt ve varsayımlar RAID kaydının malzemesidir.** Analistin listesini kayda taşı.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- BABOK dört tür sayar: iş, paydaş, çözüm ve geçiş gereksinimi.
+- Paydaş gereksinimi, iş gereksinimiyle çözüm gereksinimi arasında köprüdür.
+- Çözüm gereksinimi işlevsel (davranış ve bilgi) ve işlevsel olmayan (performans, kalite) diye ikiye ayrılır.
+- Geçiş gereksinimi geçicidir ve en sık unutulan türdür.
+- Kısıt, varsayım ve beyan edilmiş gereksinim, gereksinimden ayrı tutulur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Destek ekibi yeni iade kuralı için bir saatlik eğitim alır' hangi tür gereksinimdir?">
+
+Geçiş gereksinimi. Bugünden yarına geçmek için gereklidir ve değişim tamamlanınca artık gerekmez.
+
+</SelfCheck>
+
+<SelfCheck question="'Panel hızlı ve kullanıcı dostu olmalı' neden iyi bir işlevsel olmayan gereksinim değildir?">
+
+Ölçülemez. "Hızlı" ve "kullanıcı dostu" doğrulanamayan kelimelerdir. Bir ölçü, bir sayı ve bir koşul gerekir: "İade kararı iptalden sonra en geç 5 saniye içinde görünür."
+
+</SelfCheck>
+
+<SelfCheck question="'Ödeme kuruluşu iadeyi 1–3 iş gününde yansıtır' bir gereksinim mi?">
+
+Hayır, bir kısıttır. Demlik bunu değiştiremez; ama müşteriye gönderilen bildirim bu süreyi söylemelidir. Kısıt, çözüm gereksinimlerini şekillendirir.
+
+</SelfCheck>
+
+<SelfCheck question="Paydaş gereksinimi neden bir 'köprü' sayılır?">
+
+İş gereksinimi bir sonuç ister ama kimin neye ihtiyacı olduğunu söylemez. Çözüm gereksinimi bir yetenek tanımlar ama kimin için olduğunu söylemez. Paydaş gereksinimi ikisini bağlar.
+
+</SelfCheck>

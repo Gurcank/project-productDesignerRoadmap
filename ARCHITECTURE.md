@@ -445,8 +445,10 @@ HTML'de durduğu için sayfa biraz büyür; bütçe ve DOM boyutu izlenir.
 bileşendi. Yüzlerce derse görsel eklemek için her şekli baştan çizmek ölçeklenmez.
 
 **Karar.**
-- **11 ilkel** ([`src/components/diagrams/primitives/`](src/components/diagrams/primitives)):
-  Matrix2x2, Cycle, Timeline, Network, Tree, Swimlane, Layers, Venn, Spectrum, Chart, Heatmap. Veri
+- **12 ilkel** ([`src/components/diagrams/primitives/`](src/components/diagrams/primitives)):
+  Matrix2x2, Cycle, Timeline, Network, Tree, Swimlane, Layers, Venn, Spectrum, Chart, Heatmap ve
+  Hub (Faz 6: ortada sistem, çevresinde en çok altı etiketli varlık; bağlam diyagramı, paydaş halkası).
+  İlişki etiketi çizgide değil kutunun içinde, çünkü 360 genişlikte çizgi etiketleri birbirine çarpar. Veri
   props ile verilir; hepsi `DiagramFigure` ve `dg-*` sözlüğünü kullanır. Telefon için üç yol: 360
   genişliğinde dar düzen (`dg-narrow`), ya da kendi genişliğinde kalıp yana kayma (`--dg-min`) ve
   görünür "yana kaydır" ipucu. Veri taşıyan ilkeller altlarında JS'siz bir "Tablo olarak göster"

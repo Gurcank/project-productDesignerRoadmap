@@ -71,6 +71,11 @@ açılır ama gövde boştur; sebep sunucu günlüğündedir ("Diyagram etiketi 
 üretiyorsa, o öğenin kuralı `<style>` içinde `.kok :global(.oge)` olarak yazılır. Yoksa ilk çizim
 doğru görünür, ilk etkileşimden sonra öğeler stilsiz kalır ve hata da vermez.
 
+**Terim ipucu yanlış anlama bağlanabilir.** Eklenti kelimeyi eşler, anlamı bilmez: İş Analizi'nde
+"doğrulama" (verification) Ürün Geliştirme'deki "Validation" terimine, "yalın" (sade) "Lean"e
+bağlanmıştı. Yeni dersten sonra `dist/<kategori>/*/index.html` içindeki `data-term` eşleşmelerini oku;
+yanlış olanı o dersin `skipTerms`'üne yaz ve `build:fresh` çalıştır.
+
 **Paragrafı sıra sayısıyla başlatma.** "7. haftada…" Markdown'da numaralı liste olur; yazıyla yaz.
 
 **Astro 7 markdown eklentileri.** `markdown.rehypePlugins` artık kabul edilmiyor; `processor:

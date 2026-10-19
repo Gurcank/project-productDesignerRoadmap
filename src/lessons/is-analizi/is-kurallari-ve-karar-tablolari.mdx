@@ -1,0 +1,166 @@
+---
+summary: "İş kuralı, işin kontrolündeki ve test edilebilir bir yönergedir. Karar tablosu birçok kuralı girdiler, çıktılar ve satırlar olarak tek yerde toplar; eksik ve çakışan kuralları görünür kılar."
+outcomes:
+  - "Bir iş kuralını tanımlayıp süreçten ayırabilirsin."
+  - "Dağınık kuralları eksiksiz ve çakışmasız bir karar tablosuna çevirebilirsin."
+  - "Hit policy'lerin ne anlama geldiğini ve DMN'in ne olduğunu açıklayabilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "BABOK Guide — Ek A: Sözlük (IIBA)"
+    url: "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"
+  - label: "OMG — Decision Model and Notation (DMN)"
+    url: "https://www.omg.org/spec/DMN/"
+  - label: "Camunda — DMN Hit Policy"
+    url: "https://docs.camunda.io/docs/components/modeler/dmn/decision-table-hit-policy/"
+additions:
+  - "İş kuralı tanımı (BABOK sözlüğü)"
+  - "Karar tablosu, hit policy ve çakışan kurallar (Camunda DMN belgeleri)"
+  - "DMN'in amacı ve sürümleri (OMG)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Ayşe üç iade metnini yan yana koydu. Uygulama: "Siparişiniz hazırlanmadan iptal ederseniz tam iade." Panel yardım sayfası: "Dükkân iptal ederse müşteriye tam iade yapılır." Destek el kitabı: "Hazırlanmaya başlanan siparişe iade yapılmaz."
+
+Dükkân hazırlanan bir siparişi iptal ederse ne olur? Yardım sayfasına göre tam iade, el kitabına göre hiç iade yok. Peki müşteri hazır bir siparişi iptal ederse? Üç metnin hiçbiri söylemiyordu. Bu ders, dağınık kuralları tek bir tabloya toplamayı anlatır.
+
+## İş kuralı
+
+BABOK **iş kuralını** (business rule) şöyle tanımlar: işin kontrolünde olan, belirli, uygulanabilir ve test edilebilir bir yönerge. Davranışı yönlendirmek, yargıyı biçimlendirmek ya da karar vermek için bir ölçüt olarak kullanılır.
+
+Tanımdaki iki ifade önemlidir:
+
+- **İşin kontrolünde:** kuralı iş değiştirebilir. "Dükkân iptalinde %20 kupon" bir iş kuralıdır; Ozan yarın %15 yapabilir. Ödeme kuruluşunun iade süresi ise bir kısıttır; Demlik onu değiştiremez.
+- **Test edilebilir:** bir durum verildiğinde kuralın ne dediği tartışmasız olmalı.
+
+**Kural ≠ süreç.** Süreç işin sırasını, kural kararın ölçütünü anlatır. BPMN çiziminde bir dışlayıcı kapı "kupon gerekli mi?" diye sorar; cevabın ölçütü süreç çiziminde değil, kural kümesinde durur. Kurallar süreçten daha sık değişir. Ayrı tutulursa kupon oranı değiştiğinde süreç çizimine dokunulmaz.
+
+## Karar tablosu
+
+Bir sonuç birkaç koşulun birleşimine bağlıysa, kuralları düzyazıyla yazmak çelişki üretir. **Karar tablosu** (decision table) bunu üç parçayla düzenler: **girdiler**, **çıktılar** ve her satırda bir **kural**.
+
+<Tree
+  label="İade kararının girdileri"
+  caption="İade kararı üç girdiye ve bir iş bilgisine dayanır. Girdiler: siparişin durumu, iptal edenin kim olduğu ve stok sorunu olup olmadığı. İş bilgisi, Ozan'ın sahibi olduğu iade politikasıdır. Karar iki çıktı üretir: iade tutarı ve kupon. Bu tür bir çizim, DMN'de karar gereksinimleri diyagramı olarak bilinir."
+  root={{
+    title: "İade kararı",
+    sub: "çıktı: iade ve kupon",
+    tone: "accent",
+    children: [
+      { title: "Sipariş durumu", sub: "girdi: alındı, hazırlanıyor, hazır" },
+      { title: "İptal eden", sub: "girdi: müşteri, dükkân" },
+      { title: "Stok sorunu", sub: "girdi: evet, hayır" },
+      { title: "İade politikası", sub: "iş bilgisi · sahibi Ozan", tone: "progress" },
+    ],
+  }}
+/>
+
+| # | Sipariş durumu | İptal eden | Stok sorunu | İade | %20 kupon |
+|---|---|---|---|---|---|
+| 1 | Alındı | Müşteri | – | Tam | Hayır |
+| 2 | Alındı | Dükkân | Hayır | Tam | Hayır |
+| 3 | Alındı | Dükkân | Evet | Eksik ürün kadar | Hayır |
+| 4 | Hazırlanıyor | Müşteri | – | Yok | Hayır |
+| 5 | Hazırlanıyor | Dükkân | Hayır | Tam | Evet |
+| 6 | Hazırlanıyor | Dükkân | Evet | Eksik ürün kadar | Hayır |
+| 7 | Hazır | Müşteri | – | Yok | Hayır |
+| 8 | Hazır | Dükkân | – | Tam | Evet |
+
+"–", o girdinin bu kural için önemsiz olduğunu söyler. Tablonun iki sınavı vardır:
+
+1. **Eksiksiz mi?** Üç durum × iki iptal eden × iki stok değeri = 12 birleşim. Her biri bir kurala düşmeli. Kural 1, stok sorununun iki değerini de kapsar; kural 8 de öyle. Toplam 12.
+2. **Çakışmasız mı?** Hiçbir birleşim iki kurala birden düşmemeli.
+
+## Hit policy
+
+Bir durum birden çok kurala uyarsa ne olacağını tablonun **hit policy**'si söyler. Camunda'nın DMN belgeleri başlıcalarını şöyle anlatır:
+
+- **UNIQUE** (varsayılan): her durumda en çok bir kural uyar. Kurallar çakışırsa tablo geçersizdir.
+- **ANY:** birden çok kural uyabilir ama hepsi aynı çıktıyı vermelidir.
+- **FIRST:** sıradaki ilk uyan kural geçerlidir.
+- **RULE ORDER:** uyan bütün kurallar, tablodaki sırayla döner.
+- **COLLECT:** uyan bütün kurallar döner; isteğe bağlı olarak toplanır ya da sayılır.
+
+Belgedeki örnek çakışmanın nasıl gizlendiğini gösterir: "mevsim yaz ve sayı 20'den büyük" ile "mevsim yaz ve sayı 22'den küçük" iki ayrı kuraldır. Sayı 21 olunca ikisi birden uyar. UNIQUE tablolarda kurallar birbirini dışlayacak biçimde tasarlanmalıdır.
+
+**FIRST ≠ kolaylık.** FIRST çakışmayı çözmez, gizler: kuralların sırası değişince karar sessizce değişir. Okuyan kişinin bir satıra bakıp anlayabilmesi için UNIQUE daha güvenlidir.
+
+## DMN
+
+**DMN** (Decision Model and Notation), OMG'nin karar modelleme standardıdır. Bir grafik notasyonu ve karar tablolarını da içeren bir ifade dilinden oluşur. Notasyon, birbirine bağlı kararları ve onların gerektirdiği girdi verilerini ve iş bilgisini gösterir. OMG'ye göre analistlerin ve iş sahiplerinin okuyabileceği kadar sadedir ve BPMN ile birlikte kullanılmak üzere tasarlanmıştır.
+
+İlk sürüm 1.0 Eylül 2015'te yayımlandı; OMG'nin sayfası en güncel resmî sürüm olarak 1.6'yı gösteriyor. Bir karar tablosu yazmak için DMN aracı kullanmak şart değildir; ama aynı yapıyı izlemek, tabloyu ileride bir karar motoruna taşımayı kolaylaştırır.
+
+<Case>
+
+Ayşe üç metni tek tabloya çevirdi ve iki sınavı uyguladı:
+
+1. **Çakışma:** "Hazırlanıyor + dükkân iptali" için yardım sayfası "tam iade", el kitabı "iade yok" diyordu. Ozan karar verdi: müşteri boşuna bekledi, tam iade ve %20 kupon (kural 5).
+2. **Eksik:** "Hazır + müşteri iptali" hiçbir metinde yoktu. Ozan: iade yok (kural 7).
+3. **Eksik:** stok sorunu hiçbir metinde yoktu; gözlemden gelmişti. Kural 3 ve 6 eklendi.
+4. **Sınav:** 12 birleşim, 8 kural, her birleşim tam bir kurala düşüyor. Hit policy UNIQUE.
+
+Üç eski metin silindi. Uygulamadaki ve Panel'deki metinler artık tablodan üretiliyor.
+
+</Case>
+
+<Tool slug="karar-tablosu" />
+
+<Lenses>
+<Lens role="business-analyst">
+
+- **Birleşimleri say.** Girdi değerlerini çarp; tablo bu sayıyı kapsamıyorsa bir durum eksiktir.
+- **"–" işaretini bilinçli kullan.** Önemsiz bir girdi, bir kuralı birçok birleşime yayar; çakışmaları orada ara.
+- **Kuralı süreçten ayır.** Süreç çiziminde kapı soruyu sorar, cevabı tablo verir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Tablonun sahibi sensin.** Çakışan iki metin arasında karar vermek bir ürün kararıdır.
+- **Tek kaynak ilkesini koru.** Kural tablonun dışında bir yerde yeniden yazılırsa, çelişki geri gelir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- İş kuralı, işin kontrolünde, belirli ve test edilebilir bir yönergedir; kısıtı iş değiştiremez.
+- Kural süreçten ayrı tutulur: süreç sırayı, kural kararın ölçütünü anlatır.
+- Karar tablosu girdileri, çıktıları ve kuralları satır satır toplar; eksiksizlik ve çakışma sınanır.
+- UNIQUE'te her durumda en çok bir kural uyar; FIRST çakışmayı çözmez, gizler.
+- DMN, karar tablolarını da içeren OMG standardıdır ve BPMN ile birlikte kullanılır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Ödeme kuruluşu iadeyi 1–3 iş gününde yansıtır' bir iş kuralı mı?">
+
+Hayır. İş kuralı işin kontrolündedir; bu süreyi Demlik değiştiremez. Bu bir kısıttır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir karar tablosunun dört girdisi var: iki, üç, iki ve iki değerli. Tablo en az kaç birleşimi kapsamalı?">
+
+2 × 3 × 2 × 2 = 24 birleşim. "–" kullanan kurallar birden çok birleşimi kapsayabilir, ama toplamda her birleşim tam bir kurala düşmelidir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir analist, çakışmaları düzeltmek yerine tabloyu FIRST yapmayı öneriyor. Ne dersin?">
+
+FIRST çakışmayı gizler. Satırların sırası değişince karar sessizce değişir ve tabloyu okuyan biri bir satıra bakıp sonucu anlayamaz. Önce çakışan kuralları birbirini dışlayacak biçimde yeniden yazmayı öneririm.
+
+</SelfCheck>
+
+<SelfCheck question="Kupon oranı %20'den %15'e indi. Kural süreçten ayrı tutulduysa ne değişir?">
+
+Yalnız karar tablosundaki çıktı değişir. Süreç çizimi aynı kalır; kapı hâlâ "kupon gerekli mi?" diye sorar.
+
+</SelfCheck>
