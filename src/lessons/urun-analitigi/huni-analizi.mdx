@@ -1,0 +1,150 @@
+---
+summary: "Huni analizi bir akışın her adımında kaç kişinin kaldığını gösterir. Adım adım dönüşüm kaybın nerede olduğunu söyler; nedenini söylemez. Tanım, zaman penceresi ve kırılım sonucu değiştirir."
+outcomes:
+  - "Bir akışı adımlara ayırıp adım ve toplam dönüşümü hesaplayabilirsin."
+  - "Huninin tanımındaki seçimlerin (sıra, pencere, kim sayılır) sonucu nasıl değiştirdiğini açıklayabilirsin."
+  - "Huniden çıkan bulguyu nedenini bulacak bir araştırmaya bağlayabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "Amplitude — AARRR: Come aboard the pirate metrics framework (2024)"
+    url: "https://amplitude.com/blog/pirate-metrics-framework"
+  - label: "a16z — 16 Startup Metrics (2015)"
+    url: "https://a16z.com/16-startup-metrics/"
+additions:
+  - "Huniyle kaybın yerini bulmak; tanımın netliği (Amplitude, a16z)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Chart from "~/components/diagrams/primitives/Chart.astro";
+
+Demlik'in panosunda bir sayı aylardır aynı yerde duruyordu: ödemeye geçenlerin %22'si ödemeyi bitirmiyordu. Ama "ödeme sorunu" konuşulurken herkes farklı bir şeyden söz ediyordu: biri menüyü, biri sepeti, biri kart ekranını suçluyordu.
+
+Ece bir hafta boyunca uygulamayı açan herkesin yolunu adım adım saydı. Sorunun nerede olduğu ilk kez herkes için aynı resimde göründü. Bu ders o resmi, huniyi anlatır.
+
+## Adımlar ve dönüşüm
+
+Bir **huni**, kullanıcıların bir hedefe giderken geçtiği adımları sıralar ve her adımda kaç kişinin kaldığını sayar. İki oran hesaplanır:
+
+- **Adım dönüşümü:** bir adımdan sonrakine geçenlerin oranı. Kaybın nerede yoğunlaştığını gösterir.
+- **Toplam dönüşüm:** ilk adımdan son adıma varanların oranı. Akışın bütününü gösterir.
+
+<Chart
+  kind="bar"
+  label="Demlik'in haftalık sipariş hunisi"
+  caption="Bir haftada 60.000 kişi uygulamayı açtı. 42.000'i bir ürün görüntüledi, 21.000'i sepete ekledi, 16.000'i ödemeye geçti ve 12.480'i ödemeyi tamamladı. En büyük adım kaybı ürün görüntülemeden sepete geçişte, yüzde 50. Ödeme adımında kaybedilen oran yüzde 22. Uygulamayı açandan ödemeyi tamamlayana toplam dönüşüm yüzde 20,8."
+  x={{ title: "Adım", labels: ["Açılış", "Ürün", "Sepet", "Ödeme", "Tamam"] }}
+  y={{ title: "Kişi (bin)", max: 60 }}
+  series={[{ name: "Kişi (bin)", values: [60, 42, 21, 16, 12.48], tone: "progress" }]}
+/>
+
+| Adım | Kişi | Adım dönüşümü |
+|---|---|---|
+| Uygulamayı açtı | 60.000 | — |
+| Ürün görüntüledi | 42.000 | %70 |
+| Sepete ekledi | 21.000 | %50 |
+| Ödemeye geçti | 16.000 | %76 |
+| Ödemeyi tamamladı | 12.480 | %78 |
+
+**Büyük kayıp ≠ en önemli kayıp.** Ürün görüntüleyip sepete eklemeyenlerin bir kısmı yalnız menüye bakmaya gelmiştir; bu doğal bir kayıptır. Ödemeye geçip bitirmeyen ise sipariş vermeye karar vermiştir; oradaki kayıp hem daha pahalı hem daha düzeltilebilirdir.
+
+## Tanım sonucu değiştirir
+
+a16z'nin metrik rehberi her metrik için aynı uyarıyı yapar: tanımı net değilse sayı yanıltır. Huni için üç seçim vardır:
+
+1. **Sıra:** adımların bu sırayla mı yapılması gerekiyor, yoksa herhangi bir sırayla mı?
+2. **Zaman penceresi:** açılıştan ödemeye kadar ne kadar süre tanınıyor? Bir oturum mu, bir gün mü?
+3. **Kim sayılıyor:** her kişi bir kez mi, her deneme ayrı mı?
+
+Aynı veri, farklı pencerelerle farklı huniler verir. Huninin tanımı panonun üstünde yazılı olmalıdır.
+
+## Nerede, ama neden değil
+
+Huni kaybın **nerede** olduğunu söyler. **Neden** olduğunu söylemez. Nedeni bulmak için nitel bir yönteme geçmek gerekir; bunu [Araştırma ve kullanıcı bilgisi](/urun-gelistirme/arastirma-ve-kullanici-bilgisi/) dersi anlatıyor.
+
+Kırılım ilk ipucunu verir: huniyi platforma, edinme kanalına ya da segmente göre ayırmak, kaybın herkeste mi yoksa bir grupta mı olduğunu gösterir.
+
+<Case>
+
+Ece'nin hunisi tartışmayı üç adımda değiştirdi:
+
+1. **Kayıp yerleşti:** ödeme adımında %22 kayıp; herkes aynı sayıya bakıyordu.
+2. **Kırılım:** kayıtlı kartı olmayan müşterilerde kayıp daha yüksekti; kampüs kullanıcılarında da.
+3. **Nitel adım:** Mert beş kişiyle test yaptı; beşinden dördü hangi kartın seçili olduğunu söyleyemedi.
+
+Sonuç yol haritasında Next'e girdi: "Ödemeyi yarıda bırakmayı azalt, %22'den %15'e." Çözümü sınamak için bir A/B testi planlandı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Kaybın değerine bak, büyüklüğüne değil.** Karar vermiş kullanıcının kaybı, göz atan kullanıcınınkinden pahalıdır.
+- **Huninin tanımını panoya yaz.** Sıra, pencere ve kimin sayıldığı yazılmazsa sayılar tartışma doğurur.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Huniyi akış tasarımının haritası olarak kullan.** Her adım bir ekran ya da karardır; kayıp nerede yoğunsa tasarım orada sınanır.
+- **Nedeni testle bul.** Huni nerede olduğunu söyler; kullanılabilirlik testi nedenini.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Adım dönüşümünü story'nin ölçüsü yap.** Ödeme ekranındaki bir değişikliğin başarısı o adımın dönüşümüyle ölçülür.
+- **Kırılım sonuçlarını backlog'a taşı.** Kayıp bir segmentteyse iş de o segment için yazılır.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Adımları olaylara eşle.** Her huni adımı izleme planındaki bir olaydan gelmeli; olay yoksa adım ölçülemez.
+- **Tanımı gereksinim gibi yaz.** Sıra, zaman penceresi ve tekrar sayımı bir analiz kuralıdır.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Huniden araştırma sorusu çıkar.** "Neden ödeme adımında bırakıyorlar?" tam bir araştırma sorusudur.
+- **Kırılımdaki grubu davet et.** Kayıp kampüs kullanıcılarındaysa, görüşmeleri onlarla yap.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Huni bir akışın adımlarında kaç kişinin kaldığını sayar; adım ve toplam dönüşüm iki ayrı orandır.
+- En büyük kayıp her zaman en önemli kayıp değildir; karar vermiş kullanıcının kaybı daha pahalıdır.
+- Sıra, zaman penceresi ve kimin sayıldığı huninin sonucunu değiştirir; tanım yazılı olmalıdır.
+- Huni kaybın nerede olduğunu söyler, nedenini söylemez; neden için nitel araştırma gerekir.
+- Kırılım, kaybın herkeste mi yoksa bir grupta mı olduğunu gösterir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Adım dönüşümü ile toplam dönüşüm arasındaki fark nedir?">
+
+Adım dönüşümü bir adımdan sonrakine geçenlerin oranıdır ve kaybın yerini gösterir. Toplam dönüşüm ilk adımdan son adıma varanların oranıdır ve akışın bütününü gösterir.
+
+</SelfCheck>
+
+<SelfCheck question="Demlik'in hunisinde en büyük kayıp sepete eklemede (%50). Önce orayı mı düzeltirsin?">
+
+Hemen değil. Ürün görüntüleyenlerin bir kısmı yalnız göz atmaya gelmiştir; o kaybın bir kısmı doğaldır. Ödemeye geçip bitirmeyenler ise karar vermiş kullanıcılardır; oradaki kayıp hem daha pahalı hem daha düzeltilebilir olabilir.
+
+</SelfCheck>
+
+<SelfCheck question="İki kişi aynı veriden farklı huni oranları çıkardı. Ne kontrol edersin?">
+
+Huninin tanımını: adımlar belirli bir sırayla mı sayılıyor, zaman penceresi ne kadar, her kişi bir kez mi her deneme ayrı mı sayılıyor? Bu seçimler farklıysa sonuçlar da farklıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Huni ödeme adımında kayıp gösteriyor. Nedenini nasıl bulursun?">
+
+Önce kırılımla kaybın hangi grupta yoğunlaştığına bakarım. Sonra nitel bir yönteme geçerim: o adımda birkaç kullanıcıyla kullanılabilirlik testi ya da görüşme. Huni yalnız nerede olduğunu söyler.
+
+</SelfCheck>

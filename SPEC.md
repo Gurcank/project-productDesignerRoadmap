@@ -54,18 +54,18 @@ diyagramlar.
 Manager, Scrum Master, Business Analyst, UX Researcher) ve rolsüz **Keşif modu**. Ana sayfada rol
 seçici, role göre çizilen harita (durak numarası + temel / önerilen / isteğe bağlı rozeti, yol dışı
 gezegen küçük ve soluk), rolün yüzdesi ve **Sıradaki adımın** kartı; Ayarlar'da rol seçimi; yedekte
-rol. Paylaşılabilir `/?rol=<id>`. Henüz yazılmamış kategoriler (şu an dört) haritada "hazırlanıyor" olarak durur.
+rol. Paylaşılabilir `/?rol=<id>`. Henüz yazılmamış kategoriler (şu an iki) haritada "hazırlanıyor" olarak durur.
 
 **Var — mobil.** Alt gezinme çubuğu · okuma ilerleme çubuğu · adımlar arası kaydırma · ana ekrana
 eklenebilir manifest · **çevrimdışı okuma** (ADR-012). Çevrimdışı katmanı yalnız üretim
 derlemesinde etkindir; `astro dev` altında service worker kaydedilmez, kalmış olan sökülür —
 gerekçesi ve bedeli ADR-012'de.
 
-**Var — Araçlar (Faz 3–7).** `/araclar/`: doldurulmuş örnekli 27 şablon (PRD, RACI, risk kaydı;
+**Var — Araçlar (Faz 3–8).** `/araclar/`: doldurulmuş örnekli 31 şablon (PRD, RACI, risk kaydı;
 proje tüzüğü, iş gerekçesi, WBS, takvim, RAID, değişiklik talebi, durum raporu, kapanış raporu;
 sprint hedefi, çalışma sözleşmesi, retro panosu, hazır ve bitti tanımı, Gherkin story; BRD, use case,
 as-is/to-be, karar tablosu, izlenebilirlik matrisi, UAT; one-pager, fırsat-çözüm ağacı, deney kartı,
-Now-Next-Later, lansman planı),
+Now-Next-Later, lansman planı; izleme planı, metrik kartı, A/B test planı, Lean Canvas),
 Markdown ve Türkçe Excel'de açılan CSV indirmeleri (ADR-021).
 
 **Var — Proje Yönetimi (Faz 4).** Materyal dışı ilk tam kategori: 18 v2 ders (yaşam döngüsü,
@@ -95,6 +95,16 @@ Geliştirme'nin kalan 9 dersi v2'ye taşındı; bölümün 11 dersinin hepsi art
 `docs/icerik/kapsam-urun-yonetimi.md`; birincil kaynaklar Cagan (SVPG), Torres (Product Talk), Dunford,
 Traynor (Intercom) ve diğerleri.
 
+**Var — Ürün Analitiği ve İş Modeli (Faz 8).** Ürün Analitiği ve Deney: 11 v2 ders (iyi metrik ve HEART,
+North Star ve metrik ağacı, AARRR, huni, kohort ve elde tutma, segmentasyon, izleme planı, A/B testi
+tasarımı, deney tuzakları, pano tasarımı, korelasyon ve nedensellik), A/B örneklem demosu, 10 soruluk
+quiz, 20 terim. İş Modeli ve Strateji: 10 v2 ders (iş modeli kanvası ve Lean Canvas, gelir modelleri,
+birim ekonomisi, TAM/SAM/SOM, rekabet ve hendekler, fiyatlandırma, ROI ve NPV, finansal okuryazarlık,
+SWOT/PESTLE/Ansoff, stratejiden OKR'a), 10 soruluk quiz, 28 terim. Vaka kitabına analitik ve iş
+rakamları eklendi. Kapsam haritaları `docs/icerik/kapsam-urun-analitigi.md` ve
+`kapsam-is-ve-strateji.md`; birincil kaynaklar Evan Miller, Microsoft ExP, Rodden (HEART), Amplitude,
+Twilio Segment, a16z, Strategyzer, Maurya, Salesforce, What Matters ve Wikipedia giriş bölümleri.
+
 **Henüz yok — planlı, yapılmadı.** EN arayüz (`/en/`, `src/i18n`): kullanıcı ertelemeyi seçti,
 şu an TR tek dil · Araçlar'da kontrol listeleri, proje akış haritası, çalışma takvimi ve diğer
 şablonlar · framework ve kütüphane profil sayfaları · Cloudflare Pages yayını.
@@ -114,7 +124,7 @@ eşlemesi orada; başka hiçbir yerde tekrarlanmaz.
 |---|---|
 | Temel | 1 Web Temelleri |
 | Ürün ve Ekip | 2 Ürün Geliştirme · 3 Çalışma Biçimi · 18 Şirket Ortamı Sözlüğü · *[hazırlanıyor]* İletişim ve Paydaş Yönetimi |
-| Strateji ve Ürün | Ürün Yönetimi (materyal dışı) · *[hazırlanıyor]* Ürün Analitiği ve Deney · İş Modeli ve Strateji |
+| Strateji ve Ürün | Ürün Yönetimi · Ürün Analitiği ve Deney · İş Modeli ve Strateji (üçü de materyal dışı) |
 | Teslimat | Proje Yönetimi · Çevik Pratikler · İş Analizi (materyal dışı, bu site için yazıldı) |
 | Tasarım | 4 UX/UI Süreç ve İlkeler · *[hazırlanıyor]* Kullanıcı Araştırması · 5 Tasarım Sistemi · 6 Erişilebilirlik · 7 Arayüz Anatomisi |
 | Mühendislik | 8 Front-end · **Programlama Dilleri** · 9a Framework'ler · 9b Kütüphaneler · 10 Back-end ve API · 11 Veritabanı · **Veri Yapıları** · **Algoritmalar** |

@@ -1,0 +1,131 @@
+---
+summary: "TAM bütün pazarın büyüklüğü, SAM gerçekten hizmet verebileceğin kısmı, SOM belirli bir sürede kazanabileceğin kısmıdır. Pazar yukarıdan aşağı raporlarla ya da aşağıdan yukarı kendi verinle hesaplanır."
+outcomes:
+  - "TAM, SAM ve SOM'u tanımlayıp aralarındaki daralmayı açıklayabilirsin."
+  - "Aşağıdan yukarı bir pazar büyüklüğü hesabı kurabilirsin."
+  - "Bir pazar büyüklüğü iddiasının varsayımlarını sorgulayabilirsin."
+minutes: 6
+standard: 2
+skipTerms: ["kapasite"]
+sources:
+  - label: "Salesforce — TAM, SAM, and SOM: Made Simple (2025)"
+    url: "https://www.salesforce.com/blog/small-business/tam-sam-som/"
+additions:
+  - "TAM, SAM ve SOM'un tanımları; yukarıdan aşağı ve aşağıdan yukarı hesap (Salesforce)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Yatırımcı sunumunun ilk taslağında kocaman bir sayı vardı: "Türkiye kahve pazarı: milyarlarca lira." Yatırımcının ilk sorusu o slayta geldi: "Bunun ne kadarı sizin?"
+
+Bütün kahve pazarı Demlik'in pazarı değildi. Demlik kahve satmıyordu; dükkânlara sipariş getiriyordu ve yalnız bir şehirdeydi. Bu ders, büyük bir sayıdan gerçekçi bir sayıya inmeyi anlatır.
+
+## Üç halka
+
+Salesforce'un rehberi pazar büyüklüğünü üç halkada anlatır:
+
+- **TAM** (total addressable market): pazar talebinin tamamı ele geçirilseydi elde edilecek toplam gelir. Rekabet ve coğrafya daraltmasından önceki üst sınır.
+- **SAM** (serviceable available market): rekabet, coğrafya, kapasite ve hedef kitleye göre gerçekten hizmet verebileceğin kısım.
+- **SOM** (serviceable obtainable market): SAM'in belirli bir sürede gerçekçi olarak kazanabileceğin kısmı. Fiyat, rekabet, pazarlama bütçesi ve satış gücü belirler.
+
+Rehbere göre bu sayılar ne kadar üretileceğini, pazarlamaya ne kadar yatırılacağını ve fiyat kararlarını etkiler.
+
+<Layers
+  shape="funnel"
+  label="Demlik'in pazar büyüklüğü"
+  caption="Hesap dükkândan başlar. TAM: İstanbul'daki yaklaşık 4.000 bağımsız kahve dükkânının her biri yılda yaklaşık 125.000 TL gelir potansiyeli taşır; toplam yaklaşık 500 milyon TL. SAM: sabah yoğunluğu olan ve kasası entegre edilebilen 1.800 dükkân, yaklaşık 225 milyon TL. SOM: üç yılda kazanılması gerçekçi 600 dükkân, yaklaşık 75 milyon TL."
+  layers={[
+    { title: "TAM · 4.000 dükkân", sub: "≈ 500 milyon TL", tone: "accent" },
+    { title: "SAM · 1.800 dükkân", sub: "≈ 225 milyon TL" },
+    { title: "SOM · 600", sub: "≈ 75 milyon TL", tone: "progress" },
+  ]}
+/>
+
+## İki hesap yolu
+
+Salesforce iki yöntemi ayırır:
+
+| | Yukarıdan aşağı | Aşağıdan yukarı |
+|---|---|---|
+| Nereden başlar? | Sektör raporları, analist verisi | Kendi satış ve müşteri verin |
+| Nasıl? | Toplamdan daraltarak | Birim değerini müşteri sayısıyla çarparak |
+| Güçlü yanı | Hızlı; veri yokken işe yarar | Daha doğru |
+| Zayıf yanı | Verisi kadar doğrudur, abartmaya açıktır | Daha çok zaman alır |
+
+Rehberin TAM örneği aşağıdan yukarı bir hesaptır: 8–12 yaş için bir oyun yapıyorsan, bu yaşta oyun oynayan çocuk sayısını çocuk başına ortalama harcamayla çarparsın.
+
+**Pazar ≠ hedef.** SOM bir tahmin; büyüme hedefi değil. Hangi varsayımlara dayandığı yazılmadan bir anlam taşımaz.
+
+## Varsayımları yaz
+
+Her halka bir varsayıma dayanır. Hesabın değeri, sayıdan çok varsayımların görünür olmasındadır:
+
+1. **Birim:** neyi sayıyorsun? Kişi mi, dükkân mı, şirket mi?
+2. **Birim değeri:** bir birim yılda ne kadar gelir getirir? Hangi kullanıma dayanıyor?
+3. **Daraltma:** SAM'e hangi kural ile giriliyor? Coğrafya, kapasite, teknik uyum?
+4. **Süre:** SOM hangi sürede kazanılıyor?
+
+<Case>
+
+Elif yatırımcı slaytını aşağıdan yukarı hesapla değiştirdi:
+
+1. **Birim:** müşteri değil dükkân, çünkü gelir dükkândan geliyor.
+2. **Birim değeri:** yıllık abonelik 18.000 TL + komisyon yaklaşık 107.000 TL. Komisyon, günde 30 sipariş varsayımına dayanıyordu. Toplam yaklaşık 125.000 TL.
+3. **TAM:** İstanbul'da yaklaşık 4.000 bağımsız dükkân → yaklaşık 500 milyon TL.
+4. **SAM:** sabah yoğunluğu olan ve kasası entegre edilebilen 1.800 dükkân → yaklaşık 225 milyon TL.
+5. **SOM:** üç yılda 600 dükkân → yaklaşık 75 milyon TL.
+
+Yatırımcının sorusu değişti: "Günde 30 sipariş varsayımı nereden geliyor?" Elif'in cevabı hazırdı: bugünkü 140 dükkânın ortalaması.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Aşağıdan yukarı hesapla.** Kendi birim değerin ve müşteri sayınla kurulan hesap savunulabilir.
+- **Varsayımı sayının yanına yaz.** Yatırımcı ve yönetim sayıyı değil varsayımı sorgular.
+- **SAM'i ürün kararına bağla.** Kasa entegrasyonu olmayan dükkânlar SAM dışındaysa, entegrasyonu genişletmek SAM'i büyütür.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- TAM bütün pazar, SAM hizmet verebileceğin kısım, SOM belirli bir sürede kazanabileceğin kısımdır.
+- Yukarıdan aşağı hesap hızlıdır ama abartmaya açıktır; aşağıdan yukarı hesap daha doğrudur.
+- Aşağıdan yukarı hesap: birim değeri × birim sayısı.
+- Her halkanın varsayımı yazılır: birim, birim değeri, daraltma kuralı, süre.
+- SOM bir tahmindir, bir hedef değil.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="TAM, SAM ve SOM arasındaki fark nedir?">
+
+TAM talebin tamamı ele geçirilseydi elde edilecek gelir, SAM gerçekten hizmet verebileceğin kısım, SOM belirli bir sürede gerçekçi olarak kazanabileceğin kısımdır.
+
+</SelfCheck>
+
+<SelfCheck question="'Türkiye kahve pazarı milyarlarca lira' cümlesi Demlik için neden yanıltıcı bir TAM'dır?">
+
+Demlik kahve satmıyor; dükkânlara sipariş getirip komisyon ve abonelik alıyor. Ayrıca yalnız İstanbul'da. Demlik'in TAM'ı, dükkân başına gelir potansiyeli × uygun dükkân sayısıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Aşağıdan yukarı hesabın yukarıdan aşağıya göre avantajı nedir?">
+
+Kendi verine dayandığı için daha doğrudur ve varsayımları görünür kılar. Yukarıdan aşağı hesap sektör raporu kadar doğrudur ve abartmaya açıktır.
+
+</SelfCheck>
+
+<SelfCheck question="Günde 30 sipariş varsayımı 20'ye inerse Demlik'in TAM'ı nasıl değişir?">
+
+Komisyon geliri üçte bir azalır: yaklaşık 107.000 TL'den 71.000 TL'ye. Dükkân başına değer yaklaşık 89.000 TL'ye, TAM yaklaşık 357 milyon TL'ye iner. Hesabın en hassas varsayımı budur.
+
+</SelfCheck>

@@ -1,0 +1,142 @@
+---
+summary: "North Star, müşterinin üründen aldığı değeri yakalayan tek metriktir. Takımlar onu doğrudan değil, onu üreten girdileri hareket ettirir; metrik ağacı bu bağları ve takımların nerede durduğunu gösterir."
+outcomes:
+  - "Bir North Star metriğinin üç özelliğini sayabilirsin."
+  - "North Star'ı üç beş girdiye ayırıp takımların metriklerini bu girdilere bağlayabilirsin."
+  - "İyi bir North Star'ı neden doğrudan hareket ettiremeyeceğini açıklayabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "Amplitude — North Star Playbook: About the North Star Framework"
+    url: "https://amplitude.com/books/north-star/about-north-star-framework"
+additions:
+  - "North Star'ın üç özelliği, girdiler, oyun türleri, tek North Star ilkesi (Amplitude North Star Playbook)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Sipariş takımı "30 günde ikinci sipariş"e, panel takımı "iade talepleri"ne, pazarlama "yeni kayıt"a bakıyordu. Üçünün de iyi bir haftası olabiliyordu, ama Hakan şirketin iyi bir hafta geçirip geçirmediğini anlayamıyordu.
+
+Eksik olan, bu metrikleri birbirine bağlayan bir resimdi: hepsi hangi tek sayıya hizmet ediyordu? Bu ders, o tek sayıyı ve ona giden ağacı anlatır. North Star kavramının temeli [Hedef ve ölçüm](/calisma-bicimi/hedef-ve-olcum-okr-kpi-north-star/) dersinde.
+
+## North Star'ın üç özelliği
+
+Amplitude'un North Star Playbook'una göre **North Star metriği**, müşterilerin üründen aldığı değeri en iyi yakalayan tek metriktir. Üç özelliği vardır:
+
+1. **Kullanıcının üründen aldığı değeri temsil eder.**
+2. **Ürün ve pazarlama ekiplerinin etki alanındadır.**
+3. **Gelirin öncü göstergesidir:** o değişince iş sonuçlarının da değişmesi beklenir.
+
+Playbook'un tarihî örneği Netflix'tir: 2005'te, DVD gönderdiği yıllarda, ürün takımının North Star'ı "ilk oturumunda kuyruğuna üç ya da daha fazla DVD ekleyen müşteri yüzdesi"ydi.
+
+Playbook işe başlamadan "hangi oyunu oynuyoruz?" sorusunu sormayı önerir. **Dikkat oyununda** kullanıcı ürünün içinde vakit geçirir. **İşlem oyununda** doğru ürünü bulup işlemi kolayca tamamlamak ister. **Verimlilik oyununda** bir işi yapmak için ürünü seçer. Demlik bir işlem oyunu oynar.
+
+## Girdiler ve ağaç
+
+North Star tek başına durmaz. Playbook onu üreten **girdileri** tanımlar: North Star'ı en doğrudan etkileyen, takımların ürünle etkileyebildiği üç beş tamamlayıcı etken. Playbook'un örneği bir market teslimat servisidir. North Star "ayda zamanında teslim alınan ürün"dür. Girdiler çok sipariş, siparişte çok ürün, çok siparişi hazırlamak ve zamanında teslim etmektir.
+
+<Tree
+  label="Demlik'in metrik ağacı"
+  caption="Ağacın tepesinde North Star durur: haftalık tamamlanan sipariş, bugün 29.400. Altında beş girdi vardır: haftalık aktif müşteri 21.000, müşteri başına haftalık sipariş 1,4, ödeme tamamlama oranı yüzde 78, aktif dükkân 140 ve söz verilen sürede hazır olan sipariş oranı yüzde 91. Takım metrikleri girdilerin altına bağlanır: sipariş takımının 30 günde ikinci sipariş oranı müşteri başına sipariş girdisini, panel takımının iade talepleri ise hazır olma ve güven girdisini besler."
+  root={{
+    title: "Haftalık tamamlanan sipariş",
+    sub: "North Star · 29.400",
+    tone: "accent",
+    children: [
+      { title: "Haftalık aktif müşteri", sub: "21.000" },
+      {
+        title: "Müşteri başına sipariş",
+        sub: "haftada 1,4",
+        children: [{ title: "30 günde 2. sipariş", sub: "sipariş takımı · %41", tone: "progress" }],
+      },
+      { title: "Ödeme tamamlama", sub: "%78" },
+      { title: "Aktif dükkân", sub: "140" },
+      {
+        title: "Zamanında hazır sipariş",
+        sub: "%91",
+        children: [{ title: "Aylık iade talebi", sub: "panel takımı · 310", tone: "progress" }],
+      },
+    ],
+  }}
+/>
+
+Playbook ağacı bir iskele olarak tanımlar: içinde varsayımlar, inançlar ve nedensel ilişkiler vardır. Kurulduktan sonra sahada sınanır. Girdilerin gerçekten North Star'ı hareket ettirip ettirmediği bir varsayımdır.
+
+## Bir seviye ulaşılmaz olmalı
+
+Playbook'ta John Cutler'ın bir uyarısı vardır: North Star'ı doğrudan hareket ettirebiliyorsan, muhtemelen iyi bir North Star değildir. North Star bir sonuçtur. Takımlar girdilere çalışır; North Star onların toplam etkisini gösterir.
+
+**North Star ≠ OKR.** North Star yıllarca aynı kalabilir; OKR'lar çeyrekliktir ve çoğu zaman bir girdiyi hareket ettirmeyi hedefler. Playbook tek bir ürün ve tek bir müşteri tabanı için tek bir North Star önerir.
+
+<Case>
+
+Elif, Ece ve Hakan iki saatlik bir atölyede ağacı çizdi:
+
+1. **Oyun:** işlem oyunu. North Star "haftalık tamamlanan sipariş" oldu; "uygulamayı açan" gibi dikkat metrikleri elendi.
+2. **Girdiler:** haftalık aktif müşteri, müşteri başına sipariş, ödeme tamamlama, aktif dükkân, zamanında hazır sipariş. Haftalık aktif müşteri × müşteri başına sipariş, North Star'ı verir: 21.000 × 1,4 = 29.400.
+3. **Takımlar yerleşti:** sipariş takımının ikinci sipariş oranı müşteri başına sipariş girdisine, panel takımının iade talepleri zamanında hazır siparişe bağlandı. Pazarlamanın yeni kayıtları haftalık aktif müşteriye.
+4. **Varsayım yazıldı:** "İade talepleri azaldıkça dükkânların zamanında hazırlama oranı artar." Ağaçta en zayıf bağ buydu; bir çeyrek sonra veriyle bakılacak.
+
+Hakan'ın sorusu artık tek bir sayıyla cevaplanıyordu; neden o sayının oynadığı da ağaçtan okunuyordu.
+
+</Case>
+
+<Tool slug="metrik-karti" />
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Önce oyunu adlandır.** Dikkat, işlem ya da verimlilik; North Star buna göre seçilir.
+- **Ağacı varsayım olarak işaretle.** Girdi ile North Star arasındaki her bağ veriyle sınanmalı.
+- **Doğrudan hareket ettirebildiğin bir North Star seçme.** Bir seviye ulaşılmaz olmalı.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Takımın metriğini ağaçta göster.** Ürün hedefinin hangi girdiye hizmet ettiğini bilen takım, önceliği kendisi verebilir.
+- **Sprint hedefini girdiye bağla.** "Ödeme tamamlamayı artır" bir girdidir; North Star değil.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- North Star müşterinin aldığı değeri temsil eder, ürün ve pazarlamanın etki alanındadır ve gelirin öncü göstergesidir.
+- Takımlar North Star'ı onu üreten üç beş girdi üzerinden hareket ettirir.
+- Metrik ağacı North Star'ı, girdileri ve takım metriklerini bağlar; bağlar varsayımdır ve sınanır.
+- İyi bir North Star doğrudan hareket ettirilemez; bir seviye ulaşılmazdır.
+- North Star uzun ömürlüdür; OKR'lar çeyreklik ve çoğu zaman bir girdiye yöneliktir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="North Star metriğinin üç özelliği nedir?">
+
+Kullanıcının üründen aldığı değeri temsil eder, ürün ve pazarlamanın etki alanındadır ve gelirin öncü göstergesidir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir takım North Star'ı 'günlük uygulama açılışı' olarak seçti. Demlik için neden zayıf bir seçim?">
+
+Demlik bir işlem oyunu oynar: müşterinin aldığı değer, kahvesini kuyruksuz almaktır. Uygulamayı açmak bu değeri göstermez ve gelirle zayıf bağlıdır. Tamamlanan sipariş değeri daha iyi yakalar.
+
+</SelfCheck>
+
+<SelfCheck question="'North Star'ı doğrudan hareket ettirebiliyorsan, muhtemelen iyi bir North Star değildir' ne demek?">
+
+North Star bir sonuçtur; birçok girdinin ve takımın toplam etkisini göstermelidir. Tek bir eylemle doğrudan oynatılabiliyorsa, değeri değil o eylemi ölçüyordur.
+
+</SelfCheck>
+
+<SelfCheck question="Sipariş takımının '30 günde ikinci sipariş' metriği ağaçta nereye bağlanır?">
+
+Müşteri başına sipariş girdisinin altına. Müşteri daha sık dönerse kişi başına sipariş artar; bu da haftalık tamamlanan sipariş North Star'ını büyütür.
+
+</SelfCheck>

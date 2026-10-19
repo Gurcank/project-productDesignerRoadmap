@@ -1,0 +1,141 @@
+---
+summary: "Birim ekonomisi tek bir müşterinin kâr bırakıp bırakmadığını sorar. LTV müşterinin ömrü boyunca bıraktığı katkı, CAC onu kazanmanın maliyetidir; oranları ve geri ödeme süresi büyümenin sağlığını gösterir."
+outcomes:
+  - "Sipariş başına katkıdan LTV'yi adım adım hesaplayabilirsin."
+  - "Karma ve ücretli CAC'ı ayırt edip hangisinin hangi kararı verdiğini açıklayabilirsin."
+  - "LTV/CAC oranını ve geri ödeme süresini yorumlayabilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "a16z — 16 Startup Metrics (2015)"
+    url: "https://a16z.com/16-startup-metrics/"
+additions:
+  - "LTV'nin tanımı ve hesabı, gelir üzerinden hesaplama hatası, karma ve ücretli CAC, edinme maliyetinin ölçekle artması (a16z)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Pazarlama yeni bir öneriyle geldi: Instagram bütçesini üç katına çıkaralım. Her ücretli müşteri 180 TL'ye geliyordu ve "bir müşteri yıllarca kahve içer" deniyordu. Finans sordu: "Bir müşteri bize gerçekte ne kadar bırakıyor?"
+
+Kimse cevabı bilmiyordu. Sipariş sayısı biliniyordu, gelir biliniyordu, ama tek bir müşterinin kâra mı zarara mı yazdığı bilinmiyordu. Bu ders o hesabı anlatır.
+
+## Katkıdan başla
+
+**Birim ekonomisi** (unit economics), tek bir birimin, yani bir müşterinin ya da bir siparişin, gelir ve maliyetine bakar. Toplam rakamlar büyürken birim zarar ediyorsa, büyümek zararı büyütür.
+
+Hesap **katkı marjıyla** başlar: birimin getirdiği gelirden, o birime hizmet etmenin değişken maliyetleri düşülür. Maaşlar ve ofis gibi sabit giderler burada yoktur.
+
+## LTV
+
+a16z'nin metrik rehberi **LTV**'yi (lifetime value) bir müşteriyle ilişki süresince elde edilecek net kârın bugünkü değeri olarak tanımlar. Rehberin uyardığı sık hata, LTV'yi gelir ya da brüt marj üzerinden hesaplamaktır. Hesap şu sırayla yapılır:
+
+1. **Müşteri başına aylık gelir** = ortalama sipariş geliri × aylık sipariş sayısı.
+2. **Aylık katkı** = bu gelir − müşteriye hizmetin değişken maliyetleri.
+3. **Ortalama ömür** (ay) = 1 / aylık churn.
+4. **LTV** = aylık katkı × ortalama ömür.
+
+Rehber, verisi az olan genç şirketlere tahmin yerine gerçekleşen 12 ve 24 aylık LTV'ye bakmayı da önerir.
+
+<Layers
+  label="Demlik'te sipariş katkısından LTV'ye"
+  caption="Hesap aşağıdan yukarı kurulur. Bir siparişten 9,90 TL komisyon gelir; ödeme ücreti 3,30 ve altyapı ile destek 1,10 TL düşülünce sipariş başına katkı 5,50 TL kalır. Aktif müşteri ayda 3,3 sipariş verdiği için aylık katkı 18,15 TL. Aylık churn yüzde 8 olduğundan ortalama ömür 12,5 ay. LTV yaklaşık 227 TL. Bu, ücretli kanaldaki 180 TL'lik edinme maliyetinin yalnız 1,3 katı."
+  layers={[
+    { title: "LTV ≈ 227 TL", sub: "18,15 × 12,5 ay", tone: "accent" },
+    { title: "Ortalama ömür 12,5 ay", sub: "1 / %8 churn" },
+    { title: "Aylık katkı 18,15 TL", sub: "5,50 × 3,3 sipariş" },
+    { title: "Sipariş başına katkı 5,50 TL", sub: "9,90 − 3,30 − 1,10", tone: "progress" },
+  ]}
+/>
+
+## CAC
+
+**CAC** (customer acquisition cost), a16z'nin tanımıyla bir müşteri kazanmanın tam maliyetidir: reklam, tavsiye ödülleri, krediler ve indirimler dahil. Rehber iki hesabı ayırır:
+
+- **Karma CAC** (blended): toplam edinme harcaması / bütün kanallardan gelen yeni müşteri. Yanlış değildir ama ücretli kampanyanın kârlı olup olmadığını söylemez.
+- **Ücretli CAC** (paid): ücretli kanal harcaması / o kanaldan gelen yeni müşteri. Bütçe kararı bu sayıyla verilir.
+
+Rehber bir uyarı daha yapar: daha geniş kitleye ulaştıkça edinme maliyeti artar. İlk müşteriler ucuzdur; bütçeyi üç katına çıkarmak CAC'ı da büyütür.
+
+## Oran ve geri ödeme
+
+İki sayı birlikte okunur:
+
+- **LTV/CAC:** bir müşterinin bıraktığı katkının, onu kazanma maliyetine oranı. Oran 1'e yakınsa müşteri kazanmak neredeyse hiçbir şey bırakmaz.
+- **CAC geri ödeme süresi:** edinme maliyetinin aylık katkıyla kaç ayda geri döndüğü. Süre uzadıkça şirketin kasası daha uzun süre müşteriyi finanse eder.
+
+**Karma ≠ ücretli.** Ucuz kanallar karma CAC'ı düşürür ve ücretli kanalın zararını gizler.
+
+<Case>
+
+Ece hesabı finansla birlikte yaptı:
+
+1. **Sipariş başına katkı:** 9,90 TL komisyon − 3,30 TL ödeme ücreti − 1,10 TL altyapı ve destek = 5,50 TL.
+2. **LTV:** ayda 3,3 sipariş → 18,15 TL; churn %8 → ömür 12,5 ay; LTV ≈ 227 TL.
+3. **CAC:** ücretli (Instagram) 180 TL; karma 95 TL, çünkü QR ve davet neredeyse bedavaydı.
+4. **Oranlar:** ücretli LTV/CAC ≈ 1,3, karma ≈ 2,4. Ücretli kanalda geri ödeme yaklaşık 10 ay; ortalama ömür 12,5 ay.
+
+Instagram bütçesi üç katına çıkmadı. Elif'in önerisi farklıydı: churn'ü düşürmek. Churn %8'den %6'ya inse ömür 16,7 aya, LTV yaklaşık 303 TL'ye çıkardı; aynı reklam harcaması daha çok katkı bırakırdı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Elde tutma LTV'nin en güçlü kaldıracıdır.** Churn'deki küçük bir düşüş ömrü belirgin biçimde uzatır.
+- **Edinme kararını ücretli CAC ile ver.** Karma CAC ücretli kanalın zararını gizler.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Sipariş başına katkıyı bil.** Değişken maliyeti artıran bir özellik, her siparişin katkısını düşürür.
+- **Churn'ü düşüren işleri görünür kıl.** Backlog'da elde tutma işleri, LTV üzerinden savunulabilir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Tanımları yaz.** "Müşteri", "aktif" ve "değişken maliyet" tanımlanmadan LTV tartışması bitmez.
+- **Hesabın girdilerini kaynağa bağla.** Churn ve sipariş sıklığı hangi rapordan, hangi dönemden geliyor?
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Birim ekonomisi tek bir müşterinin ya da siparişin kâr bırakıp bırakmadığını sorar.
+- LTV katkı üzerinden hesaplanır, gelir üzerinden değil: aylık katkı × ortalama ömür.
+- Ortalama ömür 1 / aylık churn'dür; churn düşünce LTV hızla büyür.
+- Karma CAC bütün kanalları birlikte, ücretli CAC yalnız ücretli kanalı ölçer; bütçe kararı ücretli CAC ile verilir.
+- LTV/CAC ve geri ödeme süresi büyümenin sağlıklı olup olmadığını gösterir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="LTV'yi gelir üzerinden hesaplamak neden yanlıştır?">
+
+Gelir, müşteriye hizmetin değişken maliyetlerini içermez. LTV bir müşterinin bıraktığı katkıyı ölçmelidir. Demlik'te sipariş başına gelir 9,90 TL ama katkı 5,50 TL; gelirle hesaplanan LTV neredeyse iki kat şişer.
+
+</SelfCheck>
+
+<SelfCheck question="Karma CAC 95 TL, ücretli CAC 180 TL. Instagram bütçesini artırma kararı hangisiyle verilir?">
+
+Ücretli CAC ile. Bütçe artışı yalnız ücretli kanaldan müşteri getirir. Karma CAC ucuz kanalların etkisiyle düşük görünür ve ücretli kanalın zararını gizler.
+
+</SelfCheck>
+
+<SelfCheck question="Aylık churn %8'den %4'e inerse ortalama ömür ne olur?">
+
+Ortalama ömür 1 / churn olduğu için 12,5 aydan 25 aya çıkar. Aylık katkı aynıysa LTV de iki katına çıkar.
+
+</SelfCheck>
+
+<SelfCheck question="Ücretli LTV/CAC 1,3. Bu ne anlama gelir?">
+
+Ücretli kanaldan gelen bir müşteri, kazanma maliyetinin yalnız 1,3 katı katkı bırakır. Maliyet yaklaşık 10 ayda geri döner ve ortalama müşteri 12,5 ay kalır; pay çok incedir. Bütçe artışı CAC'ı da yükseltirse oran 1'in altına düşebilir.
+
+</SelfCheck>

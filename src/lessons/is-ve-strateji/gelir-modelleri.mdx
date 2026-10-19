@@ -1,0 +1,146 @@
+---
+summary: "Gelir modeli bir ürünün kimden, ne karşılığında ve nasıl para kazandığıdır: satış, kullanım, abonelik, kiralama, lisans, aracılık ya da reklam. Pazar yerinde GMV gelir değildir."
+outcomes:
+  - "Başlıca gelir akışı türlerini örnekleriyle sayabilirsin."
+  - "GMV ile geliri, sözleşme değeri ile tanınan geliri ayırt edebilirsin."
+  - "Bir gelir modelinin ürün kararlarını nasıl etkilediğini açıklayabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "Wikipedia — Business model canvas (revenue streams)"
+    url: "https://en.wikipedia.org/wiki/Business_Model_Canvas"
+  - label: "Wikipedia — Freemium"
+    url: "https://en.wikipedia.org/wiki/Freemium"
+  - label: "a16z — 16 Startup Metrics (2015)"
+    url: "https://a16z.com/16-startup-metrics/"
+additions:
+  - "Gelir akışı türleri (Business Model Generation, Wikipedia aracılığıyla)"
+  - "Freemium'un tanımı ve terimin kökeni (Wikipedia)"
+  - "GMV ve gelir, bookings ve gelir, tekrar eden gelir (a16z)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Yeni katılan bir mühendis, ilk haftasında Elif'e sordu: "Müşteriden hiç ücret almıyoruz. Peki maaşımı kim ödüyor?" Soru şakaydı ama cevabı her ürün kararını etkiliyordu.
+
+Demlik'in parası kahve içenden değil, dükkândan geliyordu. Bu, hangi özelliğin önemli olduğunu, kimin şikâyetinin daha pahalı olduğunu ve hangi metriğin izleneceğini değiştiriyordu. Bu ders, bir ürünün para kazanma biçimlerini anlatır.
+
+## Gelir akışı türleri
+
+İş modeli kanvasındaki **gelir akışları** bloğu, müşteri segmentlerinin hangi değer için ne ödediğini yazar. *Business Model Generation*'a dayanan tanımlarda başlıca türler şunlardır:
+
+<Tree
+  label="Gelir akışı türleri"
+  caption="Gelir akışları iki aileye ayrılabilir. Ürünün kendisinden gelenler: varlık satışı, kullanım ücreti, abonelik, kiralama ve lisanslama. Başkaları arasında aracılıktan gelenler: komisyon ve reklam. Demlik iki türü birlikte kullanır: dükkândan aylık abonelik ve sipariş başına komisyon."
+  root={{
+    title: "Gelir akışları",
+    tone: "accent",
+    children: [
+      {
+        title: "Üründen",
+        sub: "müşteri ürün için öder",
+        children: [
+          { title: "Varlık satışı", sub: "bir kez satın al" },
+          { title: "Kullanım ücreti", sub: "kullandıkça öde" },
+          { title: "Abonelik", sub: "dönem dönem öde", tone: "progress" },
+          { title: "Kiralama", sub: "süreli kullanım hakkı" },
+          { title: "Lisanslama", sub: "fikri mülkü kullanma hakkı" },
+        ],
+      },
+      {
+        title: "Aracılıktan",
+        sub: "iki taraf arasında durur",
+        children: [
+          { title: "Aracılık (komisyon)", sub: "işlem başına pay", tone: "progress" },
+          { title: "Reklam", sub: "dikkati satar" },
+        ],
+      },
+    ],
+  }}
+/>
+
+Bir ürün birden çok türü birlikte kullanabilir. **Freemium** bunlardan sık görülen bir birleşimdir: temel ürün ücretsizdir, ek özellikler ücretlidir. Wikipedia'ya göre terim 2006'da Fred Wilson'ın bir blog yazısına gelen tepkilerle doğdu. Ücretsiz sürüm özellikle, kapasiteyle ya da süreyle sınırlanır.
+
+## Model kararı ürün kararıdır
+
+Gelir modeli kimin müşteri olduğunu belirler. Reklamla para kazanan bir ürün dikkati satar; abonelikle kazanan bir ürün, aboneyi her ay geri getirmek zorundadır. Komisyonla kazanan bir pazar yeri, iki tarafın da işlemi tamamlamasına bağlıdır.
+
+**Ödeyen ≠ kullanan.** Demlik'te ürünü en çok kullanan kahve içenlerdir, ödeyen dükkânlardır. İki tarafın da kaybı gelir kaybıdır, ama farklı yoldan.
+
+## İki sık karışıklık
+
+a16z'nin metrik rehberi gelirle karıştırılan iki sayıyı ayırır:
+
+- **GMV ≠ gelir.** Bir pazar yerinde **GMV** (gross merchandise value), platformdan geçen toplam satıştır. Gelir ise platformun aldığı paydır ve GMV'nin küçük bir kesridir.
+- **Sözleşme ≠ gelir.** İmzalanan sözleşmenin değeri (bookings) bir ödeme yükümlülüğüdür. Gelir, hizmet verildikçe ya da abonelik süresince tanınır.
+
+Rehber **tekrar eden geliri** (MRR, ARR) ayrı izlemeyi önerir; tek seferlik ücretleri ve hizmet bedellerini dışarıda bırakır. Sık hata, tek bir ayın bütün sözleşmelerini on ikiyle çarpıp ARR diye sunmaktır.
+
+<Case>
+
+Elif yeni mühendise Demlik'in bir ayını gösterdi:
+
+1. **GMV:** 20,79 milyon TL. Uygulamadan geçen bütün kahvelerin tutarı.
+2. **Gelir:** 1,457 milyon TL. Bunun 1,247 milyonu komisyon (sipariş tutarının %6'sı; 165 TL'lik siparişte 9,90 TL), 0,210 milyonu dükkân aboneliği (aylık 1.500 TL).
+3. **Tekrar eden kısım:** abonelik her ay tekrar eder; komisyon sipariş sayısına bağlıdır, bu yüzden North Star doğrudan geliri besler.
+4. **Ürün kararına etkisi:** Panel'in ilk ayı ücretsizdir; dükkânın abonelikte kalması, ilk ayda yeterli sipariş almasına bağlıdır. Panel takımının "zamanında hazır" metriği bu yüzden gelirle doğrudan ilgilidir.
+
+Mühendisin sonraki sorusu daha iyiydi: "O hâlde iade talebini azaltmak, dükkânı tutmak demek mi?" Evet.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Ödeyeni ve kullananı ayrı yaz.** İki tarafın da kaybı gelir kaybıdır; hangisinin daha hızlı kayıp olduğunu bil.
+- **Gelir modelini metrik ağacına bağla.** Komisyonla kazanılıyorsa tamamlanan işlem, abonelikle kazanılıyorsa elde tutma öne çıkar.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Backlog'da ödeyen tarafın işlerini görünür kıl.** Dükkân tarafındaki bir hata, doğrudan abonelik kaybı olabilir.
+- **Ücretsiz deneme süresini bir hedef olarak gör.** Deneme süresinde değer görülmezse abonelik başlamaz.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Başlıca gelir akışları: varlık satışı, kullanım ücreti, abonelik, kiralama, lisanslama, aracılık ve reklam.
+- Bir ürün birden çok türü birleştirebilir; freemium temel ürünü ücretsiz, ekleri ücretli sunar.
+- Gelir modeli kimin müşteri olduğunu ve hangi metriğin önemli olduğunu belirler.
+- Pazar yerinde GMV gelir değildir; gelir platformun aldığı paydır.
+- Tekrar eden gelir ayrı izlenir; sözleşme değeri gelirle karıştırılmaz.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="GMV ile gelir arasındaki fark nedir?">
+
+GMV platformdan geçen toplam satıştır. Gelir, platformun bu satıştan aldığı paydır; Demlik'te komisyon ve abonelik. Demlik'in aylık GMV'si 20,79 milyon, geliri 1,457 milyon TL.
+
+</SelfCheck>
+
+<SelfCheck question="Freemium nedir?">
+
+Temel ürünün ücretsiz, ek özelliklerin ücretli sunulduğu modeldir. Ücretsiz sürüm özellikle, kapasiteyle ya da süreyle sınırlanır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir şirket ocakta 12 aylık sözleşmeler imzaladı ve bu tutarı 12 ile çarpıp ARR diye sundu. Sorun nedir?">
+
+İki hata var. Sözleşme değeri gelir değildir; gelir hizmet verildikçe tanınır. Ayrıca tek bir ayın sözleşmelerini on ikiyle çarpmak tekrar eden geliri şişirir.
+
+</SelfCheck>
+
+<SelfCheck question="Reklamla para kazanan bir ürün ile abonelikle kazanan bir ürün, neyi farklı optimize eder?">
+
+Reklam modeli dikkati ve görüntülenmeyi, abonelik modeli aboneyi her dönem geri getirmeyi optimize eder. Gelir modeli, hangi metriğin önemli olduğunu değiştirir.
+
+</SelfCheck>

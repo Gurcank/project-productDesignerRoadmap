@@ -1,0 +1,140 @@
+---
+summary: "Doğru tasarlanmış bir deney bile yanlış yürütülürse yanıltır. Erken bakıp durdurmak yanlış pozitifleri artırır, örneklem oranı uyuşmazlığı kayıp kullanıcıları gizler, çok sayıda metrik şans eseri kazanan üretir."
+outcomes:
+  - "Erken bakıp durdurmanın yanlış pozitif oranını neden artırdığını açıklayabilirsin."
+  - "Örneklem oranı uyuşmazlığını (SRM) tanıyıp sonuca güvenmeden önce kontrol edebilirsin."
+  - "Bir deney sonucunu okumadan önce bakılacak kontrolleri sayabilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Evan Miller — How Not To Run an A/B Test (2010)"
+    url: "https://www.evanmiller.org/how-not-to-run-an-ab-test.html"
+  - label: "Microsoft Research ExP — Diagnosing Sample Ratio Mismatch in A/B Testing (2020)"
+    url: "https://www.microsoft.com/en-us/research/articles/diagnosing-sample-ratio-mismatch-in-a-b-testing/"
+additions:
+  - "Tekrarlı anlamlılık testinin yanlış pozitif etkisi ve bakış sayısına göre eşik tablosu (Evan Miller)"
+  - "Örneklem oranı uyuşmazlığı, MSN karusel örneği, Microsoft ve LinkedIn sıklıkları (Microsoft ExP)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Chart from "~/components/diagrams/primitives/Chart.astro";
+
+Ödeme testinin ilk günü bitti. Burak panoyu açtı: yeni ekran 5 puan öndeydi ve araç sonucu "anlamlı" diye gösteriyordu. "Kazandık," dedi, "herkese açalım, iki hafta beklemenin anlamı yok."
+
+Elif testi durdurmadı. Burak'a bunun bir inat olmadığını açıklaması gerekiyordu. Bu ders, iyi tasarlanmış bir deneyi bile geçersiz kılan yürütme hatalarını anlatır. Deneyin tasarımı [A/B testi tasarımı](/urun-analitigi/ab-testi-tasarimi/) dersinde.
+
+## Erken bakmak, erken durmak
+
+Evan Miller'ın yazısının ana fikri şudur: anlamlılık hesabı, örneklem büyüklüğünün **önceden sabitlendiğini** varsayar. Test her gün kontrol edilip anlamlı görüldüğü an durdurulursa bu varsayım bozulur.
+
+Neden? İki grup arasında hiç fark olmasa bile, fark gün gün dalgalanır. Her bakış, o dalganın bir anlığına eşiği aşmasına yeni bir şans verir. Miller'ın örneğinde fark yokken her gözlemden sonra bakılıp anlamlı görülünce durulduğunda, yanlış pozitif oranı %5 yerine %26,1 olur: beş katından fazla.
+
+Miller tekrarlı bakışın etkisini bir tabloyla gösterir. Gerçek yanlış pozitif oranını %5'te tutmak için, bakış sayısı arttıkça eşiğin düşmesi gerekir:
+
+<Chart
+  kind="bar"
+  label="Bakış sayısına göre gereken anlamlılık eşiği"
+  caption="Gerçek yanlış pozitif oranını yüzde 5'te tutmak için her bakışta kullanılması gereken anlamlılık eşiği. Tek bakışta yüzde 2,9. İki bakışta yüzde 2,2, üç bakışta 1,8, beş bakışta 1,4, on bakışta yüzde 1. Yani on kez bakan biri, yüzde 1 sandığı bir eşikle aslında yüzde 5'lik bir risk alır. Değerler Evan Miller'ın tablosundandır."
+  x={{ title: "Bakış sayısı", labels: ["1", "2", "3", "5", "10"] }}
+  y={{ title: "Gereken eşik (%)", max: 4 }}
+  series={[{ name: "Gereken eşik", values: [2.9, 2.2, 1.8, 1.4, 1.0], tone: "accent" }]}
+/>
+
+Miller'ın vurgusu nettir: bakmak sorun değildir, **erken durdurmak** sorundur. Çözüm, örneklemi önceden belirleyip ona ulaşana kadar beklemektir. Testi gerçekten erken bitirme ihtiyacı varsa sıralı (sequential) ya da Bayesçi tasarımlar bunun için kurulmuştur.
+
+**Bakmak ≠ durdurmak.** Koruyucu metrikleri her gün izlemek doğrudur; bir hata varsa test durdurulur. Birincil metriğe bakıp "kazandık" diye durmak yanlıştır.
+
+## Örneklem oranı uyuşmazlığı
+
+**Örneklem oranı uyuşmazlığı** (sample ratio mismatch, SRM), Microsoft'un deney ekibinin tanımıyla şudur: A ve B'de sayılan kullanıcıların oranı, deneyden önce ayarlanan orandan anlamlı biçimde farklıdır. Örneğin 50/50 ayarlanmış bir test 52/48 çıkar.
+
+Yazı Abraham Wald'ın hikâyesiyle başlar. İkinci Dünya Savaşı'nda önemli olan, dönen uçaklardaki delikler değil, dönmeyen uçaklardı. SRM de böyledir: eksik kullanıcılar nadiren rastgeledir, çoğu zaman testten en çok etkilenenlerdir.
+
+Yazının MSN örneğinde bir karuseldeki kart sayısı 12'den 16'ya çıkarıldı. Sonuç etkileşimde düşüş gösterdi, ama SRM uyarısı vardı. B o kadar ilgi çekmişti ki bot algılayıcısı bu kullanıcıları ayıklamıştı. Hata düzeltilince sonuç tersine döndü: B olumluydu.
+
+SRM sanıldığından sık görülür: yazıya göre Microsoft'ta testlerin yaklaşık %6'sında, LinkedIn'de yaklaşık %10'unda. Microsoft'ta her A/B testi, etkileri incelenmeden önce SRM kontrolünden geçmek zorundadır.
+
+## Diğer tuzaklar
+
+- **Çok metrik, tek kazanan.** %5 anlamlılıkla yirmi metriğe bakarsan, hiçbir etki olmasa bile biri şans eseri anlamlı görünebilir. Birincil metrik bu yüzden testten önce seçilir.
+- **Sonradan segment avı.** "Genelde fark yok ama Android'de var" bulgusu yeni bir hipotezdir, bir sonuç değil.
+- **Testi kısa tutmak.** Haftanın günleri farklı davranıyorsa, tam haftaları kapsamayan bir test bir günün etkisini ölçebilir.
+
+<Case>
+
+Elif Burak'a üç şey gösterdi:
+
+1. **Birinci gün yalnız birkaç yüz kişiydi.** Plan varyasyon başına yaklaşık 2.950 kişi istiyordu; ilk günün farkı dalganın tepesi olabilirdi.
+2. **Plandaki tek erken durdurma koşulu** ödeme hatası oranının iki katına çıkmasıydı. O olmamıştı.
+3. **SRM her gün kontrol ediliyordu.** İki haftanın sonunda oran 50,2 / 49,8 idi; kontrol geçti.
+
+İki hafta sonunda fark +5 değil, 2,8 puandı: %78,1'e karşı %80,9. Anlamlıydı ama birinci günün gösterdiğinden küçüktü. Burak sonradan şunu söyledi: "İlk gün durdursaydık, takvimi beş puana göre yapacaktık."
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Erken durdurma koşullarını plana yaz.** Yalnız koruyucu metrikler; birincil metrik değil.
+- **Sonucu okumadan önce SRM'ye bak.** Oran bozuksa sonuç ne derse desin güvenme, önce nedeni bul.
+
+</Lens>
+<Lens role="product-designer">
+
+- **İlk günün sonucunu tasarım kararı sayma.** Dalgalanma büyüktür; plan bitmeden ekranı değiştirme.
+- **Bir varyant kullanıcıyı farklı bir yola götürüyorsa SRM'yi sor.** Yönlendirme ve bot filtresi kullanıcıyı sayımdan düşürebilir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Test sürerken aynı ekrana başka değişiklik gönderme.** İki değişiklik karışınca hangisinin etkisi olduğu bilinmez.
+- **Erken bitirme baskısını takvimle yönet.** Testin bitişi sprint planında görünürse baskı azalır.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Segment bulgusunu yeni bir araştırma sorusu olarak al.** "Android'de fark var" bir neden değil, bir sorudur.
+- **SRM'nin nedeni bir deneyim sorunu olabilir.** Bir varyantta kullanıcı kayboluyorsa oturum kayıtlarına ve görüşmelere bak.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Anlamlılık hesabı örneklemin önceden sabitlendiğini varsayar; anlamlı görünce durmak yanlış pozitifleri artırır.
+- Bakmak sorun değildir; birincil metriğe bakıp erken durdurmak sorundur.
+- SRM, gruplardaki kullanıcı oranının planlanandan anlamlı biçimde sapmasıdır; eksik kullanıcılar nadiren rastgeledir.
+- SRM'li bir testin sonucuna, nedeni bulunmadan güvenilmez.
+- Çok metrik ve sonradan segment avı şans eseri kazananlar üretir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Birinci gün sonuç anlamlı görünüyor. Neden durdurmamak gerekir?">
+
+Anlamlılık hesabı önceden belirlenmiş bir örneklemi varsayar. Her bakış, şans dalgalanmasının eşiği aşmasına yeni bir fırsat verir. Anlamlı görünce durmak, Miller'ın örneğinde yanlış pozitif oranını %5'ten %26,1'e çıkarır.
+
+</SelfCheck>
+
+<SelfCheck question="50/50 ayarlanmış bir testte gruplar 52/48 çıktı ve fark anlamlı. Ne yaparsın?">
+
+Bu bir SRM'dir. Sonucu okumadan önce nedenini ararım: atama, bir varyantta yönlendirme, bot filtresi, log birleştirme. Eksik kullanıcılar çoğu zaman en çok etkilenenlerdir; neden bulunmadan sonuca güvenilmez.
+
+</SelfCheck>
+
+<SelfCheck question="Testte 20 metriğe bakıldı ve biri anlamlı çıktı. Bu bir kazanım mı?">
+
+Kendi başına değil. %5 anlamlılıkla 20 metrikten birinin şans eseri anlamlı çıkması beklenir. Kararı testten önce seçilmiş birincil metrik verir; diğer bulgu yeni bir hipotez olabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Test sürerken her gün hangi metriğe bakmak doğrudur?">
+
+Koruyucu metriklere ve SRM'ye. Ödeme hatası gibi bir koruyucu bozulursa test durdurulur. Birincil metriğe bakılabilir ama ona göre durdurulmaz.
+
+</SelfCheck>

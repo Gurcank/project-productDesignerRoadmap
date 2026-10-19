@@ -84,6 +84,11 @@ Dev sunucusunu yeniden başlat. Kontrol: sayfada `<figure>` var mı.
 çeyreklerde y ≈ 0,8–1, alt çeyreklerde y ≈ 0,3–0,5 bu alana denk gelir ve nokta yazının üstüne biner.
 Noktaları üst çeyreklerde 0,55–0,75, alt çeyreklerde 0,05–0,25 arasına koy; 768'de ekranda bak.
 
+**Demoda ondalık alan `type="number"` olmaz.** İngilizce yerel ayarlı tarayıcıda "1,5" yazılınca
+virgül yutulur ve değer 15 olur; hata da vermez. `type="text" inputmode="decimal"` kullan, okurken
+virgülü noktaya çevir. Grafik ölçeğini (`y.max`) dörde tam bölünen bir sayı seç; yoksa eksen
+işaretleri 0 / 6 / 11 / 17 gibi düzensiz çıkar.
+
 **Paragrafı sıra sayısıyla başlatma.** "7. haftada…" Markdown'da numaralı liste olur; yazıyla yaz.
 
 **Astro 7 markdown eklentileri.** `markdown.rehypePlugins` artık kabul edilmiyor; `processor:

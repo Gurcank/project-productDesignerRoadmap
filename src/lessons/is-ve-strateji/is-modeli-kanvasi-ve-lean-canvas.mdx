@@ -1,0 +1,167 @@
+---
+summary: "İş modeli kanvası bir işin kime ne sunduğunu, nasıl ulaştırdığını, neye mal olduğunu ve ne kazandırdığını dokuz blokta tek sayfaya koyar. Lean Canvas aynı sayfayı yeni girişimler için riske ve öğrenmeye çevirir."
+outcomes:
+  - "İş modeli kanvasının dokuz bloğunu sayıp bir ürün için doldurabilirsin."
+  - "Lean Canvas'ın kanvastan neyi çıkarıp neyi eklediğini açıklayabilirsin."
+  - "Bir kanvastaki en riskli varsayımı bulup sınanacak hâle getirebilirsin."
+minutes: 7
+standard: 2
+skipTerms: ["altyapı"]
+sources:
+  - label: "Strategyzer — The Business Model Canvas"
+    url: "https://www.strategyzer.com/library/the-business-model-canvas"
+  - label: "Wikipedia — Business model canvas"
+    url: "https://en.wikipedia.org/wiki/Business_Model_Canvas"
+  - label: "Ash Maurya — Lean Canvas vs Business Model Canvas (LEANSpark, 2024)"
+    url: "https://leanspark.ai/compare/lean-canvas-vs-bmc"
+additions:
+  - "Dokuz blok, sağ-sol-orta düzeni, kanvasın bir iddia olması (Strategyzer; Wikipedia)"
+  - "Lean Canvas'ın eklediği ve çıkardığı kutular, kullanım alanı (Ash Maurya)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Yatırımcı toplantısından bir gün önce Hakan, Elif'ten "Demlik nasıl para kazanıyor, tek sayfada" istedi. Elif'in elinde 40 slaytlık bir sunum, bir gelir tablosu ve bir yol haritası vardı. Hiçbiri tek sayfa değildi.
+
+Bir iş modelini anlatmak için bütün işi anlatmak gerekmez; birkaç soruyu cevaplamak yeter. Bu ders, o soruları tek sayfada toplayan iki aracı anlatır.
+
+## Dokuz blok
+
+**İş modeli kanvası** (Business Model Canvas), Alexander Osterwalder'ın 2005'te önerdiği ve 2010'da *Business Model Generation* kitabıyla yaygınlaşan bir şablondur. Strategyzer'ın tanımıyla dokuz blok, bir işin kime hizmet ettiğini, ne sunduğunu, nasıl ulaştırdığını, neye mal olduğunu ve ne kazandırdığını kapsar.
+
+Kanvasın bir düzeni vardır. **Sağ taraf pazardır:** müşteriler ve onlara ulaşmak. **Sol taraf** o pazara hizmet etmek için gerekenlerdir. **Değer önerisi** ortada durur ve ikisini bağlar.
+
+<Tree
+  label="İş modeli kanvasının dokuz bloğu"
+  caption="Dokuz blok üç gruba ayrılır. Ortada değer önerisi durur: müşteriye ne sunuyoruz? Sağ taraf pazardır: müşteri segmentleri, kanallar, müşteri ilişkileri ve gelir akışları. Sol taraf altyapıdır: kilit ortaklıklar, kilit faaliyetler, kilit kaynaklar ve maliyet yapısı."
+  root={{
+    title: "İş modeli kanvası",
+    sub: "tek sayfa, dokuz blok",
+    tone: "accent",
+    children: [
+      { title: "Değer önerisi", sub: "orta · ne sunuyoruz?", tone: "progress" },
+      {
+        title: "Sağ taraf: pazar",
+        sub: "kime, nasıl, ne kazandırır?",
+        children: [
+          { title: "Müşteri segmentleri" },
+          { title: "Kanallar" },
+          { title: "Müşteri ilişkileri" },
+          { title: "Gelir akışları" },
+        ],
+      },
+      {
+        title: "Sol taraf: altyapı",
+        sub: "ne gerekir, neye mal olur?",
+        children: [
+          { title: "Kilit ortaklıklar" },
+          { title: "Kilit faaliyetler" },
+          { title: "Kilit kaynaklar" },
+          { title: "Maliyet yapısı" },
+        ],
+      },
+    ],
+  }}
+/>
+
+Bloklar birbirine bağlıdır. Strategyzer'ın örneğiyle bir müşteri segmentini değiştirirsen kanallar, faaliyetler ve maliyetler de değişir. Kanvas bir iş modeli için bir kez doldurulur; bütün şirket için değil.
+
+**Kanvas ≠ plan.** Strategyzer kanvası bir iddia olarak tanımlar: maliyet ve gelir blokları ancak üstteki yedi blok doğruysa geçerlidir. Kanvasa tarih ve sürüm yazılır, kanıt geldikçe yeniden çizilir.
+
+## Lean Canvas
+
+Ash Maurya 2010'da kanvası yeni girişimler için uyarladı ve adına **Lean Canvas** dedi. Maurya'ya göre iki aracın amacı farklıdır:
+
+| | İş modeli kanvası | Lean Canvas |
+|---|---|---|
+| Kim için? | Yerleşik işler, kurum içi yenilik | Ürün-pazar uyumundan önceki girişimler |
+| Odak | İşin mimarisi ve değerin teslimi | Risk ve öğrenme |
+| Süre (Maurya'nın tahmini) | 45–60 dakika | Yaklaşık 20 dakika |
+
+Lean Canvas dört kutu ekler: **Problem**, **Çözüm**, **Kilit metrikler** ve **Haksız avantaj**. Maurya'ya göre çoğu girişim yapmaya çalıştığını yapamadığı için değil, yanlış ürünü yaptığı için batar; Problem kutusu bu yüzden ilk sıradadır. Çözüm kutusu bilerek küçük tutulur: ilk çözüme âşık olmamak için. Haksız avantaj, kolayca kopyalanamayan ya da satın alınamayan şeydir ve ilk gün çoğu zaman boştur.
+
+Yer açmak için kilit faaliyetler, kilit kaynaklar, kilit ortaklıklar ve müşteri ilişkileri çıkarılır. Maurya'nın ifadesiyle bunlar işe "dışarıdan içeri" bakan bir girişim için daha sonranın sorularıdır.
+
+<Case>
+
+Elif tek sayfayı iki kanvasla hazırladı:
+
+1. **Bugünün iş modeli kanvası:** iki müşteri segmenti (kahve içenler ve bağımsız dükkânlar), çok taraflı bir platform. Gelir dükkândan: aylık 1.500 TL abonelik ve sipariş tutarının %6'sı komisyon. Müşteriden ücret alınmıyor.
+2. **İlk yılın Lean Canvas'ı:** Hakan'ın arşivinden çıktı. Problem kutusunda "sabah kuyruğu" yazıyordu; haksız avantaj kutusu boştu.
+3. **En riskli varsayım:** ilk yıl "dükkânlar sipariş başına komisyon ödemeyi kabul eder" idi. İlk 20 dükkânla ödeme yapılan bir pilot yapılmıştı; 17'si üç ay sonra devam etti.
+4. **Bugünün haksız avantajı:** kasa entegrasyonu ve iki taraflı ağ etkisi.
+
+Hakan yatırımcıya iki sayfayı yan yana gösterdi: "Başladığımız yer ve bugün."
+
+</Case>
+
+<Tool slug="lean-canvas" />
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Kanvasa tarih ve sürüm yaz.** Bir iddia olduğu için kanıt geldikçe değişir.
+- **En riskli varsayımı işaretle.** Kanvasın çıktısı bir deney listesidir, bir poster değil.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Değer önerisini backlog'un yanına koy.** Bir iş değer önerisine hizmet etmiyorsa sorgula.
+- **Segmente bağlı kararları gör.** Segment değişirse kanal, iş ve maliyet de değişir.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Kilit faaliyetler ve ortaklıklar projenin bağımlılıklarıdır.** POS tedarikçisi ve ödeme kuruluşu, risk kaydına girer.
+- **Maliyet yapısını bütçeyle karşılaştır.** Proje bütçesi hangi maliyet bloğunu büyütüyor?
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Kanvası iş ihtiyacı analizinin girişi olarak kullan.** Değer önerisi ve segment, gereksinimlerin "neden"idir.
+- **Bloklar arası tutarsızlığı ara.** Kanalda olmayan bir müşteri ilişkisi vaat edilmiş olabilir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- İş modeli kanvası dokuz blokta kime, ne, nasıl, neye mal olur ve ne kazandırır sorularını cevaplar.
+- Sağ taraf pazar, sol taraf altyapı, değer önerisi ortadadır; bloklar birbirine bağlıdır.
+- Kanvas bir iddiadır; tarih ve sürüm taşır, kanıt geldikçe yeniden çizilir.
+- Lean Canvas problem, çözüm, kilit metrikler ve haksız avantaj ekler; riske ve öğrenmeye odaklanır.
+- Kanvasın asıl çıktısı en riskli varsayım ve onu sınayacak deneydir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="İş modeli kanvasının dokuz bloğu nedir?">
+
+Müşteri segmentleri, değer önerileri, kanallar, müşteri ilişkileri, gelir akışları, kilit kaynaklar, kilit faaliyetler, kilit ortaklıklar ve maliyet yapısı.
+
+</SelfCheck>
+
+<SelfCheck question="Lean Canvas, iş modeli kanvasından hangi kutuları çıkarıp yerine ne koyar?">
+
+Kilit faaliyetler, kilit kaynaklar, kilit ortaklıklar ve müşteri ilişkilerini çıkarır. Yerine problem, çözüm, kilit metrikler ve haksız avantajı koyar.
+
+</SelfCheck>
+
+<SelfCheck question="Yeni bir girişim için hangisini önerirsin, neden?">
+
+Lean Canvas'ı. Maurya'ya göre ürün-pazar uyumundan önceki bir girişimin asıl sorusu, işin mimarisi değil, en riskli varsayımın doğru olup olmadığıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Demlik bir gün eve teslimata geçerse kanvasta ne değişir?">
+
+Yalnız değer önerisi değil, bağlı bloklar da değişir: kanallar, kilit faaliyetler (kurye), kilit ortaklıklar ve maliyet yapısı. Strategyzer'ın vurguladığı gibi bir bloğu değiştirmek diğerlerini de etkiler.
+
+</SelfCheck>

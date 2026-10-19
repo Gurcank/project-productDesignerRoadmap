@@ -37,7 +37,10 @@ const max = y.max ?? Math.ceil(Math.max(...all) / 5) * 5;
 const n = x.labels.length;
 const xAt = (i: number) => LEFT + (kind === "bar" ? (i + 0.5) * (plotW / n) : n === 1 ? plotW / 2 : (i / (n - 1)) * plotW);
 const yAt = (v: number) => TOP + PLOT_H - (v / max) * PLOT_H;
-const ticks = [0, 0.25, 0.5, 0.75, 1].map((t) => Math.round(max * t));
+// Small scales (a 3 % threshold, 1.5 million TL) need a decimal, or the ticks repeat.
+const step = max < 10 ? 10 : 1;
+const ticks = [0, 0.25, 0.5, 0.75, 1].map((t) => Math.round(max * t * step) / step);
+const num = (v: number) => v.toLocaleString("tr-TR");
 const tone = (s: Series) => (s.tone === "progress" ? "dg-line--progress" : s.tone === "plain" ? "" : "dg-line--accent");
 const unit = y.unit ?? "";
 const barW = (plotW / n) * 0.7 / series.length;
@@ -51,7 +54,7 @@ const barW = (plotW / n) * 0.7 / series.length;
         <>
           <path class="dg-line" d={`M${LEFT} ${yAt(t)} H${LEFT + plotW}`} stroke-dasharray={t === 0 ? undefined : "1 5"} />
           <text class="dg-sub" x={LEFT - 8} y={yAt(t) + 4} text-anchor="end">
-            {t}
+            {num(t)}
             {unit}
           </text>
         </>
@@ -111,5 +114,5 @@ const barW = (plotW / n) * 0.7 / series.length;
       </ul>
     )
   }
-  <DataTable slot="data" caption={label} head={[x.title, ...series.map((s) => s.name)]} rows={x.labels.map((text, i) => [text, ...series.map((s) => (s.values[i] === null ? "—" : `${s.values[i]}${unit}`))])} />
+  <DataTable slot="data" caption={label} head={[x.title, ...series.map((s) => s.name)]} rows={x.labels.map((text, i) => [text, ...series.map((s) => (s.values[i] === null ? "—" : `${num(s.values[i]!)}${unit}`))])} />
 </DiagramFigure>

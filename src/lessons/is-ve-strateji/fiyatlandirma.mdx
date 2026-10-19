@@ -1,0 +1,124 @@
+---
+summary: "Fiyat maliyetten değil, müşterinin gördüğü değerden yola çıkarak da belirlenebilir. Fiyat farklılaştırma segmentlere farklı fiyat verir; ücretsiz sürüm ve deneme değeri göstermenin yollarıdır."
+outcomes:
+  - "Maliyete dayalı ve değere dayalı fiyatlamayı ayırt edebilirsin."
+  - "Fiyat farklılaştırmanın neye dayandığını ve hangi koşulda çalıştığını açıklayabilirsin."
+  - "Bir fiyat değişikliğinin ürün metriklerine etkisini sorgulayabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "Wikipedia — Value-based pricing"
+    url: "https://en.wikipedia.org/wiki/Value-based_pricing"
+  - label: "Wikipedia — Price discrimination"
+    url: "https://en.wikipedia.org/wiki/Price_discrimination"
+  - label: "Wikipedia — Freemium"
+    url: "https://en.wikipedia.org/wiki/Freemium"
+additions:
+  - "Değere dayalı fiyatlama, fiyat farklılaştırma ve freemium'un tanımları (Wikipedia giriş bölümleri)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+
+Finans bir öneriyle geldi: komisyonu %6'dan %8'e çıkaralım. Hesap basitti; aynı sipariş sayısıyla komisyon geliri üçte bir artardı. Elif sordu: "Aynı sipariş sayısıyla mı? Dükkânlar kalacak mı?"
+
+Fiyat yalnız bir sayı değil, bir ürün kararıdır. Dükkânın Demlik'te kalıp kalmayacağı, Demlik'in ona ne kadar değer kattığına bağlıydı. Bu ders, fiyatı belirlemenin yollarını anlatır.
+
+## Maliyetten değere
+
+Fiyat iki uçtan birinden yola çıkarak belirlenebilir:
+
+- **Maliyete dayalı:** birimin maliyeti hesaplanır, üstüne bir pay eklenir.
+- **Değere dayalı** (value-based pricing): Wikipedia'nın tanımıyla fiyat, müşterinin algıladığı ya da tahmin edilen değere, yani ödeme isteğine göre belirlenir. Üretim maliyeti fiyatı belirlemez.
+
+<Spectrum
+  label="Fiyatın yola çıktığı yer"
+  caption="Sol uçta maliyete dayalı fiyat durur: maliyetin üstüne bir pay eklenir. Sağ uçta değere dayalı fiyat durur: müşterinin ödeme isteğine bakılır. Demlik'in komisyonu ortanın sağındadır; yüzde 6, dükkânın Demlik'ten gelen siparişten elde ettiği değere göre seçilmiştir. Öğrenci indirimi bir segment fiyatıdır."
+  left={{ title: "Maliyete dayalı", sub: "maliyet + pay" }}
+  right={{ title: "Değere dayalı", sub: "ödeme isteği" }}
+  marks={[
+    { label: "Maliyet + pay", at: 0.05 },
+    { label: "Demlik %6 komisyon", at: 0.62 },
+    { label: "Ödeme isteği", at: 0.95 },
+  ]}
+/>
+
+**Maliyet ≠ fiyat.** Maliyet fiyatın alt sınırıdır; altında satmak zarardır. Ama müşterinin ödemeye razı olduğu tutar maliyetle ilgili değildir. Değer maliyetin çok üstündeyse, maliyete dayalı fiyat masada para bırakır.
+
+## Fiyat farklılaştırma
+
+**Fiyat farklılaştırma** (price discrimination), Wikipedia'nın tanımıyla aynı ya da çok benzer bir ürünü aynı satıcının farklı segmentlere farklı fiyatla satmasıdır. Segmentlerin ödeme isteği ve fiyata duyarlılığı farklıdır. Çalışması için satıcının bir ölçüde pazar gücü olması gerekir. Seyahat, eğitim ve telekomda yaygındır: öğrenci bileti, erken rezervasyon, kurumsal tarife.
+
+**Freemium** da bir farklılaştırmadır: temel ürün ücretsizdir, ek özellikler ücretlidir. Wikipedia'ya göre ücretsiz sürüm özellikle, kapasiteyle ya da süreyle sınırlanır. Süreyle sınırlamanın en bilinen biçimi deneme süresidir.
+
+## Fiyat bir deneydir
+
+Fiyat değişikliği metrikleri birlikte oynatır. Komisyon artarsa gelir sipariş başına artar; ama dükkân kaybı, yeni dükkân kazanımı ve dükkânın uygulamayı ne kadar öne çıkardığı da değişebilir. Bu yüzden fiyat bir varsayım olarak ele alınır: önce ödeme isteği araştırılır, sonra küçük bir grupta denenir.
+
+<Case>
+
+Elif finansın önerisini bir soruya çevirdi: dükkân Demlik'ten ne kazanıyor?
+
+1. **Değer:** Ayşe 12 dükkân sahibiyle görüştü. Sahipler, Demlik siparişlerinin yaklaşık üçte birinin Demlik olmasa gelmeyecek müşterilerden geldiğini tahmin ediyordu. Değer, bu ek siparişlerdi.
+2. **Hesap:** günde 30 siparişin yaklaşık 10'u ek sipariştir. Dükkân yeni geliri bu 10 siparişten alır, ama komisyonu 30 siparişin hepsine öder. %8'de bu dengenin dükkân aleyhine döneceği konuşuldu.
+3. **Segment fiyatı:** öğrenci kartıyla %10 indirim zaten bir farklılaştırmaydı; kampüs müşterisinin ödeme isteği farklıydı ve indirimi kampanya bütçesi karşılıyordu.
+4. **Deneme:** Panel'in ilk ayı ücretsizdi; dükkânın değeri görmesi için bir süre sınırıydı.
+
+**Karar:** komisyon %6'da kaldı. Önce dükkân başına ek siparişi ölçen bir analiz başladı; fiyat değişikliği, sonucuna göre küçük bir dükkân grubunda denenecek.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Fiyattan önce değeri ölç.** Müşterinin ürünle kazandığı ya da kurtardığı şey, ödeme isteğinin kaynağıdır.
+- **Fiyat değişikliğini bir deney olarak tasarla.** Küçük bir grupta, koruyucu metriklerle: kayıp, kazanım, kullanım.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Deneme süresinin hedefini yaz.** İlk ay dükkân hangi değeri görmeli? Backlog bu ana hizmet etmeli.
+- **Fiyatla ilgili ekranları ürünün parçası say.** Fatura, komisyon dökümü ve abonelik ekranı güveni etkiler.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Maliyete dayalı fiyat maliyetin üstüne pay ekler; değere dayalı fiyat ödeme isteğine bakar.
+- Maliyet fiyatın alt sınırıdır, belirleyicisi değil.
+- Fiyat farklılaştırma segmentlere farklı fiyat verir; pazar gücü gerektirir.
+- Freemium ve deneme süresi değeri göstermenin yollarıdır.
+- Fiyat bir varsayımdır: değer ölçülür, değişiklik küçük bir grupta denenir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Değere dayalı fiyatlama nedir?">
+
+Fiyatın, müşterinin algıladığı ya da tahmin edilen değere, yani ödeme isteğine göre belirlenmesidir. Üretim maliyeti fiyatı belirlemez, yalnız bir alt sınırdır.
+
+</SelfCheck>
+
+<SelfCheck question="Öğrenci bileti neden bir fiyat farklılaştırma örneğidir?">
+
+Aynı hizmet farklı bir segmente farklı fiyatla satılır. Öğrencilerin ödeme isteği ve fiyata duyarlılığı farklıdır; satıcı bu farkı fiyata yansıtır.
+
+</SelfCheck>
+
+<SelfCheck question="Komisyonu %6'dan %8'e çıkarmak geliri üçte bir artırır mı?">
+
+Ancak sipariş ve dükkân sayısı aynı kalırsa. Fiyat değişikliği dükkân kaybını, yeni dükkân kazanımını ve dükkânın Demlik'i ne kadar öne çıkardığını da değiştirebilir. Bu yüzden önce küçük bir grupta denenir.
+
+</SelfCheck>
+
+<SelfCheck question="Panel'in ilk ayının ücretsiz olması fiyatlandırmada neye örnektir?">
+
+Süreyle sınırlanmış ücretsiz kullanıma, yani deneme süresine. Amacı dükkânın değeri ödeme yapmadan görmesidir; deneme süresinde değer görülmezse abonelik başlamaz.
+
+</SelfCheck>

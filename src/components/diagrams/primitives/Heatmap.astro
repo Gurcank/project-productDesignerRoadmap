@@ -30,7 +30,7 @@ const CELL_H = 36;
 const TOP = 26;
 const top = max ?? Math.max(...values.flat().filter((v): v is number => v !== null));
 const level = (v: number) => Math.min(4, Math.floor((v / (top || 1)) * 4.999));
-const show = (v: number | null) => (v === null ? "—" : format === "percent" ? `%${v}` : String(v));
+const show = (v: number | null) => (v === null ? "—" : `${format === "percent" ? "%" : ""}${v.toLocaleString("tr-TR")}`);
 for (const row of rows) if (!fits(row, ROW_LABEL - 10, "sub")) throw new Error(`Heatmap satır etiketi sığmıyor: "${row}"`);
 const width = ROW_LABEL + cols.length * CELL + 4;
 const height = TOP + rows.length * CELL_H + 4;

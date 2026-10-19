@@ -1,0 +1,155 @@
+---
+summary: "Strateji bir seçimdir; OKR onu bir çeyrekte ölçülebilir sonuçlara çevirir. Şirket hedefi takımların anahtar sonuçlarına bağlanır; taahhüt, iddialı ve öğrenme OKR'ları ayrı yazılır."
+outcomes:
+  - "Bir strateji kararından şirket OKR'ı ve takım anahtar sonuçları çıkarabilirsin."
+  - "Taahhüt, iddialı ve öğrenme OKR'larını ayırt edebilirsin."
+  - "OKR ile KPI'ı karıştırmadan bir hedef setini gözden geçirebilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "What Matters — What is an OKR? Definition and examples"
+    url: "https://www.whatmatters.com/faqs/okr-meaning-definition-example"
+  - label: "Amplitude — North Star Playbook: About the North Star Framework"
+    url: "https://amplitude.com/books/north-star/about-north-star-framework"
+additions:
+  - "OKR'ın tanımı, yazım kalıbı, türleri, F.A.C.T.S., OKR ile KPI farkı, puanlama ve sık hatalar (What Matters)"
+  - "Takımların North Star girdilerine bağlanması (Amplitude North Star Playbook)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Strateji günü bitmişti: bu yıl tekrar sipariş ve kampüs, eve teslimat yok. Pazartesi sabahı sipariş takımı sprint planlamasına oturdu ve aynı soruyu sordu: "Peki bu çeyrek tam olarak neyi başarmış olmalıyız?"
+
+Bir strateji kararı, takımın önündeki işe kendiliğinden dönüşmez. Arada ölçülebilir bir ara adım gerekir. OKR'ın temeli [Hedef ve ölçüm](/calisma-bicimi/hedef-ve-olcum-okr-kpi-north-star/) dersinde; bu ders, stratejiden takım hedeflerine inen yolu anlatır.
+
+## OKR bir çeviridir
+
+What Matters'ın tanımıyla **OKR** (objectives and key results), iddialı hedefleri ölçülebilir sonuçlarla koyan, iş birliğine dayalı bir hedef belirleme yöntemidir. Yazım kalıbı şudur: "(Hedef)'e ulaşacağım; bunu (anahtar sonuçlar) ile ölçeceğim."
+
+- **Hedef** (objective): neyin başarılacağı. Önemli, somut, eyleme dönük ve ilham verici.
+- **Anahtar sonuç** (key result): hedefe nasıl yaklaşıldığının ölçüsü. Belirli, zamana bağlı, iddialı ama gerçekçi; ölçülebilir ve doğrulanabilir. Bir hedefin altında üç beş tane olur.
+
+Hedef uzun yaşayabilir; anahtar sonuçlar iş ilerledikçe değişir. Genelde çeyrekte bir değerlendirilir.
+
+## Şirketten takıma
+
+What Matters iki yön tanımlar: yukarıdan aşağı (kademeli) ve aşağıdan yukarı. Şirket hedefi yukarıdan gelir; takımlar hangi anahtar sonucu üstleneceğini ve nasıl katkı vereceğini aşağıdan önerir.
+
+Metrik ağacı bu bağı kurmanın doğal yoludur. North Star Playbook'taki örneklerde de takımlar North Star'ı doğrudan değil, bir girdiyi üstlenir.
+
+<Tree
+  label="Strateji kararından takım anahtar sonuçlarına"
+  caption="Ağacın tepesinde strateji kararı durur: bu yıl tekrar sipariş ve kampüs. Altında bu çeyreğin şirket hedefi vardır: düzenli sabah müşterisinin ilk tercihi olmak. Hedefin üç anahtar sonucu var. Birincisi haftalık tamamlanan siparişi 29.400'den 34.000'e çıkarmak; iki takımın ortak sonucu. İkincisi 30 günde ikinci sipariş oranını yüzde 41'den 50'ye çıkarmak; sipariş takımı üstlenir. Üçüncüsü aylık iade talebini 310'dan 150'nin altına indirmek; panel takımı üstlenir. Yanında bir öğrenme OKR'ı vardır."
+  root={{
+    title: "Strateji: tekrar sipariş ve kampüs",
+    sub: "bu yılın seçimi",
+    children: [
+      {
+        title: "O: Düzenli sabah müşterisinin ilk tercihi ol",
+        sub: "şirket hedefi · bu çeyrek",
+        tone: "accent",
+        children: [
+          { title: "KR1: Haftalık sipariş 29.400 → 34.000", sub: "ortak sonuç" },
+          { title: "KR2: 30 günde 2. sipariş %41 → %50", sub: "sipariş takımı", tone: "progress" },
+          { title: "KR3: Aylık iade talebi 310 → <150", sub: "panel takımı", tone: "progress" },
+        ],
+      },
+      { title: "Öğrenme OKR'ı", sub: "kampüs öğrencileri ne kadar önceden sipariş veriyor?" },
+    ],
+  }}
+/>
+
+## Üç tür OKR
+
+What Matters üç türü ayırır:
+
+| Tür | Beklenti | Demlik örneği |
+|---|---|---|
+| **Taahhüt** (committed) | Tamamen ulaşılması beklenir | KR3: iade taleplerini 150'nin altına indirmek |
+| **İddialı** (aspirational) | Ulaşılamayabilir; esnemek için konur | KR2: ikinci siparişi %50'ye çıkarmak |
+| **Öğrenme** | "Önümüzdeki 90 günde öğrenmemiz gereken en önemli şey ne?" | Kampüs öğrencilerinin sipariş zamanı |
+
+Puanlama da türe göre okunur. What Matters birkaç yöntem sayar: Andy Grove'un evet/hayır yaklaşımı, kırmızı-sarı-yeşil ve Google'ın 0,0–1,0 ölçeği. İddialı bir anahtar sonuçta tam puanın altında kalmak beklenen bir durumdur; taahhüt edilen birinde ise bir uyarıdır.
+
+## OKR ≠ KPI
+
+What Matters'a göre OKR bir **değişim** ölçüsüdür, KPI bir **sağlık** ölçüsüdür. Uygulama puanı ya da ödeme hata oranı izlenir, ama her çeyrek bir OKR olmaz; bozulursa bir OKR'a dönüşebilir.
+
+Aynı kaynak üç sık hatayı da sayar: olağan işi OKR yapmak, OKR ile KPI'ı karıştırmak ve kum torbası (sandbagging), yani kolayca ulaşılacak hedef koymak.
+
+<Case>
+
+Elif, Hakan ve takım liderleri stratejiyi bir çeyreğe çevirdi:
+
+1. **Hedef:** "Düzenli sabah müşterisinin ilk tercihi ol." Tekrar sipariş ve kampüs seçiminin ortak noktası düzenli müşteriydi.
+2. **Anahtar sonuçlar:** KR1 haftalık tamamlanan sipariş 29.400 → 34.000; KR2 30 günde ikinci sipariş %41 → %50; KR3 iade talepleri ayda 310 → 150'nin altı.
+3. **Sahiplik:** sipariş takımı KR2'yi, panel takımı KR3'ü üstlendi. KR1 ikisinin ortak sonucuydu; tek bir takıma verilmedi.
+4. **Öğrenme OKR'ı:** Mert, kampüs öğrencilerinin sabah ne kadar önceden sipariş verdiğini araştıracaktı. İkinci kampüs dalgasının kararı buna da bağlıydı.
+5. **KPI olarak kalanlar:** uygulama puanı (4,3) ve ödeme kuruluşu hata oranı. İzlenecek, ama bu çeyreğin hedefi değil.
+
+Sipariş takımının sprint hedefi artık bir anahtar sonuca bağlanıyordu: "Müşteri son siparişini tek dokunuşla tekrarlayabilsin."
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Hedefi stratejiden, anahtar sonucu metrik ağacından al.** Her KR bir girdiyi hareket ettirmeli.
+- **Türü yaz.** Taahhüt mi, iddialı mı? Çeyrek sonunda puan buna göre okunur.
+- **Öğrenme OKR'ını küçümseme.** Bir sonraki büyük karar çoğu zaman ona bağlıdır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Ürün hedefini bir anahtar sonuca bağla.** Scrum'daki ürün hedefi, şirketin OKR'ıyla aynı yöne bakmalı.
+- **Sprint hedefini KR'ın bir adımı olarak yaz.** Takım işinin neden önemli olduğunu oradan görür.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Projeyi bir OKR'a bağla.** Kampüs ikinci dalgası gibi bir proje, hangi anahtar sonuca hizmet ediyor?
+- **Ortak KR'da bağımlılıkları görünür kıl.** İki takımın ortak sonucu, iki takımın takvimine bağlıdır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- OKR bir strateji kararını bir çeyrekte ölçülebilir sonuçlara çevirir: bir hedef, üç beş anahtar sonuç.
+- Şirket hedefi yukarıdan gelir; takımlar hangi anahtar sonucu üstleneceğini önerir.
+- Taahhüt OKR'ı tamamen beklenir, iddialı OKR esnemek için konur, öğrenme OKR'ı bir soruyu cevaplar.
+- OKR değişim, KPI sağlık ölçüsüdür.
+- Sık hatalar: olağan işi OKR yapmak, OKR ile KPI'ı karıştırmak, kum torbası.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="İyi bir anahtar sonucun özellikleri nelerdir?">
+
+Belirli, zamana bağlı, iddialı ama gerçekçi; ölçülebilir ve doğrulanabilir. Ulaşılıp ulaşılmadığı konusunda gri alan bırakmaz.
+
+</SelfCheck>
+
+<SelfCheck question="'Uygulama puanını 4,3'te tut' bir OKR mu?">
+
+Hayır, bir KPI'dır. OKR bir değişimi ölçer; bir değeri korumak sağlık ölçüsüdür. Puan düşmeye başlarsa, onu düzeltmek bir OKR'a dönüşebilir.
+
+</SelfCheck>
+
+<SelfCheck question="İddialı bir anahtar sonuçta hedefin yalnız bir kısmına ulaşıldı. Bu bir başarısızlık mı?">
+
+Değil. İddialı OKR'lar esnemek için konur ve tamamen ulaşılmaları beklenmez. Aynı sonuç, taahhüt edilmiş bir anahtar sonuçta ise bir uyarıdır.
+
+</SelfCheck>
+
+<SelfCheck question="KR1, iki takımın ortak sonucu. Neden tek bir takıma verilmedi?">
+
+Haftalık tamamlanan sipariş North Star'dır ve birçok girdinin toplam etkisidir. Tek bir takım onu doğrudan hareket ettiremez; takımlar kendi girdilerini (KR2 ve KR3) üstlenir, KR1 onların ortak sonucu olarak izlenir.
+
+</SelfCheck>

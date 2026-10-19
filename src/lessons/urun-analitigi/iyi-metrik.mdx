@@ -1,0 +1,163 @@
+---
+summary: "İyi bir metrik net tanımlıdır, bir hedefe bağlanır ve bir kararı değiştirebilir. HEART beş kullanıcı merkezli kategori, Goals-Signals-Metrics de hedeften metriğe giden yolu verir."
+outcomes:
+  - "Bir metriği payı, paydası ve zaman penceresiyle eksiksiz tanımlayabilirsin."
+  - "HEART'ın beş kategorisini ve hangisinin ne zaman anlamsız olduğunu söyleyebilirsin."
+  - "Bir hedeften sinyale, sinyalden metriğe inebilirsin."
+minutes: 7
+standard: 2
+skipTerms: ["task"]
+sources:
+  - label: "Kerry Rodden — How to choose the right UX metrics for your product (GV, 2015)"
+    url: "https://medium.com/gv-library/how-to-choose-the-right-ux-metrics-for-your-product-5f46359ab5be"
+  - label: "Rodden, Hutchinson, Fu — Measuring the User Experience on a Large Scale (CHI 2010)"
+    url: "https://research.google/pubs/measuring-the-user-experience-on-a-large-scale-user-centered-metrics-for-web-applications/"
+  - label: "a16z — 16 Startup Metrics (2015)"
+    url: "https://a16z.com/16-startup-metrics/"
+additions:
+  - "HEART çerçevesi ve Goals-Signals-Metrics süreci (Rodden, Hutchinson, Fu; Google)"
+  - "\"Aktif\" tanımının ve kümülatif metriklerin tuzağı (a16z)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Haftalık ürün toplantısında üç kişi aynı soruya üç farklı sayı verdi. Elif "38.000 aktif müşterimiz var" dedi. Pazarlama "52.000" dedi. Ece "21.000" dedi.
+
+Üçü de doğruydu. Elif son 30 günde sipariş verenleri, pazarlama son 30 günde uygulamayı açanları, Ece son 7 günde sipariş verenleri sayıyordu. Aynı kelime, üç ayrı metrik. Bu ders iyi bir metriği tanımlamayı ve onu bir hedefe bağlamayı anlatır. OKR, KPI ve vanity metrik kavramları [Hedef ve ölçüm](/calisma-bicimi/hedef-ve-olcum-okr-kpi-north-star/) dersinde.
+
+## Bir metrik ne zaman iyidir?
+
+a16z'nin girişimcilere yazdığı metrik rehberi tanımla başlar: şirketler "aktif" için neredeyse sınırsız tanım kullanır, bazı grafikler aktifliğin ne olduğunu hiç söylemez. Tanımı net olmayan metrik konuşmayı bölmekten başka işe yaramaz.
+
+İyi bir metrik dört şey söyler:
+
+- **Pay:** neyi sayıyoruz? Sipariş veren müşteri.
+- **Payda:** neye bölüyoruz? İlk siparişini vermiş ve üzerinden 30 gün geçmiş müşteri.
+- **Zaman penceresi:** hangi süre? Son 30 gün, son 7 gün.
+- **Kim sayılmaz:** test hesapları, iptal edilen siparişler.
+
+Aynı rehber bir tuzağa da dikkat çeker: kümülatif grafikler, iş küçülürken bile her zaman yukarı gider. Toplam indirme sayısı bir sağlık ölçüsü değildir.
+
+## HEART: beş kullanıcı merkezli kategori
+
+Kerry Rodden, Google'daki nicel UX araştırmacılarıyla birlikte, ürün takımlarına önerdikleri metriklerin beş kategoriye düştüğünü fark etti. Bu kategoriler 2010'da Rodden, Hilary Hutchinson ve Xin Fu'nun CHI makalesinde **HEART** adıyla yayımlandı:
+
+| Kategori | Ölçtüğü | Demlik örneği |
+|---|---|---|
+| **Mutluluk** (Happiness) | Tutum: memnuniyet, algılanan kolaylık; çoğu zaman anketle | Uygulama içi memnuniyet anketi |
+| **Bağlılık** (Engagement) | Bir dönemde etkileşimin sıklığı, yoğunluğu, derinliği | Müşteri başına haftalık sipariş |
+| **Benimseme** (Adoption) | Bir ürünün ya da özelliğin yeni kullanıcıları | "Son siparişini tekrarla"yı ilk kez kullananlar |
+| **Elde tutma** (Retention) | Mevcut kullanıcıların dönme oranı; tersi churn | 30 günde ikinci sipariş oranı |
+| **Görev başarısı** (Task success) | Verimlilik, etkinlik, hata oranı | Ödeme tamamlama oranı |
+
+Rodden'a göre her kategoride metrik gerekmez. Kurumsal bir üründe kullanıcılar ürünü işleri gereği her gün kullandığı için bağlılık anlamlı olmayabilir. Benimseme ve elde tutmayı ayrı ölçmek yeni ve dönen kullanıcıyı ayırır; yalnız tekil kullanıcı saymak bunu göstermez.
+
+## Hedeften metriğe: Goals-Signals-Metrics
+
+HEART bir kontrol listesidir; metriği seçen süreç **Goals-Signals-Metrics**'tir. Rodden uzun bir metrik listesiyle başlamamayı önerir:
+
+<Layers
+  label="Hedeften metriğe"
+  caption="Üç katman yukarıdan aşağı ilerler. Önce hedef yazılır: müşteri ödemeyi güvenle tamamlasın. Sonra sinyal: hedefin başarısı ya da başarısızlığı davranışta nasıl görünür; ödeme ekranında kart seçip geri dönmek bir başarısızlık sinyalidir. En altta metrik gelir: haftalık ödeme tamamlama oranı."
+  layers={[
+    { title: "Hedef", sub: "müşteri ödemeyi güvenle tamamlasın", tone: "accent" },
+    { title: "Sinyal", sub: "kart seçip geri dönmek: başarısızlık" },
+    { title: "Metrik", sub: "haftalık ödeme tamamlama oranı", tone: "progress" },
+  ]}
+/>
+
+1. **Hedef:** ürünün ya da projenin hedefi. Rodden'ın uyarısı: "trafiği artırmak" bir hedef değildir; hangi deneyim iyileştirmesiyle, yeni kullanıcı mı, mevcut kullanıcı mı?
+2. **Sinyal:** hedefin başarısı ya da başarısızlığı kullanıcı davranışında nasıl görünür? Rodden'ın örneği: YouTube aramasında bir sorgu girip hiçbir sonuca tıklamamak bir başarısızlık sinyalidir. Sinyal izlenebilir ve tasarım değişikliğine duyarlı olmalıdır.
+3. **Metrik:** sinyalin zaman içinde izlenecek ya da bir A/B testinde karşılaştırılacak biçimi. Ham sayılar çoğu zaman normalleştirilir: kullanıcı başına, gün başına.
+
+**Veriyle yönlendirilen ≠ veriye dayanan.** Rodden "data-driven" yerine "data-informed" demeyi tercih eder: karar veren hâlâ tasarımcı ve takımdır, veri değil.
+
+<Case>
+
+Üç "aktif" sayısından sonra Elif bir metrik kartı yazdırdı:
+
+1. **Tanım:** aktif müşteri, son 30 günde en az bir siparişi tamamlanmış müşteridir. Uygulamayı açmak sayılmaz. Bugün 38.000.
+2. **İkinci metrik ayrıldı:** son 7 günde sipariş verenler "haftalık aktif müşteri" oldu (21.000) ve North Star'ın girdisi yapıldı.
+3. **Pazarlamanın 52.000'i** "uygulamayı açanlar" adıyla ayrı bir satıra taşındı; panoda "aktif" kelimesini kullanmıyor.
+4. **HEART'tan seçim:** sipariş takımı elde tutma (30 günde ikinci sipariş) ve görev başarısı (ödeme tamamlama) kategorilerini seçti; mutluluk anketini çeyrekte bir yapmaya karar verdi.
+
+Bir sonraki toplantıda aynı soruya tek sayı geldi.
+
+</Case>
+
+<Tool slug="metrik-karti" />
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Metriğin tanımını yaz ve sahiplen.** Tanımsız metrik toplantıda üç farklı sayı olarak geri döner.
+- **Hedeften başla, metrikten değil.** Uzun bir metrik listesi önceliklendirilemez.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Görev başarısı senin metriğin.** Tamamlama oranı, süre ve hata oranı tasarım değişikliğine en duyarlı sinyallerdir.
+- **Veri yön verir, kararı sen verirsin.** Rodden'ın "data-informed" yaklaşımı tasarım muhakemesini dışarıda bırakmaz.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Ürün hedefini bir metrikle yaz.** Sprint hedefleri, hangi metriği hareket ettirmeye çalıştığını bilirse daha net olur.
+- **Kabul kriterine ölçümü ekle.** Bir özelliğin ölçümü yoksa, işe yarayıp yaramadığı bilinmez.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Metrik tanımı bir gereksinimdir.** Pay, payda ve pencere yazılmazsa iki sistem iki farklı sayı üretir.
+- **Kaynak olayı izleme planına bağla.** Her metriğin hangi olaydan hesaplandığı belli olmalı.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Mutluluk kategorisi anket ister.** Anketi düzenli ve aynı sorularla yap ki karşılaştırılabilsin.
+- **Sinyali araştırmayla seç.** Hangi davranışın hedefi gerçekten gösterdiği, gözlem ve görüşmeyle sınanır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- İyi metrik payı, paydası, zaman penceresi ve kimin sayılmadığıyla tanımlanır; "aktif" kendi başına bir tanım değildir.
+- Kümülatif sayılar hep artar; sağlık ölçüsü değildir.
+- HEART beş kategori verir: mutluluk, bağlılık, benimseme, elde tutma, görev başarısı; hepsi her ürün için gerekmez.
+- Goals-Signals-Metrics hedeften başlar, davranıştaki sinyale, oradan izlenecek metriğe iner.
+- Veri kararı bilgilendirir; kararı takım verir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Aktif kullanıcımız 52.000' cümlesinde ne eksik?">
+
+Tanım: kim aktif sayılıyor (uygulamayı açan mı, sipariş veren mi), hangi zaman penceresinde (7 gün mü, 30 gün mü) ve kim dışarıda bırakılıyor? Tanım yazılmadan sayı karşılaştırılamaz.
+
+</SelfCheck>
+
+<SelfCheck question="HEART'ın beş kategorisi nedir?">
+
+Mutluluk (tutum), bağlılık (etkileşimin sıklığı ve derinliği), benimseme (yeni kullanıcılar), elde tutma (dönen kullanıcılar) ve görev başarısı (verimlilik, etkinlik, hata).
+
+</SelfCheck>
+
+<SelfCheck question="Bir ekip hedefini 'sitenin trafiğini artırmak' diye yazdı. Rodden ne der?">
+
+Bu bir hedef değil, bir metrik. Hangi deneyim iyileştirmesinin trafiği artıracağı ve yeni kullanıcı mı, mevcut kullanıcının bağlılığını mı hedeflediği yazılmalı.
+
+</SelfCheck>
+
+<SelfCheck question="Kurumsal bir iç araçta günlük kullanım çok yüksek. Bu iyi bir bağlılık metriği mi?">
+
+Muhtemelen değil. Kullanıcılar aracı işleri gereği kullanmak zorundaysa, kullanım bağlılığı göstermez. Rodden'ın önerisiyle mutluluk ya da görev başarısı daha anlamlı olabilir.
+
+</SelfCheck>

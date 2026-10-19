@@ -1,0 +1,55 @@
+{
+  "category": "urun-analitigi",
+  "sources": [
+    { "label": "Kerry Rodden — How to choose the right UX metrics for your product (GV, 2015)", "url": "https://medium.com/gv-library/how-to-choose-the-right-ux-metrics-for-your-product-5f46359ab5be" },
+    { "label": "Amplitude — North Star Playbook: About the North Star Framework", "url": "https://amplitude.com/books/north-star/about-north-star-framework" },
+    { "label": "Amplitude — Understanding retention analytics", "url": "https://amplitude.com/guides/retention-analytics" },
+    { "label": "Twilio Segment — Data Collection Best Practices", "url": "https://www.twilio.com/docs/segment/protocols/tracking-plan/best-practices" },
+    { "label": "Evan Miller — How Not To Run an A/B Test (2010)", "url": "https://www.evanmiller.org/how-not-to-run-an-ab-test.html" },
+    { "label": "Microsoft Research ExP — Diagnosing Sample Ratio Mismatch in A/B Testing (2020)", "url": "https://www.microsoft.com/en-us/research/articles/diagnosing-sample-ratio-mismatch-in-a-b-testing/" },
+    { "label": "a16z — 16 Startup Metrics (2015)", "url": "https://a16z.com/16-startup-metrics/" },
+    { "label": "Wikipedia — Simpson's paradox", "url": "https://en.wikipedia.org/wiki/Simpson%27s_paradox" }
+  ],
+  "items": [
+    {
+      "question": "Pazarlama 'bu ay uygulamayı 52.000 kişi açtı' diye kutluyor. Bu metriğe neden temkinli bakarsın, yerine ne önerirsin?",
+      "answer": "Uygulamayı açmak, kullanıcının değeri aldığını göstermez ve bir karar değiştirmez; bir gösteriş metriğidir. Hedeften başlarım: kullanıcı kahvesini kuyruksuz almalı. Sinyali tamamlanan sipariştir; metrik, örneğin haftalık tamamlanan sipariş ya da 30 günde ikinci sipariş oranıdır."
+    },
+    {
+      "question": "Bir takım North Star olarak 'haftalık push bildirimi açılma sayısı'nı seçmek istiyor. Neyi sorgularsın?",
+      "answer": "Üç özelliği sorarım: kullanıcının aldığı değeri temsil ediyor mu, ürün ve pazarlamanın etki alanında mı, gelirin öncü göstergesi mi? Bildirim açılması değeri değil bir eylemi ölçer ve doğrudan oynatılabilir. Cutler'ın uyarısıyla, doğrudan hareket ettirebildiğin bir North Star muhtemelen iyi değildir."
+    },
+    {
+      "question": "Ayda 12.000 kayıt geliyor ama siparişler artmıyor. AARRR'da nereye bakarsın?",
+      "answer": "Aktivasyona ve elde tutmaya. Kayıtların kaçı yedi gün içinde ilk siparişi veriyor, ilk siparişi verenlerin kaçı 30 gün içinde dönüyor? Sonra kanala göre ayırırım; yeni kayıtlar düşük kaliteli bir kanaldan geliyor olabilir."
+    },
+    {
+      "question": "Aylık aktif müşteri grafiği düz. Yeni bir özelliğin işe yarayıp yaramadığını nasıl anlarsın?",
+      "answer": "Toplam yerine kohortlara bakarım. Yayından sonra başlayan kohortların Ay 1 elde tutmasını önceki kohortlarla karşılaştırırım. Eski müşterilerin kalabalığı yeni kohortlardaki değişikliği gizler; kampanyalı kohortları da işaretlerim."
+    },
+    {
+      "question": "30 günde ikinci sipariş oranı %41'den %38'e düştü ama hiçbir edinme kanalında düşüş yok. Nasıl olabilir?",
+      "answer": "Kanal karışımı değişmiştir. Oranı düşük bir kanalın, örneğin Instagram'ın, yeni müşterilerdeki payı artınca, kanalların hiçbiri değişmeden ortalama düşer. Karar kanal kırılımına bakılarak verilir."
+    },
+    {
+      "question": "Analitik araçta aynı sipariş için dokuz farklı olay adı var. İlk ne yaparsın?",
+      "answer": "Bir izleme planı yazarım. Olayı bir iş hedefine bağlarım, tek bir Nesne + Eylem adı seçerim (Order Completed), değerleri özelliklere koyarım ve mümkünse olayı sunucuda tek yerden tetiklerim. Eski adlar kaldırılır; yeni olay plana girmeden koda girmez."
+    },
+    {
+      "question": "Ödeme testinde gereken örneklem 3 günde doluyor. Ekip testi üçüncü gün kapatmak istiyor. Ne dersin?",
+      "answer": "Örneklem tek ölçüt değil. Haftanın günleri farklı davranıyorsa, tam haftaları kapsamayan bir test yalnız birkaç günün etkisini ölçer. Takım kuralını, iki tam haftayı, plana önceden yazarız; süre sonuç geldikten sonra değiştirilmez."
+    },
+    {
+      "question": "Birinci gün yeni ekran +5 puan önde ve araç 'anlamlı' diyor. Burak durdurmak istiyor. Ne cevap verirsin?",
+      "answer": "Anlamlılık hesabı önceden sabitlenmiş bir örneklemi varsayar. Her gün bakıp anlamlı görünce durmak yanlış pozitif oranını belirgin biçimde artırır; Miller'ın örneğinde %5'ten %26,1'e. Erken durdurma yalnız plandaki koruyucu koşullar bozulursa olur."
+    },
+    {
+      "question": "50/50 planlanmış bir test 52/48 çıktı ve fark istatistiksel olarak anlamlı. Sonucu okur musun?",
+      "answer": "Hayır, önce nedeni ararım. Bu bir örneklem oranı uyuşmazlığıdır. Eksik kullanıcılar nadiren rastgeledir; MSN örneğinde bot filtresi en ilgili kullanıcıları ayıklamış ve sonuç tersine dönmüştü. Atama, yönlendirme, filtre ve log birleştirme kontrol edilir."
+    },
+    {
+      "question": "Yeni ekran hem kampüste hem şehirde daha iyi ama toplamda %80'e karşı %69,6 ile daha kötü görünüyor. Ne oluyor, ne yaparsın?",
+      "answer": "Simpson paradoksu. Yeni ekranı görenlerin çoğu, tamamlama oranı zaten düşük olan kampüs kullanıcılarıydı; toplam ekranı değil karışımı gösteriyor. Grup grup karşılaştırırım ve kararı rastgele atamalı bir A/B testine bırakırım."
+    }
+  ]
+}

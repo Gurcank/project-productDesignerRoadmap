@@ -1,0 +1,38 @@
+---
+title: "İzleme planı"
+summary: "Hangi olayın neden izlendiğini, adını, özelliklerini, nerede tetiklendiğini ve hangi iş hedefine hizmet ettiğini tek tabloda tutar; veri toplamanın tek kaynağıdır."
+kind: "tablo"
+roles: ["product-manager", "business-analyst", "product-owner", "ux-researcher"]
+lessons: ["urun-analitigi/izleme-plani", "urun-analitigi/huni-analizi"]
+sources:
+  - label: "Twilio Segment — Data Collection Best Practices"
+    url: "https://www.twilio.com/docs/segment/protocols/tracking-plan/best-practices"
+table:
+  columns: ["Olay (Nesne + Eylem)", "Ne zaman tetiklenir", "Özellikler (snake_case)", "Hizmet ettiği hedef", "Nerede (platform)", "Sahibi", "Durum"]
+  example:
+    - ["App Opened", "Uygulama ön plana geldiğinde", "source", "Haftalık aktif müşteri", "iOS, Android", "Ece", "Canlı"]
+    - ["Product Added", "Ürün sepete eklendiğinde", "shop_id, product_id, price", "Sipariş hunisi", "iOS, Android, web", "Ece", "Canlı"]
+    - ["Checkout Started", "Ödeme ekranı açıldığında", "shop_id, cart_value, payment_saved_card", "Ödeme tamamlama oranı", "iOS, Android, web", "Ece", "Canlı"]
+    - ["Order Completed", "Ödeme onaylandığında (sunucu)", "order_value, shop_id, payment_saved_card, source", "North Star: haftalık tamamlanan sipariş", "Sunucu", "Burak", "Canlı"]
+    - ["Reorder Tapped", "\"Son siparişini tekrarla\" düğmesine basıldığında", "shop_id, last_order_age_days", "30 günde ikinci sipariş", "iOS, Android", "Can", "Test ediliyor"]
+    - ["Order Cancelled", "Sipariş iptal edildiğinde (sunucu)", "cancelled_by, reason, order_status", "İade talepleri", "Sunucu", "Emre", "Canlı"]
+  blankRows: 10
+---
+
+## Ne zaman kullanılır?
+
+Ölçmeye başlamadan önce ve her yeni özellikle birlikte. Segment'in tanımıyla izleme planı hangi olayların izleneceğini, kodda nerede yaşadıklarını ve iş açısından neden gerektiklerini netleştirir; pazarlamacıyı, PM'i, mühendisi ve analisti aynı sayfaya getirir.
+
+## Nasıl doldurulur?
+
+1. **Önce iş hedefini yaz.** Her olay bir hedefe bağlanmalı; bağlanmayan olay neden toplanıyor?
+2. **Adlandırma kuralını seç ve uygula.** Segment olay adlarında Nesne + Eylem ve Title Case, özelliklerde snake_case önerir.
+3. **Değeri olay adına koyma.** "Order Completed 165 TL" değil; tutar `order_value` özelliğidir.
+4. **Az olayla başla.** Doğrudan bir hedefe bağlı çekirdek olaylar ve onları zenginleştiren özellikler.
+5. **Kişisel veriyi ekleme.** Ad, telefon, e-posta olaylara girmez; amaçla ölçülü olmayan veri toplanmaz.
+
+## Sık hatalar
+
+- **Olay adını dinamik üretmek.** Tarih ya da kimlik içeren adlar analiz edilemez.
+- **Aynı şeyi iki adla izlemek.** "Order Completed" ile "Checkout Finished" birlikte varsa, rakamlar çelişir.
+- **Planı güncellememek.** Kodda olup planda olmayan olay sahipsiz kalır.

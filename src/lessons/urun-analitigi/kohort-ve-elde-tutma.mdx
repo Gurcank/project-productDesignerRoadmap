@@ -1,0 +1,144 @@
+---
+summary: "Kohort aynı dönemde başlamış kullanıcı grubudur. Elde tutma, kohortun zamanla ne kadarının döndüğünü ölçer; N-gün, sınırsız ve aralık tanımları farklı sorular sorar. Kohort tablosu ortalamanın gizlediğini gösterir."
+outcomes:
+  - "Bir kohortu tanımlayıp kohort tablosunu satır ve sütun olarak okuyabilirsin."
+  - "N-gün, sınırsız ve aralık elde tutmayı ayırt edip ürününe uygun olanı seçebilirsin."
+  - "Churn'ü ve elde tutmayı birbirine bağlayabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "Amplitude — Understanding retention analytics"
+    url: "https://amplitude.com/guides/retention-analytics"
+  - label: "a16z — 16 Startup Metrics (2015)"
+    url: "https://a16z.com/16-startup-metrics/"
+additions:
+  - "N-gün, sınırsız ve aralık elde tutma; davranışsal kohort (Amplitude)"
+  - "Kohort elde tutma ve churn hesapları (a16z)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Heatmap from "~/components/diagrams/primitives/Heatmap.astro";
+
+"Son siparişini tekrarla" yayına çıktıktan bir ay sonra Hakan sordu: "İşe yaradı mı?" Ece aylık aktif müşteri grafiğini açtı: düz bir çizgi. Hiçbir şey değişmemiş gibiydi.
+
+Ama grafik bütün müşterileri bir arada gösteriyordu: üç yıldır gelenleri de, dün kaydolanları da. Yeni müşterilerde bir değişiklik olsa bile eskilerin kalabalığında kaybolurdu. Bu ders, müşterileri başladıkları döneme göre ayırıp ayrı ayrı izlemeyi anlatır.
+
+## Kohort ve elde tutma
+
+**Kohort**, aynı dönemde aynı şeyi yapmış kullanıcı grubudur: aynı ay ilk siparişini verenler, aynı hafta kaydolanlar. **Elde tutma** (retention), Amplitude'un tanımıyla kullanıcıların zaman içinde ne kadarının ürüne döndüğünün ölçüsüdür.
+
+a16z'nin metrik rehberi kohort elde tutmayı yatırımcıların baktığı biçimde anlatır: başlangıç ayı %100'dür; sonraki her ay, ilk kohortun hâlâ işlem yapan kısmının yüzdesi yazılır. Aynı rehber **aylık churn**'ü kaybedilen müşterinin önceki ayın toplamına oranı olarak verir. Churn, elde tutmanın tersidir.
+
+## Üç tanım
+
+Amplitude üç elde tutma tanımı ayırır:
+
+| Tanım | Neyi sayar? | Gün 7 örneği |
+|---|---|---|
+| **N-gün** | Tam o gün dönenler | Tam 7. günde dönenler |
+| **Sınırsız** (unbounded) | O gün ya da sonrasında dönenler | 7. gün ya da sonrasında dönenler |
+| **Aralık** (bracket) | Seçilen aralıklarda dönenler | Gün 0, Gün 1–7, Gün 8–14 |
+
+Sınırsız elde tutma genellikle daha yüksek çıkar, çünkü daha geniş bir pencereyi sayar. Amplitude, her gün kullanılan ürünlerde N-gün tanımının günden güne aktifliği daha iyi gösterdiğini söyler. Kahve gibi haftada birkaç kez alınan bir şey için aralıklı ya da aylık bir tanım daha anlamlı olabilir.
+
+**Tanım ≠ ayrıntı.** "Elde tutma %41" cümlesi, hangi tanımla hesaplandığı yazılmadıkça başka bir ürünün oranıyla karşılaştırılamaz.
+
+## Kohort tablosunu okumak
+
+<Heatmap
+  label="İlk sipariş ayına göre kohort tablosu"
+  caption="Her satır bir kohorttur: o ay ilk siparişini veren müşteriler. Sütunlar sonraki ayları gösterir: Ay 1, Ay 2, Ay 3. Hücredeki sayı, o ayda en az bir sipariş veren müşterilerin yüzdesidir. Ocak kohortu Ay 1'de yüzde 41, Ay 2'de 30, Ay 3'te 26. Şubat, Mart ve Nisan benzer. Mayıs kohortunun Ay 1'i yüzde 43; henüz sonraki aylar dolmadı. Satırlar aşağı indikçe sağdaki hücreler boşalır, çünkü o aylar daha yaşanmadı."
+  rows={["Ocak", "Şubat", "Mart", "Nisan", "Mayıs"]}
+  cols={["Ay 1", "Ay 2", "Ay 3"]}
+  values={[
+    [41, 30, 26],
+    [40, 29, 25],
+    [42, 31, 27],
+    [41, 30, null],
+    [43, null, null],
+  ]}
+  format="percent"
+  max={45}
+  rowTitle="Kohort"
+/>
+
+Kohort tablosu iki yönde okunur:
+
+- **Satır boyunca:** bir kohortun zamanla nasıl eridiği. Eğri bir yerde düzleşiyorsa, ürün kendine kalıcı bir çekirdek bulmuş demektir.
+- **Sütun boyunca:** aynı yaştaki kohortların karşılaştırması. Ay 1 sütununda yukarıdan aşağı artış, yeni müşterilerin daha iyi tutulduğunu gösterir.
+
+**Davranışsal kohort** bir adım daha ileri gider. Amplitude bunu kullanıcıları yaptıkları ya da yapmadıkları eylemlere göre gruplamak olarak tanımlar: örneğin hazır bildirimini açanlar ve açmayanlar. Bu tür kohortlar ilginç farklar gösterir, ama farkın nedenini kendi başına kanıtlamaz; bunu [Korelasyon ve nedensellik](/urun-analitigi/korelasyon-ve-nedensellik/) dersi anlatıyor.
+
+<Case>
+
+Ece aylık aktif müşteri grafiğinin yerine kohort tablosunu açtı:
+
+1. **Tanım:** kohort, ilk siparişin ayı. Hücre, o ay en az bir sipariş verenlerin oranı.
+2. **Satırlar:** Ocak'tan Nisan'a kohortlar Ay 3'te %25–27 civarında düzleşiyordu; çekirdek bir müşteri grubu vardı.
+3. **Sütun:** Ay 1 sütununda Mayıs %43 ile en yüksek değerdi.
+4. **Temkin:** tek bir ay bir kanıt değildi; Mayıs'ta kampüs kampanyası da vardı. Ece, Haziran kohortunu beklemeyi ve kampanyalı kohortu işaretlemeyi önerdi.
+
+Hakan'ın sorusunun cevabı "henüz bilmiyoruz, ama nereye bakacağımızı biliyoruz" oldu.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Toplam aktif kullanıcı yerine kohortlara bak.** Yeni müşterideki değişiklik eskilerin kalabalığında kaybolur.
+- **Tanımı ürünün kullanım sıklığına göre seç.** Günlük kullanılan ürün için N-gün, haftalık ya da aylık kullanılan için aralık.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Bir özelliğin etkisini yeni kohortlarda ara.** Yayından sonraki kohortların Ay 1 değeri, özelliğin ilk işaretidir.
+- **Kampanyalı kohortları işaretle.** Kampanya ayının yükselişini ürün değişikliği sanma.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Eğrinin düzleştiği yerdeki müşterilerle konuş.** Kalan çekirdek grubun neden kaldığı, en değerli içgörülerdendir.
+- **Erken bırakanları da ara.** Ay 1'de dönmeyenlerle yapılan görüşmeler, kaybın nedenini söyler.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Kohort aynı dönemde başlamış kullanıcı grubudur; elde tutma kohortun zamanla ne kadarının döndüğünü ölçer.
+- N-gün tam o günü, sınırsız o gün ve sonrasını, aralık seçilen dilimleri sayar; tanım yazılmadan oranlar karşılaştırılamaz.
+- Kohort tablosu satır boyunca erimeyi, sütun boyunca kohortların karşılaştırmasını gösterir.
+- Churn elde tutmanın tersidir: kaybedilen müşteri / önceki dönemin toplamı.
+- Davranışsal kohortlar farkları gösterir ama nedenini kanıtlamaz.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="N-gün elde tutma ile sınırsız elde tutma arasındaki fark nedir?">
+
+N-gün tam o günde dönenleri sayar (tam 7. gün). Sınırsız o gün ya da sonrasında dönenleri sayar (7. gün ya da sonra); bu yüzden genellikle daha yüksek çıkar.
+
+</SelfCheck>
+
+<SelfCheck question="Kohort tablosunda bir sütunu yukarıdan aşağı okumak neyi gösterir?">
+
+Aynı yaştaki farklı kohortların karşılaştırmasını. Örneğin Ay 1 sütunu, her kohortun ilk ayındaki elde tutmasını yan yana koyar; yeni kohortlar daha iyiyse ürün iyileşiyor olabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Aylık aktif kullanıcı düz bir çizgi; yeni bir özelliğin işe yarayıp yaramadığını nasıl anlarsın?">
+
+Yayından sonra başlayan kohortların elde tutmasını önceki kohortlarla karşılaştırırım. Toplam aktif kullanıcı, eski müşterilerin kalabalığı yüzünden yeni kohortlardaki değişikliği gizler.
+
+</SelfCheck>
+
+<SelfCheck question="Kohort tablosunda satırlar bir yerde düzleşiyor. Bu ne anlama gelir?">
+
+Kohortun bir kısmı kalıcı hâle gelmiştir: ürün kendine düzenli dönen bir çekirdek bulmuştur. Bu, ürün-pazar uyumunun işaretlerinden biridir.
+
+</SelfCheck>

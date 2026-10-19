@@ -1,0 +1,36 @@
+---
+title: "A/B test planı"
+summary: "Bir A/B testini başlamadan önce yazar: hipotez, birincil ve koruyucu metrikler, en küçük saptanacak etki, örneklem ve süre, durdurma kuralı ve karar."
+kind: "belge"
+roles: ["product-manager", "product-owner", "product-designer", "ux-researcher"]
+lessons: ["urun-analitigi/ab-testi-tasarimi", "urun-analitigi/deney-tuzaklari"]
+sources:
+  - label: "Evan Miller — How Not To Run an A/B Test"
+    url: "https://www.evanmiller.org/how-not-to-run-an-ab-test.html"
+  - label: "Evan Miller — Sample Size Calculator"
+    url: "https://www.evanmiller.org/ab-testing/sample-size.html"
+  - label: "Microsoft Research ExP — Diagnosing Sample Ratio Mismatch in A/B Testing"
+    url: "https://www.microsoft.com/en-us/research/articles/diagnosing-sample-ratio-mismatch-in-a-b-testing/"
+---
+
+## Ne zaman kullanılır?
+
+Bir değişiklik inşa edildikten ve yeterli trafik olduktan sonra, testi açmadan önce. Evan Miller'ın uyarısıyla, örneklem büyüklüğü önceden sabitlenmezse ve test "anlamlı görününce" durdurulursa, raporlanan anlamlılık anlamını yitirir.
+
+## Bölümler
+
+1. **Hipotez:** "Şunu değiştirirsek şu metrik artar, çünkü şu."
+2. **Birincil metrik:** kararı verecek tek metrik.
+3. **Koruyucu metrikler:** bozulmaması gerekenler (sepet tutarı, hata oranı).
+4. **Taban oran ve en küçük saptanacak etki.**
+5. **Güç ve anlamlılık düzeyi** (genellikle %80 ve %5).
+6. **Örneklem ve süre:** varyasyon başına kaç kişi, kaç gün.
+7. **Kontroller:** atama oranı kontrolü (SRM), olayların iki varyantta da doğru toplandığı.
+8. **Durdurma kuralı:** test hangi koşulda erken durdurulur? (Yalnız ciddi zarar.)
+9. **Karar:** sonuç ne çıkarsa ne yapılacak.
+
+## Sık hatalar
+
+- **Erken bakıp durdurmak.** Her bakış yanlış pozitif ihtimalini büyütür.
+- **SRM'li sonuca güvenmek.** Varyantlardaki kullanıcı oranı ayarlanandan farklıysa, önce nedenini bul.
+- **Bir sürü metrikten birinin "anlamlı" çıkmasını beklemek.** Birincil metrik önceden seçilir.

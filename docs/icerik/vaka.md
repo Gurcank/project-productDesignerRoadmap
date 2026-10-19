@@ -398,6 +398,130 @@ haber verildi, alternatif: masadaki QR'dan gel-al siparişi ve isimle çağırma
 müşteri "Köşe Kahve"den kendine özel sadakat sistemi; rakipte var diye aylık kahve aboneliği; bir
 geliştiriciden "iki saatlik iş" diye karanlık mod. Elif'in cevabı her biri için yazılı.
 
+## Analitik ve iş rakamları
+
+Ürün Analitiği ile İş Modeli ve Strateji dersleri bu rakamları kullanır. Analitik tarafında veri
+sorularını Elif ve Mert sorar, panoyu Ece kurar; iş tarafında rakamların sahibi finans ve Hakan'dır.
+
+**North Star ve metrik ağacı:** North Star "haftalık tamamlanan sipariş" (bugün 29.400 = 4.200 × 7).
+Girdiler: haftalık aktif müşteri (21.000), müşteri başına haftalık sipariş (1,4), ödeme tamamlama
+oranı (%78), aktif dükkân (140), söz verilen sürede hazır olan sipariş oranı (%91). Takım metrikleri:
+30 günde ikinci sipariş %41 (sipariş takımı), aylık iade talebi 310 (panel takımı).
+
+**"Aktif müşteri" tanımı:** son 30 günde en az bir siparişi tamamlanmış müşteri (uygulamayı açmak
+sayılmaz). Aylık aktif müşteri 38.000.
+
+**AARRR (bir aylık):** edinme — 12.000 yeni kayıt (kasadaki QR %45, Instagram reklamı %35, arkadaş
+daveti %20); aktivasyon — kayıttan sonra 7 gün içinde ilk siparişini tamamlayanlar %55 (6.600);
+elde tutma — 30 günde ikinci sipariş %41; tavsiye — "dükkân öner" ve arkadaş daveti; gelir —
+dükkân komisyonu ve aboneliği.
+
+**Haftalık sipariş hunisi:** uygulamayı açan 60.000 → ürün görüntüleyen 42.000 → sepete ekleyen
+21.000 → ödemeye geçen 16.000 → ödemeyi tamamlayan 12.480 (%78; bırakma %22).
+
+**Kohort tablosu (ilk sipariş ayına göre; o ayda en az bir sipariş verenlerin oranı):**
+
+| Kohort | Ay 1 | Ay 2 | Ay 3 |
+|---|---|---|---|
+| Ocak | %41 | %30 | %26 |
+| Şubat | %40 | %29 | %25 |
+| Mart | %42 | %31 | %27 |
+| Nisan | %41 | %30 | — |
+| Mayıs | %43 | — | — |
+
+**Segmentler:** sabah müşterisi (haftada 3+ sipariş) aktiflerin %25'i ama siparişlerin %60'ı;
+öğrenciler (kampüs) aktiflerin %15'i, ortalama sepet 120 TL; sabah müşterisinin ortalama sepeti ≈ 170 TL; ara sıra gelenler (ayda 1; çoğu zaman birkaç kişilik sipariş, ortalama sepet ≈ 190 TL) aktiflerin
+%40'ı. Edinme kanalına göre 30 günde ikinci sipariş: QR %52, arkadaş daveti %47, Instagram %28.
+
+**İzleme planı (seçme):** olaylar İngilizce, Nesne + Eylem, Title Case; özellikler snake_case.
+App Opened, Product Viewed, Product Added, Checkout Started, Order Completed (order_value,
+shop_id, payment_saved_card, source), Reorder Tapped, Order Cancelled (cancelled_by, reason),
+Refund Issued (refund_rule). Olaylarda ad, telefon, e-posta yok; müşteri anonim kimlikle izlenir.
+
+**Ödeme A/B testi (Next satırı):** yeni kart seçim ekranı (seçili kart vurgulu). Taban ödeme
+tamamlama %78, en küçük saptanacak etki 3 puan (%78 → %81), α %5, güç %80 → varyasyon başına
+yaklaşık 2.950 kullanıcı; ödeme adımına günde ~2.300 kişi geliyor. Takım kuralı: hesap birkaç gün
+çıksa da test iki tam hafta (pazartesi–pazar) sürer. Birinci gün Burak +5 puan gördü ve durdurmak
+istedi; Elif durdurmadı. SRM kontrolü geçti (50,2 / 49,8). Sonuç: kontrol %78,1, yeni ekran %80,9;
+anlamlı. Ekran herkese açıldı.
+
+**Simpson paradoksu (testten önceki hata):** yeni ekran önce yalnız kampüs pilot sürümünde açılmıştı.
+Kaba karşılaştırma yeni ekranı daha kötü gösterdi (eski %80, yeni %69,6), çünkü yeni ekranı görenlerin
+çoğu, tamamlama oranı zaten düşük olan öğrencilerdi. Segment segment: kampüste eski %60 (1.000
+kullanıcı), yeni %65 (4.000); şehirde eski %85 (4.000), yeni %88 (1.000).
+
+**Korelasyon örneği:** hazır bildirimini açan müşterilerin 30 günde ikinci sipariş oranı %58,
+açmayanların %33. Bildirim mi tekrar siparişi getiriyor, yoksa düzenli müşteriler mi bildirimi
+açıyor? Takım bunu bir deneyle sınadı: yeni kullanıcıların yarısında bildirim varsayılan açık
+geldi; fark 3 puan çıktı, 25 puan değil.
+
+**Pano:** üst satırda North Star ve beş girdi (haftalık, geçen haftayla ve geçen yılın aynı
+haftasıyla); altında takım metrikleri. Eski panoda "toplam indirme" kümülatif grafiği vardı; kaldırıldı.
+Eski panoda 34 grafik vardı, yenisinde 9. Haftalık indirme sekiz haftada 3.400'lük tepeden 2.000'e
+indi (yaklaşık %40); bu ilk kez kümülatif grafiğin yerine konan haftalık grafikte görüldü.
+
+**Analitik dersleri için ek olgular:**
+- Pazarlama "aktif" diye 52.000 sayısını veriyordu; bu "uygulamayı açanlar"dı ve panoda o adla ayrı bir satıra taşındı. Sipariş takımı müşteri
+  memnuniyetini çeyrekte bir kısa anketle ölçer.
+- Ödeme adımındaki kayıp, kayıtlı kartı olmayanlarda ve kampüs kullanıcılarında daha yüksek.
+- Bir ay 30 günde ikinci sipariş %41'den %38'e düştü; hiçbir kanalda düşüş yoktu, Instagram'ın yeni
+  müşterilerdeki payı artmıştı. Pazarlama Instagram bütçesinin bir kısmını QR kartlarına kaydırdı.
+- Günde 30 sipariş varsayımı, bugünkü 140 dükkânın ortalamasıdır (4.200 / 140).
+- İlk yılın Lean Canvas'ındaki en riskli varsayım: "Dükkânlar sipariş başına komisyon ödemeyi kabul
+  eder." İlk 20 dükkânla ödeme yapılan bir pilot yapıldı; 17'si üç ay sonra devam etti.
+
+**Fiyat tartışması:** finans komisyonu %6'dan %8'e çıkarmayı önerdi. Ayşe 12 dükkân sahibiyle
+görüştü; sahipler Demlik siparişlerinin yaklaşık üçte birinin Demlik olmasa gelmeyecek
+müşterilerden geldiğini tahmin etti. Komisyon %6'da kaldı; önce dükkân başına ek siparişi ölçen bir
+analiz başladı. Kampüs NPV'sindeki %30 iskonto oranını finans yüksek enflasyon ve şirketin riski
+yüzünden seçti.
+
+**İş modeli:** müşteri ödeme yapmaz (sipariş ücreti yok). Dükkân aylık 1.500 TL abonelik ve sipariş
+tutarının %6'sı komisyon öder (165 TL'lik siparişte 9,90 TL). Demlik Panel'in ilk ayı ücretsiz.
+Öğrenci kartıyla %10 indirim (kampüs; indirimi kampanya bütçesi karşılar).
+
+**Aylık gelir tablosu (yaklaşık):** GMV 20,79 milyon TL (4.200 × 165 × 30). Gelir 1,457 milyon TL
+(komisyon 1,247 + abonelik 0,210). Değişken maliyet 0,554 milyon (ödeme kuruluşu işlem ücreti
+GMV'nin %2'si = 0,416; altyapı ve destek 0,139). Brüt kâr 0,903 milyon, brüt marj %62. Faaliyet
+giderleri 3,0 milyon (maaşlar 2,45; pazarlama 0,40; ofis ve diğer 0,15). Faaliyet zararı ve net
+yanma (net burn) ayda yaklaşık 2,1 milyon. Kasada 30 milyon TL → yaklaşık 14 aylık pist (runway).
+
+**Birim ekonomisi (müşteri tarafı):** sipariş başına katkı 5,50 TL (komisyon 9,90 − ödeme ücreti
+3,30 − altyapı ve destek 1,10). Aktif müşteri ayda ortalama 3,3 sipariş → aylık katkı 18,15 TL.
+Aylık müşteri kaybı (churn) %8 → ortalama ömür 12,5 ay → LTV ≈ 227 TL. Ücretli CAC (Instagram)
+180 TL, karma CAC 95 TL (QR ve davet neredeyse bedava). Ücretli LTV/CAC ≈ 1,3; karma ≈ 2,4. Ücretli
+kanalda geri ödeme ≈ 10 ay.
+
+**Pazar büyüklüğü (aşağıdan yukarı, Demlik'in kendi sayımı):** İstanbul'da yaklaşık 4.000 bağımsız
+kahve dükkânı. Dükkân başına yıllık gelir potansiyeli ≈ 125.000 TL (abonelik 18.000 + komisyon
+≈ 107.000; günde 30 sipariş varsayımıyla). TAM ≈ 500 milyon TL/yıl. SAM (sabah yoğunluğu olan ve
+kasası entegre edilebilen 1.800 dükkân) ≈ 225 milyon TL. SOM (üç yılda 600 dükkân) ≈ 75 milyon TL.
+
+**Rekabet:** rakip alternatifler kuyruk, telefon, teslimat uygulamaları, zincirlerin uygulamaları.
+Tedarikçiler: ödeme kuruluşu, POS tedarikçisi. Alıcılar: dükkânlar (geçiş maliyeti: kasa
+entegrasyonu ve personel eğitimi) ve müşteriler (geçiş maliyeti düşük). Yeni giren tehdidi: bir
+teslimat devinin gel-al özelliği. Ağ etkisi iki taraflı: dükkân çoğaldıkça müşteri, müşteri
+çoğaldıkça dükkân gelir.
+
+**Kampüs projesinin ROI ve NPV'si:** yatırım 2,52 milyon TL (gerçekleşen). Beklenen: günde 600
+sipariş → aylık katkı 99.000 TL (600 × 30 × 5,50) + 12 kafenin aboneliği 18.000 TL = 117.000 TL;
+yılda ≈ 1,404 milyon. Üç yıllık basit ROI ≈ %67; geri ödeme ≈ 1,8 yıl. Yıllık %30 iskonto oranıyla
+üç yıllık NPV ≈ +0,03 milyon TL: zar zor pozitif. Hakan'ın kararı: ikinci dalga ancak 30 günde
+ikinci sipariş kampüste %41'in üstündeyse.
+
+**SWOT (özet):** güçlü — 140 dükkân, kasa entegrasyonu, yüksek tekrar sipariş; zayıf — ücretli
+kanalda zayıf LTV/CAC, nakit yanması; fırsat — kampüsler, dükkânların stok ihtiyacı; tehdit — teslimat
+devlerinin gel-al özelliği, ödeme ücretlerinin artması. **Ansoff:** tekrar sipariş = pazara nüfuz;
+kampüs = pazar geliştirme; Panel'e stok modülü = ürün geliştirme (aday); eve teslimat = çeşitlendirme
+(reddedildi). **PESTLE'den:** enflasyon (fiyat ve iskonto oranı), KVKK (izleme planı), öğrenci
+işleri protokolleri, mobil ödeme alışkanlığı.
+
+**Şirket OKR'ı (bu çeyrek):** O — "Düzenli sabah müşterisinin ilk tercihi ol." KR1 — haftalık
+tamamlanan sipariş 29.400 → 34.000; KR2 — 30 günde ikinci sipariş %41 → %50; KR3 — iade talepleri
+ayda 310 → 150'nin altı. Sipariş takımı KR2'yi, panel takımı KR3'ü üstlendi; KR1 ikisinin ortak
+sonucu. Ayrıca bir öğrenme OKR'ı: "Kampüs öğrencileri sabah ne kadar önceden sipariş veriyor?"
+(Mert). KPI olarak izlenen: uygulama puanı 4,3, ödeme kuruluşu hata oranı.
+
 ## Paydaşlar
 
 | Paydaş | İlgi | Etki |

@@ -463,6 +463,10 @@ bileşendi. Yüzlerce derse görsel eklemek için her şekli baştan çizmek öl
   (1.008 B; tohumlu üreteç, sunucu ve betik aynı sayıları verir). Betiğin oluşturduğu öğeler Astro'nun
   kapsamlı CSS özniteliğini taşımaz; onların kuralları `:global()` ile kök sınıfın altına yazılır
   (`.mc :global(.mc__bar)`). Faz 5'te ilk etkileşimden sonra stilsiz kalan çubuklarla yakalandı.
+  Faz 8'de A/B örneklem hesaplayıcısı (1.171 B; Evan Miller'ın hesaplayıcısıyla aynı sonucu verir,
+  test edilir). Yüzde alanları `type="text" inputmode="decimal"`: `type="number"` İngilizce yerel
+  ayarlı tarayıcıda "1,5"teki virgülü yutup 15 yapıyordu. `Chart` ve `Heatmap` sayıları `tr-TR` ile
+  yazar (12,48 · %69,6); 10'un altındaki ölçeklerde eksen işaretleri ondalık alır, yoksa tekrar eder.
 - **İllüstrasyonlar** (`src/assets/illustrations/*.svg`): yalnız `il-*` sınıfları; renkler
   `--c-illu-*` token'larından. `<Illustration>` satır içi gömer (public/ değil: SW hash'siz
   dosyayı sonsuza dek tutar). `validate` ham renk, öznitelik rengi, betik/dış referans, viewBox ve 12

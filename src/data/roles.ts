@@ -187,6 +187,63 @@ const AGILE_FOR_PRODUCT_DESIGNER: TopicTiers = {
   "anti-paternler": I,
 };
 
+const ANALYTICS_FOR_PRODUCT_DESIGNER: TopicTiers = {
+  "metrik-agaci": I,
+  "aarrr": I,
+  "kohort-ve-elde-tutma": I,
+  "segmentasyon": I,
+  "izleme-plani": I,
+  "dashboard": I,
+};
+
+const ANALYTICS_FOR_PRODUCT_OWNER: TopicTiers = {
+  "aarrr": I,
+  "segmentasyon": I,
+  "izleme-plani": I,
+};
+
+const ANALYTICS_FOR_BUSINESS_ANALYST: TopicTiers = {
+  "metrik-agaci": I,
+  "aarrr": I,
+  "kohort-ve-elde-tutma": I,
+  "segmentasyon": I,
+  "ab-testi-tasarimi": I,
+  "deney-tuzaklari": I,
+};
+
+const ANALYTICS_FOR_UX_RESEARCHER: TopicTiers = {
+  "metrik-agaci": I,
+  "aarrr": I,
+  "izleme-plani": I,
+  "dashboard": I,
+};
+
+const STRATEGY_FOR_PRODUCT_OWNER: TopicTiers = {
+  "tam-sam-som": I,
+  "rekabet-ve-hendekler": I,
+  "roi-ve-npv": I,
+  "finansal-okuryazarlik": I,
+  "swot-pestle-ansoff": I,
+};
+
+const STRATEGY_FOR_PROJECT_MANAGER: TopicTiers = {
+  "gelir-modelleri": I,
+  "birim-ekonomisi-cac-ltv": I,
+  "tam-sam-som": I,
+  "rekabet-ve-hendekler": I,
+  "fiyatlandirma": I,
+  "swot-pestle-ansoff": I,
+};
+
+const STRATEGY_FOR_BUSINESS_ANALYST: TopicTiers = {
+  "gelir-modelleri": I,
+  "tam-sam-som": I,
+  "rekabet-ve-hendekler": I,
+  "fiyatlandirma": I,
+  "finansal-okuryazarlik": I,
+  "stratejiden-okra": I,
+};
+
 const PRODUCT_MGMT_FOR_PRODUCT_DESIGNER: TopicTiers = {
   "vizyon-ve-strateji": I,
   "deger-onerisi-ve-konumlandirma": I,
@@ -328,7 +385,7 @@ export const ROLES: RoleDefinition[] = [
       entry("erisilebilirlik", T),
       entry("arayuz-anatomisi", T),
       entry("urun-yonetimi", O, PRODUCT_MGMT_FOR_PRODUCT_DESIGNER),
-      entry("urun-analitigi", O),
+      entry("urun-analitigi", O, ANALYTICS_FOR_PRODUCT_DESIGNER),
       entry("cevik-pratikler", O, AGILE_FOR_PRODUCT_DESIGNER),
       entry("front-end", O),
       entry("programlama-dilleri", I),
@@ -397,8 +454,8 @@ export const ROLES: RoleDefinition[] = [
       entry("iletisim-ve-paydaslar", T),
       entry("urun-yonetimi", T, PRODUCT_MGMT_FOR_PRODUCT_OWNER),
       entry("is-analizi", T, BA_FOR_PRODUCT_OWNER),
-      entry("urun-analitigi", O),
-      entry("is-ve-strateji", O),
+      entry("urun-analitigi", O, ANALYTICS_FOR_PRODUCT_OWNER),
+      entry("is-ve-strateji", O, STRATEGY_FOR_PRODUCT_OWNER),
       entry("kullanici-arastirmasi", O),
       entry("ux-ui-ilkeleri", O),
       entry("erisilebilirlik", O),
@@ -432,7 +489,7 @@ export const ROLES: RoleDefinition[] = [
       entry("proje-yonetimi", T),
       entry("cevik-pratikler", O, AGILE_FOR_PROJECT_MANAGER),
       entry("is-analizi", O, BA_FOR_PROJECT_MANAGER),
-      entry("is-ve-strateji", O),
+      entry("is-ve-strateji", O, STRATEGY_FOR_PROJECT_MANAGER),
       entry("web-temelleri", O),
       entry("test-ve-kalite", O, QUALITY_MECHANICS),
       entry("devops-ve-yayin", O, DEVOPS_MECHANICS),
@@ -496,8 +553,8 @@ export const ROLES: RoleDefinition[] = [
       entry("kullanici-arastirmasi", O),
       entry("ux-ui-ilkeleri", O),
       entry("erisilebilirlik", O),
-      entry("urun-analitigi", O),
-      entry("is-ve-strateji", O),
+      entry("urun-analitigi", O, ANALYTICS_FOR_BUSINESS_ANALYST),
+      entry("is-ve-strateji", O, STRATEGY_FOR_BUSINESS_ANALYST),
       entry("proje-yonetimi", O, PM_FOR_BUSINESS_ANALYST),
       entry("cevik-pratikler", O, AGILE_FOR_BUSINESS_ANALYST),
       entry("web-temelleri", O),
@@ -534,7 +591,7 @@ export const ROLES: RoleDefinition[] = [
       entry("erisilebilirlik", T),
       entry("calisma-bicimi", O, WAYS_OF_WORKING_FOR_RESEARCHER),
       entry("iletisim-ve-paydaslar", O),
-      entry("urun-analitigi", O),
+      entry("urun-analitigi", O, ANALYTICS_FOR_UX_RESEARCHER),
       entry("urun-yonetimi", O, PRODUCT_MGMT_FOR_UX_RESEARCHER),
       entry("is-analizi", O, BA_FOR_UX_RESEARCHER),
       entry("guvenlik-ve-hukuk", O, { ...SECURITY_MECHANICS, ...PRIVACY_CORE }),
