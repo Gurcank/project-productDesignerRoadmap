@@ -1,0 +1,51 @@
+{
+  "category": "veri-yapilari",
+  "sources": [
+    { "label": "MDN — JavaScript veri yapıları", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures" },
+    { "label": "MDN — Map", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map" },
+    { "label": "MDN — History API", "url": "https://developer.mozilla.org/en-US/docs/Web/API/History_API" },
+    { "label": "NN/g — Tree Testing", "url": "https://www.nngroup.com/articles/tree-testing/" }
+  ],
+  "items": [
+    {
+      "question": "Bir geliştirici \"arama hızlı ama ekleme pahalı\" diyor. Bu cümle neyi anlatıyor?",
+      "answer": "Seçilen veri yapısının dengesini: her yapı bazı işlemleri ucuzlatır, bazılarını pahalılaştırır. Hangi yapının doğru olduğu, ekranda en sık yapılan işleme bağlıdır."
+    },
+    {
+      "question": "10.000 satırlık bir liste sanallaştırıldı. Tasarımda neyi yeniden düşünmek gerekir?",
+      "answer": "Tarayıcının sayfa içi araması yalnız çizilmiş satırları bulur; listeye kendi arama kutusu gerekir. Değişken yükseklikli satırlar zorlaşır. Ekran okuyucuya listenin toplam uzunluğu da ayrıca bildirilir."
+    },
+    {
+      "question": "Bir tabloda filtreledikten sonra yanlış satır seçili görünüyor. En olası neden nedir?",
+      "answer": "Seçimin satırların sıra numarasıyla tutulması. Filtre ya da sıralama sırayı değiştirince aynı numara başka bir satırı gösterir. Seçim satırın kalıcı kimliğiyle tutulmalıdır."
+    },
+    {
+      "question": "\"Tümünü seç\" onay kutusu tasarlarken hangi soruyu cevaplamak gerekir?",
+      "answer": "Hangi \"tüm\" olduğunu: ekranda görünen sayfa mı, filtreye uyan bütün kayıtlar mı, her şey mi? Ayrıca filtre değişince seçimin korunup korunmayacağı."
+    },
+    {
+      "question": "Kullanıcı bir modal açıyor, telefonda geri hareketi yapıyor ve siteden çıkıyor. Hangi veri yapısı bu sorunun arkasında?",
+      "answer": "Tarayıcı geçmişi, bir yığın. Modal açıldığında geçmişe bir kayıt yazılmazsa geri hareketi modalı kapatmak yerine bir önceki sayfaya döner."
+    },
+    {
+      "question": "Rapor hazırlama işi kuyruğa alınacak. Hangi üç ekran tasarlanmalı?",
+      "answer": "Kabul (isteğin alındı), durum görünürlüğü (iş nerede, nereden takip edilir) ve başarısızlık (iş olmazsa kullanıcı nasıl öğrenir, tekrar deneyebilir mi)."
+    },
+    {
+      "question": "Bir ürünün hem \"Soğuk içecekler\" hem \"Kampanya\" kategorisinde görünmesi isteniyor. Yapıda ne değişir?",
+      "answer": "Ağaçta her öğenin tek bir üstü vardır; iki üst istendiğinde yapı ağaç olmaktan çıkar. Çoğu zaman çözüm ikincisini kategori değil etiket yapmaktır; breadcrumb ve adresin hangi yolu göstereceği ayrıca kararlaştırılır."
+    },
+    {
+      "question": "Bir görev başka bir görevi beklerken o görev de ilkini bekliyor. Bu ne tür bir sorundur, tasarımda ne tanımlanmalı?",
+      "answer": "Bir graftaki döngüdür; iki görev de başlayamaz. Döngü oluştuğunda ne olacağı tanımlanmalıdır: engellenecek mi, uyarı mı verilecek, döngüyü oluşturan işler nasıl gösterilecek?"
+    },
+    {
+      "question": "Türkçe bir arama kutusunda \"kurabiyeler\" yazan kullanıcı \"Kurabiye\"yi bulamıyor. Eksik olan nedir?",
+      "answer": "Kökleme (stemming): eklerle yazılan kelimenin kökünü bulmak. Türkçenin zengin ek yapısı yüzünden kökleme yoksa kullanıcı doğal yazdığında sonuç bulamaz."
+    },
+    {
+      "question": "Bir \"favori listesi\" tasarlarken sorulacak beş soru nedir?",
+      "answer": "Kaç öğe olabilir? En sık işlem ne (ekle-çıkar, \"favorimde mi?\")? Sıra anlam taşıyor mu (eklenme sırası)? Öğeyi neyle ayırt ediyoruz (kalıcı kimlik)? Çıkarma işlemi geri alınabilir mi?"
+    }
+  ]
+}

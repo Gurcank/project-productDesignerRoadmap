@@ -4,7 +4,8 @@ outcomes:
   - "N+1 problemini ve hangi tasarım isteğinden doğduğunu söyleyebilirsin."
   - "Staging'de hızlı, production'da yavaş bir listenin iki muhtemel sebebini sayabilirsin."
   - "Kilit sorunun tasarımdaki karşılığını ('başkası az önce aldı' ekranı) bilirsin."
-minutes: 8
+minutes: 5
+standard: 2
 sources:
   - label: "Rails Guides — Eager loading (N+1 çözümü)"
     url: "https://guides.rubyonrails.org/active_record_querying.html"
@@ -20,6 +21,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Chart from "~/components/diagrams/primitives/Chart.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Listede her ürünün yazarını da gösterelim." Masum bir tasarım isteği. Geliştirici "bu zor" diyor. Neden? Bu ders o cevabın arkasındaki problemleri anlatır.
 
@@ -28,6 +31,15 @@ import Lenses from "~/components/lesson/Lenses.astro";
 **N+1 query problem**, bir liste çekmek için 1 sorgu atılması, sonra listedeki her öğe için ayrı birer sorgu daha atılmasıdır. **Bu bölümdeki en önemli terim, çünkü doğrudan tasarım isteklerinden doğar.** "Listede her ürünün yazarını da gösterelim" dediğinde, kod 20 ürün için 20 ek sorgu atabilir. 1 sorgu 5 milisaniyeyse toplam 105 milisaniye olur; 100 ürünlü bir sayfada bu yarım saniyeye çıkar. Çözümü genelde join ya da toplu yüklemedir. "Bu liste N+1 yapıyor; her satır için ayrı sorgu gidiyor, ilişkileri tek seferde çekelim."
 
 ORM'ler bu sorunu kolaylaştırır: tek satırlık masum görünen bir kod arka planda yüzlerce sorgu üretebilir. Bu yüzden ORM kullanan ekiplerde N+1 daha sık görülür.
+
+<Chart
+  kind="bar"
+  label="Panel sipariş listesinin sorgu sayısı"
+  caption="Panel'in sipariş listesi otuz sipariş gösteriyordu. İlk sürümde listeyi almak için bir sorgu, sonra her siparişin müşteri adı için ayrı birer sorgu gidiyordu: toplam 31 sorgu. Müşteri adları tek bir birleştirilmiş sorguyla alınınca sayı ikiye indi."
+  x={{ title: "Sürüm", labels: ["Önce (N+1)", "Sonra (join)"] }}
+  y={{ title: "Sorgu sayısı", max: 32 }}
+  series={[{ name: "Sayfa başına sorgu", values: [31, 2], tone: "accent" }]}
+/>
 
 ## Yavaş sorgu ve eksik index
 
@@ -43,6 +55,17 @@ ORM'ler bu sorunu kolaylaştırır: tek satırlık masum görünen bir kod arka 
 
 **Connection pool (bağlantı havuzu)**, veritabanına açılan bağlantıların sınırlı sayıda tutulup yeniden kullanılmasıdır. Her bağlantı veritabanı için maliyetlidir ve sayıları sınırlıdır. **Serverless ile bilinen bir çatışması vardır:** her işlev çağrısı yeni bir bağlantı açmaya çalışırsa havuz hızla tükenir; "too many connections" hatası serverless projelerinde sık karşılaşılan bir üretim hatasıdır. Çözüm, havuzlayıcı kullanmaktır.
 
+<Case>
+
+Panel'de üç problem de yaşandı:
+
+1. **N+1:** sipariş listesine her siparişin müşteri adı eklendi. Kod otuz sipariş için otuz ayrı sorgu attı; liste staging'de hızlıydı, canlıda yavaştı. Adlar tek bir birleştirilmiş sorguyla alınınca sorgu sayısı 31'den 2'ye indi.
+2. **Eksik indeks:** staging'de 200 sipariş vardı, canlıda yüz binlerce. Dükkân ve tarih sütunlarına indeks eklendi.
+3. **Kilit:** son kruvasan için aynı anda gelen iki sipariş satırı kilitle sıraya girdi; ikincisi "az önce tükendi" ekranını gördü.
+4. **Bağlantı havuzu:** kampüs lansmanı günü serverless bekleme listesi formu veritabanı bağlantılarını tüketti. Bir havuzlayıcı eklendi.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -50,6 +73,12 @@ ORM'ler bu sorunu kolaylaştırır: tek satırlık masum görünen bir kod arka 
 - **"Başkası az önce aldı" durumunu rezervasyon/stok akışlarında tasarla.**
 - **Performans testini gerçekçi veri hacmiyle iste;** staging'de hızlı olması yetmez.
 - **Trafik artışında beklenen hata ekranlarını tasarla.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Ölçek varsayımını gereksinime yaz.** "Bir dükkânın günde 600 siparişi olabilir" test verisini de belirler.
+- **Eşzamanlı işlem kurallarını tanımla.** Son ürünü iki kişi aynı anda alırsa ne olur?
 
 </Lens>
 </Lenses>
@@ -74,5 +103,11 @@ Bir liste için 1 sorgu atılıp sonra her öğe için ayrı birer sorgu daha at
 <SelfCheck question="Staging'de hızlı, production'da yavaş bir liste. En muhtemel iki sebep nedir?">
 
 Veri hacmi farkı (staging'de 100 kayıt, production'da milyonlar) ve eksik indeks (küçük veride fark edilmez, büyük veride tam tablo taramasına dönüşür).
+
+</SelfCheck>
+
+<SelfCheck question={"\"Listede her ürünün yazarını da gösterelim\" isteği neden yavaşlığa yol açabilir?"}>
+
+Kod her ürün için ayrı bir sorgu atabilir (N+1). Yüz ürünlük bir liste yüz ek sorgu demektir. Çözüm, ilişkili veriyi tek bir birleştirilmiş sorguyla ya da toplu yüklemeyle almaktır.
 
 </SelfCheck>

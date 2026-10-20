@@ -4,7 +4,8 @@ outcomes:
   - "Veri yapısının neden bir tasarım meselesi olduğunu söyleyebilirsin."
   - "Bir yapıyı değerlendirmek için sorulacak tek soruyu (en sık işlem ne?) bilirsin."
   - "Ölçeğin neden her şeyi değiştirdiğini ve ekranda 8 satır görünmesinin arkadaki listeyi küçültmediğini açıklayabilirsin."
-minutes: 7
+minutes: 4
+standard: 2
 sources:
   - label: "MDN — JavaScript veri yapıları"
     url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures"
@@ -18,6 +19,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir geliştirici "bunu yapmak pahalı" dediğinde ne demek istiyor? Çoğu zaman: seçilen veri yapısı o işi kötü yapıyor. Bu bölüm kod öğretmeyecek. Amacı, **neden pahalı olduğunu** anlayabilmen ve tasarımını buna göre kurabilmen.
 
@@ -50,7 +53,53 @@ Bir yapının iyi mi kötü mü olduğu soyut olarak sorulamaz. Sorulacak soru �
 
 10 öğede hiçbir yapı seçimi hissedilmez. 1.000 öğede fark başlar. 1.000.000 öğede yanlış yapı arayüzü kullanılamaz hâle getirir. Bu yüzden "tasarımda 8 satır gösteriyoruz, sorun olmaz" demek yanıltıcıdır: ekranda 8 satır olabilir ama **arkadaki liste** on binlerce kayıt olabilir ve filtre o listenin tamamında çalışır.
 
+<Spectrum
+  label="Ölçek ve yapı seçimi"
+  caption="Yapı seçiminin etkisi öğe sayısıyla büyür. On öğede hiçbir seçim hissedilmez. Bin öğede fark başlar; yanlış yapıyla bir filtre ya da seçim gecikmeye başlar. Bir milyon öğede yanlış yapı arayüzü kullanılamaz hâle getirir. Demlik'te bir dükkânın menüsü yaklaşık 120 üründür; Panel'in sipariş geçmişi ise yüz binleri bulur."
+  left={{
+  title: "Az öğe",
+  sub: "seçim hissedilmez"
+}}
+  right={{
+  title: "Çok öğe",
+  sub: "yanlış yapı kullanılmaz"
+}}
+  marks={[
+  {
+    label: "10",
+    at: 0.05
+  },
+  {
+    label: "Menü: ~120 ürün",
+    at: 0.28
+  },
+  {
+    label: "1.000",
+    at: 0.45
+  },
+  {
+    label: "Sipariş geçmişi",
+    at: 0.8
+  },
+  {
+    label: "1.000.000",
+    at: 0.95
+  }
+]}
+/>
+
 Tarayıcı tarafındaki görünür karşılığı **INP** eşiğidir: bir tıklamadan sonra ekranın güncellenmesi 200 ms'yi aşarsa kullanıcı gecikmeyi fark eder. Yanlış veri yapısı bu bütçeyi tek başına tüketebilir.
+
+<Case>
+
+Panel'de iki arama kutusu var ve ikisi çok farklı yapılara dayanıyor:
+
+1. **Menüde ara:** bir dükkânın menüsü yaklaşık 120 ürün. Liste tarayıcıda duruyor; her tuşta baştan sona taranıyor ve bu hissedilmiyor.
+2. **Sipariş geçmişinde ara:** bir dükkânın bir yıllık siparişleri yüz binleri buluyor. Bu liste tarayıcıya gelmiyor; arama sunucuda, indeksli sütunlarda yapılıyor.
+3. **Soru:** Ozan "menüdeki gibi anında olsun" dedi. Emre en sık işlemi sordu: dükkânlar geçmişte çoğunlukla sipariş koduyla ve tarihle arıyordu.
+4. **Karar:** sipariş geçmişinde kodla ve tarih aralığıyla arama var; "içinde geçen ürün adı" araması yok.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -82,5 +131,11 @@ Bu ekranda en sık yapılan işlem ne (ekleme, arama, sıralama, silme)? Her yap
 <SelfCheck question="Tasarımda 8 satır gösterilmesi neden liste küçük demek değildir?">
 
 Ekrandaki satır sayısı arkadaki kayıt sayısını yansıtmaz; filtre ve sıralama tüm veri üzerinde çalışır ve on binlerce kayıt olabilir.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Tasarımda sadece 8 satır gösteriyoruz, performans sorunu olmaz\" cümlesi neden yanıltıcı olabilir?"}>
+
+Ekranda 8 satır olabilir ama arkadaki liste on binlerce kayıt olabilir; filtre ve arama o listenin tamamında çalışır. Önemli olan ekrandaki değil, arkadaki öğe sayısıdır.
 
 </SelfCheck>

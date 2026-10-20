@@ -138,6 +138,14 @@ derinleştirildi, ana metindeki tasarımcıya özgü cümleler rol-nötr yazıld
 PjM ve BA, "SQL" dersine BA mercekleri eklendi. Programlama Dilleri'ne ilk kez bir quiz yazıldı; Front-end,
 Framework'ler ve Kütüphaneler'in içe aktarılmış quizlerinin yerini rol-nötr kopyaları aldı.
 
+**Var — Mühendislik, ikinci yarı v2 (Faz 11b).** Back-end/API (15), Veritabanı (12), Veri Yapıları (9) ve
+Algoritmalar'ın (9) 45 dersi v2'ye taşındı: her birine vakadan bir örnek, bir diyagram (Veri Yapıları'nda
+takvim ağını gösteren bir Hub dahil) ve en az üç kendini yokla sorusu eklendi; bölüm başlığı olmayan
+dersler bölümlere ayrıldı, "seviye 2/3" ifadeleri kaldırıldı. Back-end/API'de PM, PO ve BA; Veritabanı'nda
+BA; Algoritmalar'ın filtre, öneri ve anlamsal arama derslerinde PM ve PO mercekleri yazıldı. Veri Yapıları
+ve Algoritmalar'a ilk kez quiz yazıldı; Back-end/API ve Veritabanı quizlerinin yerini rol-nötr kopyaları
+aldı. Mühendislik alanının sekiz kategorisinin hepsi v2.
+
 **Henüz yok — planlı, yapılmadı.** EN arayüz (`/en/`, `src/i18n`): kullanıcı ertelemeyi seçti,
 şu an TR tek dil · Araçlar'da Ek B kaynakları ve diğer şablonlar · framework ve kütüphane profil sayfaları · Cloudflare Pages yayını.
 

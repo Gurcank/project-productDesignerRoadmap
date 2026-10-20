@@ -4,7 +4,8 @@ outcomes:
   - "Veri modelinin neden ekranlarla birlikte konuşulması gerektiğini söyleyebilirsin."
   - "Veritabanının neden ayrı bir katman olduğunu açıklayabilirsin."
   - "Kalıcılık kararlarını (form, sepet, filtre) tasarımda belirtebilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "PostgreSQL — Veritabanı temelleri"
     url: "https://www.postgresql.org/docs/current/ddl-basics.html"
@@ -16,8 +17,10 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Bu bölümün tasarımcı için değeri, ilk bakışta göründüğünden büyük. Sebebi şu: **veri modeli, arayüzün neyi gösterebileceğinin sınırını çizer.**
+Bu bölümün tasarım için değeri, ilk bakışta göründüğünden büyük. Sebebi şu: **veri modeli, arayüzün neyi gösterebileceğinin sınırını çizer.**
 
 Bir örnek: "Kullanıcı birden fazla adres kaydedebilsin" ile "kullanıcının tek bir adresi olsun" arasındaki fark bir tasarım tercihi gibi görünür. Aslında bir **veri modeli kararıdır** ve sonradan değiştirmek, ekranı değiştirmekten kat kat pahalıdır. Bu yüzden veri modeli ekranlarla birlikte konuşulmalıdır, sonrasında değil.
 
@@ -33,12 +36,70 @@ Bölümdeki kavramlar **eskimeyen** kategoridedir; ilişkisel model elli yıllı
 
 **Persistence (kalıcılık)**, verinin onu üreten süreç sona erdikten sonra da var olmaya devam etmesidir. **Tasarım açısından somut sorusu şudur:** kullanıcı sekmeyi kapatıp geri geldiğinde ne kaybolur? Yarım kalmış bir form kaybolacak mı? Sepet duruyor mu? Filtre seçimleri hatırlanıyor mu? Bunların her biri bir kalıcılık kararıdır ve tasarımda belirtilmelidir. "Uzun formu taslak olarak kaydedelim mi? Kullanıcı yanlışlıkla kapatırsa her şey gitmesin."
 
+<Tree
+  label="Bir bilgi nerede yaşar?"
+  caption="Bir bilgi üç yerde yaşayabilir ve her birinin kalıcılığı farklıdır. Veritabanında duran bilgi kalıcıdır ve her cihazdan görülür: Demlik'te sipariş geçmişi. Tarayıcıda ya da cihazda saklanan bilgi uygulama kapanınca kalır ama yalnız o cihazdadır: sepet. Yalnız bellekte duran bilgi sekme kapanınca kaybolur: ödeme ekranında seçili kart."
+  root={{
+  title: "Bilgi nerede?",
+  tone: "accent",
+  children: [
+    {
+      title: "Veritabanı",
+      sub: "kalıcı, her cihazda",
+      children: [
+        {
+          title: "Sipariş geçmişi"
+        }
+      ]
+    },
+    {
+      title: "Cihaz deposu",
+      sub: "bu cihazda kalır",
+      children: [
+        {
+          title: "Sepet"
+        }
+      ]
+    },
+    {
+      title: "Bellek",
+      sub: "kapanınca gider",
+      children: [
+        {
+          title: "Seçili kart",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
+<Case>
+
+Demlik'te üç kalıcılık kararı açıkça yazıldı:
+
+1. **Sipariş geçmişi veritabanında:** müşteri telefonunu değiştirse de "Son siparişini tekrarla" çalışıyor.
+2. **Sepet cihazda:** uygulama kapanıp açılınca duruyor; telefon değişince gidiyor. Ekip bunu kabul etti; sepet genelde birkaç dakikalık.
+3. **Seçili kart bellekte:** ödeme ekranından çıkınca sıfırlanıyor; bir sonraki ödemede varsayılan kart seçili geliyor.
+4. **Panel'de taslak:** dükkân çalışanı yeni ürün eklerken sayfayı yanlışlıkla kapatınca her şey gidiyordu. Form artık taslak olarak kaydediliyor.
+
+"Birden fazla teslim noktası" isteği geldiğinde Elif önce veri modelini sordu: müşterinin tek bir "favori dükkânı" alanı vardı.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
 - **Her ekran için "bu veri nerede yaşıyor?" sor:** sunucuda mı, tarayıcıda mı, hiçbir yerde mi?
 - **Kalıcılık kararlarını yaz:** yarım form, sepet, filtre, tercih; yenilemede ve başka cihazda ne olur?
 - **Veri modeli sorusunu ekran tasarımıyla birlikte sor:** "birden fazla adres" gibi kararlar sonradan pahalıdır.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Kalıcılık kararını gereksinime yaz.** "Sepet uygulama kapanınca korunur, cihazlar arası taşınmaz."
+- **Veri modeli kararlarını ekranlarla birlikte konuş.** "Tek adres mi, birden çok mu?" sonradan değiştirmesi pahalı bir karardır.
 
 </Lens>
 </Lenses>
@@ -56,5 +117,17 @@ Bölümdeki kavramlar **eskimeyen** kategoridedir; ilişkisel model elli yıllı
 <SelfCheck question="Veri modeli kararları neden ekranlarla birlikte konuşulmalı?">
 
 Çünkü veri modeli arayüzün neyi gösterebileceğinin sınırını çizer. "Birden fazla adres" bir tasarım tercihi gibi görünür ama bir veri modeli kararıdır ve sonradan değiştirmek ekranı değiştirmekten kat kat pahalıdır.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Kullanıcı yarım kalan formuna geri dönebilsin\" isteği hangi karara dayanır?"}>
+
+Bir kalıcılık kararına: formun içeriği nerede ve ne kadar süre saklanacak? Yalnız bu cihazda mı, hesaba bağlı olarak her cihazda mı? Karar tasarımda belirtilmezse form sekme kapanınca kaybolur.
+
+</SelfCheck>
+
+<SelfCheck question="Neden veri modeli kararları ekranlarla birlikte konuşulmalı?">
+
+Veri modeli arayüzün neyi gösterebileceğinin sınırını çizer ve sonradan değiştirmek ekranı değiştirmekten çok pahalıdır; mevcut veri de dönüştürülmek zorunda kalır.
 
 </SelfCheck>

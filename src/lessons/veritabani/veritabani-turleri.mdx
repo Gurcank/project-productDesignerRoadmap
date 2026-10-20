@@ -4,7 +4,8 @@ outcomes:
   - "Dört veritabanı türünü ve ne zaman seçileceğini söyleyebilirsin."
   - "İlişkisel veritabanının temel garantisini (tutarlılığı veri katmanında zorlamak) açıklayabilirsin."
   - "Redis'in neden ana veritabanı değil, yanında bir araç olduğunu bilirsin."
-minutes: 8
+minutes: 4
+standard: 2
 sources:
   - label: "PostgreSQL — Kısıtlar"
     url: "https://www.postgresql.org/docs/current/ddl-constraints.html"
@@ -23,6 +24,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Farklı veri şekilleri farklı depolama biçimleri ister. Dört türü ve ne zaman hangisinin seçildiğini bil.
 
@@ -42,7 +45,46 @@ Farklı veri şekilleri farklı depolama biçimleri ister. Dört türü ve ne za
 
 ## Vektör veritabanı
 
+<Tree
+  label="Dört veritabanı türü"
+  caption="Veritabanları dört türdedir. İlişkisel veritabanı tablolar ve aralarındaki ilişkilerle çalışır; varsayılan seçimdir. Belge veritabanı esnek, JSON benzeri belgeler saklar. Anahtar-değer deposu çok hızlıdır ve ana veritabanının yanında önbellek, oturum ve sayaç için kullanılır. Vektör veritabanı anlam yakınlığına göre arama yapar."
+  root={{
+  title: "Veritabanı türleri",
+  tone: "accent",
+  children: [
+    {
+      title: "İlişkisel",
+      sub: "varsayılan · tablolar"
+    },
+    {
+      title: "Belge",
+      sub: "esnek yapı"
+    },
+    {
+      title: "Anahtar-değer",
+      sub: "hızlı · yanında"
+    },
+    {
+      title: "Vektör",
+      sub: "anlam yakınlığı",
+      tone: "progress"
+    }
+  ]
+}}
+/>
+
 **Vector database**, metin ya da görsellerin sayısal temsillerini (embedding) saklayıp "anlamca en benzer olanı" bulmayı sağlar. Yapay zekâ destekli arama ve öneri sistemlerinin altyapısıdır. Klasik arama kelime eşleşmesine bakar; vektör araması **anlam yakınlığına** bakar: "ucuz laptop" araması "uygun fiyatlı dizüstü bilgisayar" sonucunu getirebilir. "Anlamsal arama istiyorsak vektör aramasına ihtiyacımız var; kelime eşleşmesi yetmez." Bu alan çok hızlı değişiyor; ayrı ürünler yerine mevcut veritabanlarına eklenen özellikler de yaygınlaşıyor.
+
+<Case>
+
+Demlik iki tür kullanıyor, iki türü bilerek kullanmıyor:
+
+1. **İlişkisel:** müşteriler, dükkânlar, ürünler, siparişler ve iadeler PostgreSQL'de. Bir sipariş var olmayan bir dükkâna yazılamıyor.
+2. **Anahtar-değer:** oturumlar, giriş denemesi sayaçları ve dükkân menülerinin beş dakikalık önbelleği Redis'te.
+3. **Belge:** ürün özellikleri dükkândan dükkâna değişiyor (süt seçeneği, boy, şurup). Ayrı bir belge veritabanı yerine PostgreSQL'in JSON alanı kullanıldı.
+4. **Vektör:** "anlamsal menü araması" konuşuldu; menüler küçük olduğu için klasik arama yeterli bulundu.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -50,6 +92,12 @@ Farklı veri şekilleri farklı depolama biçimleri ister. Dört türü ve ne za
 - **Tutarlılık gerektiren akışlarda (sipariş, stok, ödeme) ilişkisel veritabanı varsay.**
 - **"Esnek yapı" isteğini sorgula:** hangi alanlar gerçekten değişken?
 - **Arama deneyimini tasarlarken anlamsal aramanın gerekip gerekmediğini sor.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Tutarlılık kurallarını hangi katmanın garanti ettiğini sor.** İlişkisel veritabanında kural veri katmanında, belge veritabanında kodda yaşar.
+- **Esnek yapı isteğinde hangi alanların gerçekten değiştiğini listele.** Çoğu zaman yalnız birkaç alandır.
 
 </Lens>
 </Lenses>
@@ -74,5 +122,11 @@ Tutarlılığı veri katmanında zorlar: olmayan bir kullanıcıya sipariş yaz�
 <SelfCheck question="Redis neden ana veritabanı olarak kullanılmaz?">
 
 Karmaşık sorgu yapamaz; yalnızca anahtarla çok hızlı erişim sunar. Bu yüzden ana veritabanının yanında önbellek, oturum, hız sınırı sayacı ve kuyruk için kullanılır.
+
+</SelfCheck>
+
+<SelfCheck question="Redis neden ana veritabanının yerine değil yanında kullanılır?">
+
+Çok hızlıdır ama karmaşık sorgu yapamaz ve tutarlılık garantileri sınırlıdır. Önbellek, oturum, sayaç gibi hızlı ve basit işler için ana veritabanının yükünü alır.
 
 </SelfCheck>

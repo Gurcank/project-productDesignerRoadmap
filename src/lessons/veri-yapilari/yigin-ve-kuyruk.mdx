@@ -1,10 +1,11 @@
 ---
-summary: "Yığın (son giren ilk çıkar) ve kuyruk (ilk giren ilk çıkar): iki büyük özelliğin altında yatar, geri alma ve arka plan işleri. Geri alma sınırı, ileri alma davranışı ve 'kabul-durum-başarısızlık' üç ekranı tasarım kararlarıdır."
+summary: "Yığın (son giren ilk çıkar) ve kuyruk (ilk giren ilk çıkar) iki özelliğin altında yatar: geri alma ve arka plan işleri. Geri alma sınırı ve kuyruğun üç ekranı tasarım kararıdır."
 outcomes:
   - "Yığın ile kuyruğun farkını ve arayüzdeki karşılıklarını söyleyebilirsin."
   - "Geri alma için tasarlanması gereken kararları (sınır, ileri alma, tarayıcı geçmişi) sayabilirsin."
   - "Arka plana atılan bir iş için gereken üç ekranı bilirsin."
-minutes: 8
+minutes: 4
+standard: 2
 sources:
   - label: "MDN — History API"
     url: "https://developer.mozilla.org/en-US/docs/Web/API/History_API"
@@ -22,6 +23,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 İkisi de sıralı yapılardır; farkları **hangi ucundan alındığıdır.**
 
@@ -48,6 +51,31 @@ Bu tek cümlelik fark, arayüzdeki iki büyük özelliği belirler: **geri alma*
 
 Geri alma (undo), yapılan işlemlerin bir yığında tutulmasıdır. Her işlem üste konur; "geri al" en üsttekini alır. Tasarıma yansıyan sonuçlar:
 
+<StepFlow
+  label="Geri alma yığını"
+  caption="Panel'de bir çalışan önce bir ürünün fiyatını değiştirir, sonra başka bir ürünü bugünlük kapatır; iki işlem sırayla yığına konur. Geri al en üstteki işlemi, yani ürün kapatmayı geri alır. Ardından çalışan yeni bir işlem yaparsa ileri alma zinciri silinir: geri alınan işlem artık ileri alınamaz."
+  steps={[
+  {
+    title: "Fiyat değişti",
+    sub: "yığına girer",
+    tone: "accent"
+  },
+  {
+    title: "Ürün kapatıldı",
+    sub: "en üstte"
+  },
+  {
+    title: "Geri al",
+    sub: "en üstteki geri alınır"
+  },
+  {
+    title: "Yeni işlem",
+    sub: "ileri alma silinir",
+    tone: "progress"
+  }
+]}
+/>
+
 - **Geri alma sırayla çalışır.** "Üç adım önceki şeyi geri al ama aradakiler kalsın" doğal bir işlem değildir; ayrıca tasarlanması gerekir ve pahalıdır.
 - **Yeni bir işlem yaparsan ileri alma (redo) silinir.** Kullanıcı geri alır, sonra başka bir şey yazar: ileri alma zinciri kopar. Bu yapının doğal sonucudur ama kullanıcıya belli etmek gerekir.
 - **Yığın sonsuz değildir.** "Kaç adım geri alınabilir?" bir tasarım kararıdır. Belirtmezsen geliştirici bir sayı seçer (genelde 50) ve kullanıcı sınıra çarptığında hiçbir açıklama görmez.
@@ -69,7 +97,22 @@ Kuyruk, hemen yapılmayacak işlerin sıraya konmasıdır: e-posta gönderimi, r
 | Arayüzdeki yeri | Geri al/ileri al, tarayıcı geçmişi, iç içe modal | Arka plan işleri, bildirim sırası, dışa aktarma |
 | Tasarım sorusu | Kaç adım geri alınabilir? | İş bitince kullanıcı nereden görecek? |
 
-**Alternatifler:** öncelikli kuyruk (premium kullanıcının raporu önce); iş yeterince hızlıysa anlık (senkron) işlem, çünkü kuyruk karmaşıklık ekler; geri alma yerine onay (altyapısı ucuzdur ama deneyim açısından daha kötüdür: **geri alınabilir bir işlem, onay soran bir işlemden neredeyse her zaman iyidir**).
+**Alternatifler:**
+
+- Öncelikli kuyruk: premium kullanıcının raporu önce.
+- Anlık (senkron) işlem: iş yeterince hızlıysa; kuyruk karmaşıklık ekler.
+- Geri alma yerine onay: altyapısı ucuzdur ama deneyim açısından daha kötüdür. **Geri alınabilir bir işlem, onay soran bir işlemden neredeyse her zaman iyidir.**
+
+<Case>
+
+Panel'de yığın da kuyruk da var:
+
+1. **Tek adımlı geri alma:** "Ürün bugünlük kapatıldı" bildirimi beş saniye "Geri al" sunuyor. Tek adım; çok adımlı geri alma istenmedi, çünkü Panel'deki işlemler birbirinden bağımsız.
+2. **Tarayıcı geçmişi:** sipariş ayrıntısı açıldığında geçmişe yazılıyor; geri tuşu ayrıntıyı kapatıyor, Panel'den çıkarmıyor.
+3. **Kuyruk:** aylık rapor kuyruğa alınıyor. Üç ekranı var: "Rapor hazırlanıyor", raporlar listesinde durum ve "Rapor oluşturulamadı, tekrar dene".
+4. **Onay yerine geri alma:** ürün kapatma eskiden "Emin misiniz?" soruyordu; yoğun saatte çalışanlar okumadan "Evet"e basıyordu.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -95,5 +138,17 @@ Kuyruk, hemen yapılmayacak işlerin sıraya konmasıdır: e-posta gönderimi, r
 <SelfCheck question="Arka plana atılan bir iş için hangi üç ekran gerekir?">
 
 Kabul ("isteğin alındı"), durum görünürlüğü (kullanıcı nereden bakacak) ve başarısızlık (iş başarısız olursa kullanıcı nasıl öğrenecek, tekrar deneyebilir mi). Üçüncüsü en çok atlanandır.
+
+</SelfCheck>
+
+<SelfCheck question="Kuyruğa alınan bir iş için hangi üç ekran tasarlanmalı?">
+
+Kabul ekranı (isteğin alındı), durum görünürlüğü (iş nerede, ne zaman biter) ve başarısızlık (iş başarısız olursa kullanıcı nasıl öğrenir, tekrar deneyebilir mi).
+
+</SelfCheck>
+
+<SelfCheck question="Kullanıcı iki adım geri aldı, sonra yeni bir şey yazdı. İleri alma neden artık çalışmıyor?">
+
+Geri alma bir yığındır; yeni bir işlem yapıldığında ileri alma zinciri silinir. Bu yapının doğal sonucudur ama kullanıcıya belli edilmesi gerekir.
 
 </SelfCheck>

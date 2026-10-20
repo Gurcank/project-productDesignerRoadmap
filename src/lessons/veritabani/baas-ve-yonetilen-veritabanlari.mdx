@@ -5,6 +5,7 @@ outcomes:
   - "Ücretsiz katmanlar hakkındaki dersi ('çıkmak ne kadar zor?') açıklayabilirsin."
   - "RLS'in ne olduğunu ve BaaS'ta neden kritik bir güvenlik noktası olduğunu bilirsin."
 minutes: 7
+standard: 2
 sources:
   - label: "Supabase — Dokümantasyon"
     url: "https://supabase.com/docs"
@@ -23,8 +24,10 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Tek başına çalışan bir tasarımcı olarak bir ürün çıkarmak istiyorsun ama arka yüz yazamıyorsun. Hazır servisler tam bunun için var. Bu ders, bu seçeneğin getirdiklerini ve risklerini anlatır.
+Bir ürünü hızla çıkarmak isteyen ama arka yüz yazacak kimsesi olmayan küçük bir ekip düşün. Hazır servisler tam bunun için var. Bu ders, bu seçeneğin getirdiklerini ve risklerini anlatır.
 
 ## BaaS
 
@@ -48,9 +51,49 @@ Sınırları: karmaşık iş kuralları, özel performans ihtiyaçları ya da ka
 
 ## Row Level Security
 
+<Spectrum
+  label="Arka yüzün ne kadarını sen yönetiyorsun?"
+  caption="Veriyi barındırmanın yolları, ekibin ne kadarını kendisinin yönettiğine göre sıralanır. Sol uçta kendi sunucusunda kendi veritabanını çalıştıran ekip durur: her şey onun elinde, her iş de onun. Ortada yönetilen veritabanı vardır: yedek, güncelleme ve ölçekleme sağlayıcıda, uygulama sunucusu ekipte. Sağ uçta BaaS durur: veritabanı, kimlik doğrulama ve depolama hazır gelir; ekip neredeyse hiç arka yüz yazmaz, ama yetki kurallarını RLS ile kendisi yazmak zorundadır."
+  left={{
+  title: "Her şey ekipte",
+  sub: "kendi sunucu"
+}}
+  right={{
+  title: "Her şey hazır",
+  sub: "BaaS"
+}}
+  marks={[
+  {
+    label: "Kendi sunucusu",
+    at: 0.08
+  },
+  {
+    label: "Yönetilen veritabanı",
+    at: 0.5
+  },
+  {
+    label: "BaaS",
+    at: 0.92
+  }
+]}
+/>
+
 **RLS (Row Level Security, satır seviyesinde güvenlik)**, hangi kullanıcının hangi **satırları** görebileceğinin uygulama kodunda değil **veritabanı seviyesinde** tanımlanmasıdır. BaaS mimarilerinde kritiktir: istemci doğrudan veritabanıyla konuştuğu için yetki kontrolü, arada bir sunucu katmanı olmadan yapılmalıdır. RLS bu kontrolü en derin katmana koyar. "RLS politikalarını yazmadan yayına çıkmayalım; şu an herkes her satırı okuyabilir."
 
 **Ciddi bir risk kaynağıdır:** RLS yapılandırılmadığında ya da yanlış yazıldığında veritabanı internete açık hâle gelebilir. Materyale göre BaaS ile hızlı ilerleyen projelerde en sık görülen güvenlik açığı budur.
+
+<Case>
+
+Mert'in araştırma paneli ("Araştırmalara katıl" kaydı) ilk olarak Selin'in bir BaaS ile hafta sonunda kurduğu bir formdu.
+
+1. **Hız:** form iki günde yayındaydı; arka yüz yazılmadı.
+2. **Açık:** yayından önce Burak tabloyu kontrol etti. RLS kuralı yazılmamıştı; formun kullandığı anahtarla tüm katılımcı listesi okunabiliyordu: adlar ve telefonlar.
+3. **Düzeltme:** "herkes yalnız kendi kaydını ekleyebilir, kimse okuyamaz" kuralı yazıldı; liste yalnız Mert'in hesabından görünür oldu.
+4. **Sonra:** panel 1.240 kişiye ulaşınca Demlik'in ana sistemine, yönetilen PostgreSQL'e taşındı.
+
+Demlik'in kendisi BaaS kullanmıyor; veritabanı yönetilen bir PostgreSQL servisinde.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -81,5 +124,17 @@ Sınırları: karmaşık iş kuralları, özel performans ihtiyaçları ya da ka
 <SelfCheck question="RLS nedir ve neden BaaS mimarilerinde kritik bir güvenlik noktasıdır?">
 
 Hangi kullanıcının hangi satırları görebileceğinin veritabanı seviyesinde tanımlanmasıdır. BaaS'ta istemci doğrudan veritabanıyla konuştuğu için arada yetki kontrolü yapacak bir sunucu yoktur; RLS yapılandırılmazsa ya da yanlış yazılırsa veritabanı fiilen internete açık hâle gelir.
+
+</SelfCheck>
+
+<SelfCheck question="BaaS ile yapılan bir projede yayından önce kontrol edilmesi gereken en kritik şey nedir?">
+
+Row Level Security kuralları: hangi kullanıcının hangi satırları okuyup yazabileceği. İstemci veritabanıyla doğrudan konuştuğu için RLS yoksa veri internete açık kalabilir.
+
+</SelfCheck>
+
+<SelfCheck question={"Bir platform seçerken \"bugün ücretsiz mi?\" sorusu neden yetmez?"}>
+
+Ücretsiz katmanlar kalıcı değildir; kaldırılabilir ya da değişebilir. Sorulması gereken, ödemeli plana geçince maliyetin ne olacağı ve çıkmanın ne kadar zor olduğudur.
 
 </SelfCheck>

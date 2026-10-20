@@ -1,9 +1,10 @@
 ---
-summary: "PostgreSQL, MySQL, SQLite, MongoDB ve Redis: beş yaygın veritabanı ürünü ve hangisi ne zaman. Ürün seçimi seni doğrudan etkilemez; etkilediği tek yer ne garanti ettiğidir."
+summary: "PostgreSQL, MySQL, SQLite, MongoDB ve Redis: beş yaygın veritabanı ürünü ve hangisi ne zaman. Ürün seçimi tasarımı doğrudan etkilemez; etkilediği yer ne garanti ettiğidir."
 outcomes:
   - "Beş yaygın veritabanının türünü ve tipik kullanımını söyleyebilirsin."
   - "Ürün seçiminin tasarımı hangi yerde etkilediğini (verdiği garantiler) açıklayabilirsin."
 minutes: 3
+standard: 2
 sources:
   - label: "PostgreSQL — Dokümantasyon"
     url: "https://www.postgresql.org/docs/current/"
@@ -20,8 +21,12 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Ürün adlarını duyduğunda kategorisini bilmen yeterli. Ürün seçimi senin işini doğrudan etkilemez; etkilediği tek yer, o veritabanının **ne garanti ettiğidir.**
+Ürün adlarını duyduğunda kategorisini bilmen yeterli. Ürün seçimi tasarımı doğrudan etkilemez; etkilediği yer, o veritabanının **ne garanti ettiğidir.**
+
+## Beş ürün
 
 | Ürün | Tür | Ne zaman |
 |---|---|---|
@@ -31,7 +36,64 @@ import Lenses from "~/components/lesson/Lenses.astro";
 | **MongoDB** | Belge | Esnek yapılı veri; en yaygın belge veritabanı |
 | **Redis** | Anahtar-değer | Önbellek, oturum, kuyruk, sayaç. Ana veritabanı olarak değil, yanında |
 
-**Tasarımcı için sonuç:** ilişkisel bir veritabanı, arayüzde "bu iki kayıt tutarlı olmalı" varsayımını güvenilir kılar; belge veritabanı bunu garanti etmez.
+## Ne garanti eder
+
+<Tree
+  label="Beş ürün, üç tür"
+  caption="Beş yaygın veritabanı ürünü üç türe ayrılır. İlişkisel: PostgreSQL modern varsayılandır, MySQL klasik web yığınlarında yaygındır, SQLite tek dosyada çalışır. Belge: MongoDB. Anahtar-değer: Redis; ana veritabanının yanında önbellek ve oturum için."
+  root={{
+  title: "Veritabanı ürünleri",
+  tone: "accent",
+  children: [
+    {
+      title: "İlişkisel",
+      children: [
+        {
+          title: "PostgreSQL"
+        },
+        {
+          title: "MySQL"
+        },
+        {
+          title: "SQLite"
+        }
+      ]
+    },
+    {
+      title: "Belge",
+      children: [
+        {
+          title: "MongoDB"
+        }
+      ]
+    },
+    {
+      title: "Anahtar-değer",
+      children: [
+        {
+          title: "Redis",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
+**Tasarım için sonuç:** ilişkisel bir veritabanı, arayüzde "bu iki kayıt tutarlı olmalı" varsayımını güvenilir kılar; belge veritabanı bunu garanti etmez.
+
+<Case>
+
+Demlik'in dünyasında beş ürünün dördü var:
+
+1. **PostgreSQL:** ana veritabanı; müşteriler, dükkânlar, siparişler, iadeler.
+2. **Redis:** oturumlar, giriş denemesi sayaçları, menü önbelleği.
+3. **SQLite:** mobil uygulama son siparişlerin bir kopyasını cihazda tutuyor; bağlantı yokken "Son siparişini tekrarla" düğmesi neyi tekrarlayacağını gösterebiliyor.
+4. **MySQL:** Demlik'in değil; bazı dükkânların WordPress sitelerinin altında.
+
+MongoDB konuşulmadı; ürün özelliklerinin esnekliği PostgreSQL'in JSON alanıyla karşılandı.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -46,6 +108,7 @@ import Lenses from "~/components/lesson/Lenses.astro";
 
 - PostgreSQL modern varsayılandır; MySQL klasik web yığınlarında yaygın; SQLite dosya tabanlı ve hafif; MongoDB belge; Redis anahtar-değer ve yan araç.
 - Ürün seçimi tasarımı yalnızca verdiği garantiler üzerinden etkiler.
+- Bir üründe birden fazla veritabanı birlikte çalışabilir: ana veri ilişkisel, önbellek anahtar-değer, cihazdaki kopya SQLite.
 
 </Summary>
 
@@ -54,5 +117,17 @@ import Lenses from "~/components/lesson/Lenses.astro";
 <SelfCheck question="Emin değilsen hangi veritabanı varsayılan seçim olarak anılır?">
 
 PostgreSQL: güçlü, açık kaynak, JSON desteği var ve eklentilerle genişler.
+
+</SelfCheck>
+
+<SelfCheck question="Emin değilsen hangi veritabanını seçmen önerilir, neden?">
+
+PostgreSQL. Güçlü, açık kaynak, ilişkisel garantiler sunuyor; JSON desteğiyle esnek veri ihtiyacının çoğunu da karşılıyor ve eklentilerle genişliyor.
+
+</SelfCheck>
+
+<SelfCheck question="SQLite ne zaman uygundur?">
+
+Sunucu gerektirmediği ve tek dosyada çalıştığı için küçük projelerde, mobil uygulamalarda cihazdaki veri için ve yerel geliştirmede.
 
 </SelfCheck>

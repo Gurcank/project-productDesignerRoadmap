@@ -714,6 +714,33 @@ artık sunucudan yalnız yetkisi olana geliyor. Panel'de "Menü ayarları" adres
 yönlendirildi. Dükkân sayfalarının başlığı "Moda Kahve · Demlik" biçiminde, şablon OG görseli var.
 Bazı dükkânların WordPress siteleri için eklenti yerine hazır bağlantı ve düğme görseli verildi.
 
+**Arka yüz ve veri:** API REST; mobil, web ve Panel aynı endpoint'leri kullanır.
+Panel'de iki rol var: dükkân sahibi ve çalışan; ciro raporunu yalnız sahip görür (403 ekranı). Bir çalışan
+birden fazla dükkânda çalışabilir; ilişki çoka çok, rol ara tabloda. Panel girişinde beş hatalı denemeden
+sonra 60 saniye bekleme. Müşteriler telefon numarası ve SMS koduyla giriş yapar (tekrar gönder: 60 sn).
+Çift sipariş idempotency key ile engellenir. Ödeme onayı ödeme kuruluşundan webhook ile gelir; arada
+"Ödemen alındı, sipariş kafeye iletiliyor" ekranı. Aylık rapor kuyrukta; bildirimler üç kez denenir,
+sonra ölü mektup kuyruğuna düşer. Dükkân faturaları 15 dakika geçerli imzalı adresle indirilir. Ürün
+fotoğrafları görsel dönüştürme servisinden 4:3 üç boyutta çıkar. Sipariş servisi sürekli açık sunucularda;
+formlar serverless; edge kullanılmıyor. Mobil ana ekran BFF ile tek istekte gelir. Oturum, giriş sayacı
+ve menü önbelleği (5 dk, fiyat değişince temizlenir) Redis'te; mobil uygulama son siparişleri SQLite'ta
+tutar. Sipariş adresleri tahmin edilemez kimlik kullanır; müşteriye ve baristaya gösterilen kısa kod
+("A-417") her gün baştan sayar. Panel sipariş listesi dükkân + tarih indeksi eklenince 4 saniyeden yarım
+saniyenin altına indi; müşteri adları N+1 ile 31 sorgu atıyordu, join ile 2 oldu. Sipariş satırı o anki
+fiyatı kopyalar; iade siparişteki fiyattan yapılır. Hesap silinince 30 gün beklenir, sonra kişisel bilgi
+anonimleştirilir; siparişler "silinmiş müşteri" olarak kalır. Yedekler her gece; geri yükleme tatbikatı
+çeyrekte bir. Mert'in araştırma paneli önce Selin'in bir BaaS ile kurduğu formdu; RLS yazılmamıştı, yayından
+önce düzeltildi; sonra yönetilen PostgreSQL'e taşındı.
+
+**Arama ve algoritma kararları:** dükkân listesi sırası: önce açık olanlar, sonra mesafe, eşitse ad.
+"Tüm dükkânlarda menü araması" yakındaki 10 açık dükkâna küçültüldü. Menü araması önek tabanlı, Türkçe
+köklemeli ve karakter sadeleştirmeli, tek harf yazım toleranslı, 250 ms debounce; dükkân adları köklemeden
+muaf. Panel listesi saate, eşitse sipariş koduna göre sıralanır. Dükkân listesi filtreleri URL'de; facet
+sayıları ve "bitki bazlı süt" filtresi kullanılmadığı için kaldırıldı. Dükkân sayfasında "Bu dükkânda
+birlikte sık alınanlar"; yeni dükkânda "Bu dükkânda popüler"e döner. Yardım merkezinde 60 makale var;
+anlamsal arama yerine en sık 30 ifade için eş anlamlı listesi kuruldu. Favori listesi en çok 20 ürün;
+kimlik dükkân + ürün. Panel'de "bugünkü diğer siparişleri" rozeti kare büyüyordu; sözlükle doğrusala indi.
+
 ## Paydaşlar
 
 | Paydaş | İlgi | Etki |

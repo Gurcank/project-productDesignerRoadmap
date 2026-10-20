@@ -1,10 +1,11 @@
 ---
-summary: "Sıralama, arayüzde tek bir tıklamadır ama arkada listenin tamamına dokunan bir iştir. Kararlı sıralama, eşitlikte ikinci ölçüt ve sıralama + sayfalama tuzağı tasarımcının söylemesi gereken kararlardır."
+summary: "Sıralama, arayüzde tek bir tıklamadır ama arkada listenin tamamına dokunan bir iştir. Kararlı sıralama, eşitlikte ikinci ölçüt ve sıralama + sayfalama tuzağı tasarımda söylenmesi gereken kararlardır."
 outcomes:
   - "'Sadece ilk sayfayı gösteriyoruz' demenin sıralamayı neden ucuzlatmadığını açıklayabilirsin."
   - "Eşit değerli satırların neden zıpladığını ve çözümünü (ikinci ölçüt) söyleyebilirsin."
   - "Offset ve cursor sayfalamanın sıralamayla ilişkisini bilirsin."
-minutes: 5
+minutes: 3
+standard: 2
 sources:
   - label: "MDN — Array.prototype.sort (kararlı sıralama)"
     url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort"
@@ -22,6 +23,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Sütun başlığına tıklayıp sıralamak tek bir hareket. Arkada ise listenin tamamına dokunan bir iş.
 
@@ -30,6 +33,29 @@ Sütun başlığına tıklayıp sıralamak tek bir hareket. Arkada ise listenin 
 Sıralamak, tüm veriyi görmeyi gerektirir. İlk 20 satırı göstereceksen bile **hangi 20 olduğunu** bulmak için hepsine bakmak gerekir; bu yüzden "sadece ilk sayfayı gösteriyoruz" sıralamayı ucuzlatmaz. Kurtaran şey yine index: veritabanı o sütun için sıralı bir yapı tutuyorsa sıralama zaten yapılmıştır. Tutmuyorsa her istekte yeniden sıralanır. Pratik kural: **her sütuna sıralama koymak, her sütun için index istemek demektir;** her index yazmayı yavaşlatır ve yer kaplar.
 
 ## Kararlı sıralama
+
+<StepFlow
+  label="Eşitlikte ikinci ölçüt"
+  caption="Panel'in sipariş listesi geliş saatine göre sıralanır. Aynı dakikada gelen iki sipariş eşittir; ikinci bir ölçüt yoksa sırayla yer değiştirebilirler. İkinci ölçüt olarak sipariş kodu eklenir. Sıra artık her yenilemede aynıdır ve sayfalama da kaymaz."
+  steps={[
+  {
+    title: "Geliş saatine göre",
+    tone: "accent"
+  },
+  {
+    title: "07.52'de iki sipariş",
+    sub: "eşit"
+  },
+  {
+    title: "İkinci ölçüt",
+    sub: "sipariş kodu"
+  },
+  {
+    title: "Her yenilemede aynı sıra",
+    tone: "progress"
+  }
+]}
+/>
 
 İki kayıt aynı değere sahipse hangisi önce gelir? **Kararlı (stable)** sıralama önceki sırayı korur, kararsız olan korumaz. Arayüzdeki karşılığı: aynı tarihe sahip iki satır, sayfa her yenilendiğinde yer değiştirebilir ve kullanıcı bunu hata sanar. Çözümü ikinci bir sıralama ölçütü belirlemektir ("tarihe göre, eşitse ada göre") ve bunu **senin** söylemen gerekir.
 
@@ -53,6 +79,17 @@ Sayfalama sıralı bir liste üzerinde çalışır. Sıra belirsizse 2. sayfada 
 
 </Pane>
 </Compare>
+
+<Case>
+
+Pilot kafede bir barista şikâyet etti: "Liste her yenilendiğinde iki sipariş yer değiştiriyor; hangisini önce hazırladığımı karıştırıyorum."
+
+1. **Neden:** liste dakikaya göre sıralanıyordu; aynı dakikada gelen siparişlerin sırası belirsizdi.
+2. **İkinci ölçüt:** "geliş saatine göre, eşitse sipariş koduna göre" kuralı yazıldı. Sipariş kodu her gün baştan sayan bir sıra olduğu için geliş sırasını da yansıtıyor.
+3. **Sıralanabilir sütunlar:** Panel'de yalnız iki sütun sıralanabiliyor: saat ve durum. İkisinin de indeksi var.
+4. **Sayfalama:** sipariş geçmişi sonsuz kaydırmayla geldiği için cursor kullanılıyor; yeni sipariş gelince liste kaymıyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -78,5 +115,17 @@ Sayfalama sıralı bir liste üzerinde çalışır. Sıra belirsizse 2. sayfada 
 <SelfCheck question="Aynı tarihe sahip iki satır neden her yenilemede yer değiştirebilir ve çözümü nedir?">
 
 Sıralama kararsızsa eşit değerlerin sırası korunmaz. Çözüm, ikinci bir sıralama ölçütü belirlemektir ("tarihe göre, eşitse ada göre").
+
+</SelfCheck>
+
+<SelfCheck question={"\"Sadece ilk 20 sonucu gösteriyoruz\" demek sıralamayı ucuzlatır mı?"}>
+
+Hayır. Hangi 20'nin ilk 20 olduğunu bulmak için tüm veriye bakmak gerekir. Sıralamayı ucuzlatan, o sütun için sıralı bir yapı (indeks) tutulmasıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Her sütuna sıralama eklemek neden bedava değildir?">
+
+Her sıralanabilir sütun için hızlı sıralama bir indeks ister. Her indeks yer kaplar ve yazmayı yavaşlatır; kullanılmayan sıralamalar arkada yük bırakır.
 
 </SelfCheck>

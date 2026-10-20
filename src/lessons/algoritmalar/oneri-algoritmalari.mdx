@@ -4,7 +4,8 @@ outcomes:
   - "Popülerlik, içerik benzerliği ve ortak davranış yaklaşımlarını ve zayıf yanlarını söyleyebilirsin."
   - "Soğuk başlangıç ekranının neden tasarlanması gerektiğini açıklayabilirsin."
   - "Öneri etiketlerini mekanizmaya göre dürüstçe yazabilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "Google — Öneri sistemi türleri"
     url: "https://developers.google.com/machine-learning/recommendation/overview/types"
@@ -18,6 +19,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Sana özel", "önerilen", "senin için seçtik": üçü aynı şeyi söylemez ama arayüzde aynı yere konur. Arkadaki mekanizmayı bilmek, hangisini yazacağına karar vermeni sağlar.
 
@@ -33,6 +36,43 @@ import Lenses from "~/components/lesson/Lenses.astro";
 
 ## Dürüst etiket bir tasarım kararıdır
 
+<Tree
+  label="Öneri yaklaşımları ve dürüst etiketleri"
+  caption="Üç öneri yaklaşımının her birine uyan dürüst bir etiket vardır. Popülerlik: bu kategoride ya da bu dükkânda popüler. İçerik benzerliği: benzer özelliklere sahip. Ortak davranış: birlikte sık alınanlar. Ortak davranışın yeni kullanıcı ve yeni ürün için verisi yoktur; bu soğuk başlangıçta sistem çoğu zaman popülerliğe döner."
+  root={{
+  title: "Öneri",
+  tone: "accent",
+  children: [
+    {
+      title: "Popülerlik",
+      children: [
+        {
+          title: "Bu dükkânda popüler"
+        }
+      ]
+    },
+    {
+      title: "İçerik benzerliği",
+      children: [
+        {
+          title: "Benzer özellikte"
+        }
+      ]
+    },
+    {
+      title: "Ortak davranış",
+      sub: "soğuk başlangıç",
+      children: [
+        {
+          title: "Birlikte sık alınanlar",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
 Sistem ne yapıyorsa etiket onu söylemeli:
 
 | Yazmak yerine | Bunu yaz |
@@ -47,6 +87,17 @@ Bu yalnızca dürüstlük meselesi değil: doğru etiket, öneri zayıf olduğun
 
 Öneri bölümünün tıklanma oranı yüksek çıkabilir çünkü ekranın iyi bir yerindedir, öneri iyi olduğu için değil. Gerçek soru: *bu bölüm olmasaydı kullanıcı o şeyi zaten bulur muydu?* Bunu ancak karşılaştırmalı bir deneyle (A/B) anlarsın.
 
+<Case>
+
+Dükkân sayfasındaki öneri bölümü iki ayrı durumla karşılaştı:
+
+1. **Yerleşik dükkân:** Moda'daki dükkânın binlerce siparişi var. Bölüm "Bu dükkânda birlikte sık alınanlar" başlığıyla, aynı siparişte birlikte alınan ürünleri gösteriyor.
+2. **Yeni kampüs kafesi:** açılış haftasında sipariş geçmişi yoktu: soğuk başlangıç. Bölüm otomatik olarak "Bu dükkânda popüler"e dönüyor; ilk günlerde dükkânın kendi seçtiği ürünleri gösteriyor.
+3. **Etiket:** iki durumda da başlık neye bakıldığını söylüyor; "Senin için seçtik" hiç kullanılmadı.
+4. **Ölçme:** bölümün tıklanma oranı yüksekti. Elif bunun bölümün konumundan mı geldiğini sordu; öneri bölümünün sepete etkisi, bölümü göstermeyen bir grupla karşılaştırılarak ölçüldü.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -54,6 +105,18 @@ Bu yalnızca dürüstlük meselesi değil: doğru etiket, öneri zayıf olduğun
 - **Soğuk başlangıç ekranını tasarla:** yeni kullanıcı ne görecek? En çok atlanan durum.
 - **Kaç öneri?** Beş iyi öneri, yirmi orta öneriden iyidir; seçenek artışı karar yorgunluğu üretir.
 - **"Neden bunu görüyorum?" sorusuna cevap verebiliyor musun?** Veremiyorsan etiketi zayıflat.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Öneri bölümünün etkisini karşılaştırmalı ölç.** Tıklanma oranı, bölümün konumunu ölçüyor olabilir.
+- **Soğuk başlangıç planını kapsamın parçası say.** Yeni kullanıcı ve yeni ürün için ne gösterilecek?
+
+</Lens>
+<Lens role="product-owner">
+
+- **Etiket metnini kabul kriterine yaz.** Etiket, sistemin gerçekte yaptığını söylemeli.
+- **Veri yokken davranışı story'ye ekle.** "Sipariş geçmişi yoksa popüler ürünler gösterilir."
 
 </Lens>
 </Lenses>
@@ -71,5 +134,17 @@ Bu yalnızca dürüstlük meselesi değil: doğru etiket, öneri zayıf olduğun
 <SelfCheck question="Soğuk başlangıç nedir ve neden tasarım sorunudur?">
 
 Yeni kullanıcının geçmişi ya da yeni ürünün alıcısı olmadığı için ortak davranış önerisi veri bulamaz; çoğu sistem popülerlikle doldurur. Bu durumda "sana özel" etiketi yanıltıcı olur ve yeni kullanıcının ne göreceği tasarlanmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question={"Yeni kaydolan bir kullanıcıya \"Sana özel\" bölümü gösteriliyor. Neden sorunlu olabilir?"}>
+
+Yeni kullanıcının geçmişi yoktur; sistem büyük olasılıkla popüler ürünleri gösterir. "Sana özel" demek sistemin yapamadığını iddia eder; "Popüler" gibi dürüst bir etiket beklentiyi doğru kurar.
+
+</SelfCheck>
+
+<SelfCheck question="Soğuk başlangıç nedir?">
+
+Ortak davranışa dayanan önerinin yeni kullanıcı ya da yeni ürün için veri bulamamasıdır. Bu durumda sistem çoğu zaman popülerliğe döner; etiketin de buna göre değişmesi gerekir.
 
 </SelfCheck>

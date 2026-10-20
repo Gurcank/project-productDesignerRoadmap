@@ -4,7 +4,9 @@ outcomes:
   - "Veri türüne göre kabul edilebilir yaşı (blog saatler, stok saniyeler, sepet sıfır) söyleyebilirsin."
   - "stale-while-revalidate'in tasarım bedelini açıklayabilirsin."
   - "'Bende eski görünüyor' şikâyetinin neden birden çok önbellek katmanından kaynaklanabileceğini bilirsin."
-minutes: 6
+minutes: 4
+standard: 2
+skipTerms: ["manifest"]
 sources:
   - label: "web.dev — stale-while-revalidate"
     url: "https://web.dev/articles/stale-while-revalidate"
@@ -19,6 +21,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Önbellek, bir kez hesaplanan sonucu saklayıp tekrar kullanmaktır. Hız için en güçlü araç ve aynı zamanda **en sinsi hata kaynağı:** sakladığın şey eskidiğinde kullanıcı yanlış bilgiyi görür ve sistem hata vermez. Teknik tarafı Back-end bölümündeki Caching dersinde var; burada tasarıma yansıyan kısmı.
 
@@ -35,6 +39,37 @@ Her veri için cevap farklıdır ve bu bir **ürün kararıdır,** teknik değil
 
 Belirtmezsen geliştirici bir süre seçer ve kullanıcı bir gün yanlış fiyat görür.
 
+<Spectrum
+  label="Ne kadar eski kabul edilebilir?"
+  caption="Demlik'te her verinin kabul edilebilir yaşı farklıdır. Sol uçta sepet tutarı ve ödeme durumu durur: hiç önbelleklenmez. Dükkânın şu an açık olup olmadığı saniyeler içinde değişebilir. Dükkân menüsü beş dakika önbellekte kalır, fiyat değişince hemen temizlenir. Sağ uçta kampüs tanıtım sayfası durur: saatlerce aynı kalabilir."
+  left={{
+  title: "Hiç eski olamaz",
+  sub: "önbellek yok"
+}}
+  right={{
+  title: "Saatler",
+  sub: "uzun önbellek"
+}}
+  marks={[
+  {
+    label: "Sepet, ödeme",
+    at: 0.04
+  },
+  {
+    label: "Açık mı?",
+    at: 0.22
+  },
+  {
+    label: "Menü: 5 dk",
+    at: 0.55
+  },
+  {
+    label: "Kampüs sayfası",
+    at: 0.92
+  }
+]}
+/>
+
 ## Bayat veri nasıl görünür
 
 En yaygın kalıp **stale-while-revalidate:** eskisini hemen göster, arka planda yenile. Arayüz anında dolar, sonra sessizce güncellenir. Tasarım bedeli: kullanıcı bir sayıya bakarken sayı değişir. Karar vermek gerekir: sessizce mi güncellensin, yoksa "güncellendi" mi denilsin?
@@ -48,6 +83,19 @@ Bir sayfa görünene kadar veri birkaç önbellekten geçebilir: tarayıcı, ser
 Bu sitenin çevrimdışı katmanı bunun canlı bir örneğidir: içeriği değişen dosyaların adı içerikle birlikte değişir (hash'li), değişmeyenler ağ-öncelikli çalışır ve önbellek şekli değişince bir sürüm numarası artırılıp eski kayıtlar süpürülür. Arama indeksinin manifest dosyası kalıcı önbelleğe alınınca bayat bir manifest arama sonuçlarını anlamsız hâle getiriyordu; hata veren bir şey yoktu, yalnızca yanlış cevaplar vardı.
 
 </Callout>
+
+<Case>
+
+Demlik'te her veri için kabul edilebilir yaş yazılı:
+
+1. **Sepet tutarı ve ödeme durumu:** hiç önbelleklenmiyor; ödeme ekranındaki tutar her seferinde sunucuda hesaplanıyor.
+2. **Dükkân açık mı:** önbelleğe alınmıyor; dükkân sayfası bu yüzden her istekte sunucuda üretiliyor.
+3. **Menü:** beş dakika önbellekte; Panel'de fiyat ya da ürün değişince o dükkânın menü önbelleği hemen temizleniyor.
+4. **Kampüs tanıtım sayfası:** statik; derlemede bir kez üretiliyor.
+
+Panel'in sipariş listesi stale-while-revalidate gibi çalışıyor: eski liste görünür kalıyor, tazelenirken üstte ince bir çizgi beliriyor; sayılar sessizce güncelleniyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -74,5 +122,17 @@ Bu sitenin çevrimdışı katmanı bunun canlı bir örneğidir: içeriği deği
 <SelfCheck question="Önbellek neden 'en sinsi hata kaynağı' diye anılır?">
 
 Sakladığın şey eskidiğinde kullanıcı yanlış bilgiyi görür ve sistem hata vermez; kullanıcı için bu, hatadan ayırt edilemez.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Bende eski görünüyor\" şikâyeti neden tek bir yerde çözülemeyebilir?"}>
+
+Veri görünene kadar birden çok önbellekten geçer: tarayıcı, service worker, CDN, sunucu, veritabanı. Eski kopya bunların herhangi birinde kalmış olabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir bakiye ya da sepet tutarı neden önbelleklenmez?">
+
+Kullanıcının bu veriye dayanarak verdiği karar (ödeme, satın alma) yanlış olursa zarar doğrudandır. Kabul edilebilir yaşı sıfırdır; her seferinde güncel değer hesaplanır.
 
 </SelfCheck>

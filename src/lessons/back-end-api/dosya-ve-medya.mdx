@@ -5,6 +5,7 @@ outcomes:
   - "Image CDN'in neden gerektiğini açıklayabilirsin."
   - "Dosya yükleme akışının hangi durumlarının tasarlanması gerektiğini sayabilirsin."
 minutes: 5
+standard: 2
 sources:
   - label: "AWS — Presigned URL ile nesne paylaşmak"
     url: "https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html"
@@ -19,6 +20,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Kullanıcı profil fotoğrafı yükledi, 5MB'lık bir telefon fotoğrafı. Bu dosya nerede duruyor, listeye 5MB olarak mı gelecek, başkası onu görebilir mi? Üç sorunun cevabı bu derste.
 
@@ -30,7 +33,41 @@ Tasarım tarafında yükleme akışının tüm durumları gerekir: boyut ve form
 
 ## Image CDN ve transcoding
 
+<StepFlow
+  label="Bir ürün fotoğrafının yolu"
+  caption="Dükkân çalışanı telefonla çektiği 5 MB'lık fotoğrafı Panel'e yükler; boyut ve biçim sınırı yükleme ekranında baştan yazılıdır. Dosya sunucunun diskine değil, nesne depolama servisine gider. Görsel dönüştürme servisi kart, liste ve ayrıntı için ayrı boyutlarda, modern biçimde sürümler üretir. Müşteriye her ekranda uygun boyuttaki sürüm gider."
+  steps={[
+  {
+    title: "Yükleme",
+    sub: "en çok 10 MB · JPG, PNG",
+    tone: "accent"
+  },
+  {
+    title: "Nesne depolama"
+  },
+  {
+    title: "Dönüştürme",
+    sub: "4:3 · kart, liste, ayrıntı"
+  },
+  {
+    title: "Müşteriye uygun boyut",
+    tone: "progress"
+  }
+]}
+/>
+
 **Image CDN (görsel dönüştürme servisi)**, yüklenen görsellerin otomatik olarak yeniden boyutlandırılması, formatının değiştirilmesi (WebP/AVIF) ve kırpılmasıdır; **transcoding** video için aynı işlemin adıdır. Editörün yüklediği 5MB'lık fotoğrafın kullanıcıya 5MB olarak gitmemesini sağlar. Tasarımdaki her farklı boyut (kart, liste, detay) için ayrı sürüm otomatik üretilir. İçerik yoğun sitelerde bulunur; meta-framework'lerin görsel bileşenleri bunu genelde hazır sunar. "Görselleri image CDN'den geçirelim; editörler ne yüklerse yüklesin optimize edilmiş gelsin."
+
+<Case>
+
+Demlik'te iki tür dosya var: ürün fotoğrafları ve dükkânların aylık faturaları.
+
+1. **Fotoğraflar:** dükkânlar telefondan 5 MB'a varan fotoğraflar yüklüyor. Görsel dönüştürme servisi 4:3 oranlı, modern biçimde üç boyut üretiyor; müşteri listede birkaç yüz kilobaytlık sürümü görüyor.
+2. **Yükleme ekranı:** sınırlar baştan yazılı; ilerleme çubuğu var, yükleme iptal edilebiliyor. "Dosya çok büyük" hatası hangi sınırı aştığını söylüyor.
+3. **Faturalar:** Demlik'in dükkânlara kestiği aylık fatura herkese açık değil. Panel'de "İndir"e basınca 15 dakika geçerli bir imzalı adres üretiliyor.
+4. **Gizlilik:** fatura adresi biri tarafından paylaşılsa bile süre dolunca açılmıyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -39,6 +76,24 @@ Tasarım tarafında yükleme akışının tüm durumları gerekir: boyut ve form
 - **Yükleme ilerlemesini, iptali ve hatayı (boyut aşıldı, format uygun değil) tasarla.**
 - **Özel dosyalar için süreli erişim modelini** (ve süre dolunca ekranda ne göründüğünü) tasarla.
 - **Görsel boyut setlerini (kart, liste, detay) ve oranlarını teslimde belirt.**
+
+</Lens>
+<Lens role="product-manager">
+
+- **Dosya sınırlarını ürün kararı olarak ver.** Boyut ve biçim sınırı hem maliyeti hem deneyimi belirler.
+- **Özel dosyaların paylaşım riskini sor.** Herkese açık bir adres, gizli bir belgeyi sızdırır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Yükleme akışının bütün hâllerini story'ye ekle.** İlerleme, iptal, hata, başarı.
+- **Özel dosya erişimini kabul kriterine yaz.** "Fatura adresi 15 dakika sonra geçersizdir."
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Saklama süresini ve erişim kuralını yaz.** Hangi dosya ne kadar saklanır, kim görebilir?
+- **Kişisel veri içeren dosyaları ayrıca işaretle.** Kimlik belgesi, fatura, imza.
 
 </Lens>
 </Lenses>
@@ -56,5 +111,17 @@ Tasarım tarafında yükleme akışının tüm durumları gerekir: boyut ve form
 <SelfCheck question="Signed URL neyi çözer?">
 
 Özel dosyalara (fatura, kimlik belgesi) herkese açık hâle getirmeden ve sınırlı süreyle erişim verilmesini. Adres belirli bir süre sonra geçersiz olur.
+
+</SelfCheck>
+
+<SelfCheck question="Signed URL hangi sorunu çözer?">
+
+Özel bir dosyaya, herkese açık olmadan ve sınırlı bir süre için erişim verir. Adres paylaşılsa bile süre dolunca geçersiz olur.
+
+</SelfCheck>
+
+<SelfCheck question="Editör 5 MB'lık bir fotoğraf yüklüyor. Kullanıcıya 5 MB gitmemesi için ne gerekir?">
+
+Bir görsel dönüştürme servisi (image CDN): fotoğrafı her kullanım yeri için uygun boyutta ve modern biçimde yeniden üretir.
 
 </SelfCheck>

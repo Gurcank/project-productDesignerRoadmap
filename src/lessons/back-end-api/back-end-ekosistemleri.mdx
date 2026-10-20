@@ -1,9 +1,11 @@
 ---
-summary: "Arka yüzün hangi dille yazıldığı: Node.js, Python, Go, PHP, Ruby, Java/C#. Seviye 3: adını duyduğunda kategorisini bilmen yeterli. Dil seçimi nadiren işini etkiler; etkilediği yer o ekosistemin hazır çözümleridir."
+summary: "Arka yüzün hangi dille yazıldığı: Node.js, Python, Go, PHP, Ruby, Java/C#. Adını duyduğunda kategorisini bilmen yeterli. Dil seçimi tasarımı nadiren etkiler; etkilediği yer o ekosistemin hazır çözümleridir."
 outcomes:
   - "Altı ekosistemin hangi iş için tipik olduğunu tablodan söyleyebilirsin."
   - "Dil seçiminin tasarımı etkilediği tek yerin hazır çözümler olduğunu açıklayabilirsin."
 minutes: 3
+standard: 2
+skipTerms: ["doğrulama"]
 sources:
   - label: "Node.js — Öğren"
     url: "https://nodejs.org/en/learn"
@@ -22,8 +24,12 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Arka yüzün hangi dille yazıldığı **seviye 3** bir bilgidir: adını duyduğunda kategorisini bilmen yeterli. Diller ayrıntılı olarak Programlama Dilleri bölümünde işlendi; burada back-end ekosistemlerinin kısa haritası var.
+Arka yüzün hangi dille yazıldığını duyduğunda kategorisini bilmen yeterli. Diller ayrıntılı olarak [Programlama Dilleri](/programlama-dilleri/dil-secimi-neden-urun-kararidir/) bölümünde işlendi; burada back-end ekosistemlerinin kısa haritası var.
+
+## Altı ekosistem
 
 | Ekosistem | Kısaca | Ne zaman |
 |---|---|---|
@@ -34,7 +40,73 @@ Arka yüzün hangi dille yazıldığı **seviye 3** bir bilgidir: adını duydu�
 | **Ruby** (Rails) | Hızlı geliştirme, güçlü sözleşmeler | Startup MVP'leri; Shopify ve GitHub gibi büyük örnekleri var |
 | **Java / C#** | Kurumsal standart | Bankalar, sigorta, büyük kurumlar |
 
-**Tasarımcı için sonuç:** dil seçimi senin işini nadiren etkiler. Etkilediği tek yer, o ekosistemin hazır çözümleridir; örneğin Django kutudan çıkan bir yönetim paneli getirir ve bu tasarım kapsamını değiştirir.
+## Ürüne etkisi
+
+<Tree
+  label="Back-end ekosistemleri ve güçlü yanları"
+  caption="Altı ekosistem güçlü oldukları işe göre gruplanabilir. Ön yüzle aynı dil için Node.js. Veri ve yapay zekâ için Python. Yüksek trafik için Go. Klasik web ve hızlı ürün için PHP ile Laravel ve Ruby ile Rails. Kurumsal sistemler için Java ve C#."
+  root={{
+  title: "Back-end",
+  tone: "accent",
+  children: [
+    {
+      title: "Tek dil",
+      children: [
+        {
+          title: "Node.js"
+        }
+      ]
+    },
+    {
+      title: "Veri, yapay zekâ",
+      children: [
+        {
+          title: "Python"
+        }
+      ]
+    },
+    {
+      title: "Yüksek trafik",
+      children: [
+        {
+          title: "Go"
+        }
+      ]
+    },
+    {
+      title: "Web, hızlı ürün",
+      children: [
+        {
+          title: "PHP · Ruby"
+        }
+      ]
+    },
+    {
+      title: "Kurumsal",
+      children: [
+        {
+          title: "Java · C#",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
+**Tasarım için sonuç:** dil seçimi tasarımı nadiren etkiler. Etkilediği yer, o ekosistemin hazır çözümleridir; örneğin Django kutudan çıkan bir yönetim paneli getirir ve bu tasarım kapsamını değiştirir.
+
+<Case>
+
+Demlik'in arka yüzü tek bir ekosistemde değil:
+
+1. **Node.js:** sipariş ve ödeme servisleri. Ekip ön yüzle aynı dili kullanıyor.
+2. **Python:** haftalık metrik raporu; ana uygulamanın parçası değil.
+3. **C#:** kasa tedarikçisinin entegrasyon katmanı; Demlik'in kodu değil.
+
+Hazır çözüm farkı bir kez tasarıma yansıdı: destek ekibinin iade izleme aracı için "her şey dahil" bir framework'ün kutudan çıkan yönetim paneli önerildi. Ekip Node.js'te kaldı ve aracı styled bir bileşen kütüphanesiyle iki haftada yazdı.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -49,13 +121,26 @@ Arka yüzün hangi dille yazıldığı **seviye 3** bir bilgidir: adını duydu�
 
 - Node.js, Python, Go, PHP, Ruby ve Java/C# altı yaygın back-end ekosistemidir; her birinin tipik bir kullanım alanı vardır.
 - Dil seçimi tasarımı nadiren etkiler; etkilediği tek yer ekosistemin hazır çözümleridir.
+- Bir üründe birden fazla ekosistem bir arada yaşayabilir: ana servis bir dilde, rapor ya da entegrasyon başka bir dilde.
 
 </Summary>
 
 ## Kendini yokla
 
-<SelfCheck question="Back-end dil seçimi tasarımcıyı hangi tek yerde etkiler?">
+<SelfCheck question="Back-end dil seçimi tasarımı en çok nerede etkiler?">
 
 O ekosistemin hazır çözümleri: örneğin Django'nun kutudan çıkan yönetim paneli tasarım kapsamını değiştirir.
+
+</SelfCheck>
+
+<SelfCheck question="Veri ve yapay zekâ işleri için hangi back-end ekosistemi doğal seçimdir, neden?">
+
+Python. Bu alanın kütüphaneleri Python'da yaşar; Django ve FastAPI ile web servisleri de yazılabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Küçük bir ekip ön yüzü TypeScript ile yazıyor. Arka yüz için Node.js'in avantajı nedir?">
+
+Ekip iki tarafı aynı dille yazabilir; kod, tip tanımları ve doğrulama şemaları paylaşılabilir ve bir geliştirici iki tarafa da dokunabilir.
 
 </SelfCheck>

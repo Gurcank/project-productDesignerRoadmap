@@ -4,7 +4,8 @@ outcomes:
   - "Önbelleğin katmanlarını sayabilirsin (tarayıcı, CDN, sunucu, veritabanı)."
   - "stale-while-revalidate'in hangi durumun tasarlanmasını gerektirdiğini söyleyebilirsin."
   - "'Değişikliğim sitede neden görünmüyor?' şikâyetinin en yaygın teknik sebebini bilirsin."
-minutes: 8
+minutes: 4
+standard: 2
 sources:
   - label: "MDN — HTTP önbellekleme"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching"
@@ -21,6 +22,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Editör bir yazıyı güncelledi; sitede hâlâ eski hâli duruyor. Ya da bir sayfa şaşırtıcı hızlı açılıyor. İkisinin de arkasında aynı şey var: **önbellek.** Caching, performansın en büyük tek kaldıracıdır.
 
@@ -29,6 +32,30 @@ Editör bir yazıyı güncelledi; sitede hâlâ eski hâli duruyor. Ya da bir sa
 **Cache (önbellek)**, bir sonucu, tekrar hesaplamak yerine saklayıp yeniden kullanmaktır. Katman katman çalışır: tarayıcı önbelleği, CDN, sunucu önbelleği, veritabanı önbelleği. Her katman isteğin daha derine gitmesini engeller ve gecikmeyi düşürür. "Bu veri saatte bir değişiyor; her istekte veritabanına gitmeyelim, önbelleğe alalım."
 
 **CDN (Content Delivery Network)**, statik dosyaların (görsel, CSS, JavaScript, font) dünya genelindeki sunuculara kopyalanıp kullanıcıya en yakın olandan servis edilmesidir. İki fayda: mesafeyi kısaltarak gecikmeyi düşürür ve asıl sunucunun yükünü alır. Statik siteler tamamen CDN'den servis edilebildiği için bu kadar hızlı ve ucuzdur. Modern hosting platformlarında varsayılan olarak gelir.
+
+<Layers
+  label="Önbellek katmanları"
+  caption="Bir istek önbellek katmanlarından geçer. Önce tarayıcı kendi önbelleğine bakar. Sonra kullanıcıya yakın CDN sunucusu. Sonra uygulama sunucusunun önbelleği. En sonda veritabanı. Cevap ne kadar üst katmanda bulunursa istek o kadar hızlı biter; her katman alttakinin yükünü alır."
+  layers={[
+  {
+    title: "Tarayıcı önbelleği",
+    sub: "en hızlı",
+    tone: "accent"
+  },
+  {
+    title: "CDN",
+    sub: "kullanıcıya yakın"
+  },
+  {
+    title: "Sunucu önbelleği"
+  },
+  {
+    title: "Veritabanı",
+    sub: "en derin",
+    tone: "progress"
+  }
+]}
+/>
 
 ## TTL, ETag, stale-while-revalidate
 
@@ -47,6 +74,19 @@ Sonuncusu tasarımı doğrudan ilgilendirir: kullanıcı beklemez, veriyi anınd
 Bu sitenin çevrimdışı katmanı bir önbellek örneğidir ve invalidation'ın zorluğunu yaşar: içeriği değişen dosyalar adlarını içerikle birlikte değiştirir (hash'li), değişmeyenler ağ-öncelikli çalışır ve önbellek şekli değişince bir sürüm numarası artırılıp eski kayıtlar süpürülür. Yoksa kullanıcı eski içeriği görmeye devam ederdi.
 
 </Callout>
+
+<Case>
+
+Moda'daki dükkân filtre kahvenin fiyatını Panel'de güncelledi; müşteriler birkaç dakika eski fiyatı gördü.
+
+1. **Neden:** dükkân menüsü sunucu önbelleğinde beş dakika tutuluyordu (TTL). Fiyat değişti ama önbellek temizlenmedi.
+2. **Düzeltme:** Panel'de menü ya da fiyat değişince o dükkânın menü önbelleği hemen temizleniyor.
+3. **Kural:** ödeme ekranındaki tutar her zaman sunucuda güncel fiyatla yeniden hesaplanıyor; eski fiyatla ödeme alınamıyor.
+4. **Görseller:** ürün fotoğrafları CDN'den geliyor; adları içeriklerine göre değiştiği için yeni fotoğraf yüklenince eski kopya sorun çıkarmıyor.
+
+"Fiyat neden değişmedi?" destek talepleri o haftadan sonra kesildi.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -78,5 +118,17 @@ Eski (bayat) kopyayı hemen gösterip arka planda yenisini getirmektir. "Eski ve
 <SelfCheck question="'Değişikliğim sitede neden görünmüyor?' sorusunun en yaygın teknik sebebi nedir?">
 
 Önbellek geçersizleştirmenin yapılmaması: veri değişmiş ama tarayıcı, CDN, sunucu ya da service worker katmanlarından birinde eski kopya servis ediliyor olabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir editör içeriği güncelledi ama sitede eski hâli görünüyor. En olası sebep nedir?">
+
+Önbellek geçersizleştirme: eski kopya bir önbellek katmanında (CDN, sunucu önbelleği) duruyor. İçerik değiştiğinde ilgili önbelleğin temizlenmesi ya da kısa bir TTL gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="stale-while-revalidate kullanıcıya ne kazandırır, tasarıma ne iş çıkarır?">
+
+Kullanıcı beklemeden eski kopyayı hemen görür, yenisi arka planda gelir. Tasarıma "eski veri gösteriliyor, tazeleniyor" hâlini çizmek düşer; örneğin üstte ince bir tazeleme göstergesi.
 
 </SelfCheck>

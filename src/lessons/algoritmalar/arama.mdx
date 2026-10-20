@@ -1,10 +1,11 @@
 ---
-summary: "Bir şeyi bulmanın iki temel yolu: doğrusal ve ikili arama. İkili arama sıralı veri ister; veritabanları bu yüzden index tutar. Otomatik tamamlamanın neden önek araması yaptığını ve debounce'un tasarım kararı olduğunu öğrenirsin."
+summary: "Bir şeyi bulmanın iki temel yolu: doğrusal ve ikili arama. İkili arama sıralı veri ister; veritabanları bu yüzden indeks tutar. Otomatik tamamlama önek araması yapar; debounce bir tasarım kararıdır."
 outcomes:
   - "Doğrusal ve ikili aramanın farkını ve ikilinin şartını söyleyebilirsin."
   - "Index'in hangi sorgulara yarayıp hangilerine yaramadığını tablodan okuyabilirsin."
   - "Otomatik tamamlamada önek aramasının ve debounce'un neden bir karar olduğunu açıklayabilirsin."
-minutes: 6
+minutes: 3
+standard: 2
 sources:
   - label: "PostgreSQL — Index'lere giriş"
     url: "https://www.postgresql.org/docs/current/indexes-intro.html"
@@ -20,6 +21,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir şeyi bulmanın iki temel yolu var ve aralarındaki fark, index kavramının neden var olduğunu açıklar.
 
@@ -28,6 +31,35 @@ Bir şeyi bulmanın iki temel yolu var ve aralarındaki fark, index kavramının
 **Doğrusal arama:** baştan başla, bulana kadar bak. Sıralı olmayan her veride tek seçenek; maliyeti öğe sayısıyla doğru orantılı.
 
 **İkili arama:** veri **sıralıysa** ortadan böl, hangi yarıda olduğuna bak, o yarıyı tekrar böl. Her adımda kalan veriyi yarıya indirir: bir milyon kayıtta yaklaşık yirmi adımda sonuç. Şartı: **veri sıralı olmalı.** Sıralamak da bedava değil (sonraki ders). Bu yüzden veritabanları veriyi sıralı tutan ayrı bir yapı kurar: **index.**
+
+<StepFlow
+  label="İkili arama: her adımda yarısı"
+  caption="Bir milyon sıralı kayıtta ikili arama ortadaki kayda bakar ve aranan değerin hangi yarıda olduğuna karar verir; kalan yarım milyon kaydı yine ortadan böler. Her adımda kalan kayıt yarıya iner: 500.000, 250.000, 125.000 ve böyle sürer. Yaklaşık yirminci adımda tek bir kayıt kalır."
+  steps={[
+  {
+    title: "1.000.000",
+    sub: "sıralı kayıt",
+    tone: "accent"
+  },
+  {
+    title: "500.000",
+    sub: "1. adım"
+  },
+  {
+    title: "250.000",
+    sub: "2. adım"
+  },
+  {
+    title: "…",
+    sub: "her adımda yarısı"
+  },
+  {
+    title: "1 kayıt",
+    sub: "≈ 20. adım",
+    tone: "progress"
+  }
+]}
+/>
 
 ## Index neyi çözer, neyi çözmez
 
@@ -46,6 +78,17 @@ Bir şeyi bulmanın iki temel yolu var ve aralarındaki fark, index kavramının
 - **Otomatik tamamlama** genelde önek araması yapar; kullanıcı kelimenin ortasını yazarsa sonuç gelmez. Bu bir hata değil, bir karardır; ama kullanıcıya belli etmek gerekir.
 - **Her tuşta sorgu atmak pahalıdır.** Bekleme süresi (**debounce**) bir tasarım kararıdır; belirtmezsen geliştirici bir değer seçer.
 - **Sonuç yokken ne göreceği** tasarlanmalı: yazım önerisi, popüler aramalar, filtreyi gevşetme.
+
+<Case>
+
+Demlik'in dükkân sayfasındaki menü araması iki kararla kuruldu:
+
+1. **Önek araması:** "fil" yazan "Filtre kahve"yi görüyor. "kahve" yazan da görüyor, çünkü her kelimenin başına bakılıyor. Ama "atte" yazan "Latte"yi bulamıyor; bu bilerek kabul edildi.
+2. **Debounce:** arama yazma durduktan 250 milisaniye sonra çalışıyor; her tuşta değil.
+3. **Boş sonuç:** "Bu dükkânda bulunamadı" ve yakındaki dükkânlarda arama bağlantısı.
+4. **Panel:** sipariş koduyla arama tam eşleşme; "A-417" yazan doğrudan o siparişe gidiyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -70,5 +113,17 @@ Bir şeyi bulmanın iki temel yolu var ve aralarındaki fark, index kavramının
 <SelfCheck question="İkili aramanın şartı nedir ve bu neden index'e yol açar?">
 
 Verinin sıralı olması. Sıralamak da maliyetli olduğundan veritabanları veriyi sıralı tutan ayrı bir yapı (index) kurar.
+
+</SelfCheck>
+
+<SelfCheck question="İkili aramanın şartı nedir ve veritabanları bu şartı nasıl sağlar?">
+
+Verinin sıralı olması. Veritabanları veriyi sıralı tutan ayrı bir yapı kurar: indeks.
+
+</SelfCheck>
+
+<SelfCheck question="Otomatik tamamlamada kullanıcı kelimenin ortasını yazınca sonuç gelmiyor. Bu bir hata mı?">
+
+Genelde bir karardır: otomatik tamamlama önek araması yapar, çünkü "içinde geçen" araması çok daha pahalıdır. Ama kullanıcıya belli edilmesi ve gerekirse ayrı bir tam arama sunulması gerekir.
 
 </SelfCheck>

@@ -1,10 +1,12 @@
 ---
-summary: "Şema, verinin yapısının sözleşmesidir ve tasarımcı için okunabilir bir belgedir: hangi alanlar var, hangisi zorunlu, hangisi boş olabilir. Nullable her alan bir boş durum demektir."
+summary: "Şema, verinin yapısının sözleşmesidir ve tasarım için okunabilir bir belgedir: hangi alanlar var, hangisi zorunlu, hangisi boş olabilir. Nullable her alan bir boş durum demektir."
 outcomes:
   - "Şemayı okuyup hangi uç durumları tasarlaman gerektiğini çıkarabilirsin."
   - "Tablo, satır ve sütunu bir Excel benzetmesiyle anlatabilirsin."
   - "Nullable alanın arayüzde bir boş durum demek olduğunu söyleyebilirsin."
-minutes: 6
+minutes: 3
+standard: 2
+skipTerms: ["fallback"]
 sources:
   - label: "PostgreSQL — Tablo temelleri"
     url: "https://www.postgresql.org/docs/current/ddl-basics.html"
@@ -16,12 +18,14 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir ekranı tasarlamadan önce bakabileceğin en faydalı belge: veritabanı şeması.
 
 ## Şema
 
-**Schema (şema)**, veritabanındaki tabloların, sütunların, tiplerin ve aralarındaki ilişkilerin tanımıdır. Verinin yapısının sözleşmesidir. **Tasarımcı için okunabilir bir belgedir:** hangi alanların var olduğunu, hangilerinin zorunlu, hangilerinin boş olabileceğini gösterir. Bir ekranı tasarlamadan önce şemaya bakmak, hangi uç durumları düşünmen gerektiğini söyler. "Şemaya baktım: `phone` alanı boş olabiliyor. Telefonu olmayan kullanıcı için kart nasıl görünecek?"
+**Schema (şema)**, veritabanındaki tabloların, sütunların, tiplerin ve aralarındaki ilişkilerin tanımıdır. Verinin yapısının sözleşmesidir. **Tasarım için okunabilir bir belgedir:** hangi alanların var olduğunu, hangilerinin zorunlu, hangilerinin boş olabileceğini gösterir. Bir ekranı tasarlamadan önce şemaya bakmak, hangi uç durumları düşünmen gerektiğini söyler. "Şemaya baktım: `phone` alanı boş olabiliyor. Telefonu olmayan kullanıcı için kart nasıl görünecek?"
 
 ## Tablo, satır, sütun
 
@@ -29,11 +33,67 @@ Bir ekranı tasarlamadan önce bakabileceğin en faydalı belge: veritabanı şe
 
 ## Veri tipi, nullable, varsayılan değer
 
+<Tree
+  label="Dükkânlar tablosundan beş sütun"
+  caption="Demlik'in dükkânlar tablosundan beş sütun. Ad ve adres metindir ve boş olamaz. Logo nullable'dır: boş olabilir, arayüzde baş harfli bir yedek gerekir. Hazırlık süresi nullable bir sayıdır: boşsa Hazır olunca bildireceğiz metni gösterilir. Açık mı sütunu doğru ya da yanlış değer alır ve varsayılan değeri yanlıştır; yeni dükkân kapalı başlar."
+  root={{
+  title: "dukkanlar",
+  tone: "accent",
+  children: [
+    {
+      title: "Boş olamaz",
+      children: [
+        {
+          title: "ad · metin"
+        },
+        {
+          title: "adres · metin"
+        }
+      ]
+    },
+    {
+      title: "Nullable",
+      sub: "boş hâl gerekir",
+      children: [
+        {
+          title: "logo"
+        },
+        {
+          title: "hazirlik_dakika · sayı"
+        }
+      ]
+    },
+    {
+      title: "Varsayılan değerli",
+      children: [
+        {
+          title: "acik_mi = hayır",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
 Her sütun ne tür veri tutacağı (metin, sayı, tarih, doğru/yanlış), **boş bırakılıp bırakılamayacağı (nullable)** ve boş bırakılırsa hangi **varsayılan değeri** alacağıyla tanımlanır.
 
-**Bu, tasarımcının en çok işine yarayan üç bilgidir.** "Nullable" olan her alan arayüzde bir boş durum demektir: profil fotoğrafı yoksa ne görünecek (avatar fallback), açıklama yoksa kart nasıl duracak, tarih yoksa ne yazacak. "Üç alan nullable; üçünün de boş hâlini tasarladım, teslimde var."
+**Bu, tasarımın en çok işine yarayan üç bilgidir.** "Nullable" olan her alan arayüzde bir boş durum demektir: profil fotoğrafı yoksa ne görünecek (avatar fallback), açıklama yoksa kart nasıl duracak, tarih yoksa ne yazacak. "Üç alan nullable; üçünün de boş hâlini tasarladım, teslimde var."
 
 Karıştırma: `NULL` (değer yok) ile boş metin (`""`) ve sıfır farklı şeylerdir. "Değer girilmemiş" ile "bilerek boş bırakılmış" ayrımı bazen ürün açısından anlamlıdır.
+
+<Case>
+
+Selin dükkân listesini tasarlamadan önce Burak'tan `dukkanlar` tablosunun şemasını istedi:
+
+1. **Boş olamaz:** ad ve adres. Her kartta güvenle gösteriliyor.
+2. **Nullable:** logo ve hazırlık süresi. Logosu olmayan dükkân için baş harfli bir yedek; hazırlık süresi yoksa satır gizleniyor.
+3. **Varsayılan değer:** `acik_mi` yeni dükkânda "hayır". Panel'e yeni katılan dükkân kurulumu bitirmeden müşteriye görünmüyor.
+4. **Yeni sütun:** kampüs için `kampus_mu` sütunu eklendi; kampüs kafeleri ayrı bir filtrede listeleniyor.
+
+Şemayı okumak, Selin'in teslim dosyasındaki boş hâllerin listesini çıkardı.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -43,11 +103,17 @@ Karıştırma: `NULL` (değer yok) ile boş metin (`""`) ve sıfır farklı şey
 - **Varsayılan değerlerin kullanıcıya nasıl görüneceğini sor** (örneğin varsayılan saat dilimi).
 
 </Lens>
+<Lens role="business-analyst">
+
+- **Veri sözlüğünü şemayla eşle.** Her sütunun iş anlamı, biçimi ve zorunluluğu yazılı olsun.
+- **NULL ile "bilerek boş"u ayır.** Ürün açısından anlamı farklıysa gereksinimde belirt.
+
+</Lens>
 </Lenses>
 
 <Summary>
 
-- Şema verinin yapısının sözleşmesidir; tasarımcı için okunabilir bir belgedir.
+- Şema verinin yapısının sözleşmesidir; tasarım için okunabilir bir belgedir.
 - Tablo bir tür nesne, satır bir kayıt, sütun bir özelliktir.
 - Nullable her alan arayüzde bir boş durum demektir; NULL, boş metin ve sıfır farklıdır.
 
@@ -55,8 +121,20 @@ Karıştırma: `NULL` (değer yok) ile boş metin (`""`) ve sıfır farklı şey
 
 ## Kendini yokla
 
-<SelfCheck question="Bir sütunun 'nullable' olması tasarımcı için ne anlama gelir?">
+<SelfCheck question="Bir sütunun 'nullable' olması tasarım için ne anlama gelir?">
 
 O alan boş olabilir demektir; yani arayüzde bir boş durum tasarlanmalıdır: profil fotoğrafı yoksa avatar fallback, açıklama yoksa kartın nasıl duracağı, tarih yoksa ne yazacağı.
+
+</SelfCheck>
+
+<SelfCheck question="NULL ile boş metin arasındaki fark ürün açısından ne zaman önemlidir?">
+
+"Değer hiç girilmemiş" ile "kullanıcı bilerek boş bıraktı" farklı anlamlar taşıdığında. Örneğin bir anket alanında soruyu atlamak ile boş cevap vermek farklı yorumlanabilir; arayüz ve raporlar bu farkı yansıtmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir sütunun varsayılan değeri tasarımı nasıl etkiler?">
+
+Kayıt oluşturulurken alan doldurulmazsa hangi değeri alacağını belirler. Örneğin yeni bir dükkânın "açık mı" alanı varsayılan olarak "hayır" ise dükkân kurulum bitene kadar müşteriye görünmez; arayüzün bu başlangıç hâlini göstermesi gerekir.
 
 </SelfCheck>

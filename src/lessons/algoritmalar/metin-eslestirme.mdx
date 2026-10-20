@@ -1,10 +1,11 @@
 ---
-summary: "'Kullanıcı ne yazarsa yazsın bulsun' isteği arkada birkaç ayrı mekanizmadır: normalizasyon, kökleme, yazım toleransı, eş anlamlı. Türkçede I/ı/İ/i ve ek yapısı tuzakları; sıralama kuralı ve vurgulama tasarım kararlarıdır."
+summary: "'Kullanıcı ne yazarsa yazsın bulsun' isteği arkada birkaç mekanizmadır: normalizasyon, kökleme, yazım toleransı, eş anlamlı. Türkçede I/ı/İ/i ve ek yapısı tuzakları; sıralama kuralı bir tasarım kararıdır."
 outcomes:
   - "Metin eşleştirmenin katmanlarını ve her birinin riskini söyleyebilirsin."
   - "Türkçe aramada kökleme ve I/ı/İ/i neden ayrı bir mesele olduğunu açıklayabilirsin."
   - "Sonuç sıralaması kuralını neden yazılı tanımlaman gerektiğini bilirsin."
-minutes: 6
+minutes: 3
+standard: 2
 sources:
   - label: "MDN — String.prototype.toLocaleLowerCase"
     url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLocaleLowerCase"
@@ -20,6 +21,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir arama kutusu "kullanıcı ne yazarsa yazsın bulsun" ister. Arkada bu birkaç ayrı mekanizmadır ve her biri ayrı maliyet ve ayrı yanlış-eşleşme riski taşır.
 
@@ -35,6 +38,34 @@ Bir arama kutusu "kullanıcı ne yazarsa yazsın bulsun" ister. Arkada bu birka�
 
 ## Türkçe neden ayrı bir mesele
 
+<Layers
+  label="Metin eşleştirme katmanları"
+  caption="Bir arama kutusu kullanıcının yazdığını birkaç katmanda eşleştirir. Tam eşleşme en dar ve en kesin katmandır. Büyük-küçük harf ve aksan normalizasyonu İSTANBUL ile istanbul'u eşler. Kökleme eklerle yazılan kelimenin kökünü bulur. Yazım toleransı küçük hataları affeder. Eş anlamlı listesi farklı kelimeleri birbirine bağlar. Aşağı indikçe bulunan şey artar, yanlış eşleşme riski de artar."
+  layers={[
+  {
+    title: "Tam eşleşme",
+    sub: "en kesin",
+    tone: "accent"
+  },
+  {
+    title: "Normalizasyon",
+    sub: "harf, aksan"
+  },
+  {
+    title: "Kökleme",
+    sub: "Türkçe ekler"
+  },
+  {
+    title: "Yazım toleransı"
+  },
+  {
+    title: "Eş anlamlı",
+    sub: "en geniş",
+    tone: "progress"
+  }
+]}
+/>
+
 Türkçe eklerle çalışır: *bileşen, bileşenler, bileşenlerin, bileşenlerimizden.* Kökleme desteklenmiyorsa kullanıcı doğal hâliyle yazdığında **hiçbir şey bulamaz** ve bunu bir hata değil "sitede yok" diye yorumlar. İki tuzak daha:
 
 - **`I/ı/İ/i`.** Türkçe küçültme kuralı İngilizceden farklıdır; yanlış yapılırsa "İstanbul" araması "istanbul"u bulmaz.
@@ -43,6 +74,17 @@ Türkçe eklerle çalışır: *bileşen, bileşenler, bileşenlerin, bileşenler
 ## Sıralama: hangi sonuç önce
 
 Eşleşme bulmak yarısıdır; **hangisinin önce geleceği** diğer yarısı. Tipik ağırlıklar: başlıkta geçen > gövdede geçen, tam kelime > kısmi, yeni > eski. Bu bir ürün kararıdır; belirtilmezse aracın varsayılanı kullanılır ve kimse neden o sıralamanın çıktığını açıklayamaz.
+
+<Case>
+
+Demlik'in dükkân araması Türkçenin üç tuzağına da düştü:
+
+1. **I/ı/İ/i:** Kadıköy'deki "Işık Kahve" "isik" ya da "ışık" yazınca bulunuyor ama "IŞIK" yazınca bulunmuyordu. Küçültme Türkçe kurallarına göre yapılınca düzeldi.
+2. **Kökleme:** "kahveciler" yazan "Kahveci" adlı dükkânı bulamıyordu.
+3. **İngilizce adlar:** "Brew Lab" adlı dükkân Türkçe köklemeden geçince alakasız sonuçlarla eşleşti. Dükkân adları köklemeden muaf tutuldu; yalnız normalize ediliyor.
+4. **Sıralama:** dükkân adında geçen, menüde geçenden önce geliyor; eşitse açık dükkân önce.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -68,5 +110,17 @@ Eşleşme bulmak yarısıdır; **hangisinin önce geleceği** diğer yarısı. T
 <SelfCheck question="Türkçe aramada kökleme olmazsa ne olur?">
 
 Kullanıcı ekli kelimeleri doğal hâliyle yazdığında hiçbir şey bulamaz ve bunu "sitede yok" diye yorumlar.
+
+</SelfCheck>
+
+<SelfCheck question={"Türkçe bir aramada \"İstanbul\" araması \"istanbul\"u bulmuyor. Sorun nerededir?"}>
+
+Büyük-küçük harf normalizasyonunda: Türkçede I ve İ'nin küçük hâlleri İngilizceden farklıdır (ı ve i). Küçültme Türkçe kurallarına göre yapılmazsa eşleşme bozulur.
+
+</SelfCheck>
+
+<SelfCheck question="Yazım toleransı neden her aramaya varsayılan olarak açılmaz?">
+
+Alakasız sonuçlar getirebilir: kısa kelimelerde bir harflik fark başka bir kelimeye denk gelir. Ne kadar hataya izin verileceği ve hangi alanlarda (örneğin kişi adları, kodlar) kapalı kalacağı kararlaştırılmalıdır.
 
 </SelfCheck>

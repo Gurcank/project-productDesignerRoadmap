@@ -4,7 +4,8 @@ outcomes:
   - "Serverless'ta sunucunun olduğunu ve neden ucuz/ölçeklenebilir olduğunu açıklayabilirsin."
   - "Cold start'ın kullanıcıya nasıl yansıdığını söyleyebilirsin."
   - "Edge function'ın ne kazandırdığını ve veritabanı uzaktaysa neden kazancın kaybolabileceğini bilirsin."
-minutes: 7
+minutes: 4
+standard: 2
 sources:
   - label: "AWS — Serverless nedir?"
     url: "https://aws.amazon.com/what-is/serverless-computing/"
@@ -19,6 +20,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Gece kimsenin girmediği bir siteye sabah ilk giren kişi diğerlerinden yavaş bir deneyim yaşayabilir. Sebebi çoğu zaman sunucunun kendisi değil, onu çalıştırma biçimidir.
 
@@ -34,9 +37,44 @@ Gece kimsenin girmediği bir siteye sabah ilk giren kişi diğerlerinden yavaş 
 
 ## Edge function
 
+<Tree
+  label="Sunucu kodu nerede çalışır?"
+  caption="Sunucu kodu üç biçimde çalıştırılabilir. Sürekli açık bir sunucu, sabit ve yüksek trafikte öngörülebilirdir. Serverless işlevler yalnız istek geldiğinde çalışır; kullandığın kadar ödersin ama uzun aradan sonraki ilk istekte cold start gecikmesi olur. Edge işlevleri kullanıcıya yakın çalışır; hafif işler için hızlıdır ama veri uzaktaysa kazanç kaybolabilir."
+  root={{
+  title: "Sunucu kodu",
+  tone: "accent",
+  children: [
+    {
+      title: "Sürekli açık sunucu",
+      sub: "sabit, yüksek trafik"
+    },
+    {
+      title: "Serverless",
+      sub: "istekte çalışır · cold start"
+    },
+    {
+      title: "Edge",
+      sub: "kullanıcıya yakın · veri uzak",
+      tone: "progress"
+    }
+  ]
+}}
+/>
+
 **Edge function (uç işlev)**, kodun tek bir merkezî veri merkezi yerine kullanıcıya coğrafi olarak yakın sunucularda çalıştırılmasıdır. Gecikmeyi düşürür: kullanıcı İstanbul'daysa ve kod uzak bir veri merkezi yerine yakın bir noktada çalışıyorsa fark milisaniyelerle ölçülür. Yönlendirme, A/B test dağıtımı, kişiselleştirme ve dil tespiti gibi hafif işler için idealdir. "Dil tespitini edge'de yapalım; kullanıcı doğru dile hemen yönlensin."
 
 Edge ortamı sınırlıdır: bazı Node API'leri çalışmaz ve **veritabanı uzaktaysa kazanç kaybolabilir;** kod kullanıcıya yakın olsa da veri hâlâ uzaktadır.
+
+<Case>
+
+Demlik'te hangi kodun nerede çalıştığı trafiğe göre seçildi:
+
+1. **Sipariş servisi:** sabah 07.30–10.00 arası yoğun ve her gün aynı; sürekli açık sunucularda çalışıyor. Cold start sabahın ilk siparişini yavaşlatırdı.
+2. **Formlar:** "Dükkân öner" ve kampüs bekleme listesi serverless. Günde birkaç kez çağrılıyorlar; boşta maliyet yok.
+3. **Lansman:** kampüs lansmanı günü bekleme listesi formu birkaç saat içinde binlerce kez çağrıldı; serverless kendiliğinden ölçeklendi.
+4. **Edge:** kullanılmıyor. Kullanıcıların tamamı Türkiye'de, veritabanı İstanbul'a yakın bir bölgede; edge'in getireceği kazanç küçük.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -67,5 +105,17 @@ Sunucu vardır, sadece sen yönetmezsin. Cold start, işlev uzun süre çağrıl
 <SelfCheck question="Edge function ne kazandırır? Sınırı nedir?">
 
 Kodu kullanıcıya coğrafi olarak yakın çalıştırarak gecikmeyi düşürür. Sınırı: bazı Node API'leri çalışmaz ve veritabanı uzaktaysa kazanç kaybolabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Sabah ilk kullanıcının sayfası 2 saniye, sonrakilerin 200 ms'de açılıyor. Olası sebep nedir?">
+
+Serverless işlevin cold start'ı: uzun süre çağrılmayan işlev ilk istekte yeniden başlatılır. Sabit ve öngörülebilir trafikte sürekli açık bir sunucu ya da işlevi sıcak tutan bir ayar düşünülebilir.
+
+</SelfCheck>
+
+<SelfCheck question="Edge function veritabanı uzaktaysa neden kazanç sağlamayabilir?">
+
+Kod kullanıcıya yakın çalışsa da her istek veriyi uzaktaki veritabanından almak zorundadır. Gecikmenin büyük kısmı bu yolculukta kalır.
 
 </SelfCheck>

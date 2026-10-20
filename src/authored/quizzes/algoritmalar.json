@@ -1,0 +1,52 @@
+{
+  "category": "algoritmalar",
+  "sources": [
+    { "label": "MDN — Algoritma (sözlük)", "url": "https://developer.mozilla.org/en-US/docs/Glossary/Algorithm" },
+    { "label": "MDN — Array.prototype.sort", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort" },
+    { "label": "MDN — HTTP caching", "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching" },
+    { "label": "web.dev — Interaction to Next Paint (INP)", "url": "https://web.dev/articles/inp" },
+    { "label": "Google — Recommendation systems overview", "url": "https://developers.google.com/machine-learning/recommendation/overview/types" }
+  ],
+  "items": [
+    {
+      "question": "Bir geliştirici \"bu özellik zor\" diyor. Bu üç farklı şey anlamına gelebilir. Nelerdir?",
+      "answer": "Çok iş (kapsamı bölmek gerekir), ölçek (küçük veride çalışır, büyükte çalışmaz; kaç öğe olacağını netleştirmek gerekir) ya da belirsizlik (kural tanımlanmamıştır; örneğin \"alakaya göre\" sıralamanın ne olduğu)."
+    },
+    {
+      "question": "Yavaş bir işlem için üç yol hangi sırayla düşünülmeli?",
+      "answer": "Önce işi hiç yapmamak (istek küçültülebilir mi?), sonra daha sonra yapmak (arka plana atmak), en son daha hızlı yapmak (algoritma ya da veri yapısını değiştirmek). İsteği küçültmek çoğu zaman en ucuzudur."
+    },
+    {
+      "question": "Prototipte anında çalışan bir filtre canlıda 3.000 satırla donuyor. En olası neden nedir?",
+      "answer": "Kare büyüyen bir işlem: her öğe için tüm öğelerin yeniden gezilmesi. 3.000 öğede milyonlarca işlem eder. Veritabanı tarafındaki karşılığı N+1 problemidir."
+    },
+    {
+      "question": "Aynı dakikada gelen iki sipariş, liste her yenilendiğinde yer değiştiriyor. Ne eksik?",
+      "answer": "Eşitlik durumunda ikinci bir sıralama ölçütü. \"Saate göre, eşitse sipariş koduna göre\" gibi bir kural yazılmalıdır; bu aynı zamanda sayfalamanın kaymasını önler."
+    },
+    {
+      "question": "Otomatik tamamlama kelimenin ortasından yazılınca sonuç getirmiyor. Neden?",
+      "answer": "Otomatik tamamlama genelde önek araması yapar; indeks \"ile başlayan\" aramayı hızlandırır, \"içinde geçen\" aramayı genelde hızlandırmaz. Bu bir hata değil bir karardır ve kullanıcıya belli edilmelidir."
+    },
+    {
+      "question": "Bir filtre panelinde her seçeneğin yanına sonuç sayısı eklenmesi isteniyor. Bedeli nedir?",
+      "answer": "Her sayı ayrı bir sayımdır; altı filtre ve her birinde beş seçenek otuz ayrı sayım eder ve her filtre değişiminde yeniden hesaplanır. Sayının gerçekten karar değiştirip değiştirmediği sorulmalıdır."
+    },
+    {
+      "question": "Türkçe bir aramada \"IŞIK\" yazan \"Işık Kahve\"yi bulamıyor. Sorun nerededir?",
+      "answer": "Büyük-küçük harf normalizasyonunda. Türkçede I harfinin küçüğü ı, İ harfinin küçüğü i'dir; küçültme İngilizce kurallarla yapılırsa eşleşme bozulur."
+    },
+    {
+      "question": "Yeni açılan bir dükkânın sayfasında \"Birlikte sık alınanlar\" bölümü boş. Bu durumun adı nedir, ne gösterilmeli?",
+      "answer": "Soğuk başlangıç: ortak davranışa dayanan öneri için henüz veri yoktur. Çoğu sistem popülerliğe döner; etiket de buna göre değişmeli, örneğin \"Bu dükkânda popüler\"."
+    },
+    {
+      "question": "Bir ürün fiyatı, bir stok durumu ve bir sepet tutarı için önbellek süresi nasıl farklılaşır?",
+      "answer": "Fiyat dakikalarca eski kalabilir ve değişince önbellek temizlenir; stok durumu saniyeler içinde değişebilir; sepet tutarı ve bakiye hiç önbelleklenmez. Her verinin kabul edilebilir yaşı bir ürün kararıdır."
+    },
+    {
+      "question": "Yardım merkezinde kullanıcılar sorularını cümleyle yazıyor ve kelime araması sonuç bulmuyor. Hangi seçenekler var?",
+      "answer": "Önce sık aranan ifadeler için bir eş anlamlı listesi; içerik büyükse anlamsal ya da hibrit arama. Anlamsal arama eş anlamlıları yakalar ama birebir eşleşme garantisini ve \"neden bu sonuç?\" açıklamasını kaybettirir."
+    }
+  ]
+}

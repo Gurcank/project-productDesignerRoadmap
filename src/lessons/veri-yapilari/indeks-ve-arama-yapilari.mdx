@@ -1,10 +1,12 @@
 ---
-summary: "İndeks, veriyi bulmayı hızlandırmak için tutulan ikinci bir yapıdır; ters indeks tam metin aramanın temelidir. 'İçinde geçsin' ile 'ile başlasın' aynı maliyette değildir; Türkçe kökleme, yazım toleransı ve boş sonuç ekranı tasarım kararlarıdır."
+summary: "İndeks, veriyi hızlı bulmak için tutulan ikinci bir yapıdır; ters indeks tam metin aramanın temelidir. 'İçinde geçsin' ile 'ile başlasın' aynı maliyette değildir; Türkçe kökleme bir tasarım kararıdır."
 outcomes:
   - "İndeksin faydasını ve üç bedelini (yazma, yer, her sorguya yaramaması) söyleyebilirsin."
   - "Önek aramasıyla 'içinde geçen' aramasının neden aynı maliyette olmadığını açıklayabilirsin."
   - "Tam metin aramanın tasarımı ilgilendiren üç özelliğini bilirsin."
-minutes: 9
+minutes: 5
+standard: 2
+skipTerms: ["gövde"]
 sources:
   - label: "PostgreSQL — Tam metin arama"
     url: "https://www.postgresql.org/docs/current/textsearch-intro.html"
@@ -22,6 +24,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 **İndeks**, veriyi bulmayı hızlandırmak için tutulan **ikinci bir yapıdır.** Kitabın arkasındaki dizin gibi: kitabın kendisini değiştirmez ama bir kelimenin geçtiği sayfayı taramadan bulmanı sağlar. Veritabanı tarafı Veritabanı bölümünde anlatıldı; burada arayüze yansıyan sonuçları var.
 
@@ -55,12 +59,61 @@ Son madde tasarımı doğrudan ilgilendirir: **"içinde geçsin" araması ile "i
 
 ## Arayüzde sonuçlar
 
+<Tree
+  label="Ne bulunsun?"
+  caption="Bir arama kutusu beş farklı şey yapabilir. Tam eşleşme yalnız birebir aynısını bulur. Önek araması yazılan harflerle başlayanları bulur; otomatik tamamlama için genelde yeterlidir. İçinde geçen araması herhangi bir yerdeki eşleşmeyi bulur ve pahalıdır. Tam metin arama kelime bazında ve köklenmiş arar; Türkçe desteği gerekir. Bulanık arama yazım hatasına tolerans gösterir ama yanlış eşleşme riski taşır."
+  root={{
+  title: "Arama türü",
+  tone: "accent",
+  children: [
+    {
+      title: "Tam eşleşme"
+    },
+    {
+      title: "Önek",
+      sub: "otomatik tamamlama"
+    },
+    {
+      title: "İçinde geçen",
+      sub: "pahalı"
+    },
+    {
+      title: "Tam metin",
+      sub: "Türkçe kökleme"
+    },
+    {
+      title: "Bulanık",
+      sub: "yazım toleransı",
+      tone: "progress"
+    }
+  ]
+}}
+/>
+
 - **Boş sonuç ekranı zorunludur** ve "sonuç yok" demekten fazlasını yapmalı: yazım önerisi, filtreyi gevşetme, popüler aramalar.
 - **Arama kutusunun gecikmesi tasarım kararıdır.** Her tuşta sorgu atmak pahalı ve titrek hissettirir; bekleme süresi (debounce) belirtilmezse geliştirici bir değer seçer.
 - **Sonuç sayısını göstermek her zaman ucuz değildir:** "Yaklaşık 12.000 sonuç" tam sayıdan ucuzdur.
 - **Vurgulama (highlight)** eşleşen kelimeyi göstererek sonucun neden geldiğini anlatır.
 
-**Alternatifler:** küçük veride indekssiz tarama (erken optimizasyon gerekmez), liste zaten tarayıcıdaysa istemci tarafı arama (anlık), büyük ölçekte ayrı arama motoru, ve statik arama indeksi (içerik derleme anında indekslenir, sunucu gerekmez; bu sitedeki arama bu yaklaşımla çalışır).
+**Alternatifler:**
+
+- Küçük veride indekssiz tarama: erken optimizasyon gerekmez.
+- Liste zaten tarayıcıdaysa istemci tarafı arama: anlık.
+- Büyük ölçekte ayrı bir arama motoru.
+- Statik arama indeksi: içerik derleme anında indekslenir, sunucu gerekmez. Bu sitedeki arama bu yaklaşımla çalışır.
+
+<Case>
+
+Demlik'te müşterinin menü araması üç Türkçe sorunla karşılaştı:
+
+1. **Kökleme:** "kurabiyeler" yazan müşteri "Kurabiye" ürününü bulamıyordu. Arama Türkçe köklemeyle yeniden kuruldu.
+2. **Türkçe karakter:** "cay" yazan "Çay"ı bulamıyordu. Arama artık Türkçe karakterleri sadeleştirerek de eşleştiriyor.
+3. **Yazım toleransı:** "late" yazan "Latte"yi görüyor; ama tek harf farkına izin veriliyor, daha fazlasına değil.
+4. **Boş sonuç:** "Bu dükkânda bulunamadı" mesajının altında yakındaki dükkânlarda aynı aramayı yapma bağlantısı var.
+
+Arama kutusu her tuşta değil, yazma durduktan 250 milisaniye sonra arıyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -93,5 +146,11 @@ Son madde tasarımı doğrudan ilgilendirir: **"içinde geçsin" araması ile "i
 <SelfCheck question="Türkçede kökleme desteklenmezse ne olur?">
 
 Kullanıcı eklerle (bileşenlerin, bileşenlerimizden) doğal hâliyle yazdığında hiçbir şey bulamaz ve bunu "sitede yok" diye yorumlar.
+
+</SelfCheck>
+
+<SelfCheck question="Türkçe bir ürün kataloğunda arama kurulurken hangi iki dil özelliği özellikle sorulmalı?">
+
+Kökleme (eklerle yazılan kelimenin kökünü bulmak, "kurabiyeler" → "kurabiye") ve Türkçe karakter eşleştirme ("cay" ile "çay"). Türkçenin zengin ek yapısı nedeniyle köklemenin eksikliği hemen görünür.
 
 </SelfCheck>

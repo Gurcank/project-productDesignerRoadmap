@@ -4,7 +4,8 @@ outcomes:
   - "Join'in neden tek tek sorgu atmaktan hızlı olduğunu söyleyebilirsin."
   - "Dashboard sayılarının neden pahalı olabildiğini açıklayabilirsin."
   - "Transaction'ın 'ya hepsi ya hiçbiri' garantisini ve ürün karşılığını bilirsin."
-minutes: 7
+minutes: 4
+standard: 2
 sources:
   - label: "PostgreSQL — SQL öğreticisi: Join"
     url: "https://www.postgresql.org/docs/current/tutorial-join.html"
@@ -18,6 +19,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir ekranı açtığında arka planda kaç sorgu gidiyor? Bir ödeme tamamlanırken stok düşüp sipariş oluşmazsa ne olur? İki soru, bu dersin iki yarısı.
 
@@ -35,9 +38,42 @@ Bir ekranı açtığında arka planda kaç sorgu gidiyor? Bir ödeme tamamlanır
 
 ## Transaction
 
+<StepFlow
+  label="Bir siparişin transaction'ı"
+  caption="Bir sipariş oluşturulurken dört değişiklik tek bir transaction içinde yapılır. Ürün stoktan düşülür, sipariş kaydı oluşturulur, ödeme kaydı yazılır ve sipariş dükkânın kuyruğuna eklenir. Adımlardan biri başarısız olursa hiçbiri uygulanmaz: stok geri gelir, yarım kalmış bir sipariş oluşmaz."
+  steps={[
+  {
+    title: "Stok düş",
+    tone: "accent"
+  },
+  {
+    title: "Sipariş oluştur"
+  },
+  {
+    title: "Ödeme kaydı"
+  },
+  {
+    title: "Dükkân kuyruğu",
+    sub: "ya hepsi ya hiçbiri",
+    tone: "progress"
+  }
+]}
+/>
+
 **Transaction (işlem)**, birden fazla değişikliğin **ya hep birlikte ya da hiç** uygulanmasını garanti eden mekanizmadır. Klasik örnek para transferi: bir hesaptan düşülüp diğerine eklenmesi tek bir bütün olmalıdır; ortada kesilirse para yok olur. **Ürün karşılığı:** sipariş oluşturulurken stok düşülmesi, ödeme kaydı ve sipariş satırı hep birlikte olmalıdır; biri başarısız olursa hiçbiri olmamalıdır. Bu, arayüzdeki "yarım kalmış sipariş" durumlarını engeller. "Sipariş oluşturma işlemini transaction'a alalım; stok düştü ama sipariş oluşmadı durumu olmasın."
 
 Transaction'ların güvence listesine **ACID** denir (Atomicity, Consistency, Isolation, Durability). Dört harfi ezberlemek gerekmez; önemli olan **atomiklik** fikridir: "ya hepsi ya hiçbiri".
+
+<Case>
+
+Kampüs pilotunun ilk sabahı son kruvasan için iki öğrenci aynı anda ödeme yaptı.
+
+1. **Transaction:** iki sipariş de stok düşme, sipariş oluşturma ve ödeme kaydını tek bir transaction içinde yapıyordu.
+2. **Sonuç:** ilk transaction stoğu sıfıra indirdi; ikincisi stok kontrolünde başarısız oldu ve bütünüyle geri alındı. Ödeme kaydı yazılmadı, kart provizyonu iptal edildi.
+3. **Ekran:** ikinci öğrenci "Bu ürün az önce tükendi" mesajını ve aynı kafedeki benzer ürünleri gördü.
+4. **Aggregate:** gün sonu raporundaki toplamlar her gece bir özet tabloya yazılıyor; Panel raporu milyonlarca satırı her açılışta taramıyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -45,6 +81,12 @@ Transaction'ların güvence listesine **ACID** denir (Atomicity, Consistency, Is
 - **Dashboard sayıları için "bu sayı nasıl hesaplanıyor, ne sıklıkta yenileniyor?" sor.**
 - **Birden fazla adımdan oluşan işlemlerde (sipariş, ödeme) yarım kalmış durumların olmaması gerektiğini vurgula.**
 - **Ekrana yeni bir veri eklerken "bunun için ek sorgu gerekiyor mu?" sor.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Birlikte olması gereken değişiklikleri iş kuralı olarak yaz.** "Stok düşmeden sipariş oluşmaz."
+- **Raporların hangi sıklıkla güncellendiğini gereksinimde belirt.** Anlık mı, gün sonu mu?
 
 </Lens>
 </Lenses>
@@ -63,5 +105,17 @@ Transaction'ların güvence listesine **ACID** denir (Atomicity, Consistency, Is
 <SelfCheck question="Transaction ne garanti eder? Sipariş akışında karşılığı nedir?">
 
 Birden fazla değişikliğin ya hep birlikte ya da hiç uygulanmasını. Sipariş akışında stok düşülmesi, ödeme kaydı ve sipariş satırı hep birlikte olmalıdır; biri başarısız olursa hiçbiri olmamalıdır, böylece "yarım kalmış sipariş" oluşmaz.
+
+</SelfCheck>
+
+<SelfCheck question="Bir dashboard her açılışta yavaş yükleniyor ve dört toplam sayı gösteriyor. Ne önerirsin?">
+
+Sayıların her açılışta büyük tabloları taradığını kontrol etmeyi; gerekiyorsa bu toplamları önceden hesaplayıp bir özet tabloda tutmayı. Bedeli, özetin ne sıklıkla güncellendiğinin ekranda belli olmasıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Join, ayrı ayrı sorgu atmaktan neden genelde daha hızlıdır?">
+
+Birden fazla tablodaki veriyi tek bir sorguda birleştirir; veritabanına tek gidiş-dönüş yapılır. Ayrı sorgular her biri için ayrı gidiş-dönüş demektir ve liste uzadıkça toplam süre katlanır.
 
 </SelfCheck>

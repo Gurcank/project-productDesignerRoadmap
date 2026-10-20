@@ -3,7 +3,8 @@ summary: "Modern meta-framework'lerin getirdiği yaklaşımlar: API route, serve
 outcomes:
   - "API route, server action ve BFF'in işini ayırabilirsin."
   - "Server action'ın da bir endpoint olduğunu ve doğrulama/yetki kontrolünün neden orada da zorunlu olduğunu açıklayabilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "Next.js — Route Handlers"
     url: "https://nextjs.org/docs/app/getting-started/route-handlers"
@@ -18,6 +19,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Form gönderimi için ayrı bir sunucu kurmak mı, yoksa ön yüz projesinin içinde bir sunucu işlevi yazmak mı? Modern meta-framework'ler üç yaklaşım sunar.
 
@@ -33,7 +36,42 @@ Form gönderimi için ayrı bir sunucu kurmak mı, yoksa ön yüz projesinin iç
 
 ## BFF
 
+<Tree
+  label="Sunucu kodunun üç biçimi"
+  caption="Modern meta-framework'lerle sunucu kodu üç biçimde yazılabilir. API route, ön yüz projesinin içinde bir endpoint'tir. Server action, ön yüzden doğrudan çağrılan bir sunucu işlevidir; o da dışarıdan çağrılabilir, doğrulama ve yetki kontrolü gerekir. BFF ise bir istemci türü için verileri tek yanıtta toplayan ince bir arka yüz katmanıdır."
+  root={{
+  title: "Sunucu kodu",
+  tone: "accent",
+  children: [
+    {
+      title: "API route",
+      sub: "projede endpoint"
+    },
+    {
+      title: "Server action",
+      sub: "doğrudan çağrılır · doğrula!"
+    },
+    {
+      title: "BFF",
+      sub: "istemciye özel toplama",
+      tone: "progress"
+    }
+  ]
+}}
+/>
+
 **BFF (Backend For Frontend)**, her istemci türü (web, mobil) için ona özel şekillendirilmiş ince bir arka yüz katmanıdır. Ön yüzün ihtiyacı olan veriyi tek yerde toplar: üç farklı iç servisten veri çekip tek yanıt hâline getirir. Böylece ön yüz üç ayrı istek atmak zorunda kalmaz (under-fetching). Mikroservis mimarilerinde ve çok istemcili ürünlerde görülür. "Ekran üç ayrı servisten veri istiyor; BFF katmanı ekleyip tek istekte toplayalım."
+
+<Case>
+
+Demlik'te bu üç biçimin üçü de kullanılıyor:
+
+1. **Server action:** müşteri sitesindeki "Dükkân öner" formu. Ayrı bir endpoint yazılmadı. Form alanları, uygulamadaki formla aynı Zod şemasıyla sunucuda da doğrulanıyor.
+2. **Yetki:** server action'ın dışarıdan da çağrılabileceği bir güvenlik incelemesinde hatırlatıldı; aynı kişiden dakikada birden fazla öneri kabul edilmiyor.
+3. **API route:** kampüs sayfasındaki bekleme listesi formu.
+4. **BFF:** mobil uygulamanın ana ekranı son siparişi, yakındaki açık dükkânları ve tek kampanyayı tek istekte alıyor. Önceden üç istek gidiyordu.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -63,5 +101,17 @@ Hayır. Server action da bir endpoint'tir ve dışarıdan çağrılabilir; girdi
 <SelfCheck question="BFF hangi problemi çözer?">
 
 Under-fetching'i: ön yüzün ihtiyacı olan veriyi birden fazla iç servisten toplayıp tek yanıt yapar, böylece ön yüz birden çok gidiş-dönüş yapmak zorunda kalmaz.
+
+</SelfCheck>
+
+<SelfCheck question={"Server action \"ayrı endpoint gerektirmiyor\" diye doğrulama atlanabilir mi?"}>
+
+Hayır. Server action da bir endpoint'tir ve dışarıdan çağrılabilir. Girdi doğrulaması ve yetki kontrolü orada da zorunludur.
+
+</SelfCheck>
+
+<SelfCheck question="BFF hangi sorunu çözer?">
+
+Bir ekran için birden fazla servisten veri gerektiğinde, istemciye özel bir katman bu verileri toplayıp tek yanıt döndürür. Ön yüz birden fazla istek atmak zorunda kalmaz.
 
 </SelfCheck>
