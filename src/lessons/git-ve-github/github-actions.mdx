@@ -4,7 +4,8 @@ outcomes:
   - "GitHub Actions'ın ne işe yaradığını söyleyebilirsin."
   - "Bir workflow'un dört parçasını (tetikleyici, iş, adım, runner) sayabilirsin."
   - "Bir PR'da 'CI kırıldı' uyarısını gördüğünde hangi işin hangi adımında kırıldığını okuyabilirsin."
-minutes: 6
+minutes: 3
+standard: 2
 sources:
   - label: "GitHub Docs — GitHub Actions'ı anlamak"
     url: "https://docs.github.com/en/actions/about-github-actions/understanding-github-actions"
@@ -18,6 +19,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir PR açtın ve birkaç dakika sonra altında yeşil tikler ya da kırmızı çarpılar belirdi. Bu otomatik kontrollerin arkasında çoğu zaman GitHub Actions var.
 
@@ -26,6 +29,34 @@ Bir PR açtın ve birkaç dakika sonra altında yeşil tikler ya da kırmızı �
 **GitHub Actions**, depoda bir olay gerçekleştiğinde (push, PR açılması, etiket oluşturulması) otomatik olarak çalışan iş tanımlarıdır. CI/CD'nin GitHub içindeki hâlidir: her PR'da testlerin, linter'ın, tip kontrolünün ve erişilebilirlik taramasının otomatik çalışmasını sağlar. **Kalite kontrolünü insan disiplinine değil mekanizmaya bağlar.** Modern GitHub projelerinin çoğunda `.github/workflows/` klasöründe bulunur. "Her PR'da Lighthouse çalıştıralım; performans bütçesi aşılırsa uyarsın." Ücretlendirme ve dakika limitleri değişir; GitLab CI, CircleCI gibi alternatifleri vardır.
 
 ## Bir workflow'un mantığı
+
+<Tree
+  label="Demlik'in PR iş akışı"
+  caption="Demlik'te her pull request açıldığında bir iş akışı tetiklenir. Paralel çalışan dört iş vardır: testler, tip denetimi, erişilebilirlik taraması ve performans bütçesi. Bir de sır taraması: anahtara benzeyen bir değer bulunursa iş akışı kırılır. Hepsi bir runner üzerinde çalışır; birinin kırılması birleştirmeyi engeller."
+  root={{
+  title: "PR açıldı",
+  sub: "tetikleyici",
+  tone: "accent",
+  children: [
+    {
+      title: "Test"
+    },
+    {
+      title: "Tip denetimi"
+    },
+    {
+      title: "Erişilebilirlik"
+    },
+    {
+      title: "Performans bütçesi"
+    },
+    {
+      title: "Sır taraması",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 Söz dizimi değil, yapısı:
 
@@ -41,6 +72,19 @@ Bu yapıyı bilmek, bir PR'da "CI kırıldı" uyarısını gördüğünde **hang
 Bu sitenin kalite kapıları da benzer biçimde çalışır: içerik doğrulaması, tip denetimi ve JavaScript bütçesi (60 KB) ayrı komutlarla her derlemede denetlenir; aşılırsa komut hata ile biter. İstersen bunlar bir CI iş akışına bağlanabilir.
 
 </Callout>
+
+<Case>
+
+Demlik'te her PR'da beş iş çalışıyor ve hepsi dal korumasına bağlı:
+
+1. **Test ve tip denetimi:** kırılırsa PR birleştirilemiyor.
+2. **Erişilebilirlik taraması:** sipariş ve ödeme ekranlarında otomatik tarama; yeni bir kontrast hatası PR'ı kırıyor.
+3. **Performans bütçesi:** dükkân sayfasının JavaScript boyutu sınırı aşarsa uyarı.
+4. **Sır taraması:** Defne'nin olayından sonra eklendi.
+
+Selin bir PR'da kırmızı çarpıyı açtı ve hata mesajını okudu: "Erişilebilirlik · ödeme ekranı · düğme metni kontrastı 3,9:1". Düzeltmeyi kendisi önerdi.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -65,5 +109,17 @@ Bu sitenin kalite kapıları da benzer biçimde çalışır: içerik doğrulamas
 <SelfCheck question="Bir workflow'un dört parçası nedir?">
 
 Tetikleyici (ne olduğunda çalışacağı), iş (bağımsız çalışan görev grubu, paralel olabilir), adım (işin içindeki tek tek komutlar) ve runner (çalıştıkları sanal makine).
+
+</SelfCheck>
+
+<SelfCheck question="Bir workflow'u oluşturan dört parça nedir?">
+
+Tetikleyici (ne olduğunda çalışacak), iş (bağımsız görev grubu), adım (işin içindeki tek tek komutlar) ve runner (bunların çalıştığı makine).
+
+</SelfCheck>
+
+<SelfCheck question="Otomatik kontrolleri dal korumasına bağlamak ne kazandırır?">
+
+Kalite kuralını insan disiplinine değil mekanizmaya bağlar: kontrol geçmeden değişiklik ana dala giremez.
 
 </SelfCheck>

@@ -1,9 +1,10 @@
 ---
-summary: "Kabul kriteriyle istemek, 'bitti' tanımını baştan koymaktır. Bu, iterasyonu en çok azaltan tek uygulamadır; liste aynı zamanda çıktıyı denetlemenin listesi olur. Kabul kriteri yazamıyorsan isteğin henüz netleşmemiştir."
+summary: "Kabul kriteriyle istemek, \"bitti\" tanımını baştan koymaktır ve iterasyonu en çok azaltan uygulamadır. Liste çıktıyı denetlemenin de listesidir; kriter yazamıyorsan istek henüz net değildir."
 outcomes:
   - "Kötü ve iyi bir isteği kabul kriteri üzerinden ayırt edebilirsin."
   - "Kabul kriteri yazamamanın neyin işareti olduğunu söyleyebilirsin."
 minutes: 4
+standard: 2
 sources:
   - label: "Anthropic Docs — Prompt engineering genel bakış"
     url: "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview"
@@ -15,8 +16,12 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Ürün Geliştirme bölümündeki kabul kriteri, prompt yazarken **"bitti" tanımını baştan koymak** anlamına gelir. Bu, iterasyonu en çok azaltan tek uygulamadır.
+
+## Bitti tanımı
 
 **Kötü:** "Bir fiyatlandırma bölümü yap."
 
@@ -31,9 +36,47 @@ import Lenses from "~/components/lesson/Lenses.astro";
 > - Tüm butonlar klavyeyle erişilebilir, focus göstergesi görünür
 > - Boşluklar spacing ölçeğinden, renkler token'dan
 
+## Liste aynı zamanda denetimdir
+
 Bu liste tek tek "evet/hayır" ile kontrol edilebilir; yani **çıktıyı denetlemenin de listesi olur.**
 
 **Kural:** bir kabul kriteri yazamıyorsan isteğin henüz netleşmemiştir. Bu, modelin değil **senin probleminin** işaretidir.
+
+<StepFlow
+  label="Kabul kriteriyle bir tur"
+  caption="Önce kabul kriterleri yazılır. İstek bu kriterlerle birlikte verilir. Çıktı geldiğinde aynı liste maddeler hâlinde evet ya da hayır diye işaretlenir. Hayır olan maddeler bir sonraki turun geri bildirimi olur. Kriter yazılamıyorsa istek henüz netleşmemiştir; önce istek netleştirilir."
+  steps={[
+  {
+    title: "Kriter yaz",
+    sub: "bitti ne demek",
+    tone: "accent"
+  },
+  {
+    title: "İste",
+    sub: "kriterlerle birlikte"
+  },
+  {
+    title: "Denetle",
+    sub: "madde madde evet/hayır"
+  },
+  {
+    title: "Geri bildirim",
+    sub: "hayır olanlar",
+    tone: "progress"
+  }
+]}
+/>
+
+<Case>
+
+Ayşe, Panel'deki iade talebi ekranının metinlerini yapay zekâya kabul kriterleriyle yazdırdı:
+
+1. **Kriterler:** her iade kuralının (T-K1…T-K8) ekranda bir karşılığı var; çalışana "İadeyi onayla" pasifken nedeni yazıyor; metinler "siz" diliyle; hiçbir metin 140 karakteri geçmiyor.
+2. **Denetim:** çıktı listeyle karşılaştırıldı. İki kural karşılıksızdı, bir metin 168 karakterdi.
+3. **Geri bildirim:** yalnız "hayır" olan üç madde geri gönderildi; ikinci tur listeyi tamamen karşıladı.
+4. **Ders:** Ayşe ilk denemede kriter yazamamıştı; çünkü T-K6'nın istisnası henüz kararlaştırılmamıştı. Önce o karar alındı.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -41,6 +84,36 @@ Bu liste tek tek "evet/hayır" ile kontrol edilebilir; yani **çıktıyı denetl
 - **Her kriter evet/hayır ile cevaplanabilmeli:** "güzel görünsün" kriter değildir.
 - **Durumları kriter yap:** boş, hata, yükleme, uzun metin.
 - **Yazamıyorsan dur:** önce isteği netleştir.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Başarı ölçütünü de kabul kriteri olarak ver;** model "neden" yapıldığını bilsin.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Story'nin kabul kriterlerini doğrudan prompt'a taşı.** Aynı liste hem story'yi hem çıktıyı denetler.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Belge taslağında kabul kriteri ver:** hangi başlıklar, hangi sayılar, hangi uzunluk.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Bitti tanımını yapay zekâ ile yapılan işe de uygula;** "model yazdı" bitti demek değildir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Kabul senaryolarını Given-When-Then ile ver;** çıktı aynı senaryolarla denetlenir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Sentez isterken kriter koy:** her içgörü en az iki katılımcıya dayansın, alıntı ham nottan gelsin.
 
 </Lens>
 </Lenses>
@@ -58,5 +131,17 @@ Bu liste tek tek "evet/hayır" ile kontrol edilebilir; yani **çıktıyı denetl
 <SelfCheck question="Kabul kriteri yazamıyorsan bu neyin işaretidir?">
 
 İsteğin henüz netleşmediğinin. Bu, modelin değil senin probleminin göstergesidir.
+
+</SelfCheck>
+
+<SelfCheck question="Kabul kriteri neden iterasyonu en çok azaltan uygulamadır?">
+
+Bitti tanımı baştan verildiği için model neyi hedeflediğini bilir. Çıktı aynı listeyle madde madde denetlenir; geri bildirim yalnız karşılanmayan maddelere odaklanır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir istek için kabul kriteri yazamıyorsun. Bu neyin işaretidir?">
+
+İsteğin henüz netleşmediğinin işaretidir. Sorun modelde değil istektedir; önce açık kararlar verilir, sonra istek yazılır.
 
 </SelfCheck>

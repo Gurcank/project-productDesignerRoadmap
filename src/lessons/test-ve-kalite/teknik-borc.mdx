@@ -1,10 +1,11 @@
 ---
-summary: "Teknik borç, bugün hızlı gitmek için alınan kısa yolun gelecekteki maliyetidir; bilinçli borç meşrudur, sorun kayıt altına alınmamasıdır. Tasarım borcu da aynı biçimde birikir. Refactor davranışı değiştirmez; izci kuralı borcu küçük adımlarla azaltır."
+summary: "Teknik borç, bugün hızlı gitmek için alınan kısa yolun ileride ödenen maliyetidir; bilinçli borç meşrudur, sorun kayıtsız olmasıdır. Tasarım borcu da birikir. İzci kuralı borcu küçük adımlarla azaltır."
 outcomes:
   - "Teknik borcun her zaman kötü olmadığını ve asıl sorunun ne olduğunu söyleyebilirsin."
   - "Tasarım borcunun dört örneğini sayabilirsin."
   - "Refactor'ın tanımındaki kritik kelimeyi ve neden yeni özellikle aynı PR'a konmadığını açıklayabilirsin."
-minutes: 7
+minutes: 4
+standard: 2
 sources:
   - label: "Martin Fowler — Technical Debt"
     url: "https://martinfowler.com/bliki/TechnicalDebt.html"
@@ -18,6 +19,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Bu neden bu kadar yavaş ilerliyor?" sorusunun en yaygın cevabı: birikmiş borç.
 
@@ -44,6 +47,42 @@ Bunlar da kayıt altına alınmalı ve bütçelenmelidir.
 
 **Code smell (kod kokusu)**, kendisi hata olmayan ama daha derin bir sorunun işareti olan kalıptır: aşırı uzun fonksiyon, tekrarlanan mantık, çok fazla parametre. **Boy scout rule (izci kuralı)**: "dokunduğun yeri bulduğundan biraz daha temiz bırak." Büyük temizlik projeleri beklemek yerine borcu sürekli ve küçük adımlarla azaltmayı önerir. Büyük temizlik projeleri genelde onaylanmaz; küçük iyileştirmeler ise her PR'da yapılabilir. "Bu dosyaya zaten dokunuyoruz; şu tekrarı da temizleyelim."
 
+<StepFlow
+  label="Bilinçli borcun yaşam döngüsü"
+  caption="Borç bir kısa yolla başlar: bir tarihe yetişmek için kod kopyalanır ya da bir durum ekranı atlanır. Bilinçli borç hemen kayda geçer; sahibi ve nedeni yazılır. Sonra her sprint kapasitenin bir kısmı borca ayrılır. Geri kalanı izci kuralıyla ödenir: dokunulan dosya biraz daha temiz bırakılır."
+  steps={[
+  {
+    title: "Kısa yol",
+    sub: "tarihe yetiş",
+    tone: "accent"
+  },
+  {
+    title: "Kaydet",
+    sub: "sahip, neden"
+  },
+  {
+    title: "Bütçele",
+    sub: "sprint payı"
+  },
+  {
+    title: "İzci kuralı",
+    sub: "dokunduğunu temizle",
+    tone: "progress"
+  }
+]}
+/>
+
+<Case>
+
+Demlik'te borç iki türde ve iki yöntemle ödeniyor:
+
+1. **Teknik borç:** Panel'in ilk ekranları styled-components ile yazılmıştı. Toplu bir taşıma projesi onaylanmadı; ekranlar dokunuldukça Tailwind'e taşınıyor.
+2. **Tasarım borcu:** iki üründe 14 farklı kahverengi ve eski Figma dosyasında 23 farklı buton vardı. Renkler dokuz basamaklı tek bir rampaya indi.
+3. **Kayıt:** borçlar backlog'da "borç" etiketiyle duruyor; her kaydın sahibi ve kısa yolun nedeni yazılı.
+4. **Bütçe:** her sprint kapasitenin yaklaşık %15'i borca ayrılıyor; Deniz ve Ozan bu payı sprint planlamada koruyor.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -51,6 +90,36 @@ Bunlar da kayıt altına alınmalı ve bütçelenmelidir.
 - **Bilinçli borçlanma kararlarını kaydet:** neden, ne zaman ödenecek?
 - **İzci kuralını tasarım dosyalarına uygula:** dokunduğun bileşeni bir miktar toparla.
 - **Refactor PR'larında "davranış değişmedi" kanıtı iste** (görsel fark yok, testler aynı).
+
+</Lens>
+<Lens role="product-manager">
+
+- **Borcu yol haritasında görünür kıl.** Görünmeyen borç, hızı açıklamasız düşürür.
+- **Tarihe yetişmek için borçlanırken geri ödeme zamanını da kararlaştır.**
+
+</Lens>
+<Lens role="product-owner">
+
+- **Borç kayıtlarını backlog'da etiketle ve önceliklendir.**
+- **Sprint kapasitesinin bir payını borca ayır;** sıfır pay, borcun hep ertelenmesi demek.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Bilinçli borcu risk kaydına yaz:** neden alındı, ne zaman ödenecek?
+- **Refactor'ı yeni özellik takvimiyle karıştırma;** ayrı iş olarak planla.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Yavaşlayan hızı borçla ilişkilendirerek retroda konuş.**
+- **İzci kuralını ekip alışkanlığı yap;** büyük temizlik projeleri nadiren onaylanır.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Çözümün geçici kısımlarını gereksinim belgesinde işaretle.** "Şimdilik elle" yazılan adım bir borçtur.
+- **Borcun iş etkisini ölç:** hangi süreç bu kısa yol yüzünden yavaş?
 
 </Lens>
 </Lenses>

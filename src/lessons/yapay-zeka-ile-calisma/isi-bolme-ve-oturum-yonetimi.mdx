@@ -1,10 +1,11 @@
 ---
-summary: "Büyük ve belirsiz talep sapmanın en verimli zeminidir: işi spec, plan, görevler, uygulama diye böl ve her aşamada bir insan kontrol noktası bırak. Oturum hijyeni (yeni iş yeni oturum, özetle yenile, kapsamı daralt) ve model/effort seçimi aynı mantığa bağlıdır."
+summary: "Büyük ve belirsiz talep sapmanın zeminidir: işi tanım, plan, görev ve uygulama diye böl, her adımda insan kontrolü bırak. Oturum hijyeni ile model ve effort seçimi aynı mantığa bağlıdır."
 outcomes:
   - "İşi bölmenin dört aşamasını ve 'tek promptla tüm site' yaklaşımının neden yavaş olduğunu açıklayabilirsin."
   - "Oturum hijyeninin üç kuralını sayabilirsin."
   - "Effort'un neyi kontrol ettiğini ve yanlış çıktı geldiğinde sırayla neye bakılacağını bilirsin."
 minutes: 9
+standard: 2
 sources:
   - label: "Claude Code Docs — Maliyeti verimli yönetme"
     url: "https://code.claude.com/docs/en/costs"
@@ -23,6 +24,10 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
+
+Leyla tek bir istekle kampüs projesinin risk kaydını, takvimini ve paydaş planını istedi. Gelen belge uzun ve kendinden emindi; yarısı başka bir projeye aitti. Sorun modelde değil, isteğin büyüklüğündeydi.
 
 ## Görev boyutu
 
@@ -34,6 +39,31 @@ Büyük ve belirsiz bir talep, sapma için en verimli zemindir. Yaygın tavsiye,
 4. **Her parçadan sonra kontrol.** Çıktıyı gör, sonra devam et.
 
 Bu, "tek promptla tüm siteyi yap" yaklaşımından yavaş görünür ama **toplam süre genelde daha kısadır,** çünkü geri dönüş turları azalır.
+
+<StepFlow
+  label="İşi bölmek"
+  caption="Büyük bir iş dört aşamaya bölünür. Önce tanım yazılır: ne yapılacak, kısıtlar ve kabul kriteri. Sonra bir plan istenir ve onaylanır. Ardından iş küçük görevlere ayrılır. Her görev uygulanır ve çıktısı görülmeden bir sonrakine geçilmez. Her aşamanın sonunda bir insan kontrol noktası vardır."
+  steps={[
+  {
+    title: "Tanım",
+    sub: "kısıt, kabul",
+    tone: "accent"
+  },
+  {
+    title: "Plan",
+    sub: "onayla"
+  },
+  {
+    title: "Görevler",
+    sub: "küçük parçalar"
+  },
+  {
+    title: "Uygulama",
+    sub: "her parçadan sonra bak",
+    tone: "progress"
+  }
+]}
+/>
 
 ## Oturum hijyeni
 
@@ -79,6 +109,17 @@ Bu yol haritası da bu ilkelerle yapıldı: önce spec ve mimari belgeleri, sonr
 
 </Callout>
 
+<Case>
+
+Leyla aynı işi ikinci kez bölerek yaptı:
+
+1. **Tanım:** proje tüzüğünü, kilometre taşlarını ve sponsorun "8. hafta entegrasyon hazır" koşulunu verdi. Kabul: her risk bir sahip ve bir karşı önlem taşıyacak.
+2. **Plan:** önce yalnız risk başlıklarının listesini istedi; iki başlığı çıkardı, birini ekledi.
+3. **Görevler:** risk kaydı, takvim ve paydaş planı üç ayrı oturumda hazırlandı. Her oturum bir önceki oturumun onaylanmış özetiyle başladı.
+4. **Sonuç:** toplam süre ilk denemeden kısaydı; çünkü geri dönüp düzeltecek bir şey kalmadı.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -86,6 +127,36 @@ Bu yol haritası da bu ilkelerle yapıldı: önce spec ve mimari belgeleri, sonr
 - **Oturum uzadığında özetle ve yenile.**
 - **Yanlış çıktıda önce bağlama bak,** ayarlara sonra.
 - **Her isteğe doğrulama iliştir:** ekran görüntüsü ve beklenen çıktı.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Strateji belgesi gibi büyük işlerde önce iskeleti onayla,** sonra bölüm bölüm yazdır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Backlog işini epic, story, kriter diye böl;** her seviyeyi ayrı onayla.
+
+</Lens>
+<Lens role="project-manager">
+
+- **WBS mantığını uygula:** işi teslim edilebilir parçalara böl, her parçayı ayrı oturumda üret.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Uzun oturumları ekip pratiğinde de böl:** yeni iş, yeni oturum.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Önce süreç kapsamını onaylat, sonra akış ve kuralları ayrı ayrı iste.**
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Sentezi aşamalı yap:** önce kodlama, sonra temalar, sonra içgörüler; her aşamada ham veriye dön.
 
 </Lens>
 </Lenses>

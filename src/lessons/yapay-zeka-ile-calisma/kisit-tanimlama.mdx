@@ -1,9 +1,10 @@
 ---
-summary: "Kısıtlar modelin senin yerine karar vermesini engeller. Bir web işi için kısıtlar beş grupta toplanır: teknik, tasarım, erişilebilirlik, kapsam ve her seferinde yazmak yerine talimat dosyasına taşınacak olanlar."
+summary: "Kısıtlar modelin senin yerine karar vermesini engeller. Bir iş için kısıtlar teknik, tasarım, erişilebilirlik ve kapsam diye gruplanır; kalıcı olanlar talimat dosyasına taşınır."
 outcomes:
   - "Beş kısıt grubunu ve her birinden örnek söyleyebilirsin."
   - "Hangi kısıtın talimat dosyasına, hangisinin prompt'a gittiğini ayırabilirsin."
-minutes: 5
+minutes: 3
+standard: 2
 sources:
   - label: "Anthropic Docs — Açık ve doğrudan ol"
     url: "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/be-clear-and-direct"
@@ -18,8 +19,38 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Kısıtlar, modelin senin yerine karar vermesini engelleyen şeydir. Bir web işi için tipik kısıt listesi beş grupta toplanır.
+
+<Tree
+  label="Kısıtların dört grubu"
+  caption="Bir işin kısıtları dört gruba ayrılır. Teknik kısıtlar stack, kütüphane ve paket boyutunu belirler. Tasarım kısıtları ölçekleri, token'ları ve yasakları söyler. Erişilebilirlik kısıtları klavye, kontrast ve dokunma hedefini kapsar. Kapsam kısıtları neye dokunulmayacağını sınırlar. Kalıcı olanlar talimat dosyasına taşınır, prompt'ta yalnız işe özgü olanlar kalır."
+  root={{
+  title: "Kısıtlar",
+  tone: "accent",
+  children: [
+    {
+      title: "Teknik",
+      sub: "stack, paket"
+    },
+    {
+      title: "Tasarım",
+      sub: "ölçek, token, yasak"
+    },
+    {
+      title: "Erişilebilirlik",
+      sub: "klavye, kontrast"
+    },
+    {
+      title: "Kapsam",
+      sub: "neye dokunma",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 ## Teknik
 
@@ -49,12 +80,54 @@ Kısıtlar, modelin senin yerine karar vermesini engelleyen şeydir. Bir web iş
 
 **Önemli:** kısıtları her seferinde yazmak yerine çoğunu **talimat dosyasına taşı;** prompt'ta yalnızca o işe özgü olanları belirt.
 
+<Case>
+
+Ece kampüs landing page'inin ilk taslağını yapay zekâyla çıkardı. Kısıtlar:
+
+1. **Teknik:** sayfa statik üretilir; yeni bağımlılık yok.
+2. **Tasarım:** renkler `kahve-*` token'larından; boşluk ölçeği 4, 8, 12, 16, 24, 32; tek birincil eylem "Uygulamayı indir".
+3. **Erişilebilirlik:** WCAG 2.2 AA; yanıp sönen animasyon yok.
+4. **Kapsam:** yalnız `/kampus` sayfası; bekleme listesi formu ayrı iş.
+5. **Kalıcı olan:** token ve ölçek kuralları zaten talimat dosyasında olduğu için prompt'a yalnız sayfaya özgü kısıtlar yazıldı.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
 - **Sayıyla yaz:** "boşluklar tutarlı olsun" değil, "4/8/12/16/24/32/48 ölçeği".
 - **Kalıcı olanı dosyaya, bu işe özgü olanı prompt'a koy.**
 - **Kapsam kısıtını atlama:** beklenmedik değişikliklerin önünü o keser.
+
+</Lens>
+<Lens role="product-manager">
+
+- **İş kısıtlarını da yaz:** bütçe, tarih, hukuki sınır. Model bunları bilmez.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kapsam dışını açıkça yaz;** yazılmayan sınır model için yoktur.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Plan isterken sabit kısıtları ver:** bitiş tarihi, kaynak, bağımlılık.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Ekip kurallarını talimat dosyasına taşı,** herkes aynı kısıtlarla çalışsın.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Kısıtı doğrulanabilir yaz:** "hızlı" değil, "2 saniyenin altında".
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Anket ve rehber isteğinde dil ve etik kısıt koy:** yönlendirici soru yok, kişisel veri istenmez.
 
 </Lens>
 </Lenses>
@@ -78,5 +151,11 @@ Teknik ("yeni bağımlılık ekleme"), tasarım ("ham hex yazma, token kullan"),
 <SelfCheck question="Kısıtları her prompt'ta yazmak yerine ne yapılır?">
 
 Çoğu talimat dosyasına taşınır; prompt'ta yalnızca o işe özgü olanlar belirtilir.
+
+</SelfCheck>
+
+<SelfCheck question="Hangi kısıtlar talimat dosyasına taşınır, hangileri prompt'ta kalır?">
+
+Her işte geçerli olan kalıcı kısıtlar talimat dosyasına taşınır: stack, ölçekler, token kuralı, yasaklar. Prompt'ta yalnız o işe özgü kısıtlar kalır: hangi sayfa, hangi dosya, bu işin kapsam dışı.
 
 </SelfCheck>

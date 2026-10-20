@@ -1,9 +1,10 @@
 ---
-summary: "Pipeline, kodun testten geçip yayına çıkana kadar izlediği otomatik adımlar dizisidir. Aşamalar: install, lint ve tip kontrolü, test, build, deploy, smoke test. Aynı artifact'ın tüm ortamlarda kullanılması önemli bir ilkedir."
+summary: "Pipeline, kodun testten geçip yayına çıkana kadar izlediği otomatik adımlardır: install, lint, test, build, deploy, smoke test. Staging'de denenen artifact production'a aynen çıkmalıdır."
 outcomes:
   - "Tipik bir hattın aşamalarını sayabilirsin."
   - "Build ve artifact'ı ve 'aynı artifact her ortamda' ilkesini açıklayabilirsin."
-minutes: 5
+minutes: 3
+standard: 2
 sources:
   - label: "Martin Fowler — Deployment Pipeline"
     url: "https://martinfowler.com/bliki/DeploymentPipeline.html"
@@ -15,6 +16,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Elle yapılan her adım unutulabilir ya da yanlış yapılabilir. Bu yüzden yayın otomatik bir hat olarak kurulur.
 
@@ -35,6 +38,46 @@ Elle yapılan her adım unutulabilir ya da yanlış yapılabilir. Bu yüzden yay
 
 **Build**, kaynak kodun çalıştırılabilir/servis edilebilir hâle getirilmesidir; **artifact** o işlemin ürettiği ve sonraki aşamalara taşınan çıktıdır. **Aynı artifact'ın tüm ortamlarda kullanılması önemli bir ilkedir:** staging'de test edilen şey ile production'a çıkan şey birebir aynı olmalıdır. Her ortam için ayrı build almak "staging'de çalışıyordu" sorununu üretir. "Staging'de test ettiğimiz artifact'ı production'a alalım; yeniden build etmeyelim."
 
+<StepFlow
+  label="Bir artifact, iki ortam"
+  caption="Build bir kez alınır ve bir artifact üretir. Bu artifact önce staging'e çıkar ve orada test edilir. Production'a yeni bir build değil, staging'de test edilen aynı artifact çıkar. Yayından hemen sonra smoke test temel akışların çalıştığını doğrular."
+  steps={[
+  {
+    title: "Build",
+    sub: "bir kez",
+    tone: "accent"
+  },
+  {
+    title: "Artifact",
+    sub: "tek çıktı"
+  },
+  {
+    title: "Staging",
+    sub: "test edilir"
+  },
+  {
+    title: "Production",
+    sub: "aynı artifact"
+  },
+  {
+    title: "Smoke test",
+    sub: "temel akışlar",
+    tone: "progress"
+  }
+]}
+/>
+
+<Case>
+
+Demlik'in sipariş servisi hattı:
+
+1. **Aşamalar:** install, lint ve tip kontrolü, test, build. Build bir Docker imajı üretiyor; imaj bir sürüm numarası alıyor.
+2. **Aynı artifact:** staging'de test edilen imaj, yeniden build edilmeden production'a çıkıyor. Önceden Panel her ortam için ayrı derleniyordu; production derlemesi bir kez eski bir paketle çıktı.
+3. **Smoke test:** yayından hemen sonra üç kontrol çalışıyor: dükkân sayfası açılıyor mu, ürün sepete ekleniyor mu, Panel giriş ekranı geliyor mu. Ödeme yapılmıyor.
+4. **Karar:** smoke test kırmızıysa yayın kendiliğinden bir önceki imaja dönüyor.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -48,6 +91,8 @@ Elle yapılan her adım unutulabilir ya da yanlış yapılabilir. Bu yüzden yay
 
 - Pipeline otomatik adımlar dizisidir: install, lint/tip, test, build, deploy, smoke test.
 - Artifact build'in çıktısıdır; aynı artifact tüm ortamlarda kullanılmalıdır.
+- Hat tamamen otomatikse yayın bir operasyon değil, bir karardır.
+- Smoke test yayından hemen sonra temel akışların çalıştığını doğrular.
 
 </Summary>
 
@@ -56,5 +101,17 @@ Elle yapılan her adım unutulabilir ya da yanlış yapılabilir. Bu yüzden yay
 <SelfCheck question="Aynı artifact'ın tüm ortamlarda kullanılması neden önemli?">
 
 Staging'de test edilen şey ile production'a çıkan şey birebir aynı olmalıdır. Her ortam için ayrı build almak "staging'de çalışıyordu" sorununu üretir.
+
+</SelfCheck>
+
+<SelfCheck question={"Pipeline tamamen otomatikse yayın neden \"bir karar\" olur?"}>
+
+Elle yapılan adım kalmadığı için yayın unutulabilecek ya da yanlış yapılabilecek bir operasyon olmaktan çıkar. Geriye yalnız "şimdi yayınlıyor muyuz?" sorusu kalır.
+
+</SelfCheck>
+
+<SelfCheck question="Smoke test neden yayından sonra çalışır ve ne kontrol eder?">
+
+Testler yayından önce kodu doğrular; smoke test ise canlı ortamda temel akışların gerçekten çalıştığını doğrular. Örneğin sayfa açılıyor mu, ürün sepete ekleniyor mu. Ortam farkından doğan sorunları yayından hemen sonra yakalar.
 
 </SelfCheck>

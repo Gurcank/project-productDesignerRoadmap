@@ -1,10 +1,12 @@
 ---
-summary: "Ortam türleri ve yapılandırma yönetimi: preview ortamı doğrudan senin işine yarar (kimseden bir şey istemeden gerçek adreste görme). Eksik ya da yanlış ortam değişkeni deploy sorunlarının en yaygın sebebidir; staging'de gerçek servis kullanmak tehlikelidir."
+summary: "Aynı uygulama local, preview, staging ve production ortamlarında çalışır. Preview her PR için geçici bir adrestir ve onayı hızlandırır. Deploy sorunlarının en yaygın sebebi eksik ortam değişkenidir."
 outcomes:
   - "Preview ortamının neden değerli olduğunu ve staging'den farkını söyleyebilirsin."
   - "Ortam değişkeni yönetiminin neden gerekli olduğunu açıklayabilirsin."
   - "Staging'de gerçek servisleri kullanmanın riskini bilirsin."
 minutes: 5
+standard: 2
+skipTerms: ["bağımlılık"]
 sources:
   - label: "Vercel — Preview deployment'lar"
     url: "https://vercel.com/docs/deployments/preview-deployments"
@@ -17,6 +19,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir tasarım değişikliğini müşteriye göstermek istiyorsun, ama canlıya almak da istemiyorsun. Çözüm: preview ortamı.
 
@@ -24,7 +28,32 @@ Bir tasarım değişikliğini müşteriye göstermek istiyorsun, ama canlıya al
 
 Aynı uygulamanın farklı amaçlarla çalışan kopyaları: **local, development, preview, staging, production.** **Preview environment**, her PR için otomatik oluşturulan, geçici ve kendine ait adresi olan ortamdır.
 
-**Preview ortamı doğrudan senin işine yarar:** bir tasarım değişikliğini kimseden bir şey istemeden, gerçek bir adreste görebilir ve paylaşabilirsin. Modern hosting platformlarının en değerli özelliklerinden biridir. "PR'ın preview linkini müşteriye gönderelim; staging'e almadan onay alalım." Karıştırma: **preview geçicidir ve PR'a bağlıdır;** staging kalıcı ve tektir.
+<StepFlow
+  label="Bir değişikliğin geçtiği ortamlar"
+  caption="Değişiklik önce geliştiricinin kendi bilgisayarında çalışır. PR açılınca o PR'a ait geçici bir preview adresi oluşur; tasarım ve ürün onayı orada verilir. Ana dala giren değişiklik kalıcı ve tek olan staging ortamına çıkar; staging test servislerini kullanır. Son durak gerçek kullanıcıların ve gerçek ödemenin olduğu production'dır."
+  steps={[
+  {
+    title: "Local",
+    sub: "geliştiricinin bilgisayarı",
+    tone: "accent"
+  },
+  {
+    title: "Preview",
+    sub: "PR başına, geçici"
+  },
+  {
+    title: "Staging",
+    sub: "kalıcı, test servisleri"
+  },
+  {
+    title: "Production",
+    sub: "gerçek kullanıcı",
+    tone: "progress"
+  }
+]}
+/>
+
+**Preview ortamı tasarım ve ürün onayını hızlandırır:** bir değişikliği kimseden bir şey istemeden, gerçek bir adreste görebilir ve paylaşabilirsin. Modern hosting platformlarının en değerli özelliklerinden biridir. "PR'ın preview linkini müşteriye gönderelim; staging'e almadan onay alalım." Karıştırma: **preview geçicidir ve PR'a bağlıdır;** staging kalıcı ve tektir.
 
 ## Ortam değişkeni yönetimi
 
@@ -32,12 +61,47 @@ Her ortamın kendi yapılandırma değerlerine sahip olması ve sırların güve
 
 **Staging'de gerçek servisleri kullanmak tehlikelidir:** test siparişi gerçek kart çekebilir, test e-postası gerçek müşteriye gidebilir. Bu bir tasarım ve süreç kararıdır.
 
+<Case>
+
+Demlik'in ortamları:
+
+1. **Preview:** müşteri sitesinde ve Panel'de her PR kendi adresini alıyor. Selin onayını o linkte veriyor; Ozan da Panel değişikliklerini dükkân sahibine aynı linkle gösteriyor.
+2. **Staging:** `staging.demlik.com.tr`, ödeme kuruluşunun test modunu kullanıyor. Test siparişi gerçek kart çekemez.
+3. **Ortam değişkeni:** yeni e-posta servisinin anahtarı staging'e eklenmiş, production'a eklenmemişti. Yayından sonra şifre sıfırlama e-postaları 25 dakika gitmedi.
+4. **Önlem:** hatta bir adım, production'da gereken değişkenlerin listesini yayından önce kontrol ediyor; eksik varsa yayın durur.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
 - **Her tasarım PR'ında preview linki iste** ve onayı o linkte ver.
 - **Staging'in test servislerini (sahte ödeme, test e-postası) kullandığını doğrula.**
 - **Ortam farklılıklarını test planına yaz:** ödeme, e-posta, analitik farklı ortamlarda farklı davranır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Erken geri bildirimi preview linkiyle topla.** Paydaşa ekran görüntüsü değil, çalışan bir adres gönder.
+- **Ortam farkını lansman planına yaz:** ödeme, e-posta ve analitik her ortamda farklı davranır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kabulü preview ya da staging'de ver;** "bende çalışıyor" ekran görüntüsünü kabul sayma.
+- **Test verisinin gerçek kullanıcıya dokunmadığını sor.** Test e-postası müşteriye gitmemeli.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Dış tedarikçinin test ortamını takvime bağımlılık olarak yaz.** Test ortamı hazır değilse entegrasyon testi başlamaz.
+- **Ortam değişkeni eksikliğini yayın kontrol listesine ekle.**
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Preview'u inceleme döngüsünü kısaltmak için kullan.** Onay için toplantı beklemek yerine link paylaşılsın.
+- **Staging'in tıkandığı anları gör;** tek staging'i sırayla kullanan ekip bekler.
 
 </Lens>
 </Lenses>
@@ -61,5 +125,11 @@ Bir tasarım değişikliğini kimseden bir şey istemeden gerçek bir adreste g�
 <SelfCheck question="Staging'de gerçek servisleri kullanmanın riski nedir?">
 
 Test siparişi gerçek kart çekebilir, test e-postası gerçek müşteriye gidebilir. Staging test anahtarlarını kullanmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Yayından sonra şifre sıfırlama e-postaları gitmiyor ama staging'de çalışıyordu. İlk neye bakarsın?">
+
+Production ortam değişkenlerine bakarım. Aynı kod farklı ortamlarda farklı anahtarlarla çalışır; deploy sorunlarının en yaygın sebebi eksik ya da yanlış ortam değişkenidir. Staging'de olan anahtar production'a eklenmemiş olabilir.
 
 </SelfCheck>

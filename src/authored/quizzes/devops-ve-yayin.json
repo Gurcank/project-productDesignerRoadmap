@@ -1,0 +1,132 @@
+{
+  "category": "devops-ve-yayin",
+  "overrides": true,
+  "sources": [
+    {
+      "label": "Martin Fowler — Continuous Integration",
+      "url": "https://martinfowler.com/articles/continuousIntegration.html"
+    },
+    {
+      "label": "Martin Fowler — Continuous Delivery",
+      "url": "https://martinfowler.com/bliki/ContinuousDelivery.html"
+    },
+    {
+      "label": "Atlassian — CI vs. CD vs. Deployment",
+      "url": "https://www.atlassian.com/continuous-delivery/principles/continuous-integration-vs-delivery-vs-deployment"
+    },
+    {
+      "label": "Martin Fowler — Blue Green Deployment",
+      "url": "https://martinfowler.com/bliki/BlueGreenDeployment.html"
+    },
+    {
+      "label": "Martin Fowler — Canary Release",
+      "url": "https://martinfowler.com/bliki/CanaryRelease.html"
+    },
+    {
+      "label": "Martin Fowler — Feature Toggles",
+      "url": "https://martinfowler.com/articles/feature-toggles.html"
+    }
+  ],
+  "items": [
+    {
+      "question": "Continuous Delivery ile Continuous Deployment arasındaki fark nedir?",
+      "answer": "**Continuous Delivery**: her değişiklik yayına çıkmaya hazır hâle gelir ama yayın kararını insan verir. **Continuous Deployment**: testleri geçen her değişiklik otomatik olarak canlıya çıkar. Çoğu ekip \"CD yapıyoruz\" derken aslında birincisini kastediyor."
+    },
+    {
+      "question": "Aynı artifact'ın tüm ortamlarda kullanılması neden önemli?",
+      "answer": "Çünkü **staging'de test edilen şey ile production'a çıkan şey birebir aynı olmalıdır.** Her ortam için ayrı build almak, \"staging'de çalışıyordu\" sorununu üretir."
+    },
+    {
+      "question": "Preview environment onay sürecinde neden değerli? Staging'den farkı nedir?",
+      "answer": "Bir değişikliği kimseden bir şey istemeden, **gerçek bir adreste** görmek ve paydaşla paylaşmak mümkündür. Farkı: preview **geçicidir ve PR'a bağlıdır**; staging kalıcı ve tektir."
+    },
+    {
+      "question": "Staging'de gerçek servisleri kullanmanın riski nedir?",
+      "answer": "Test siparişi **gerçek kart çekebilir**, test e-postası **gerçek müşteriye gidebilir**. Staging test anahtarlarını kullanmalıdır; bu bir süreç kararıdır."
+    },
+    {
+      "question": "Docker \"bende çalışıyor\" problemini nasıl çözer? Konteyner bir sanal makine midir?",
+      "answer": "Uygulama yalnızca kendi kodunu değil, **çalıştığı ortamı da taşır** (dil sürümü, kütüphaneler, sistem parçaları). Senin bilgisayarında çalışan imaj sunucuda da birebir aynı çalışır. **Hayır, sanal makine değildir** — işletim sistemini tekrarlamaz, sadece yalıtım sağlar; bu yüzden çok daha hafiftir."
+    },
+    {
+      "question": "Konteynerdeki veri neden kaybolur? Çözümü nedir?",
+      "answer": "Çünkü **konteyner varsayılan olarak kalıcı değildir**; durdurulduğunda içindeki veri silinir. Kalıcı veri için **volume** kullanılır."
+    },
+    {
+      "question": "Kubernetes ne zaman gereksiz karmaşıklıktır? \"Kubernetes kullanıyoruz\" ne göstergesi olmalıdır?",
+      "answer": "Onlarca servis ve gerçek bir ölçek yoksa gereksizdir: Kubernetes'in kendisi bakım gerektiren bir sistemdir ve küçük bir ekibin ürün geliştirme zamanını yer. \"Kubernetes kullanıyoruz\" bir **üstünlük göstergesi değil, bir ölçek göstergesi** olmalıdır."
+    },
+    {
+      "question": "Serverless tek başına hangi durumlarda yetmez?",
+      "answer": "**Sürekli çalışan süreçler** gerektiğinde: WebSocket sunucusu, arka plan worker'ı, uzun süren işler ve cron benzeri kalıcı görevler. Bunlar için kalıcı konteyner çalıştıran platformlar gerekir."
+    },
+    {
+      "question": "Kullanıma dayalı faturalamanın bilinen riski nedir ve savunması ne?",
+      "answer": "**Bot ve tarayıcı trafiği faturayı şişirebilir** — yayınlanmamış bir proje bile taranıp yüksek fatura üretebilir. Savunma: harcama sınırı ve uyarı kurmak, bot trafiğini engellemek (WAF), hız sınırı uygulamak. Bunlar yayından **önce** kurulmalıdır."
+    },
+    {
+      "question": "Nameserver değiştirirken en kritik dikkat noktası nedir?",
+      "answer": "**E-posta kayıtları (MX, TXT).** Nameserver değiştirip eski kayıtları taşımazsan **şirketin e-postası çalışmayı bırakır** — yayın gününün en kötü sürprizlerinden biri."
+    },
+    {
+      "question": "Yayın gününde \"bende açılmıyor\" şikâyetlerinin en yaygın sebebi nedir?",
+      "answer": "**DNS propagation.** Değişiklik anında geçerli olmaz; bazı kullanıcılar bir süre eski adresi görür. Genelde bir hata değildir. Geçiş öncesi TTL düşürülerek süre kısaltılabilir."
+    },
+    {
+      "question": "Blue-green ile canary arasındaki fark nedir?",
+      "answer": "**Blue-green**: iki tam ortam vardır, trafik bir anda yeniye çevrilir; geri dönüş anlıktır ama iki kat altyapı maliyeti vardır. **Canary**: yeni sürüm önce kullanıcıların küçük bir yüzdesine açılır, sorun yoksa oran kademeli artırılır; hatanın etki alanını sınırlar."
+    },
+    {
+      "question": "Feature flag'in en önemli katkısı nedir? Dört sonucunu say.",
+      "answer": "**Yayın (deploy) ile açılışı (release) birbirinden ayırır.** Sonuçları: (a) yarım kalmış iş ana dala girebilir, (b) özellik pazarlama takvimine göre yeni yayın gerekmeden açılabilir, (c) sorun çıkarsa saniyeler içinde kapatılabilir (kill switch), (d) A/B testi ve kademeli açılım bunun üstüne kurulur."
+    },
+    {
+      "question": "Feature flag'lerin biriktirdiği sorun nedir?",
+      "answer": "**Birikirler ve teknik borç üretirler.** Kullanılmayan bayraklar kodu dallandırır ve test edilmesi gereken durum sayısını katlar. Her bayrağın bir sahibi ve bir kaldırılma tarihi olmalıdır."
+    },
+    {
+      "question": "Canlıda bir şey bozulduğunda ilk refleks ne olmalı? Veritabanı değişiklikleri bunu nasıl zorlaştırır?",
+      "answer": "**Rollback** — önce geri dön, kullanıcı etkisini durdur, sonra sebebi araştır. Veritabanı değişiklikleri bunu zorlaştırır: kod geri alınabilir ama **silinmiş bir sütun geri gelmez.** Bu yüzden migration'lar geriye uyumlu planlanır: önce ekle, sonra kullan, en son eskisini kaldır."
+    },
+    {
+      "question": "Postmortem'in \"blameless\" olması neden kritik?",
+      "answer": "Çünkü amaç suçlu bulmak değil, **sistemdeki zayıflığı bulmaktır.** Suçlama kültüründe insanlar hataları gizler ve sistem öğrenemez."
+    },
+    {
+      "question": "Olay anında ürün ve tasarım tarafının rolü nedir?",
+      "answer": "Olay sırasında **kullanıcıya ne gösterileceğini önceden tasarlamış olmak**: bakım ekranı, durum sayfası, hata mesajı. Olay anında metin yazmaya çalışmak kötü sonuç verir."
+    },
+    {
+      "question": "Monitoring ile observability arasındaki fark nedir?",
+      "answer": "**Monitoring** önceden bildiğin sorunları izler (\"CPU %90'ı geçti mi?\"). **Observability** bilmediğin sorunları sorabilme yeteneğidir (\"neden sadece Türkiye'deki Android kullanıcıları yavaş?\")."
+    },
+    {
+      "question": "Log, metric ve trace hangi üç farklı soruyu cevaplar?",
+      "answer": "**Metric**: \"bir sorun var mı?\" **Trace**: \"nerede?\" **Log**: \"tam olarak ne oldu?\""
+    },
+    {
+      "question": "Alert fatigue nedir?",
+      "answer": "Çok fazla uyarı gönderen bir sistemde insanların uyarıları görmezden gelmeye başlaması — ve bu yüzden gerçek olayın kaçırılması. Uyarılar eyleme geçilebilir olanlarla sınırlı tutulmalıdır."
+    },
+    {
+      "question": "Error tracking neden gerekli? Kullanıcılar hataları bildirmez mi?",
+      "answer": "Çünkü **kullanıcıların çoğu hata bildirmez, sadece terk eder.** Hata izleme bildirilmeyen sorunları görünür kılar: hangi tarayıcıda, hangi sayfada, kaç kullanıcıda olduğunu gösterir."
+    },
+    {
+      "question": "Event tasarımı neden ürün ekibinin işidir? Plansız olay ekleme nasıl sonuçlanır?",
+      "answer": "Çünkü hangi davranışın ölçüleceği bir ürün kararıdır ve çoğu ekipte sahipsiz kalır. Plansız eklenirse üç ay sonra `button_click`, `btn_clicked` ve `ClickedButton` adlı üç ayrı olay olur ve hiçbiri analiz edilemez. Başarı ölçütü tanımlanırken onu ölçecek olay da tanımlanmalıdır."
+    },
+    {
+      "question": "Tasarım kararlarının bulut maliyetiyle bağlantısına iki örnek ver.",
+      "answer": "(a) Optimize edilmemiş görseller **egress** faturasını büyütür — görsel optimizasyonu hem hız hem maliyet kararıdır. (b) Her sayfada çalışan ağır bir sunucu işlevi hesaplama maliyeti üretirken, statik üretim neredeyse bedavadır — rendering stratejisi bir maliyet kararıdır."
+    },
+    {
+      "question": "Yeni bir düğme feature flag arkasında yayınlanacak. Kademeli açılışı nasıl planlarsın?",
+      "answer": "Önce yalnız ekibe, sonra kullanıcıların küçük bir yüzdesine (ör. %10), sonra herkese açılır. Her basamak için durdurma koşulu önceden yazılır (ör. hatalı siparişler %1'i geçerse bayrak kapanır). Bayrağın bir sahibi ve kaldırılma tarihi olur."
+    },
+    {
+      "question": "DNS kaydı bir akşam önce değişti; sabah iki kullanıcı eski sürümü görüyor. Ne oluyor, bir dahakine ne yapılır?",
+      "answer": "DNS değişikliği henüz her yere yayılmamıştır (propagation); genelde hata değildir. Bir dahakine geçişten önce TTL düşürülür ve geçiş, sorun çıkarsa müdahale edilebilecek bir saatte yapılır."
+    }
+  ]
+}

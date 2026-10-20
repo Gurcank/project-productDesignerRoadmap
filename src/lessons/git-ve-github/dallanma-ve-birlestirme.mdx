@@ -1,10 +1,11 @@
 ---
-summary: "Git'in asıl gücü: birden fazla kişinin birbirini engellemeden çalışabilmesi. Branch, merge, rebase, conflict ve cherry-pick. Dal ne kadar uzun yaşarsa çakışma o kadar büyür; rebase'in altın kuralı: paylaşılan dalda yapma."
+summary: "Git'in asıl gücü birden çok kişinin birbirini engellemeden çalışması: branch, merge, rebase, conflict ve cherry-pick. Dal uzun yaşadıkça çakışma büyür; rebase paylaşılan dalda yapılmaz."
 outcomes:
   - "Branch ve merge'in neden gerekli olduğunu söyleyebilirsin."
   - "Rebase'in altın kuralını ve nedenini açıklayabilirsin."
   - "Merge conflict'in neden normal olduğunu ve uzun dallarda neden büyüdüğünü bilirsin."
-minutes: 8
+minutes: 4
+standard: 2
 sources:
   - label: "Pro Git — Temel dallanma ve birleştirme"
     url: "https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging"
@@ -19,6 +20,7 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Üç kişi aynı projede çalışıyor. Biri yeni bir tasarımı kodluyor, biri bir hatayı düzeltiyor, biri bir özelliği deniyor. Hiçbiri ötekinin yarım işiyle karşılaşmak istemiyor. Çözüm: dallar.
 
@@ -45,6 +47,17 @@ import Lenses from "~/components/lesson/Lenses.astro";
 ## Cherry-pick
 
 **Cherry-pick (seçerek alma)**, bir daldaki tek bir commit'i dalın tamamını almadan başka bir dala kopyalamaktır. Acil düzeltmelerde işe yarar: kritik bir düzeltmeyi, o dalın geri kalanı hazır değilken canlıya almak. "Yalnızca o düzeltmeyi cherry-pick'leyip release dalına alalım."
+
+<Case>
+
+Demlik'te dallar kısa ömürlü:
+
+1. **Dal:** "Son siparişini tekrarla" için Ece bir dal açtı; Burak'ın ödeme düzeltmesi ayrı bir daldaydı.
+2. **Conflict:** iki dal da sipariş kartı bileşenine dokunmuştu. Birleştirirken çakışma çıktı; ikisi on dakikada birlikte çözdü. Dallar bir günlük olduğu için çakışma küçüktü.
+3. **Rebase:** Ece kendi dalını main'in güncel hâline rebase etti; paylaşılan dallarda rebase yapılmıyor.
+4. **Cherry-pick:** kampüs pilotunun ilk sabahı indirim hesabındaki bir hata için tek bir düzeltme commit'i cherry-pick ile hemen yayına alındı; dalın geri kalanı hazır değildi.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -76,5 +89,17 @@ Kötü değil, normaldir: Git'in "bunu ben çözemem, sen karar ver" demesidir. 
 <SelfCheck question="Rebase'in altın kuralı nedir ve neden?">
 
 Paylaşılan dallarda rebase yapma, kendi dalında yap. Rebase geçmişi yeniden yazar; başkalarının kullandığı bir dalda yapılırsa herkesin geçmişi bozulur.
+
+</SelfCheck>
+
+<SelfCheck question="Paylaşılan bir dalda rebase yapmak neden sorun yaratır?">
+
+Rebase geçmişi yeniden yazar. Başkalarının da üzerinde çalıştığı bir dalın geçmişi değişince onların yerel kopyaları uyuşmaz hâle gelir. Rebase yalnız kendi dalında yapılır.
+
+</SelfCheck>
+
+<SelfCheck question="Merge conflict kötü bir şey midir?">
+
+Hayır, normaldir: iki kişi aynı satırları farklı değiştirmiştir ve Git hangisinin doğru olduğuna karar veremez. Ama dallar uzun yaşadıkça çakışmalar büyür; kısa ömürlü dallar bunu küçük tutar.
 
 </SelfCheck>

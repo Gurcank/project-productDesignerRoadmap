@@ -1,10 +1,12 @@
 ---
-summary: "Kodun bilgisayardan çıkıp kullanıcıya ulaştığı süreç: yayın hızı tasarım kalitesini belirler. CI, Continuous Delivery ve Continuous Deployment üç ayrı şeydir; 'CD yapıyoruz' cümlesi hangisini kastettiğini söylemez."
+summary: "CI her değişikliği sık birleştirip otomatik test eder. Continuous Delivery'de yayın kararını insan verir, Continuous Deployment'ta testi geçen her şey kendiliğinden çıkar. Yayın hızı ürün kalitesini belirler."
 outcomes:
   - "CI'ın ne olduğunu ve neden sık birleşmenin çakışmayı küçülttüğünü söyleyebilirsin."
   - "Continuous Delivery ile Continuous Deployment arasındaki farkı açıklayabilirsin."
   - "Yayın hızının tasarım kalitesini nasıl etkilediğini bilirsin."
 minutes: 7
+standard: 2
+skipTerms: ["geri alma"]
 sources:
   - label: "Martin Fowler — Continuous Integration"
     url: "https://martinfowler.com/articles/continuousIntegration.html"
@@ -20,12 +22,18 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Bu bölüm, kodun bilgisayardan çıkıp kullanıcıya ulaştığı ve orada yaşadığı süreci anlatıyor. Tasarımcı için üç somut bağlantısı var:
+Selin bir PR'da yanlış bir boşluk değeri buldu. Düzeltme tek satır. Yayın ayda bir ve elle yapılıyorsa bu satır bir ay bekler; her gün ve otomatik yapılıyorsa öğleden sonra canlıdadır. Kodun bilgisayardan çıkıp kullanıcıya ulaştığı süreç bu yüzden bütün ürün ekibini ilgilendirir.
 
-1. **Yayın hızı, tasarım kalitesini belirler.** Deploy zorsa küçük düzeltmeler birikir ve "sonraki sürümde" diye ertelenir; kolaysa boşluk değerini düzeltmek beş dakikalık bir iştir. CI/CD dolaylı olarak senin işini etkiler.
+## Yayın neden herkesi ilgilendirir
+
+Üç somut bağlantısı var:
+
+1. **Yayın hızı, tasarım kalitesini belirler.** Deploy zorsa küçük düzeltmeler birikir ve "sonraki sürümde" diye ertelenir; kolaysa boşluk değerini düzeltmek beş dakikalık bir iştir. CI/CD dolaylı olarak ürün kalitesini etkiler.
 2. **Kalite kontrolü otomatikleştirilebilir.** Erişilebilirlik taraması, performans bütçesi ve görsel karşılaştırma testleri yayın hattına konabilir; kontrol insan hafızasına değil sürece bağlanır.
-3. **Canlıda ne olduğunu görmek.** Analitik olaylarını tasarlamak senin işin; bir hata canlıda yaşandığında kullanıcının gördüğü de senin tasarladığın ekrandır.
+3. **Canlıda ne olduğunu görmek.** Hangi davranışın ölçüleceğine ürün ekibi karar verir; bir hata canlıda yaşandığında kullanıcının gördüğü de ekibin tasarladığı ekrandır.
 
 Bölümdeki kavramlar eskimeyen, **ürün ve fiyat bilgileri hızlı eskiyen** türdendir.
 
@@ -54,12 +62,72 @@ Bölümdeki kavramlar eskimeyen, **ürün ve fiyat bilgileri hızlı eskiyen** t
 
 İkisinin farkı bir kültür meselesidir. Continuous Deployment günde onlarca yayın demektir ve ancak güçlü test altyapısı, feature flag ve hızlı geri alma varsa güvenlidir. **"CD yapıyoruz" cümlesi hangisini kastettiğini söylemez; sorulmalıdır.** "CI/CD" kısaltması üç kavramı tek torbaya koyar; çoğu ekip aslında CI + Continuous Delivery yapar, Continuous Deployment değil.
 
+<StepFlow
+  label="Kodun canlıya yolculuğu"
+  caption="Geliştirici değişikliğini ortak dala katar. Her katmada otomatik testler çalışır; buraya kadarı sürekli entegrasyondur. Testi geçen değişiklik yayına hazır hâle gelir; Continuous Delivery'de son düğmeye insan basar. Continuous Deployment'ta aynı değişiklik insan onayı olmadan kendiliğinden canlıya çıkar."
+  steps={[
+  {
+    title: "Ortak dala kat",
+    sub: "günde en az bir",
+    tone: "accent"
+  },
+  {
+    title: "Otomatik test",
+    sub: "her katmada"
+  },
+  {
+    title: "Yayına hazır",
+    sub: "Delivery: insan basar"
+  },
+  {
+    title: "Canlı",
+    sub: "Deployment: otomatik",
+    tone: "progress"
+  }
+]}
+/>
+
+<Case>
+
+Demlik CI ve Continuous Delivery yapıyor, Continuous Deployment yapmıyor:
+
+1. **CI:** her PR'da GitHub Actions lint, tip kontrolü, test ve build çalıştırıyor; hat yaklaşık sekiz dakika sürüyor. Kırmızıysa birleştirme düğmesi kapalı.
+2. **Delivery:** ana dala giren her değişiklik kendiliğinden staging'e çıkıyor. Production'a çıkış tek bir düğme; düğmeye geliştirici basıyor, haftada ortalama on iki kez.
+3. **Kural:** cuma 15.00'ten sonra canlıya çıkış yok. Hafta sonu bir sorunu çözecek kimse ofiste değil.
+4. **Sonuç:** Selin'in bulduğu boşluk hatası aynı gün düzeltildi ve öğleden sonra canlıdaydı; "sonraki sürüm" listesine girmedi.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
 - **Yayın hızını tasarım kalitesinin bir parçası olarak gör:** küçük düzeltmeler kolay yayınlanıyorsa ince detaylar düzelir.
 - **Kalite kontrollerini (erişilebilirlik, görsel fark, performans bütçesi) hatta koyma önerisini getir.**
 - **"CD" duyduğunda hangisini kastettiğini sor.**
+
+</Lens>
+<Lens role="product-manager">
+
+- **Yayın sıklığını keşif hızının bir parçası say.** Haftada bir yayın, haftada bir öğrenme demektir.
+- **"CD yapıyoruz" denince hangisi olduğunu sor.** Lansman takvimini buna göre kurarsın.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kabul ettiğin story'nin ne zaman canlıda olacağını hattan öğren.** "Bitti" ile "kullanıcıda" arasındaki süreyi bil.
+- **Kırmızı hattı sprint riski olarak gör;** birleşemeyen iş bitmiş sayılmaz.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Yayın kuralını (cuma 15.00 gibi) takvime yaz.** Kilometre taşını o kurala göre koy.
+- **Hattın süresini planlamaya kat;** sekiz dakikalık hat ile iki saatlik hat aynı takvimi üretmez.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Kırmızı hattı ekip engeli olarak ele al.** Uzun süren kırmızı, birleşmeyi ve akışı durdurur.
+- **Küçük ve sık birleşmeyi çalışma sözleşmesine yaz.** Haftalık dallar büyük çakışma üretir.
 
 </Lens>
 </Lenses>
@@ -77,5 +145,17 @@ Bölümdeki kavramlar eskimeyen, **ürün ve fiyat bilgileri hızlı eskiyen** t
 <SelfCheck question="Continuous Delivery ile Continuous Deployment arasındaki fark nedir?">
 
 Continuous Delivery: her değişiklik yayına çıkmaya hazır hâle gelir ama yayın kararını insan verir. Continuous Deployment: testleri geçen her değişiklik otomatik olarak canlıya çıkar. Çoğu ekip "CD yapıyoruz" derken aslında birincisini kastediyor.
+
+</SelfCheck>
+
+<SelfCheck question="Continuous Integration neden çakışmaları küçük tutar?">
+
+Değişiklikler en az günde bir ortak dala katılır ve her katmada testler çalışır. Bir hafta ayrı çalışılan iki dal birleşince büyük bir çakışma çıkar; günlük birleşmede çakışma küçük olur ve erken yakalanır.
+
+</SelfCheck>
+
+<SelfCheck question={"Ekibin \"CI/CD yapıyoruz\" dedi. Lansman takvimini kurmadan önce ne sorarsın?"}>
+
+Continuous Delivery mi, Continuous Deployment mı kastedildiğini sorarım. Delivery'de yayın kararını insan verir, takvim bir düğmeye bağlıdır. Deployment'ta testi geçen her değişiklik kendiliğinden çıkar; özellik açılışı feature flag ile ayrıca yönetilmelidir.
 
 </SelfCheck>

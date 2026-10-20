@@ -1,10 +1,12 @@
 ---
-summary: "Bir şeyler ters gittiğinde: önce geri dön (rollback), sonra sebebi araştır. Hotfix, incident, severity, on-call, runbook ve blameless postmortem. Tasarımcının rolü: olay sırasında kullanıcıya ne gösterileceğini önceden tasarlamak."
+summary: "Bir şey ters gidince önce geri dön, sonra sebebi araştır. Severity, on-call ve runbook kriz anında kimin ne yapacağını önceden belirler. Postmortem suçlu değil, sistemdeki zayıflığı arar."
 outcomes:
   - "Rollback'in neden ilk refleks olduğunu ve veritabanı değişikliklerinin onu nasıl zorlaştırdığını söyleyebilirsin."
   - "Hotfix'in riskini açıklayabilirsin."
-  - "Olay anında tasarımcının rolünü ve blameless postmortem'in önemini bilirsin."
-minutes: 8
+  - "Olay anında ürün ve tasarım tarafının rolünü ve blameless postmortem'in önemini bilirsin."
+minutes: 5
+standard: 2
+skipTerms: ["geri alma"]
 sources:
   - label: "Google SRE Kitabı — Olayları yönetmek"
     url: "https://sre.google/sre-book/managing-incidents/"
@@ -18,6 +20,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Sabah 03:00, ödeme sayfası çalışmıyor. Kimin ne yapacağı o an belirlenmeyecek; önceden belirlenmiş olmalı.
 
@@ -40,11 +44,51 @@ Sabah 03:00, ödeme sayfası çalışmıyor. Kimin ne yapacağı o an belirlenme
 
 Kriz anında "kim ne yapacak" sorusunu önceden cevaplarlar. Panik anında karar vermek yerine yazılı bir plan uygulanır. "Bu sev2; kullanıcılar etkileniyor ama akış tamamen durmuş değil."
 
-**Tasarımcının rolü var:** olay sırasında kullanıcıya ne gösterileceği (bakım ekranı, durum sayfası, hata mesajı) **önceden tasarlanmış** olmalıdır. Olay anında metin yazmaya çalışmak kötü sonuç verir.
+<StepFlow
+  label="Bir olayın yaşam döngüsü"
+  caption="Olay önce tespit edilir: uyarı ya da kullanıcı şikâyeti. Nöbetçi severity'yi belirler ve runbook'u açar. İlk hedef kullanıcı etkisini durdurmaktır: rollback ya da kill switch. Etki durduktan sonra kök neden araştırılır. Olay kapanınca suçlamasız bir postmortem yazılır ve tekrarını önleyecek iş backlog'a girer."
+  steps={[
+  {
+    title: "Tespit",
+    sub: "uyarı, şikâyet",
+    tone: "accent"
+  },
+  {
+    title: "Severity",
+    sub: "nöbetçi, runbook"
+  },
+  {
+    title: "Etkiyi durdur",
+    sub: "rollback, kill switch"
+  },
+  {
+    title: "Kök neden"
+  },
+  {
+    title: "Postmortem",
+    sub: "suçlamasız",
+    tone: "progress"
+  }
+]}
+/>
+
+**Ürün ve tasarım tarafının da rolü var:** olay sırasında kullanıcıya ne gösterileceği (bakım ekranı, durum sayfası, hata mesajı) **önceden tasarlanmış** olmalıdır. Olay anında metin yazmaya çalışmak kötü sonuç verir.
 
 ## Postmortem
 
 **Postmortem (olay sonrası değerlendirme)**: bir olaydan sonra ne olduğunu, neden olduğunu ve tekrarlamaması için ne yapılacağını yazan belge. **"Blameless" olması kritiktir:** amaç suçlu bulmak değil, sistemdeki zayıflığı bulmaktır. Suçlama kültüründe insanlar hataları gizler ve sistem öğrenemez. "Postmortem yazalım; asıl soru 'kim yaptı' değil, 'bu nasıl canlıya kadar geldi'." Retrospective ile akrabadır ama farklıdır: retro düzenli ve süreç odaklı, postmortem olaya özel ve teknik odaklıdır.
+
+<Case>
+
+Demlik'in tek SMS sağlayıcısı bir sabah 40 dakika kesildi:
+
+1. **Tespit:** synthetic izleme giriş kodu adımında kırmızıya döndü; nöbetçi o hafta Can'dı.
+2. **Severity:** sev2. Yeni giriş yapamayan müşteriler vardı ama açık oturumlar sipariş verebiliyordu.
+3. **Kullanıcıya:** Selin'in önceden yazdığı şerit açıldı: "Giriş kodları gecikiyor. Açık oturumun çalışmaya devam ediyor." Metin olay anında yazılmadı.
+4. **Postmortem:** soru "kim yaptı" değil, "neden tek sağlayıcıya bağlıydık" oldu. İkinci sağlayıcı eklendi; runbook'a geçiş adımı yazıldı.
+5. **Rollback örneği:** daha önce Panel'in bir sürümü sipariş listesini boş göstermişti; önce geri alındı, dört dakika sürdü, sebep ertesi gün bulundu.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -54,6 +98,30 @@ Kriz anında "kim ne yapacak" sorusunu önceden cevaplarlar. Panik anında karar
 - **Postmortem'e katıl:** kullanıcı deneyimi açısından "bu olay kullanıcıya nasıl yansıdı?" sorusunu sen sor.
 
 </Lens>
+<Lens role="product-manager">
+
+- **Olay iletişiminin sahibini önceden belirle:** durum sayfası, uygulama içi şerit, dükkânlara mesaj.
+- **Postmortem'den çıkan işi önceliklendir.** Önleyici iş, yeni özellikle yarışır ve çoğu zaman kaybeder.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Postmortem aksiyonlarını backlog'a sahibiyle gir.**
+- **Hotfix'in de gözden geçirilmesini iste;** süreç atlanınca yeni hata gelir.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Nöbet takvimini ve eskalasyon zincirini lansman planına koy.** Pilot sabahı kim aranır?
+- **Sev1 olaylarda sponsora ve paydaşlara kim, ne sıklıkla haber verir, önceden yaz.**
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Postmortem'i suçlamasız yürüt.** Soru "kim" değil, "bu nasıl canlıya kadar geldi".
+- **Retro ile postmortem'i karıştırma:** retro düzenli ve süreç odaklı, postmortem olaya özel.
+
+</Lens>
 </Lenses>
 
 <Summary>
@@ -61,7 +129,7 @@ Kriz anında "kim ne yapacak" sorusunu önceden cevaplarlar. Panik anında karar
 - Kriz anında önce rollback, sonra kök neden; migration'lar geriye uyumlu planlanır (ekle, kullan, kaldır).
 - Hotfix süreci atladığı için risklidir; bir göz daha gerekir.
 - Incident, severity, on-call ve runbook "kim ne yapacak" sorusunu önceden cevaplar.
-- Tasarımcı olay anında kullanıcıya gösterilecek ekranları önceden hazırlar; postmortem suçlama değil öğrenme içindir.
+- Olay anında kullanıcıya gösterilecek ekranlar önceden hazırlanır; postmortem suçlama değil öğrenme içindir.
 
 </Summary>
 
@@ -76,5 +144,11 @@ Rollback: önce geri dön, kullanıcı etkisini durdur, sonra sebebi araştır. 
 <SelfCheck question="Postmortem'in 'blameless' olması neden kritik?">
 
 Amaç suçlu bulmak değil, sistemdeki zayıflığı bulmaktır. Suçlama kültüründe insanlar hataları gizler ve sistem öğrenemez.
+
+</SelfCheck>
+
+<SelfCheck question="Severity, on-call ve runbook kriz anında hangi soruyu önceden cevaplar?">
+
+"Kim ne yapacak?" sorusunu. Severity olayın ne kadar kritik olduğunu, on-call o an kimin sorumlu olduğunu, runbook bilinen sorunlarda hangi adımların izleneceğini söyler. Panik anında karar vermek yerine yazılı plan uygulanır.
 
 </SelfCheck>

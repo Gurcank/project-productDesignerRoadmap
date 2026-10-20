@@ -1,10 +1,11 @@
 ---
-summary: "İlk çıktı nadiren son çıktıdır; önemli olan düzeltme turunun ne kadar bilgi taşıdığı. Güçlü geri bildirim üç parçalıdır: ne yanlış (teknik terimle), neden yanlış, ne olmalı. Beş turdan sonra yaklaşılmıyorsa tanımı yeniden yazıp sıfırdan başla."
+summary: "İlk çıktı nadiren son çıktıdır; önemli olan düzeltme turunun taşıdığı bilgidir. Güçlü geri bildirim ne yanlış, neden yanlış ve ne olmalı diye üç parçadır. Beş turda yaklaşılmıyorsa baştan başla."
 outcomes:
   - "Güçlü geri bildirimin üç parçasını söyleyebilirsin."
   - "Zayıf bir geri bildirimi (karışık duruyor, boşluklar tuhaf) güçlüye çevirebilirsin."
   - "Beş turdan sonra ne yapılacağını bilirsin."
 minutes: 5
+standard: 2
 sources:
   - label: "Claude Code Docs — En iyi uygulamalar"
     url: "https://code.claude.com/docs/en/best-practices"
@@ -16,16 +17,41 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 İlk çıktı nadiren son çıktıdır. Önemli olan, düzeltme turunun **ne kadar bilgi taşıdığı.**
 
 **Zayıf geri bildirim:** "Beğenmedim, bir daha dene." Model neyi değiştireceğini bilmez; rastgele başka bir yöne gider.
 
+## Üç parça
+
 **Güçlü geri bildirim üç parçadan oluşur:**
 
-1. **Ne yanlış:** teknik terimle. Bu yol haritasının asıl faydası burada.
+1. **Ne yanlış:** teknik terimle. Bu sitedeki terimlerin asıl faydası burada.
 2. **Neden yanlış:** hangi ilkeye veya kısıta aykırı.
 3. **Ne olmalı:** mümkünse somut.
+
+<StepFlow
+  label="Güçlü geri bildirimin üç parçası"
+  caption="Güçlü geri bildirim üç parçadan oluşur. Önce neyin yanlış olduğu teknik bir terimle söylenir. Sonra neden yanlış olduğu, yani hangi ilkeye ya da kısıta aykırı düştüğü yazılır. En son ne olması gerektiği mümkün olduğunca somut verilir."
+  steps={[
+  {
+    title: "Ne yanlış",
+    sub: "terimle",
+    tone: "accent"
+  },
+  {
+    title: "Neden yanlış",
+    sub: "ilke, kısıt"
+  },
+  {
+    title: "Ne olmalı",
+    sub: "somut",
+    tone: "progress"
+  }
+]}
+/>
 
 | Zayıf | Güçlü |
 |---|---|
@@ -35,7 +61,20 @@ import Lenses from "~/components/lesson/Lenses.astro";
 | "Erişilebilir değil" | "İkon butonların erişilebilir adı yok ve tıklama alanı 24×24'ün altında. Ad ekle, padding ile hedefi büyüt." |
 | "Çok yavaş" | "Hero görseli LCP öğesi ve 1,2MB PNG. WebP'ye çevir ve öncelikli yükle." |
 
+## Ne zaman baştan başlanır
+
 **Dikkat:** uzun bir düzeltme zincirinde sapma riski artar. Beş turdan sonra hâlâ yaklaşılmıyorsa düzeltmeye devam etmek yerine **tanımı yeniden yazıp sıfırdan başlamak** genelde daha hızlıdır.
+
+<Case>
+
+Selin, yapay zekânın Panel için önerdiği "bugün sipariş yok" boş durumuna geri bildirim verdi:
+
+1. **Zayıf:** "Olmamış, bir daha dene." İkinci çıktı başka bir illüstrasyonla aynı sorunu taşıyordu.
+2. **Güçlü:** "Birincil eylem yok: boş durum yalnız bilgi veriyor. Boş durum bir sonraki adımı göstermeli. 'Menünü kontrol et' bağlantısı ekle; illüstrasyonu kaldır, Panel'de illüstrasyon kullanmıyoruz."
+3. **Sonuç:** üçüncü çıktı kullanılabilir oldu.
+4. **Sıfırdan başlama:** ödeme ekranı metinlerinde altı tur sonra hâlâ yaklaşılmıyordu. Selin tanımı yeniden yazıp yeni bir oturum açtı; ilk turda yaklaştı.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -43,6 +82,36 @@ import Lenses from "~/components/lesson/Lenses.astro";
 - **İzlenimi ilkeye bağla:** "karışık" yerine "hiyerarşi yok".
 - **Ölçü ver:** 375px, 24×24, 48/16.
 - **Beşinci turda dur,** tanımı yeniden yaz.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Geri bildirimi hedefe bağla:** "Bu metin tekrar siparişi değil, yeni ürünü öne çıkarıyor; hedefimiz tekrar sipariş."
+
+</Lens>
+<Lens role="product-owner">
+
+- **Geri bildirimi kabul kriterine bağla:** hangi madde karşılanmadı?
+
+</Lens>
+<Lens role="project-manager">
+
+- **Belge düzeltmesinde neyin eksik olduğunu adıyla söyle:** "risk kaydında sahip sütunu yok".
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Ekip içi geri bildirimde de aynı üç parçayı kullan;** SBI ile aynı mantık.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinimi düzeltirken kuralı kimlikle an:** "T-K3'e aykırı".
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Soru taslağında yönlendirmeyi adıyla söyle:** "bu soru cevabı ima ediyor".
 
 </Lens>
 </Lenses>

@@ -1,10 +1,11 @@
 ---
-summary: "Çıktıyı denetlemek pazarlık konusu değil. Neyi mutlaka doğrulayacağın (sürüm, API, istatistik, link, güvenlik, erişilebilirlik), kod okumadan yapabileceğin altı arayüz kontrolü ve her oturum sonunda diff'e bakma refleksi. Üretimi hızlandırabilirsin, sorumluluğu devredemezsin."
+summary: "Çıktıyı denetlemek pazarlık konusu değildir: sürüm, API, sayı, link, güvenlik ve erişilebilirlik iddiaları doğrulanır, her oturumdan sonra değişikliklere bakılır. Sorumluluk devredilemez."
 outcomes:
   - "Mutlaka doğrulanması gereken altı kategoriyi ve nasıl doğrulanacağını söyleyebilirsin."
   - "Kod okumadan yapılacak altı arayüz kontrolünü sayabilirsin."
   - "Her oturum sonunda yapılacak tek alışkanlığı bilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "Anthropic Docs — Hallucination'ları azaltma"
     url: "https://docs.claude.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
@@ -18,8 +19,10 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
-**Bu ders pazarlık konusu değil.** Kod okuyabiliyorsun; bu, çıktıyı denetleyebileceğin anlamına gelir ve denetlemek zorundasın.
+**Bu ders pazarlık konusu değil.** Kod okuyan kişi kodu, okumayan kişi iddiaları ve arayüzü denetler; ama herkes denetlemek zorundadır.
 
 ## Neyi mutlaka doğrula
 
@@ -31,6 +34,34 @@ import Lenses from "~/components/lesson/Lenses.astro";
 | **Kaynak linkleri** | Var olmayan link üretilebilir | Tıkla, gerçekten açılıyor mu |
 | **Güvenlik ve hukuk iddiaları** | Yanlışın bedeli yüksek | Birincil kaynak veya uzman |
 | **Erişilebilirlik** | Otomatik araç sorunların yalnızca bir kısmını yakalar | Manuel klavye ve zoom testi |
+
+<Tree
+  label="Neyi mutlaka doğrula"
+  caption="Doğrulanması gereken iddialar riskin kaynağına göre gruplanır. Sürüm ve API iddiaları bilgi kesim tarihi ve uydurma yüzünden risklidir; resmî dokümana bakılır. Sayılar ve linkler uydurulabilir; kaynak açılır. Güvenlik, hukuk ve erişilebilirlik iddialarında yanlışın bedeli yüksektir; birincil kaynak ve elle test gerekir."
+  root={{
+  title: "Doğrula",
+  tone: "accent",
+  children: [
+    {
+      title: "Sürüm, API",
+      sub: "resmî doküman"
+    },
+    {
+      title: "Sayı, link",
+      sub: "kaynağı aç"
+    },
+    {
+      title: "Güvenlik, hukuk",
+      sub: "birincil kaynak"
+    },
+    {
+      title: "Erişilebilirlik",
+      sub: "elle test",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 ## Kod okumadan, gözle kontrol
 
@@ -45,9 +76,20 @@ Bir arayüz çıktısı geldiğinde yapabileceğin altı kontrol:
 
 ## Kod incelemesi refleksi
 
-Materyal, kaynaklarda tekrar eden bir tavsiyeyi aktarıyor: **her yapay zekâ oturumundan sonra diff'e bakmak.** Bunun prompt iyileştirmekten daha çok hata önlediği belirtiliyor. Kod okuyabildiğin için bu senin de yapabileceğin bir kontrol; hangi dosyaların değiştiğine bakmak bile başlı başına faydalıdır.
+Materyal, kaynaklarda tekrar eden bir tavsiyeyi aktarıyor: **her yapay zekâ oturumundan sonra diff'e bakmak.** Bunun prompt iyileştirmekten daha çok hata önlediği belirtiliyor. Kod okumayan biri için de hangi dosyaların değiştiğine bakmak başlı başına faydalıdır.
 
 **Nihai ilke:** üretimi hızlandırabilirsin ama **sorumluluğu devredemezsin.** Yayına çıkan şeyin sahibi sensin.
+
+<Case>
+
+Elif, yatırımcı sunumu için kampüs pazarının özetini yapay zekâyla hazırladı:
+
+1. **Sayılar:** model üç istatistik verdi. İkisinin kaynağı açıldı ve doğrulandı; üçüncünün linki açılmadı. O rakam sunumdan çıktı.
+2. **Hukuk:** model "öğrenci kartı verisi işlemek için ayrıca izin gerekmez" dedi. Elif bunu KVKK'nın kendi sayfasından ve hukuk danışmanından sordu; cümle sunuma girmedi.
+3. **Arayüz:** aynı hafta Selin yapay zekânın önerdiği bir Panel ekranında altı kontrolü yaptı. Ölçek dışı bir boşluk ve eksik bir hata durumu buldu.
+4. **Diff:** Emre her oturumdan sonra değişen dosyalara bakıyor. Bir oturumda istenmeyen bir yapılandırma dosyasının da değiştiğini gördü ve geri aldı.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -56,6 +98,36 @@ Materyal, kaynaklarda tekrar eden bir tavsiyeyi aktarıyor: **her yapay zekâ ot
 - **Güvenlik ve hukuk iddialarında birincil kaynağa veya uzmana git.**
 - **Her oturum sonunda diff'e bak:** bir bileşen istedin, kaç dosya değişti?
 - **Altı kontrolü bir kontrol listesi yap** ve her arayüz çıktısında çalıştır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Pazar, rakip ve gelir rakamlarını kaynağından doğrula;** sunumdaki yanlış rakamın sahibi sensin.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kabul ettiğin her yapay zekâ çıktısını kendi kabul kriterinle denetle.**
+
+</Lens>
+<Lens role="project-manager">
+
+- **Sözleşme ve takvim varsayımlarını doğrulamadan plana koyma.**
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Denetimi ekip pratiği yap:** her yapay zekâ işi de incelemeden geçsin.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Mevzuat ve standart atıflarını birincil kaynaktan doğrula.**
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Sentezdeki her alıntıyı ham notla eşleştir;** uydurulmuş alıntı araştırmanın güvenini bitirir.
 
 </Lens>
 </Lenses>
@@ -80,5 +152,11 @@ Materyal, kaynaklarda tekrar eden bir tavsiyeyi aktarıyor: **her yapay zekâ ot
 <SelfCheck question="Her yapay zekâ oturumundan sonra yapılması önerilen tek alışkanlık nedir?">
 
 Diff'e bakmak: hangi dosyaların nasıl değiştiğini görmek. Materyal bunun prompt iyileştirmekten daha çok hata önlediğini aktarıyor.
+
+</SelfCheck>
+
+<SelfCheck question="Yapay zekâ bir sunum için kaynaklı üç istatistik verdi. Ne yaparsın?">
+
+Her kaynağı açar, rakamın gerçekten orada yazdığını kontrol ederim. Açılmayan ya da rakamı içermeyen kaynağa dayanan istatistiği kullanmam. Yayına çıkan şeyin sorumluluğu bendedir.
 
 </SelfCheck>

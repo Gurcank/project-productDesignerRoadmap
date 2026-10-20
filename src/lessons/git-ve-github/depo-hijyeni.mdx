@@ -4,7 +4,8 @@ outcomes:
   - "`.gitignore`'un neyi yapıp neyi yapmadığını söyleyebilirsin."
   - "Büyük tasarım varlıklarını doğrudan depoya koymanın sakıncasını açıklayabilirsin."
   - "Monorepo'nun tasarım sistemi olan bir ekip için neden anlamlı olduğunu bilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "Git — gitignore"
     url: "https://git-scm.com/docs/gitignore"
@@ -20,6 +21,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Depoya yanlış bir şey girdiğinde çıkarmak zordur. Bu yüzden hijyen baştan önemlidir.
 
@@ -31,15 +34,64 @@ Depoya yanlış bir şey girdiğinde çıkarmak zordur. Bu yüzden hijyen başta
 
 ## Git LFS ve submodule
 
-**Git LFS (Large File Storage)**, büyük ikili dosyaları (video, yüksek çözünürlüklü görsel, tasarım dosyaları) Git'in dışında saklayıp depoda yalnızca bir işaretçi tutmaktır. **LFS seni doğrudan ilgilendirebilir:** büyük tasarım varlıklarını doğrudan depoya koymak, deponun boyutunu **kalıcı olarak şişirir,** çünkü Git her sürümü saklar. Bir kez girdiyse çıkarmak zordur. "Video dosyalarını doğrudan repoya koymayalım; LFS ya da ayrı bir depolama kullanalım."
+**Git LFS (Large File Storage)**, büyük ikili dosyaları (video, yüksek çözünürlüklü görsel, tasarım dosyaları) Git'in dışında saklayıp depoda yalnızca bir işaretçi tutmaktır. **LFS tasarım ekibini doğrudan ilgilendirebilir:** büyük tasarım varlıklarını doğrudan depoya koymak, deponun boyutunu **kalıcı olarak şişirir,** çünkü Git her sürümü saklar. Bir kez girdiyse çıkarmak zordur. "Video dosyalarını doğrudan repoya koymayalım; LFS ya da ayrı bir depolama kullanalım."
 
-**Submodule**, bir deponun içine başka bir depoyu gömmektir. Güçlüdür ama yönetimi zordur; çoğu ekip ondan kaçınır. Seviye 3.
+**Submodule**, bir deponun içine başka bir depoyu gömmektir. Güçlüdür ama yönetimi zordur; çoğu ekip ondan kaçınır.
 
 ## Monorepo
+
+<Tree
+  label="Depoya ne girer, ne girmez?"
+  caption="Depoya giren her dosya geçmişte kalıcı olarak saklanır. Depoya hiç girmemesi gerekenler gitignore ile dışarıda tutulur: bağımlılık klasörleri, derleme çıktıları ve sırlar. Büyük ikili dosyalar, örneğin videolar ve kaynak tasarım dosyaları, LFS ya da ayrı bir depolamada durur. Kod, küçük varlıklar ve tasarım sistemi paketi depoda yaşar; birden fazla uygulama varsa tek bir monorepoda."
+  root={{
+  title: "Depo",
+  tone: "accent",
+  children: [
+    {
+      title: "Girmez",
+      sub: ".gitignore",
+      children: [
+        {
+          title: "Bağımlılık, derleme, .env"
+        }
+      ]
+    },
+    {
+      title: "Ayrı durur",
+      sub: "LFS, depolama",
+      children: [
+        {
+          title: "Video, kaynak tasarım"
+        }
+      ]
+    },
+    {
+      title: "Girer",
+      children: [
+        {
+          title: "Kod, SVG, tasarım sistemi",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
 
 **Monorepo (tek depo)**, birden fazla projenin (web sitesi, uygulama, tasarım sistemi paketi) tek bir depoda yaşamasıdır. **Tasarım sistemi olan ekipler için doğrudan anlamlıdır:** bileşen kütüphanesi ile onu kullanan uygulamalar aynı depodaysa bir bileşendeki değişikliğin hangi uygulamaları etkilediği tek PR'da görülür ve birlikte test edilir. Ayrı depolarda bu senkronu sağlamak çok daha zordur. "Tasarım sistemini monorepo'ya alalım; bileşen değişince tüketen uygulamaları da aynı PR'da güncelleyelim."
 
 Küçük ve tek ürünlü projelerde gereksiz karmaşıklık üretir; araç zinciri ve derleme yapılandırması ağırlaşır.
+
+<Case>
+
+Demlik'in deposu bir monorepo: müşteri sitesi, Panel ve ortak bileşen paketi aynı yerde.
+
+1. **Monorepo:** sipariş kartı bileşeni değiştiğinde onu kullanan site ve Panel aynı PR'da güncelleniyor ve birlikte test ediliyor.
+2. **Video:** kampüs kampanyasının videoları bir kez depoya eklendi; depo boyutu bir günde katlandı. Videolar geçmişten temizlendi ve ayrı bir depolamaya taşındı; temizlik yarım gün sürdü.
+3. **Tasarım dosyaları:** Figma dosyaları depoda değil; depoda yalnız dışa aktarılmış SVG ikonlar ve Lottie dosyaları var.
+4. **.gitignore:** `.env` dosyaları baştan listede; buna rağmen giren bir anahtar sır taramasıyla yakalanıyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -70,5 +122,11 @@ Hayır. Yalnızca henüz takip edilmeyen dosyalar için çalışır. Bir dosya b
 <SelfCheck question="Büyük tasarım varlıklarını doğrudan depoya koymanın sakıncası nedir?">
 
 Git her sürümü saklar; büyük ikili dosyalar deponun boyutunu kalıcı olarak şişirir ve bir kez girdiyse çıkarmak zordur. Çözüm: Git LFS ya da ayrı bir depolama servisi.
+
+</SelfCheck>
+
+<SelfCheck question="Bir dosya depoya commit'lendikten sonra .gitignore'a eklenirse geçmişten çıkar mı?">
+
+Hayır. .gitignore yalnız henüz takip edilmeyen dosyalar için çalışır. Geçmişe girmiş bir dosya orada kalır; bir sırsa iptal edilip yenilenmelidir.
 
 </SelfCheck>

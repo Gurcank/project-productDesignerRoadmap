@@ -4,7 +4,8 @@ outcomes:
   - "Revert ile reset'in farkını ve neden kriz anında revert tercih edildiğini söyleyebilirsin."
   - "Tag ve release'in ne işe yaradığını açıklayabilirsin."
   - "Git blame'i bağlam bulmak için nasıl kullanacağını bilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "Pro Git — Geri almak"
     url: "https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things"
@@ -24,6 +25,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Deploy'dan sonra site bozuldu. Ne yapılır? Panikle düzeltmeye mi çalışılır, yoksa geri mi alınır? Bu derste doğru refleksi ve geçmişi okumanın yollarını göreceksin.
 
@@ -50,13 +53,49 @@ Deploy'dan sonra site bozuldu. Ne yapılır? Panikle düzeltmeye mi çalışıl�
 
 ## Tag ve release
 
+<StepFlow
+  label="Yayın sonrası bir bozulmaya tepki"
+  caption="Bir yayından sonra Panel'de sorun görülür. İlk adım düzeltmeye çalışmak değil, bozan değişikliği geri almaktır: revert, geçmişi koruyan yeni bir commit oluşturur. Panel önceki çalışan hâline döner. Neden sakin kafayla incelenir; düzeltme normal bir PR olarak hazırlanır ve yeniden yayınlanır."
+  steps={[
+  {
+    title: "Yayın",
+    tone: "accent"
+  },
+  {
+    title: "Sorun görülür"
+  },
+  {
+    title: "Revert",
+    sub: "dakikalar içinde"
+  },
+  {
+    title: "Sakin inceleme"
+  },
+  {
+    title: "Düzeltme yayını",
+    tone: "progress"
+  }
+]}
+/>
+
 **Tag (etiket)**, geçmişteki belirli bir noktanın kalıcı olarak işaretlenmesidir (`v2.1.0` gibi). **Release (sürüm)**, GitHub'da o etiketin etrafına sürüm notları ve dosyalar eklenerek yayınlanmasıdır. **"Hangi kod canlıda?"** sorusunun cevabıdır ve bir sorun çıktığında tam olarak hangi sürüme geri dönüleceğini belirler. "v2.1.0 etiketine geri dönelim; sorun ondan sonra girmiş."
 
 ## Stash, blame, bisect
 
 **Stash**, yarım kalmış işi geçici olarak kenara koyup temiz bir duruma dönmektir. **Blame**, bir dosyadaki her satırın hangi commit ve kim tarafından yazıldığını gösterir. **Bisect**, bir hatanın hangi commit'te girdiğini ikili aramayla bulur.
 
-**Blame senin için faydalıdır:** "bu boşluk değeri neden 22px?" sorusunu, ilgili satırın hangi commit ve hangi PR ile geldiğine bakarak cevaplayabilirsin ve o PR'daki tartışmayı okuyabilirsin. "Blame'e baktım; bu değer altı ay önce bir hotfix'te elle girilmiş, token'dan gelmiyor." Adı talihsizdir; amaç suçlu bulmak değil, **bağlamı bulmaktır.**
+**Blame kod yazmayanlar için de faydalıdır:** "bu boşluk değeri neden 22px?" sorusunu, ilgili satırın hangi commit ve hangi PR ile geldiğine bakarak cevaplayabilirsin ve o PR'daki tartışmayı okuyabilirsin. "Blame'e baktım; bu değer altı ay önce bir hotfix'te elle girilmiş, token'dan gelmiyor." Adı talihsizdir; amaç suçlu bulmak değil, **bağlamı bulmaktır.**
+
+<Case>
+
+Bir öğleden sonra Panel'in yeni sürümü sipariş listesini boş gösterdi.
+
+1. **Revert:** Emre düzeltmeyi denemek yerine yayını geri aldı. Dört dakika sonra Panel çalışıyordu.
+2. **Neden:** sakin bir incelemede sorunun yeni filtrenin varsayılan değeri olduğu görüldü. Düzeltme ertesi sabah normal bir PR olarak yayınlandı.
+3. **Blame:** Selin, sipariş kartındaki 22 piksellik bir boşluğun nereden geldiğini blame ile buldu: altı ay önceki bir hotfix'te elle girilmişti. PR'daki not "geçici" diyordu.
+4. **Etiket:** mobil uygulamada her sürüm bir etiketle işaretleniyor; bir hata bildirildiğinde hangi sürümde olduğu kesin.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -87,5 +126,11 @@ Revert. Güvenlidir, paylaşılmış geçmişi bozmaz ve ne olduğunun kaydını
 <SelfCheck question="Git blame senin için nasıl faydalı olabilir?">
 
 "Bu boşluk değeri neden 22px?" gibi sorularda ilgili satırın hangi commit ve hangi PR ile geldiğini gösterir; sen de o PR'daki tartışmayı okuyup bağlamı öğrenirsin.
+
+</SelfCheck>
+
+<SelfCheck question="Canlıda bir şey bozulduğunda neden önce revert önerilir?">
+
+Bozan değişiklik hızla ve geçmişi koruyarak geri alınır; kullanıcı etkisi biter. Baskı altında yazılan bir düzeltme yeni hatalar üretebilir; asıl düzeltme sonra sakin kafayla yapılır.
 
 </SelfCheck>

@@ -1,10 +1,11 @@
 ---
-summary: "Altı tekrar eden tuzak: jenerik tasarım, uydurma bağımlılık, eskimiş sürüm bilgisi, sessiz kapsam büyümesi, kabul edilen ilk cevap ve yanlış problemi çözmek. Her birinin belirtisi, sebebi ve çözümü."
+summary: "Altı tekrar eden tuzak: jenerik tasarım, uydurma bağımlılık, eskimiş sürüm, sessiz kapsam büyümesi, kabul edilen ilk cevap ve yanlış problem. Her birinin belirtisi, sebebi ve çözümü belli."
 outcomes:
   - "Altı tuzağı belirtisinden tanıyabilirsin."
   - "Her tuzağın çözümünü söyleyebilirsin."
   - "'Yanlış problemi çözmek' tuzağının kökünün çözüm dilinde yazılmış istek olduğunu açıklayabilirsin."
 minutes: 6
+standard: 2
 sources:
   - label: "Anthropic Docs — Hallucination'ları azaltma"
     url: "https://docs.claude.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
@@ -17,6 +18,10 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+import Case from "~/components/lesson/Case.astro";
+
+Aynı hatalar her ekipte ve her araçta tekrar eder. Altısının belirtisi, sebebi ve çözümü belli; tanıyan kişi onları ilk çıktıda yakalar.
 
 ## Jenerik tasarım
 
@@ -66,11 +71,84 @@ import Lenses from "~/components/lesson/Lenses.astro";
 
 **Çözüm:** problem tanımıyla başla, çözümle değil. Ürün Geliştirme bölümündeki problem tanımı ilkesinin aynısıdır.
 
+<Layers
+  label="Altı tuzak ve çözümleri"
+  caption="Altı tuzağın her birinin bir çözümü vardır. Jenerik tasarım ölçek, token ve yasak vererek önlenir. Uydurma bağımlılık yeni bağımlılığı kısıtlayarak, eskimiş sürüm kullanılan sürümü belirterek önlenir. Sessiz kapsam büyümesine kapsam kısıtı, sorgulanmadan kabul edilen ilk cevaba alternatif istemek iyi gelir. Yanlış problemi çözmenin panzehiri problem diliyle başlamaktır."
+  layers={[
+  {
+    title: "Jenerik tasarım",
+    sub: "ölçek, token, yasak",
+    tone: "accent"
+  },
+  {
+    title: "Uydurma bağımlılık",
+    sub: "bağımlılık kısıtı"
+  },
+  {
+    title: "Eskimiş sürüm",
+    sub: "sürümü belirt"
+  },
+  {
+    title: "Kapsam büyümesi",
+    sub: "kapsam kısıtı"
+  },
+  {
+    title: "İlk cevap",
+    sub: "alternatif iste"
+  },
+  {
+    title: "Yanlış problem",
+    sub: "problem diliyle başla",
+    tone: "progress"
+  }
+]}
+/>
+
+<Case>
+
+Demlik'te üç tuzak bir sprintte görüldü:
+
+1. **Sessiz kapsam büyümesi:** Defne yapay zekâdan Panel'deki tek bir tarih alanını düzeltmesini istedi; altı dosya değişti, biri yeni bir tarih kütüphanesiydi. İstek "yalnız bu bileşen, yeni bağımlılık yok" diye yeniden yazıldı.
+2. **Kabul edilen ilk cevap:** Kaan retro formatı için ilk öneriyi aldı; ekip için uygun değildi. Sonraki retroda "üç format ver ve hangi durumda uygun olduklarını yaz" diye sordu.
+3. **Yanlış problem:** Elif'in ilk isteği "Panel'e filtre ekle" idi. Mert'in görüşmeleri asıl sorunun çalışanların bekleyen siparişi bulamaması olduğunu gösterdi; istek problem diliyle yeniden yazıldı.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
 - **Belirtiyi tanı:** "AI hissi", var olmayan fonksiyon, eski API, fazla dosya değişikliği, sorgulanmamış ilk cevap, işe yaramayan çözüm.
 - **Her tuzağın çözümü bir kısıt ya da alışkanlıktır:** ölçek ve yasak ver, "yeni bağımlılık ekleme" yaz, sürümü belirt, kapsamı daralt, alternatif iste, problemle başla.
+
+</Lens>
+<Lens role="product-manager">
+
+- **İsteği problem diliyle başlat.** "Filtre lazım" değil, "çalışan bekleyen siparişi bulamıyor".
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kapsam büyümesini story sınırıyla durdur;** fazlası yeni bir story olur.
+
+</Lens>
+<Lens role="project-manager">
+
+- **İlk çıktıyı plan sayma;** iki alternatif ve takaslarını iste.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Tekrar eden tuzakları ekip retrosunda topla;** talimat dosyasına kural olarak girsin.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Çözüm dilinde gelen talebi problem diline çevir;** sonra modele ver.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Araştırma bulgusunu çözüm önerisiyle karıştırma;** önce problemi tarif ettir.
 
 </Lens>
 </Lenses>
@@ -103,5 +181,11 @@ Scope creep'in yapay zekâ hâlidir: bir bileşen istersin, beş dosya değişir
 <SelfCheck question="'Yanlış problemi çözmek' tuzağının kökü genelde nerededir?">
 
 İsteğin çözüm dilinde yazılmış olmasında ("bize filtre lazım"), problem dilinde değil ("kullanıcı aradığını bulamıyor"). Problem tanımıyla başlamak çözümdür.
+
+</SelfCheck>
+
+<SelfCheck question="Bir bileşen istedin, beş dosya değişti. Hangi tuzak bu ve nasıl önlenir?">
+
+Sessiz kapsam büyümesi; scope creep'in yapay zekâ hâlidir. Kapsam kısıtıyla önlenir: "yalnızca şu dosyayı değiştir", "mevcut davranışı koru", "yeni bağımlılık ekleme".
 
 </SelfCheck>

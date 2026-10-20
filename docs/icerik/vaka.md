@@ -775,6 +775,47 @@ zaman aşımı 10 sn, öneri servisi için devre kesici. Sipariş servisi SLO'su
 (ortalama 600 ms iken p95 3 sn'yi geçiyordu); dükkânlara SLA %99,5. Öğrenci kartı doğrulaması Elif'in
 yazdığı bir ADR ile haftalık listeye bağlandı.
 
+## Teslimat, kalite ve yapay zekâ işleri
+
+Git ve GitHub, DevOps ve Yayın, Test ve Kalite ile Yapay Zekâ ile Çalışma dersleri bu olguları kullanır.
+
+**Git:** tek bir monorepo (müşteri sitesi, Panel, ortak bileşen paketi). GitHub Flow; dallar kısa ömürlü,
+paylaşılan dalda rebase ve force push yok. Main'e girmek için bir onay ve geçen kontroller gerekir; PR'lar
+squash ile birleşir. Commit'ler Conventional Commits; mobil uygulama SemVer ("Son siparişini tekrarla" 3.4.0,
+kapalı dükkân düzeltmesi 3.4.1), her sürüm etiketli. "Son siparişini tekrarla" önce 1.400 satırlık tek PR'dı;
+dört PR'a bölündü. Kampanya videoları bir kez depoya girdi, geçmişten temizlendi. Panel takımının panosu
+GitHub'da (Gelen → Analiz → Geliştirme → Test → Yayında); hata ve PR şablonları var. Kasa tedarikçisi
+fork'tan PR açtı.
+
+**Yayın:** her PR'da GitHub Actions lint, tip, test ve build çalıştırır (~8 dk); ayrıca erişilebilirlik ve
+sır taraması. Main'e giren her şey kendiliğinden staging'e çıkar; production'a çıkış bir düğme (Continuous
+Delivery), haftada ortalama on iki yayın. Site ve Panel istek bazlı bir platformda, her PR'a preview linki;
+sipariş servisi ve bildirim işçisi Docker imajı olarak bir konteyner platformunda, staging'de denenen imaj
+production'a aynen çıkar. Smoke test: dükkân sayfası, sepete ekleme, Panel girişi; kırmızıysa önceki imaja
+döner. Harcama sınırı ve bütçenin %80'inde uyarı. Yerel ortam Compose ile (uygulama, PostgreSQL, Redis);
+Defne ilk gün çalıştırdı. Kubernetes önerisi reddedildi; servis sayısı ona yaklaşırsa yeniden bakılır.
+Yeni e-posta servisinin anahtarı production'a eklenmemişti; şifre sıfırlama e-postaları 25 dakika gitmedi.
+DNS geçişlerinden bir gün önce TTL beş dakikaya iner. "Son siparişini tekrarla" bayrağının sahibi Deniz'di;
+lansmandan iki hafta sonra kaldırıldı. Nöbet haftalık; SMS kesintisi sev2'ydi (nöbetçi Can), Selin'in önceden
+yazdığı şerit açıldı, postmortem suçlamasızdı. Synthetic izleme beş dakikada bir; Panel uyarı kanalı günde
+40 uyarıdan 6'ya indi. Panel'de eski iPad'lerde bir hata günde 180 kez tetikleniyordu, destek talebi yoktu.
+Dükkân fotoğrafları WebP'ye geçince veri transferi kalemi yarıya indi. Kampüs bekleme listesi ücretsiz bir
+form aracından (ticari kullanıma kapalı) kendi siteye alındı.
+
+**Test ve kalite:** sipariş servisinde ~1.400 unit, 120 entegrasyon, 9 E2E testi (kırk E2E ile CI 22 dakika
+sürüyordu). Kapsam %78, hedef değil. Panel'in "Hazır" E2E testi flaky'ydi; karantinaya alındı, Defne düzeltti.
+Testler ödeme kuruluşunun API'sini mock'lar; fixture'da "Moda" dükkânı ve "Büyük boy yulaf sütlü karamelli
+soğuk latte". Zeynep'in raporu: süresi dolmuş kartlı müşteride Android 3.8.1'de Öde düğmesi pasif (severity ve
+priority yüksek). Borç backlog'da "borç" etiketiyle, sprint kapasitesinin ~%15'i. İlk inceleme hedefi bir iş
+günü; öneriler `nit:` ile. Araçlar: Vitest, Testing Library, Playwright; ESLint, Prettier, TypeScript strict;
+Panel'de görsel regresyon uyarı olarak duruyor. Sabit adı `SIPARIS_TAZELEME_SN`.
+
+**Yapay zekâ:** depoda bir `AGENTS.md` var (stack, klasörler, `kahve-*` token'ları, ölçek, komutlar, en
+sonda yasaklar; biri "yeni bağımlılık ekleme"). Emre'nin token'sız ilk denemesi Panel'e benzemedi. Model
+ödeme API'sinde var olmayan bir "iade nedeni kodu" parametresi uydurdu. Elif'in yatırımcı özetinde açılmayan
+linkli istatistik çıkarıldı. Leyla risk kaydı, takvim ve paydaş planını üç ayrı oturumda hazırladı. Defne'nin
+tek alan düzeltmesinde altı dosya değişti.
+
 ## Paydaşlar
 
 | Paydaş | İlgi | Etki |

@@ -1,10 +1,11 @@
 ---
-summary: "Docker, uygulamayı kendi çalışma ortamıyla birlikte paketler: 'bende çalışıyor' problemini yapısal olarak çözer. Image, container, Dockerfile, Compose. Konteyner sanal makine değildir ve varsayılan olarak kalıcı değildir."
+summary: "Docker, uygulamayı çalışma ortamıyla birlikte paketler ve \"bende çalışıyor\" sorununu yapısal olarak çözer. Konteyner sanal makine değildir; varsayılan olarak kalıcı da değildir."
 outcomes:
   - "Image, container ve Dockerfile'ı ayırabilirsin."
   - "Docker'ın 'bende çalışıyor' problemini nasıl çözdüğünü ve konteynerin sanal makineden farkını söyleyebilirsin."
   - "Konteynerdeki verinin neden kaybolduğunu ve volume'un çözümünü bilirsin."
-minutes: 6
+minutes: 3
+standard: 2
 sources:
   - label: "Docker — Genel bakış"
     url: "https://docs.docker.com/get-started/docker-overview/"
@@ -18,6 +19,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Bende çalışıyor" cümlesi, yazılım dünyasının en eski şakalarından biri. Docker bu probleme yapısal bir cevap.
 
@@ -27,6 +30,27 @@ import Lenses from "~/components/lesson/Lenses.astro";
 - **Container (konteyner):** o imajın çalışan bir örneği.
 - **Dockerfile:** imajın nasıl oluşturulacağını tanımlayan tarif.
 
+<StepFlow
+  label="Tariften çalışan örneğe"
+  caption="Dockerfile, imajın nasıl oluşturulacağını yazan tariftir. Build bu tariften bir imaj üretir: uygulama, dil sürümü ve kütüphaneler tek pakette. İmaj çalıştırıldığında bir konteyner olur. Aynı imajdan istenen sayıda konteyner açılabilir; hepsi birebir aynı ortamda çalışır."
+  steps={[
+  {
+    title: "Dockerfile",
+    sub: "tarif",
+    tone: "accent"
+  },
+  {
+    title: "Image",
+    sub: "paket"
+  },
+  {
+    title: "Container",
+    sub: "çalışan örnek",
+    tone: "progress"
+  }
+]}
+/>
+
 **"Bende çalışıyor" problemini yapısal olarak çözer.** Uygulama yalnızca kendi kodunu değil, çalıştığı ortamı da taşır; senin bilgisayarında çalışan imaj sunucuda da birebir aynı çalışır. "Veritabanını Docker'da çalıştıralım; herkesin bilgisayarına ayrı ayrı kurmayalım."
 
 Karıştırmayacağın iki şey: **konteyner bir sanal makine değildir;** işletim sistemini tekrarlamaz, yalnızca yalıtım sağlar, bu yüzden çok daha hafif ve hızlıdır. Ve **konteyner varsayılan olarak kalıcı değildir:** durdurulduğunda içindeki veri silinir. Kalıcı veri için **volume** kullanılır.
@@ -34,6 +58,16 @@ Karıştırmayacağın iki şey: **konteyner bir sanal makine değildir;** işle
 ## Docker Compose
 
 **Docker Compose**, birden fazla konteyneri (uygulama, veritabanı, önbellek) tek bir yapılandırma dosyasıyla birlikte çalıştırma aracıdır. Yerel geliştirme ortamını tek komutla ayağa kaldırır; yeni birinin projeye katılma süresini günlerden dakikalara indirebilir. "Compose dosyası var; tek komutla uygulama, Postgres ve Redis birlikte kalkıyor."
+
+<Case>
+
+Demlik'te Docker iki yerde kullanılıyor:
+
+1. **Yerel ortam:** Compose dosyası uygulamayı, PostgreSQL'i ve Redis'i tek komutla kaldırıyor. Defne ekibe katıldığında ilk gün çalıştırdı; önceki geliştiricinin kurulumu iki gün sürmüştü.
+2. **Servisler:** sipariş servisi ve bildirim işçisi Docker imajı olarak yayınlanıyor; staging'de denenen imaj production'a aynen çıkıyor.
+3. **Volume:** yerel PostgreSQL verisi bir volume'da. İlk hafta volume yoktu; Burak konteyneri yeniden başlatınca deneme verisi silindi.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -64,5 +98,11 @@ Uygulama yalnızca kendi kodunu değil çalıştığı ortamı da taşır (dil s
 <SelfCheck question="Konteynerdeki veri neden kaybolur? Çözümü nedir?">
 
 Konteyner varsayılan olarak kalıcı değildir; durdurulduğunda içindeki veri silinir. Kalıcı veri için volume kullanılır.
+
+</SelfCheck>
+
+<SelfCheck question="Yeni katılan bir geliştiricinin projeyi çalıştırması iki gün sürüyor. Docker Compose nasıl yardım eder?">
+
+Uygulamayı, veritabanını ve önbelleği tek bir yapılandırma dosyasında tanımlar ve tek komutla birlikte kaldırır. Herkes aynı sürümlerle çalışır; kurulum günlerden dakikalara iner.
 
 </SelfCheck>

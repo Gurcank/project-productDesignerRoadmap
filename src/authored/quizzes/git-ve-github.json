@@ -1,0 +1,124 @@
+{
+  "category": "git-ve-github",
+  "overrides": true,
+  "sources": [
+    {
+      "label": "Conventional Commits 1.0.0",
+      "url": "https://www.conventionalcommits.org/en/v1.0.0/"
+    },
+    {
+      "label": "Semantic Versioning 2.0.0",
+      "url": "https://semver.org/"
+    },
+    {
+      "label": "Keep a Changelog",
+      "url": "https://keepachangelog.com/en/1.1.0/"
+    },
+    {
+      "label": "GitHub Docs — GitHub Flow",
+      "url": "https://docs.github.com/en/get-started/using-github/github-flow"
+    },
+    {
+      "label": "Vincent Driessen — A successful Git branching model",
+      "url": "https://nvie.com/posts/a-successful-git-branching-model/"
+    },
+    {
+      "label": "Atlassian — Gitflow Workflow",
+      "url": "https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow"
+    }
+  ],
+  "items": [
+    {
+      "question": "Git ile GitHub arasındaki fark nedir?",
+      "answer": "**Git** bir sürüm kontrol sistemidir (yazılımın kendisi). **GitHub** Git depolarını barındıran bir platformdur. Git olmadan GitHub olmaz, ama GitHub olmadan Git çalışır — GitLab, Bitbucket alternatifleridir."
+    },
+    {
+      "question": "Staging area ne işe yarar?",
+      "answer": "**Hangi değişikliklerin birlikte kaydedileceğini seçmeyi** sağlar. Aynı anda iki farklı iş yaptıysan, ikisini ayrı commit'lere bölebilirsin."
+    },
+    {
+      "question": "Diff, kod yazmayanlar için neden en işe yarayan Git kavramıdır?",
+      "answer": "Çünkü **bir pull request'i incelemek aslında diff'e bakmaktır**: hangi satırlar eklendi, hangileri silindi. Bir tasarım değişikliğinin uygulanıp uygulanmadığını, ölçülerin token'dan mı elle mi geldiğini buradan kod yazmadan görmek mümkündür."
+    },
+    {
+      "question": "Merge conflict kötü bir şey mi? Neden uzun ömürlü dallarda daha sık ve daha büyük olur?",
+      "answer": "Kötü değil, normaldir — Git'in \"bunu ben çözemem, sen karar ver\" demesidir. Uzun ömürlü dallarda daha büyük olur çünkü **iki taraf o süre boyunca birbirinden habersiz uzaklaşır**; ne kadar uzun ayrı kalırlarsa o kadar çok satır çakışır."
+    },
+    {
+      "question": "Rebase'in altın kuralı nedir ve neden?",
+      "answer": "**Paylaşılan dallarda rebase yapma, kendi dalında yap.** Çünkü rebase geçmişi yeniden yazar; başkalarının kullandığı bir dalda yapılırsa herkesin geçmişi bozulur."
+    },
+    {
+      "question": "Force push neden tehlikeli? Ana dalda nasıl engellenir?",
+      "answer": "Uzaktaki geçmişi zorla üzerine yazar ve **başkalarının işini silebilir.** Ana dalda **branch protection** ile engellenir."
+    },
+    {
+      "question": "Fork ne zaman kullanılır?",
+      "answer": "Yazma yetkin olmayan bir projeye katkı vermek istediğinde. Kendi hesabın altında bağımsız bir kopya oluşturur, orada değişiklik yapar, sonra asıl projeye PR açarsın. Açık kaynağın çalışma biçimi budur."
+    },
+    {
+      "question": "PR boyutu neden önemli? Yaygın başparmak kuralı nedir?",
+      "answer": "Çünkü **çok büyük PR'lar gerçekten incelenmez** — insanlar bakar ve onaylar. Yaygın başparmak kuralı, bir PR'ın birkaç yüz satırlık farkı geçmemesi; daha büyükse bölünmesi."
+    },
+    {
+      "question": "Branch protection neyi mekanikleştirir?",
+      "answer": "\"Kimse test edilmemiş kodu ana dala itemesin\" kuralını. Niyete ve disipline değil, **ayara** bağlar: PR zorunluluğu, minimum onay sayısı ve geçmesi zorunlu kontroller tanımlanır."
+    },
+    {
+      "question": "Merge queue hangi problemi çözer?",
+      "answer": "\"Testler geçti ama ben incelerken başka bir PR araya girdi ve ana dal kırıldı\" durumunu. PR'ları sıraya alıp değişiklikleri **birlikte** test ederek birleştirir."
+    },
+    {
+      "question": "Canlıda bir şey bozulduğunda revert mi, \"fix forward\" mı? Neden?",
+      "answer": "**Revert.** Çünkü güvenlidir, paylaşılmış geçmişi bozmaz ve ne olduğunun kaydını bırakır. Baskı altında yazılan \"ileri doğru düzeltme\" genelde yeni hata üretir; önce revert edip sonra sakin kafayla bakmak doğrudur."
+    },
+    {
+      "question": "Git blame kod yazmayan biri için nasıl faydalı olabilir?",
+      "answer": "\"Bu boşluk değeri neden 22px?\" gibi sorularda: ilgili satırın hangi commit ve hangi PR ile geldiğini gösterir; o PR'daki tartışma okunarak kararın bağlamı öğrenilir."
+    },
+    {
+      "question": "Git Flow'un sektördeki konumu nasıl değişti? Kim ne dedi?",
+      "answer": "**Varsayılan olmaktan çıktı.** Git Flow'u tanımlayan Vincent Driessen, orijinal yazısına sonradan bir not ekleyerek sürekli teslimat yapan ekiplere GitHub Flow gibi daha basit bir akış önerdi. Git Flow dokümantasyonunu yaygınlaştıran Atlassian ise onu \"eski bir iş akışı\" olarak niteliyor. Yanlış değil ama dar bir bağlamda (çoklu sürüm, katı denetim) doğru kalan bir seçenek."
+    },
+    {
+      "question": "GitHub Flow'un ön koşulu nedir?",
+      "answer": "**`main`'in her an yayınlanabilir durumda olması.** Bu da otomatik testlerin ve CI kontrollerinin gerçekten çalışmasını gerektirir."
+    },
+    {
+      "question": "Trunk-based development'ın ön koşulu nedir? Yarım kalmış iş ana dala nasıl girer?",
+      "answer": "**Güçlü otomatik test ve feature flag altyapısı.** Yarım kalmış iş, **feature flag** ile gizlenerek ana dala girer: kod canlıda ama kullanıcıya kapalıdır."
+    },
+    {
+      "question": "İyi bir commit mesajı neyi açıklamalı?",
+      "answer": "**Ne yapıldığını değil, neden yapıldığını.** Ne yapıldığı zaten diff'te görünür. (Kod yorumları için de geçerli olan aynı ilke.)"
+    },
+    {
+      "question": "SemVer'de major, minor ve patch farkı nedir? `0.x.y` sürümleri ne anlama gelir?",
+      "answer": "**PATCH**: hata düzeltmesi, geriye uyumlu, güvenle güncellenir. **MINOR**: yeni özellik, geriye uyumlu, mevcut kullanım kırılmaz. **MAJOR**: kırıcı değişiklik, güncellemeden önce sürüm notları okunmalı. `0.x.y` sürümleri \"kararlı değil\" demektir — o aralıkta minor sürümler bile kırıcı olabilir."
+    },
+    {
+      "question": "Changelog neden bir içerik tasarımı işidir?",
+      "answer": "Çünkü commit mesajlarını olduğu gibi dökmek işe yaramaz; `refactor(core)` satırını kullanıcı anlamaz. Changelog **kullanıcının anlayacağı dilde** yazılmalıdır ve ürün içinde gösterildiğinde bir özelliğin keşfedilmesini de sağlar."
+    },
+    {
+      "question": "PR şablonu bir ekip için nasıl bir araç olabilir?",
+      "answer": "**Definition of Done'ı mekanikleştirmenin aracıdır.** Şablona \"tasarım kontrol edildi mi?\", \"responsive test edildi mi?\", \"erişilebilirlik kontrolü yapıldı mı?\" maddelerini koyarsan, bu kontroller insan hafızasına değil sürece bağlanır."
+    },
+    {
+      "question": "`.gitignore` bir dosyayı geçmişten çıkarır mı?",
+      "answer": "**Hayır.** `.gitignore` yalnızca henüz takip edilmeyen dosyalar için çalışır. Bir dosya bir kez commit'lendiyse geçmişte kalır; bu yüzden depoya giren bir sır, silinse bile iptal edilip yenilenmelidir."
+    },
+    {
+      "question": "Büyük tasarım varlıklarını doğrudan depoya koymanın sakıncası nedir?",
+      "answer": "Git **her sürümü saklar**; büyük ikili dosyalar deponun boyutunu kalıcı olarak şişirir ve bir kez girdiyse çıkarmak zordur. Çözüm: Git LFS veya ayrı bir depolama servisi."
+    },
+    {
+      "question": "Monorepo tasarım sistemi olan bir ekip için neden anlamlı?",
+      "answer": "Çünkü bileşen kütüphanesi ile onu kullanan uygulamalar aynı depodaysa, **bir bileşendeki değişikliğin hangi uygulamaları etkilediği tek PR'da görülür ve birlikte test edilir.** Ayrı depolarda bu senkronu sağlamak çok daha zordur."
+    },
+    {
+      "question": "Canlıdaki bir sürüm sipariş listesini boş gösteriyor. Ekip hata nedenini mi arasın, önce geri mi alsın?",
+      "answer": "Önce **revert** ile değişiklik geri alınır ve kullanıcı etkisi durdurulur; neden sonra sakin kafayla araştırılır. Revert paylaşılmış geçmişi bozmaz ve ne olduğunun kaydını bırakır."
+    }
+  ]
+}

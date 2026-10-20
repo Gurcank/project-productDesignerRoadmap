@@ -1,10 +1,12 @@
 ---
-summary: "Repository, commit, staging area, HEAD ve diff: Git'in beş temel kavramı. Tasarımcı için en işe yarayanı diff: bir PR'ı incelemek aslında diff'e bakmaktır."
+summary: "Repository, commit, staging area, HEAD ve diff: Git'in beş temel kavramı. Kod yazmayanlar için en işe yarayanı diff: bir PR'ı incelemek aslında diff'e bakmaktır."
 outcomes:
   - "Repo, commit, staging area, HEAD ve diff'i kendi cümlenle açıklayabilirsin."
   - "İyi bir commit'in neden tek bir mantıklı değişiklik içermesi gerektiğini söyleyebilirsin."
   - "Diff'i okuyarak bir tasarım değişikliğinin uygulanıp uygulanmadığını kontrol edebilirsin."
-minutes: 7
+minutes: 4
+standard: 2
+skipTerms: ["Staging","geri alma","Geri alma"]
 sources:
   - label: "Pro Git — Depoya değişiklik kaydetmek"
     url: "https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository"
@@ -17,6 +19,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Beş kavram, Git konuşmalarının yarısı.
 
@@ -34,17 +38,53 @@ Beş kavram, Git konuşmalarının yarısı.
 
 ## HEAD
 
+<StepFlow
+  label="Bir değişikliğin geçmişe girişi"
+  caption="Geliştirici çalışma dizinindeki dosyaları değiştirir. Birlikte kaydedilecek değişiklikleri hazırlık alanına alır. Commit ile bu değişiklikler bir açıklamayla geçmişe kaydedilir. HEAD artık bu yeni commit'i gösterir. İki commit arasındaki fark, yani diff, hangi satırların eklendiğini ve silindiğini gösterir."
+  steps={[
+  {
+    title: "Çalışma dizini",
+    sub: "dosyalar değişir",
+    tone: "accent"
+  },
+  {
+    title: "Hazırlık alanı",
+    sub: "birlikte kaydedilecekler"
+  },
+  {
+    title: "Commit",
+    sub: "mesajla geçmişe"
+  },
+  {
+    title: "Diff",
+    sub: "ne değişti?",
+    tone: "progress"
+  }
+]}
+/>
+
 **HEAD**, şu anda nerede durduğunu gösteren işaretçidir; genelde bulunduğun dalın son commit'i. Git komutlarının çoğu buna göre çalışır. "Detached HEAD durumundasın; bir dalda değil, doğrudan bir commit'in üstündesin."
 
 ## Diff
 
-**Diff (fark)**, iki sürüm arasındaki satır bazında değişikliklerdir. **Senin için en işe yarayan Git kavramı budur:** bir pull request'i incelemek aslında diff'e bakmaktır: hangi satırlar eklendi (yeşil), hangileri silindi (kırmızı). Bir tasarım değişikliğinin uygulanıp uygulanmadığını kod yazmayı bilmeden buradan görebilirsin. "Diff'e baktım; spacing değerleri token'dan değil, elle yazılmış."
+**Diff (fark)**, iki sürüm arasındaki satır bazında değişikliklerdir. **Kod yazmayanlar için en işe yarayan Git kavramı budur:** bir pull request'i incelemek aslında diff'e bakmaktır: hangi satırlar eklendi (yeşil), hangileri silindi (kırmızı). Bir tasarım değişikliğinin uygulanıp uygulanmadığını kod yazmayı bilmeden buradan görebilirsin. "Diff'e baktım; spacing değerleri token'dan değil, elle yazılmış."
 
 <Callout kind="ornek" title="Bu sitede nasıl?">
 
 Bu sitenin kendi kaynak kodu da bir Git deposudur. Bir değişikliğin diff'i, hangi dosyaların eklendiğini ve hangi satırların değiştiğini açıkça gösterir.
 
 </Callout>
+
+<Case>
+
+Selin bir PR'ı kod yazmadan inceledi:
+
+1. **Diff:** sipariş kartı bileşeninin farkında boşluk değerleri görünüyordu. Üç değer token yerine elle yazılmıştı: 10, 14, 22 piksel.
+2. **Yorum:** "Bu üç değer ölçekte yok; 8, 16, 24 olmalı." Ece aynı PR'da düzeltti.
+3. **Commit:** Ece düzeltmeyi ayrı bir commit olarak attı: "fix(siparis-karti): boşluklar ölçeğe bağlandı". Geçmişte stil düzeltmesi ayrı bir satır olarak duruyor.
+4. **Depo:** Selin'in Figma dosyaları depoda değil; depoda yalnız dışa aktarılmış SVG ikonlar var.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -75,5 +115,11 @@ Hangi değişikliklerin birlikte kaydedileceğini seçmeyi sağlar; aynı anda i
 <SelfCheck question="Diff senin için neden en işe yarayan Git kavramı?">
 
 Bir pull request'i incelemek aslında diff'e bakmaktır: hangi satırlar eklendi, hangileri silindi. Bir tasarım değişikliğinin uygulanıp uygulanmadığını, ölçülerin token'dan mı elle mi geldiğini kod yazmayı bilmeden görebilirsin.
+
+</SelfCheck>
+
+<SelfCheck question="Neden bir commit tek bir mantıklı değişiklik içermelidir?">
+
+Sonradan geri almak ya da hangi değişikliğin bir hatayı getirdiğini bulmak kolaylaşır. "Her şeyi düzelttim" diyen dev bir commit, içindeki tek bir değişikliği geri almayı imkânsızlaştırır.
 
 </SelfCheck>

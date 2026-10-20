@@ -3,8 +3,10 @@ summary: "Git yalnızca kodun değil, işin de kaydıdır. Sürüm kontrolü ü�
 outcomes:
   - "Sürüm kontrolünün çözdüğü üç problemi söyleyebilirsin."
   - "Git ile GitHub arasındaki farkı açıklayabilirsin."
-  - "Git'in tasarımcıya sağladığı üç faydayı (PR incelemesi, değişiklik takibi, konuşmayı anlamak) sayabilirsin."
+  - "Git'in ürün ekibine sağladığı üç faydayı (PR incelemesi, değişiklik takibi, konuşmayı anlamak) sayabilirsin."
 minutes: 6
+standard: 2
+skipTerms: ["geri alma","Geri alma"]
 sources:
   - label: "Pro Git — Git nedir?"
     url: "https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F"
@@ -20,10 +22,12 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Rebase ettim", "conflict çıktı", "main'e merge edildi". Bu cümleler her gün geçer ve kod yazmasan bile içinde olursun. Sebep şu: **Git yalnızca kodun değil, işin de kaydıdır.** Bir özelliğin ne zaman girdiği, kimin neyi değiştirdiği, bir hatanın hangi değişiklikle geldiği: hepsi burada.
 
-Senin açından üç somut fayda var:
+Ürün ekibi açısından üç somut fayda var:
 
 1. **Pull request incelemesine katılabilmek.** Tasarımın uygulanmış hâlini incelemek, bir PR üzerinde yorum yapmak kod yazmayı gerektirmez.
 2. **Değişikliği takip edebilmek.** "Bu ne zaman böyle oldu?" sorusunun cevabı Git geçmişindedir.
@@ -42,6 +46,30 @@ Bölümdeki temel kavramlar **eskimeyen** kategoridedir; Git yirmi yıldır ayn�
 "Bu değişikliği geri alalım; geçmişte hangi commit'te girdiğine bakalım."
 
 ## Git ve GitHub
+
+<Tree
+  label="Sürüm kontrolünün çözdüğü üç problem"
+  caption="Sürüm kontrolü üç problemi çözer. Geri dönebilmek: bir değişiklik bir şeyi bozduğunda o değişikliği bulup geri almak. Birlikte çalışabilmek: iki kişinin aynı dosyayı birbirinin üstüne yazmadan değiştirmesi. Neden sorusunu cevaplamak: bir satırın hangi değişiklikle, kim tarafından ve hangi tartışmadan sonra geldiğini bulmak."
+  root={{
+  title: "Sürüm kontrolü",
+  tone: "accent",
+  children: [
+    {
+      title: "Geri dön",
+      sub: "bozan değişikliği al"
+    },
+    {
+      title: "Birlikte çalış",
+      sub: "üst üste yazma yok"
+    },
+    {
+      title: "Neden?",
+      sub: "kim, ne zaman, hangi PR",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 <Compare>
 <Pane title="Git">
@@ -62,6 +90,17 @@ Bölümdeki temel kavramlar **eskimeyen** kategoridedir; Git yirmi yıldır ayn�
 
 **Git**, dağıtık bir sürüm kontrol sistemidir: her geliştiricinin bilgisayarında projenin tam geçmişiyle birlikte bir kopyası bulunur. "Dağıtık" olması internet olmadan da çalışabilmeyi ve merkezî sunucu çökse bile geçmişin kaybolmamasını sağlar. Fiilî standarttır. Git olmadan GitHub olmaz, ama GitHub olmadan Git gayet çalışır. "Depo Git'te; GitHub'da barındırıyoruz."
 
+<Case>
+
+Demlik'in kodu GitHub'da duruyor; ekipte kod yazmayan herkes de oraya bakıyor:
+
+1. **Geri dönmek:** Panel'in bir sürümü sipariş listesini boş gösterdi. Hangi değişikliğin getirdiği geçmişte göründü; dört dakikada geri alındı.
+2. **Birlikte çalışmak:** Ece ve Emre ortak sipariş kartı bileşenine aynı hafta dokundu; ikisinin değişikliği ayrı dallarda kaldı, birleştirirken görüldü.
+3. **Neden?** Ozan, Panel'de iptal düğmesinin neden ayrı bir menüye taşındığını sordu. Cevap, o değişikliğin pull request'indeki sezgisel değerlendirme notundaydı.
+4. **Kayıt:** Leyla kampüs projesinin kilometre taşlarını sürüm etiketleriyle eşledi: "entegrasyon hazır" hangi koddu, belli.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -70,13 +109,31 @@ Bölümdeki temel kavramlar **eskimeyen** kategoridedir; Git yirmi yıldır ayn�
 - **GitHub'da bir PR'ı açıp diff'e bakmayı bir kez dene;** kod bilmeden de ölçü ve metin değişikliklerini görürsün.
 
 </Lens>
+<Lens role="product-owner">
+
+- **"Bu ne zaman, neden değişti?" sorusunu geçmişte ara.** Pull request tartışması kararın kaydıdır.
+- **Story'yi PR'a bağla.** Hangi işin hangi kodla bittiği izlenebilsin.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Kilometre taşlarını sürüm etiketleriyle eşle.** "Hangi kod pilotta?" sorusunun cevabı tek olsun.
+- **Geri alma süresini risk planına yaz.** Kötü bir yayın ne kadar sürede geri alınır?
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Git dilini ekip konuşmalarında ortak kıl.** "Rebase", "conflict", "merge" herkes için aynı anlama gelsin.
+- **Geçmişi suçlu bulmak için değil, bağlam bulmak için kullan.**
+
+</Lens>
 </Lenses>
 
 <Summary>
 
 - Sürüm kontrolü geri dönmeyi, birlikte çalışmayı ve "neden böyle?" sorusunu çözer.
 - Git bir araçtır (dağıtık, internetsiz çalışır), GitHub onu barındıran bir platformdur.
-- Tasarımcıya faydası: PR incelemesi, değişiklik takibi, konuşmayı anlamak.
+- Ürün ekibine faydası: PR incelemesi, değişiklik takibi, konuşmayı anlamak.
 
 </Summary>
 
@@ -85,5 +142,17 @@ Bölümdeki temel kavramlar **eskimeyen** kategoridedir; Git yirmi yıldır ayn�
 <SelfCheck question="Git ile GitHub arasındaki fark nedir?">
 
 Git bir sürüm kontrol sistemidir (yazılımın kendisi); GitHub, Git depolarını barındıran bir platformdur. Git olmadan GitHub olmaz ama GitHub olmadan Git çalışır; GitLab ve Bitbucket alternatiflerdir.
+
+</SelfCheck>
+
+<SelfCheck question="Git ile GitHub arasındaki fark nedir?">
+
+Git dağıtık bir sürüm kontrol yazılımıdır; her geliştiricide projenin tam geçmişiyle bir kopyası bulunur. GitHub Git depolarını barındıran ve pull request, issue, Actions gibi özellikler ekleyen bir platformdur.
+
+</SelfCheck>
+
+<SelfCheck question={"Git neden \"dağıtık\" bir sistemdir ve bunun faydası nedir?"}>
+
+Her geliştiricinin bilgisayarında projenin tam geçmişiyle bir kopyası bulunur. İnternet olmadan da çalışılabilir ve merkezî sunucu çökse bile geçmiş kaybolmaz.
 
 </SelfCheck>

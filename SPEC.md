@@ -155,6 +155,14 @@ quizlerinin yerini rol-nötr kopyaları aldı. KVKK dersindeki birinci tekil şa
 "bu turda açamadım") nötr bir doğrulama uyarısına çevrildi; Kurul duyurusu hâlâ birincil kaynaktan
 doğrulanmadı.
 
+**Var — Teslimat, kalite ve yapay zekâ v2 (Faz 12b).** Git ve GitHub (11), DevOps ve Yayın (12), Test ve
+Kalite (10) ve Yapay Zekâ ile Çalışma'nın (10) 43 dersi v2'ye taşındı; böylece 335 dersin hepsi v2'de. Her
+derse vakadan bir örnek, bir diyagram (kalite dersinde severity × priority matrisi dahil) ve en az üç kendini
+yokla sorusu eklendi. DevOps'ta PM, PO, PjM ve SM; Test ve Kalite'de bunlara ek BA; Yapay Zekâ'da yolu olan
+altı rolün hepsi için mercek yazıldı. Kubernetes dersindeki açıklanmamış "Seviye 3" kaldırıldı; hosting
+dersindeki birinci tekil şahıslı not nötrleşti. Dört kategorinin quizi rol-nötr kopyalarla değişti. Vaka
+kitabına "Teslimat, kalite ve yapay zekâ işleri" bölümü eklendi.
+
 **Henüz yok — planlı, yapılmadı.** EN arayüz (`/en/`, `src/i18n`): kullanıcı ertelemeyi seçti,
 şu an TR tek dil · Araçlar'da Ek B kaynakları ve diğer şablonlar · framework ve kütüphane profil sayfaları · Cloudflare Pages yayını.
 

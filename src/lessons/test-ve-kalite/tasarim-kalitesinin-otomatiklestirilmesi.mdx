@@ -1,10 +1,11 @@
 ---
-summary: "Senin için ikinci en önemli ders: görsel regresyon testi, otomatik erişilebilirlik testi ve performans bütçesi tasarım kalitesini insan disiplininden çıkarıp sürece bağlar. Yeşil erişilebilirlik işareti 'erişilebilir' demek değildir."
+summary: "Görsel regresyon, otomatik erişilebilirlik testi ve performans bütçesi tasarım kalitesini insan disiplininden çıkarıp yayın hattına bağlar. Yeşil erişilebilirlik işareti \"erişilebilir\" demek değildir."
 outcomes:
   - "Görsel regresyon testinin hangi boşluğu doldurduğunu ve bilinen sorununu (yanlış pozitif) söyleyebilirsin."
   - "CI'daki yeşil erişilebilirlik işaretinin ne anlama gelip gelmediğini açıklayabilirsin."
   - "Performans bütçesinin gerekçesini ve Lighthouse skorunun neyin kanıtı olmadığını bilirsin."
-minutes: 8
+minutes: 4
+standard: 2
 sources:
   - label: "Storybook — Görsel test"
     url: "https://storybook.js.org/docs/writing-tests/visual-testing"
@@ -25,18 +26,44 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
-**Senin için ikinci en önemli ders bu.** Buradaki üç kontrol, tasarım kalitesini insan disiplininden çıkarıp sürece bağlar: "her sürümde tekrar kontrol et" yükü insandan makineye geçer.
+Selin her yayından önce on iki ekranı elle kontrol ediyordu; bir gün atladı ve bir kart bozuk çıktı. Buradaki üç kontrol, tasarım kalitesini insan disiplininden çıkarıp sürece bağlar: "her sürümde tekrar kontrol et" yükü insandan makineye geçer.
 
 ## Visual regression testing
 
-**Visual regression testing (görsel gerileme testi)**, arayüzün ekran görüntülerinin alınıp her değişiklikte öncekiyle piksel bazında karşılaştırılmasıdır. **Kod testleri görsel bozulmaları yakalayamaz:** bir CSS değişikliği başka bir sayfadaki kartı bozabilir ve hiçbir test bunu fark etmez. Görsel regresyon testi PR'da "bu 12 ekran değişti" diyerek fark listesi sunar ve sen bunun kasıtlı olup olmadığına karar verirsin. Tasarım sistemi olan ekiplerde yaygındır. "Görsel regresyon kuralım; bileşen değişikliklerinin başka yerleri bozup bozmadığını PR'da görelim."
+**Visual regression testing (görsel gerileme testi)**, arayüzün ekran görüntülerinin alınıp her değişiklikte öncekiyle piksel bazında karşılaştırılmasıdır. **Kod testleri görsel bozulmaları yakalayamaz:** bir CSS değişikliği başka bir sayfadaki kartı bozabilir ve hiçbir test bunu fark etmez. Görsel regresyon testi PR'da "bu 12 ekran değişti" diyerek fark listesi sunar ve tasarımcı bunun kasıtlı olup olmadığına karar verir. Tasarım sistemi olan ekiplerde yaygındır. "Görsel regresyon kuralım; bileşen değişikliklerinin başka yerleri bozup bozmadığını PR'da görelim."
 
 **Yanlış pozitifler sorun olur:** font yüklenme farkı, animasyon zamanlaması ve dinamik içerik sahte farklar üretir; kurulumun bir kısmı bunları sabitlemekle geçer. Araç adları ve fiyatlar değişir.
 
 ## Otomatik erişilebilirlik testi
 
 **Automated accessibility testing**: erişilebilirlik ihlallerinin CI hattında otomatik taranması. Eksik alt metin, düşük kontrast ve eksik etiket gibi sorunların birikmesini engeller. **Kritik uyarı:** otomatik araçlar sorunların yalnızca bir kısmını yakalar. CI'daki yeşil işaret "erişilebilir" demek değildir; **"bilinen otomatik kontroller geçti"** demektir. "axe'ı CI'a ekleyelim; yeni ihlal eklenirse PR kırılsın. Manuel kontrolü yine de yapacağız."
+
+<Tree
+  label="Yayın hattındaki üç tasarım kontrolü"
+  caption="Tasarım kalitesi yayın hattında üç kontrolle korunur. Görsel regresyon, değişen ekranları önceki görüntülerle karşılaştırır ve fark listesini PR'a koyar. Otomatik erişilebilirlik testi bilinen ihlalleri tarar ama manuel kontrolün yerini tutmaz. Performans bütçesi paket boyutu ve LCP gibi sınırları denetler ve aşan PR'ı durdurur."
+  root={{
+  title: "Yayın hattı",
+  tone: "accent",
+  children: [
+    {
+      title: "Görsel regresyon",
+      sub: "ne değişti?"
+    },
+    {
+      title: "Erişilebilirlik",
+      sub: "bilinen ihlaller"
+    },
+    {
+      title: "Performans bütçesi",
+      sub: "sınır aşıldı mı?",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 <Outside source="Deque — Otomatik test çalışması" href="https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/">
 
@@ -55,6 +82,16 @@ Laboratuvar ölçümü (Lighthouse) ile saha verisi (CrUX) farklıdır. CI'daki 
 Bu sitede performans bütçesi bir derleme sonrası komutla denetlenir: ilk yüklemedeki JavaScript'in 60 KB altında kalması beklenir ve aşılırsa komut hata ile biter. Erişilebilirlik ve kontrast için ise otomatik tarama yetmez; kontrast oranları hesapla, odak sırası ise elle doğrulanır.
 
 </Callout>
+
+<Case>
+
+Demlik'in Panel hattında üç kontrol var:
+
+1. **Görsel regresyon:** sipariş kartı bileşeni değişince PR'a fark listesi düşüyor. Ortak `SiparisKarti` bileşeninde bir değişiklik on iki ekranı etkiledi; Selin her birini onayladı.
+2. **Erişilebilirlik:** axe her PR'da çalışıyor ve yeni ihlal PR'ı kırıyor. Sipariş durumlarının yalnız renkle ayrılmasını ise bir ekran okuyucu denemesi bulmuştu, tarama değil.
+3. **Performans bütçesi:** harita kütüphanesi bir kez Panel'in ana paketine girdi ve bütçe aşıldı; harita lazy load edildi.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">

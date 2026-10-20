@@ -1,10 +1,11 @@
 ---
-summary: "Platform seçiminde fiyattan önce uygulamanın şekli, önizleme ortamı, fatura davranışı, harcama sınırı ve çıkış maliyeti sorulur. Platform konumlandırmaları hızla eskir; kullanıma dayalı faturalamada bot trafiği faturayı şişirebilir."
+summary: "Platform seçiminde fiyattan önce uygulamanın şekli, önizleme ortamı, fatura davranışı, harcama sınırı ve çıkış maliyeti sorulur. Kullanıma dayalı faturayı bot trafiği şişirebilir."
 outcomes:
   - "Yedi platform türünün ne için güçlü olduğunu karşılaştırabilirsin."
   - "Platform seçiminde fiyattan önce sorulacak beş soruyu sayabilirsin."
   - "Kullanıma dayalı faturalamanın bilinen riskini ve savunmasını bilirsin."
-minutes: 8
+minutes: 4
+standard: 2
 sources:
   - label: "Vercel — Dokümantasyon"
     url: "https://vercel.com/docs"
@@ -27,6 +28,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 > **Bu ders dosyadaki en hızlı eskiyen içeriklerden biri.** Aşağıdaki konumlandırmalar materyalin Eylül 2026 tarihli ikincil kaynaklarına dayanır. **Fiyatları karar vermeden önce platformun kendi sayfasından doğrula.**
 
@@ -46,15 +49,61 @@ import Lenses from "~/components/lesson/Lenses.astro";
 
 Fiyattan önce şu sorular:
 
+<Spectrum
+  label="Uygulama hangi şekilde?"
+  caption="Platformlar uygulamanın şekline göre sıralanır. Sol uçta istek geldiğinde çalışıp duran fonksiyonlar durur; Vercel, Netlify ve Cloudflare bu modele göre kuruludur. Sağ uçta sürekli çalışan süreçler durur: API, arka plan işçisi, WebSocket. Railway, Render ve Fly.io bu tarafa yakındır. En sağda kendi sunucun vardır; tam kontrol verir, bütün operasyonu sana bırakır."
+  left={{
+  title: "İstek bazlı",
+  sub: "fonksiyon"
+}}
+  right={{
+  title: "Sürekli çalışan",
+  sub: "süreç, konteyner"
+}}
+  marks={[
+  {
+    label: "Vercel, Netlify",
+    at: 0.06
+  },
+  {
+    label: "Cloudflare",
+    at: 0.24
+  },
+  {
+    label: "Railway, Render",
+    at: 0.6
+  },
+  {
+    label: "Fly.io",
+    at: 0.78
+  },
+  {
+    label: "Kendi sunucun",
+    at: 0.96
+  }
+]}
+/>
+
 1. **Uygulama hangi şekilde?** İstek bazlı fonksiyonlar mı (Vercel, Netlify, Cloudflare), yoksa sürekli çalışan süreçler mi (Railway, Render, Fly)? WebSocket, arka plan worker'ı ya da uzun süren iş varsa serverless tek başına yetmez.
-2. **Önizleme ortamı var mı?** Senin iş akışın için en değerli özellik bu.
+2. **Önizleme ortamı var mı?** Tasarım ve ürün onayı için en değerli özellik bu.
 3. **Fatura nasıl davranıyor?** Kullanıma dayalı mı, sabit mi? Ani trafik artışında ne olur?
 4. **Harcama sınırı koyabiliyor muyum?** Bir sonraki başlıktaki tuzağın tek gerçek savunması.
 5. **Çıkış maliyeti ne?** Vendor lock-in bilinçli bir karar olmalı.
 
 ## Maliyet tuzağı
 
-Kullanıma dayalı faturalamanın bilinen bir riski var: **bot ve tarayıcı trafiği faturayı şişirebilir.** Yayınlanmamış bir projenin, yapay zekâ botlarının taraması yüzünden dört haneli bir fatura ürettiğine dair vaka anlatımları var; bu belirli vakayı doğrulamadım ama risk yapısal olarak gerçektir. Savunma: **harcama sınırı ve uyarı kurmak,** bot trafiğini engellemek (WAF) ve hız sınırı uygulamak. Bir projeyi yayına almadan önce bunları kurmak, sonradan faturayı tartışmaktan kolaydır.
+Kullanıma dayalı faturalamanın bilinen bir riski var: **bot ve tarayıcı trafiği faturayı şişirebilir.** Yayınlanmamış bir projenin, yapay zekâ botlarının taraması yüzünden dört haneli bir fatura ürettiğine dair vaka anlatımları var; bu belirli vaka doğrulanmadı ama risk yapısal olarak gerçektir. Savunma: **harcama sınırı ve uyarı kurmak,** bot trafiğini engellemek (WAF) ve hız sınırı uygulamak. Bir projeyi yayına almadan önce bunları kurmak, sonradan faturayı tartışmaktan kolaydır.
+
+<Case>
+
+Demlik iki şekli iki platformda çalıştırıyor:
+
+1. **Şekil:** müşteri sitesi ve Panel istek bazlı bir platformda; sipariş servisi ve bildirim işçisi sürekli çalışan bir konteyner platformunda. Bildirim işçisi uzun süren bir iş olduğu için fonksiyona sığmıyor.
+2. **Taşıma:** Panel önizleme ortamı olan bir platforma taşındı; her PR'a link bu taşımayla geldi.
+3. **Fatura:** iki platformda da harcama sınırı var; aylık bütçenin %80'inde uyarı geliyor.
+4. **Çıkış:** servisler Docker imajı olarak çalıştığı için başka bir platforma taşımak bir yapılandırma işi; çıkış maliyeti bilinçli olarak düşük tutuldu.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -85,5 +134,11 @@ Sürekli çalışan süreçler gerektiğinde: WebSocket sunucusu, arka plan work
 <SelfCheck question="Kullanıma dayalı faturalamanın bilinen riski nedir ve savunması ne?">
 
 Bot ve tarayıcı trafiği faturayı şişirebilir. Savunma: harcama sınırı ve uyarı kurmak, bot trafiğini engellemek (WAF) ve hız sınırı uygulamak; bunlar yayından önce kurulmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir ekip yalnız fiyat tablosuna bakarak platform seçmek istiyor. Hangi soruları önce sorarsın?">
+
+Uygulama istek bazlı fonksiyon mu, sürekli çalışan süreç mi? Önizleme ortamı var mı? Fatura kullanıma mı dayalı, sabit mi? Harcama sınırı konabiliyor mu? Platformdan çıkmak ne kadar zor?
 
 </SelfCheck>

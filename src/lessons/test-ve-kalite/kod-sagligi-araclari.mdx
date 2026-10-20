@@ -1,10 +1,11 @@
 ---
-summary: "Linter, formatter, tip kontrolü, pre-commit hook ve CI gate: kalite kontrolünü hatırlamaktan çıkarıp mekanizmaya bağlar. Formatter'ın asıl faydası tartışmayı ortadan kaldırmasıdır; kapı sayısı arttıkça yayın yavaşlar."
+summary: "Linter, formatter, tip kontrolü, pre-commit hook ve CI gate kalite kontrolünü hatırlamaktan çıkarıp mekanizmaya bağlar. Formatter tartışmayı bitirir; kapı sayısı arttıkça yayın yavaşlar."
 outcomes:
   - "Linter, formatter ve tip kontrolünün işini ayırabilirsin."
   - "Pre-commit hook ile CI gate'in farkını ve asıl güvencenin hangisi olduğunu söyleyebilirsin."
   - "Çok fazla zorunlu kapının neden ters tepebileceğini açıklayabilirsin."
-minutes: 6
+minutes: 3
+standard: 2
 sources:
   - label: "ESLint"
     url: "https://eslint.org/docs/latest/"
@@ -24,6 +25,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir kod incelemesinde "burada boşluk eksik", "tırnak tek olmalı" yorumları görürsen, o ekipte araçlar eksik demektir. Bu araçlar bu tür tartışmayı baştan ortadan kaldırır.
 
@@ -39,6 +42,30 @@ Bir kod incelemesinde "burada boşluk eksik", "tırnak tek olmalı" yorumları g
 
 **Pre-commit hook**, commit atılmadan önce yerel olarak çalışan kontroldür. **CI gate**, PR'ın birleştirilebilmesi için geçmesi zorunlu olan kontroldür. İkisi de kalite kontrolünü **hatırlamaktan çıkarıp mekanizmaya bağlar.** Pre-commit hızlı geri bildirim verir; CI gate ise atlanamaz olduğu için asıl güvencedir. "Erişilebilirlik taramasını ve performans bütçesini CI gate yapalım; uyarı olarak kalırsa kimse bakmıyor."
 
+<StepFlow
+  label="Kontrolün dört katmanı"
+  caption="Kontroller koda ne kadar erken dokunduklarına göre dizilir. Editör, linter ve tip hatalarını yazarken gösterir. Pre-commit hook, commit atılmadan önce hızlı kontrolleri çalıştırır. CI gate, PR'ın birleştirilebilmesi için geçmesi zorunlu kontrollerdir ve atlanamaz. Hepsinden geçen değişiklik ana dala girer."
+  steps={[
+  {
+    title: "Editör",
+    sub: "yazarken",
+    tone: "accent"
+  },
+  {
+    title: "Pre-commit",
+    sub: "commit öncesi"
+  },
+  {
+    title: "CI gate",
+    sub: "atlanamaz"
+  },
+  {
+    title: "Ana dal",
+    tone: "progress"
+  }
+]}
+/>
+
 **Kapı sayısı arttıkça yayın yavaşlar.** Her kontrolün bir maliyeti vardır; hepsini zorunlu yapmak ekibi kapıları atlatmanın yollarını aramaya iter. Zorunlu olanlar gerçekten kritik olanlarla sınırlı tutulmalıdır.
 
 <Callout kind="ornek" title="Bu sitede nasıl?">
@@ -46,6 +73,17 @@ Bir kod incelemesinde "burada boşluk eksik", "tırnak tek olmalı" yorumları g
 Bu sitede de kalite kapıları ayrı komutlarla çalışır: içerik doğrulaması, tip ve şablon denetimi ve JavaScript bütçesi. Hepsi derleme sürecinin parçasıdır; biri başarısız olursa yayın hazırlığı durur.
 
 </Callout>
+
+<Case>
+
+Demlik'in kod sağlığı kapıları:
+
+1. **Editör:** ESLint, Prettier ve TypeScript strict modu. İncelemelerde biçim yorumu yazılmıyor.
+2. **Pre-commit:** yalnız değişen dosyalarda lint ve biçim; birkaç saniye sürüyor.
+3. **CI gate:** lint, tip kontrolü, test ve build. Panel'de ayrıca erişilebilirlik taraması ve JavaScript bütçesi var.
+4. **Kapı sayısı:** görsel regresyonu zorunlu kapı yapma önerisi reddedildi; yanlış pozitifler yüzünden uyarı olarak kaldı.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -77,5 +115,11 @@ Hayır; asıl faydası tartışmayı ortadan kaldırmasıdır. Kod incelemelerin
 <SelfCheck question="CI gate sayısını artırmanın sakıncası nedir?">
 
 Kapı sayısı arttıkça yayın yavaşlar ve ekip kapıları atlatmanın yollarını aramaya başlar. Zorunlu kontroller gerçekten kritik olanlarla sınırlı tutulmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Pre-commit hook ile CI gate arasındaki fark nedir?">
+
+Pre-commit hook commit atılmadan önce geliştiricinin bilgisayarında çalışır ve hızlı geri bildirim verir, ama atlanabilir. CI gate PR'ın birleşmesi için geçmesi zorunlu kontroldür; atlanamadığı için asıl güvencedir.
 
 </SelfCheck>

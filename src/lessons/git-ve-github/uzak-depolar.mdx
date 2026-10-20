@@ -4,7 +4,8 @@ outcomes:
   - "Remote, origin ve upstream'in ne olduğunu söyleyebilirsin."
   - "Clone ile fork'un farkını ve fork'un ne zaman kullanıldığını açıklayabilirsin."
   - "Push, pull ve fetch'i ayırıp force push'un neden tehlikeli olduğunu bilirsin."
-minutes: 6
+minutes: 3
+standard: 2
 sources:
   - label: "Pro Git — Uzak depolarla çalışmak"
     url: "https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes"
@@ -16,6 +17,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Git bilgisayarında çalışır; peki ekip nerede buluşur? Uzak depoda.
 
@@ -29,6 +32,33 @@ Git bilgisayarında çalışır; peki ekip nerede buluşur? Uzak depoda.
 
 ## Push, pull, fetch
 
+<StepFlow
+  label="Uzak depoyla bir günlük döngü"
+  caption="Geliştirici günün başında depoyu ilk kez bilgisayarına klonlamışsa artık yalnız güncellemeleri çeker. Kendi dalında çalışır ve commit'ler. İşini göndermeden önce uzaktaki değişiklikleri getirip birleştirir. Sonra kendi dalını uzak depoya gönderir ve bir pull request açar."
+  steps={[
+  {
+    title: "Clone",
+    sub: "ilk kez",
+    tone: "accent"
+  },
+  {
+    title: "Çalış, commit'le"
+  },
+  {
+    title: "Pull",
+    sub: "güncellemeleri al"
+  },
+  {
+    title: "Push",
+    sub: "dalı gönder"
+  },
+  {
+    title: "PR aç",
+    tone: "progress"
+  }
+]}
+/>
+
 - **Push:** yerel değişiklikleri uzak depoya gönderir.
 - **Fetch:** uzaktaki değişiklikleri indirir ama birleştirmez.
 - **Pull:** ikisini birden yapar: indirir ve birleştirir.
@@ -36,6 +66,17 @@ Git bilgisayarında çalışır; peki ekip nerede buluşur? Uzak depoda.
 Fetch'in ayrı olması, "önce ne değişmiş bir bakayım" imkânı verir. "Push'lamadan önce pull al, yoksa reddedilir."
 
 **Force push tehlikelidir:** uzaktaki geçmişi zorla üzerine yazar ve başkalarının işini silebilir. Paylaşılan dallarda kullanılmaz; ana dalda ise genelde dal koruması ile tamamen yasaklanır.
+
+<Case>
+
+Demlik'te uzak depo kuralları basit:
+
+1. **Origin:** her şey GitHub'daki tek depoda; geliştiriciler doğrudan dallarını gönderiyor.
+2. **Fork:** kasa tedarikçisi Demlik'in deposuna yazma yetkisi olmadan bir düzeltme önerdi; kendi kopyasında değiştirip pull request açtı.
+3. **Force push:** main'de ve paylaşılan dallarda yasak; dal korumasıyla mekanik olarak engelleniyor.
+4. **Bir ders:** Can bir sabah fetch etmeden push etmeye çalıştı, reddedildi. Önce çekip birleştirdi; bir şey kaybolmadı.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -66,5 +107,17 @@ Uzaktaki geçmişi zorla üzerine yazar ve başkalarının işini silebilir. Ana
 <SelfCheck question="Fork ne zaman kullanılır?">
 
 Yazma yetkin olmayan bir projeye katkı vermek istediğinde: kendi hesabın altında bağımsız bir kopya oluşturur, orada değişiklik yapar, sonra asıl projeye PR açarsın.
+
+</SelfCheck>
+
+<SelfCheck question="Fetch ile pull arasındaki fark nedir?">
+
+Fetch uzaktaki değişiklikleri indirir ama birleştirmez; önce ne değiştiğine bakma imkânı verir. Pull indirir ve hemen birleştirir.
+
+</SelfCheck>
+
+<SelfCheck question="Yazma yetkin olmayan bir projeye nasıl katkı verilir?">
+
+Depo fork'lanır: kendi hesabının altında bağımsız bir kopya oluşturulur. Değişiklik orada yapılır ve asıl projeye pull request açılır.
 
 </SelfCheck>
