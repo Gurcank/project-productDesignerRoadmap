@@ -89,6 +89,9 @@ virgül yutulur ve değer 15 olur; hata da vermez. `type="text" inputmode="decim
 virgülü noktaya çevir. Grafik ölçeğini (`y.max`) dörde tam bölünen bir sayı seç; yoksa eksen
 işaretleri 0 / 6 / 11 / 17 gibi düzensiz çıkar.
 
+**Uzun alıntıyı boş satırla böl.** Lint, yalnız `>` içeren satırlarla birleşen bir alıntının tamamını tek
+paragraf sayar; 120 kelimeyi geçince hata verir. Alıntıyı ikiye bölmek için araya boş bir satır koy.
+
 **Paragrafı sıra sayısıyla başlatma.** "7. haftada…" Markdown'da numaralı liste olur; yazıyla yaz.
 
 **Astro 7 markdown eklentileri.** `markdown.rehypePlugins` artık kabul edilmiyor; `processor:
@@ -96,7 +99,7 @@ unified({...})` kullanılıyor. Nedeni ve ödünleşimi ADR-010'da.
 
 ## Ders yazımı
 
-Her yeni ya da yeniden yazılan ders **ders standardı v2**'ye uyar
+Bütün dersler (335/335) **ders standardı v2**'de; yeni ya da yeniden yazılan her ders de ona uyar
 ([docs/icerik/ders-standardi.md](docs/icerik/ders-standardi.md)) ve frontmatter'da `standard: 2`
 taşır; `npm run lint:lessons` temiz olmadan ders bitmiş sayılmaz. Örnekler ortak vakadan gelir
 ([docs/icerik/vaka.md](docs/icerik/vaka.md)); vakadaki sayı ve isimler değişmez, yeni bilgi oraya

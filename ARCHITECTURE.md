@@ -112,6 +112,9 @@ hesap yok, sunucu yok, gizlilik sorunu yok, maliyet sıfır.
 
 ## ADR-006 — i18n: Astro yerleşik yönlendirme, TR varsayılan
 
+> **Durum: ertelendi (Ekim 2026).** Kullanıcı EN arayüzünü ertelemeyi seçti; site şu an yalnız TR.
+> `src/i18n` ve `/en/` rotaları yok. Aşağıdaki karar EN eklenirse uygulanacak plan olarak duruyor.
+
 `defaultLocale: "tr"`, `prefixDefaultLocale: false` → TR `/`, EN `/en/`. Arayüz sözlükleri
 `src/i18n/{tr,en}.json`.
 
@@ -124,6 +127,10 @@ içerik iki kez sonuçlanır.
 ---
 
 ## ADR-007 — Tema: `data-theme` + sistem varsayılanı, flaş yok
+
+> **Durum: kısmen geçersiz (15 Ekim 2026).** Galaksi yeniden tasarımından beri tek tema var: gece
+> gökyüzü. `<html data-theme="dark">` sabit yazılır, açık tema ve tema anahtarı yok. Geçerli kalan kısım:
+> ilk boyamadan önce çalışan satır içi `<head>` betiği kuralı; bugün rolü (ADR-018) ve yıldız ayarını uyguluyor.
 
 `<html data-theme="dark|light">`; seçim yoksa `prefers-color-scheme`, o da yoksa koyu.
 
@@ -266,6 +273,12 @@ Düğme, hangi sürümün indirildiğini `localStorage`'da `build` karmasıyla t
 der. `navigator.storage.persist()` istenir (en iyi çaba). Okuma konumu (`pdr.scroll.v1`) ilerleme modelinden
 ayrıdır: yedeğe/Zod şemasına/`updatedAt`'a girmez, çünkü ders düzenlenince eskir.
 
+**"Yolunu indir" (Faz 13).** Ayarlar'da üçüncü kapsam: seçili rolün yolundaki **temel ve önerilen**
+bölümler (isteğe bağlılar dahil edilince bir rolün yolu bütün siteye yaklaşıyordu: PM için 28/31 bölüm,
+~47 MB; şimdi 21 bölüm, ~37 MB). Liste build'de `getRoutes()`'tan çıkar ve düğmenin `data-paths`
+özniteliğine yazılır; düğme rol değişince kendini yeniden anlatır. Kayıt anahtarı `path:<rol>`, manifest
+değişmedi. Roller, Araçlar, sözlük ve arama zaten ortak (`shared`) dosyalarda.
+
 **Ödünleşim.** İndirme ~19 MB (sıkıştırılmamış üst sınır). Hepsini indirmek mobil veriyi harcar, bu yüzden
 otomatik değil, kullanıcı tetikler. Yeni derlemede kullanıcı elle güncellemezse eski kopyayı görür; sayfalar yine
 arka planda tazelenir.
@@ -273,6 +286,11 @@ arka planda tazelenir.
 ---
 
 ## ADR-014 — Ana sayfa şeması: 64rem'de mobil rotadan farklı bir yerleşime geçer
+
+> **Durum: yerini aldı (15 Ekim 2026).** `RoadmapRoute.astro` ve `RoadmapPath.astro` artık yok. Ana
+> sayfa haritası `GalaxyMap.astro`: her alan bir kuşak, her kategori o kuşak içinde sürüklenebilen
+> bir gezegen (`galaxy-drag.ts`), tek bir SVG katmanı gezegenleri rota sırasıyla birleştirir. JS yokken
+> sıralı bağlantı listesidir. Rolün haritayı nasıl değiştirdiği ADR-017'de. Aşağıdaki metin tarihsel kayıttır.
 
 **Bağlam.** `RoadmapRoute.astro` tek bir düzen kuralı kullanıyordu: kartlar dikey bantlarda,
 genişlik arttıkça 2 sonra 4 sütuna bölünen bir ızgara. Masaüstünde bu, geniş ekranı doldurmuyordu —

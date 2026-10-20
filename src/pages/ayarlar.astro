@@ -3,9 +3,18 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import OfflineDownload from "~/components/OfflineDownload.astro";
 import RolePicker from "~/components/RolePicker.astro";
 import { getPublishedCategories } from "~/lib/content";
+import { getRoutes } from "~/lib/routes";
 
 const published = await getPublishedCategories();
 const totalTopics = published.reduce((sum, entry) => sum + entry.topics.length, 0);
+
+// "Yolunu indir": the published Temel and Önerilen stops of each role. Optional
+// stops would bring a role's path close to the whole site.
+const rolePaths = Object.fromEntries(
+  (await getRoutes())
+    .filter((route) => route.state !== "all")
+    .map((route) => [route.state, route.stops.filter((stop) => stop.published && stop.tier !== "istege-bagli").map((stop) => stop.category)]),
+);
 
 const SIZES = [
   { id: "sm", label: "Küçük" },
@@ -127,8 +136,12 @@ const SIZES = [
       {/* -------------------------------------------------------- offline */}
       <section class="card glass" aria-labelledby="cevrimdisi">
         <h2 id="cevrimdisi" class="card__title">Çevrimdışı</h2>
-        <p class="setting__hint">Tüm dersleri, sözlüğü ve aramayı indir; internet olmadan açılır.</p>
+        <p class="setting__hint">
+          Yolunun temel ve önerilen bölümlerini ya da bütün siteyi indir; Roller, Araçlar, sözlük ve arama ikisinde de gelir.
+          İnternet olmadan açılır.
+        </p>
         <div class="offline">
+          <OfflineDownload scope="path" label="Yolunu indir" paths={rolePaths} />
           <OfflineDownload scope="all" label="Tüm siteyi indir" />
         </div>
       </section>
@@ -619,6 +632,8 @@ const SIZES = [
   }
 
   .offline {
+    display: grid;
+    gap: var(--spacing-5);
     margin-block-start: auto;
   }
 

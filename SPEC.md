@@ -163,6 +163,30 @@ altı rolün hepsi için mercek yazıldı. Kubernetes dersindeki açıklanmamı�
 dersindeki birinci tekil şahıslı not nötrleşti. Dört kategorinin quizi rol-nötr kopyalarla değişti. Vaka
 kitabına "Teslimat, kalite ve yapay zekâ işleri" bölümü eklendi.
 
+**Var — Son tur (Faz 13).** v2: 335/335, `lint:lessons` sıfır hata. 70 sayfada (her kategorinin ana sayfası
+ve bir dersi, harita, Roller, Araçlar, Ayarlar, Ara, Sözlük) axe WCAG 2.2 AA taraması: ihlal yok. Kontrast
+hesapla: en düşük gövde metni 5,65:1 (`--c-text-muted`, açılır yüzeyde), kontrol kenarlığı 4,13:1. İki
+fontta da Türkçe glifler yüklü alt kümeyle çiziliyor. Turda bulunan ve düzeltilen: ana sayfadaki rol
+seçicide ok tuşu ilk rolde seçimi tamamlayıp paneli kapatıyor, odak `<body>`'ye düşüyordu; artık klavyeyle
+panel açık kalıyor, fareyle seçimde odak "Değiştir"e geçiyor. Planda olup yapılmamış "Yolunu indir" eklendi.
+Eskimiş ADR-006, ADR-007 ve ADR-014'e durum notu düşüldü.
+
+**Uçtan uca senaryo (Faz 13, 20 Ekim 2026, `npm run preview`, 375 px).** Sekiz adımın hepsi geçti:
+1. Boş depolamayla açılış; rol seçici klavyeyle Project Manager'a getirildi.
+2. Harita PjM yolunu çizdi (25 durak, 6 temel); "Yolculuğa başla" → Ürün Geliştirme · Ekipteki roller.
+3. Derste önce "Project Manager olarak sen", diğerleri "Diğer roller (6)" içinde. "Bu dersi bitirdim" →
+   ilerleme 1/112, sıradaki adım "Ürün geliştirme yaşam döngüsü".
+4. Risk kaydı CSV'si: UTF-8 BOM, `;` ayraç, CRLF, Türkçe karakterler bozulmadan (Excel'de açma elle
+   denenmedi; biçim Türkçe Excel'in beklediği biçim).
+5. Rol PM'e çevrildi; aynı tamamlanan ders, 1/190.
+6. Ayarlar'dan yedek metni alındı, ilerleme sıfırlandı, rol Scrum Master'a çevrildi; yedek geri yüklenince
+   ilerleme ve rol (PM) geri geldi.
+7. "Yolunu indir" (PM, 21 bölüm) → sunucu kapatıldı: yoldaki ders stilleriyle açıldı, yol dışındaki bir
+   ders "Bu sayfa çevrimdışı yok" sayfasını gösterdi.
+8. JS yokken: `<html>` `data-role` taşımaz, yalnız Keşif rozetleri görünür, 31 gezegen düz bağlantıdır;
+   derslerde mercekler "Rollere göre bakış" listesine düşer (derlenmiş HTML'den doğrulandı; tarayıcıda JS
+   kapatılamadı).
+
 **Henüz yok — planlı, yapılmadı.** EN arayüz (`/en/`, `src/i18n`): kullanıcı ertelemeyi seçti,
 şu an TR tek dil · Araçlar'da Ek B kaynakları ve diğer şablonlar · framework ve kütüphane profil sayfaları · Cloudflare Pages yayını.
 

@@ -114,11 +114,23 @@ const panelId = `rol-paneli-${variant}`;
       for (const option of options) option.checked = option.value === state;
     });
 
+    // On the home page the first choice hides the panel (CSS on html[data-role]).
+    // Arrow keys fire "change" on every radio they pass, so a keyboard user
+    // would lose the panel, and focus, on the first step. Keep it open for
+    // keys; after a click, hand focus to "Değiştir" instead of <body>.
+    let byPointer = false;
+    picker.addEventListener("pointerdown", () => (byPointer = true));
+    picker.addEventListener("keydown", () => (byPointer = false));
+
     for (const option of options) {
       option.addEventListener("change", () => {
         if (!option.checked || !isRoleState(option.value)) return;
+        const wasClosed = toggle !== null && !picker.classList.contains("is-open");
         setRole(option.value);
         if (live) live.textContent = option.dataset.announce ?? "";
+        if (!wasClosed) return;
+        if (byPointer) toggle?.focus();
+        else setOpen(true);
       });
     }
 

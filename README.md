@@ -54,7 +54,8 @@ npm run preview    # http://localhost:4322
 ProductDesignerMaterials/   Kaynak materyal (salt okunur)
 src/content/                Materyalden üretilen ham içerik (elle düzenlenmez)
 src/authored/topics/        Site için yazılan adımların kayıtları (materyal dışı kategoriler)
-src/lessons/                Elle yazılmış dersler (MDX), kategori başına bir klasör
+src/lessons/                Elle yazılmış dersler (MDX), kategori başına bir klasör; hepsi ders standardı v2
+docs/icerik/                Ders standardı, ortak vaka kitabı (Demlik) ve kapsam haritaları
 tests/                      Birim testleri (npm test)
 src/data/                   Kategori sırası, gezegen eşlemesi, menü
 src/components/             Harita, menüler, yıldız alanı, ders bileşenleri
