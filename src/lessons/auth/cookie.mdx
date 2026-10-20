@@ -1,10 +1,11 @@
 ---
-summary: "Çerez, tarayıcının sunucudan gelen küçük bilgiyi saklayıp her istekte geri göndermesidir; oturum kimliğini taşımanın standart yolu. httpOnly, Secure ve SameSite bayrakları birlikte oturum çerezini korur. Jetonu localStorage'da tutmak XSS varsa riskli."
+summary: "Çerez, tarayıcının küçük bir bilgiyi saklayıp her istekte geri göndermesidir; oturum kimliğini taşımanın standart yoludur. httpOnly, Secure ve SameSite birlikte oturum çerezini korur."
 outcomes:
   - "Çerezin ne olduğunu ve otomatik gönderilmesinin hem avantajını hem riskini söyleyebilirsin."
   - "httpOnly, Secure ve SameSite'ın her birinin neyi engellediğini açıklayabilirsin."
   - "Jetonu localStorage'da tutmanın riskini bilirsin."
-minutes: 6
+minutes: 3
+standard: 2
 sources:
   - label: "MDN — HTTP çerezleri"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies"
@@ -21,6 +22,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Siteye girdiğinde "çerezleri kabul et" bildirimi çıkar. Ama çerezin bir de görünmeyen bir yüzü var: oturumunu taşıyan şey.
 
@@ -38,9 +41,44 @@ Siteye girdiğinde "çerezleri kabul et" bildirimi çıkar. Ama çerezin bir de 
 
 Üçü birlikte oturum çerezini korumanın standart yoludur. Üçü de olmayan bir oturum çerezi ciddi bir açıktır. "Çerez ayarlarını kontrol edelim: httpOnly, Secure ve SameSite üçü de olmalı."
 
+<Tree
+  label="Oturum çerezinin üç bayrağı"
+  caption="Bir oturum çerezini üç bayrak birlikte korur. httpOnly, JavaScript'in çereze erişmesini engeller; bir XSS açığında bile oturum okunamaz. Secure, çerezin yalnız HTTPS üzerinden gönderilmesini sağlar. SameSite, çerezin başka sitelerden yapılan isteklerde gönderilmesini sınırlar ve CSRF'e karşı temel savunmadır."
+  root={{
+  title: "Oturum çerezi",
+  tone: "accent",
+  children: [
+    {
+      title: "httpOnly",
+      sub: "JavaScript okuyamaz · XSS"
+    },
+    {
+      title: "Secure",
+      sub: "yalnız HTTPS"
+    },
+    {
+      title: "SameSite",
+      sub: "başka siteden gitmez · CSRF",
+      tone: "progress"
+    }
+  ]
+}}
+/>
+
 ## localStorage'da jeton
 
-Erişim jetonunu çerez yerine tarayıcının yerel deposunda (`localStorage`) saklamak yaygın bir kalıptır ama **riskli** kabul edilir: `localStorage`'a JavaScript erişebilir; sayfada bir XSS açığı varsa saldırgan jetonu okuyup çalabilir. httpOnly çerez bu riski ortadan kaldırır çünkü JavaScript ona erişemez. "Token localStorage'da duruyor; httpOnly çereze taşımayı değerlendirelim." Bu konu tamamen siyah-beyaz değildir ve mimariye göre farklı yaklaşımlar savunulur; tek doğru cevap gibi sunma. Ama "XSS varsa localStorage'daki jeton okunabilir" kısmı tartışmasızdır.
+Erişim jetonunu çerez yerine tarayıcının yerel deposunda (`localStorage`) saklamak yaygın bir kalıptır ama **riskli** kabul edilir. Bu depoya JavaScript erişebilir; sayfada bir XSS açığı varsa saldırgan jetonu okuyup çalabilir. httpOnly çerez bu riski ortadan kaldırır çünkü JavaScript ona erişemez. "Token localStorage'da duruyor; httpOnly çereze taşımayı değerlendirelim." Bu konu tamamen siyah-beyaz değildir ve mimariye göre farklı yaklaşımlar savunulur; tek doğru cevap gibi sunma. Ama "XSS varsa localStorage'daki jeton okunabilir" kısmı tartışmasızdır.
+
+<Case>
+
+Panel'in ilk sürümü oturum jetonunu tarayıcının yerel deposunda tutuyordu.
+
+1. **Bulgu:** bir güvenlik incelemesinde, sayfadaki bir XSS açığının jetonu okuyabileceği gösterildi. Açık kapatıldı ama asıl risk duruyordu.
+2. **Taşıma:** oturum httpOnly, Secure ve SameSite bayraklı bir çereze taşındı. JavaScript artık oturuma erişemiyor.
+3. **Tasarıma etkisi:** yok. Çalışan hiçbir fark görmedi; tek görünen değişiklik, çerez bildiriminde oturum çerezinin "zorunlu çerezler" altında açıklanması oldu.
+4. **Ayrım:** çerez bildirimi pazarlama ve analitik çerezleri için onay istiyor; oturum çerezi zorunlu olduğu için onaya bağlı değil.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -71,5 +109,17 @@ httpOnly (JavaScript erişemez; XSS ile oturum çalınamaz), Secure (yalnızca H
 <SelfCheck question="Token'ı localStorage'da tutmanın riski nedir?">
 
 localStorage'a JavaScript erişebilir; sayfada bir XSS açığı varsa saldırgan jetonu okuyup çalabilir. httpOnly çerez bu riski ortadan kaldırır.
+
+</SelfCheck>
+
+<SelfCheck question="httpOnly bayrağı neyi engeller?">
+
+JavaScript'in çereze erişmesini. Sayfada bir XSS açığı olsa bile saldırganın kodu oturum çerezini okuyamaz.
+
+</SelfCheck>
+
+<SelfCheck question="Oturum çerezi kullanıcının çerez onayına bağlı mıdır?">
+
+Genelde hayır; hizmetin çalışması için zorunlu çerezlerdendir. Pazarlama ve analitik gibi zorunlu olmayan çerezler ise onaya bağlıdır. Hangi çerezin hangi grupta olduğu hukukla birlikte netleştirilmelidir.
 
 </SelfCheck>

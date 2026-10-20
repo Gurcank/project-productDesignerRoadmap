@@ -1,9 +1,10 @@
 ---
-summary: "Stateless servis istekler arasında kendi belleğinde bilgi tutmaz; yatay ölçeklemenin ön koşuludur. Oturum sunucu belleğinde duruyorsa ikinci kopya eklendiğinde kullanıcılar rastgele çıkış yapar."
+summary: "Stateless servis istekler arasında kendi belleğinde bilgi tutmaz; yatay ölçeklemenin ön koşuludur. Oturum sunucu belleğinde durursa ikinci kopya eklenince kullanıcılar rastgele çıkış yapar."
 outcomes:
   - "Stateless ile stateful farkını ve neden yatay ölçeklemenin ön koşulu olduğunu söyleyebilirsin."
   - "Oturum bilgisinin sunucu belleğinde tutulmasının sorununu ve çözümünü açıklayabilirsin."
-minutes: 4
+minutes: 2
+standard: 2
 sources:
   - label: "The Twelve-Factor App — Processes"
     url: "https://12factor.net/processes"
@@ -15,10 +16,55 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Kullanıcılar rastgele çıkış yapıyor. Hiçbir hata yok, ama bazen oturumun düşüyor. En olası sebep: oturum bilgisi bir sunucunun belleğinde tutuluyor ve ikinci kopya eklendi.
+Kullanıcılar rastgele çıkış yapıyor. Hiçbir hata yok, ama bazen oturum düşüyor. En olası sebep: oturum bilgisi bir sunucunun belleğinde tutuluyor ve ikinci kopya eklendi.
 
-**Stateless** bir servis, istekler arasında kendi belleğinde bilgi tutmaz; her istek kendi içinde bütündür. **Stateful** olan tutar. **Stateless olmak yatay ölçeklemenin ön koşuludur.** Kullanıcının oturum bilgisi tek bir sunucunun belleğinde durursa, ikinci bir sunucu eklendiğinde o kullanıcı oraya düştüğünde çıkış yapmış olur. Çözüm: durumu paylaşılan bir yere taşımak (Redis, veritabanı) ya da jetonda taşımak. "Oturumları sunucu belleğinde tutuyoruz; ikinci kopya ekleyince kullanıcılar rastgele çıkış yapacak. Redis'e taşıyalım."
+## Stateless ve stateful
+
+**Stateless** bir servis, istekler arasında kendi belleğinde bilgi tutmaz; her istek kendi içinde bütündür. **Stateful** olan tutar.
+
+## Neden önemli?
+
+<StepFlow
+  label="Bellekteki oturum ve ikinci kopya"
+  caption="Oturum bilgisi birinci sunucunun belleğinde tutuluyorsa sorun ikinci kopya eklenince başlar. Yük dengeleyici bir sonraki isteği ikinci sunucuya gönderir. İkinci sunucu bu oturumu tanımaz ve kullanıcı çıkış yapmış görünür. Çözüm oturumu paylaşılan bir yere, örneğin Redis'e taşımaktır; o zaman her kopya aynı oturumu görür."
+  steps={[
+  {
+    title: "Oturum 1. sunucuda",
+    tone: "accent"
+  },
+  {
+    title: "2. kopya eklenir"
+  },
+  {
+    title: "İstek 2. sunucuya",
+    sub: "oturum yok"
+  },
+  {
+    title: "Kullanıcı çıkış yapmış görünür"
+  },
+  {
+    title: "Oturum Redis'e",
+    sub: "her kopya görür",
+    tone: "progress"
+  }
+]}
+/>
+
+**Stateless olmak yatay ölçeklemenin ön koşuludur.** Kullanıcının oturum bilgisi tek bir sunucunun belleğinde durursa, ikinci bir sunucu eklendiğinde o kullanıcı oraya düştüğünde çıkış yapmış olur. Çözüm: durumu paylaşılan bir yere taşımak (Redis, veritabanı) ya da jetonda taşımak. "Oturumları sunucu belleğinde tutuyoruz; ikinci kopya ekleyince kullanıcılar rastgele çıkış yapacak. Redis'e taşıyalım."
+
+<Case>
+
+Panel'in ilk yılında oturumlar sunucunun belleğindeydi ve tek bir kopya çalışıyordu.
+
+1. **Olay:** sabah yoğunluğu için ikinci bir kopya eklendi. Aynı sabah kafelerden "Panel bizi durup dururken çıkarıyor" şikâyetleri geldi.
+2. **Teşhis:** istekler iki kopya arasında dağılıyordu; ikinci kopya birincinin bellekteki oturumlarını tanımıyordu.
+3. **Çözüm:** oturumlar Redis'e taşındı. Kopya sayısı artık serbestçe artırılabiliyor.
+4. **Ders:** "bir kopya daha ekleyelim" bir altyapı işi gibi görünüyordu; uygulamanın stateless olmasını gerektiriyordu.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -33,6 +79,7 @@ Kullanıcılar rastgele çıkış yapıyor. Hiçbir hata yok, ama bazen oturumun
 
 - Stateless servis istekler arasında bellekte bilgi tutmaz; yatay ölçeklemenin ön koşuludur.
 - Oturum sunucu belleğinde tutulursa ikinci kopya eklendiğinde kullanıcılar çıkış yapar; durumu paylaşılan bir yere ya da jetona taşımak gerekir.
+- "Bir kopya daha ekleyelim" bir altyapı işi gibi görünür; uygulamanın stateless olmasını gerektirir.
 
 </Summary>
 
@@ -41,5 +88,17 @@ Kullanıcılar rastgele çıkış yapıyor. Hiçbir hata yok, ama bazen oturumun
 <SelfCheck question="Oturumlar sunucu belleğinde tutulursa ikinci kopya eklenince ne olur?">
 
 Kullanıcı ikinci kopyaya düştüğünde oturum orada olmadığı için çıkış yapmış olur. Çözüm: durumu paylaşılan bir yere (Redis, veritabanı) ya da jetona taşımak.
+
+</SelfCheck>
+
+<SelfCheck question="Stateless bir servis neden kolay ölçeklenir?">
+
+İstekler arasında kendi belleğinde bilgi tutmadığı için her istek herhangi bir kopyaya gidebilir. Kopya eklemek ya da çıkarmak kullanıcıyı etkilemez.
+
+</SelfCheck>
+
+<SelfCheck question="Durumu stateless bir servisten nereye taşıyabilirsin?">
+
+Paylaşılan bir depoya (Redis, veritabanı) ya da istemcinin taşıdığı imzalı bir jetona. Böylece her kopya aynı bilgiye ulaşır.
 
 </SelfCheck>

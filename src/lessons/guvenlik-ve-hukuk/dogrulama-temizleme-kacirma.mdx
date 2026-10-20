@@ -3,7 +3,9 @@ summary: "Üç sık karıştırılan savunma: doğrulama (kabul edilebilir mi?),
 outcomes:
   - "Doğrulama, temizleme ve kaçırmanın farkını söyleyebilirsin."
   - "Client-side doğrulamanın neden güvenlik sağlamadığını açıklayabilirsin."
-minutes: 5
+minutes: 2
+standard: 2
+skipTerms: ["Doğrulama", "doğrulama"]
 sources:
   - label: "OWASP — Input Validation Cheat Sheet"
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html"
@@ -15,6 +17,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Üçü sık karıştırılır ama farklı işler yapar ve farklı yerlerde uygulanır.
 
@@ -33,6 +37,41 @@ import Lenses from "~/components/lesson/Lenses.astro";
 **Sanitization**, tehlikeli kısımların veriden çıkarılmasıdır. **Escaping** ise verinin, gösterildiği bağlamda kod olarak yorumlanmamasını sağlamaktır. XSS'e karşı asıl savunma escaping'dir ve modern framework'ler bunu varsayılan olarak yapar. Sanitization yalnızca kullanıcının HTML girmesine izin verildiğinde gerekir (zengin metin editörü gibi). "Zengin metni sunucuda temizleyelim; yalnızca izin verilen etiketler kalsın."
 
 **Üçü birbirinin yerine geçmez;** doğrulama "bu veri kabul edilebilir mi", temizleme "tehlikeli kısmı çıkar", kaçırma "gösterirken kod sayılmasın" der. Hepsi gerekir.
+
+<StepFlow
+  label="Bir sipariş notunun yolculuğu"
+  caption="Müşteri sipariş notu yazar. Sunucu önce doğrular: not en çok 140 karakter mi? Not düz metin olduğu için temizlemeye gerek yoktur. Not olduğu gibi saklanır. Panel'de gösterilirken kaçırılır: notta bir etiket bile olsa kod olarak çalışmaz, metin olarak görünür."
+  steps={[
+  {
+    title: "Girdi",
+    sub: "sipariş notu",
+    tone: "accent"
+  },
+  {
+    title: "Doğrula",
+    sub: "en çok 140 karakter"
+  },
+  {
+    title: "Sakla",
+    sub: "olduğu gibi"
+  },
+  {
+    title: "Göster, kaçır",
+    sub: "metin olarak",
+    tone: "progress"
+  }
+]}
+/>
+
+<Case>
+
+Demlik'te iki metin alanı iki farklı savunma istedi:
+
+1. **Sipariş notu:** düz metin. Sunucuda doğrulanıyor (en çok 140 karakter) ve Panel'de gösterilirken kaçırılıyor. Bir test notuna eklenen etiket Panel'de metin olarak göründü, çalışmadı.
+2. **Dükkân açıklaması:** sınırlı zengin metin. Doğrulama (en çok 600 karakter) ve sunucuda temizleme: yalnız kalın, italik ve liste kalıyor; geri kalan her şey ayıklanıyor.
+3. **Arayüz doğrulaması:** iki alanda da karakter sayacı var; ama sunucu kontrolü ayrıca yapılıyor. Mobil uygulamanın eski bir sürümü sayacı göstermiyordu; sunucu kontrolü yine çalıştı.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -63,5 +102,17 @@ Input validation: gelen veri kurallara uyuyor mu? Sanitization: tehlikeli kısı
 <SelfCheck question="Client-side doğrulama güvenlik sağlar mı?">
 
 Hayır. Atlanabilir; yalnızca kullanıcı deneyimi içindir. Güvenlik sunucu tarafındaki doğrulamayla sağlanır.
+
+</SelfCheck>
+
+<SelfCheck question="Sanitization ne zaman gerekir?">
+
+Kullanıcının biçimlendirilmiş içerik (HTML) girmesine izin verildiğinde, örneğin zengin metin editörlerinde. Düz metin alanlarında gösterirken kaçırmak (escaping) yeterlidir.
+
+</SelfCheck>
+
+<SelfCheck question="Escaping XSS'e karşı nasıl korur?">
+
+Veriyi gösterildiği bağlamda kod olarak değil metin olarak işler. Kullanıcı bir betik etiketi yazsa bile tarayıcı onu çalıştırmaz, ekranda metin olarak gösterir.
 
 </SelfCheck>

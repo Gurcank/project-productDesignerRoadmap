@@ -1,10 +1,12 @@
 ---
-summary: "Genel kabul: auth'u sıfırdan yazma. Better Auth, Auth.js, Clerk, Supabase Auth ve Auth0 arasındaki takaslar; tasarımcı için asıl soru hazır çözümün kendi ekranlarını mı yoksa yalnızca arka ucunu mu kullanacağın. Bu bilgi hızla eskir."
+summary: "Genel kabul: auth'u sıfırdan yazma. Better Auth, Auth.js, Clerk, Supabase Auth ve Auth0 arasındaki takaslar; asıl soru hazır çözümün ekranlarını mı, yalnız arka ucunu mu kullanacağın. Bilgi hızla eskir."
 outcomes:
   - "Auth'u neden sıfırdan yazmamak gerektiğini söyleyebilirsin."
   - "Beş hazır çözümün takaslarını (veri sahipliği, hız, maliyet, kilitlenme) karşılaştırabilirsin."
   - "Hazır ekran mı kendi ekranın mı kararının neden proje başında verilmesi gerektiğini açıklayabilirsin."
 minutes: 6
+standard: 2
+skipTerms: ["bağımlılık"]
 sources:
   - label: "Better Auth"
     url: "https://www.better-auth.com/docs"
@@ -25,6 +27,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 > **Bu ders hızla eskir.** Aşağıdaki bilgiler materyalin Eylül 2026 tarihli doğrulamasına dayanır; kullanmadan önce her projenin kendi sitesinden doğrula.
 
@@ -44,9 +48,55 @@ import Lenses from "~/components/lesson/Lenses.astro";
 
 Materyalde ekosistemde iki hareket raporlanıyor: Auth.js'in Better Auth ile birleştiği yönünde bir duyuru (Eylül 2025) ve Lucia Auth'un kullanımdan kaldırıldığı. Bu bilgiler birincil kaynaktan doğrulanmadı; karar vermeden önce projelerin kendi sitelerine bak.
 
-## Tasarımcı için asıl soru
+## Tasarım için asıl soru
+
+<Spectrum
+  label="Ne kadarını sen yönetiyorsun?"
+  caption="Auth çözümleri, ekibin ne kadarını kendisinin yönettiğine göre sıralanır. Sol uçta kendi veritabanında çalışan kütüphaneler durur: Better Auth ve Auth.js; veri ve arayüz ekipte, operasyon da ekipte. Ortada bir platformun parçası olan Supabase Auth vardır. Sağ uçta barındırılan servisler durur: Clerk ve Auth0 hazır ekranlar ve yönetim paneli getirir; karşılığında kullanıcı başına ödeme ve dışarıda tutulan kullanıcı verisi."
+  left={{
+  title: "Kendin yönet",
+  sub: "kütüphane"
+}}
+  right={{
+  title: "Hazır servis",
+  sub: "barındırılan"
+}}
+  marks={[
+  {
+    label: "Better Auth",
+    at: 0.08
+  },
+  {
+    label: "Auth.js",
+    at: 0.24
+  },
+  {
+    label: "Supabase Auth",
+    at: 0.5
+  },
+  {
+    label: "Clerk",
+    at: 0.76
+  },
+  {
+    label: "Auth0",
+    at: 0.92
+  }
+]}
+/>
 
 Hazır çözümün **kendi ekranlarını mı** kullanacaksın, yoksa yalnızca arka ucunu alıp arayüzü kendin mi tasarlayacaksın? Bu, marka tutarlılığı ile hız arasındaki takastır ve **proje başında karara bağlanmalıdır;** sonradan değiştirmek pahalıdır.
+
+<Case>
+
+Demlik auth'u kendisi yazmadı ama ekranlarını kendisi tasarladı:
+
+1. **Seçim:** açık kaynak bir auth kütüphanesi, kendi veritabanında. Kullanıcı verisi Demlik'te kalıyor; kişisel verinin nerede durduğu sorusunun cevabı tek.
+2. **Ekranlar:** giriş, SMS kodu, MFA kurulumu ve şifre sıfırlama Selin'in tasarımı; Demlik'in tasarım sistemiyle.
+3. **Takas:** hazır ekranlı bir servis iki hafta kazandırırdı. Karşılığında SMS ekranının ve hata mesajlarının Türkçe metinleri o servisin izin verdiği kadar değişebilecekti.
+4. **İstisna:** Mert'in araştırma paneli BaaS ile kurulduğunda o platformun hazır auth'u kullanıldı; ana sisteme taşınınca kaldırıldı.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -54,6 +104,24 @@ Hazır çözümün **kendi ekranlarını mı** kullanacaksın, yoksa yalnızca a
 - **Proje başında sor:** hazır ekran mı, özel ekran mı? Özelleştirme sınırı nerede?
 - **Hazır ekran kullanılacaksa** marka uyumunu (renk, tipografi, metinler) hangi seviyede değiştirebildiğini test et.
 - **Çözümün hangi akışları (magic link, passkey, MFA, hesap birleştirme) kutudan verdiğini** ve hangilerini senin tasarlaman gerektiğini listele.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Kendin yazmak ile hazır servis arasındaki takası ürün kararı olarak ver.** Hız, maliyet, veri konumu, marka.
+- **Kullanıcı başına ücretlendirmenin büyüme senaryosundaki maliyetini hesapla.**
+
+</Lens>
+<Lens role="product-owner">
+
+- **Hazır ekran mı, kendi ekranımız mı kararını proje başında kaydet.** Sonradan değiştirmek pahalıdır.
+- **Auth ekranlarını ayrı story'ler olarak planla.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Kişisel verinin nerede saklanacağını gereksinime yaz.** Hazır servis veriyi dışarıda tutabilir.
+- **Metin ve dil gereksinimlerini kontrol et.** Hazır ekranlar Türkçe metinleri ne kadar destekliyor?
 
 </Lens>
 </Lenses>
@@ -71,5 +139,17 @@ Hazır çözümün **kendi ekranlarını mı** kullanacaksın, yoksa yalnızca a
 <SelfCheck question="Auth'u neden sıfırdan yazmamak gerekir?">
 
 Doğru yapılması gereken çok sayıda detay var (özetleme, oturum yönetimi, jeton yenileme, hız sınırı, hesap kurtarma, kullanıcı sayımı sızıntısı) ve her biri sessizce yanlış yapılabilir. Hazır çözümler bunları test edilmiş biçimde getirir.
+
+</SelfCheck>
+
+<SelfCheck question="Auth'u sıfırdan yazmak neden önerilmez?">
+
+Doğru yapılması gereken çok sayıda ayrıntı vardır (şifre özetleme, oturum yönetimi, jeton yenileme, hız sınırı, kurtarma, kullanıcı sayımı) ve her biri sessizce yanlış yapılabilir. Hazır çözümler bunları test edilmiş biçimde getirir.
+
+</SelfCheck>
+
+<SelfCheck question="Hazır bir auth servisinin kendi ekranlarını kullanmanın takası nedir?">
+
+Hız kazanılır; karşılığında marka tutarlılığı, metin ve dil kontrolü servisin izin verdiği kadarla sınırlı kalır. Bu karar proje başında verilmelidir.
 
 </SelfCheck>

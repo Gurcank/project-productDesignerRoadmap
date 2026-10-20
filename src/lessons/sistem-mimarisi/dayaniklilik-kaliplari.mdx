@@ -4,7 +4,9 @@ outcomes:
   - "Idempotency key'in neyi engellediğini ve butonu devre dışı bırakmanın neden yetmediğini söyleyebilirsin."
   - "Retry'a neden jitter eklendiğini açıklayabilirsin."
   - "Circuit breaker ve timeout'un gerektirdiği tasarım kararlarını bilirsin."
-minutes: 8
+minutes: 4
+standard: 2
+skipTerms: ["bağımlılık", "Bağımlılık"]
 sources:
   - label: "Stripe — Idempotent istekler"
     url: "https://docs.stripe.com/api/idempotent_requests"
@@ -20,6 +22,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Ödeme isteği gitti, yanıt gelmedi. Ağ mı koptu, sunucu mu yavaş? İstemci bilemez ve tekrar dener. İşlem tekrar çalışırsa çift çekim olur mu? Dört kalıp bu sorulara cevap verir.
 
@@ -35,6 +39,32 @@ Butonu devre dışı bırakmak istemci tarafı bir önlemdir ve **yeterli değil
 
 ## Circuit breaker
 
+<StepFlow
+  label="Yanıt vermeyen bir bağımlılık"
+  caption="Dükkân sayfası öneri servisini çağırır ve zaman aşımı süresi kadar bekler. Yanıt gelmezse istek artan aralıklarla ve rastgele bir gecikmeyle yeniden denenir. Hatalar sürerse devre kesici açılır: bir süre servise hiç istek gönderilmez, hemen hata dönülür. Dükkân sayfası bu durumda öneri bölümünü gizler; sayfanın geri kalanı çalışır."
+  steps={[
+  {
+    title: "İstek",
+    tone: "accent"
+  },
+  {
+    title: "Zaman aşımı",
+    sub: "en çok 2 sn"
+  },
+  {
+    title: "Yeniden dene",
+    sub: "backoff + jitter"
+  },
+  {
+    title: "Devre kesici açılır"
+  },
+  {
+    title: "Bölüm gizlenir",
+    tone: "progress"
+  }
+]}
+/>
+
 **Circuit breaker (devre kesici)**, bir bağımlılık sürekli hata veriyorsa ona istek atmayı bir süre tamamen durdurup hızlıca hata dönme kalıbıdır; sigortanın çalışma mantığı. Çöken bir servise istek atmaya devam etmek iki zarar verir: senin kaynaklarını bekleyerek tüketir ve zaten çökmüş servisi daha da boğar. "Öneri servisi sürekli zaman aşımına uğruyor; devre kesici koyalım ve o bölümü gizleyelim."
 
 **Graceful degradation ile birlikte çalışır:** devre kesildiğinde arayüzde ne görüneceği tasarlanmalıdır.
@@ -42,6 +72,17 @@ Butonu devre dışı bırakmak istemci tarafı bir önlemdir ve **yeterli değil
 ## Timeout
 
 **Timeout (zaman aşımı)**, bir isteğin ne kadar bekleneceğinin sınırlanmasıdır. Zaman aşımı olmayan bir istek sonsuza kadar bekleyebilir ve kaynakları kilitler. **Tasarım karşılığı:** zaman aşımı süresi kullanıcının ne kadar bekleyeceğini belirler ve bu süre boyunca ne göreceği tasarlanmalıdır. "Zaman aşımını 10 saniye yapalım; kullanıcı sonsuza kadar spinner izlemesin."
+
+<Case>
+
+Demlik'te dört kalıbın dördü de kullanılıyor:
+
+1. **Idempotency:** her ödeme isteği bir anahtar taşıyor; zayıf bağlantıda tekrar gönderilen istek ikinci sipariş oluşturmuyor.
+2. **Timeout:** kasa entegrasyonuna giden çağrı en çok 10 saniye bekliyor. Süre dolarsa müşteriye "Sipariş kafeye iletilemedi, ödemen iade edilecek" yazıyor.
+3. **Retry ve jitter:** bildirimler üç kez, artan ve rastgele aralıklarla deneniyor; sabah zirvesinde bütün denemeler aynı saniyeye yığılmıyor.
+4. **Circuit breaker:** öneri servisi sürekli hata verirse beş dakika çağrılmıyor; dükkân sayfası bölümü gizliyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -74,5 +115,17 @@ Aynı isteğin iki kez işlenmesini (çift sipariş, çift ödeme). Yeterli değ
 <SelfCheck question="Yeniden denemelere neden jitter eklenir?">
 
 Yoksa tüm istemciler aynı anda tekrar dener ve sıkışık servisi yeniden boğar (yeniden deneme fırtınası). Jitter beklemeye rastgelelik ekleyerek denemeleri zamana yayar.
+
+</SelfCheck>
+
+<SelfCheck question="Jitter neden gereklidir?">
+
+Rastgelelik eklenmezse hata alan bütün istemciler aynı anda yeniden dener ve zaten sıkışık servisi bir "yeniden deneme fırtınasıyla" boğar. Jitter denemeleri zamana yayar.
+
+</SelfCheck>
+
+<SelfCheck question="Zaman aşımı süresi neden bir tasarım kararıdır?">
+
+Kullanıcının ne kadar bekleyeceğini belirler. Bu süre boyunca ne göreceği ve süre dolunca ne olacağı tasarlanmalıdır.
 
 </SelfCheck>

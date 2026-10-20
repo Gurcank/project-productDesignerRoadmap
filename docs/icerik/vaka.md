@@ -741,6 +741,40 @@ birlikte sık alınanlar"; yeni dükkânda "Bu dükkânda popüler"e döner. Yar
 anlamsal arama yerine en sık 30 ifade için eş anlamlı listesi kuruldu. Favori listesi en çok 20 ürün;
 kimlik dükkân + ürün. Panel'de "bugünkü diğer siparişleri" rozeti kare büyüyordu; sözlükle doğrusala indi.
 
+**Kimlik ve güvenlik:** Panel'de her çalışanın kendi hesabı var (ortak kafe hesabı yok); giriş tek ekranla
+başlar ("E-postanı gir"), yeni çalışan davet koduyla katılır. Panel ve web oturumları session (Redis),
+Panel oturumu 12 saat, "beni hatırla" yok; mobil uygulama 15 dakikalık erişim ve 60 günlük yenileme jetonu
+kullanır. Panel jetonu önce yerel depodaydı, httpOnly/Secure/SameSite çereze taşındı. Panel şifresi en az
+15 karakter; karmaşıklık kuralı ve zorunlu değiştirme yok, sızmış şifre kontrolü var; sıfırlama bağlantısı
+30 dakika. Dükkân sahibine MFA (kimlik doğrulayıcı uygulama, on yedek kod) zorunlu, çalışana isteğe bağlı.
+Müşteri girişi SMS kodu (kart bilgisi ödeme kuruluşunda olduğu için risk düşük kabul edildi); passkey ikinci
+yöntem. Telefon numarası değiştirme akışı iki numarayı da doğrular. Çalışanın ekranında "İadeyi onayla"
+pasif ve açıklamalı; sahip bir çalışana yalnız iade onayı yetkisi verebilir. Yeni davet edilen varsayılan
+"çalışan". Sosyal giriş yok. Auth açık kaynak bir kütüphaneyle, ekranlar Selin'in.
+
+**Güvenlik olayları:** tehdit modelinde üç risk: sahip hesabının ele geçirilmesi, öğrenci kartı indiriminin
+istismarı (kart başına günde en çok iki indirimli sipariş), telefonların sızması. Kart listesi servisi
+yanıt vermediğinde indirim uygulanmaz (güvenli başarısızlık). Lansman öncesi dış denetim: A01 (rapor
+uç noktasında dükkân kontrolü), A02 (staging'de açık hata sayfası), A06 (telefon değiştirme akışı), A10
+(kasa zaman aşımında "alındı" görünmesi). Dükkân açıklaması sınırlı zengin metin (600 karakter, sunucuda
+temizleme), sipariş notu düz metin (140 karakter). "Dükkânın web sitesi" önizlemesi SSRF riski yüzünden
+yapılmadı. Panel'e sıkı CSP eklenince harita kırıldı, izin listesine eklendi. Düğme görselinin HTTP
+bağlantısı karışık içerik yarattı. Defne e-posta servisinin anahtarını depoya gönderdi; aynı akşam iptal
+edildi, depoya gönderimde sır taraması var. Bekleme listesi spam'i honeypot ve hız sınırıyla durdu. Kayıt
+ekranında aydınlatma ve kampanya izni ayrıldı; "Verilerimi indir" ve "Hesabımı sil" var. Ödeme ekranında
+iade koşulu tek satır; satıcı dükkân.
+
+**Mimari:** arka yüz modüler monolith (sipariş, ödeme, menü ve stok, iade modülleri); bildirim işçisi ve
+haftalık rapor ayrı. Panel'in Next.js'e taşınması ADR ile reddedildi. İade modülü sipariş tablosuna doğrudan
+yazıyordu; artık sipariş modülünün arayüzünü çağırıyor. Panel'in ikinci kopyası eklenince bellekteki
+oturumlar yüzünden çalışanlar çıkış yaptı; oturumlar Redis'e taşındı. Sabah trafiği dakikada ~10 (07.00),
+~32 (08.00), ~8 (10.00) sipariş isteği; kopyalar 2 → 4, her gün 07.15'te 3'e önceden çıkar; kampüs lansmanı
+sabahı 6. API gateway (iki kopya) ve yük dengeleyici. "Sipariş oluşturuldu" olayını kafe ekranı, bildirim
+işçisi ve analitik dinler. Tek SMS sağlayıcısı 40 dakika kesildi; ikinci sağlayıcı eklendi. Kasa çağrısı
+zaman aşımı 10 sn, öneri servisi için devre kesici. Sipariş servisi SLO'su %99,9, p95 onay 2 sn altında
+(ortalama 600 ms iken p95 3 sn'yi geçiyordu); dükkânlara SLA %99,5. Öğrenci kartı doğrulaması Elif'in
+yazdığı bir ADR ile haftalık listeye bağlandı.
+
 ## Paydaşlar
 
 | Paydaş | İlgi | Etki |

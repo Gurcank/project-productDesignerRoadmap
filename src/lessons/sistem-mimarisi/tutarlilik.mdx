@@ -4,7 +4,8 @@ outcomes:
   - "Güçlü ve nihai tutarlılığı ve arayüzdeki sonucunu söyleyebilirsin."
   - "Nihai tutarlılıkta kullanıcı deneyimini nasıl koruyacağını (optimistic UI, güncelleniyor durumu) açıklayabilirsin."
   - "CAP'in pratik anlamını ('ağ koptuğunda doğruluk mu cevap mı?') bilirsin."
-minutes: 6
+minutes: 3
+standard: 2
 sources:
   - label: "InfoQ — Eric Brewer: CAP Twelve Years Later"
     url: "https://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed/"
@@ -19,6 +20,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Profil adını değiştirdin, "Kaydedildi" gördün, sayfayı yeniledin ve eski ad geri geldi. Sistem bozuk değil. Kullanıcı ise bozuk sanıyor. Bu, tutarlılık konusunun arayüze yansıması.
 
@@ -43,9 +46,51 @@ Profil adını değiştirdin, "Kaydedildi" gördün, sayfayı yeniledin ve eski 
 
 ## CAP teoremi
 
-**CAP teoremi**, dağıtık bir sistemde ağ bölünmesi yaşandığında tutarlılık (consistency) ile erişilebilirlik (availability) arasında seçim yapmak zorunda kalınacağını söyler. Kavramsal olarak bilmen yeterli (seviye 3). **Pratik anlamı:** ağ koptuğunda ya yanlış olabilecek bir cevap verirsin ya hiç cevap vermezsin. Bir banka birinciyi seçemez; bir sosyal medya akışı seçebilir. "Bu veri için tutarlılık kritik; erişilebilirlikten ödün verip hata döneriz."
+<Spectrum
+  label="Hangi veri ne kadar tutarlı olmalı?"
+  caption="Demlik'teki veriler tutarlılık ihtiyacına göre sıralanır. Sol uçta güçlü tutarlılık gereken veriler durur: son ürünün stoğu ve ödeme durumu; iki müşteri aynı son kruvasanı alamaz. Ortada menü fiyatları vardır: beş dakika önbellekte kalır ama değişince önbellek temizlenir. Sağ uçta nihai tutarlılığın yettiği veriler durur: Panel'deki bugünkü sipariş sayacı ve birlikte sık alınanlar önerisi."
+  left={{
+  title: "Güçlü",
+  sub: "herkes anında aynı"
+}}
+  right={{
+  title: "Nihai",
+  sub: "eninde sonunda aynı"
+}}
+  marks={[
+  {
+    label: "Stok, ödeme",
+    at: 0.06
+  },
+  {
+    label: "Menü fiyatı",
+    at: 0.45
+  },
+  {
+    label: "Sipariş sayacı",
+    at: 0.75
+  },
+  {
+    label: "Öneriler",
+    at: 0.94
+  }
+]}
+/>
+
+**CAP teoremi**, dağıtık bir sistemde ağ bölünmesi yaşandığında tutarlılık (consistency) ile erişilebilirlik (availability) arasında seçim yapmak zorunda kalınacağını söyler. Kavramsal olarak bilmen yeterli. **Pratik anlamı:** ağ koptuğunda ya yanlış olabilecek bir cevap verirsin ya hiç cevap vermezsin. Bir banka birinciyi seçemez; bir sosyal medya akışı seçebilir. "Bu veri için tutarlılık kritik; erişilebilirlikten ödün verip hata döneriz."
 
 Sık yanlış anlaşılır: "üçünden ikisini seç" diye özetlenir ama teoremin söylediği daha dar; seçim yalnızca **bölünme anında** ortaya çıkar. Teoremin kesin formülasyonu akademik bir tartışma konusudur; günlük kullanımda kaba bir çerçeve olarak geçer.
+
+<Case>
+
+Demlik'te tutarlılık ihtiyacı veriden veriye değişiyor:
+
+1. **Güçlü:** son ürünün stoğu. İki öğrenci aynı son kruvasanı alamaz; sipariş transaction içinde stok düşüyor.
+2. **Nihai:** Panel'in üstündeki "bugün 23 sipariş" sayacı birkaç saniye gecikebiliyor; kimse bu sayıyla karar vermiyor.
+3. **Kendi değişikliğini anında göster:** dükkân çalışanı bir ürünü bugünlük kapattığında Panel'de anında kapalı görünüyor. Müşteri tarafında menü önbelleği temizlenene kadar birkaç saniye eski hâli görülebiliyor.
+4. **Bölünme anı:** kasa entegrasyonuyla bağlantı koptuğunda sipariş "alındı" gösterilmiyor; tutarlılık seçildi, hata dönülüyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -70,5 +115,17 @@ Sık yanlış anlaşılır: "üçünden ikisini seç" diye özetlenir ama teorem
 <SelfCheck question="Nihai tutarlılığın arayüzdeki sonucu nedir? Tasarım çözümü nedir?">
 
 Kullanıcı bir şeyi kaydeder, sayfayı yeniler ve eski hâli görür; sistem bozuk değildir ama kullanıcı öyle sanır. Çözüm: kullanıcının kendi değişikliğini anında göstermek (optimistic UI) ve "güncelleniyor" durumunu belirtmek.
+
+</SelfCheck>
+
+<SelfCheck question="Nihai tutarlı bir sistemde kullanıcı kaydettiği değişikliği yenileyince göremiyor. Tasarımda ne yapılır?">
+
+Kullanıcının kendi değişikliği anında gösterilir (optimistic UI) ve gerekirse "güncelleniyor" durumu belirtilir. Sistem bozuk değildir ama kullanıcı öyle sanmamalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir banka ile bir sosyal medya akışı ağ bölünmesinde neden farklı seçim yapar?">
+
+Banka yanlış bakiye gösteremez; tutarlılığı seçer ve gerekirse hata döner. Sosyal medya akışı kısa süre eski içerik gösterebilir; erişilebilirliği seçer.
 
 </SelfCheck>

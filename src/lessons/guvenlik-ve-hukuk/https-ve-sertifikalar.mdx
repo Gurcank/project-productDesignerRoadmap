@@ -1,10 +1,11 @@
 ---
-summary: "TLS trafiğin yolda okunamamasını ve karşı tarafın gerçekten iddia ettiği site olmasını sağlar; modern hosting sertifikayı otomatik yeniler. Süresi dolan sertifika büyük bir tarayıcı uyarısı demektir. Mixed content sayfayı bozar."
+summary: "TLS trafiğin yolda okunamamasını ve karşı tarafın gerçekten iddia ettiği site olmasını sağlar; modern hosting sertifikayı otomatik yeniler. Süresi dolan sertifika büyük uyarı, mixed content bozuk sayfa demektir."
 outcomes:
   - "TLS sertifikasının iki işini söyleyebilirsin."
   - "Süresi dolan sertifikanın kullanıcıya etkisini açıklayabilirsin."
   - "Mixed content'in belirtisini ve çözümünü bilirsin."
-minutes: 4
+minutes: 2
+standard: 2
 sources:
   - label: "Let's Encrypt — Nasıl çalışır?"
     url: "https://letsencrypt.org/how-it-works/"
@@ -16,6 +17,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Adres çubuğundaki kilit simgesi, ya da kırmızı bir uyarı sayfası. İkisinin arkasında TLS sertifikası var.
 
@@ -25,7 +28,42 @@ Adres çubuğundaki kilit simgesi, ya da kırmızı bir uyarı sayfası. İkisin
 
 ## Mixed content
 
+<StepFlow
+  label="Güvenli bir bağlantı nasıl kurulur?"
+  caption="Tarayıcı siteye bağlanır ve sunucunun sertifikasını ister. Sertifikanın geçerli olup olmadığını ve gerçekten bu alan adına ait olup olmadığını doğrular. Doğrulama başarılıysa şifreli bağlantı kurulur ve adres çubuğunda kilit görünür. Sayfa içindeki bir kaynak HTTP ile çağrılıyorsa tarayıcı onu engelleyebilir; bu karışık içeriktir."
+  steps={[
+  {
+    title: "Bağlan",
+    tone: "accent"
+  },
+  {
+    title: "Sertifikayı doğrula",
+    sub: "geçerli mi, bu site mi?"
+  },
+  {
+    title: "Şifreli bağlantı",
+    sub: "kilit"
+  },
+  {
+    title: "Kaynaklar",
+    sub: "HTTP olanlar engellenebilir",
+    tone: "progress"
+  }
+]}
+/>
+
 **Mixed content (karışık içerik)**, HTTPS bir sayfada HTTP üzerinden yüklenen kaynakların bulunmasıdır. Sayfanın güvenlik garantisini bozar; tarayıcı bu kaynakları engelleyebilir ya da uyarı gösterebilir. Sonuç: görseller yüklenmez, stiller bozulur. Eski siteler HTTPS'e geçirilirken sık görülür. "Bazı görseller yüklenmiyor; mixed content uyarısı var, adresleri HTTPS'e çevirelim."
+
+<Case>
+
+Demlik'in sertifikaları barındırma platformunda otomatik yenileniyor; sorun başka yerden çıktı:
+
+1. **Mixed content:** dükkânlara verilen "Demlik'le sipariş ver" düğme görselinin ilk bağlantısı HTTP'ydi. HTTPS kullanan dükkân sitelerinde görsel görünmedi.
+2. **Düzeltme:** bağlantı HTTPS'e çevrildi; dükkânlara yeni kod gönderildi.
+3. **Takip:** eski kodu kullanan dükkânlar için HTTP adres HTTPS'e kalıcı yönlendiriliyor; ama tarayıcı karışık içeriği yönlendirmeden önce engelleyebildiği için dükkânlardan kodu güncellemeleri istendi.
+4. **Sertifika izleme:** kasa tedarikçisinin entegrasyon adresinin sertifika bitiş tarihi Demlik'in izleme panosunda; süresi dolmadan 30 gün önce uyarı geliyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -50,5 +88,17 @@ Adres çubuğundaki kilit simgesi, ya da kırmızı bir uyarı sayfası. İkisin
 <SelfCheck question="TLS sertifikası hangi iki şeyi sağlar?">
 
 Trafiğin yolda okunamamasını ve karşı tarafın gerçekten iddia ettiği site olmasını.
+
+</SelfCheck>
+
+<SelfCheck question="HTTPS'e geçirilmiş bir sitede bazı görseller görünmüyor. En olası neden nedir?">
+
+Karışık içerik: görseller hâlâ HTTP adresinden çağrılıyordur ve tarayıcı bunları engelliyordur. Kaynak adresleri HTTPS'e çevrilmelidir.
+
+</SelfCheck>
+
+<SelfCheck question="Sertifikanın süresi dolarsa kullanıcı ne görür?">
+
+Tarayıcının büyük bir güvenlik uyarısı sayfasını. Çoğu kullanıcı siteden çıkar; bu yüzden otomatik yenileme ve bitiş tarihi izleme gerekir.
 
 </SelfCheck>

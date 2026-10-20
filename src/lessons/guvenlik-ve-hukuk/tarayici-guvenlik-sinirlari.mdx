@@ -4,7 +4,8 @@ outcomes:
   - "Same-origin policy'nin neyi engellediğini söyleyebilirsin."
   - "'CORS var, güvendeyiz' cümlesinin neden yanlış olduğunu açıklayabilirsin."
   - "CSP'nin ne yaptığını ve tasarımda hangi sürtüşmeyi yarattığını bilirsin."
-minutes: 7
+minutes: 4
+standard: 2
 sources:
   - label: "MDN — Same-origin policy"
     url: "https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy"
@@ -18,6 +19,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Geliştirme sırasında en sık karşılaşılan hatalardan biri: "CORS hatası alıyoruz." Bu hatanın arkasında web'in en temel güvenlik kuralı var.
 
@@ -33,9 +36,43 @@ Geliştirme sırasında en sık karşılaşılan hatalardan biri: "CORS hatası 
 
 ## CSP
 
+<Tree
+  label="Tarayıcının üç sınır kuralı"
+  caption="Tarayıcıda üç kural birlikte çalışır. Aynı köken politikası varsayılan sınırdır: bir site başka bir sitenin verisini okuyamaz. CORS bu sınırın kontrollü gevşetilmesidir: sunucu hangi kökenlere izin verdiğini söyler; bir güvenlik önlemi değildir. CSP sayfanın hangi kaynaklardan kod yükleyebileceğini sınırlar; XSS'e karşı ikinci savunma katmanıdır."
+  root={{
+  title: "Tarayıcı sınırları",
+  tone: "accent",
+  children: [
+    {
+      title: "Aynı köken",
+      sub: "varsayılan sınır"
+    },
+    {
+      title: "CORS",
+      sub: "kontrollü gevşetme"
+    },
+    {
+      title: "CSP",
+      sub: "kaynak izin listesi",
+      tone: "progress"
+    }
+  ]
+}}
+/>
+
 **CSP (Content Security Policy, içerik güvenlik politikası)**, sayfanın hangi kaynaklardan kod, stil, görsel ve font yükleyebileceğini sınırlayan politikadır. XSS'e karşı ikinci savunma katmanıdır: bir açık oluşsa bile saldırganın kodu izin verilen kaynaklar listesinde olmadığı için çalışmayabilir. Güvenlik başlıklarında yer alır.
 
 **Tasarım tarafında bir sürtüşme noktasıdır:** sıkı bir CSP, gömülü analitik, harita, video oynatıcı ve font servislerini kırabilir. Bu yüzden hangi üçüncü partilerin kullanılacağı kararı, CSP kararıyla birlikte alınmalıdır. "CSP ekleyelim ama üçüncü parti gömülü bileşenlerin kırılmadığından emin olalım."
+
+<Case>
+
+Demlik'te iki tarayıcı kuralı iki ayrı gün sorun çıkardı:
+
+1. **CORS:** Panel `panel.demlik.com.tr`, API ise ayrı bir alt alan adındaydı. Yeni Panel sürümü staging'de "CORS hatası" verdi; staging adresi API'nin izin listesinde yoktu. Liste ortam değişkenine taşındı.
+2. **CSP:** Panel'e sıkı bir CSP eklendi. Ertesi gün "Dükkân bilgileri" ekranındaki harita açılmadı; harita servisinin adresleri izin listesinde değildi. Eklendi.
+3. **Ders:** yeni bir üçüncü parti bileşen eklemek artık CSP listesini güncellemeyi de içeriyor; teslim kontrol listesinde bir madde.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -66,5 +103,17 @@ Hayır. CORS aslında same-origin politikasının kontrollü gevşetilmesidir ve
 <SelfCheck question="CSP ne yapar ve tasarımda hangi sürtüşmeyi yaratır?">
 
 Sayfanın hangi kaynaklardan kod, stil, görsel ve font yükleyebileceğini sınırlar; XSS'e karşı ikinci savunma katmanıdır. Sürtüşme: sıkı bir CSP gömülü analitik, harita, video oynatıcı ve font servislerini kırabilir; bu yüzden üçüncü parti seçimleri CSP kararıyla birlikte alınmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question={"\"CORS var, güvendeyiz\" cümlesi neden yanlıştır?"}>
+
+CORS bir gevşetme mekanizmasıdır: hangi kökenlerin tarayıcıdan erişebileceğini söyler. Yalnız tarayıcıyı bağlar; sunucudan sunucuya yapılan istekleri engellemez. Asıl koruma yetkilendirmedir.
+
+</SelfCheck>
+
+<SelfCheck question="Sıkı bir CSP hangi tasarım kararını etkiler?">
+
+Hangi üçüncü parti bileşenlerin kullanılabileceğini: analitik, harita, video oynatıcı ve font servisleri izin listesinde değilse çalışmaz. Üçüncü parti kararı CSP kararıyla birlikte alınmalıdır.
 
 </SelfCheck>

@@ -4,7 +4,8 @@ outcomes:
   - "RBAC'ı ve tasarımda düşünülmesi gereken üç soruyu söyleyebilirsin."
   - "RBAC ile ABAC'ın farkını ve ABAC'ın bedelini açıklayabilirsin."
   - "Multi-tenancy'nin tasarıma getirdiği ekranları ve en kritik güvenlik noktasını (veri yalıtımı) bilirsin."
-minutes: 8
+minutes: 4
+standard: 2
 sources:
   - label: "OWASP — Authorization Cheat Sheet"
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html"
@@ -18,6 +19,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir ekip ürününde "Admin", "Editör", "Görüntüleyici" rolleri var. Ya "yalnızca kendi ekibinin projelerini görsün" gibi bir kural? Yetkilendirme modelleri, kimin neyi yapabileceğini tanımlama biçimleridir.
 
@@ -37,9 +40,52 @@ Bir ekip ürününde "Admin", "Editör", "Görüntüleyici" rolleri var. Ya "yal
 
 ## Multi-tenancy
 
+<Tree
+  label="Demlik Panel'in yetki modeli"
+  caption="Demlik Panel çok kiracılıdır: her dükkân bir kiracıdır ve verisi diğer dükkânlardan yalıtılır. Her dükkânda iki rol vardır. Dükkân sahibi siparişleri yönetir, menüyü değiştirir, ciro raporunu görür ve iadeleri onaylar. Çalışan siparişleri yönetir ve menüyü değiştirir. Bir çalışan birden fazla dükkânda farklı rollerle bulunabilir."
+  root={{
+  title: "Panel",
+  sub: "her dükkân bir kiracı",
+  tone: "accent",
+  children: [
+    {
+      title: "Dükkân sahibi",
+      children: [
+        {
+          title: "Sipariş, menü"
+        },
+        {
+          title: "Ciro, iade onayı"
+        }
+      ]
+    },
+    {
+      title: "Çalışan",
+      children: [
+        {
+          title: "Sipariş, menü",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
 **Multi-tenancy (çok kiracılı yapı)**: aynı uygulamanın birden fazla müşteri kuruluşuna hizmet vermesi ve verilerinin birbirinden yalıtılmasıdır (tenant, organization, workspace). B2B SaaS'ın temel yapısıdır. **Tasarım karşılığı çok somuttur:** kullanıcı birden fazla kuruluşta olabilir mi? Öyleyse **kuruluş değiştirici (workspace switcher)** gerekir. Davet akışı, rol atama, kuruluş ayarları ve faturalandırma ayrı ekranlar demektir. "Kullanıcı birden fazla workspace'te olabilecek; header'a workspace switcher koyalım."
 
 **En kritik güvenlik noktası veri yalıtımıdır:** bir kiracının verisinin başka bir kiracıya sızması, bir SaaS ürünü için en ciddi hata sınıfıdır. Her sorguda kiracı filtresinin uygulandığından emin olunmalıdır; veritabanı seviyesinde Row Level Security bunun için kullanılır.
+
+<Case>
+
+Demlik Panel'in yetki yapısı bir çok kiracılı RBAC:
+
+1. **Kiracı:** her dükkân bir kiracı. Her sorgu dükkân kimliğiyle süzülüyor; veritabanında da satır seviyesinde bir kural var.
+2. **Roller:** sahip ve çalışan; iki rol yeter görüldü. "Vardiya şefi" rolü istendi; ihtiyacın yalnız iade onayı olduğu anlaşılınca sahip, bir çalışana tek bu yetkiyi verebilir oldu.
+3. **Birden fazla dükkân:** bir çalışan iki şubede çalışabiliyor; üstte dükkân seçici var, rol dükkân başına.
+4. **Yalıtım testi:** Zeynep bir dükkânın çalışanıyla giriş yapıp başka bir dükkânın sipariş adresini elle yazdı; 404 döndü. Test her sürümde tekrarlanıyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -48,6 +94,24 @@ Bir ekip ürününde "Admin", "Editör", "Görüntüleyici" rolleri var. Ya "yal
 - **Yetkisiz eylem için tek bir kural belirle:** genelde pasif + açıklama ("Yetki için yöneticine başvur").
 - **Rol değişikliğinde bildirim ve etkilerini göster.**
 - **Birden fazla kuruluşa üyelik olasılığını erken sor;** workspace switcher, davet ve faturalama ekranlarını planla.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Rol sayısını az tut.** Her yeni rol, anlatılması ve test edilmesi gereken bir matris demektir.
+- **Kiracı yalıtımını kırmızı çizgi say.** Bir müşterinin verisinin diğerine sızması en ciddi hatadır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Rol matrisini story'lere ekle.** Her yeni özellik için "hangi rol görür, hangi rol yapar?"
+- **Yalıtım testini Definition of Done'a koy.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Yetki gereksinimini rol × işlem tablosu olarak yaz.**
+- **Yeni rol isteğinde asıl ihtiyacı sor.** Çoğu zaman tek bir izin yeterlidir.
 
 </Lens>
 </Lenses>
@@ -71,5 +135,11 @@ Veri yalıtımı: bir kiracının verisinin başka bir kiracıya sızması SaaS 
 <SelfCheck question="RBAC'ta tasarımda düşünülmesi gereken üç soru nedir?">
 
 Rol matrisi kullanıcıya nasıl gösterilecek; yetkisi olmayan eylem gizlenecek mi pasif mi gösterilecek; rol değiştiğinde kullanıcı bilgilendirilecek mi?
+
+</SelfCheck>
+
+<SelfCheck question="Yeni bir rol istendiğinde ilk sorulacak soru nedir?">
+
+Asıl ihtiyacın ne olduğu: kişinin gerçekten yeni bir rol setine mi, yoksa tek bir ek izne mi ihtiyacı var? Her yeni rol, kullanıcıya anlatılması ve test edilmesi gereken bir matris büyümesi demektir.
 
 </SelfCheck>

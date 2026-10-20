@@ -1,10 +1,11 @@
 ---
-summary: "Adlarını duyacağın ve ne olduğunu anlaman gereken saldırı türleri: XSS, CSRF, SQL injection, IDOR, SSRF ve clickjacking. IDOR tasarımcının en çok ilgilendiği açıktır; 'zengin metin' ve 'URL önizleme' gibi masum özellikler risk doğurur."
+summary: "Adını duyacağın saldırı türleri: XSS, CSRF, SQL injection, IDOR, SSRF ve clickjacking. IDOR tasarımı en çok ilgilendiren açıktır; 'zengin metin' ve 'URL önizleme' gibi masum özellikler risk doğurur."
 outcomes:
   - "XSS ile CSRF arasındaki farkı söyleyebilirsin."
-  - "IDOR'un neden tasarımcıyı ilgilendirdiğini ve asıl savunmanın ne olduğunu açıklayabilirsin."
+  - "IDOR'un neden tasarımı ilgilendirdiğini ve asıl savunmanın ne olduğunu açıklayabilirsin."
   - "URL önizleme gibi bir özelliğin SSRF riskini ve zengin metin isteğinin XSS riskini bilirsin."
-minutes: 9
+minutes: 5
+standard: 2
 sources:
   - label: "OWASP — XSS Prevention Cheat Sheet"
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
@@ -24,6 +25,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bu ders bir saldırı kataloğu değil; adlarını duyacağın ve ne olduğunu anlaman gereken saldırıların kısa tanıtımı. Her birinin tasarım bağlantısına dikkat et.
 
@@ -58,7 +61,7 @@ Bu ders bir saldırı kataloğu değil; adlarını duyacağın ve ne olduğunu a
 
 ## IDOR
 
-**IDOR (Insecure Direct Object Reference)**: bir kaydın kimliğini değiştirerek başkasına ait kayda erişilebilmesidir. **Tasarımcının en çok ilgilendiği açıktır:** URL'de `/siparis/1042` görüyorsan `/siparis/1043` yazarak başkasının siparişini görebilir misin? Sunucu her istekte "bu kayıt bu kullanıcıya mı ait?" kontrolünü yapmıyorsa evet. Erişim kontrolü kategorisinin en yaygın biçimidir.
+**IDOR (Insecure Direct Object Reference)**: bir kaydın kimliğini değiştirerek başkasına ait kayda erişilebilmesidir. **Tasarımı en çok ilgilendiren açıktır:** URL'de `/siparis/1042` görüyorsan `/siparis/1043` yazarak başkasının siparişini görebilir misin? Sunucu her istekte "bu kayıt bu kullanıcıya mı ait?" kontrolünü yapmıyorsa evet. Erişim kontrolü kategorisinin en yaygın biçimidir.
 
 **Tahmin edilemez kimlik kullanmak bir savunma değil, yalnızca zorlaştırmadır.** Asıl savunma, her istekte yetki kontrolü yapmaktır; ikisi birlikte kullanılır. "IDOR testi yapalım: başka kullanıcının sipariş ID'siyle URL'i deneyelim."
 
@@ -68,7 +71,63 @@ Bu ders bir saldırı kataloğu değil; adlarını duyacağın ve ne olduğunu a
 
 ## Clickjacking
 
+<Tree
+  label="Açıklar ve kaynakları"
+  caption="Altı açık üç kaynaktan doğar. Kullanıcı girdisinin kod gibi çalışmasından: XSS ve SQL injection. Kimlik ve yetkinin yanlış varsayılmasından: IDOR ve CSRF. Masum görünen özelliklerden: URL önizlemesi SSRF'e, sitenin başka sayfalara gömülebilmesi clickjacking'e yol açabilir."
+  root={{
+  title: "Yaygın açıklar",
+  tone: "accent",
+  children: [
+    {
+      title: "Girdi kod olur",
+      children: [
+        {
+          title: "XSS"
+        },
+        {
+          title: "SQL injection"
+        }
+      ]
+    },
+    {
+      title: "Kimlik varsayılır",
+      children: [
+        {
+          title: "IDOR"
+        },
+        {
+          title: "CSRF"
+        }
+      ]
+    },
+    {
+      title: "Masum özellik",
+      children: [
+        {
+          title: "SSRF · URL önizleme"
+        },
+        {
+          title: "Clickjacking",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
 **Clickjacking**: sitenin görünmez bir çerçeve içinde başka bir sayfaya gömülüp kullanıcının farkında olmadan tıklamasının sağlanmasıdır. Kullanıcı bir yere tıkladığını sanır, aslında altta duran uygulamanda bir işlem onaylar. Savunması, sitenin başka sayfalara gömülmesini engelleyen başlıklardır. "Uygulamanın iframe içine gömülmesini engelleyelim."
+
+<Case>
+
+Demlik'te üç açık bir özellik isteğiyle birlikte geldi:
+
+1. **XSS:** dükkânlar Panel'de dükkân açıklamasını biçimlendirmek istedi. Ham HTML yerine yalnız kalın, italik ve liste destekleyen bir editör kondu; içerik sunucuda temizleniyor.
+2. **SSRF:** "Dükkânın web sitesi" alanına girilen adresin önizlemesinin gösterilmesi istendi. Sunucunun kullanıcının verdiği adrese istek atması gerekecekti; önizleme yapılmadı, adres düz bağlantı olarak gösteriliyor.
+3. **IDOR:** müşterinin sipariş ayrıntısı adresi tahmin edilemez bir kimlik kullanıyor; ama asıl savunma sunucuda: her istekte siparişin o müşteriye ait olduğu kontrol ediliyor.
+4. **Clickjacking:** Panel'in başka sitelere gömülmesi başlıklarla engellendi.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -99,7 +158,7 @@ XSS, saldırganın senin sitende kod çalıştırmasıdır. CSRF, saldırganın 
 
 </SelfCheck>
 
-<SelfCheck question="IDOR nedir ve neden tasarımcıyı doğrudan ilgilendirir? Asıl savunması nedir?">
+<SelfCheck question="IDOR nedir ve neden tasarımı doğrudan ilgilendirir? Asıl savunması nedir?">
 
 Bir kaydın kimliğini değiştirerek başkasına ait kayda erişebilmektir (`/siparis/1042` → `/siparis/1043`). URL yapısı ve kimlik gösterimi tasarım kararı olduğu için ilgilendirir. Asıl savunma, her istekte "bu kayıt bu kullanıcıya mı ait?" kontrolüdür; tahmin edilemez kimlik yalnızca zorlaştırır.
 
@@ -108,5 +167,11 @@ Bir kaydın kimliğini değiştirerek başkasına ait kayda erişebilmektir (`/s
 <SelfCheck question="'URL gir, biz önizlemesini getirelim' özelliği hangi riski doğurur?">
 
 SSRF: saldırgan, sunucunun iç ağdaki gizli servislere istek atmasını sağlayabilir. Hangi adreslere istek atılabileceği sınırlanmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Bir adres gir, biz önizlemesini gösterelim\" özelliği hangi riski doğurur?"}>
+
+SSRF: sunucu, kullanıcının verdiği adrese istek atar; saldırgan bunu iç ağdaki gizli servislere istek attırmak için kullanabilir. İstek atılabilecek adresler sınırlanmalı ya da özellik yeniden düşünülmelidir.
 
 </SelfCheck>

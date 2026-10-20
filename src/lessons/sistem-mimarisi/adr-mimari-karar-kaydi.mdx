@@ -1,10 +1,12 @@
 ---
-summary: "ADR, alınan bir mimari kararın gerekçesiyle ve değerlendirilen alternatifleriyle kaydedildiği kısa belgedir. Kod yazmadan da yazabilirsin ve yazmak seni teknik masada ciddiye aldırır. En sık atlanan iki madde: alternatifler ve sonuçlar."
+summary: "ADR, bir mimari kararın gerekçesiyle ve değerlendirilen alternatifleriyle kaydedildiği kısa belgedir. Kod yazmadan da yazılabilir. En sık atlanan iki madde: alternatifler ve sonuçlar."
 outcomes:
   - "ADR'nin ne işe yaradığını ve neden kararın koşullarını kaydettiğini söyleyebilirsin."
   - "Yedi başlıklı bir ADR iskeleti yazabilirsin."
   - "Alternatiflerin ve sonuçların neden kritik olduğunu açıklayabilirsin."
-minutes: 7
+minutes: 4
+standard: 2
+skipTerms: ["Doğrulama", "doğrulama"]
 sources:
   - label: "Michael Nygard — Documenting Architecture Decisions"
     url: "https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions"
@@ -17,14 +19,52 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Altı ay sonra biri "neden bunu seçmişiz?" diye soruyor. Kimse hatırlamıyor. **Bu, bölümdeki en doğrudan senin işin olan parça:** kod yazmadan da yazabilirsin ve yazmak seni teknik masada ciddiye aldırır.
+Altı ay sonra biri "neden bunu seçmişiz?" diye soruyor. Kimse hatırlamıyor. **Bu, bölümde herkesin doğrudan yapabileceği iş:** kod yazmadan da yazılabilir ve yazan kişiyi teknik masada ciddiye aldırır.
 
 ## ADR nedir
 
 **ADR (Architecture Decision Record, mimari karar kaydı)**, alınan bir mimari kararın gerekçesiyle ve değerlendirilen alternatifleriyle birlikte kaydedildiği kısa belgedir. Altı ay sonra "neden bunu seçmişiz?" sorusuna cevap verir. Daha önemlisi: kararın hangi **koşullar altında** alındığını kaydeder; koşullar değiştiğinde kararı yeniden değerlendirmek meşru hâle gelir. ADR olmadan eski kararlar sorgulanamaz dogmalara dönüşür. Olgun ekiplerde genellikle depoda `docs/adr/` klasöründe durur. "Bu kararı ADR olarak yazalım; altı ay sonra neden böyle yaptığımızı hatırlayalım."
 
 ## Tipik iskelet
+
+<Tree
+  label="Bir ADR'nin yedi parçası"
+  caption="Bir ADR yedi parçadan oluşur. Başlık ve tarih, durum, bağlam, değerlendirilen seçenekler, karar, gerekçe ve sonuçlar. En sık atlanan ikisi değerlendirilen seçenekler ile sonuçlardır: seçenekler yazılmazsa aynı alternatif yeniden önerilir; sonuçlar yazılmazsa kararın bedeli izlenmez."
+  root={{
+  title: "ADR",
+  tone: "accent",
+  children: [
+    {
+      title: "Başlık, tarih"
+    },
+    {
+      title: "Durum"
+    },
+    {
+      title: "Bağlam"
+    },
+    {
+      title: "Seçenekler",
+      sub: "sık atlanır",
+      tone: "progress"
+    },
+    {
+      title: "Karar"
+    },
+    {
+      title: "Gerekçe"
+    },
+    {
+      title: "Sonuçlar",
+      sub: "sık atlanır",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 Ekipten ekibe değişir ama bu başlıklar çoğunda vardır:
 
@@ -44,12 +84,29 @@ Bu sitenin mimari kararları da ADR biçiminde kayıtlıdır: her kararın bağl
 
 </Callout>
 
+<Case>
+
+Kampüs projesinde öğrenci kartı doğrulaması bir ADR ile karara bağlandı. Elif yazdı, Burak gözden geçirdi:
+
+1. **Bağlam:** tüzükteki varsayım "kart numaraları bir arayüzle doğrulanabilir" 3. haftada yanlış çıktı. Öğrenci işleri her pazartesi bir liste gönderiyor.
+2. **Seçenekler:** üniversitenin kimlik sistemiyle giriş (mümkün değil); haftalık listeyle doğrulama; kart fotoğrafı yükleme.
+3. **Karar:** haftalık liste. Listede olmayan öğrenciyi kafe personeli elle onaylıyor.
+4. **Gerekçe ve sonuçlar:** fotoğraf yükleme saldırı yüzeyini büyütüyor ve gereksiz kişisel veri topluyordu. Sonuç: hafta içinde kart alan öğrenci pazartesiye kadar indirimi elle onaylatmak zorunda. "Üniversite bir arayüz sunarsa yeniden değerlendir" notu düşüldü.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
 - **Bir tasarım sistemi ya da bileşen kararı için de ADR yaz:** neden bu kütüphane, hangi alternatifleri değerlendirdik?
 - **Her ADR'de en az iki seçenek ve gerçek bir sonuç bölümü yaz;** "zorlaştırdığı şeyler" dürüstçe listelensin.
 - **Kararın koşullarını (ekip büyüklüğü, süre) yaz;** koşullar değiştiğinde yeniden bakmak meşru olsun.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Ürün kararlarını da ADR biçiminde yaz.** Bağlam, seçenekler ve sonuçlar aynı ölçüde değerlidir.
+- **"Hangi koşulda yeniden değerlendiririz?" satırını ekle.** Kararı dogmadan korur.
 
 </Lens>
 </Lenses>
@@ -67,5 +124,17 @@ Bu sitenin mimari kararları da ADR biçiminde kayıtlıdır: her kararın bağl
 <SelfCheck question="Bir ADR'de en sık atlanan iki madde nedir ve atlanınca ne olur?">
 
 Değerlendirilen alternatifler ve sonuçlar. Alternatifler yazılmazsa yeni gelen biri aynı seçeneği yeniden önerir ve tartışma sıfırdan başlar; sonuçlar yazılmazsa kararın bedelini kimse takip etmez.
+
+</SelfCheck>
+
+<SelfCheck question="ADR'de değerlendirilen alternatifleri yazmak neden önemlidir?">
+
+Yazılmazsa yeni gelen biri aynı alternatifi yeniden önerir ve tartışma sıfırdan başlar. Alternatifler ve neden seçilmedikleri kararın bağlamını korur.
+
+</SelfCheck>
+
+<SelfCheck question="ADR'deki sonuçlar bölümü neden yazılır?">
+
+Kararın getirdiğini ve zorlaştırdığını kaydetmek için. Sonuçlar yazılmazsa kararın bedeli izlenmez ve hangi koşulda yeniden konuşulması gerektiği unutulur.
 
 </SelfCheck>

@@ -1,10 +1,12 @@
 ---
-summary: "JWT imzalı ama şifreli olmayan bir jeton biçimidir: içindeki bilgi okunabilir ve süresi dolana kadar iptal edilemez. Access ve refresh token ayrımı bu sorunu hafifletir; yenilemenin kullanıcıya görünmemesi bir tasarım gereksinimidir."
+summary: "JWT imzalı ama şifresiz bir jeton biçimidir: içi okunabilir, süresi dolana kadar iptal edilemez. Access ve refresh token ayrımı bu sorunu hafifletir; yenileme kullanıcıya görünmemelidir."
 outcomes:
   - "JWT'nin şifreli olmadığını, yalnızca imzalı olduğunu ve neden hassas veri konmadığını söyleyebilirsin."
   - "Access ve refresh token'ın neden ayrıldığını açıklayabilirsin."
   - "Jeton yenilemenin kullanıcıya görünmez olması gerektiğini ve süresi dolduğunda yaşanacak anı tasarlaman gerektiğini bilirsin."
-minutes: 6
+minutes: 4
+standard: 2
+skipTerms: ["Doğrulama", "doğrulama"]
 sources:
   - label: "RFC 7519 — JSON Web Token (JWT)"
     url: "https://datatracker.ietf.org/doc/html/rfc7519"
@@ -18,6 +20,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 JWT, token tabanlı yaklaşımın en yaygın biçimi. Adını sık duyarsın ve hakkında iki yaygın yanılgı vardır.
 
@@ -37,6 +41,42 @@ Bu iki gerçek JWT'yi çoğu basit web uygulaması için session'dan daha karma�
 **Access token** kısa ömürlüdür (dakikalar) ve her istekte kullanılır. **Refresh token** uzun ömürlüdür ve yalnızca yeni bir access token almak için kullanılır. JWT'nin iptal edilememe sorununu hafifletir: access token çalınsa bile kısa sürede geçersiz olur; refresh token ise sunucuda kayıtlı olduğu için iptal edilebilir. Mobil uygulamalarda ve OAuth akışlarında yaygındır. "Access token 15 dakika, refresh token 30 gün olsun."
 
 **Tasarım karşılığı:** jeton yenileme kullanıcıya **görünmez** olmalıdır. Kullanıcının 15 dakikada bir çıkış yapmış olması bir hatadır. Ama refresh token da süresi dolduğunda kullanıcı gerçekten çıkış yapar ve bu anın nasıl yaşandığı (yarım kalan iş kaybolur mu?) tasarlanmalıdır.
+
+<StepFlow
+  label="Bir mobil oturumun yaşamı"
+  caption="Demlik'in mobil uygulamasında öğrenci giriş yapınca kısa ömürlü bir erişim jetonu ve uzun ömürlü bir yenileme jetonu alır. Erişim jetonunun süresi dolunca uygulama yenileme jetonuyla sessizce yeni bir erişim jetonu alır; öğrenci bunu fark etmez. Yenileme jetonunun da süresi dolunca öğrenci gerçekten çıkış yapmış olur ve yeniden giriş yapar; sepeti cihazda durduğu için kaybolmaz."
+  steps={[
+  {
+    title: "Giriş",
+    sub: "erişim + yenileme jetonu",
+    tone: "accent"
+  },
+  {
+    title: "Erişim jetonu doldu",
+    sub: "dakikalar sonra"
+  },
+  {
+    title: "Sessiz yenileme",
+    sub: "kullanıcı görmez"
+  },
+  {
+    title: "Yenileme jetonu doldu",
+    sub: "yeniden giriş",
+    tone: "progress"
+  }
+]}
+/>
+
+<Case>
+
+Demlik'in mobil uygulaması iki jetonla çalışıyor:
+
+1. **Erişim jetonu:** 15 dakika geçerli. İçinde müşteri kimliği var; telefon numarası ya da başka kişisel bilgi yok, çünkü jeton okunabilir.
+2. **Yenileme jetonu:** 60 gün geçerli ve sunucuda kayıtlı; telefon kaybında iptal edilebiliyor.
+3. **İlk sürüm hatası:** erişim jetonu dolunca uygulama müşteriyi giriş ekranına atıyordu; dersten çıkan öğrenci her seferinde SMS kodu bekliyordu. Sessiz yenileme eklendi.
+4. **Gerçek çıkış:** 60 gün sonra yeniden giriş gerekiyor. Giriş sonrası öğrenci kaldığı ekrana dönüyor; sepeti cihazda olduğu için duruyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -67,5 +107,17 @@ JWT şifreli değildir, yalnızca imzalıdır. İçindeki bilgi herkes tarafınd
 <SelfCheck question="Access token ile refresh token neden ayrılır?">
 
 JWT'nin iptal edilememe sorununu hafifletmek için: access token kısa ömürlüdür ve çalınsa bile hızla geçersiz olur; refresh token uzun ömürlüdür ama sunucuda kayıtlı olduğu için iptal edilebilir.
+
+</SelfCheck>
+
+<SelfCheck question="JWT'nin içine kullanıcının telefon numarasını koymak neden yanlıştır?">
+
+JWT yalnız imzalıdır, şifreli değildir; içindeki bilgi jetonu gören herkes tarafından okunabilir. Kişisel ya da hassas veri jetona konmaz.
+
+</SelfCheck>
+
+<SelfCheck question="Access token neden kısa, refresh token neden uzun ömürlüdür?">
+
+Access token her istekte kullanılır; çalınırsa zararı kısa sürede bitsin diye kısadır. Refresh token yalnız yeni access token almak için kullanılır ve sunucuda kayıtlı olduğu için iptal edilebilir; kullanıcıyı sık sık giriş yapmaktan kurtarır.
 
 </SelfCheck>

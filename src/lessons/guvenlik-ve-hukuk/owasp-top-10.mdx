@@ -3,8 +3,10 @@ summary: "OWASP Top 10, web uygulamalarındaki en kritik güvenlik risklerinin g
 outcomes:
   - "OWASP Top 10'un ne olduğunu ve neden kategorilerini ezberlemene gerek olmadığını söyleyebilirsin."
   - "2025 sürümünün iki yeni kategorisini ve SSRF'nin yeni yerini bilirsin."
-  - "A06 Insecure Design ve A10'un tasarımcıyı neden ilgilendirdiğini açıklayabilirsin."
-minutes: 6
+  - "A06 Insecure Design ve A10'un tasarımı neden ilgilendirdiğini açıklayabilirsin."
+minutes: 4
+standard: 2
+skipTerms: ["Doğrulama", "doğrulama"]
 sources:
   - label: "OWASP Top 10:2025 — Giriş"
     url: "https://top10.owasp.org/2025/0x00_2025-Introduction"
@@ -15,6 +17,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Denetim raporunda "A01 altında üç bulgu" yazıyor. Bu ne demek? **OWASP Top 10**, web uygulamalarındaki en kritik güvenlik risklerinin, gerçek veriye dayanarak derlenen listesidir. Güvenlik konuşmasının ortak dilidir: ihale şartnamelerinde, denetim raporlarında ve müşteri güvenlik sorularında referans olarak geçer. **Ezberlemen gerekmez; kategorilerin ne anlattığını bilmen yeter.** "Denetim raporu A01 altında üç bulgu listelemiş; erişim kontrolü sorunumuz var."
 
@@ -35,9 +39,72 @@ Güncel sürüm **OWASP Top 10:2025**'tir ve 2021'den sonraki ilk büyük günce
 | **A09** | Security Logging & Alerting Failures | Saldırıyı görememe ve zamanında tepki verememe |
 | **A10** | Mishandling of Exceptional Conditions | **Yeni.** Beklenmedik durumların kötü yönetilmesi |
 
-## Tasarımcı için iki not
+## Tasarım için iki not
 
-**A06 Insecure Design** doğrudan seni ilgilendirir: kusur uygulamada değil, **akışın kurgusundadır** (zayıf hesap kurtarma akışı gibi). **A10 Mishandling of Exceptional Conditions** ise durum ekranlarıyla akrabadır: bir sistemin beklenmedik durumu nasıl karşıladığı hem UX hem güvenlik meselesidir.
+<Tree
+  label="OWASP Top 10:2025, beş grupta"
+  caption="On kategori beş grupta toplanabilir. Erişim ve kimlik: A01 erişim kontrolü ve A07 kimlik doğrulama. Yapılandırma ve zincir: A02 yanlış yapılandırma, A03 tedarik zinciri, A08 bütünlük. Kod: A04 şifreleme ve A05 enjeksiyon. Tasarım ve durum: A06 güvensiz tasarım ve A10 beklenmedik durumlar; bu ikisi tasarımı doğrudan ilgilendirir. Görme: A09 kayıt ve alarm."
+  root={{
+  title: "OWASP 2025",
+  tone: "accent",
+  children: [
+    {
+      title: "Erişim, kimlik",
+      children: [
+        {
+          title: "A01 · A07"
+        }
+      ]
+    },
+    {
+      title: "Yapılandırma, zincir",
+      children: [
+        {
+          title: "A02 · A03 · A08"
+        }
+      ]
+    },
+    {
+      title: "Kod",
+      children: [
+        {
+          title: "A04 · A05"
+        }
+      ]
+    },
+    {
+      title: "Tasarım, durum",
+      children: [
+        {
+          title: "A06 · A10",
+          tone: "progress"
+        }
+      ]
+    },
+    {
+      title: "Görme",
+      children: [
+        {
+          title: "A09"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
+**A06 Insecure Design** tasarımı doğrudan ilgilendirir: kusur uygulamada değil, **akışın kurgusundadır** (zayıf hesap kurtarma akışı gibi). **A10 Mishandling of Exceptional Conditions** ise durum ekranlarıyla akrabadır: bir sistemin beklenmedik durumu nasıl karşıladığı hem UX hem güvenlik meselesidir.
+
+<Case>
+
+Kampüs lansmanından önce dışarıdan bir güvenlik denetimi yapıldı. Rapor OWASP kategorilerine göre yazılmıştı:
+
+1. **A01:** Panel'de bir rapor uç noktası, dükkân kimliğini adresten alıyor ve kullanıcının o dükkâna ait olup olmadığını kontrol etmiyordu. Düzeltildi; yalıtım testi her sürümde çalışıyor.
+2. **A02:** staging ortamında hata ayrıntılarını gösteren bir sayfa internete açıktı. Kapatıldı.
+3. **A06:** telefon numarası değiştirme akışı yalnız yeni numarayı doğruluyordu; eski numaraya erişimi olmayan biri hesabı ele geçirebilirdi. Akış iki numarayı da doğrulayacak şekilde yeniden tasarlandı.
+4. **A10:** kasa entegrasyonu zaman aşımına düştüğünde sipariş "alındı" görünüyor ama kafeye ulaşmıyordu. Artık zaman aşımında müşteriye "Sipariş kafeye iletilemedi, ödemen iade edilecek" yazıyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -53,7 +120,7 @@ Güncel sürüm **OWASP Top 10:2025**'tir ve 2021'den sonraki ilk büyük günce
 
 - OWASP Top 10, güvenlik risklerinin ortak dilidir; kategorileri ezberlemek yerine ne anlattıklarını bil.
 - Güncel sürüm 2025'tir; iki yeni kategori: A03 Software Supply Chain Failures, A10 Mishandling of Exceptional Conditions. SSRF erişim kontrolüne dahil edildi.
-- A06 Insecure Design akışın kurgusundaki kusurdur; tasarımcıyı doğrudan ilgilendirir.
+- A06 Insecure Design akışın kurgusundaki kusurdur; tasarımı doğrudan ilgilendirir.
 
 </Summary>
 
@@ -62,5 +129,17 @@ Güncel sürüm **OWASP Top 10:2025**'tir ve 2021'den sonraki ilk büyük günce
 <SelfCheck question="OWASP Top 10'un güncel sürümü hangisidir ve 2021'e göre iki yeni kategori nedir?">
 
 OWASP Top 10:2025. İki yeni kategori: A03 Software Supply Chain Failures ve A10 Mishandling of Exceptional Conditions. SSRF ayrı madde olmaktan çıkıp A01 Broken Access Control'e dahil edildi.
+
+</SelfCheck>
+
+<SelfCheck question="A06 Insecure Design ile bir kodlama hatası arasındaki fark nedir?">
+
+Kodlama hatasında akış doğru tasarlanmış ama yanlış uygulanmıştır. A06'da kusur akışın kurgusundadır: kod kusursuz yazılsa bile, örneğin zayıf bir hesap kurtarma akışı istismar edilebilir.
+
+</SelfCheck>
+
+<SelfCheck question="Uyum belgelerinde hâlâ OWASP 2021 referansı varsa ne yapılır?">
+
+Güncel sürümün 2025 olduğu bilinir ve kategoriler eşleştirilir: örneğin SSRF 2025 listesinde erişim kontrolüne dahil edildi, yanlış yapılandırma ikinci sıraya yükseldi. Belge sahibine güncelleme önerilir.
 
 </SelfCheck>

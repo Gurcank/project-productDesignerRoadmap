@@ -3,7 +3,9 @@ summary: "İstekleri kopyalar arasında dağıtan load balancer ve isteklerin uy
 outcomes:
   - "Load balancer'ın iki işini söyleyebilirsin."
   - "Reverse proxy ile API gateway'in farkını ve gateway'in neden tek arıza noktası olabileceğini açıklayabilirsin."
-minutes: 4
+minutes: 2
+standard: 2
+skipTerms: ["Doğrulama", "doğrulama"]
 sources:
   - label: "AWS — Load balancing nedir? (Elastic Load Balancing)"
     url: "https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/what-is-load-balancing.html"
@@ -15,6 +17,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir mimari diyagramında kullanıcı ile uygulama arasında iki kutu görürsün: biri yükü dağıtır, biri isteği karşılar ve yönlendirir. İkisi de trafiği yöneten katmanlardır.
 
@@ -24,9 +28,42 @@ Bir mimari diyagramında kullanıcı ile uygulama arasında iki kutu görürsün
 
 ## Reverse proxy ve API gateway
 
+<StepFlow
+  label="Bir isteğin girişten kopyaya yolu"
+  caption="Bir sipariş isteği Demlik'e girerken önce API gateway'den geçer: kimlik doğrulanır, hız sınırı uygulanır, istek doğru servise yönlendirilir. Sonra yük dengeleyici isteği sipariş servisinin çalışan kopyalarından birine gönderir. Çöken bir kopya varsa ona istek göndermez."
+  steps={[
+  {
+    title: "İstek",
+    tone: "accent"
+  },
+  {
+    title: "API gateway",
+    sub: "kimlik, hız sınırı"
+  },
+  {
+    title: "Yük dengeleyici"
+  },
+  {
+    title: "Sipariş servisi kopyası",
+    sub: "2–4 kopya",
+    tone: "progress"
+  }
+]}
+/>
+
 **Reverse proxy (ters vekil sunucu)**, isteklerin uygulamaya ulaşmadan önce geçtiği ara katmandır. **API gateway**, bunun API'ye özel ve daha yetenekli hâlidir: kimlik doğrulama, hız sınırı, yönlendirme ve günlük kaydını tek yerde toplar. Her serviste tekrarlanacak işleri tek noktaya çeker ve dışarıya tek bir adres sunarak iç yapıyı gizler. "Hız sınırını gateway'de uygulayalım; her serviste ayrı ayrı yazmayalım."
 
 Gateway bir **tek arıza noktası** hâline gelebilir; kendisi de yedekli kurulmalıdır.
+
+<Case>
+
+Demlik'te trafik iki katmandan geçiyor:
+
+1. **Gateway:** kimlik kontrolü ve hız sınırı tek yerde. Bir müşteri dakikada en çok 10 sipariş isteği gönderebiliyor; Panel girişinde beş hatalı deneme sınırı da burada.
+2. **Yük dengeleyici:** sipariş servisinin kopyaları arasında dağıtıyor. Bir sabah kopyalardan biri bellek sorunu yüzünden yanıt vermez oldu; yük dengeleyici onu devre dışı bıraktı, müşteriler fark etmedi.
+3. **Yedek:** gateway'in kendisi de iki kopya; tek arıza noktası olmasın diye.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -50,5 +87,17 @@ Gateway bir **tek arıza noktası** hâline gelebilir; kendisi de yedekli kurulm
 <SelfCheck question="Load balancer hangi iki işi görür?">
 
 Yükü kopyalar arasında paylaştırır ve çöken bir kopyayı devre dışı bırakarak sistemin ayakta kalmasını sağlar.
+
+</SelfCheck>
+
+<SelfCheck question="Yük dengeleyici hangi iki işi yapar?">
+
+Gelen istekleri birden fazla kopya arasında dağıtır ve çöken bir kopyayı devre dışı bırakarak sistemin ayakta kalmasını sağlar.
+
+</SelfCheck>
+
+<SelfCheck question="API gateway neden kendisi de yedekli kurulmalıdır?">
+
+Bütün istekler ondan geçer; tek bir gateway çökerse sistemin tamamına erişim durur. Gateway bir tek arıza noktası olmamalıdır.
 
 </SelfCheck>

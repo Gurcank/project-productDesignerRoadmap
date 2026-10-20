@@ -3,7 +3,8 @@ summary: "Parçaların birbirini doğrudan çağırmak yerine 'olan biten'i duyu
 outcomes:
   - "Event-driven mimarinin ne kazandırıp ne kaybettirdiğini söyleyebilirsin."
   - "Mesaj kuyruğu ile pub/sub farkını ve mesaj kuyruğunun dayanıklılığa katkısını açıklayabilirsin."
-minutes: 6
+minutes: 3
+standard: 2
 sources:
   - label: "Martin Fowler — What do you mean by Event-Driven?"
     url: "https://martinfowler.com/articles/201701-event-driven.html"
@@ -17,6 +18,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Hub from "~/components/diagrams/primitives/Hub.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir sipariş oluştu. E-posta gitmeli, stok düşmeli, analitik kaydedilmeli. Sipariş servisi bunların hepsini tek tek çağırırsa her yeni ihtiyaçta kodu değiştirmek gerekir. Alternatif: sipariş servisi yalnızca "sipariş oluşturuldu" diye duyurur, ilgilenenler dinler.
 
@@ -27,6 +30,20 @@ Bir sipariş oluştu. E-posta gitmeli, stok düşmeli, analitik kaydedilmeli. Si
 **Bedeli takip edilebilirliktir:** bir şeyin neden olduğunu izlemek zorlaşır, çünkü çağrı zinciri açık değildir. Ayrıca olayların sırası ve tekrarı yönetilmelidir (idempotency).
 
 ## Mesaj kuyruğu ve pub/sub
+
+<Hub
+  label="Sipariş oluşturuldu olayı"
+  caption="Demlik'te bir sipariş oluşturulunca sipariş servisi bunu bir olay olarak duyurur. Olayı üç dinleyici bağımsız olarak alır: kafe ekranı ve yazıcı siparişi gösterir, bildirim işçisi müşteriye onay gönderir, analitik olayı kaydeder. Yeni bir dinleyici eklemek sipariş servisinin kodunu değiştirmeyi gerektirmez."
+  center={{ title: "Sipariş oluşturuldu", sub: "olay" }}
+  top={[
+    { title: "Sipariş servisi", rel: "yayınlar", tone: "progress" },
+  ]}
+  bottom={[
+    { title: "Kafe ekranı", rel: "dinler" },
+    { title: "Bildirim işçisi", rel: "dinler" },
+    { title: "Analitik", rel: "dinler" },
+  ]}
+/>
 
 Mesajlar gönderici ile alıcı arasında bir **aracı (broker)** üzerinden taşınır.
 
@@ -45,7 +62,18 @@ Mesajlar gönderici ile alıcı arasında bir **aracı (broker)** üzerinden ta�
 </Pane>
 </Compare>
 
-Gönderici ile alıcıyı **zaman olarak ayırır:** alıcı çökmüş olsa bile mesaj kuyrukta bekler ve alıcı ayağa kalkınca işlenir. Bu dayanıklılığın temel araçlarından biridir. Kafka, RabbitMQ ve SQS yaygın adlardır (seviye 3). "E-posta servisi çökerse siparişler etkilenmesin; mesajı kuyruğa atalım."
+Gönderici ile alıcıyı **zaman olarak ayırır:** alıcı çökmüş olsa bile mesaj kuyrukta bekler ve alıcı ayağa kalkınca işlenir. Bu dayanıklılığın temel araçlarından biridir. Kafka, RabbitMQ ve SQS yaygın adlardır; adlarını bilmek yeterli. "E-posta servisi çökerse siparişler etkilenmesin; mesajı kuyruğa atalım."
+
+<Case>
+
+Demlik'te "sipariş oluşturuldu" bir olay:
+
+1. **Dinleyiciler:** kafe ekranı ve yazıcı, müşteriye onay bildirimi, analitik. Sipariş servisi hiçbirini doğrudan çağırmıyor.
+2. **Dayanıklılık:** e-posta servisinin anahtarının yenilendiği on dakikada bildirimler gönderilemedi; siparişler etkilenmedi. Mesajlar kuyrukta bekledi ve sonra gitti.
+3. **Yeni dinleyici:** kampüs projesinde "öğrenci kartı indirimi kullanıldı" sayacı için yeni bir dinleyici eklendi; sipariş servisine dokunulmadı.
+4. **Bedel:** bir müşteri onay e-postasını iki kez aldı. Olay iki kez işlenmişti; bildirim işçisi artık her olayın kimliğini kontrol ediyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -70,5 +98,17 @@ Gönderici ile alıcıyı **zaman olarak ayırır:** alıcı çökmüş olsa bil
 <SelfCheck question="Event-driven mimarinin kazandırdığı ve kaybettirdiği nedir?">
 
 Kazandırır: bağlılığı düşürür; yayıncı kimin dinlediğini bilmez, yeni dinleyici eklemek kodu değiştirmez. Kaybettirir: takip edilebilirlik; çağrı zinciri açık olmadığı için bir şeyin neden olduğunu izlemek zorlaşır.
+
+</SelfCheck>
+
+<SelfCheck question="Mesaj kuyruğu ile pub/sub arasındaki fark nedir?">
+
+Kuyrukta bir mesajı genelde tek bir alıcı işler; iş dağıtımı içindir. Pub/sub'da aynı mesajı birden fazla abone alır; bir olayın duyurulması içindir.
+
+</SelfCheck>
+
+<SelfCheck question="Olay güdümlü mimarinin bedeli nedir?">
+
+Takip edilebilirlik: bir şeyin neden olduğunu izlemek zorlaşır çünkü çağrı zinciri açık değildir. Olayların sırası ve tekrar işlenmesi de ayrıca yönetilmelidir.
 
 </SelfCheck>

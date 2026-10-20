@@ -4,7 +4,9 @@ outcomes:
   - "MFA'nın üç faktörünü ve yöntemlerin güvenlik sıralamasını söyleyebilirsin."
   - "Yedek kodların neden zorunlu olduğunu açıklayabilirsin."
   - "MFA kurulum akışının dört gerekli parçasını sayabilirsin."
-minutes: 6
+minutes: 4
+standard: 2
+skipTerms: ["Doğrulama", "doğrulama"]
 sources:
   - label: "OWASP — Multifactor Authentication Cheat Sheet"
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html"
@@ -18,6 +20,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Şifren sızdı. Ama hesabına hâlâ kimse giremiyor, çünkü telefonundaki kod da gerekiyor. Bu, MFA'nın işi.
 
@@ -26,6 +30,33 @@ import Lenses from "~/components/lesson/Lenses.astro";
 **MFA (Multi-Factor Authentication, çok faktörlü kimlik doğrulama)**, girişte birden fazla kanıt istenmesidir: **bildiğin bir şey** (şifre), **sahip olduğun bir şey** (telefon, güvenlik anahtarı), **olduğun bir şey** (parmak izi). Şifre çalınsa bile hesabı korur ve hesap ele geçirmelere karşı en etkili tek önlem olarak kabul edilir. "MFA'yı isteğe bağlı sunalım ama yönetici hesapları için zorunlu olsun."
 
 **Yöntemler eşit güvenlikte değildir.** Genel sıralama: **FIDO2/passkey en güçlü, ardından kimlik doğrulayıcı uygulama (TOTP), en sonda SMS.** SMS hiç yoktan iyidir ama kimlik avına dayanıklı sayılmaz.
+
+<Spectrum
+  label="İkinci faktörün gücü"
+  caption="İkinci faktör yöntemleri eşit güçte değildir. Sol uçta SMS kodu durur: hiç yoktan iyidir ama SIM değiştirme saldırılarına açıktır ve kimlik avına dayanıklı sayılmaz. Ortada kimlik doğrulayıcı uygulamanın ürettiği TOTP kodu vardır; telefon numarasına değil cihaza bağlıdır. Sağ uçta passkey ve güvenlik anahtarları durur: alan adına bağlı oldukları için sahte sayfada çalışmazlar."
+  left={{
+  title: "Daha zayıf",
+  sub: "SMS"
+}}
+  right={{
+  title: "Daha güçlü",
+  sub: "passkey"
+}}
+  marks={[
+  {
+    label: "SMS kodu",
+    at: 0.1
+  },
+  {
+    label: "TOTP uygulaması",
+    at: 0.5
+  },
+  {
+    label: "Passkey",
+    at: 0.9
+  }
+]}
+/>
 
 ## TOTP ve yedek kodlar
 
@@ -42,6 +73,17 @@ import Lenses from "~/components/lesson/Lenses.astro";
 
 Kullanıcı yedek kodları kaydetmeden akışı bitirebiliyorsa destek yükü ve hesap kaybı kaçınılmazdır.
 
+<Case>
+
+Demlik Panel'de MFA rolüne göre farklı:
+
+1. **Dükkân sahibi:** zorunlu. Sahip hesabı ciroyu görüyor, iadeleri onaylıyor ve faturaları indiriyor.
+2. **Çalışan:** isteğe bağlı. Çalışanlar yoğun saatte giriş yapıyor; zorunlu MFA kasada kuyruk yaratırdı.
+3. **Kurulum:** kimlik doğrulayıcı uygulama. QR kod, elle girilecek kod, bir doğrulama adımı ve on yedek kod. Yedek kodları indirmeden ya da yazdığını onaylamadan kurulum bitmiyor.
+4. **Destek:** ilk ay iki dükkân sahibi telefonunu değiştirdi; ikisi de yedek kodla girdi. Destek ekibine kimlik doğrulama sıfırlama talebi gelmedi.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -49,6 +91,24 @@ Kullanıcı yedek kodları kaydetmeden akışı bitirebiliyorsa destek yükü ve
 - **Yöntem listesinde güçlü olanı öne çıkar,** SMS'i son seçenek yap.
 - **Kurulum akışının dört parçasını çiz;** yedek kodları kaydetmeden devam edilmesini engelle.
 - **Cihaz kaybı senaryosunu (yedek kod ile giriş, destek yolu) ayrıca tasarla.**
+
+</Lens>
+<Lens role="product-manager">
+
+- **MFA'yı hangi rollere zorunlu kılacağına karar ver.** Risk ile sürtünmeyi rol bazında tart.
+- **Hesap ele geçirmenin müşteri ve marka maliyetini hesaba kat.**
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kurulum akışının dört parçasını kabul kriterine yaz.** QR, elle giriş, doğrulama, yedek kodlar.
+- **Cihaz kaybı senaryosunu test et.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Rol bazında güvenlik gereksinimini yaz.** Hangi işlemler ek doğrulama ister?
+- **Kurtarma sürecini destek süreciyle birlikte tasarla.**
 
 </Lens>
 </Lenses>
@@ -72,5 +132,11 @@ En güçlüden zayıfa: FIDO2/passkey → kimlik doğrulayıcı uygulama (TOTP) 
 <SelfCheck question="Yedek kodlar neden zorunludur?">
 
 MFA'yı yedek yol olmadan sunmak, cihaz kaybolduğunda başka giriş yolu bırakmaz ve kullanıcıları hesaplarından kalıcı olarak kilitleme riski yaratır.
+
+</SelfCheck>
+
+<SelfCheck question="MFA kurulumunda yedek kodları göstermek neden zorunludur?">
+
+Kullanıcı ikinci faktör cihazını kaybederse yedek kod olmadan hesabına giremez. Yedek yol olmayan MFA kullanıcıları kalıcı olarak kilitler ve destek yükü yaratır.
 
 </SelfCheck>

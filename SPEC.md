@@ -146,6 +146,15 @@ BA; Algoritmalar'ın filtre, öneri ve anlamsal arama derslerinde PM ve PO merce
 ve Algoritmalar'a ilk kez quiz yazıldı; Back-end/API ve Veritabanı quizlerinin yerini rol-nötr kopyaları
 aldı. Mühendislik alanının sekiz kategorisinin hepsi v2.
 
+**Var — Kimlik, güvenlik ve mimari v2 (Faz 12a).** Auth (11), Güvenlik ve Hukuk (11) ve Sistem Mimarisi'nin
+(13) 35 dersi v2'ye taşındı: her birine vakadan bir örnek, bir diyagram (Sistem Mimarisi'nde sipariş servisi
+ve olay akışı için iki Hub dahil) ve en az üç kendini yokla sorusu eklendi; uzun özetler kısaltıldı, "seviye
+2/3" ifadeleri ve ana metindeki tasarımcıya özgü cümleler kaldırıldı. Auth'ta PM, PO ve BA; Güvenlik ve
+Hukuk'ta PM, PO, PjM, BA ve UXR; Sistem Mimarisi'nde PM mercekleri yazıldı. Auth ile Güvenlik ve Hukuk
+quizlerinin yerini rol-nötr kopyaları aldı. KVKK dersindeki birinci tekil şahıslı not ("Ben hukukçu değilim",
+"bu turda açamadım") nötr bir doğrulama uyarısına çevrildi; Kurul duyurusu hâlâ birincil kaynaktan
+doğrulanmadı.
+
 **Henüz yok — planlı, yapılmadı.** EN arayüz (`/en/`, `src/i18n`): kullanıcı ertelemeyi seçti,
 şu an TR tek dil · Araçlar'da Ek B kaynakları ve diğer şablonlar · framework ve kütüphane profil sayfaları · Cloudflare Pages yayını.
 

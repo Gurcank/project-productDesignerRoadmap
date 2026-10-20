@@ -1,11 +1,12 @@
 ---
-summary: "KVKK ve GDPR'ın doğrudan tasarım kararına dönüşen kısımları: aydınlatma metni, açık rıza (ikisi ayrı sunulmalı), yurt dışına aktarım, veri minimizasyonu, ilgili kişinin hakları ve ihlal bildirimi. Hukuki tavsiye değildir; avukat görüşü al."
+summary: "KVKK ve GDPR'ın tasarım kararına dönüşen kısımları: aydınlatma metni, ayrı sunulan açık rıza, yurt dışına aktarım, veri minimizasyonu, ilgili kişinin hakları ve ihlal bildirimi. Hukuki tavsiye değildir."
 outcomes:
   - "Aydınlatma metni ile açık rızanın neden ayrı sunulması gerektiğini söyleyebilirsin."
   - "Veri minimizasyonunun neden hem UX hem uyum meselesi olduğunu açıklayabilirsin."
   - "İlgili kişinin haklarının arayüzdeki karşılığını (veri indirme, hesap silme) sayabilirsin."
   - "Üçüncü parti servis seçiminin neden yurt dışı aktarım sorusunu gündeme getirdiğini bilirsin."
 minutes: 11
+standard: 2
 sources:
   - label: "6698 sayılı Kişisel Verilerin Korunması Kanunu (mevzuat.gov.tr)"
     url: "https://www.mevzuat.gov.tr/mevzuatmetin/1.5.6698.pdf"
@@ -22,8 +23,10 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
-> **Hukuki uyarı:** Bu ders genel bilgilendirmedir, hukuki tavsiye değildir. Ben hukukçu değilim. Gerçek bir projede avukat görüşü almadan hareket etme. Mevzuat ve kurul kararları değişir; aşağıdaki ayrıntıları birincil kaynaktan doğrula.
+> **Hukuki uyarı:** Bu ders genel bilgilendirmedir, hukuki tavsiye değildir. Gerçek bir projede avukat görüşü almadan hareket etme. Mevzuat ve kurul kararları değişir; aşağıdaki ayrıntıları birincil kaynaktan doğrula.
 
 Kayıt formuna bir onay kutusu ekleyeceksin: "Aydınlatma metnini okudum ve kişisel verilerimin işlenmesine izin veriyorum." Bu cümle tek bir kutuda iki farklı hukuki işlemi birleştiriyor mu? Bu ders, kişisel veri mevzuatının doğrudan tasarım kararına dönüşen yanlarını anlatır.
 
@@ -41,13 +44,13 @@ Kayıt formuna bir onay kutusu ekleyeceksin: "Aydınlatma metnini okudum ve kiş
 
 **Açık rıza (explicit consent)**: belirli bir konuya ilişkin, bilgilendirmeye dayanan ve özgür iradeyle açıklanan onaydır. Bazı veri işleme faaliyetleri için gereklidir. **Ama her şey için gerekli değildir:** sözleşmenin ifası, kanuni yükümlülük ve meşru menfaat gibi başka hukuki sebepler de vardır. Her şeyi rızaya dayandırmak yaygın bir hatadır ve risklidir: rıza her an geri çekilebilir, işlemenin hukuki temeli kırılgan hâle gelir.
 
-**Doğrudan bir arayüz kısıtı ve senin işin (değişken ve doğrulanması gereken bilgi):** materyal, Kişisel Verileri Koruma Kurulu'nun 18.02.2026 tarihli ve 2026/347 sayılı ilke kararına ilişkin kamuoyu duyurusuna dayanarak, **açık rıza metni ile aydınlatma metninin ayrı ayrı düzenlenmesi gerektiğini** ve ikisinin iç içe tek metin hâlinde sunulmasının en sık karşılaşılan hukuka aykırılıklardan biri olarak nitelendiğini aktarıyor. Aynı duyuruda, aydınlatma yapıldığına dair kullanıcıdan **onay/rıza istenmesinin** de hatalı olduğu belirtiliyor. Kurul'un duyurusunu bu turda açamadım (kvkk.gov.tr bu ortamdan erişilemiyordu); kullanmadan önce Kurum'un sitesinden doğrula.
+**Doğrudan bir arayüz kısıtı (değişken ve doğrulanması gereken bilgi).** Materyal, Kişisel Verileri Koruma Kurulu'nun 18.02.2026 tarihli ve 2026/347 sayılı ilke kararına ilişkin bir kamuoyu duyurusuna dayanıyor. Buna göre **açık rıza metni ile aydınlatma metni ayrı ayrı düzenlenmelidir;** ikisinin iç içe tek metin hâlinde sunulması en sık karşılaşılan hukuka aykırılıklardan biri olarak nitelenmiştir. Aynı duyuruda, aydınlatma yapıldığına dair kullanıcıdan **onay/rıza istenmesinin** de hatalı olduğu belirtiliyor. Bu duyuru birincil kaynaktan doğrulanmadı; kullanmadan önce Kurum'un sitesinden doğrula.
 
 **Tasarım karşılığı çok somut:** yaygın "Aydınlatma metnini okudum ve kişisel verilerimin işlenmesine izin veriyorum" tek kutusu bu yaklaşıma göre sorunludur. **Aydınlatma bilgilendirmedir** (onay istenmez); **rıza ise ayrı, isteğe bağlı ve geri alınabilir** olmalıdır. "Tek bir onay kutusuyla hem aydınlatmayı hem rızayı almayalım; ikisini ayıralım ve rıza gerçekten isteğe bağlı olsun."
 
 ## Yurt dışına veri aktarımı
 
-Kişisel verinin Türkiye dışındaki bir sunucuya ya da hizmet sağlayıcıya aktarılması. **Bu, doğrudan teknoloji seçimini etkiler:** ABD'de barındırılan bir analitik servisi, e-posta servisi ya da BaaS kullanmak yurt dışına veri aktarımı anlamına gelebilir. Materyale göre 7499 sayılı Kanunla KVKK'nın 9. maddesinde köklü bir değişiklik yapıldı ve **açık rızaya dayalı aktarım genel kural olmaktan çıkıp istisna hâline geldi;** yerine yeterlilik kararı ve standart sözleşme gibi güvence mekanizmaları getirildi ve geçiş sürecinin 1 Eylül 2024'te tamamlandığı belirtiliyor. Bu bilgiler ikincil kaynaktan alınmıştır; kesin uygulama için mevzuata ve avukata bak. "Bu analitik servisi verileri ABD'de tutuyor; yurt dışı aktarım rejimine göre değerlendirmemiz gerekiyor."
+Kişisel verinin Türkiye dışındaki bir sunucuya ya da hizmet sağlayıcıya aktarılması. **Bu, doğrudan teknoloji seçimini etkiler:** ABD'de barındırılan bir analitik servisi, e-posta servisi ya da BaaS kullanmak yurt dışına veri aktarımı anlamına gelebilir. Materyale göre 7499 sayılı Kanunla KVKK'nın 9. maddesinde köklü bir değişiklik yapıldı. **Açık rızaya dayalı aktarım genel kural olmaktan çıkıp istisna hâline geldi;** yerine yeterlilik kararı ve standart sözleşme gibi güvence mekanizmaları getirildi ve geçiş sürecinin 1 Eylül 2024'te tamamlandığı belirtiliyor. Bu bilgiler ikincil kaynaktan alınmıştır; kesin uygulama için mevzuata ve avukata bak. "Bu analitik servisi verileri ABD'de tutuyor; yurt dışı aktarım rejimine göre değerlendirmemiz gerekiyor."
 
 ## Ürün tarafına yansıyan ilkeler
 
@@ -59,7 +62,49 @@ Kişisel verinin Türkiye dışındaki bir sunucuya ya da hizmet sağlayıcıya 
 
 ## Veri ihlali bildirimi
 
+<Tree
+  label="Kişisel verinin ekrandaki dört yüzü"
+  caption="Kişisel veri mevzuatı ekranda dört yerde görünür. Aydınlatma: veri toplanmadan önce verilen bilgidir; onay istenmez. Açık rıza: aydınlatmadan ayrı, isteğe bağlı ve geri alınabilir bir onaydır. İlgili kişinin hakları: verilerimi indir ve hesabımı sil ekranları. İhlal bildirimi: önceden hazırlanmış bir iletişim şablonu."
+  root={{
+  title: "Kişisel veri",
+  tone: "accent",
+  children: [
+    {
+      title: "Aydınlatma",
+      sub: "bilgi · onay istenmez"
+    },
+    {
+      title: "Açık rıza",
+      sub: "ayrı · isteğe bağlı"
+    },
+    {
+      title: "Haklar",
+      sub: "indir · sil"
+    },
+    {
+      title: "İhlal",
+      sub: "hazır şablon",
+      tone: "progress"
+    }
+  ]
+}}
+/>
+
 Kişisel veri sızması durumunda otoriteye ve etkilenen kişilere bildirim yapma yükümlülüğü vardır. Bir ihlal yaşandığında ne yapılacağı **önceden** planlanmış olmalıdır; olay anında öğrenilmez. Bildirimin metni ve kullanıcıya nasıl iletileceği de tasarlanması gereken bir şeydir. "İhlal senaryosu için bir iletişim şablonumuz var mı? Olay anında yazmaya çalışmayalım."
+
+<Case>
+
+Demlik'in kayıt ekranı bir hukuk incelemesinden sonra değişti:
+
+1. **Eski hâl:** tek bir kutu: "Aydınlatma metnini okudum ve kişisel verilerimin işlenmesine izin veriyorum." Kutu işaretlenmeden kayıt olunamıyordu.
+2. **Yeni hâl:** aydınlatma metni kayıt düğmesinin üstünde bir bağlantı ve iki satırlık bir özet; onay istenmiyor. Kampanya bildirimleri için ayrı, boş gelen, isteğe bağlı bir kutu.
+3. **Haklar:** profilde "Verilerimi indir" ve "Hesabımı sil". Silme 30 gün bekliyor, sonra kişisel bilgiler anonimleştiriliyor.
+4. **Aktarım:** yeni bir analitik servisi seçilirken verinin nerede tutulduğu ilk soru oldu; hukuk ekibinin değerlendirmesi kararın parçası.
+5. **İhlal:** etkilenen müşterilere ve dükkânlara gönderilecek bildirimin taslağı hazır; olay anında yazılmayacak.
+
+Kayıt formundan doğum tarihi alanı da kalktı; hiçbir yerde kullanılmıyordu.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -69,6 +114,36 @@ Kişisel veri sızması durumunda otoriteye ve etkilenen kişilere bildirim yapm
 - **"Verilerimi indir" ve "hesabımı sil" akışlarını tasarla.**
 - **Üçüncü parti servis seçerken veri nerede tutuluyor sorusunu hukukla birlikte sor.**
 - **İhlal bildirim şablonunu önceden hazırla.**
+
+</Lens>
+<Lens role="product-manager">
+
+- **Kişisel veri toplayan her özelliğe "bu alanı kullanıyor muyuz?" sorusunu sor.** Her alan bir yükümlülüktür.
+- **Servis seçiminde verinin nerede tutulduğunu karar ölçütü yap.**
+
+</Lens>
+<Lens role="product-owner">
+
+- **Aydınlatma ile rızanın ayrı sunulmasını kabul kriterine yaz.**
+- **"Verilerimi indir" ve "Hesabımı sil" akışlarını backlog'da tut.**
+
+</Lens>
+<Lens role="project-manager">
+
+- **Hukuk incelemesini takvime koy.** Lansman öncesinde son haftaya bırakılmamalı.
+- **İhlal iletişim planını hazır tut.** Kim, kime, ne zaman bildirir?
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Her kişisel veri alanı için amaç, hukuki sebep ve saklama süresini yaz.**
+- **Veri akışında yurt dışına aktarım noktalarını işaretle.**
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Aydınlatma metninin anlaşılırlığını test et.** Kullanıcı ne toplandığını ve nedenini anlatabiliyor mu?
+- **Araştırma verisinde de aynı ilkeleri uygula.** Onam ve saklama süresi.
 
 </Lens>
 </Lenses>
@@ -99,5 +174,11 @@ Toplamadığın veri, korumak zorunda olmadığın veridir. Formdaki her alan he
 <SelfCheck question="İlgili kişinin haklarının arayüzdeki karşılığı nedir?">
 
 Ekranlar: kullanıcı verisine erişme, düzeltme ve silinmesini isteme hakkının karşılığı "verilerimi indir" ve "hesabımı sil" akışlarıdır; başvuru yolu da makul olmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Neden her veri işleme faaliyetini açık rızaya dayandırmak risklidir?">
+
+Rıza her an geri çekilebilir; işlemenin hukuki temeli kırılgan hâle gelir. Sözleşmenin ifası, kanuni yükümlülük ve meşru menfaat gibi başka hukuki sebepler de vardır; hangisinin geçerli olduğu hukukla birlikte belirlenir.
 
 </SelfCheck>

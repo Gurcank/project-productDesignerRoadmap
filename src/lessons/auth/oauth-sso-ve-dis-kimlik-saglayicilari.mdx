@@ -5,7 +5,9 @@ outcomes:
   - "Sosyal girişte iki tasarım tuzağını (yöntemi unutmak, çok seçenek) sayabilirsin."
   - "SSO'nun neden satın alma şartı olabildiğini ve hangi ekranları gerektirdiğini açıklayabilirsin."
   - "Hesap birleştirmenin neden gerektiğini ve riskini bilirsin."
-minutes: 9
+minutes: 5
+standard: 2
+skipTerms: ["Doğrulama", "doğrulama"]
 sources:
   - label: "OAuth 2.0 — oauth.net"
     url: "https://oauth.net/2/"
@@ -21,6 +23,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Google ile devam et", "Apple ile giriş yap", "Kurumsal hesabınla giriş". Üçü farklı protokollerin yüzü. Bu ders hangisinin ne olduğunu ve tasarıma ne istediğini anlatır.
 
@@ -45,9 +49,44 @@ SSO kurulumu genelde müşterinin IT ekibiyle birlikte yapılır ve **kendi aray
 
 ## Account linking
 
+<Tree
+  label="Başka bir sistemle giriş"
+  caption="Başka bir sistem üzerinden giriş üç protokolle yapılır. OAuth 2.0 bir yetkilendirme protokolüdür: bir uygulamaya başka bir servisteki verilere sınırlı erişim verir; izin ekranı gerekir. OIDC, OAuth'un üzerine kimlik katmanı ekler; Google ile giriş budur. SAML kurumsal SSO'nun yaygın protokolüdür; yönetici panelinde yapılandırma ekranları ister."
+  root={{
+  title: "Dış kimlik",
+  tone: "accent",
+  children: [
+    {
+      title: "OAuth 2.0",
+      sub: "yetkilendirme · izin ekranı"
+    },
+    {
+      title: "OIDC",
+      sub: "kimlik · sosyal giriş"
+    },
+    {
+      title: "SAML / SSO",
+      sub: "kurumsal · yönetici ekranı",
+      tone: "progress"
+    }
+  ]
+}}
+/>
+
 **Account linking (hesap birleştirme)**, aynı kişinin farklı giriş yöntemleriyle oluşturduğu hesapların tek hesapta birleştirilmesidir. Kullanıcı önce e-postayla kayıt olur, sonra Google ile girmeye çalışır; sistem bunu ayrı bir hesap sayarsa kullanıcı verilerini kaybetmiş gibi hisseder. Auth akışlarındaki en sık yaşanan gerçek sorunlardan biridir. "Aynı e-posta ile Google'dan gelirse mevcut hesaba bağlayalım; yeni hesap açmayalım."
 
 Otomatik birleştirme güvenlik riski taşıyabilir: doğrulanmamış bir e-posta üzerinden hesap ele geçirme. Bu yüzden birleştirme genelde doğrulama ister ve bu doğrulama akışı tasarlanmalıdır.
+
+<Case>
+
+Demlik'te dış kimlik iki kez konuşuldu:
+
+1. **Üniversite girişi:** kampüs projesinde öğrenci kartı indirimi için üniversitenin kimlik sistemiyle giriş önerildi. Proje tüzüğündeki varsayım "kart numaraları bir arayüzle doğrulanabilir"di; 3. haftada yanlış çıktı. Öğrenci işleri her pazartesi bir kart listesi gönderiyor.
+2. **Hesap birleştirme:** telefon numarasını değiştiren bir müşteri yeni numarayla giriş yapınca yeni ve boş bir hesap açıldı; sipariş geçmişi eski hesapta kaldı.
+3. **Çözüm:** profilde "Telefon numaramı değiştir" akışı. Eski numaraya ve yeni numaraya ayrı kod gidiyor; ikisi doğrulanınca hesap yeni numaraya taşınıyor. Eski numaraya erişimi olmayanlar için destek ekibiyle kimlik doğrulama süreci var.
+4. **Sosyal giriş:** eklenmedi. Müşterilerin çoğu telefonla giriş yapıyordu; ikinci bir yöntem, "hangisiyle kaydolmuştum?" sorusunu doğuracaktı.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -56,6 +95,24 @@ Otomatik birleştirme güvenlik riski taşıyabilir: doğrulanmamış bir e-post
 - **Giriş seçeneklerini 2-3 ile sınırla.**
 - **Kurumsal planlar için SSO yönetici ekranlarını (yapılandırma, alan adı doğrulama, zorunlu SSO kuralı) önceden planla.**
 - **Hesap birleştirme akışında doğrulama adımını çiz.**
+
+</Lens>
+<Lens role="product-manager">
+
+- **Kurumsal müşteri segmentinde SSO'yu satış şartı olarak değerlendir.**
+- **Giriş yöntemi sayısını sınırlı tut.** Her yeni yöntem, "hangisiyle kaydolmuştum?" sorusunu artırır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Hesap birleştirme ve numara değişikliği akışlarını backlog'a koy.** En sık gerçek sorunlar buradan çıkar.
+- **İzin ekranının metnini kabul kriterine yaz.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Dış kimlik sistemiyle entegrasyonda varsayımları erken doğrula.** Arayüz gerçekten var mı, hangi veriyi veriyor?
+- **Hesap kimliğinin neye bağlı olduğunu tanımla.** Telefon mu, e-posta mı, ikisi mi?
 
 </Lens>
 </Lenses>
@@ -77,8 +134,14 @@ OAuth bir yetkilendirme protokolüdür ("bu uygulama dosyalarıma erişebilir").
 
 </SelfCheck>
 
-<SelfCheck question="SSO neden kurumsal satışta önemlidir ve tasarımcı için ne demektir?">
+<SelfCheck question="SSO neden kurumsal satışta önemlidir ve tasarım için ne demektir?">
 
-Kurumsal IT ekipleri çalışanların ayrı ayrı şifre yönetmesini istemez ve çalışan ayrıldığında tüm erişimlerin merkezî olarak kesilmesini ister; bu yüzden çoğu zaman satın alma şartıdır. Tasarımcı için: yönetici panelinde SSO yapılandırma ekranı, alan adı doğrulama ve zorunlu SSO kuralı tasarlanmalıdır.
+Kurumsal IT ekipleri çalışanların ayrı ayrı şifre yönetmesini istemez ve çalışan ayrıldığında tüm erişimlerin merkezî olarak kesilmesini ister; bu yüzden çoğu zaman satın alma şartıdır. Tasarım için: yönetici panelinde SSO yapılandırma ekranı, alan adı doğrulama ve zorunlu SSO kuralı tasarlanmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="OAuth ile OIDC arasındaki fark nedir?">
+
+OAuth 2.0 yetkilendirme protokolüdür: bir uygulamaya başka bir servisteki kaynaklara sınırlı erişim verir. OIDC, OAuth'un üzerine kimlik bilgisi katmanı ekler; "Google ile giriş yap" OIDC ile çalışır.
 
 </SelfCheck>

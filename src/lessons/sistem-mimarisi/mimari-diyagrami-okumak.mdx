@@ -5,6 +5,8 @@ outcomes:
   - "Okun yönünün neyi söylediğini açıklayabilirsin."
   - "Bir diyagrama bakarken beş soruyu sorabilirsin."
 minutes: 6
+standard: 2
+skipTerms: ["Doğrulama", "doğrulama", "bağımlılık", "Bağımlılık"]
 sources:
   - label: "C4 modeli"
     url: "https://c4model.com/"
@@ -17,6 +19,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Hub from "~/components/diagrams/primitives/Hub.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Toplantıda bir mimari diyagram açılıyor: kutular, oklar, kesikli çerçeveler. Sessizce başını sallıyorsun ama okuyamıyorsun. Bu dersin sonunda okuyabileceksin. Diyagramlar bir dildir; standart bir gösterim yoktur ama yaygın kalıplar vardır.
 
@@ -30,6 +34,22 @@ Toplantıda bir mimari diyagram açılıyor: kutular, oklar, kesikli çerçevele
 
 ## Beş soru
 
+<Hub
+  label="Demlik sipariş servisinin bağlamı"
+  caption="Demlik'in sipariş servisi ortadadır. Onu üç istemci çağırır: mobil uygulama, web sitesi ve Panel. Sipariş servisi de üç şeyi çağırır: verinin durduğu PostgreSQL, ödeme kuruluşu ve kafelerdeki kasa entegrasyonu. Ödeme kuruluşu ve kasa entegrasyonu Demlik'in ağ sınırının dışındadır; o oklarda gecikme ve hata olasılığı en yüksektir."
+  center={{ title: "Sipariş servisi", sub: "Node.js" }}
+  top={[
+    { title: "Mobil uygulama", rel: "çağırır" },
+    { title: "Web sitesi", rel: "çağırır" },
+    { title: "Panel", rel: "çağırır" },
+  ]}
+  bottom={[
+    { title: "PostgreSQL", rel: "veri" },
+    { title: "Ödeme kuruluşu", rel: "sınır dışı", tone: "progress" },
+    { title: "Kasa entegrasyonu", rel: "sınır dışı", tone: "progress" },
+  ]}
+/>
+
 1. **Kullanıcı isteği hangi kutulardan geçiyor?** Zincirdeki her halka gecikme ve arıza ihtimali ekler.
 2. **Hangi kutu çökerse ne olur?** Tek arıza noktaları burada görünür.
 3. **Hangi oklar bir sınırı geçiyor?** Ağ sınırını geçen her çağrı yavaş ve güvenilmezdir.
@@ -40,6 +60,18 @@ Toplantıda bir mimari diyagram açılıyor: kutular, oklar, kesikli çerçevele
 
 **C4 modeli** olarak anılan ve diyagramları dört zoom seviyesine ayıran bir yaklaşım yaygın kullanılır: sistem bağlamı, konteyner, bileşen, kod. Kesin detayı doğrulama gerektirir; ama "hangi seviyede konuşuyoruz?" sorusu diyagram tartışmalarında işe yarar: çoğu karışıklık, iki kişinin farklı zoom seviyelerinden konuşmasından çıkar.
 
+<Case>
+
+Leyla kampüs projesinin ilk haftasında Demlik'in mimari diyagramını beş soruyla okudu:
+
+1. **İstek nereden geçiyor?** Öğrenci siparişi: mobil uygulama → sipariş servisi → ödeme kuruluşu → sipariş servisi → kasa entegrasyonu → kafe.
+2. **Ne çökerse ne olur?** Kasa entegrasyonu çökerse sipariş alınabiliyor ama kafeye ulaşmıyor. Bu, risk kaydına "tedarikçi entegrasyonu" maddesi olarak girdi.
+3. **Hangi oklar sınırı geçiyor?** Ödeme kuruluşu ve kasa entegrasyonu; ikisi de Demlik'in ağının dışında.
+4. **Veri nerede?** PostgreSQL, Redis ve mobil uygulamadaki SQLite kopyası.
+5. **Ne eksik?** Diyagramda bildirim kuyruğu yoktu; Burak ekledi.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -47,6 +79,12 @@ Toplantıda bir mimari diyagram açılıyor: kutular, oklar, kesikli çerçevele
 - **Sınırı geçen oklar için hata durumlarını tasarla:** gecikme, zaman aşımı, kimlik hatası.
 - **Eksik parçaları (izleme, önbellek, kuyruk, yedeklilik) toplantıda sor.**
 - **Kendi diyagramlarını (kullanıcı akışı, sitemap) da "hangi zoom seviyesindeyiz?" sorusuyla netleştir.**
+
+</Lens>
+<Lens role="product-manager">
+
+- **Kullanıcı isteğinin geçtiği zinciri diyagramda izle.** Her halka bir gecikme ve arıza ihtimalidir.
+- **Sınırı geçen okları iş riski olarak oku.** Dış sağlayıcıya bağlı her adım bir bağımlılıktır.
 
 </Lens>
 </Lenses>
@@ -71,5 +109,17 @@ Kimin kimi çağırdığını, yani bağımlılık yönünü. A → B ise A, B'y
 <SelfCheck question="Bir diyagrama bakarken sorulacak beş soruyu say.">
 
 Kullanıcı isteği hangi kutulardan geçiyor? Hangi kutu çökerse ne olur? Hangi oklar bir sınırı geçiyor? Veri nerede duruyor ve nasıl senkron kalıyor? Ne eksik (izleme, önbellek, kuyruk, yedeklilik)?
+
+</SelfCheck>
+
+<SelfCheck question="Bir mimari diyagramında A'dan B'ye giden bir ok ne söyler?">
+
+A'nın B'yi çağırdığını, yani B'ye bağımlı olduğunu. B çökerse A etkilenir; tersi geçerli olmayabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Diyagramlarda en sık atlanan parçalar nelerdir?">
+
+İzleme, önbellek, kuyruk ve yedeklilik. "Ne eksik?" sorusu bunları ortaya çıkarır.
 
 </SelfCheck>

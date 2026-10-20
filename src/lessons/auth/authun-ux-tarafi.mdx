@@ -1,11 +1,12 @@
 ---
-summary: "Bir terim listesi değil, auth akışı için tasarımcının cevaplaması gereken sorular: giriş/kayıt, hata mesajları, oturum süresi, hesap kurtarma ve bildirimler. En sık atlanan: oturum bitince yarım kalan işin kaybolması."
+summary: "Bir terim listesi değil, auth akışı için cevaplanması gereken sorular: giriş ve kayıt, hata mesajları, oturum süresi, hesap kurtarma ve bildirimler. En sık atlanan: oturum bitince yarım işin kaybolması."
 outcomes:
   - "Giriş ve kayıt akışı için sorulacak soruları sayabilirsin."
   - "Hata mesajlarında user enumeration dengesini kurabilirsin."
   - "Oturum bitiminde yarım kalan işin korunması gerektiğini açıklayabilirsin."
   - "Hesap kurtarma akışının neden güvenliğin en zayıf halkası olduğunu bilirsin."
-minutes: 8
+minutes: 5
+standard: 2
 sources:
   - label: "web.dev — Oturum açma formu en iyi uygulamaları"
     url: "https://web.dev/articles/sign-in-form-best-practices"
@@ -21,10 +22,39 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Bu ders bir terim listesi değil, bir **kontrol listesidir.** Auth akışında tasarımcının cevaplaması gereken soruları topluyor. Her başlık kendi başına bir toplantı gündemi olabilir.
+Bu ders bir terim listesi değil, bir **kontrol listesidir.** Auth akışında cevaplanması gereken soruları topluyor. Her başlık kendi başına bir toplantı gündemi olabilir.
 
 ## Giriş ve kayıt akışı
+
+<Tree
+  label="Auth akışının beş sorusu"
+  caption="Auth akışında beş başlıkta soru cevaplanır. Giriş ve kayıt: kaç yöntem, tek ekran mı? Hata mesajları: kullanıcı sayımı sızıntısı ve kilitlenme. Oturum: ne kadar sürer, bitince yarım iş ne olur? Hesap kurtarma: cihaz kaybında ne olur? Bildirimler: şifre değişikliği ve yeni cihazdan giriş haber verilir mi?"
+  root={{
+  title: "Auth UX",
+  tone: "accent",
+  children: [
+    {
+      title: "Giriş ve kayıt"
+    },
+    {
+      title: "Hata mesajları"
+    },
+    {
+      title: "Oturum ve süre"
+    },
+    {
+      title: "Hesap kurtarma"
+    },
+    {
+      title: "Bildirimler",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 - **Kaç yöntem sunulacak?** Her ek yöntem karar yükü ekler; iki-üç seçenek genelde yeterlidir.
 - **Kayıt ve giriş ayrı ekran mı, tek ekran mı?** Tek alanlı "e-postanı gir" yaklaşımı, kullanıcının hangi durumda olduğunu sistemin belirlemesini sağlar ve "hesabım var mıydı?" sorusunu ortadan kaldırır.
@@ -55,6 +85,18 @@ Bu ders bir terim listesi değil, bir **kontrol listesidir.** Auth akışında t
 
 Şifre değişti, yeni cihazdan giriş yapıldı, MFA kapatıldı, e-posta değişti: **bunların hepsi kullanıcıya bildirilmelidir.** Bu bildirimler, hesap ele geçirmenin fark edilmesini sağlayan tek mekanizma olabilir.
 
+<Case>
+
+Selin Panel'in auth akışını bu listeyle gözden geçirdi:
+
+1. **Tek ekran:** "E-postanı gir" ile başlıyor; hesap varsa şifre, yoksa davet kodu isteniyor. "Hesabım var mıydı?" sorusu kalktı.
+2. **Oturum süresi:** 12 saat; bir sabah vardiyası boyunca yeniden giriş gerekmiyor. "Beni hatırla" yok; tablet ortak kullanılıyor.
+3. **Yarım iş:** oturum bittiğinde ürün ekleme formu taslak olarak saklanıyor; çalışan yeniden giriş yapınca aynı forma dönüyor.
+4. **Bildirim:** dükkân sahibinin hesabına yeni bir cihazdan girilince e-posta gidiyor: cihaz, saat, "Bu sen değilsen" bağlantısı.
+5. **Kilitlenme:** beş hatalı denemede 60 saniye bekleme ve şifre sıfırlama bağlantısı.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -63,6 +105,24 @@ Bu ders bir terim listesi değil, bir **kontrol listesidir.** Auth akışında t
 - **Hata mesajı setini** (giriş, sıfırlama, kayıt, kilitlenme) tek tabloda gözden geçir; user enumeration dengesini kur.
 - **Hesap kurtarma akışını ana akış kadar tasarla.**
 - **Güvenlik bildirim e-postalarını da tasarla** (metin, bağlantı, "bu ben değildim" eylemi).
+
+</Lens>
+<Lens role="product-manager">
+
+- **Auth akışını ürünün ilk deneyimi say.** Kayıt ve giriş, kullanıcının ürünle ilk temasıdır.
+- **Oturum süresini risk ve kullanım bağlamına göre belirle.** Bir kafe tableti ile bir banka uygulaması aynı olamaz.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Bu listeyi auth story'lerinin kabul kriterlerine dönüştür.**
+- **Oturum sona erince yarım işin korunmasını ayrı bir kriter yap.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Kullanım bağlamını gereksinime yaz.** Ortak cihaz mı, kişisel cihaz mı? Oturum kuralları buna bağlıdır.
+- **Güvenlik bildirimlerinin hangi olaylarda gideceğini listele.**
 
 </Lens>
 </Lenses>
@@ -87,5 +147,11 @@ Kullanıcının yarım kalmış işinin kaybolması. Giriş yaptıktan sonra ayn
 <SelfCheck question="Hesap kurtarma akışı neden 'güvenliğin en zayıf halkası' olarak anılır?">
 
 Bir hesabı ele geçirmenin en kolay yolu genelde şifreyi kırmak değil, kurtarma akışını istismar etmektir. Ana giriş ne kadar güçlü olursa olsun zayıf bir kurtarma akışı onu anlamsız kılar.
+
+</SelfCheck>
+
+<SelfCheck question="Oturum süresi dolduğunda kullanıcı yarım kalmış bir formdaysa ne olmalı?">
+
+Form verisi kaybolmamalıdır. Kullanıcı yeniden giriş yaptıktan sonra aynı ekrana ve aynı veriyle dönmelidir; örneğin form taslak olarak saklanabilir.
 
 </SelfCheck>

@@ -1,10 +1,11 @@
 ---
-summary: "Tek arıza noktası, yedeklilik ve zarif bozulma: burası çökerse ne olur? Graceful degradation bölümün tasarımcıyı en çok ilgilendiren terimi: hangi bölüm olmadan bu sayfa hâlâ işe yarar?"
+summary: "Tek arıza noktası, yedeklilik ve zarif bozulma: burası çökerse ne olur? Graceful degradation tasarımı en çok ilgilendiren terimdir: hangi bölüm olmadan bu sayfa hâlâ işe yarar?"
 outcomes:
   - "SPOF'u bir örnekle açıklayabilirsin."
   - "Yedeklilik ve failover'ın SPOF'u nasıl ortadan kaldırdığını ve maliyetini söyleyebilirsin."
   - "Graceful degradation'ı bir tasarım sorusu olarak ele alabilirsin."
-minutes: 7
+minutes: 3
+standard: 2
 sources:
   - label: "AWS Well-Architected — Güvenilirlik sütunu"
     url: "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html"
@@ -16,8 +17,10 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Öneri servisi çöktü. Ürün sayfası komple çöktü mü, yoksa yalnızca öneriler bölümü mü kayboldu? İkincisi tasarlanmış bir davranıştır ve **senin işin.**
+Öneri servisi çöktü. Ürün sayfası komple çöktü mü, yoksa yalnızca öneriler bölümü mü kayboldu? İkincisi tasarlanmış bir davranıştır ve **bir tasarım işidir.**
 
 ## Single point of failure
 
@@ -29,7 +32,55 @@ import Lenses from "~/components/lesson/Lenses.astro";
 
 ## Graceful degradation
 
-**Graceful degradation (zarif bozulma)**, bir parça çöktüğünde tüm sistemin çökmesi yerine o parçanın işlevinin devre dışı kalıp geri kalanın çalışmaya devam etmesidir. **Doğrudan bir tasarım işidir ve bölümün tasarımcıyı en çok ilgilendiren terimidir.** Öneri servisi çöktüğünde ürün sayfası çökmemeli; yalnızca öneriler bölümü görünmemeli ya da bir hata kutusu göstermelidir. Yani **"hangi bölüm olmadan bu sayfa hâlâ işe yarar?"** sorusu bir tasarım sorusudur. "Yorumlar yüklenmezse yalnızca o bölüm hata göstersin, sayfanın tamamı çökmesin."
+<Tree
+  label="Dükkân sayfası: ne olmadan da çalışır?"
+  caption="Demlik'in dükkân sayfası parçalarına ayrıldığında iki grup çıkar. Menü ve Sipariş ver düğmesi olmazsa sayfa işe yaramaz; bu parçalar korunur. Birlikte sık alınanlar bölümü, harita ve yorumlar olmadan da sipariş verilebilir; bu parçaların servisi çökerse yalnız o bölüm gizlenir ya da kısa bir mesaj gösterir."
+  root={{
+  title: "Dükkân sayfası",
+  tone: "accent",
+  children: [
+    {
+      title: "Olmazsa olmaz",
+      children: [
+        {
+          title: "Menü"
+        },
+        {
+          title: "Sipariş ver"
+        }
+      ]
+    },
+    {
+      title: "Olmadan da çalışır",
+      children: [
+        {
+          title: "Birlikte sık alınanlar"
+        },
+        {
+          title: "Harita"
+        },
+        {
+          title: "Yorumlar",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
+**Graceful degradation (zarif bozulma)**, bir parça çöktüğünde tüm sistemin çökmesi yerine o parçanın işlevinin devre dışı kalıp geri kalanın çalışmaya devam etmesidir. **Doğrudan bir tasarım işidir ve bölümün tasarımı en çok ilgilendiren terimidir.** Öneri servisi çöktüğünde ürün sayfası çökmemeli; yalnızca öneriler bölümü görünmemeli ya da bir hata kutusu göstermelidir. Yani **"hangi bölüm olmadan bu sayfa hâlâ işe yarar?"** sorusu bir tasarım sorusudur. "Yorumlar yüklenmezse yalnızca o bölüm hata göstersin, sayfanın tamamı çökmesin."
+
+<Case>
+
+Demlik'te bir tek arıza noktası ve bir zarif bozulma örneği:
+
+1. **SPOF:** müşteri girişi tek bir SMS sağlayıcısına bağlıydı. Sağlayıcı bir sabah 40 dakika kesildi; yeni giriş yapılamadı. Açık oturumlar etkilenmedi ama yeni öğrenciler sipariş veremedi.
+2. **Yedeklilik:** ikinci bir SMS sağlayıcısı eklendi; birincisi yanıt vermezse kodlar ikincisinden gidiyor.
+3. **Zarif bozulma:** dükkân sayfasındaki "birlikte sık alınanlar" servisi çöktüğünde bölüm sessizce gizleniyor; menü ve sipariş çalışmaya devam ediyor.
+4. **Tasarım:** Selin her dükkân sayfası bölümü için "bu olmadan sayfa çalışır mı?" sorusunu yanıtladı; cevabı "evet" olanların hata hâli ayrıca çizildi.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -37,6 +88,12 @@ import Lenses from "~/components/lesson/Lenses.astro";
 - **Her sayfa için bölümleri "kritik / değil" diye işaretle:** hangisi olmadan sayfa işe yarar?
 - **Kritik olmayan bölümler için kendi hata/gizleme hâlini tasarla.**
 - **Diyagramda SPOF'ları ekiple birlikte işaretle** ve her biri için kullanıcının göreceği hata ekranını çiz.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Tek arıza noktalarını iş riski olarak önceliklendir.** Hangi bileşen çökerse müşteri sipariş veremez?
+- **Yedekliliğin maliyetini riskle tart.** İkinci sağlayıcı ek fatura, kesinti ise kayıp sipariş demektir.
 
 </Lens>
 </Lenses>
@@ -54,5 +111,17 @@ import Lenses from "~/components/lesson/Lenses.astro";
 <SelfCheck question="Graceful degradation neden bir tasarım işidir? Bir örnek ver.">
 
 Çünkü "hangi bölüm olmadan bu sayfa hâlâ işe yarar?" bir tasarım sorusudur ve cevabı ekranlara yansır. Örnek: öneri servisi çöktüğünde ürün sayfası çökmemeli; yalnızca öneriler bölümü gizlenmeli ya da kendi içinde hata kutusu göstermelidir.
+
+</SelfCheck>
+
+<SelfCheck question="Tek arıza noktası nasıl bulunur?">
+
+Mimari diyagramına bakıp her bileşen için "burası çökerse ne olur?" diye sorarak. Çöktüğünde sistemin tamamını durduran tekil bileşen bir tek arıza noktasıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Yedekliliğin bedeli nedir?">
+
+Maliyet: aynı işi yapan ikinci bir kopya ya da sağlayıcı ek kaynak ve ek fatura demektir. Bu bedel, kesintinin işe maliyetiyle tartılır.
 
 </SelfCheck>
