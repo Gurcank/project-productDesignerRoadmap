@@ -6,6 +6,7 @@ outcomes:
   - "\"Sayfa zıpladı, yanlış yere tıkladım\" sorununu adıyla (layout shift) söyleyebilirsin."
   - "Hangi animasyonun akıcı, hangisinin takılacağını önceden tahmin edebilirsin."
 minutes: 12
+standard: 2
 sources:
   - label: "MDN — Document Object Model"
     url: "https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model"
@@ -24,6 +25,7 @@ import StepFlow from "~/components/lesson/StepFlow.astro";
 import FoldFigure from "~/components/lesson/FoldFigure.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir haber sitesini açıyorsun, okumaya başlıyorsun, sonra bir reklam yükleniyor ve metin aşağı kayıyor. Tam o anda bir bağlantıya basmak üzereydin; yanlış yere tıklıyorsun. Bu sinir bozucu olay tesadüf değil: tarayıcının işleyişindeki belirli bir adımın sonucu.
 
@@ -120,6 +122,19 @@ Tasarım kararlarının doğrudan etkisi var: büyük bir hero görseli LCP'yi u
 
 </Outside>
 
+<Case>
+
+Dükkân sayfasında müşteriler zaman zaman yanlış ürünü sepete ekliyordu. Destek ekibi şikâyetleri topladı; Selin kaydı izledi:
+
+1. **Gözlem:** sayfa açılırken ürün fotoğrafları birer birer yükleniyordu. Her fotoğraf geldiğinde altındaki liste aşağı kayıyordu.
+2. **Teşhis:** fotoğrafların boyutu baştan belli değildi; tarayıcı her fotoğrafta layout'u yeniden yapıyordu. Bu bir layout kayması (CLS) sorunuydu.
+3. **Çözüm:** Selin fotoğraf alanlarına sabit bir oran verdi (4:3); fotoğraf gelmeden yer ayrıldı. Ece üç font ağırlığını ikiye indirdi.
+4. **Sonuç:** liste artık kaymıyor; ilk çizim de daha erken.
+
+Yanlış ürün şikâyetleri bir sonraki ay destek raporunda ayrı bir başlık olmaktan çıktı.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -128,6 +143,42 @@ Bu dersin tasarımcıya bıraktığı üç karar:
 - **Yer ayır.** Görsele, videoya, reklama, yüklenecek her kutuya önceden boyut ver. Sayfa zıplamasın.
 - **Az yükle.** Font ailesi, ikon seti, görsel sayısı, ilk ekranı geciktiren her şey bir bedel ödetir. İlk görünen ekranı olabildiğince hafif tut.
 - **Doğru animasyonu seç.** Hareketi `transform` ve `opacity` ile kurgulayabilecek şekilde tasarla; boyut ya da konum değişimi gerektiren animasyonlar pahalı olabilir.
+
+</Lens>
+<Lens role="product-manager">
+
+- **"Sayfa zıplıyor" şikâyetini ölçülebilir hâle getir.** Core Web Vitals, hızı ve kaymayı sayıya çevirir.
+- **Font ve görsel sayısını hız kararı olarak gör.** Her ek dosya ilk çizimi geciktirebilir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Görsellerin yerinin önceden ayrılmasını kabul kriterine yaz.** Kayma, yanlış dokunuşa yol açar.
+- **Performans bütçesini Definition of Done'a bağla.** Yeni bir sayfa eşiği aşmamalı.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Performans iyileştirmesini takvimde görünür kıl.** Görünmeyen iş en son ertelenen iştir.
+- **Hız ölçümünü lansman kriterine ekle.** Yayından sonra düzeltmek daha pahalıdır.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Hız tartışmasını ölçüme bağla.** "Yavaş hissediyorum" yerine ölçülmüş bir değer.
+- **Tasarım ve geliştirme arasında ortak dil kur.** Layout, paint, CLS herkesin bildiği kelimeler olsun.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Performans gereksinimini sayıyla yaz.** "Hızlı açılır" doğrulanamaz; eşik değer doğrulanır.
+- **Görsel boyutlarını içerik gereksinimine ekle.** Sabit oran, içerik ekibinin de kuralıdır.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Yanlış dokunuşları kayıtta ara.** Kayma, kullanıcının hatası gibi görünür ama arayüzün hatasıdır.
+- **Testi gerçek cihaz ve bağlantıda yap.** Hızlı bir bilgisayarda kayma görünmeyebilir.
 
 </Lens>
 </Lenses>
@@ -154,5 +205,11 @@ Layout shift; ölçülen metrik CLS'tir. Tarayıcının layout (reflow) adımıy
 <SelfCheck question="DOM ile HTML arasındaki fark nedir ve bu fark neden SEO'yu ilgilendirir?">
 
 HTML sunucudan gelen ham metin dosyasıdır; DOM tarayıcının ondan ürettiği ve JavaScript'in sonradan değiştirebildiği canlı yapıdır. İçerik yalnızca JavaScript çalıştıktan sonra DOM'a ekleniyorsa, JavaScript çalıştırmayan botlar o içeriği göremeyebilir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir menü açılırken `height` animasyonu takılıyor. Ne önerirsin?">
+
+`height` değişimi her karede layout'u yeniden hesaplatır. Animasyonu `transform` ya da `opacity` ile yapmayı öneririm; bunlar yalnız birleştirme (composite) adımında çalışır ve akıcıdır.
 
 </SelfCheck>

@@ -6,6 +6,8 @@ outcomes:
   - "Süre aralıklarını bağlama göre (küçük/büyük, sık/seyrek) seçebilirsin."
   - "prefers-reduced-motion açıkken ne yapılması gerektiğini ve neyin yapılmaması gerektiğini bilirsin."
 minutes: 10
+standard: 2
+skipTerms: ["gecikme"]
 sources:
   - label: "Material Design 3 — Easing and duration"
     url: "https://m3.material.io/styles/motion/easing-and-duration/applying-easing-and-duration"
@@ -23,6 +25,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir uygulamada bir butona basıyorsun ve ekranın yarısı salınarak kayıyor, kartlar sırayla havada uçuşarak yerine konuyor, bir ikon dönüyor. İlk üç kez "güzel" diyorsun. Onuncu kez, hızlı bir işlem yapmaya çalışırken, **sinir bozucu.** Hareket işe yaramıyor, sadece vakit alıyor.
 
@@ -48,6 +52,20 @@ Bu üçünden birini yapmıyorsa hareket gereksizdir. Prototip ve handoff'ta kar
 | Büyük ve uzak (panel, modal, sayfa) | 250–400 ms |
 
 Kullanıcının **sık tekrarladığı** bir etkileşim ne kadar hoş olursa olsun uzun sürerse rahatsız edici hâle gelir. "Hover geçişi 300ms çok yavaş; 150'ye indirelim, tekrar eden bir etkileşim."
+
+<Spectrum
+  label="Hareketin büyüklüğüne göre süre"
+  caption="Süre, hareketin büyüklüğü ve mesafesiyle artar. Sol uçta küçük ve yakın hareketler durur: bir onay tiki ya da bir butonun hover durumu, yaklaşık 100 ile 200 milisaniye. Ortada bir menünün açılması gelir. Sağ uçta büyük ve uzak hareketler vardır: bir panelin kayması ya da sayfa geçişi, yaklaşık 250 ile 400 milisaniye. Sık tekrarlanan etkileşim, sola yakın kalmalıdır."
+  left={{ title: "Küçük, yakın", sub: "≈100–200 ms" }}
+  right={{ title: "Büyük, uzak", sub: "≈250–400 ms" }}
+  marks={[
+    { label: "Onay tiki", at: 0.08 },
+    { label: "Hover", at: 0.22 },
+    { label: "Menü açılması", at: 0.5 },
+    { label: "Panel", at: 0.75 },
+    { label: "Sayfa geçişi", at: 0.93 },
+  ]}
+/>
 
 **Emin değilim:** Bu sayı aralıkları sektörde yaygın öneriler; kesin bir standart değil. Sistemine göre ayarla ve tekrar sıklığını ölçüt al.
 
@@ -110,6 +128,19 @@ Bu sitede hareketin görevi durum bildirmek, süslemek değil. Süreler üç kad
 
 </Callout>
 
+<Case>
+
+Demlik'te sipariş verildiğinde bir fincan animasyonu oynuyordu: 1,2 saniye, her siparişte.
+
+1. **İş:** animasyonun işi "siparişin alındı" geri bildirimiydi. Ama her gün sipariş veren sabah müşterisi için 1,2 saniye bir bekleme oldu.
+2. **Süre:** geri bildirim 300 ms'lik bir tik animasyonuna indi; fincan yalnız ilk siparişte oynuyor.
+3. **Yumuşatma:** ekrana giren onay kartı yavaşlayarak giriyor (ease-out).
+4. **Azaltılmış hareket:** cihazda bu tercih açıksa tik, hareket etmeden beliriyor; bilgi kaybolmuyor.
+
+Tasarım incelemesinde soru değişti: "Güzel mi?" değil, "Bu hareketin işi ne?"
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -143,5 +174,11 @@ Ekrana giren öğe ease-out (hızlı başlar, yavaşlar): dikkat çeker ve doğa
 <SelfCheck question="prefers-reduced-motion açıkken ne yapılmalı? Tüm animasyonları kapatmak doğru mu?">
 
 Hayır. Büyük yer değiştirmeler, paralaks ve zoom gibi vestibüler rahatsızlık yaratabilecek hareketler kaldırılır; yerine kısa bir opaklık geçişi gibi zararsız bir geri bildirim bırakılır. Amaç hareketi yok etmek değil, rahatsız edici olanı azaltmaktır.
+
+</SelfCheck>
+
+<SelfCheck question="Her gün tekrarlanan bir etkileşimde uzun ve gösterişli bir animasyon neden sorun olur?">
+
+Sık tekrarlanan etkileşimde uzun süre her seferinde bir bekleme hâline gelir ve rahatsız eder. Hareketin bir işi olmalı; tekrar eden etkileşimde kısa tutulur, gösterişli hâl gerekiyorsa yalnız ilk seferde oynatılır.
 
 </SelfCheck>

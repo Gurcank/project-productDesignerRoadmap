@@ -6,6 +6,7 @@ outcomes:
   - "Variable ile style farkını ve style'ın hâlâ nerede kullanıldığını açıklayabilirsin."
   - "Figma'daki variant / component property kavramının koddaki karşılığını (props) bilirsin."
 minutes: 11
+standard: 2
 sources:
   - label: "Figma — Variables ve style farkı"
     url: "https://help.figma.com/hc/en-us/articles/15871097384471-The-difference-between-variables-and-styles"
@@ -25,6 +26,7 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir geliştirici sana diyor ki: "Bunu grup değil frame yap, auto layout uygulayabileyim. Instance detach edilmiş, ana bileşene bağlayalım. Rengi variable'dan alalım, style'dan değil." Bu cümledeki her kelime bir şey ifade ediyor ve hepsini bilmen gerekiyor. Bunlar sadece araç bilgisi değil, **ekiple konuşurken kullanacağın kelimeler.**
 
@@ -108,6 +110,19 @@ Figma'nın kendi dokümantasyonu değişkenlerin style'ların yerine geçmediği
 
 Tasarım-geliştirme aktarımında karşına çıkar. **Değişken bilgi:** Bu özelliklerin kapsamı ve fiyatlandırması değişebilir. "Dev Mode'da token adları görünüyor; ham hex kopyalamayın."
 
+<Case>
+
+Selin Demlik'in buton bileşenini Figma'da baştan kurdu:
+
+1. **Auto layout:** buton metnin uzunluğuna göre genişliyor; "Öde" ile "Son siparişini tekrarla" aynı bileşenden çıkıyor.
+2. **Variant:** tür (birincil, ikincil, metin) × durum (varsayılan, basılı, devre dışı, yükleniyor).
+3. **Variable:** renkler token adlarıyla tanımlı; koyu mod bir mod değişikliği.
+4. **Kütüphane:** Sipariş ve Panel takımları aynı kütüphaneyi kullanıyor. Ece Dev Mode'da bileşenin kodda aynı adla karşılığını görüyor: `Button variant="primary" state="loading"`.
+
+Önceki dosyada her ekranda kopyalanmış, birbirinden hafifçe farklı yirmi üç buton vardı.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -142,5 +157,11 @@ Variable dinamik ve tiplidir: modları (light/dark, marka A/B) destekler, başka
 <SelfCheck question={"Figma'daki \"variant / component property\" kavramının kod tarafındaki karşılığı nedir?"}>
 
 Kod tarafındaki props. Bir bileşenin `variant`, `size`, `disabled` gibi özellikleri, Figma'daki component property'lerin doğrudan karşılığıdır; bu eşleşme handoff'u kolaylaştırır.
+
+</SelfCheck>
+
+<SelfCheck question={"Bir tasarımcı ekranda bir bileşenin kopyasını \"detach\" edip renk değiştiriyor. Bu neden sorun yaratır?"}>
+
+Kopya artık ana bileşene bağlı değildir; ana bileşende yapılan düzeltmeler ona ulaşmaz ve kodla tutarlılık bozulur. Doğrusu, gerekiyorsa ana bileşene yeni bir variant ya da özellik eklemektir.
 
 </SelfCheck>

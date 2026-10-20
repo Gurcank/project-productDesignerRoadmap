@@ -1,0 +1,155 @@
+---
+summary: "Moderatörlü kullanılabilirlik testinde katılımcı gerçekçi görevleri yaparken sesli düşünür; araştırmacı izler ve susar. Görevler cevabı ele vermez; test edilen katılımcı değil hizmettir."
+outcomes:
+  - "Cevabı ele vermeyen, gerçekçi test görevleri yazabilirsin."
+  - "Bir test oturumunu sesli düşünme ve az müdahaleyle yürütebilirsin."
+  - "Gerçek veri, sahte veri ve yardımcı teknoloji kararlarını verebilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "GOV.UK Service Manual — Using moderated usability testing"
+    url: "https://www.gov.uk/service-manual/user-research/using-moderated-usability-testing"
+  - label: "GOV.UK Service Manual — Plan a round of user research"
+    url: "https://www.gov.uk/service-manual/user-research/plan-round-of-user-research"
+additions:
+  - "Moderatörlü test, sesli düşünme, görev tasarımı, oturumun yürütülmesi, gerçek ve sahte veri, yardımcı teknoloji (GOV.UK Service Manual)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Timeline from "~/components/diagrams/primitives/Timeline.astro";
+
+Selin ödeme ekranını yeniden tasarlamadan önce eski ekranı test etmek istedi. İlk görev taslağı şöyleydi: "Kayıtlı kart bölümünden iş kartını seç ve Öde'ye dokun." Mert taslağı okuyup gülümsedi: "Bu bir görev değil, bir kullanım kılavuzu. Herkes geçer."
+
+İyi bir test, katılımcının kendi yolunu bulmasına izin verir. Bu ders, bir kullanılabilirlik testini tasarlamayı ve yürütmeyi anlatır. Testin ne olduğu [Değerlendirme yöntemleri](/ux-ui-ilkeleri/degerlendirme-yontemleri/) dersinde.
+
+## Görev yazmak
+
+GOV.UK'nin tanımıyla **moderatörlü kullanılabilirlik testinde** katılımcılar belirli görevleri tamamlamaya çalışırken izlenir. Onlardan **sesli düşünmeleri** istenir: ne yaptıklarını, ne düşündüklerini ve ne hissettiklerini anlatırlar. Test en çok alpha, beta ve canlı evrelerde prototipi ya da hizmeti sınamak için kullanılır.
+
+Rehbere göre iyi bir görev dört özellik taşır:
+
+- Katılımcıya **net bir hedef** koyar.
+- Katılımcı için **gerçekçi ve ilgilidir.**
+- Sorunları açığa çıkaracak kadar **zordur.**
+- **Cevabı ele vermez,** nasıl yapılacağını ima etmez.
+
+Genelde birkaç küçük görev verilir ve mantıklı bir sırayla yapılır. Görevler, giriş metni ve hazırlık listesiyle birlikte bir rehbere yazılır ve bir meslektaşla denenir.
+
+**Talimat ≠ görev.** "Kayıtlı kart bölümünü aç" arayüzdeki kelimeyi verir. "Bu sabahki kahveni iş kartınla öde" bir hedef verir.
+
+## Oturumu yürütmek
+
+<Timeline
+  label="Otuz dakikalık bir test oturumu"
+  caption="Otuz dakikalık bir oturumun planı. İlk üç dakika giriş ve onam: hizmeti test ettiğimizi, katılımcıyı değil, söyleriz. Ardından üç dakikalık ısınma soruları gelir. Üç görev sırayla verilir; ilki en uzunudur. Son dört dakika kapanış sorularına ayrılır: gözlenip anlaşılmayan şeyler ve katılımcının son düşünceleri."
+  unit="dakika"
+  span={30}
+  every={5}
+  rows={[
+    { label: "Giriş ve onam", start: 0, end: 3, tone: "accent" },
+    { label: "Isınma", start: 3, end: 6 },
+    { label: "Görev 1: kahveyi öde", start: 6, end: 14 },
+    { label: "Görev 2: kartı söyle", start: 14, end: 18 },
+    { label: "Görev 3: kart ekle", start: 18, end: 26 },
+    { label: "Kapanış", start: 26, end: 30, tone: "progress" },
+  ]}
+/>
+
+Rehberin oturum öğütleri şunlardır:
+
+- **Rahatlat.** Katılımcılar çoğu zaman gergindir ve hata yapmaktan korkar. "Hizmeti test ediyoruz, seni değil."
+- **Görevi açık ve tarafsız ver; mümkünse kişiselleştir.** Rehberin örneği: "Kızının kreşe hazır olduğunu söyledin; ona uygun bir kreş seçer misin?"
+- **Sessiz kal.** Çoğunlukla izle ve dinle.
+- **Ara sıra araya gir:** gerçekten ilginç bir şeyi anlamak ya da tamamen takılan katılımcıyı yola döndürmek için.
+- **Görüşü açık uçlu sorularla aç:** "Bunu neden söylüyorsun?", "Bu nasıl yardımcı olurdu?"
+
+Rehbere göre oturum 30–60 dakika sürer. Günde en fazla altı bir saatlik oturum planlanır, aralarda en az 15 dakika bırakılır.
+
+## Veri ve yardımcı teknoloji
+
+Mümkün olduğunda katılımcı **kendi verisi ve belgeleriyle** çalışır; daha ilgili olur ve daha çok bağlamsal sorun çıkar. Bu ancak hizmet veriyi işleyebiliyorsa ve veri güvende tutulabiliyorsa olur. Olmazsa **sahte veri** hazırlanır: bir karakter ve onun adına belgeler. Rehbere göre sahte veriyle de yararlı içgörü çıkar, ama katılımcı daha az ilgili olur.
+
+Yardımcı teknoloji kullananların kişisel kurulumları kopyalanması zordur; mümkünse kendi cihazlarıyla katılırlar. Araştırmacı oturumdan önce ekran okuyucu ya da büyüteç gibi araçların nasıl çalıştığını öğrenir; böylece bir sorunun hizmetten mi araçtan mı geldiğini ayırt eder.
+
+<Case>
+
+Mert ile Selin görevleri yeniden yazdı:
+
+1. **Görev 1:** "Bu sabahki kahveni Moda'daki dükkândan sipariş et ve iş kartınla öde." Test hesabında iki kayıtlı kart vardı.
+2. **Görev 2:** ödemeden hemen önce, "Şu an hangi kartla ödüyorsun?" diye soruldu.
+3. **Görev 3:** "Kişisel kartının süresi dolmuş. Yenisini ekle."
+4. **Sonuç (5 katılımcı):** dördü seçili kartı söyleyemedi; ikisi farkında olmadan kişisel kartla ödedi. Kart güncellemeyi ikisi buldu; diğerleri "Profil"de aradı.
+
+Selin'in yeni tasarımı bu üç gözleme dayandı: seçili kart vurgulandı, kart ekleme ödeme ekranından erişilebilir oldu.
+
+</Case>
+
+<Tool slug="test-senaryosu" />
+
+<Lenses>
+<Lens role="ux-researcher">
+
+- **Görevi bir meslektaşla dene.** Görev arayüzdeki kelimeyi kullanıyorsa yeniden yaz.
+- **Araya girme ölçünü bil.** Takılan katılımcıyı yola döndür; ama her duraksamada yardım etme.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Kendi tasarımının testini başkası yürütsün ya da sessiz kal.** Savunma refleksi katılımcıyı yönlendirir.
+- **Başarı ölçütünü testten önce yaz.** Sonra yazılan ölçüt her sonucu "fena değil" gösterir.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Bir oturumu izle.** Beş katılımcıdan dördünün takıldığı yeri görmek, bir rapordan daha ikna edicidir.
+- **Bulguyu öncelik kararına çevir.** Hangi sorun en çok katılımcıda ve en kritik adımda?
+
+</Lens>
+<Lens role="product-owner">
+
+- **Testi sprint planına koy.** Prototip, test günü uçtan uca çalışmalı.
+- **Bulgulardan story yaz.** Her önemli sorun bir backlog maddesine dönüşsün.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Moderatörlü testte katılımcı görevleri yaparken sesli düşünür; araştırmacı izler ve dinler.
+- İyi görev net bir hedef koyar, gerçekçidir, sorunu açığa çıkaracak kadar zordur ve cevabı ele vermez.
+- Katılımcı rahatlatılır: test edilen hizmettir, katılımcı değil.
+- Araştırmacı yalnız ilginç bir anı anlamak, takılanı yola döndürmek ya da bir görüşü açmak için araya girer.
+- Mümkünse gerçek veri ve katılımcının kendi cihazı; olmazsa sahte veri ve bir karakter.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Kayıtlı kart bölümünden iş kartını seç' neden kötü bir test görevidir?">
+
+Cevabı ele verir: arayüzdeki bölümün adını ve yapılacak işlemi söyler. İyi görev bir hedef verir ve yolu katılımcıya bırakır: "Bu sabahki kahveni iş kartınla öde."
+
+</SelfCheck>
+
+<SelfCheck question="Sesli düşünme neden istenir?">
+
+Katılımcının ne yaptığını, ne düşündüğünü ve ne hissettiğini anlamak için. Yalnız tıklamaları izlemek, neden takıldığını göstermez.
+
+</SelfCheck>
+
+<SelfCheck question="Katılımcı bir ekranda iki dakikadır takılı. Ne yaparsın?">
+
+Tamamen takıldıysa yola döndürürüm; böylece oturum devam eder ve öğrenmeye devam ederim. Takıldığı yeri ve ne düşündüğünü not alır, kapanışta sorarım.
+
+</SelfCheck>
+
+<SelfCheck question="Neden mümkünse katılımcının kendi verisiyle test edilir?">
+
+Katılımcı daha ilgili olur ve daha çok bağlamsal sorun ortaya çıkar. Sahte veri de içgörü verir ama daha az ilgiyle ve daha az bağlamla.
+
+</SelfCheck>

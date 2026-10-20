@@ -1,11 +1,13 @@
 ---
-summary: "Erişilebilirlik tasarımcının sonradan eklenemeyecek tek sorumluluğu. Kimi kapsadığını, neden azınlık için olmadığını (engelin üç hâli, kaldırım rampası etkisi) ve hukuki çerçeveyi (EAA, ADA, Türkiye) öğren."
+summary: "Erişilebilirlik sonradan eklenemeyen bir sorumluluktur. Kimi kapsadığını, neden azınlık için olmadığını (engelin üç hâli, kaldırım rampası etkisi) ve hukuki çerçeveyi (EAA, ADA, Türkiye) öğren."
 outcomes:
   - "Erişilebilirlik ile kullanılabilirlik farkını ve neden birinin diğerinden bağımsız olduğunu açıklayabilirsin."
   - "Erişilebilirliği savunurken engelin üç hâlini ve kaldırım rampası etkisini kullanabilirsin."
   - "Erişilebilirlik uyumu ile kapsayıcı tasarım arasındaki farkı anlatabilirsin."
   - "AB, ABD ve Türkiye'de erişilebilirliği zorunlu kılan düzenlemelerin ana hatlarını bilirsin."
 minutes: 12
+standard: 2
+skipTerms: ["Kapsam"]
 sources:
   - label: "W3C WAI — Accessibility Fundamentals"
     url: "https://www.w3.org/WAI/fundamentals/accessibility-intro/"
@@ -28,12 +30,13 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir kayıt formu tasarladın. Etiketler solukta gri, alan sınırları ince, hata mesajı kırmızı bir kenarlıktan ibaret, ve "gönder" butonu aslında bir `div`. Geliştirici bunu birebir kodladı. Şimdi ürün yayında ve bazı kullanıcılar bu formu **hiç dolduramıyor.** Bunu düzeltmek için sadece kodu değiştirmek yetmez; ekranın yeniden tasarlanması gerekir.
 
-Bu bölüm diğerlerinden kısa ama etkisi en yüksek olanlardan biri. Üç nedeni var.
+Bu bölümün etkisi üç nedenle yüksektir.
 
-**Birincisi:** Erişilebilirlik, tasarımcının **sonradan eklenemeyecek** tek sorumluluğudur. Kontrastı, odak sırasını, etiket yapısını ve dokunma hedefi boyutunu tasarım aşamasında düşünmezsen, geliştirici bunu sonradan düzeltemez.
+**Birincisi:** Erişilebilirlik **sonradan eklenemez.** Kontrastı, odak sırasını, etiket yapısını ve dokunma hedefi boyutunu tasarım aşamasında düşünmezsen, geliştirici bunu sonradan düzeltemez.
 
 **İkincisi** hukuki: erişilebilirlik artık "iyi olurdu" kategorisinden çıkıp birçok ülkede (Türkiye dahil) yasal yükümlülük hâline geldi.
 
@@ -143,6 +146,19 @@ Dikkat: kontrol listesi **A seviyesine** göre; AA, uluslararası pratik hedef o
   ]}
 />
 
+<Case>
+
+Demlik kampüs lansmanına hazırlanırken Mert'in görüşme turlarından birine ekran okuyucu kullanan bir öğrenci katıldı.
+
+1. **Gözlem:** öğrenci menüyü dolaştı, ürünü sepete ekledi, ama "Öde" düğmesine ulaşamadı. Düğme kodda bir `div`'di; ekran okuyucu onu düğme olarak duyurmuyordu.
+2. **Kaldırım rampası:** düğme gerçek bir `button` olunca klavyeyle de çalışmaya başladı; Panel'i klavyeyle kullanan dükkân çalışanları da faydalandı.
+3. **Süreç:** Elif erişilebilirlik kontrolünü Definition of Done'a ekletti; tasarım incelemesinde kontrast ve odak sırası artık ilk bakılan şeyler.
+4. **Hukuk:** hukuk ekibinden, Türkiye'deki ve Avrupa'daki yükümlülüklerin Demlik'e etkisini özetleyen kısa bir not istendi.
+
+Her turda en az bir yardımcı teknoloji kullanan katılımcı kuralı bu oturumdan sonra yazıldı.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -150,6 +166,30 @@ Dikkat: kontrol listesi **A seviyesine** göre; AA, uluslararası pratik hedef o
 - **Gereksinime yaz:** "WCAG 2.2 AA" bir NFR olarak PRD'de ve bitmiş sayılma tanımında yer alsın.
 - **Savunurken çerçeve kur:** "Bu yalnızca bir azınlık için değil: bebek taşıyan da, güneşte okuyan da kazanır."
 - **Hukuki durumu sor:** Ürün AB'ye mi, Türkiye'de e-ticaret ya da bankacılığa mı hizmet ediyor? Bu, kapsamı belirler.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Erişilebilirliği kapsamın parçası say.** Sonradan düzeltmek, baştan yapmaktan pahalıdır.
+- **Hukuki yükümlülüğü hukukla birlikte izle.** Kapsam ve tarihler ülkeye göre değişir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Erişilebilirlik ölçütlerini Definition of Done'a ekle.** Her story için ayrı yazmak gerekmez.
+- **Erişilebilirlik hatasını "iyileştirme" diye ertelem.** Bir kullanıcı için ürün çalışmıyor demektir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Erişilebilirliği fonksiyonel olmayan gereksinim olarak yaz.** "WCAG 2.2 AA" ölçülebilir bir hedeftir.
+- **Engelin üç hâlini kullanıcı profillerine ekle.** Kalıcı, geçici ve durumsal.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Her turda yardımcı teknoloji kullanan bir katılımcı planla.** Bulmak zaman alır; erken başla.
+- **Durumsal engeli de gözle.** Tek elle kullanım, güneş ışığı, gürültü.
 
 </Lens>
 </Lenses>
@@ -175,5 +215,11 @@ Kullanılabilirlik herkes için kolaylıktır; erişilebilirlik belirli engeller
 <SelfCheck question="&quot;Engelin üç hâli&quot; nedir ve bu çerçeve erişilebilirliği savunurken neden işe yarar?">
 
 Kalıcı (tek kolu olmayan), geçici (kolu alçıda), duruma bağlı (bebek taşıyan). İşe yarar çünkü erişilebilirliğin "küçük bir azınlık için" olmadığını gösterir: aynı arayüz problemini çok daha geniş bir kitle yaşar.
+
+</SelfCheck>
+
+<SelfCheck question={"Bir yönetici \"kullanıcılarımızın çok azı engelli, sonraya bırakalım\" diyor. Ne cevap verirsin?"}>
+
+Engel yalnız kalıcı değildir; geçici (kırık kol) ve durumsal (güneş ışığı, tek elle kullanım) hâlleri de vardır, yani kullanıcıların çoğu bir noktada etkilenir. Erişilebilirlik çözümleri herkese yarar ve birçok ülkede yasal yükümlülüktür. Sonradan düzeltmek de baştan yapmaktan pahalıdır.
 
 </SelfCheck>

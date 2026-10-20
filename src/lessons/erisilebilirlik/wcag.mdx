@@ -6,6 +6,8 @@ outcomes:
   - "Bir denetim raporundaki ölçüt numarasını (1.4.3 gibi) okuyup anlayabilirsin."
   - "WCAG 2.2'nin tasarımcıyı ilgilendiren yeni ölçütlerini sayabilirsin."
 minutes: 11
+standard: 2
+skipTerms: ["doğrulama"]
 sources:
   - label: "W3C — WCAG 2.2 Quick Reference"
     url: "https://www.w3.org/WAI/WCAG22/quickref/"
@@ -22,6 +24,7 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir denetim raporu geliyor: "15 ihlal; 9'u 1.4.3, 3'ü 2.4.7, 2'si 1.1.1, 1'i 3.3.2." Rakamlar anlamsız görünüyor. Ama bu numaraları okuyabildiğinde, raporun yarısının **tek bir sorunun** (kontrast) tekrarı olduğunu görürsün. Palet düzeltmesi dokuz maddeyi birden kapatır.
 
@@ -96,9 +99,22 @@ WCAG 2.2, 2.1'in üstüne **dokuz yeni ölçüt** ekledi ve eskiyen bir ölçüt
 
 <Callout kind="ornek" title="Bu sitede nasıl?">
 
-Bu sitenin hedefi WCAG 2.2 AA ve bu bölümün kontrol listeleri sitenin kendi kabul kriteri: tek `h1`, işaretli bölgeler (landmark), atlama bağlantısı, görünür odak halkası, kontrast hesapla doğrulanmış renkler, hedef boyutu (tek başına duran gezinme bağlantıları en az 24px). Cümle içindeki bağlantılar, standardın "satır içi" istisnasına girdiği için bu boyuta tabi tutulmuyor. Bu istisna WCAG 2.5.8'in kendi metninde var.
+Bu sitenin hedefi WCAG 2.2 AA. Bu bölümün kontrol listeleri sitenin kendi kabul kriteridir: tek `h1`, işaretli bölgeler (landmark), atlama bağlantısı, görünür odak halkası, kontrast hesapla doğrulanmış renkler, hedef boyutu (tek başına duran gezinme bağlantıları en az 24px). Cümle içindeki bağlantılar, standardın "satır içi" istisnasına girdiği için bu boyuta tabi tutulmuyor. Bu istisna WCAG 2.5.8'in kendi metninde var.
 
 </Callout>
+
+<Case>
+
+Demlik kampüs lansmanı öncesinde üniversitenin bilgi işlem birimi bir soru sordu: "Uygulamanız erişilebilir mi?"
+
+1. **Hedef:** Elif hedefi yazılı hâle getirdi: WCAG 2.2 AA. AAA bütün içerik için hedeflenmedi.
+2. **Denetim:** Selin ödeme ve kart ekleme akışlarını başarı ölçütlerine göre denetledi. Bulgular ölçüt numarasıyla yazıldı: 1.4.3 kontrast, 2.4.7 görünür odak, 3.3.1 hata belirtme.
+3. **WCAG 2.2:** yeni ölçütlerden hedef boyutu (2.5.8) ve sürükleme hareketleri (2.5.7) ayrıca kontrol edildi; Panel'de sürükle-bırak ile sıralanan menünün yukarı-aşağı düğmeleri de vardı.
+4. **Beyan:** sitede bir erişilebilirlik beyanı yayımlandı: hedef, bilinen sorunlar, düzeltme tarihi ve geri bildirim adresi.
+
+Üniversiteye beyanın bağlantısı gönderildi.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -107,6 +123,30 @@ Bu sitenin hedefi WCAG 2.2 AA ve bu bölümün kontrol listeleri sitenin kendi k
 - **Denetim raporunu ilkeye göre grupla.** Çoğu rapor birkaç kök sebebe (kontrast, etiket, klavye) dayanır.
 - **WCAG 2.2'nin yeni ölçütlerini tasarımda say:** hedef boyutu, sürükleme alternatifi, yapışkan bar odağı kapatmıyor mu?
 - **"%100 erişilebilir" deme.** Beyanda bilinen eksikleri yaz.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Hedef uyum seviyesini yazılı karar yap.** Pratik hedef AA'dır.
+- **Erişilebilirlik beyanını sahiplen.** Bilinen sorunu saklamak yerine düzeltme tarihiyle yaz.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kabul kriterinde başarı ölçütü numarasını kullan.** Tartışmayı kısaltır.
+- **Bilinen sorunları backlog'da beyanla eşle.** Beyandaki tarih bir taahhüttür.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Erişilebilirlik gereksinimini WCAG ölçütüne izlenebilir yaz.** Her gereksinim bir ölçüte bağlansın.
+- **Tedarikçi ve ihale belgelerinde seviyeyi belirt.** "WCAG 2.2 AA" ölçülebilir bir şarttır.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Ölçüt uyumu ile kullanılabilirliği ayırt et.** Ölçütü geçen bir arayüz yine de zor kullanılabilir.
+- **Beyandaki geri bildirim kanalını araştırma girdisi say.** Gelen şikâyetler bulgudur.
 
 </Lens>
 </Lenses>
@@ -132,5 +172,11 @@ Perceivable, Operable, Understandable, Robust. Klavyeyle ulaşılamama Operable 
 <SelfCheck question="Hangi uyum seviyesi pratik ve yasal hedeftir ve neden AAA hedeflenmez?">
 
 AA. Düzenlemelerin neredeyse tamamı AA'yı referans alır. AAA bazı içerik türleri için tam olarak karşılanamaz (örneğin 7:1 kontrast çoğu marka rengiyle mümkün değildir) ve W3C'nin kendisi de tüm siteler için AAA hedeflenmesini önermez.
+
+</SelfCheck>
+
+<SelfCheck question="Erişilebilirlik beyanında hangi bilgiler yer alır?">
+
+Hedeflenen uyum seviyesi, bilinen sorunlar ve neden henüz çözülmedikleri, planlanan düzeltme tarihleri ve kullanıcıların sorun bildirebileceği bir iletişim yolu.
 
 </SelfCheck>

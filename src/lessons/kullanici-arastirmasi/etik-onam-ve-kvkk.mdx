@@ -1,0 +1,148 @@
+---
+summary: "Her araştırma bilgilendirilmiş onamla başlar: katılımcı kimin, neden, hangi veriyi topladığını ve her an durabileceğini bilir. Araştırma verisi kişisel veridir; en az toplanır, gerekmeyince silinir."
+outcomes:
+  - "Bilgilendirilmiş onamın içermesi gerekenleri sayabilirsin."
+  - "Bir araştırma için bilgi notu ve onam kaydı hazırlayabilirsin."
+  - "Araştırma verisini KVKK ilkelerine göre toplayıp saklayabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "GOV.UK Service Manual — Getting informed consent for user research"
+    url: "https://www.gov.uk/service-manual/user-research/getting-users-consent-for-research"
+  - label: "GOV.UK Service Manual — Managing user research data and participant privacy"
+    url: "https://www.gov.uk/service-manual/user-research/managing-user-research-data-participant-privacy"
+  - label: "KVKK — 6698 sayılı Kişisel Verilerin Korunması Kanunu (İngilizce çeviri)"
+    url: "https://www.kvkk.gov.tr/Icerik/6649/Personal-Data-Protection-Law"
+additions:
+  - "Bilgilendirilmiş onam, bilgi notu, onam kanıtının biçimleri, araştırma verisinin yönetimi (GOV.UK Service Manual)"
+  - "Kişisel veri, işleme ilkeleri, özel nitelikli veri, aydınlatma yükümlülüğü ve ilgili kişinin hakları (KVKK md. 3, 4, 6, 10, 11)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Görüşme başlamak üzereydi. Selin kaydı açtı, öğrenci kameraya baktı ve sordu: "Bu video nereye gidiyor? Hocam görecek mi?" Mert kaydı durdurdu ve bilgi notunu birlikte yeniden okudular. Öğrenci notu üç gün önce e-postada almıştı ama açmamıştı.
+
+Onam bir imza değil, bir anlayıştır. Bu ders, katılımcının neye razı olduğunu bilmesini ve verisinin korunmasını anlatır. Ürün tarafındaki KVKK yükümlülükleri [KVKK ve GDPR'ın ürün tarafına yansıması](/guvenlik-ve-hukuk/kvkk-ve-gdprin-urun-tarafina-yansimasi/) dersinde.
+
+## Bilgilendirilmiş onam
+
+GOV.UK'ye göre her araştırmada **bilgilendirilmiş onam** (informed consent) alınır; katılımcı kurumun kendi çalışanı olsa bile. Onam, katılımcının anladığını ve kabul ettiğini gösteren bir kayıttır. Rehbere göre katılımcı şunları bilmelidir:
+
+- Araştırmayı kim yapıyor, amacı ne?
+- Hangi veri toplanıyor, onunla ne yapılacak, sonuçlar kimle paylaşılacak?
+- Katılım gönüllüdür; her an durabilir ve onayını geri çekebilir.
+- Veri ne kadar saklanacak?
+- Hakları neler, nasıl şikâyet edebilir?
+- Gözlemleniyor mu, kim izliyor? Kayıt alınıyor mu?
+
+Rehber bu bilgileri işe alım sırasında bir **bilgi notuyla** (information sheet) vermeyi önerir: katılımcı hazırlıklı gelir, baskı hissetmez. Not anlaşılır bir dille yazılır ve bir hukuk ya da veri koruma uzmanına kontrol ettirilir. Basılı, e-posta ya da sesli okuma gibi kullanılabilir biçimlerde sunulur.
+
+**Onam kanıtı** yönteme göre değişir: yüz yüze imzalı form; uzaktan e-posta ile onay; form okunduysa kayıtta sözlü onam; çevrimiçi ankette ilk adım olarak onay.
+
+**İmza ≠ anlayış.** Okunmadan imzalanan form, onamın kaydıdır ama onamın kendisi değildir. Oturumun başında ana maddeleri sesli söylemek, anlayışı sınar.
+
+## Araştırma verisi kişisel veridir
+
+GOV.UK'ye göre araştırma verisi notları, fotoğrafları, ses ve video kayıtlarını, prototipe girilen bilgileri ve belgeleri kapsar. 6698 sayılı KVKK'nın 3. maddesine göre kimliği belirli ya da belirlenebilir bir kişiye ilişkin her bilgi **kişisel veridir**; bir görüşme kaydı bunun en açık örneğidir.
+
+Kanunun ilgili maddeleri araştırmada şöyle karşılık bulur:
+
+| KVKK | Araştırmadaki karşılığı |
+|---|---|
+| md. 4: amaçla bağlantılı, sınırlı ve ölçülü | Yalnız araştırma sorusuna gereken veri toplanır. |
+| md. 4: gerekli süre kadar saklama | Silme tarihi baştan yazılır. |
+| md. 6: özel nitelikli veri (sağlık, biyometrik veri, inanç…) | Yasak olarak başlar; kanunun saydığı şartlar dışında işlenmez. Gerekmiyorsa sorulmaz. |
+| md. 10: aydınlatma yükümlülüğü | Veri sorumlusu, amaç, aktarım, toplama yöntemi ve haklar veri alınırken söylenir. |
+| md. 11: ilgili kişinin hakları | Katılımcı verisinin silinmesini ya da düzeltilmesini isteyebilir. |
+
+Hangi hukuki dayanağın geçerli olduğu bir hukuk sorusudur. Araştırmacı soruyu sorar, cevabı hukukla birlikte yazar.
+
+<Layers
+  label="Araştırma verisinin yaşam döngüsü"
+  caption="Araştırma verisi dört aşamadan geçer. Toplarken yalnız gereken en az veri alınır. Saklarken erişim kısıtlıdır ve iletişim bilgisi notlardan ayrı tutulur. Paylaşırken yalnız ihtiyacı olan meslektaşlar görür; notlarda ad yerine katılımcı kodu kullanılır. Son aşamada veri, baştan yazılan tarihte silinir."
+  layers={[
+    { title: "Topla", sub: "en az veri", tone: "accent" },
+    { title: "Sakla", sub: "kısıtlı erişim, ayrı dosya" },
+    { title: "Paylaş", sub: "yalnız gerekenle, kodla" },
+    { title: "Sil", sub: "baştan yazılan tarihte", tone: "progress" },
+  ]}
+/>
+
+<Case>
+
+Kayıt sorusundan sonra Mert onam sürecini değiştirdi:
+
+1. **Bilgi notu:** davette kısa bir metin; "Kayıt yalnız araştırma ekibinde kalır; hocalarınla ya da üniversiteyle paylaşılmaz." Veri sorumlusu Demlik.
+2. **Oturum başı:** Mert ana maddeleri sesli okur: kim izliyor, kayıt alınıyor mu, her an durabilirsin. Onam kayıtta sözlü alınır.
+3. **Veri:** ad ve telefon yalnız randevu dosyasında; notlarda katılımcı kodu. Kayıt ve notlar altı ay sonra silinir.
+4. **Kontrol:** onam formu ve bilgi notu şablonu hukuk tarafından kontrol edildi.
+
+Sonraki görüşmelerde öğrenciler kayıt hakkında soru sormadı; bilgi notunda cevabı vardı.
+
+</Case>
+
+<Tool slug="onam-ornegi" />
+
+<Lenses>
+<Lens role="ux-researcher">
+
+- **Onamı oturumun başında sesli tekrar et.** Form imzalanmış olsa bile.
+- **Silme tarihini planla birlikte yaz.** Sonradan hatırlanan silme, çoğu zaman unutulur.
+- **Hassas konuyu sormadan önce gerekçesini yaz.** Gerekmiyorsa sorma.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Prototipe gerçek kişisel veri koyma.** Gerekirse sahte bir karakterle çalış.
+- **Ekran görüntülerini paylaşmadan önce kişisel veriyi kapat.** Bir bildirimdeki isim de kişisel veridir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim görüşmesi de onam ister.** Kurum çalışanıyla yapılan görüşmede de kayıt ve paylaşım söylenir.
+- **Araştırma verisini veri envanterine ekle.** Saklama süresi ve sorumlusu yazılı olsun.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Her araştırmada bilgilendirilmiş onam alınır, kurum çalışanlarıyla yapılanlarda da.
+- Katılımcı kimin, neden, hangi veriyi topladığını, ne kadar saklayacağını ve her an durabileceğini bilir.
+- Bilgi notu işe alımda verilir; onamın kanıtı yönteme göre imza, e-posta ya da sözlü kayıttır.
+- Araştırma verisi kişisel veridir: en az toplanır, güvenle saklanır, yalnız gerekenle paylaşılır.
+- Silme tarihi baştan yazılır; özel nitelikli veri gerekmiyorsa sorulmaz.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bilgilendirilmiş onam neden kurum çalışanlarıyla yapılan araştırmada da gerekir?">
+
+Onam, katılımcının anladığını ve kabul ettiğini gösterir; bu herkes için geçerlidir. Çalışan da verisinin nasıl kullanılacağını ve gönüllü olduğunu bilmelidir.
+
+</SelfCheck>
+
+<SelfCheck question="Bilgi notu neden oturumdan önce, işe alım sırasında verilir?">
+
+Katılımcı ne bekleyeceğini bilerek gelir ve oturumda baskı hissetmeden karar verir. Sorularını önceden sorabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Uzaktan bir görüşmede onam nasıl kanıtlanır?">
+
+E-posta ile alınan onayla ya da, form okunduysa, kayıtta alınan sözlü onamla. Çevrimiçi bir ankette onay ilk adım olarak alınır.
+
+</SelfCheck>
+
+<SelfCheck question="Ekip, görüşmede katılımcıların sağlık durumunu da sormak istiyor. Ne yaparsın?">
+
+Araştırma sorusu için gerekli olup olmadığını sorarım. Sağlık verisi KVKK'da özel nitelikli veridir; işlenmesi yasak olarak başlar ve yalnız kanunun saydığı şartlarla işlenir. Gerekli değilse sorulmaz; gerekliyse hukukla birlikte karar verilir.
+
+</SelfCheck>

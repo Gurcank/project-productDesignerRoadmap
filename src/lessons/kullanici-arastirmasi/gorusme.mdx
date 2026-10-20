@@ -1,0 +1,154 @@
+---
+summary: "Derinlemesine görüşme bir rehberle hazırlanır, açık ve tarafsız sorularla yürür, genellemeler yerine gerçek hikâyeleri arar. İyi görüşmeci az konuşur, iyi dinler ve anlamadığını sorar."
+outcomes:
+  - "Araştırma sorularından bir görüşme rehberi yazabilirsin."
+  - "Açık, tarafsız açılış ve takip soruları kurabilirsin."
+  - "Bir görüşmeyi hikâyelere yönlendirip sessizliği kullanabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "GOV.UK Service Manual — Using in-depth interviews"
+    url: "https://www.gov.uk/service-manual/user-research/using-in-depth-interviews"
+additions:
+  - "Görüşmenin planlanması, görüşme rehberi, açık ve tarafsız sorular, takip soruları, görüşme sırası ve sonrası (GOV.UK Service Manual)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Elif ilk kez bir görüşmeye gözlemci olarak katıldı. Görüşme bittiğinde Mert'e bir not uzattı: "Neden ona sabah sipariş vermek isteyip istemediğini doğrudan sormadın? 45 dakika kazanırdık."
+
+Mert'in cevabı şuydu: "Sorsaydım 'evet' derdi. Ben ona dünkü sabahını anlattırdım ve kahveyi neden almadığını kendisi söyledi." Bu ders, bir görüşmeyi bir sohbetten araştırmaya çeviren yapıyı anlatır.
+
+## Görüşme ne zaman?
+
+GOV.UK'nin rehberine göre **derinlemesine görüşme**, farklı kullanıcı türlerini, koşullarını, bir hizmeti nasıl kullandıklarını ve ondan neye ihtiyaç duyduklarını öğrenmeye yarar. Kullanıcıların anlattığı bir problemi derinlemesine anlamak için de kullanılır. Bir kullanılabilirlik testiyle birleştirilebilir: önce konuşulur, sonra prototip denenir.
+
+Görüşme genelde birebir yapılır. Bir hizmeti birlikte kullananlar, örneğin birbirine yardım eden aile üyeleri, çift ya da küçük grup olarak da görüşülebilir. Rehbere göre süre 30 dakika ile 2 saat arasıdır; uzun görüşme daha çok ayrıntı verir ama katılımcı bulmayı zorlaştırır.
+
+## Görüşme rehberi
+
+Rehber görüşmeyi şöyle hazırlar:
+
+1. Araştırma sorularını gözden geçir; görmek istediğin süreçleri ve araçları düşün.
+2. Konuları listele ve mantıklı bir akışa göre sırala.
+3. Her konu için **açılış soruları** ve olası **takip soruları** yaz.
+4. Bir meslektaşla prova et; anlaşılmayan soruları düzelt.
+
+Bunların toplamı **görüşme rehberidir** (discussion guide): giriş metni, konular ve sorular, varsa etkinlik talimatları ve bir hazırlık listesi. Rehber görüşmecinin yolda kalmasını, her katılımcının aynı konulardan geçmesini ve turun kaydını sağlar.
+
+<StepFlow
+  label="Bir görüşmenin akışı"
+  caption="Görüşme beş bölümde ilerler. Giriş: kim olduğun, araştırmanın amacı, kayıt ve onam. Isınma: katılımcıyı rahatlatan genel sorular. Konular: açık açılış sorusu ve takip soruları, gerçek hikâyeler. Kapanış: anlamadıklarını sormak ve son düşünceler. Sonrası: teşekkür, araştırmaya ne olacağı ve verinin güvenle saklanması."
+  steps={[
+    { title: "Giriş ve onam", sub: "kim, neden, kayıt", tone: "accent" },
+    { title: "Isınma", sub: "rahatlatan genel sorular" },
+    { title: "Konular", sub: "açılış, takip, hikâye" },
+    { title: "Kapanış", sub: "anlamadığını sor, son söz" },
+    { title: "Sonrası", sub: "teşekkür, veriyi koru", tone: "progress" },
+  ]}
+/>
+
+## Görüşmenin içinde
+
+GOV.UK açık ve tarafsız soruları örnekler:
+
+- "… nasıl yapıyorsun?"
+- "… yapmanın farklı yolları neler?"
+- "… hakkında ne düşünüyorsun?"
+
+Takip soruları da basittir: "… dedin, bu ne zaman, neden, kiminle oldu?", "Biraz daha anlatır mısın?", "Ne bakımdan?"
+
+Rehberin görüşme sırasındaki öğütleri şunlardır:
+
+- **Hikâyelere ve gerçek örneklere odaklan.** Genellemelerden ve işlerin "nasıl olması gerektiği" konuşmasından kaçın.
+- **Gerçekten dinle** ve dinlediğini göster.
+- **Anlamadıysan sor.**
+- **Akışı aniden değiştirme.** Katılımcı konudan saparsa doğal bir arayı bekle.
+- **Sessiz kal.** Sen ne kadar konuşursan katılımcı o kadar az konuşur.
+- **Rehbere katı bağlı kalma.** Yeni ve ilginç bir konu çıkarsa peşinden git.
+
+**Görüş ≠ davranış.** "Sabah sipariş verir misin?" sorusu bir tahmin ister. "Dün sabah kahveni nasıl aldın?" bir olay anlattırır.
+
+<Case>
+
+Mert'in kampüs görüşmeleri bu yapıyla yürüdü:
+
+1. **Rehber:** üç konu: dünkü sabah, son sipariş anı, kahve almadan geçen bir sabah. Stajyerlerle prova edildi.
+2. **Süre ve yer:** 45 dakika; kampüste ya da görüntülü. Selin not aldı, Elif kamerası kapalı izledi.
+3. **Hikâye:** üçüncü öğrenci, ders başlamadan 12 dakika önce sipariş verdiği bir sabahı anlattı. Hazır bildirimi geldiğinde dersteydi; kahvesini teneffüste soğumuş aldı.
+4. **Sessizlik:** bir öğrenci "aslında…" deyip durdu. Mert bekledi. Öğrenci devam etti: geç kaldığı sabahlar sipariş vermiyordu, çünkü ne kadar bekleyeceğini bilmiyordu.
+
+Bu son cümle, sekiz görüşmenin en önemli bulgusuna dönüştü.
+
+</Case>
+
+<Tool slug="gorusme-rehberi" />
+
+<Lenses>
+<Lens role="ux-researcher">
+
+- **Rehberi araştırma sorusundan türet, ama görüşme sorusu olarak yaz.** Katılımcıya ekibin sorusunu sorma; deneyimini anlattır.
+- **Sessizliği bir araç olarak kullan.** Beş saniyelik bekleme, en değerli cümleyi getirebilir.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Görüşmeye gözlemci olarak katıl.** Bir kullanıcıdan dinlenen hikâye, hiçbir rapordan öğrenilemez.
+- **Görüşmede çözüm sorma.** "Şöyle bir düğme olsa kullanır mıydın?" sorusu tahmin toplar.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Gözlemciyken konuşma.** Sorularını not al; kapanışta araştırmacı sorar.
+- **Tek görüşmeden karar çıkarma.** Kalıp, birkaç görüşmenin ortak noktasından çıkar.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim görüşmesini de hikâyeyle aç.** "Dün bir iade nasıl oldu, anlatır mısın?" kuralı söylettirmekten fazlasını getirir.
+- **Takip sorusu sor.** "Hep böyle mi oluyor?" sorusu istisnayı ortaya çıkarır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Görüşme kullanıcıların koşullarını, kullanımlarını ve ihtiyaçlarını derinlemesine öğrenmeye yarar.
+- Görüşme rehberi giriş metnini, konuları, açılış ve takip sorularını ve hazırlık listesini içerir; prova edilir.
+- Sorular açık ve tarafsızdır; takip soruları ayrıntıyı getirir.
+- Genellemeler yerine gerçek hikâyeler aranır; görüşmeci az konuşur ve anlamadığını sorar.
+- Rehber bir yoldur, senaryo değil; ilginç bir konu çıkınca peşinden gidilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Sabah erken sipariş vermek ister misin?' neden zayıf bir görüşme sorusudur?">
+
+Kapalıdır ve bir tahmin ister; katılımcı büyük olasılıkla "evet" der. "Dün sabah kahveni nasıl aldın, anlatır mısın?" gibi bir soru gerçek bir olayı anlattırır.
+
+</SelfCheck>
+
+<SelfCheck question="Görüşme rehberi neleri içerir?">
+
+Giriş metni, konular ve her konunun açılış ve takip soruları, varsa etkinlik talimatları ve bir hazırlık listesi.
+
+</SelfCheck>
+
+<SelfCheck question="Katılımcı konudan saptı. Ne yaparsın?">
+
+Akışı aniden kesmem; doğal bir ara bekleyip nazikçe asıl konuya dönerim. Sapma ilginç ve araştırmayla ilgiliyse peşinden de gidebilirim.
+
+</SelfCheck>
+
+<SelfCheck question="Görüşmeyi gözleyen bir yönetici araya girip ürünü anlatmaya başladı. Ne yaparsın?">
+
+Nazikçe sözü geri alır, görüşmeden sonra gözlemcilerle konuşurum. Görüşmede konuşan ne kadar çoksa katılımcı o kadar az konuşur; gözlemci sorularını not alır, kapanışta araştırmacı sorar.
+
+</SelfCheck>

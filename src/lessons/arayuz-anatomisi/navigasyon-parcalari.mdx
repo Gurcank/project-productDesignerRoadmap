@@ -6,6 +6,7 @@ outcomes:
   - "Breadcrumb'ın neyi gösterip neyi göstermediğini ayırt edebilirsin."
   - "Sticky header'ın klavye erişimine verdiği zararı ve çözümünü açıklayabilirsin."
 minutes: 9
+standard: 2
 sources:
   - label: "NN/g — Hamburger Menus and Hidden Navigation Hurt UX Metrics"
     url: "https://www.nngroup.com/articles/hamburger-menus/"
@@ -26,6 +27,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir e-ticaret sitesine telefondan girdin. Üstte üç çizgi, altta dört sekme, ürün sayfasında bir de "Ana sayfa › Kadın › Bot" yolu var. Hepsi "nasıl gezinirim?" sorusunun cevabı, ama her biri farklı bir ihtiyaca çalışıyor. Bu derste menünün parçalarını ve hangisinin ne zaman seçileceğini öğreneceksin.
 
@@ -84,11 +87,39 @@ Burada kritik bir erişilebilirlik kuralı var: WCAG 2.2'nin **Focus Not Obscure
 
 Keşfedilebilirliği düşüktür: varlığını duyurman gerekir (arama kutusunda kısayolu göstermek gibi). Ana navigasyonun yerine geçmez, onu **tamamlar**.
 
+<Tree
+  label="Navigasyon parçaları ve yerleri"
+  caption="Navigasyon parçaları bağlama göre seçilir. Mobilde birkaç ana bölüm için alttaki sekme çubuğu, daha fazlası için hamburger menü kullanılır. Masaüstünde üstte kalan header içindeki menü bağlantıları ve geniş siteler için mega menü vardır. Kullanıcıya nerede olduğunu breadcrumb ve aktif durum söyler. Güç kullanıcıları için komut paleti klavyeden her yere ulaşır."
+  root={{
+    title: "Navigasyon",
+    tone: "accent",
+    children: [
+      { title: "Mobil", children: [{ title: "Tab bar" }, { title: "Hamburger" }] },
+      { title: "Masaüstü", children: [{ title: "Menü bağlantısı" }, { title: "Mega menü" }, { title: "Sticky header" }] },
+      { title: "Konum", children: [{ title: "Breadcrumb" }, { title: "Aktif durum" }] },
+      { title: "Güç kullanıcısı", children: [{ title: "Komut paleti", tone: "progress" }] },
+    ],
+  }}
+/>
+
 <Callout kind="ornek" title="Bu sitede nasıl?">
 
 Bu sitede hamburger menü yok. Geniş ekranda sol kenarda ikonlu bir menü (üzerine gelince etiketler açılır), telefonda ve tablette ise altta yüzen bir **alt gezinme çubuğu** (tab bar) çıkar. Aktif sayfa yalnızca renkle değil, `aria-current` ile de işaretlenir. Komut paleti ise henüz yok.
 
 </Callout>
+
+<Case>
+
+Demlik'in müşteri uygulamasında beş ana bölüm vardı ve hepsi bir hamburger menünün içindeydi.
+
+1. **Tab bar:** dört bölüm alttaki sekme çubuğuna çıktı: Ana sayfa, Dükkânlar, Siparişlerim, Profil. Kullanım sıklığı analitikten bakıldı.
+2. **Aktif durum:** seçili sekme hem renk hem kalın etiketle gösteriliyor.
+3. **Panel:** dükkân tarafında, ağaç testinden sonra "Menü ve stok" tek bir menü öğesi oldu; Panel'de sol kenarda dikey menü var.
+4. **Komut paleti:** önerildi, ertelendi; Panel'i klavyeyle kullanan çalışanlar için önce kısayollar geldi.
+
+"Siparişlerim" hamburgerden çıkınca sipariş geçmişine giriş arttı.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -97,6 +128,12 @@ Bu sitede hamburger menü yok. Geniş ekranda sol kenarda ikonlu bir menü (üze
 - **Mobilde karar ver:** 3-5 ana bölüm varsa tab bar, çok bağlantı varsa hamburger; kritik eylem hamburger'in dışında.
 - **Hover'a bağlı menü çizme.** Mega menünün tıklamayla ve klavyeyle de açıldığını teslimde yaz.
 - **Sticky header'ın yüksekliğini tanımla** ve odaklanan öğenin onun altında kalmadığını kontrol ettir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Menü yapısını ağaç testiyle sına.** Etiket ve konum, görsel tasarımdan önce ölçülür.
+- **"Neredesin?" sorusunu test et.** Kullanıcı konumunu söyleyemiyorsa konum işaretleri eksiktir.
 
 </Lens>
 </Lenses>
@@ -122,5 +159,11 @@ Dört-beş ana bölüm olduğunda ve uygulama benzeri bir ürün tasarlandığı
 <SelfCheck question="Sticky header klavye kullanıcısına nasıl zarar verebilir?">
 
 Klavyeyle odaklanılan bir öğe sayfa kaydığında header'ın arkasında kalabilir ve kullanıcı odağın nerede olduğunu göremez. WCAG 2.2'nin Focus Not Obscured ölçütü bunu kapsar.
+
+</SelfCheck>
+
+<SelfCheck question="Mobil uygulamanın dört ana bölümü var ve kullanıcılar sık geçiş yapıyor. Hamburger mi, tab bar mı?">
+
+Tab bar. Az sayıda ve sık kullanılan bölüm için bölümler sürekli görünür ve tek dokunuşla erişilir; hamburger menü bölümleri gizler ve keşfedilmelerini zorlaştırır.
 
 </SelfCheck>

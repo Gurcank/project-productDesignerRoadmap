@@ -6,6 +6,8 @@ outcomes:
   - "İyi bir hata mesajı yazabilirsin: ne oldu, neden, ne yapmalı; suçlamadan, teknik kod göstermeden."
   - "Hangi durumda hata mesajının bilinçli olarak belirsiz tutulduğunu bilirsin."
 minutes: 10
+standard: 2
+skipTerms: ["doğrulama"]
 sources:
   - label: "NN/g — Error-Message Guidelines"
     url: "https://www.nngroup.com/articles/error-message-guidelines/"
@@ -21,6 +23,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir silme ekranında iki buton var: "Tamam" ve "İptal". Kullanıcı "Tamam"a basıyor ve aboneliğini iptal ediyor. Ne yaptığını bilmiyordu: "Tamam" neyi onaylıyor? Butonu "Aboneliği iptal et" yapsan, aynı ekran bambaşka bir güven üretirdi.
 
@@ -90,6 +94,16 @@ Ek olarak: dolu bir alanla boş bir alanı ayırt etmeyi de zorlaştırır. Her 
 
 Form doğrulamalarında, ödeme akışlarında, bağlantı hatalarında karşına çıkar. "'Error 422' yerine 'Şifre en az 8 karakter olmalı' yazalım ve kuralı alanın altında baştan gösterelim."
 
+<StepFlow
+  label="Bir hata mesajının üç işi"
+  caption="Demlik'te kartı reddedilen müşteriye gösterilen mesaj üç işi sırayla yapar. Önce ne olduğunu söyler: ödeme tamamlanamadı. Sonra nedenini açıklar: kartın reddedildi. Son olarak ne yapılacağını gösterir: başka bir kart seç ya da yeni kart ekle; iki eylem de mesajın altında düğme olarak durur."
+  steps={[
+    { title: "Ne oldu?", sub: "Ödeme tamamlanamadı.", tone: "accent" },
+    { title: "Neden?", sub: "Kartın reddedildi." },
+    { title: "Ne yapmalı?", sub: "Başka kart seç · yeni kart ekle", tone: "progress" },
+  ]}
+/>
+
 | Kötü | İyi |
 |---|---|
 | "Hata oluştu." | "Ödeme tamamlanamadı. Kartının limiti yetersiz olabilir. Başka bir kart dene." |
@@ -97,6 +111,19 @@ Form doğrulamalarında, ödeme akışlarında, bağlantı hatalarında karşın
 | "Hatalı işlem yaptınız." | "Bu dosya 10 MB'tan büyük. Daha küçük bir dosya seç." |
 
 **Güvenlik gerektiren yerlerde mesaj bilinçli olarak belirsiz tutulur:** giriş ekranında "e-posta bulunamadı" demek saldırgana hangi hesapların var olduğunu söyler. Orada "e-posta veya şifre hatalı" denir. (Kimlik doğrulama bölümünde bu ayrıntıya döneceksin.)
+
+<Case>
+
+Demlik'in kart ekleme formunda üç sorun vardı. Selin metinleri Deniz'le birlikte yeniden yazdı:
+
+1. **Yer tutucu etiket gibi kullanılıyordu:** "Kart numarası" yazısı yazmaya başlayınca kayboluyordu. Etiket alanın üstüne taşındı.
+2. **Hata mesajı:** "Geçersiz giriş" yerine "Son kullanma tarihi geçmiş. Kartının üzerindeki tarihi kontrol et."
+3. **Ses tonu:** uygulama genelinde "siz" ve "sen" karışıktı. Demlik "sen" dilinde karar kıldı; yazım rehberine eklendi.
+4. **Ödeme hatası:** yeni mesaj üç soruyu cevaplıyor ve iki düğme sunuyor.
+
+Kartını güncellemek isteyen ama yolunu bulamayan müşteriler için "Kartın süresi doldu mu? Buradan yenile" bağlantısı da ödeme ekranına eklendi.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -106,6 +133,30 @@ Form doğrulamalarında, ödeme akışlarında, bağlantı hatalarında karşın
 - **Hata mesajı yazarken üç soruyu cevapla** ve suçlama dilini bırak.
 - **Ton rehberi yoksa en azından hata ve başarı için ayrı ton belirle.**
 - **Metni tasarımdan sonra değil, birlikte yaz.** Gerçek metinle tasarlamak taşma ve uzunluk sorunlarını erken gösterir.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Metni tasarımın parçası olarak planla.** Son gün eklenen metin, en çok hata çıkaran yerdir.
+- **Ses tonunu ürün kararı olarak sahiplen.** "Sen" mi "siz" mi, bir kez karar verilir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Hata mesajlarını kabul kriterine birebir yaz.** "Geçersiz giriş" bir kabul kriteri değildir.
+- **Metin değişikliğini küçük ama değerli say.** Çoğu zaman en ucuz iyileştirmedir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Her doğrulama kuralının mesajını gereksinimle birlikte yaz.** Kural ve mesaj aynı kaynaktan gelsin.
+- **Terimleri sözlükle tutarlı tut.** Aynı kavram her ekranda aynı adla geçsin.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Kullanıcının kelimelerini topla.** Görüşmede geçen ifadeler, arayüz metninin hammaddesidir.
+- **Metni testte sına.** Anlaşılmayan etiket, en sık görülen kullanılabilirlik sorunlarındandır.
 
 </Lens>
 </Lenses>
@@ -131,5 +182,11 @@ Form doğrulamalarında, ödeme akışlarında, bağlantı hatalarında karşın
 <SelfCheck question="Bir hata mesajının cevaplaması gereken üç soru nedir? Hangi durumda mesaj bilinçli olarak belirsiz bırakılır?">
 
 Ne oldu, neden oldu, şimdi ne yapmalıyım. Güvenlik gerektiren yerlerde bilinçli olarak belirsiz bırakılır: giriş ekranında "bu e-posta kayıtlı değil" demek saldırgana hangi hesapların var olduğunu doğrular.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Hatalı işlem yaptınız\" mesajını nasıl yeniden yazarsın?"}>
+
+Kullanıcıyı suçlamadan, ne olduğunu, nedenini ve çözümü söyleyerek. Örneğin: "Bu dosya 10 MB'tan büyük. Daha küçük bir dosya seç."
 
 </SelfCheck>

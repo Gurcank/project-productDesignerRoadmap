@@ -1,0 +1,150 @@
+---
+summary: "Anket insanların ne dediğini ölçer. Önce öğrenme hedefi yazılır, sorular tarafsız kurulur, anket hedef kitleden insanlarla test edilir ve kısa tutulur; her ek soru yanıt oranını düşürür."
+outcomes:
+  - "Nitel ve nicel anketi ayırt edip birini seçebilirsin."
+  - "Bir anketi yayına çıkmadan önce test edebilirsin."
+  - "Tarafsız, kısa ve analiz edilebilir anket soruları yazabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "NN/g — Susan Farrell, 28 Tips for Creating Great Qualitative Surveys (2016)"
+    url: "https://www.nngroup.com/articles/qualitative-surveys/"
+  - label: "NN/g — When to Use Which User-Experience Research Methods (2022)"
+    url: "https://www.nngroup.com/articles/which-ux-research-methods/"
+additions:
+  - "Nitel ve nicel anket, anket testi, soru yazımı, kısa tutma, isteğe bağlı/zorunlu işaretleme (Susan Farrell, NN/g)"
+  - "Anketin tutumsal bir yöntem olması (Christian Rohrer, NN/g)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Pazarlama, çeyreklik mutluluk anketine on iki soru eklemek istedi: hangi sosyal medyayı kullandıkları, hangi kahve çekirdeğini sevdikleri, kaç yaşında oldukları… Mert listeyi Elif'e gösterdi ve tek bir soru sordu: "Bu cevapların hangisiyle bir karar vereceğiz?"
+
+Sorulabilen her şeyi sormak kolaydır; cevapları kullanmak zordur. Bu ders, kısa, tarafsız ve test edilmiş bir anketi anlatır.
+
+## Anket neyi ölçer?
+
+Yöntem haritasında anket **tutumsal** bir yöntemdir: insanların ne yaptığını değil, ne dediğini ölçer. NN/g'den Susan Farrell iki türü ayırır:
+
+- **Nicel anket** sayar: kaç kişi şunu diyor, kaç kişi bunu. Sonuçların büyük bir topluluğa genellenmesi için rastgele seçilmiş çok sayıda katılımcı ve istatistik gerekir.
+- **Nitel anket** açık uçlu sorular sorar. Doğru cevap kümesini henüz bilmediğinde kullanılır; daha az kişiyle zengin veri toplanır.
+
+Farrell'ın önerisi ikisini sırayla kullanmaktır: önce küçük bir nitel anket, sonra çıkan cevaplarla seçenekleri belirlenmiş büyük bir anket. Bu, seçenekleri toplantı odasında uydurmaktan iyidir.
+
+**Söylenen ≠ yapılan.** Anket bir tutumu ölçer. "Bu özelliği kullanır mısın?" sorusunun cevabı, kullanımın tahmini değildir.
+
+## Önce test et
+
+Farrell bir anketin yayına çıkmadan önce test edilmesini ister ve bir sıra önerir:
+
+<StepFlow
+  label="Anketi yayına çıkmadan önce test etmek"
+  caption="Anket altı adımda test edilir. Önce sorular taslak olarak meslektaşlara gösterilir. Sonra meslektaşlar anketi doldurur ve her sorudan sonra yorum yazar. Ardından hedef kitleden katılımcılarla kâğıt üzerinde dört tur yapılır; her turda bir kişi sesli düşünür ve turlar arasında anket düzeltilir. Sonra anket aracındaki biçim küçük bir grupla denenir. Çıktı, analiz edilebilir mi diye incelenir. En son anket bir kez daha düzeltilir."
+  steps={[
+    { title: "Meslektaşlar okur", sub: "soru taslağı", tone: "accent" },
+    { title: "Meslektaşlar doldurur", sub: "her soruya yorum" },
+    { title: "Kâğıtta 4 tur", sub: "hedef kitleden 1'er kişi, sesli" },
+    { title: "Araçta dene", sub: "küçük bir grupla" },
+    { title: "Çıktıyı incele", sub: "analiz edilebilir mi?" },
+    { title: "Son düzeltme", tone: "progress" },
+  ]}
+/>
+
+## Soruları yazmak
+
+Farrell'ın önerilerinden en çok işe yarayanlar şunlardır:
+
+- **Önce öğrenme hedefine karar ver.** Ne raporlayacaksın, hangi tabloyu çizeceksin?
+- **Tarafsız sor.** Soru bir cevabı ima etmesin, beklentini ele vermesin.
+- **Kullanmayacağın soruyu sorma.** Cevapla harekete geçmeyeceksen, o soru yalnız katılımcının zamanını alır.
+- **En önemli soruları başa koy.** İnsanlar yarıda bırakır; kısmi cevaplar da kaydedilsin.
+- **"Uygulanamaz" ve "Kullanmıyorum" seçenekleri ekle.** Yoksa insanlar soruyu atlar ya da uydurur.
+- **Her soruya "(İsteğe bağlı)" ya da "(Zorunlu)" yaz.** Farrell'ın testinde kırmızı yıldız yetmedi.
+- **Kısa tut.** Her ek soru yanıt oranını düşürür. Farrell'a göre çok istekli bir kitle yoksa 20 soru fazladır; tek soruluk anketlere katılım çok daha yüksektir.
+
+<Case>
+
+Mert, pazarlamanın on iki sorusunu Elif'le birlikte eledi:
+
+1. **Hedef:** "Sabah müşterisi bizi neden tercih ediyor, neden bırakıyor?" Bu hedefe hizmet etmeyen dokuz soru çıktı.
+2. **Kalan üç soru:** memnuniyet puanı, "Son siparişinde en çok ne zorladı?" (açık uçlu) ve kullanım sıklığı. En önemli olan, açık uçlu soru, ikinci sıraya alındı.
+3. **Test:** stajyerlerle kâğıt üzerinde iki tur, sonra panelden iki öğrenciyle iki tur. "Sipariş deneyimi" ifadesi belirsiz bulundu; "son siparişin" oldu.
+4. **Sonuç:** son çeyrekte 2.140 yanıt. Açık uçlu soruda en sık geçen konu kartı güncelleyememekti.
+
+Pazarlamanın sorularından ikisi ayrı bir tek soruluk ankete dönüştü.
+
+</Case>
+
+<Lenses>
+<Lens role="ux-researcher">
+
+- **Nicel ankete nitel bir ön anketle hazırlan.** Seçenekleri kullanıcı belirlesin.
+- **Anketi sesli düşünerek test et.** Yazılı yorum, okunan sorunun nasıl anlaşıldığını göstermez.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Anket formunu bir arayüz olarak tasarla.** Talimatı sola, cevaba yakın koy; tek satır yaz.
+- **Tercih sorusunu tasarım kararı sayma.** Söylenen tercih, kullanım değildir.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Her soruya bir karar bağla.** Cevabı kullanmayacaksan soruyu çıkar.
+- **Ankete soru ekleme isteklerini yönet.** Uzun anket, herkesin sorusunun cevabını azaltır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Açık uçlu cevapları backlog'a bağla.** En sık geçen dert, sıralamanın girdisidir.
+- **Anketi sprint ritmine değil, karar ritmine göre planla.** Çeyreklik anket, çeyreklik kararı besler.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Anketi gereksinim doğrulamada dikkatle kullan.** İnsanlar bir kuralın işleyişini anlatmakta zorlanır; gözlemle tamamla.
+- **Seçeneklere "Uygulanamaz" ekle.** Zorla verilen cevap, veriyi bozar.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Anket tutumsal bir yöntemdir: insanların ne dediğini ölçer, ne yaptığını değil.
+- Nicel anket sayar ve büyük örneklem ister; nitel anket açık uçludur ve cevap kümesini keşfeder.
+- Anket yayına çıkmadan önce meslektaşlarla, sonra hedef kitleden insanlarla sesli düşünerek test edilir.
+- Sorular tarafsızdır; kullanılmayacak soru sorulmaz; en önemlisi başa konur.
+- Kısa tutulur; her ek soru yanıt oranını düşürür.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Nitel anket ile nicel anket arasındaki fark nedir?">
+
+Nicel anket kapalı sorularla sayar ve büyük, rastgele seçilmiş bir örneklemle genellenebilir sonuç verir. Nitel anket açık uçlu sorularla keşfeder; daha az kişiyle zengin veri toplar.
+
+</SelfCheck>
+
+<SelfCheck question="Neden her soruya '(İsteğe bağlı)' ya da '(Zorunlu)' yazılır?">
+
+Farrell'ın testinde kırmızı yıldız gibi işaretler yetmedi; insanlar hangi sorunun zorunlu olduğunu anlamadı. Açık yazı belirsizliği kaldırır.
+
+</SelfCheck>
+
+<SelfCheck question="'Yeni hızlı ödeme özelliğimizi ne kadar beğendiniz?' sorusunun sorunu nedir?">
+
+Tarafsız değildir: özelliğin hızlı olduğunu ve beğenildiğini ima eder. "Son ödemende ne oldu?" gibi bir soru, beklentiyi ele vermeden deneyimi sorar.
+
+</SelfCheck>
+
+<SelfCheck question="Ekip ankete 25 soru koymak istiyor. Ne önerirsin?">
+
+Her soruyu bir karara bağlamayı ve bağlanmayanları çıkarmayı. Kalanlar hâlâ çoksa iki farklı alt örnekleme iki kısa anket göndermek, tek uzun anketten daha çok ve daha güvenilir cevap getirir.
+
+</SelfCheck>

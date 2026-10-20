@@ -1,11 +1,13 @@
 ---
-summary: "Erişilebilirliği nasıl denetlersin: otomatik araçlar (axe, Lighthouse) sorunların yalnızca bir kısmını yakalar; tasarımcının yapabileceği dört manuel kontrol; overlay'lerin neden eleştirildiği ve gerçek kullanıcılarla test."
+summary: "Erişilebilirliği denetlemek: otomatik araçlar (axe, Lighthouse) sorunların yalnız bir kısmını yakalar. Dört manuel kontrol, overlay'lerin neden eleştirildiği ve gerçek kullanıcılarla test."
 outcomes:
   - "\"Lighthouse 100 verdi\" cümlesinin ne anlama geldiğini ve gelmediğini açıklayabilirsin."
   - "Tasarımcının yapabileceği dört manuel erişilebilirlik kontrolünü uygulayabilirsin."
   - "Erişilebilirlik overlay'lerinin neden eleştirildiğini ve alternatifini söyleyebilirsin."
   - "Gerçek yardımcı teknoloji kullanıcılarıyla test yapmanın neden gerekli olduğunu bilirsin."
 minutes: 9
+standard: 2
+skipTerms: ["bağımlılık"]
 sources:
   - label: "Deque — Otomatik test dijital erişilebilirlik sorunlarının %57'sini buluyor"
     url: "https://www.deque.com/blog/automated-testing-study-identifies-57-percent-of-digital-accessibility-issues/"
@@ -25,6 +27,7 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Ekip toplantısında biri sevinçle: "Lighthouse erişilebilirlikte 100 verdi, bitirdik!" Ama sen ekranı klavyeyle dolaştığında odak üç yerde kayboluyor, bir butonun etiketi anlamsız ve hata mesajı hiç duyurulmuyor. 100 puan gerçek, ama anlattığı şey sandığından çok daha küçük.
 
@@ -92,6 +95,19 @@ Bu sitenin kendi denetim süreci tam da bu katmanları kullanıyor: bölümlerin
 
 </Callout>
 
+<Case>
+
+Kampüs lansmanından iki hafta önce Selin ödeme akışını denetledi:
+
+1. **Otomatik:** tarayıcı aracı iki sorun buldu: bir görselin alt metni yoktu, bir gri metnin kontrastı düşüktü.
+2. **Klavye:** Selin fareyi bıraktı ve akışı yalnız Tab ile yürüdü. Kupon penceresi açıldığında odak arkadaki sayfada kalıyordu; araç bunu yakalamamıştı.
+3. **Büyütme:** metin %200 büyütülünce "Öde" düğmesi ekranın dışına taşıyordu.
+4. **Ekran okuyucu:** seçili kart duyurulmuyordu; yalnız kartın son dört hanesi okunuyordu.
+
+Otomatik araç iki sorun buldu; manuel kontroller üç tane daha.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -99,6 +115,30 @@ Bu sitenin kendi denetim süreci tam da bu katmanları kullanıyor: bölümlerin
 - **Klavye turu, yakınlaştırma, ekran okuyucu, gri tonlama:** bunları tasarım incelemesine ve bitmiş sayılma tanımına yaz.
 - **Overlay talebini nazikçe geri çevir.** Aynı bütçeyle gerçek düzeltmeler daha kalıcı.
 - **Mümkünse gerçek kullanıcıyla bir kez test et.** Öğrenilen şey bir rapordan fazlasıdır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **"Lighthouse 100" sonucunu uyum kanıtı sayma.** Otomatik araçlar sorunların bir kısmını yakalar.
+- **Overlay satın alma kararına karşı dur.** Sorunu kaynağında çözmez.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Manuel kontrolü kabulün parçası yap.** Klavye turu birkaç dakika sürer.
+- **Bulunan sorunları önem sırasıyla backlog'a al.** Kullanıcıyı tamamen durduran sorun önce gelir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Denetim sonucunu WCAG ölçütüne bağla.** Her bulgu bir başarı ölçütü numarası taşısın.
+- **Erişilebilirlik beyanının girdisini hazırla.** Bilinen sorunlar ve planlanan düzeltmeler.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Gerçek kullanıcıyla test et.** Uzman denetimi, yardımcı teknoloji kullanıcısının deneyiminin yerini tutmaz.
+- **Testi kullanıcının kendi cihazında yap.** Kişisel ayarlar kolay kopyalanmaz.
 
 </Lens>
 </Lenses>
@@ -124,5 +164,11 @@ Rakam kaynağa ve neyin sayıldığına göre değişir (yaygın olarak %30–40
 <SelfCheck question="Erişilebilirlik overlay'leri neden eleştirilir?">
 
 Altta yatan sorunları düzeltmezler, bazı durumlarda yardımcı teknolojilerin kendi ayarlarıyla çakışırlar ve sağladıkları iddia edilen yasal koruma tartışmalıdır. Kalıcı çözüm sorunun kodda ve tasarımda düzeltilmesidir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir modal açıldığında Tab tuşu arkadaki sayfanın bağlantılarına gidiyor. Bu sorunu hangi kontrol yakalar?">
+
+Klavye turu: fareyi bırakıp akışı yalnız Tab, Shift+Tab, Enter ve Esc ile yürümek. Otomatik araçlar odak sırası sorunlarını çoğu zaman yakalamaz.
 
 </SelfCheck>

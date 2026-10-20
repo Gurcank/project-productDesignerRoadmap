@@ -1,0 +1,108 @@
+[
+  {
+    "term": "Araştırma sorusu",
+    "english": "Research question",
+    "definition": "Ekibin öğrenmek istediği şey; katılımcıya sorulan soru değildir. Atölyede yazılır, gruplanır ve önceliklendirilir; turların hedefini belirler.",
+    "topic": "arastirma-plani",
+    "aliases": ["Araştırma soruları"]
+  },
+  {
+    "term": "Tutumsal araştırma",
+    "english": "Attitudinal research",
+    "definition": "İnsanların ne söylediğini ölçen araştırma: görüşme, anket. Kişinin farkında olduğu ve söylemeye istekli olduğu şeyle sınırlıdır.",
+    "topic": "yontem-haritasi"
+  },
+  {
+    "term": "Davranışsal araştırma",
+    "english": "Behavioral research",
+    "definition": "İnsanların ne yaptığını ölçen araştırma: kullanılabilirlik testi, saha çalışması, analitik, A/B testi. Söylenen ile yapılan ayrıştığında yapılan kazanır.",
+    "topic": "yontem-haritasi"
+  },
+  {
+    "term": "Üretken araştırma",
+    "english": "Generative research",
+    "definition": "Strateji evresinde yeni yön ve fırsat bulmaya yarayan araştırma: saha çalışması, günlük çalışması, görüşme, konsept testi.",
+    "topic": "yontem-haritasi"
+  },
+  {
+    "term": "Biçimlendirici araştırma",
+    "english": "Formative research",
+    "definition": "Tasarım evresinde tasarımın kullanılabilirliğini iyileştirmeye yarayan araştırma: kart sıralama, ağaç testi, kullanılabilirlik testi.",
+    "topic": "yontem-haritasi"
+  },
+  {
+    "term": "Özetleyici araştırma",
+    "english": "Summative research",
+    "definition": "Lansmandan sonra ürünü kendisiyle ya da rakiple ölçen araştırma: kıyaslama, A/B testi, analitik, anket.",
+    "topic": "yontem-haritasi"
+  },
+  {
+    "term": "Screener",
+    "english": "Screener",
+    "definition": "Katılımcı adaylarını işe alım kriterlerine göre eleyen soru metni. Ajans brief'ten yazar; engelli ya da dijital becerisi sınırlı kişileri dışlamadığı kontrol edilir.",
+    "topic": "katilimci-bulma"
+  },
+  {
+    "term": "Görüşme rehberi",
+    "english": "Discussion guide",
+    "definition": "Bir görüşmenin giriş metni, konuları, açılış ve takip soruları ve hazırlık listesi. Görüşmeyi yolda tutar ama bir senaryo değildir.",
+    "topic": "gorusme"
+  },
+  {
+    "term": "Sesli düşünme",
+    "english": "Think aloud",
+    "definition": "Kullanılabilirlik testinde katılımcının görevi yaparken ne yaptığını, düşündüğünü ve hissettiğini yüksek sesle anlatması.",
+    "topic": "kullanilabilirlik-testi",
+    "aliases": ["Sesli düşün"]
+  },
+  {
+    "term": "Bağlamsal sorgu",
+    "english": "Contextual inquiry",
+    "definition": "Katılımcıyı kendi ortamında, kendi ekipmanıyla gözleyip işini birlikte sorgulayan yöntem. Karmaşık sistemler için geliştirilmiştir.",
+    "topic": "baglamsal-sorgu-ve-gunluk-calismasi",
+    "aliases": ["Bağlamsal araştırma"]
+  },
+  {
+    "term": "Günlük çalışması",
+    "english": "Diary study",
+    "definition": "Katılımcıların davranış ve deneyimlerini günler ya da haftalar boyunca kendilerinin kaydettiği nitel yöntem. Kayıt olay, aralık ya da sinyal tabanlıdır.",
+    "topic": "baglamsal-sorgu-ve-gunluk-calismasi"
+  },
+  {
+    "term": "Benzerlik diyagramı",
+    "english": "Affinity diagram",
+    "definition": "Tek gözlem yazılmış notların duvarda temalara göre gruplanması; kümeler belirince gruplara ad verilir ve bulgular çıkarılır.",
+    "topic": "sentez"
+  },
+  {
+    "term": "Araştırma duvarı",
+    "english": "Research wall",
+    "definition": "Ekibin her gün gördüğü yerde yolculuk haritalarını, içgörüleri, ekran görüntülerini ve alıntıları bir arada tutan alan.",
+    "topic": "icgoru-paylasimi"
+  },
+  {
+    "term": "Show and tell",
+    "english": "Show and tell",
+    "definition": "Ekibin öğrendiklerini ve yaptıklarını düzenli aralıklarla gösterdiği kısa toplantı; araştırma bulguları burada erken paylaşılır.",
+    "topic": "icgoru-paylasimi"
+  },
+  {
+    "term": "Bilgilendirilmiş onam",
+    "english": "Informed consent",
+    "definition": "Katılımcının araştırmanın amacını, toplanan veriyi, saklama süresini ve her an durabileceğini anlayıp kabul ettiğini gösteren kayıt.",
+    "topic": "etik-onam-ve-kvkk",
+    "aliases": ["Onam"]
+  },
+  {
+    "term": "Bilgi notu",
+    "english": "Information sheet",
+    "definition": "İşe alım sırasında katılımcıya verilen, araştırmayı, veriyi ve haklarını anlaşılır dille anlatan kısa metin.",
+    "topic": "etik-onam-ve-kvkk"
+  },
+  {
+    "term": "ResearchOps",
+    "english": "Research operations",
+    "definition": "Araştırmanın değerini ölçekte artırmak için insanları, süreçleri ve araçları düzenleme. Altı alanı: katılımcılar, yönetişim, bilgi, araçlar, yetkinlik, savunuculuk.",
+    "topic": "researchops"
+  }
+]

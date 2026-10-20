@@ -5,7 +5,9 @@ outcomes:
   - "Card sorting ile tree testing'i ne zaman kullanacağını bilirsin."
   - "Findability ile discoverability'yi ayırıp doğru çözümü seçebilirsin."
   - "Kullanıcının zihinsel modelini araştırıp adlandırmayı ona göre değiştirebilirsin."
-minutes: 11
+minutes: 7
+standard: 2
+skipTerms: ["yorumlar"]
 sources:
   - label: "NN/g — Card Sorting: Definition"
     url: "https://www.nngroup.com/articles/card-sorting-definition/"
@@ -23,6 +25,7 @@ import SitemapTree from "~/components/lesson/SitemapTree.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Fatura sayfasını bulamıyorum, bu site kötü." Kullanıcı böyle der. Ama sayfa var, menüde duruyor, güzel de görünüyor. Sorun menünün rengi ya da fontu değil; fatura sayfasının **yanlış yerde** olması. Bu, görünmez bir katmanın sorunu: **bilgi mimarisi.**
 
@@ -103,6 +106,19 @@ Kullanıcı testlerinde en sık gözlenen şey budur: kullanıcı beklediği yer
 
 Özellik kullanım oranları düşük olduğunda ekipler bunu genelde "özellik kötü" diye yorumlar; **çoğu zaman keşfedilebilirlik sorunudur.** "Özelliği kullanan %3; kullananlar memnun. Bu bir discoverability sorunu, kalite sorunu değil."
 
+<Case>
+
+Demlik Panel'in menüsünde "Ürünler", "Stok" ve "Ayarlar" ayrı bölümlerdi; bir ürünü bugünlük kapatmak "Ayarlar"ın altındaydı.
+
+1. **Sorun:** analitik, menü ayarlarına gelenlerin çoğunun önce "Stok"a girdiğini gösterdi. Bu bir bulunabilirlik sorunuydu.
+2. **Zihinsel model:** kart sıralamada dükkânlar "Stok" ile "Menü"yü aynı grupta topladı; "Bugünlük kapat" herkes tarafından stokla birlikte konuldu.
+3. **Yeni yapı:** "Menü ve stok" adında tek bölüm.
+4. **Ölçüm:** ağaç testinde görev başarısı %55'ten %85'e çıktı.
+
+Çalışmanın nasıl yürütüldüğü [Kart sıralama ve ağaç testi](/kullanici-arastirmasi/kart-siralama-ve-agac-testi/) dersinde.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -110,6 +126,30 @@ Kullanıcı testlerinde en sık gözlenen şey budur: kullanıcı beklediği yer
 - **Zihinsel modeli sor.** "Sen buna ne ad verirdin?" sorusu card sorting'in en ucuz versiyonudur.
 - **Aynı kelimeyi iki yerde kullanma.** "Çözümler" ve "Ürünler" altında aynı şeyler duruyorsa kullanıcı iki yolun farkını bilemez.
 - **Düşük kullanım oranını ayır:** kullananlar memnunsa muhtemelen discoverability, kullananlar memnun değilse kalite sorunu.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Az kullanılan özelliğe önce bulunabilirlik sorusuyla bak.** Kullanılmaması, istenmediği anlamına gelmeyebilir.
+- **Menüye her ekleme isteğini yapıya karşı tart.** Her yeni öğe diğerlerini bulmayı zorlaştırır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Etiket ve konum değişikliğini ölçüyle kabul et.** Ağaç testi başarısı bir kabul kriteri olabilir.
+- **Gezinme değişikliklerini sürüm notunda duyur.** Alışkanlık değişikliği desteğe yük getirir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Sınıflandırmayı alan modeliyle karşılaştır.** Kullanıcının grupladığı kavramlar iş kavramlarından farklı olabilir.
+- **Terimleri sözlüğe yaz.** Aynı şeye iki ekranda iki ad verilmesin.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Yapıyı kullanıcıyla kur, sonra ölç.** Önce kart sıralama, sonra ağaç testi.
+- **Findability ile discoverability'yi ayrı sına.** Aranan bulunuyor mu, bilinmeyen fark ediliyor mu?
 
 </Lens>
 </Lenses>
@@ -135,5 +175,11 @@ Card sorting kullanıcıdan içeriği kendi mantığına göre gruplamasını is
 <SelfCheck question="Bir özelliği kullanan kullanıcı oranı %3, ama kullananlar memnun. Bu findability sorunu mu, discoverability sorunu mu? Ne yaparsın?">
 
 Discoverability sorunu: kullanıcılar özelliğin varlığını bilmiyor (kullananlar memnun olduğuna göre kalite sorunu yok). Çözüm arama ya da menü düzeltmesi değil; boş ekranda tanıtım, onboarding adımı, ilgili bağlamda ipucu ya da duyuru.
+
+</SelfCheck>
+
+<SelfCheck question="Ekip menüye yeni bir öğe eklemek istiyor; menüde zaten dokuz öğe var. Hangi soruları sorarsın?">
+
+Yeni öğe mevcut bir grubun içine girebilir mi? Kullanıcılar bu içeriği nerede arıyor? Ekleme diğer öğelerin bulunabilirliğini nasıl etkiler? Karar için bir ağaç testi yapılabilir.
 
 </SelfCheck>

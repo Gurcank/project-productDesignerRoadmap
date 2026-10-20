@@ -5,7 +5,8 @@ outcomes:
   - "Bir bileşenin neden doğrudan primitive token kullanmaması gerektiğini söyleyebilirsin."
   - "Dark mode'un neden \"renkleri ters çevirmek\" olmadığını üç gerekçeyle anlatabilirsin."
   - "Token'ların tasarım aracından koda nasıl taşındığını (DTCG, Style Dictionary) bilirsin."
-minutes: 12
+minutes: 8
+standard: 2
 sources:
   - label: "Design Tokens Community Group"
     url: "https://www.designtokens.org/"
@@ -24,6 +25,7 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Marka rengi değişti. Yönetici soruyor: "Kaç yerde değişecek?" Geliştirici cevaplıyor: "İki yüz yirmi dört yerde." Bu cevap bir sistem sorunudur. Aynı değer 224 kez yazılmışsa her biri unutulabilir, yanlış yazılabilir, biri kaçabilir.
 
@@ -131,6 +133,19 @@ Olgun tasarım sistemlerinin altyapısında karşına çıkar. **Değişken bilg
 
 "Token'ları DTCG formatında dışa aktarıp Style Dictionary ile CSS değişkenlerine çevirelim."
 
+<Case>
+
+Demlik'in müşteri uygulaması ve Panel'i ayrı ayrı büyümüştü. Selin iki ürünün renklerini saydı: on dört farklı kahverengi tonu.
+
+1. **Primitive:** tonlar dokuz basamaklı tek bir rampaya indi: `kahve-100` … `kahve-900`.
+2. **Semantic:** bileşenler rampaya değil anlama bağlandı: `renk-eylem`, `renk-metin`, `renk-yuzey`, `renk-hata`.
+3. **Component:** `buton-birincil-zemin` yalnız `renk-eylem`'i gösterir.
+4. **Koyu mod:** Panel'in akşam vardiyası için istenen koyu tema, yalnız semantic katmanın değerleri değiştirilerek kuruldu; bileşenlere dokunulmadı.
+
+Bir yıl sonra marka rengi biraz açıldığında tek bir primitive değeri değişti.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -163,5 +178,11 @@ Katmanlar, değeri kullanım niyetinden ayırır. Primitive ham değeri (`blue-6
 <SelfCheck question="Dark mode neden &quot;renkleri ters çevirmek&quot; değildir? En az üç sebep say.">
 
 (1) Saf beyaz metin koyu zeminde göz yorar, kırılmış beyaz gerekir. (2) Gölge koyu zeminde işe yaramaz; derinlik yüzey açıklık farkıyla verilir. (3) Doygun renkler koyu zeminde titrer, doygunluk düşürülmelidir. (4) Kontrast oranları yeniden hesaplanmalıdır; açık temada geçen bir çift koyu temada kalabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir buton doğrudan `kahve-700` değerini kullanıyor. Koyu temaya geçerken ne sorun çıkar?">
+
+Buton anlama değil ham değere bağlı olduğu için koyu temada da aynı rengi alır; zeminle kontrastı bozulabilir. Buton `renk-eylem` gibi bir semantic token'a bağlanmalı; tema o token'ın değerini değiştirir.
 
 </SelfCheck>

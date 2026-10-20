@@ -6,6 +6,8 @@ outcomes:
   - "\"Tech stack nedir?\" sorusuna doğru cevap verebilir ve yapay zekâya prompt yazarken stack'i belirtirsin."
   - "Doğrulamanın neden hem client-side hem server-side yapılması gerektiğini açıklayabilirsin."
 minutes: 8
+standard: 2
+skipTerms: ["validation"]
 sources:
   - label: "MDN — İstemci–sunucu genel bakışı"
     url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Client-Server_overview"
@@ -18,6 +20,7 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Buton mobilde taşıyor." "İndirim hesabı yanlış." "Site kod değişmeden çöktü." Üç farklı sorun; üçü de başka birinin kapısına gider. Bu ders, bir ekipteki iş bölümünün adlarını öğretiyor. Bunları bilmek, bir talebi **kime ileteceğini** bilmek demektir.
 
@@ -79,6 +82,18 @@ Aynı işlev iki yerde de yapılabilir ve sonuçları farklıdır:
 
 Bu ayrım hem güvenlik hem performans kararlarının temelidir. Örneğin form doğrulaması **hem client-side hem server-side** olmalıdır: client-side kullanıcı deneyimi için ("e-posta geçersiz" hemen görünür), server-side güvenlik için (kullanıcı tarayıcıdaki kodu atlatsa bile sunucu kontrol eder).
 
+<Case>
+
+Sipariş takımına bir sabah üç şikâyet geldi. Kaan onları panoya katmanlarına göre dağıttı:
+
+1. **"Sipariş düğmesi küçük ekranlı telefonda kesiliyor."** Görsel bir sorun: front-end. Ece aldı.
+2. **"Kampüs indirimi bazı siparişlerde iki kez uygulanmış."** Bir iş kuralı: back-end. Burak aldı.
+3. **"Panel sabah 08.00'de iki dakika açılmadı, kod değişmemişti."** Çalışma ortamı: infra. Demlik'te ayrı bir altyapı rolü yok; Can barındırma platformunun durum sayfasına baktı.
+
+Demlik'in stack'i yeni gelen birine kısaca anlatılır. Müşteri uygulamaları iOS ve Android; web sitesi ve Panel aynı çerçeveyle yazılmış web uygulamaları, sipariş ve ödeme servisleri sunucuda.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -89,6 +104,42 @@ Bu ayrım hem güvenlik hem performans kararlarının temelidir. Örneğin form 
 - Yavaşlık, çökme, ortam, yayın → **infra** (ya da platformun kendisi)
 
 Doğru kişiye doğru soruyu sormak, günler kazandırır. Bir de sana düşen iş: ekranda gösterilen her *kural* (örneğin hata mesajı) için "bu kuralı sunucu da biliyor mu?" diye sor. Biliyorsa kullanıcı atlatamaz.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Talebin katmanını bil, tahmini ona göre iste.** Görsel bir değişiklik ile bir iş kuralı değişikliği aynı maliyette değildir.
+- **Güvenlik isteyen kuralları back-end'e bağla.** Ekrandaki kural kullanıcı tarafından atlatılabilir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Story'yi katmana göre değil, değere göre böl.** Yalnız front-end ya da yalnız back-end story'si tek başına değer vermez.
+- **Doğrulamanın iki yerde olduğunu kabul kriterine yaz.** Ekranda deneyim için, sunucuda güvenlik için.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Ekip kapasitesini katmanlara göre gör.** İki front-end ve bir back-end geliştiricisi, back-end ağırlıklı bir işte darboğaz yaratır.
+- **Altyapı işini takvimde ayrı göster.** Ortam kurulumu ve yayın sistemi kendi süresini ister.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Sorunları doğru kişiye yönlendir.** Katmanı belli olan sorun, panoda beklemez.
+- **Full-stack ile uzmanlaşma arasındaki takası konuştur.** Takımın darboğazı nerede?
+
+</Lens>
+<Lens role="business-analyst">
+
+- **İş kuralını back-end gereksinimi olarak yaz.** "İndirim tek siparişe bir kez uygulanır" sunucuda doğrulanır.
+- **Doğrulama kurallarını iki tarafta ayrı belirt.** İstemci hata mesajı, sunucu kesin kontrol.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Test bulgusunu katmanıyla raporla.** "Düğme görünmüyor" ile "toplam yanlış" farklı ekiplere gider.
+- **Gecikmenin kaynağını ayırt etmeye çalış.** Kullanıcı yavaşlığı hisseder; nedeni ekip bulur.
 
 </Lens>
 </Lenses>
@@ -114,5 +165,11 @@ Client-side'daki kod kullanıcının cihazında çalışır; kullanıcı onu gö
 <SelfCheck question={"\"Buton mobilde taşıyor\" ve \"sipariş toplamı yanlış hesaplanıyor\" sorunları hangi katmanlara gider?"}>
 
 Buton taşıması görsel bir sorundur, front-end'e gider. Sipariş toplamının hesabı bir iş kuralıdır, back-end'e gider (hesap front-end'de yapılıyorsa, o da yanlıştır; çünkü kullanıcı değiştirebilir).
+
+</SelfCheck>
+
+<SelfCheck question="Bir yapay zekâ aracından bir form bileşeni istiyorsun. Çıktının doğruluğunu en çok artıracak bilgi nedir?">
+
+Projenin tech stack'i: kullanılan dil, çerçeve, stil kütüphanesi. Stack belirtilmezse araç başka bir teknolojiyle yazar ve kod projeye uymaz.
 
 </SelfCheck>

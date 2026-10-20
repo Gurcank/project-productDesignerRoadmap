@@ -6,6 +6,8 @@ outcomes:
   - "Autocomplete'in neden erişilebilirlik ve hız kazancı olduğunu bilirsin."
   - "Zorunlu alanları yıldızlamak yerine isteğe bağlıları etiketlemenin gerekçesini söyleyebilirsin."
 minutes: 9
+standard: 2
+skipTerms: ["Doğrulama", "doğrulama"]
 sources:
   - label: "W3C WAI — Forms Tutorial"
     url: "https://www.w3.org/WAI/tutorials/forms/"
@@ -22,6 +24,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir kayıt formu on iki alan içeriyor. Kullanıcı "Kaydol"a basıyor, sayfanın tepesinde kırmızı bir yazı beliriyor: "Formda hata var." Hangi alan? Neden? On iki alanın arasında kayboluyor. Ekran okuyucu kullanıcısı için ise durum daha kötü: hata yazısı hiç duyurulmuyor bile.
 
@@ -70,6 +74,17 @@ Hata mesajı:
 
 Hata özeti verilecekse, özetteki maddeler **ilgili alana bağlantı** olmalıdır. "Hata mesajını alanın altına koyalım, alanla ilişkilendirelim ve canlı bölge olarak duyuralım." (Mesajın içeriği için daha önce gördüğün üç soruyu hatırla: ne oldu, neden, şimdi ne yapmalı.)
 
+<StepFlow
+  label="Erişilebilir bir hata mesajı"
+  caption="Demlik'in kart ekleme formunda son kullanma tarihi hatalı girildiğinde dört şey olur. Mesaj alanın hemen altında belirir. Renk değil metin taşır: son kullanma tarihi geçmiş. Mesaj kodda alana bağlıdır; ekran okuyucu alana gelince onu da okur. Son olarak mesaj canlı bölge olarak duyurulur ve bir düzeltme önerisi verir."
+  steps={[
+    { title: "Alanın altında", sub: "yakında dur", tone: "accent" },
+    { title: "Metinle", sub: "yalnız renk değil" },
+    { title: "Alana bağlı", sub: "ekran okuyucu okur" },
+    { title: "Duyur ve öner", sub: "canlı bölge, düzeltme yolu", tone: "progress" },
+  ]}
+/>
+
 ## Otomatik doldurma
 
 **Autocomplete attribute** (SC 1.3.5, otomatik doldurma niteliği), alanın **hangi tür kişisel bilgiyi** beklediğini tarayıcıya bildiren niteliktir: ad, e-posta, adres, kart numarası. Tarayıcının doğru doldurmasını sağlar. Bilişsel yükü ve yazma çabasını azaltır: motor kısıtı olan kullanıcılar için ciddi fark yaratır, **herkes için de formu hızlandırır.**
@@ -88,6 +103,19 @@ Bu sitenin arama alanı etiketli (görünmez ama ekran okuyucuya okunan bir etik
 
 </Callout>
 
+<Case>
+
+Demlik'in kart ekleme formu yeniden yazıldı:
+
+1. **Etiket:** "Kart numarası" yer tutucu olmaktan çıktı; alanın üstünde, kodda alana bağlı bir etiket oldu. Etikete dokununca alan odaklanıyor.
+2. **Otomatik doldurma:** kart numarası, son kullanma tarihi ve kart üzerindeki ad için autocomplete değerleri verildi; tarayıcı ve şifre yöneticisi dolduruyor.
+3. **Hata:** "Geçersiz giriş" yerine alanın altında "Son kullanma tarihi geçmiş. Kartının üzerindeki tarihi kontrol et." Mesaj alana bağlı ve duyuruluyor.
+4. **Zorunlu alan:** formdaki dört alanın hepsi zorunlu; tek tek yıldız yerine formun başında "Tüm alanlar zorunlu" yazıyor.
+
+Ödemeyi bırakanların önemli bir kısmı kayıtlı kartı olmayanlardı; kart ekleme formu bu yüzden öncelikliydi.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -96,6 +124,30 @@ Bu sitenin arama alanı etiketli (görünmez ama ekran okuyucuya okunan bir etik
 - **Hata özeti varsa maddeleri alana bağla.**
 - **Autocomplete değerlerini form tasarımına ekle.** Hangi alan ad, hangisi e-posta, hangisi adres?
 - **Zorunluluğu azınlığı etiketleyerek göster.**
+
+</Lens>
+<Lens role="product-manager">
+
+- **Formu dönüşümün kalbi say.** Erişilebilir form, herkes için daha hızlı doldurulan formdur.
+- **Otomatik doldurmayı kapsamdan çıkarma.** Ucuz bir iştir, büyük fark yaratır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Her alanın etiketini, hatasını ve önerisini kabul kriterine yaz.** "Formda hata var" bir kriter değildir.
+- **Zorunlu alan gösterimini tutarlı tut.** Bir formda yıldız, diğerinde yazı karışıklık yaratır.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Doğrulama kuralının yanına mesajı ve öneriyi yaz.** Kural ile mesaj aynı kaynaktan gelsin.
+- **Alanların veri türünü belirt.** Autocomplete değeri, veri sözlüğündeki anlamdan gelir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Formu klavye ve ekran okuyucuyla test ettir.** Hataya nasıl ulaşıldığı, hatanın kendisi kadar önemlidir.
+- **Hata anını gözle.** Kullanıcı hatayı nerede arıyor, nasıl düzeltiyor?
 
 </Lens>
 </Lenses>
@@ -120,5 +172,11 @@ Bu sitenin arama alanı etiketli (görünmez ama ekran okuyucuya okunan bir etik
 <SelfCheck question="Etiket ile alanın kodda ilişkilendirilmemesi hangi iki sorunu doğurur?">
 
 Ekran okuyucu alana odaklanınca etiketi okuyamaz ("düzenleme alanı" der) ve etikete tıklamak alanı odaklamaz (özellikle küçük onay kutularında kullanılabilirlik kaybı).
+
+</SelfCheck>
+
+<SelfCheck question={"On iki alanlı bir formun en üstünde yalnız \"Formda hatalar var\" yazıyor. Ne eksik?"}>
+
+Hangi alanda ne hata olduğu ve nasıl düzeltileceği. Her hata ilgili alanın yanında metinle yazılmalı, alana bağlanmalı ve mümkünse bir öneri sunmalı; özet varsa maddeleri ilgili alana bağlantı olmalı.
 
 </SelfCheck>

@@ -6,6 +6,7 @@ outcomes:
   - "Çerez bildiriminde reddetmenin neden kabul etmek kadar kolay olması gerektiğini açıklayabilirsin."
   - "Dark pattern örneklerini tanıyabilirsin."
 minutes: 10
+standard: 2
 sources:
   - label: "Deceptive Design (Harry Brignull)"
     url: "https://www.deceptive.design/"
@@ -26,6 +27,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Sayfayı sonuna kadar okuyan kullanıcı en ikna olmuş kullanıcıdır. Peki ona sonra ne söyleyeceksin? Bu derste kullanıcıdan bir eylem ya da bilgi almayı hedefleyen bileşenleri, ve bu hedefin kullanıcıya zarar verdiği yeri (dark pattern) göreceksin.
 
@@ -46,6 +49,21 @@ Sayfayı sonuna kadar okuyan kullanıcı en ikna olmuş kullanıcıdır. Peki on
 **Contact form**, kullanıcının mesaj göndermesini sağlar ve gelen talebi sınıflandırır. Tek iletişim yolu olmamalı: e-posta adresi de görünür olmalı, çünkü bazı kullanıcılar form doldurmak istemez. Spam koruması gerekir; ama CAPTCHA erişilebilirlik sorunu çıkarabilir, görünmeyen yöntemler (honeypot gibi) tercih edilebilir.
 
 **Booking widget**, tarih ve saat seçerek randevu oluşturan bileşendir; karşılıklı e-postalaşmayı ortadan kaldırır. Genelde üçüncü parti bir servis gömülür (Cal.com, Calendly benzeri). Servis isimleri ve fiyatları değişir; kullanmadan önce güncel hâlini kontrol et. Gömülü bileşenler kendi erişilebilirlik ve performans yükünü getirir.
+
+<Spectrum
+  label="Bileşenlerin kullanıcıdan istediği"
+  caption="Dönüşüm bileşenleri kullanıcıdan farklı miktarda şey ister. Sol uçta tek dokunuşluk bir CTA durur. Sonra yalnız e-posta isteyen bülten ve bekleme listesi gelir. Ortada karşılığında bir şey verilen lead magnet vardır. Sağa doğru iletişim formu birkaç alan ve bir mesaj ister; sağ uçta randevu bileşeni tarih, saat ve iletişim bilgisi ister. İstek büyüdükçe karşılığında verilen değer de açık olmalıdır."
+  left={{ title: "Az ister", sub: "tek dokunuş" }}
+  right={{ title: "Çok ister", sub: "zaman ve bilgi" }}
+  marks={[
+    { label: "CTA", at: 0.05 },
+    { label: "Bülten", at: 0.27 },
+    { label: "Bekleme listesi", at: 0.42 },
+    { label: "Lead magnet", at: 0.58 },
+    { label: "İletişim formu", at: 0.76 },
+    { label: "Randevu", at: 0.94 },
+  ]}
+/>
 
 ## Rıza ve zorlama
 
@@ -71,6 +89,19 @@ Rıza konusunda birincil metin açık: "Silence, pre-ticked boxes or inactivity 
 
 E-ticaret ve abonelik ürünlerinde yaygındır ve bazı düzenlemelerde yasal yaptırıma tabidir. "Bu bir dark pattern; iptal akışını üç adımda tutalım, gizlemeyelim."
 
+<Case>
+
+Kampüs lansmanından önce `demlik.com.tr/kampus` sayfasında bir bekleme listesi açıldı.
+
+1. **Tek alan:** yalnız e-posta ve üniversite seçimi. "Adın" ve "bölümün" alanları kaldırıldı; lansman için gerekmiyordu.
+2. **Karşılık:** "Kafen açıldığı gün haber verelim; ilk siparişine öğrenci kartı indirimi." Bir bülten vaadi değil, somut bir fayda.
+3. **Rıza:** "Kampanya e-postaları da almak istiyorum" kutusu ayrı ve boş geliyor; bekleme listesine katılmak bu kutuya bağlı değil.
+4. **Sticky CTA:** mobilde alt kenarda "Uygulamayı indir" çubuğu; sayfanın üstündeki düğme görünürken gizli.
+
+Çerez bildiriminde "Reddet" düğmesi "Kabul et" ile aynı boyutta ve aynı seviyede.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -80,6 +111,12 @@ E-ticaret ve abonelik ürünlerinde yaygındır ve bazı düzenlemelerde yasal y
 - **Önceden işaretli onay kutusu çizme.**
 - **Her sticky öğe için alt boşluk ve odak çakışmasını kontrol et.**
 - **Şüphe duyduğunda şunu sor:** bu kalıp kullanıcıyı mı yönlendiriyor, onun çıkarına mı hizmet ediyor?
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Formun her alanı için "neden istiyoruz?" sorusunu test et.** Kullanıcı gerekçesini bilmediği alanda durur.
+- **Rıza ekranlarını gözle.** Kullanıcı neye onay verdiğini anlıyor mu?
 
 </Lens>
 </Lenses>
@@ -106,5 +143,11 @@ Reddetmek, kabul etmek kadar kolay olmalıdır. "Tümünü kabul et" büyük ve 
 <SelfCheck question="Bir bülten formunda dönüşümü ne belirler?">
 
 Karşılığında ne verildiği. "Bültenimize abone olun" yerine somut bir vaat ("Haftalık tek e-posta: bu haftanın en iyi 3 aracı") dönüşümü artırır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir bülten formunda pazarlama kutusu önceden işaretli geliyor. Sorun nedir?">
+
+Önceden işaretli kutu geçerli bir rıza değildir; rıza kullanıcının açık bir eylemiyle verilmelidir. Kutu boş gelmeli ve asıl işlem bu kutuya bağlı olmamalıdır.
 
 </SelfCheck>

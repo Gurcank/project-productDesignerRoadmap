@@ -6,6 +6,8 @@ outcomes:
   - "Latency ile bandwidth'i ayırır, \"gidiş-dönüş sayısı\" üzerinden hız tartışabilirsin."
   - "Durum kodlarını (200, 404, 500) görünce hangi ekranın tasarlanması gerektiğini çıkarabilirsin."
 minutes: 11
+standard: 2
+skipTerms: ["doğrulama"]
 sources:
   - label: "MDN — HTTP'ye genel bakış"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview"
@@ -24,6 +26,7 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir geliştirici sana "istek 200 dönüyor ama gövde boş" dediğinde ne söylediğini anlamak istiyorsun. Ya da "bu sayfa 84 istek atıyor" dediğinde, bunun yavaşlıkla ne ilgisi olduğunu. Bu ders o cümlelerin sözlüğü.
 
@@ -136,6 +139,19 @@ Genel kural: **2xx başarı, 3xx yönlendirme, 4xx istemci hatası, 5xx sunucu h
 
 </Outside>
 
+<Case>
+
+Ödeme ekranı yavaş açılıyordu. Burak tarayıcının Network sekmesini açtı:
+
+1. **Gözlem:** ekran açılırken dört ayrı istek gidiyordu: kayıtlı kartlar, sepet, dükkân açık mı, indirim. Her biri ayrı bir gidiş-dönüştü.
+2. **Etki:** kampüsteki mobil bağlantıda her gidiş-dönüş daha uzun sürüyordu; ekran ilk bir saniye boş kalıyordu.
+3. **Çözüm:** Burak dört bilgiyi tek istekte döndüren bir uç nokta yazdı. İstek sayısı ikiye indi.
+4. **Durum kodları:** Selin her cevap için bir ekran durumu çizdi. 200 ve boş kart listesi için "Kart ekle", 401 için "Oturumun kapandı", 503 için "Dükkân şu an sipariş almıyor".
+
+Pilotun kabul kriteri bu yüzden ölçülebilirdi: sipariş, ödemeden sonra 5 saniye içinde kafede görünür.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -144,6 +160,42 @@ Geliştiriciye şu soruyu sormayı alışkanlık edin: **"Bu ekran için kaç is
 - Her bekleme anı için bir yükleme durumu, her hata kodu için bir hata ekranı tasarlanmalı. Tasarlamazsan geliştirici kendi aklıyla bir şey koyar.
 - Yavaş bağlantıda ne olacağını düşün: metro, asansör, kalabalık etkinlik. Bu bir uç senaryo değil, kullanıcının önemli bir kısmının günlük hâlidir.
 - Aynı bilgiyi tek istekte getirmek mümkünse, hız kazanırsın. Bu bir "teknik detay" değil, ekran tasarımının (ne aynı anda gösterilecek) sonucudur.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Hızı istek sayısıyla konuş.** Gidiş-dönüş sayısını azaltmak çoğu zaman en büyük kazançtır.
+- **Hata durumlarını kapsamın parçası say.** Her durum kodu bir ekran demektir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kabul kriterine süre yaz.** "Ödemeden sonra 5 saniye içinde" test edilebilir bir kriterdir.
+- **Boş ve hata durumlarını story'ye ekle.** 200 dönen boş liste de tasarlanmalıdır.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Performans işini görünür planla.** Bir uç noktayı birleştirmek, kendi süresi olan bir iştir.
+- **Üçüncü taraf servislerin gecikmesini risk kaydına yaz.** Kasa entegrasyonu gibi.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **"200 dönüyor ama…" tartışmasını netleştir.** Sorun sunucuda mı, ekranda mı?
+- **Yavaşlık şikâyetini ölçümle getirt.** Network sekmesindeki sayı tartışmayı kısaltır.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Arayüz gereksinimine durum kodlarını yaz.** Her kod için sistemin ve ekranın davranışı.
+- **Payload'ı veri gereksinimiyle sınırla.** Ekranın kullanmadığı alan gönderilmez.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Testi gerçek bağlantıda yap.** Ofis Wi-Fi'ı, metrodaki mobil bağlantıyı göstermez.
+- **Bekleme anlarını not et.** Kullanıcının dokunduğu ve hiçbir şeyin olmadığı saniyeler bulgudur.
 
 </Lens>
 </Lenses>
@@ -169,5 +221,11 @@ Hayır. Latency gecikmedir: isteğin gidip dönmesinin süresi. Bandwidth kapasi
 <SelfCheck question="Bir sayfa 200 dönüyor ama ekranda hiçbir ürün görünmüyor. Bu bir hata mı, nasıl bir ekran gerekir?">
 
 Hata değil: sunucu isteği başarıyla karşıladı, ama gövdede veri gelmedi (boş liste). Bu bir boş durumdur; kullanıcıya neden boş olduğunu ve ne yapabileceğini söyleyen ayrı bir ekran tasarlanır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir giriş isteği 401 dönüyor. Kullanıcıya hangi ekranı gösterirsin?">
+
+401 kimlik doğrulama gerektiğini söyler. Kullanıcıya giriş ekranını ya da "Oturumun kapandı, tekrar giriş yap" mesajını gösteririm; yaptığı işi kaybetmeden dönebilmesi iyi olur.
 
 </SelfCheck>

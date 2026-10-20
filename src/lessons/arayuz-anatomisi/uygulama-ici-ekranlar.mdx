@@ -5,7 +5,8 @@ outcomes:
   - "Widget'ların neden kendi yükleme, boş ve hata durumunu taşıdığını açıklayabilirsin."
   - "Onboarding'in ürünü anlatmak yerine ilk işi yaptırması gerektiğini anlatabilirsin."
   - "Profil ile hesabın farkını ve ayarların gruplama sorununu bilirsin."
-minutes: 9
+minutes: 6
+standard: 2
 sources:
   - label: "NN/g — Onboarding Tutorials vs. Contextual Help"
     url: "https://www.nngroup.com/articles/onboarding-tutorials/"
@@ -20,6 +21,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Pazarlama sayfası kullanıcıyı ikna eder. Giriş yaptıktan sonra ise iş başlar: kullanıcı ürünü **kullanır**. Bu derste o ekranların kalıplarını göreceksin.
 
@@ -49,6 +52,29 @@ Pazarlama sayfası kullanıcıyı ikna eder. Giriş yaptıktan sonra ise iş ba�
 
 **Kanban board**, öğelerin durumlarına göre sütunlara dizildiği ve sürüklenerek taşınabildiği görünümdür. Aynı verinin liste ve takvim görünümleri de sunulabilir. Sürükle-bırak tek yol olamaz: durumu değiştirmenin sürüklemesiz bir yolu da bulunmalıdır.
 
+<StepFlow
+  label="Kullanıcının uygulama içindeki yolu"
+  caption="Uygulama içi ekranlar kullanıcının yaşam döngüsünü izler. İlk kullanımda onboarding, ürün turu ve başlangıç kontrol listesi kullanıcıyı ilk değere ulaştırır. Günlük kullanımda ana ekran, yani dashboard ve widget'lar en sık işi öne çıkarır. Kullanıcıya ait ekranlar ise ayarlar, profil ve hesap ile bildirim merkezini kapsar."
+  steps={[
+    { title: "İlk kullanım", sub: "onboarding, tur, checklist", tone: "accent" },
+    { title: "Ana ekran", sub: "dashboard, widget" },
+    { title: "Kullanıcıya ait", sub: "ayarlar, profil, bildirimler", tone: "progress" },
+  ]}
+/>
+
+<Case>
+
+Demlik Panel'e yeni katılan bir dükkânın ilk günü yeniden tasarlandı:
+
+1. **Checklist:** "Menünü ekle", "Kasanı bağla", "QR kartını tezgâha koy". Üç adım; tamamlananlar tikle ve soluk metinle.
+2. **Ürün turu:** beş adımlık tur kaldırıldı; her ekranda yalnız ilk girişte tek bir ipucu.
+3. **Dashboard:** üstte "Bugün bekleyen siparişler", altında günün toplamı. Gün sonu raporu ayrı bir ekranda.
+4. **Bildirim merkezi:** kasa bağlantısı ve stok uyarıları; pazarlama duyuruları ayrı bir sekmede.
+
+Panel'in ilk ayı ücretsiz; ilk değer, ilk siparişin kasaya düşmesi.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -58,6 +84,12 @@ Pazarlama sayfası kullanıcıyı ikna eder. Giriş yaptıktan sonra ise iş ba�
 - **Ayarları gruplarken kullanıcının sorusundan başla:** "bildirimleri nerede kapatırım?"
 - **Profil ve hesap bilgilerinin görünürlüğünü yaz.**
 - **Kanban'a sürüklemesiz bir taşıma yolu ekle.**
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **İlk kullanımı yeni bir kullanıcıyla test et.** Ekip ürünü fazla iyi bilir.
+- **Ürün turunun atlanıp atlanmadığını gözle.** Atlanan tur, işe yaramayan turdur.
 
 </Lens>
 </Lenses>
@@ -83,5 +115,11 @@ Pazarlama sayfası kullanıcıyı ikna eder. Giriş yaptıktan sonra ise iş ba�
 <SelfCheck question="Widget'ların neden kendi yükleme, boş ve hata durumu olur?">
 
 Dashboard parçalara ayrılır ve biri başarısız olduğunda tüm ekran çökmesin diye. Her widget kendi durumunu yönetir.
+
+</SelfCheck>
+
+<SelfCheck question="Yeni kullanıcılar ürün turunu çoğunlukla atlıyor. Ne önerirsin?">
+
+Uzun turu kaldırıp yerine bağlama bağlı tek tek ipuçları ya da ilk değere götüren kısa bir başlangıç kontrol listesi koymayı. Kullanıcı ürünü okuyarak değil, yaparak öğrenir.
 
 </SelfCheck>

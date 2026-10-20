@@ -323,6 +323,18 @@
     "iletisim-ve-paydaslar/sbi-geri-bildirimi",
     "iletisim-ve-paydaslar/toplanti-yonetimi",
     "iletisim-ve-paydaslar/veriyle-hikaye",
-    "iletisim-ve-paydaslar/yetkisiz-etki"
+    "iletisim-ve-paydaslar/yetkisiz-etki",
+    "kullanici-arastirmasi/anket",
+    "kullanici-arastirmasi/arastirma-plani",
+    "kullanici-arastirmasi/baglamsal-sorgu-ve-gunluk-calismasi",
+    "kullanici-arastirmasi/etik-onam-ve-kvkk",
+    "kullanici-arastirmasi/gorusme",
+    "kullanici-arastirmasi/icgoru-paylasimi",
+    "kullanici-arastirmasi/kart-siralama-ve-agac-testi",
+    "kullanici-arastirmasi/katilimci-bulma",
+    "kullanici-arastirmasi/kullanilabilirlik-testi",
+    "kullanici-arastirmasi/researchops",
+    "kullanici-arastirmasi/sentez",
+    "kullanici-arastirmasi/yontem-haritasi"
   ]
 }

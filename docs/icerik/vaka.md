@@ -593,6 +593,93 @@ Elif öneriyi refinement'a aldı.
 saatleri 10.00–16.00 onun için 08.00–14.00. Daily Scrum'a katılamadığı günlerde notunu önceki akşam
 panoya yazar. POS tedarikçisi İzmir'de; Mert haftanın iki günü kampüslerde sahada.
 
+## Araştırma işleri (Mert)
+
+Kullanıcı Araştırması dersleri bu olguları kullanır. Araştırmacı **Mert**, iki takıma ortak; ekipteki
+not alma ve gözlem işlerine Selin, Ayşe ve Zeynep katılır.
+
+**Kampüs dönemi araştırma planı:** atölyede 31 soru yazıldı, gruplanınca 9 özet soruya indi; noktalı
+oylamayla ilk üç: (1) öğrenciler sabah ne kadar önceden ve nerede sipariş veriyor; (2) kafe personeli
+yoğun dakikalarda siparişi nasıl yönetiyor; (3) Panel'de dükkânlar menü ayarlarını neden bulamıyor.
+İki haftada bir tur; her turda en az bir yardımcı teknoloji kullanan katılımcı.
+
+**Katılımcı paneli:** uygulamada "Araştırmalara katıl" kaydı; 1.240 kişi listede (izinli). Teşvik
+oturum başına 150 TL kahve kredisi, oturumun başında verilir. Dükkân tarafı için Ozan'ın listesi.
+Kişisel veri: ad ve telefon yalnız randevu için; kayıtlar ve notlar altı ay sonra silinir; veri
+sorumlusu Demlik. Onam formu ve bilgi notu şablonu Mert'te; hukuk kontrol etti.
+
+**Görüşmeler:** sekiz kampüs öğrencisi, 45 dakika, kampüste ve görüntülü. Bulgular "Öğrenci
+araştırmasının sonucu" maddesinde.
+
+**Bağlamsal gözlem:** Mert ve Ayşe, kampüsteki pilot kafede 07.45–09.30 arası iki sabah gözlem. Görüşmede "ekrana bakıyorum" diyen baristalar
+ekrana değil yazıcıdan çıkan fişe bakıyor; yoğun dakikalarda fişler tezgâhta üst üste biniyor. (Pilotta
+çıkan "fiş 50 cm'den okunmalı" gereksinimi bu gözlemle anlaşıldı.)
+
+**Günlük çalışması:** on kampüs öğrencisi, iki hafta. Olay tabanlı kayıt (her sipariş verdiğinde kısa bir
+not ve fotoğraf) ve akşam 21.00'de tek soruluk sinyal ("Bugün kahveni nereden aldın?"). Sonunda 20
+dakikalık görüşme. On kişiden yedisi derse geç kaldığı günlerde sipariş vermekten vazgeçti.
+
+**Kart sıralama (Panel menüsü):** 36 kart, 18 dükkân sahibi ya da çalışanı, nitel, uzaktan. "Stok" ile
+"Menü"yü çoğu katılımcı aynı grupta topladı; "Bugünlük kapat" kartı herkes tarafından stokla birlikte
+konuldu.
+
+**Ağaç testi (Panel'in yeni gezinmesi):** 40 dükkân çalışanı, nicel, moderatörsüz. Görev: "Biten bir ürünü
+bugünlük satıştan kaldırmak istiyorsun." Eski ağaçta başarı %55, yeni ağaçta ("Menü ve stok" altında)
+%85. Eski menüde "Ürünler", "Stok" ve "Ayarlar" ayrı bölümlerdi; işlem "Ayarlar" altındaydı.
+
+**Mutluluk anketi:** çeyrekte bir, uygulama içi, üç soru (biri açık uçlu). Son çeyrekte 2.140 yanıt.
+Açık uçlu soruda en sık geçen konu kartı güncelleyememekti.
+
+**Sentez ve paylaşım:** kampüs görüşmelerinin analizi aynı gün, 2 saatlik görüşme için 1 saat; Selin,
+Elif ve Zeynep katıldı. Her ikinci perşembe 30 dakikalık "araştırma show and tell"; ekip alanında bir
+araştırma duvarı. Bulgular ortak bir içgörü deposunda, etiketli.
+
+**Araştırma altyapısından önce:** geçen yıl bir ajansın yazdığı 40 sayfalık rapor ortak klasörde duruyordu;
+ekipte yalnız iki kişi açmıştı. Kampüs ve Panel takımları onam formunun iki farklı sürümünü kullanıyordu;
+Ayşe, bulunamadığı için daha önce yapılmış bir dükkân araştırmasını yeniden planlıyordu. İlk görüşmede bir
+öğrenci kaydın hocalarına gidip gitmeyeceğini sordu; bilgi notunu e-postada almış ama açmamıştı. Bundan
+sonra Mert onamın ana maddelerini oturum başında sesli okumaya başladı ve onam kayıtta sözlü alındı.
+
+## Web ve arayüz işleri (Selin)
+
+Web Temelleri, UX/UI İlkeleri, Tasarım Sistemi, Erişilebilirlik ve Arayüz Anatomisi dersleri bu
+olguları kullanır. Tasarım kararları **Selin**'in; Panel tarafında Emre ve Ayşe, müşteri uygulamasında
+Ece ve Burak birlikte çalışır.
+
+**Adresler ve ortamlar:** müşteri sitesi `demlik.com.tr`, dükkân sayfası `demlik.com.tr/dukkan/moda`,
+ürün `demlik.com.tr/dukkan/moda/filtre-kahve` (eskiden adresi olmayan bir modal'dı; dükkân Instagram'da
+paylaşamıyordu). Kampüs landing page'i `demlik.com.tr/kampus` (statik; tek hedef: uygulamayı indir;
+bekleme listesi: e-posta ve üniversite). Panel `panel.demlik.com.tr`, prova ortamı
+`staging.demlik.com.tr` (ödeme kuruluşunun test modu). Panel yeni hostinge taşınırken DNS kaydı bir
+akşam önce değiştirildi; sabah iki dükkân eski sürümü gördü. Kural: cuma 15.00'ten sonra canlıya
+çıkış yok.
+
+**İstemci, sunucu, katmanlar:** öğrenci kartı indirimi ilk prototipte uygulamada hesaplanıyordu;
+sunucuya taşındı. Sepet hesaba bağlı, sunucuda. Ece front-end, Burak back-end, Can full-stack;
+ayrı bir altyapı rolü yok. Ödeme ekranı açılırken dört istek gidiyordu (kartlar, sepet, dükkân
+açık mı, indirim); Burak ikiye indirdi. Panel bir SPA'dır, kafe tabletlerinde ana ekrana eklenmiş
+PWA olarak çalışır; geri tuşu Panel'den çıkarıyordu, Emre her ekrana adres verdi.
+
+**Arayüz kararları:** dükkân sayfasında fotoğraflar yüklendikçe liste kayıyordu (CLS); fotoğraflar
+4:3'e sabitlendi. Eski ödeme ekranında üç dolu düğme vardı (Öde, Kart ekle, Kupon kullan); tek
+birincil eylem Öde oldu. Kart ekleme formunda yer tutucu etiketin yerine kullanılıyordu; hata metni
+"Son kullanma tarihi geçmiş. Kartının üzerindeki tarihi kontrol et." oldu; uygulama "sen" dilinde.
+Sipariş animasyonu 1,2 saniyeydi; 300 ms'lik tike indi, fincan yalnız ilk siparişte oynuyor.
+Müşteri uygulamasında beş bölüm hamburger menüdeydi; dördü alttaki sekme çubuğuna çıktı. Ana
+sayfanın hero'su müşteriye ayrıldı ("Uygulamayı indir"); dükkânlar için ayrı sayfa var.
+
+**Tasarım sistemi:** iki üründe 14 farklı kahverengi vardı; dokuz basamaklı tek rampaya (`kahve-100`
+… `kahve-900`) ve semantic token'lara indi. Panel'in koyu teması yalnız semantic katmanla kuruldu.
+Eski Figma dosyasında 23 farklı buton vardı. Boşluk ölçeği 4, 8, 12, 16, 24, 32. Tek font ailesi,
+iki ağırlık, 16 px gövde, 1,25 oranlı ölçek. Yeni bileşen önerileri iki haftada bir Selin, Ece ve
+Emre'nin toplantısında karara bağlanır; sistemin tek doğru kaynağı koddur.
+
+**Erişilebilirlik:** hedef WCAG 2.2 AA; sitede erişilebilirlik beyanı var. Bir görüşmede ekran
+okuyucu kullanan öğrenci "Öde"ye ulaşamadı (düğme bir `div`'di). Panel'de odak halkası kaldırılmıştı,
+geri getirildi; sipariş durumları yalnız renkle ayrılıyordu, metin ve ikon eklendi. Kampüs kutlama
+animasyonundaki ikon saniyede dört kez yanıp sönüyordu; kaldırıldı. Panel'de sezgisel
+değerlendirmeyi Selin ve Ayşe yaptı; geri alma bildirimi beş saniye.
+
 ## Paydaşlar
 
 | Paydaş | İlgi | Etki |

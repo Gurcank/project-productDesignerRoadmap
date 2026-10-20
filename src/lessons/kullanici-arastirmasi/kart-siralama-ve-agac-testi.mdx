@@ -1,0 +1,133 @@
+---
+summary: "Kart sıralama, kullanıcıların içeriği nasıl grupladığını göstererek bir bilgi mimarisi kurmaya yardım eder. Ağaç testi, verilen yapıda insanların aradığını bulup bulamadığını ölçer."
+outcomes:
+  - "Kart sıralama ile ağaç testinin hangi soruya cevap verdiğini ayırt edebilirsin."
+  - "Bir kart sıralama çalışması için kart seti ve talimat hazırlayabilirsin."
+  - "Cevabı ele vermeyen ağaç testi görevleri yazabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "NN/g — Samhita Tankala, Katie Sherwin, Card Sorting: Uncover Users' Mental Models (2024)"
+    url: "https://www.nngroup.com/articles/card-sorting-definition/"
+  - label: "NN/g — Page Laubheimer, Tree Testing: Fast, Iterative Evaluation of Menu Labels and Categories (2023)"
+    url: "https://www.nngroup.com/articles/tree-testing/"
+additions:
+  - "Kart sıralamanın adımları, kart sayısı, nitel ve nicel katılımcı sayıları, talimat (Tankala ve Sherwin, NN/g)"
+  - "Ağaç testinin tanımı, görev türleri ve yazımı, nitel ve nicel ağaç testi (Page Laubheimer, NN/g)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Chart from "~/components/diagrams/primitives/Chart.astro";
+
+Panel'in menüsünde "Ürünler", "Stok" ve "Ayarlar" ayrı bölümlerdi. Bir ürünü bugünlük satıştan kaldırmak "Ayarlar"ın altındaydı. Ekip bu yerleşimi mantıklı buluyordu; dükkânlar bulamıyordu. Selin yeni bir menü çizmeye başlamadan önce Mert sordu: "Dükkânlar bu işleri kafalarında nasıl gruplıyor?"
+
+Ekibin mantığı, kullanıcının mantığı değildir. Bu ders, bir menüyü kullanıcının zihnine göre kurmayı ve kurduktan sonra sınamayı anlatır. Bilgi mimarisinin temeli [Bilgi mimarisi](/ux-ui-ilkeleri/bilgi-mimarisi-ia/) dersinde.
+
+## Kart sıralama: yapıyı kullanıcıyla kur
+
+NN/g'ye göre **kart sıralamada** (card sorting) katılımcılar etiketli kartları, kendilerine en mantıklı gelen ölçüte göre gruplar ve gruplara ad verir. Böylece içeriğe dair **zihinsel modelleri** görünür olur. Adımlar şunlardır: kartları hazırla, gruplat, gruplara ad verdir, analiz et.
+
+NN/g'nin pratik önerileri:
+
+- **30–50 kart.** Daha fazlası katılımcıyı yorar.
+- **Aynı kelimeyi birden çok kartta kullanma.** Üç kartta "Toyota" geçerse, katılımcı anlamı değil kelimeyi gruplar.
+- **Talimatı açık yaz.** Grupların boyutu farklı olabilir, belirli bir grup sayısı yoktur, kartlar yeniden düzenlenebilir.
+- **Pilot yap.**
+
+Kart sıralama nitel ya da nicel olabilir. **Nitel** çalışmada amaç insanların neden öyle grupladığını anlamaktır; sesli düşünme istenir ve en az 15 katılımcı önerilir. **Nicel** çalışmada grupların istatistiksel geçerliliği aranır; 30–50 katılımcı gerekir.
+
+## Ağaç testi: yapıyı ölç
+
+NN/g'den Page Laubheimer'a göre **ağaç testi** (tree testing), bir kategori hiyerarşisini, katılımcılardan belirli bir şeyin ağaçta nerede olduğunu bulmalarını isteyerek değerlendirir. Prototip, yerleşim ya da görsel tasarım gerekmez; yalnız ağaç ve görevler gerekir. Ağaç en alt kategoriye kadar yazılır, her görevin doğru cevabı önceden tanımlanır.
+
+Görev yazımında kural, kullanılabilirlik testindekiyle aynıdır: **cevabı ele verme.** Laubheimer'ın örneğinde "İş kurma hakkında bilgi bul" kötü bir görevdir, çünkü menüdeki kelimeyi kullanır. İyi görev bir durum anlatır: "Bir bahçe bakım işi açmayı düşünüyorsun. Süreci başlatmana yardım edecek bir kaynak var mı, bak."
+
+Ağaç testi de nitel ya da nicel yapılabilir. Nitel çalışma az katılımcıyla hızlı yineleme sağlar. Nicel çalışma daha büyük örneklemle başarı oranını ve süreyi ölçer; iki ağacı kıyaslamaya yarar. Laubheimer, nicel testten önce küçük bir nitel pilot önerir.
+
+**Kart sıralama ≠ ağaç testi.** Kart sıralamada kullanıcı yapıyı üretir; ağaç testinde verilen yapıda bir şey bulur. NN/g'ye göre mevcut bir yapıyı değerlendirmek için ağaç testi daha uygundur.
+
+<Chart
+  kind="bar"
+  label="Panel ağaç testi: görev başarısı"
+  caption="Kırk dükkân çalışanına aynı görev verildi: biten bir ürünü bugünlük satıştan kaldırmak. Eski ağaçta, işlem Ayarlar altındayken, katılımcıların yüzde 55'i doğru yeri buldu. Kart sıralamadan sonra kurulan yeni ağaçta, işlem Menü ve stok altına taşındığında, başarı yüzde 85'e çıktı."
+  x={{ title: "Ağaç", labels: ["Eski ağaç", "Yeni ağaç"] }}
+  y={{ title: "Görev başarısı", max: 100, unit: "%" }}
+  series={[
+    { name: "Başarı oranı", values: [55, 85], tone: "accent" },
+  ]}
+/>
+
+<Case>
+
+Mert iki yöntemi sırayla kullandı:
+
+1. **Kart sıralama:** 36 kart, 18 dükkân sahibi ya da çalışanı; nitel, uzaktan. Katılımcılar gruplarken sesli düşündü.
+2. **Bulgu:** çoğu katılımcı "Stok" ile "Menü"yü aynı grupta topladı. "Bugünlük kapat" kartını herkes stokla birlikte koydu.
+3. **Yeni yapı:** Selin "Menü ve stok" adında tek bir bölüm çizdi; "Bugünlük kapat" oraya taşındı.
+4. **Ağaç testi:** 40 dükkân çalışanı; nicel, moderatörsüz. Görev: "Biten bir ürünü bugünlük satıştan kaldırmak istiyorsun." Başarı eski ağaçta %55, yeni ağaçta %85.
+
+Görevde "kapat" ya da "stok" kelimesi geçmedi; ikisi de menüdeki etiketlerdi.
+
+</Case>
+
+<Lenses>
+<Lens role="ux-researcher">
+
+- **Önce kart sıralama, sonra ağaç testi.** Yapıyı kullanıcıyla kur, sonra ölç.
+- **Kart sıralamada anlaşmazlık çıkan grupları ağaç testinde görev yap.** Sorunlu alanlar orada.
+- **Görevde menü etiketini kullanma.** Kelime eşleştirme, bulmayı ölçmez.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Etiketleri kullanıcının kelimeleriyle yaz.** Kart sıralamada verilen grup adları birer etiket adayıdır.
+- **Görsel tasarıma başlamadan ağacı sına.** Ağaç testi, yanlış yapıyı ucuz yakalar.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Kart sıralamayı alan modelinin girdisi say.** Kullanıcıların grupladığı kavramlar, iş kavramlarıyla örtüşmeyebilir.
+- **Ağaç testi sonucunu kabul ölçütüne bağla.** "Başarı en az %80" ölçülebilir bir ölçüttür.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Kart sıralama, kullanıcıların içeriği nasıl gruplayıp adlandırdığını göstererek zihinsel modeli açığa çıkarır.
+- 30–50 kart kullanılır; nitel çalışmada en az 15, nicel çalışmada 30–50 katılımcı önerilir.
+- Ağaç testi, verilen bir hiyerarşide insanların aradığını bulup bulamadığını ölçer.
+- Görev cevabı ele vermez; menüdeki kelime yerine bir durum anlatır.
+- Kart sıralama yapıyı üretir, ağaç testi yapıyı sınar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Kart sıralama ile ağaç testi arasındaki fark nedir?">
+
+Kart sıralamada katılımcılar öğeleri gruplar ve gruplara ad verir; bir yapı üretir. Ağaç testinde verilen bir yapıda belirli bir öğeyi bulmaya çalışırlar; yapı değerlendirilir.
+
+</SelfCheck>
+
+<SelfCheck question="Neden birden çok kartta aynı kelime kullanılmaz?">
+
+Katılımcı kartları anlamlarına göre değil, ortak kelimeye göre gruplar. Sonuç, zihinsel modeli değil kelime eşleşmesini gösterir.
+
+</SelfCheck>
+
+<SelfCheck question="'Stok bölümünden ürünü kapat' neden kötü bir ağaç testi görevidir?">
+
+Menüdeki etiketleri kullanır; katılımcı yapıyı anlamadan kelimeyi eşleyerek bulabilir. Bir durum anlatmak gerekir: "Biten bir ürünü bugünlük satıştan kaldırmak istiyorsun."
+
+</SelfCheck>
+
+<SelfCheck question="Yeni menünün eskisinden iyi olduğunu ekibe nasıl gösterirsin?">
+
+İki ağaç için aynı görevlerle nicel bir ağaç testi yaparak. Her katılımcı tek bir ağacı görür ve başarı oranı ile süre karşılaştırılır.
+
+</SelfCheck>

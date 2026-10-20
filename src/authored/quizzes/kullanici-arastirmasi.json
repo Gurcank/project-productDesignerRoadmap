@@ -1,0 +1,55 @@
+{
+  "category": "kullanici-arastirmasi",
+  "sources": [
+    { "label": "GOV.UK Service Manual — Plan user research for your service", "url": "https://www.gov.uk/service-manual/user-research/plan-user-research-for-your-service" },
+    { "label": "NN/g — When to Use Which User-Experience Research Methods", "url": "https://www.nngroup.com/articles/which-ux-research-methods/" },
+    { "label": "NN/g — 28 Tips for Creating Great Qualitative Surveys", "url": "https://www.nngroup.com/articles/qualitative-surveys/" },
+    { "label": "NN/g — Diary Studies", "url": "https://www.nngroup.com/articles/diary-studies/" },
+    { "label": "NN/g — Card Sorting", "url": "https://www.nngroup.com/articles/card-sorting-definition/" },
+    { "label": "NN/g — Tree Testing", "url": "https://www.nngroup.com/articles/tree-testing/" },
+    { "label": "NN/g — ResearchOps 101", "url": "https://www.nngroup.com/articles/research-ops-101/" },
+    { "label": "KVKK — 6698 sayılı Kanun (İngilizce çeviri)", "url": "https://www.kvkk.gov.tr/Icerik/6649/Personal-Data-Protection-Law" }
+  ],
+  "items": [
+    {
+      "question": "Araştırma soruları atölyesinde biri \"Kullanıcıya sabah sipariş vermek ister misin diye soralım\" yazdı. Bunu nasıl bir araştırma sorusuna çevirirsin?",
+      "answer": "Araştırma sorusu ekibin öğrenmek istediğidir, katılımcıya sorulacak soru değil. Geniş ve açık yazarım: \"Öğrenciler sabah kahvelerini ne zaman, nerede ve nasıl alıyor?\" Bu soruyu görüşmede bir hikâye anlattırarak cevaplarım."
+    },
+    {
+      "question": "Ekip \"Kaç dükkân menü ayarlarını bulamıyor?\" ve \"Neden bulamıyorlar?\" sorularını tek bir ankette cevaplamak istiyor. Ne önerirsin?",
+      "answer": "İki soruyu ayırırım. İlki bir \"ne kadar\" sorusudur; analitik gibi nicel ve davranışsal bir yöntemle cevaplanır. İkincisi bir \"neden\" sorusudur; kullanılabilirlik testi ya da gözlem gibi nitel bir yöntem ister. Anket yalnız ne dediklerini ölçer."
+    },
+    {
+      "question": "Ofisteki stajyerler görüşmeye hemen razı. Kampüs görüşmesi için onları kullanmak neden kötü fikir, onlarla ne yapılabilir?",
+      "answer": "Ürünü ve ekranları bilirler, gerçek kullanıcı gibi kullanmazlar; takıldıkları yer gerçek kullanıcının takılacağı yer değildir. Görüşme rehberini ve test görevlerini onlarla prova etmek ise iyi bir kullanımdır."
+    },
+    {
+      "question": "Test görevi taslağı: \"Kayıtlı kartlar bölümünden iş kartını seç.\" Nasıl düzeltirsin?",
+      "answer": "Görev arayüzdeki kelimeyi ve yapılacak işlemi ele veriyor. Bir hedef veririm ve yolu katılımcıya bırakırım: \"Bu sabahki kahveni iş kartınla öde.\" Görevi bir meslektaşla denerim."
+    },
+    {
+      "question": "Pazarlama, çeyreklik ankete on iki soru eklemek istiyor. Ne yaparsın?",
+      "answer": "Önce anketin öğrenme hedefini yazarım ve her soruyu bir karara bağlarım; bağlanmayanı çıkarırım. Her ek soru yanıt oranını düşürür. Kalan önemli sorular için ayrı, kısa bir anket öneririm ve anketi yayından önce test ederim."
+    },
+    {
+      "question": "Öğrencilerin hangi günlerde ve ne sıklıkla sipariş vermekten vazgeçtiğini öğrenmek istiyorsun. Hangi yöntem, nasıl bir kayıtla?",
+      "answer": "Günlük çalışması; çünkü sıklık ve alışkanlık zamana yayılır. Her siparişte olay tabanlı kısa bir kayıt ve unutmaya karşı her akşam sinyal tabanlı tek bir soru. Sonunda kısa bir görüşme."
+    },
+    {
+      "question": "Yeni Panel menüsünün eskisinden daha iyi olduğunu nasıl gösterirsin?",
+      "answer": "Aynı görevlerle iki ağaç için nicel bir ağaç testi yaparım; her katılımcı tek bir ağaç görür. Görevlerde menü etiketlerini kullanmam. Başarı oranını ve süreyi karşılaştırırım."
+    },
+    {
+      "question": "Sentez sırasında bir not şöyle: \"Ödeme ekranı kafa karıştırıcı.\" Sorun ne?",
+      "answer": "Bu bir yorum, gözlem değil. Gözlem notu görüleni ya da duyulanı yazar: \"'Hangi kartla ödüyorum?' diye sordu.\" Yorumlar gruplamadan sonra bulgu olarak yazılır ve birden çok gözleme dayanır."
+    },
+    {
+      "question": "Ekip görüşmede katılımcıların sağlık durumunu da sormak istiyor. Ne yaparsın?",
+      "answer": "Araştırma sorusu için gerekli mi diye sorarım. Sağlık verisi KVKK'da özel nitelikli veridir; işlenmesi yasaktır ve yalnız kanunun saydığı şartlarla işlenebilir. Gerekmiyorsa sorulmaz; gerekiyorsa hukukla birlikte karar verilir ve onamda açıkça söylenir."
+    },
+    {
+      "question": "İki takım farklı onam formları kullanıyor ve bir takım daha önce yapılmış bir araştırmayı yeniden planlıyor. Hangi ResearchOps alanları eksik?",
+      "answer": "Yönetişim: onam, gizlilik ve saklama tek bir standarda bağlanmalı. Bilgi: içgörüler etiketli ve aranabilir bir depoda olsaydı eski araştırma bulunurdu."
+    }
+  ]
+}

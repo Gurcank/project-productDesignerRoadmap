@@ -6,6 +6,7 @@ outcomes:
   - "Tarayıcı, tarayıcı motoru ve JavaScript motoru arasındaki farkı bilirsin."
   - "Bir geliştirici \"bunu client'ta çözüyoruz\" dediğinde ne kastettiğini anlarsın."
 minutes: 9
+standard: 2
 sources:
   - label: "MDN — How the web works"
     url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works"
@@ -24,6 +25,7 @@ import Outside from "~/components/lesson/Outside.astro";
 import ClientServerMap from "~/components/lesson/ClientServerMap.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir alışveriş sitesinde ürünü sepete ekledin ve sepet simgesindeki sayı 1 oldu. Peki o "1" şu an nerede duruyor? Telefonunun içinde mi, yoksa internetin öbür ucundaki bir bilgisayarda mı? Başka bir cihazdan aynı hesaba girince sepet orada da görünecek mi?
 
@@ -83,18 +85,6 @@ Bu iş bölümünün adı **istemci–sunucu modelidir** (*client-server model*)
 
 Bir ayrım daha: **peer-to-peer** (P2P) modelde merkezi sunucu yoktur, cihazlar doğrudan birbiriyle konuşur (BitTorrent gibi). Web P2P değildir; web her zaman bir istemci ile bir sunucu arasındadır.
 
-<Lenses>
-<Lens role="product-designer">
-
-Geliştiricilerle çalışırken en işe yarar soru şudur: **"Bu bilgi nerede yaşıyor, bu işi kim yapıyor: cihaz mı, sunucu mu?"**
-
-- Cevap "sunucu" ise ekranda bir **bekleme** durumu olabilir: yükleniyor, yavaş bağlantı, hata. Bu ekranları sen tasarlamazsan geliştirici zorunlu olarak kafasına göre yapar.
-- Cevap "istemci" ise tepki anında olur, ama veri cihaza kadar gelmek zorundadır.
-- Başlangıçtaki sepet sorusuna dönelim: sepet hesaba bağlı sunucuda tutuluyorsa başka cihazdan girince de görünür; yalnızca cihazda tutuluyorsa görünmez. İkisi de meşru bir karar, ama kullanıcı deneyimi farklı olur ve bunu tasarım aşamasında bilmek gerekir.
-
-</Lens>
-</Lenses>
-
 ## Tarayıcı: istemcinin içindeki program
 
 İstemci cihaz, o cihazda isteği yapan ve cevabı gösteren program ise **tarayıcıdır** (*browser*). Tarayıcı, internetten gelen HTML, CSS ve JavaScript'i alıp ekranda görsel bir sayfaya çevirir. Gelen şey ham koddur; tarayıcı onu senin okuyabileceğin bir sayfaya dönüştürür.
@@ -141,6 +131,67 @@ Bu derste geçen ve toplantılarda sürekli karıştırılan ikililer:
 - **Tarayıcı motoru ≠ JavaScript motoru.** Biri sayfayı çizer, diğeri kodu çalıştırır.
 - **Web ≠ peer-to-peer.** Web her zaman bir sunucuya dayanır.
 
+<Case>
+
+Kampüs projesinde öğrenci kartıyla %10 indirim geliyordu. İlk prototipte indirim, uygulamanın içinde hesaplanıyordu.
+
+1. **Soru:** Burak sordu: "Bu yüzdeyi kim hesaplıyor, telefon mu sunucu mu?"
+2. **Karar:** indirim sunucuda hesaplanır. Telefonda hesaplanan bir fiyat değiştirilebilir; sunucuda hesaplanan değiştirilemez.
+3. **Ekrana etkisi:** uygulama sepet toplamını göstermeden önce sunucudan cevap bekler. Selin bu kısa an için bir yükleme durumu ve "İndirim uygulanamadı" hata metni tasarladı.
+4. **Sepet:** müşterinin sepeti hesaba bağlı, sunucuda tutulur; telefonu değişen öğrenci sepetini kaybetmez.
+
+İş bölümü kararı, ekranda iki yeni durum demekti.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
+
+Geliştiricilerle çalışırken en işe yarar soru şudur: **"Bu bilgi nerede yaşıyor, bu işi kim yapıyor: cihaz mı, sunucu mu?"**
+
+- Cevap "sunucu" ise ekranda bir **bekleme** durumu olabilir: yükleniyor, yavaş bağlantı, hata. Bu ekranları sen tasarlamazsan geliştirici zorunlu olarak kafasına göre yapar.
+- Cevap "istemci" ise tepki anında olur, ama veri cihaza kadar gelmek zorundadır.
+- Başlangıçtaki sepet sorusuna dönelim: sepet hesaba bağlı sunucuda tutuluyorsa başka cihazdan girince de görünür; yalnızca cihazda tutuluyorsa görünmez. İkisi de meşru bir karar, ama kullanıcı deneyimi farklı olur ve bunu tasarım aşamasında bilmek gerekir.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Gereksinimde "nerede yaşıyor" sorusunu sor.** Fiyat, stok, indirim gibi güvenilir olması gereken her şey sunucudadır.
+- **Hız ile güven arasındaki takası bil.** Cihazda yapılan iş hızlıdır ama değiştirilebilir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kabul kriterine sunucu kuralını yaz.** "İndirim sunucuda hesaplanır; istemci yalnız sonucu gösterir."
+- **Bekleme ve hata durumlarını story'ye ekle.** Sunucuya giden her işin bir yükleme ve hata hâli vardır.
+
+</Lens>
+<Lens role="project-manager">
+
+- **"Client" kelimesini bağlamdan oku.** Teknik toplantıda müşteri değil, kullanıcının cihazıdır.
+- **Sunucu tarafı işler için bağımlılık planla.** Back-end hazır olmadan ekran tamamlanmış sayılmaz.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Story'ler istemci ve sunucu diye bölündüğünde dikkat et.** Kullanıcıya değer, iki taraf birlikte bitince gelir.
+- **"Bende çalışıyor" tartışmalarında hangi tarafta olduğunu sor.** Sorunun yeri, kimin bakacağını belirler.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **İş kuralının nerede çalıştığını gereksinime yaz.** Kural sunucuda değilse kullanıcı atlatabilir.
+- **Veri sahipliğini netleştir.** Ortak veri sunucudadır; cihazda tutulan veri cihazla kaybolur.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Gecikme anlarını gözle.** Kullanıcının sunucu cevabını beklediği yer, testte en çok tereddüt edilen yerdir.
+- **"Başka cihazdan girince ne görmeyi bekliyorsun?" diye sor.** Beklenti, verinin nerede tutulacağını söyler.
+
+</Lens>
+</Lenses>
+
 <Summary>
 
 - Web iki taraflı bir konuşmadır: **istemci ister**, **sunucu verir**.
@@ -164,5 +215,11 @@ Cevabı önce kendi cümlenle söyle, sonra aç.
 <SelfCheck question="Aynı sayfa Safari'de bozuk, Chrome'da düzgün görünüyor. Bunun olası nedeni nedir?">
 
 Safari ile Chrome farklı tarayıcı motorları kullanır (WebKit ve Blink). Bir CSS özelliği ya da davranışı bir motorda desteklenip diğerinde desteklenmiyor olabilir. Bu bir tarayıcı uyumluluğu sorunudur.
+
+</SelfCheck>
+
+<SelfCheck question={"Bir geliştirici \"bu filtreyi client'ta yapalım\" diyor. Bunun artısı ve bedeli nedir?"}>
+
+Artısı hızdır: sonuç sunucuya gitmeden anında gelir. Bedeli, verinin tamamının baştan cihaza inmesidir; veri büyükse ilk açılış yavaşlar. Filtre bir güvenlik ya da iş kuralı içeriyorsa sunucuda da uygulanmalıdır.
 
 </SelfCheck>

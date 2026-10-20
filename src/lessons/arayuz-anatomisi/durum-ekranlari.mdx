@@ -6,6 +6,7 @@ outcomes:
   - "Üç farklı boş durum türünü ve her birinin tasarımını anlatabilirsin."
   - "Hata durumunun kapsamını doğru seçebilirsin."
 minutes: 10
+standard: 2
 skipTerms: ["header"]
 sources:
   - label: "NN/g — Skeleton Screens 101"
@@ -24,6 +25,7 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Tasarım dosyasında listen mükemmel: on proje, ikonlar, rozetler. Gerçek kullanıcı ise ilk kez giriyor ve hiç projesi yok. Ya da internet yavaş. Ya da sunucu hata verdi. Senin ekranın bu üç durumda ne gösteriyor?
 
@@ -71,6 +73,20 @@ Bağlantı kesilince bu sitenin üstünde "İnternet yok — indirilmiş içerik
 
 </Callout>
 
+<Case>
+
+Demlik'in sipariş geçmişi ekranı yalnız dolu hâliyle tasarlanmıştı. Selin beş hâli de çizdi:
+
+1. **Yükleniyor:** sipariş satırlarının iskeleti; dönen bir simge yerine.
+2. **Boş:** yeni müşteri için "Henüz siparişin yok. Yakındaki dükkânlara bak." ve bir düğme.
+3. **Hata:** "Siparişlerin yüklenemedi. Tekrar dene." Ekran boş kalmıyor.
+4. **Çevrimdışı:** kampüste bağlantı zayıf olduğunda son görülen liste gösteriliyor, üstünde "Bağlantı yok" bandı.
+5. **Başarı:** "Son siparişini tekrarla" sonrası "Siparişin alındı · hazır olma: ~8 dk".
+
+Ayşe her hâli bir kabul kriterine çevirdi; Zeynep test senaryolarını bu listeden yazdı.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -80,6 +96,18 @@ Bağlantı kesilince bu sitenin üstünde "İnternet yok — indirilmiş içerik
 - **Hata mesajını bileşen kapsamında göster** ve "tekrar dene" ver.
 - **404'e arama ve çıkış yolu koy;** header ve footer'ı koru.
 - **Optimistic UI kullanıyorsan hata hâlini ayrıca çiz.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Her ekranın hâllerini gereksinimde listele.** Yükleniyor, boş, hata, çevrimdışı, başarı.
+- **Hâlin tetikleyicisini yaz.** Hangi koşulda boş, hangi koşulda hata gösterilir?
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Testte dolu olmayan hâlleri de göster.** Boş ve hata ekranı en çok takılınan yerlerdir.
+- **İlk kullanımı ayrıca gözle.** Yeni kullanıcının ilk gördüğü ekran çoğu zaman boş ekrandır.
 
 </Lens>
 </Lenses>

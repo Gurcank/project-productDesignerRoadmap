@@ -6,6 +6,7 @@ outcomes:
   - "Bir sitedeki dört nav türünü ayırt edebilirsin."
   - "Bölge adlarının neden aynı zamanda erişilebilirlik yapısı olduğunu söyleyebilirsin."
 minutes: 8
+standard: 2
 sources:
   - label: "W3C WAI-ARIA APG — Landmark Regions"
     url: "https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/"
@@ -23,6 +24,7 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Şuraya, ürün görselinin altına, ince ince akan bir şeritte müşteri logoları koyalım." Bu cümle anlaşılır ama uzun. "Hero'nun altına logo cloud ekleyelim, marquee olsun" aynı şeyi üç saniyede, yanlış anlaşılmadan söyler. Üstelik yapay zekâya aynı cümleyi verirsen tek seferde doğru çıktı alırsın.
 
@@ -71,6 +73,20 @@ Bu sayfa da aynı iskeleti taşır: üstte yapışkan bir header, geniş ekranda
 
 </Callout>
 
+<Case>
+
+Demlik'in dükkân sayfası beş bölgeye ayrıldı:
+
+1. **Header:** logo, arama ve sepet; her sayfada aynı yerde.
+2. **Nav:** menü kategorileri; kaydırınca üstte kalıyor.
+3. **Main:** ürün listesi; ekran okuyucu kullanıcısı "ana içeriğe atla" bağlantısıyla doğrudan buraya geliyor.
+4. **Aside:** sepet özeti; mobilde alttaki çubuğa dönüşüyor.
+5. **Footer:** dükkânın adresi, açılış saatleri, yardım.
+
+Aynı iskelet 140 dükkânın sayfası için tek bir şablon oldu.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -78,6 +94,12 @@ Bu sayfa da aynı iskeleti taşır: üstte yapışkan bir header, geniş ekranda
 - **Hangi layout'ların olduğunu baştan listele:** pazarlama, uygulama, giriş. Her ekran bunlardan birine ait olmalı.
 - **Footer'ı boş bırakma.** Yasal bağlantıları (gizlilik, KVKK aydınlatma, erişilebilirlik beyanı) tasarla.
 - **Nav türlerini ayır.** Hangi bağlantının global, hangisinin utility olduğu kararı bilgi mimarisinin parçasıdır.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Ekran okuyucu kullanıcısının bölgeler arasında nasıl gezindiğini gözle.**
+- **Şablonu farklı içerikle test et.** Kısa menülü ve uzun menülü dükkân aynı iskelette nasıl duruyor?
 
 </Lens>
 </Lenses>
@@ -103,5 +125,11 @@ Header, sayfanın en üstündeki, logo ve navigasyonu taşıyan ince şerittir. 
 <SelfCheck question="Bir sitede kaç farklı nav olabilir? En az üçünü adlandır.">
 
 Birden fazla. Global nav (her sayfada aynı ana menü), local nav (bir bölümün alt menüsü), utility nav (giriş, dil, arama gibi yardımcı bağlantılar) ve footer nav (alttaki geniş bağlantı listesi).
+
+</SelfCheck>
+
+<SelfCheck question="Header ile hero arasındaki fark nedir?">
+
+Header her sayfada üstte duran ince şerittir: logo, menü, arama. Hero ise genelde yalnız ana ya da açılış sayfasında header'ın altındaki büyük tanıtım alanıdır.
 
 </SelfCheck>

@@ -259,6 +259,36 @@ const COMMS_FOR_UX_RESEARCHER: TopicTiers = {
   "kotu-haber-ve-eskalasyon": I,
 };
 
+const RESEARCH_FOR_PRODUCT_DESIGNER: TopicTiers = {
+  "researchops": I,
+};
+
+const RESEARCH_FOR_PRODUCT_MANAGER: TopicTiers = {
+  "katilimci-bulma": I,
+  "baglamsal-sorgu-ve-gunluk-calismasi": I,
+  "kart-siralama-ve-agac-testi": I,
+  "etik-onam-ve-kvkk": I,
+  "researchops": I,
+};
+
+const RESEARCH_FOR_PRODUCT_OWNER: TopicTiers = {
+  "yontem-haritasi": I,
+  "katilimci-bulma": I,
+  "gorusme": I,
+  "baglamsal-sorgu-ve-gunluk-calismasi": I,
+  "kart-siralama-ve-agac-testi": I,
+  "sentez": I,
+  "etik-onam-ve-kvkk": I,
+  "researchops": I,
+};
+
+const RESEARCH_FOR_BUSINESS_ANALYST: TopicTiers = {
+  "katilimci-bulma": I,
+  "kullanilabilirlik-testi": I,
+  "icgoru-paylasimi": I,
+  "researchops": I,
+};
+
 const PRODUCT_MGMT_FOR_PRODUCT_DESIGNER: TopicTiers = {
   "vizyon-ve-strateji": I,
   "deger-onerisi-ve-konumlandirma": I,
@@ -395,7 +425,7 @@ export const ROLES: RoleDefinition[] = [
       entry("sirket-sozlugu", T),
       entry("iletisim-ve-paydaslar", O, COMMS_FOR_PRODUCT_DESIGNER),
       entry("ux-ui-ilkeleri", T),
-      entry("kullanici-arastirmasi", T),
+      entry("kullanici-arastirmasi", T, RESEARCH_FOR_PRODUCT_DESIGNER),
       entry("tasarim-sistemi", T),
       entry("erisilebilirlik", T),
       entry("arayuz-anatomisi", T),
@@ -432,7 +462,7 @@ export const ROLES: RoleDefinition[] = [
       entry("sirket-sozlugu", T),
       entry("iletisim-ve-paydaslar", T),
       entry("urun-yonetimi", T),
-      entry("kullanici-arastirmasi", O),
+      entry("kullanici-arastirmasi", O, RESEARCH_FOR_PRODUCT_MANAGER),
       entry("urun-analitigi", T),
       entry("is-ve-strateji", T),
       entry("ux-ui-ilkeleri", O),
@@ -471,7 +501,7 @@ export const ROLES: RoleDefinition[] = [
       entry("is-analizi", T, BA_FOR_PRODUCT_OWNER),
       entry("urun-analitigi", O, ANALYTICS_FOR_PRODUCT_OWNER),
       entry("is-ve-strateji", O, STRATEGY_FOR_PRODUCT_OWNER),
-      entry("kullanici-arastirmasi", O),
+      entry("kullanici-arastirmasi", O, RESEARCH_FOR_PRODUCT_OWNER),
       entry("ux-ui-ilkeleri", O),
       entry("erisilebilirlik", O),
       entry("proje-yonetimi", O, PM_FOR_PRODUCT_OWNER),
@@ -565,7 +595,7 @@ export const ROLES: RoleDefinition[] = [
       entry("iletisim-ve-paydaslar", T),
       entry("test-ve-kalite", T, QUALITY_MECHANICS),
       entry("urun-yonetimi", O, PRODUCT_MGMT_FOR_BUSINESS_ANALYST),
-      entry("kullanici-arastirmasi", O),
+      entry("kullanici-arastirmasi", O, RESEARCH_FOR_BUSINESS_ANALYST),
       entry("ux-ui-ilkeleri", O),
       entry("erisilebilirlik", O),
       entry("urun-analitigi", O, ANALYTICS_FOR_BUSINESS_ANALYST),

@@ -5,7 +5,8 @@ outcomes:
   - "Mobile-first'ün neden bir önceliklendirme aracı olduğunu söyleyebilirsin."
   - "Breakpoint'i neden cihaz modeline göre değil içeriğe göre seçtiğini açıklayabilirsin."
   - "Container query'nin breakpoint'in çözemediği hangi problemi çözdüğünü bilirsin."
-minutes: 10
+minutes: 6
+standard: 2
 sources:
   - label: "MDN — Responsive web design"
     url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design"
@@ -23,6 +24,7 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Şu an bu siteyi telefonunda okuyorsun. Aynı sayfa masaüstünde farklı görünüyor: yan menü sabit, içerik sütunu ortada, sağda içindekiler. Telefonda ise menü alttaki bir çubuğa, içerik tek sütuna dönüştü. İkisi **aynı kod, aynı içerik.** Bu davranışın adı responsive.
 
@@ -102,6 +104,19 @@ Bu site mobil için tasarlandı: telefonda alt gezinme çubuğu, okuma ilerleme 
 
 </Callout>
 
+<Case>
+
+Demlik Panel ilk olarak masaüstü için tasarlanmıştı. Kampüs kafelerinde ise tezgâhtaki 10 inçlik bir tablette açılıyordu.
+
+1. **Sorun:** sipariş listesi ve ayrıntı yan yana sığmıyordu; ayrıntı paneli listenin üstüne biniyordu.
+2. **Mobile-first:** Selin ekranı en dar hâlinden yeniden kurdu: önce tek sütun liste, dokununca ayrıntı.
+3. **Breakpoint:** yerleşim, içeriğin kırıldığı genişlikte iki sütuna geçiyor; cihaz modeline göre değil.
+4. **Container query:** sipariş kartı, durduğu sütunun genişliğine göre düzenini değiştiriyor; aynı kart listede ve ayrıntı panelinde kullanılıyor.
+
+Tablet kurulumu (WBS 4.2) bu sürümle yapıldı.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -135,5 +150,11 @@ Cihaz modelleri ve boyutları sürekli değişir; "iPhone genişliği" gibi sabi
 <SelfCheck question="Container query hangi problemi çözer, breakpoint neden yetmez?">
 
 Aynı bileşenin, ekran genişliği aynıyken farklı kapsayıcılarda farklı davranması gerektiği durumu çözer. Bir kart geniş ana bölümde yatay, dar kenar çubuğunda dikey olmalıdır; ikisi için de ekran genişliği aynı olduğundan breakpoint bunu ayırt edemez.
+
+</SelfCheck>
+
+<SelfCheck question="Bir ekran masaüstünde iyi görünüyor ama tablette bozuluyor. Mobile-first bir yaklaşım burada nasıl yardım ederdi?">
+
+Tasarım en dar ekrandan başlayıp genişledikçe zenginleşseydi, önce en önemli içerik ve tek sütun düzen kurulurdu. Geniş ekranda düzen eklenir; dar ekrana sonradan sığdırmaya çalışmak gerekmez.
 
 </SelfCheck>

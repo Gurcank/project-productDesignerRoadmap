@@ -6,6 +6,7 @@ outcomes:
   - "En-boy oranını önceden tanımlamanın sayfa zıplamasını nasıl önlediğini açıklayabilirsin."
   - "Art direction'ın stok fotoğraf hissini nasıl engellediğini anlatabilirsin."
 minutes: 8
+standard: 2
 sources:
   - label: "MDN — Görsel formatları rehberi"
     url: "https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Formats/Image_types"
@@ -22,6 +23,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir ürünün ekranlarını yan yana koy: ikonların bir kısmı çizgisel, bir kısmı dolu, kalınlıkları farklı; fotoğrafların biri sıcak, biri soğuk; illüstrasyonların biri düz renk, biri gölgeli. Her biri ayrı ayrı güzel olabilir, ama birlikte **amatör** görünür. Sorun bireysel kalitede değil, tutarlılıkta.
 
@@ -36,6 +39,20 @@ Bu ders ikonlar, illüstrasyonlar ve fotoğraflar gibi **görsel varlıkların**
 Lucide, Phosphor, Heroicons, Material Symbols gibi hazır setler yaygın kullanılır. **Değişken bilgi:** Set isimleri ve lisansları değişir; kullanmadan önce lisansı kontrol et. "Tek set kullanalım; şu an üç farklı kaynaktan ikon var, çizgi kalınlıkları tutmuyor."
 
 **İkon tek başına anlam taşımaz.** Yaygın olmayan bir ikonun yanına metin etiket gerekir; "hamburger menü" ve "çöp kutusu" gibi öğrenilmiş birkaç ikon istisnadır.
+
+<Tree
+  label="Görsel varlık türleri ve teslim kuralları"
+  caption="Görsel varlıklar üç türdür. İkonlar tek bir setten seçilir ve SVG olarak teslim edilir; yaygın olmayanların yanında metin etiketi olur. İllüstrasyonlar da genellikle SVG'dir ve ortak bir üslupla çizilir. Fotoğraflar rasterdır; önceden tanımlı bir en-boy oranıyla kırpılır ve tutarlı bir art direction izler."
+  root={{
+    title: "Görsel varlıklar",
+    tone: "accent",
+    children: [
+      { title: "İkon", sub: "tek set · SVG", children: [{ title: "Gerekirse metin etiketi" }] },
+      { title: "İllüstrasyon", sub: "SVG · ortak üslup" },
+      { title: "Fotoğraf", sub: "raster · sabit oran", children: [{ title: "Art direction", tone: "progress" }] },
+    ],
+  }}
+/>
 
 ## SVG ve raster
 
@@ -74,6 +91,19 @@ Lucide, Phosphor, Heroicons, Material Symbols gibi hazır setler yaygın kullan�
 
 **Web'de art direction teknik bir anlam da taşır:** farklı ekran boyutlarında **farklı kırpılmış** görsel sunmak (yalnızca küçültmek değil). Telefonda yüzün kapandığı bir geniş fotoğraf yerine, yüze yakın kırpılmış bir sürüm.
 
+<Case>
+
+Demlik'in dükkân sayfalarındaki ürün fotoğraflarını dükkânlar kendileri yüklüyordu: kimi dikey, kimi yatay, kimi karanlık bir tezgâhta.
+
+1. **Oran:** bütün ürün fotoğrafları 4:3'e kırpılıyor; yükleme ekranı kırpma alanını gösteriyor.
+2. **Art direction:** Panel'de dükkânlara kısa bir rehber: gün ışığı, tek ürün, düz zemin.
+3. **İkonlar:** uygulamada üç farklı setten gelen ikonlar vardı; çizgi kalınlıkları tutmuyordu. Selin tek bir sete geçti, 24×24 ızgara.
+4. **Teslim:** ikonlar SVG, adları kebab-case: `kahve-fincan.svg`, `kart-ekle.svg`.
+
+Kırpma oranı sabitlenince dükkân sayfasındaki layout kayması da ortadan kalktı.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -107,5 +137,11 @@ Farklı setlerden karıştırılan ikonlar (biri çizgisel, biri dolu, farklı k
 <SelfCheck question="Kart görsellerinin en-boy oranını önceden tanımlamak neden sayfa zıplamasını önler?">
 
 Oran önceden bilindiğinde tarayıcı görsel henüz yüklenmeden o alan için yer ayırabilir; görsel yüklenince yerleşim kaymaz (CLS düşer).
+
+</SelfCheck>
+
+<SelfCheck question="Logo için SVG mi PNG mi teslim edersin? Neden?">
+
+SVG. Logo düz şekil ve renklerden oluşur; vektör olduğu için her boyutta keskin kalır, dosyası küçüktür ve rengi kodla değiştirilebilir. Fotoğraf gibi karmaşık görüntüler ise raster olarak teslim edilir.
 
 </SelfCheck>
