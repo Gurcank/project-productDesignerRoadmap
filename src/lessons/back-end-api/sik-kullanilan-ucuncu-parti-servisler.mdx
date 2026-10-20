@@ -4,6 +4,7 @@ outcomes:
   - "Yedi servis kategorisini ve her birinin tasarım etkisini söyleyebilirsin."
   - "Ödeme akışında nereye kadar kendi tasarımın olduğunu baştan belirlemenin neden gerektiğini açıklayabilirsin."
 minutes: 4
+standard: 2
 sources:
   - label: "Stripe — Dokümantasyon"
     url: "https://docs.stripe.com/"
@@ -12,11 +13,16 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Bu bölümdeki **kategorileri** öğren; ürün isimleri ve fiyatlandırmaları sürekli değişir. Anılan isimler bir öneri değil, kulak aşinalığı içindir.
+Bu dersteki **kategorileri** öğren; ürün isimleri ve fiyatlandırmaları sürekli değişir. Anılan isimler bir öneri değil, kulak aşinalığı içindir.
+
+## Yedi kategori
 
 | Kategori | Ne çözer | Tasarımı nasıl etkiler |
 |---|---|---|
@@ -28,16 +34,102 @@ Bu bölümdeki **kategorileri** öğren; ürün isimleri ve fiyatlandırmaları 
 | **Harita** | Konum gösterimi | Ağır bir gömülü bileşendir; lazy load düşünülmeli |
 | **Hata izleme** (Sentry vb.) | Canlıdaki hataları yakalama | DevOps bölümünde işlenir |
 
-"Ödeme sayfasının hangi kısmı bizim tasarımımız, hangisi servisin ekranı? Bunu baştan netleştirelim; akış tasarımı buna bağlı."
+## Sınırı baştan çiz
 
-<Callout kind="tasarimci">
+Her üçüncü parti servisle birlikte bir sınır gelir: hangi ekran senin, hangisi servisin? Bu sınır baştan çizilmezse akış tasarımı yarıda değişir. "Ödeme sayfasının hangi kısmı bizim tasarımımız, hangisi servisin ekranı? Bunu baştan netleştirelim; akış tasarımı buna bağlı."
+
+<Tree
+  label="Üçüncü parti servisler, işlerine göre"
+  caption="Yedi kategori dört işe ayrılır. Para: ödeme. İletişim: e-posta ve SMS ile doğrulama kodu. Bulma: arama ve harita. Ölçme: analitik ve hata izleme. Her kategori tasarımın bir kısmını o servisin kurallarına bağlar."
+  root={{
+  title: "Üçüncü parti",
+  tone: "accent",
+  children: [
+    {
+      title: "Para",
+      children: [
+        {
+          title: "Ödeme"
+        }
+      ]
+    },
+    {
+      title: "İletişim",
+      children: [
+        {
+          title: "E-posta"
+        },
+        {
+          title: "SMS / OTP"
+        }
+      ]
+    },
+    {
+      title: "Bulma",
+      children: [
+        {
+          title: "Arama"
+        },
+        {
+          title: "Harita"
+        }
+      ]
+    },
+    {
+      title: "Ölçme",
+      children: [
+        {
+          title: "Analitik"
+        },
+        {
+          title: "Hata izleme",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
+<Case>
+
+Demlik'in her üçüncü parti servisi tasarımda bir sınır çizdi:
+
+1. **Ödeme:** kart bilgisi Demlik'te değil, ödeme kuruluşunun alanında giriliyor; bankanın doğrulama ekranı da onun. Selin'in tasarımı bu ekranın öncesinde ve sonrasında.
+2. **SMS:** müşteriler telefon numarası ve SMS koduyla giriş yapıyor. Kod ekranında 60 saniyelik "tekrar gönder" sayacı ve yanlış kod mesajı var.
+3. **E-posta:** sipariş fişi e-postası da bir tasarım işi; e-posta istemcilerinin kısıtları yüzünden ayrı bir şablon.
+4. **Harita ve hata izleme:** harita yalnız gerektiği ekranda yükleniyor; canlıdaki hatalar hata izleme aracında okunabilir satırlarla görünüyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Ödemede sınırı çiz:** hangi ekranlar senin, hangileri servisin. Özelleştirme seçeneklerini baştan sor.
 - **E-posta şablonlarını da tasarla;** yaygın e-posta istemcilerinin kısıtlarını (görsel, font, genişlik) dikkate al.
 - **SMS/OTP için** kod girişi, yeniden gönderme geri sayımı ve hata hâllerini çiz.
 - **Analitik olaylarını (hangi tıklama ölçülecek) tasarım aşamasında tanımla.**
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Her servisi bir bağımlılık olarak kaydet.** Fiyat değişirse ya da servis kapanırsa ne olur?
+- **Servis seçiminde verinin nereye gittiğini sor.** Kişisel veri yurt dışına aktarılıyor mu?
+
+</Lens>
+<Lens role="product-owner">
+
+- **Servisin ekranı ile kendi ekranınızın sınırını story'de çiz.**
+- **SMS ve e-posta şablonlarını backlog'da ayrı iş say.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Entegrasyon gereksiniminde veri akışını çiz.** Hangi veri hangi servise, hangi amaçla gidiyor?
+- **Servis kesintisinde iş sürecinin nasıl devam edeceğini yaz.**
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -52,5 +144,17 @@ Bu bölümdeki **kategorileri** öğren; ürün isimleri ve fiyatlandırmaları 
 <SelfCheck question="Ödeme servisi kullanıldığında tasarımda neyi baştan netleştirmek gerekir?">
 
 Ödeme akışının hangi kısmının kendi tasarımın, hangisinin servisin kendi ekranı olduğunu; akış tasarımı buna bağlıdır.
+
+</SelfCheck>
+
+<SelfCheck question="SMS ile giriş ekranında hangi durumlar tasarlanmalı?">
+
+Kod girme alanı, kodun gelmemesi için tekrar gönderme sayacı, yanlış ya da süresi dolmuş kod mesajı ve çok fazla denemede bekleme durumu.
+
+</SelfCheck>
+
+<SelfCheck question="Bir ödeme servisi seçildiğinde tasarımda ilk netleştirilecek şey nedir?">
+
+Akışın hangi kısmının ürünün kendi ekranı, hangisinin servisin ekranı olduğu. Kart girişi ve banka doğrulaması çoğu zaman servisin alanındadır; tasarım bu sınırın etrafında kurulur.
 
 </SelfCheck>

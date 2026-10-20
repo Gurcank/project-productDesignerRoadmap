@@ -1,0 +1,158 @@
+---
+summary: "Görüşme, gözlem, anket, atölye, prototip ve belge incelemesi gereksinimi farklı açılardan yakalar. İnsanların söylediğiyle yaptığı ayrışır; bu yüzden teknikler birlikte kullanılır ve sonuçlar teyit edilir."
+outcomes:
+  - "Başlıca çıkarma tekniklerini ve her birinin neyi iyi, neyi kötü yakaladığını sayabilirsin."
+  - "İnsanların söylediğiyle yaptığının neden ayrıştığını açıklayabilirsin."
+  - "Bir iş için teknik karışımı seçip sonuçları paydaşla teyit edebilirsin."
+minutes: 9
+standard: 2
+sources:
+  - label: "BABOK Guide — Ek A: Sözlük (IIBA)"
+    url: "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"
+  - label: "IIBA — Business Analysis Standard: bilgi alanları ve görevler"
+    url: "https://www.iiba.org/knowledgehub/the-business-analysis-standard/5-applying-business-analysis-tasks/5-3-business-analysis-knowledge-areas/"
+  - label: "Jakob Nielsen — Interviewing Users (NN/g, 2010)"
+    url: "https://www.nngroup.com/articles/interviewing-users/"
+additions:
+  - "Çıkarma ve teknik tanımları (BABOK sözlüğü)"
+  - "Çıkarmaya hazırlan, yap, teyit et görevleri (IIBA Business Analysis Standard)"
+  - "Görüşmenin sınırları ve söylenen–yapılan farkı (NN/g)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+
+Ayşe dört dükkân çalışanıyla görüştü. Hepsi aynı şeyi söyledi: "Ürün bitince siparişi iptal ederiz, sistem gerisini halleder."
+
+Sonra iki dükkânda sabah yoğunluğunu izledi. Bir çalışan son kruvasan bitince siparişi iptal etmedi. Telefonu aldı, müşteriyi aradı ve başka bir ürün önerdi. Görüşmelerde kimse bundan söz etmemişti. Bu ders, gereksinimi insanlardan çıkarmanın tekniklerini ve neden tek bir tekniğe güvenilmediğini anlatır.
+
+## Çıkarma: toplamak değil, ortaya çıkarmak
+
+BABOK **çıkarmayı** (elicitation) paydaşlardan ve başka kaynaklardan bilgiyi yinelemeli olarak türetmek ve çıkarmak diye tanımlar. Tablodaki ilk altı tekniğin tanımı da BABOK sözlüğünden. "Toplamak" kelimesi yanıltıcıdır: gereksinimler bir yerde hazır durmaz. Paydaş çoğu zaman ihtiyacını bilir ama kelimelere dökemez, ya da onu bir çözüm olarak söyler.
+
+| Teknik | Ne yapılır? | İyi yakaladığı | Zayıf yanı |
+|---|---|---|---|
+| Görüşme | Bir kişiye ya da gruba ilgili sorular sorup cevapları kaydetmek | Bağlam, gerekçe, kişinin dili | İnsanlar geçmişi yanlış hatırlar, geleceği tahmin edemez |
+| Gözlem | Paydaşı kendi iş ortamında izleyip incelemek | Gerçek iş, gayriresmî adımlar | Zaman alır; izlenen kişi davranışını değiştirebilir |
+| Anket | Bir gruba sorular sorup görüş ve deneyimlerini ölçmek | Yaygınlık: "kaç kişi?" | Nedeni açıklamaz; soru kötüyse veri de kötü |
+| Gereksinim atölyesi | Seçilmiş paydaşların tarafsız bir kolaylaştırıcıyla gereksinimi birlikte tanımladığı toplantı | Çelişkileri aynı masada çözmek | Kalabalıkta sessiz kalanlar, güçlü sesler |
+| Beyin fırtınası | Hızlı ve eleştirisiz fikir üretip geniş bir seçenek kümesi bulmak | Seçenek çeşitliliği | Fikri gereksinim sanmak |
+| Prototip | Geri bildirimle değişen, çözümün erken bir örneği | Somut tepki: "bu değil" | Görünüşe takılıp işlevi tartışmamak |
+| Belge ve kayıt incelemesi | Mevcut belgeleri, talepleri, raporları okumak | Bugünkü kurallar, gerçek şikâyetler | Belge olması gerekeni anlatır, olanı değil |
+
+## Söylenen ve yapılan
+
+Jakob Nielsen, NN/g'deki 2010 tarihli bir yazısında görüşmenin temel zayıflığını anlatır. Ona göre insanlardan geçmişteki kullanımlarını hatırlamalarını ya da gelecekteki kullanımlarını tahmin etmelerini istemek, son derece zayıf ve çoğu zaman yanıltıcı veri verir. Hafıza yanılır; insanlar davranışlarını sonradan mantığa bürür.
+
+Nielsen'in örnekleri öğreticidir:
+
+- **"X özelliğini kullanır mıydınız?" diye sorulmaz.** İnsanlar görmedikleri bir şeyi tahmin edemez. Var olmayan özellikler bile bol bol geri bildirim almıştır.
+- **Microsoft Office 2007'yi tasarlarken** kullanıcıların en çok istediği "yeni" komutların çoğu, Office 2003'te zaten vardı. Sorun özellik eksikliği değil, bulunamamasıydı.
+- **Tek geçerli veri şimdidir:** kullanıcının şu anda ne yaptığı.
+
+<Spectrum
+  label="Teknikler: söylenenden yapılana"
+  caption="Çıkarma teknikleri bir yelpazeye dizilebilir. Sol uçta insanların söyledikleri vardır: anket ve görüşme. Ortada atölye ve belge incelemesi durur. Sağ uçta insanların yaptıkları vardır: prototip üzerinde deneme ve iş ortamında gözlem. Soldaki teknikler gerekçeyi ve yaygınlığı, sağdakiler gerçek davranışı yakalar. İyi bir çıkarma iki uçtan da en az bir teknik kullanır."
+  left={{ title: "Söylenen", sub: "görüş, gerekçe, hatıra" }}
+  right={{ title: "Yapılan", sub: "gerçek davranış" }}
+  marks={[
+    { label: "Anket", at: 0.05 },
+    { label: "Görüşme", at: 0.22 },
+    { label: "Atölye", at: 0.4 },
+    { label: "Belge inceleme", at: 0.58 },
+    { label: "Prototip", at: 0.78 },
+    { label: "Gözlem", at: 0.96 },
+  ]}
+/>
+
+**Görüşme ≠ gereksiz.** Görüşme gerekçeyi, bağlamı ve paydaşın dilini öğrenmenin en iyi yoludur. Yalnız tek başına yetmez. Nielsen'in önerisi yöntemleri **üçlemektir** (triangulate): birinin bulduğunu öbürüyle sına.
+
+## Hazırlan, yap, teyit et
+
+IIBA'nın Business Analysis Standard'ı çıkarmayı üç ayrı görev olarak yazar: **çıkarmaya hazırlan**, **çıkarmayı yap** ve **çıkarma sonuçlarını teyit et**.
+
+- **Hazırlan:** neyi öğrenmek istiyorsun, kimden, hangi teknikle? Mevcut belgeleri önce oku; paydaşın vaktini zaten yazılı olanı sormakla harcama.
+- **Yap:** cevabı değil, örneği iste. "Ürün bitince ne yaparsınız?" yerine "Dün ürün bittiğinde ne yaptınız?"
+- **Teyit et:** duyduğunu yazıp paydaşa geri gönder. "Böyle mi anladım?" sorusu, yanlış anlamayı ilk gün yakalar.
+
+<Case>
+
+Ayşe'nin çıkarma planı beş teknikten oluştu:
+
+1. **Belge incelemesi:** üç iade metni yan yana konuldu; çelişkiler işaretlendi.
+2. **Kayıt incelemesi:** son ayın 310 iade talebinden 60'ı okundu. 26'sı "beklediğim iadeyi alamadım", 18'i "dükkân iptal etti ama haberim olmadı" diyordu.
+3. **Görüşme:** dört dükkân çalışanı. Her biri "dün ne oldu?" sorusuyla başladı.
+4. **Gözlem:** iki dükkânda sabah yoğunluğu. Telefonla arama burada görüldü.
+5. **Atölye:** Ozan, destek ekibinin lideri ve finans; kolaylaştırıcı tarafsız biri, Scrum Master Kaan.
+
+Teyit için Ayşe her görüşmenin özetini aynı gün çalışana gönderdi. Gözlemdeki bulgu bir yeni soru doğurdu: stok bitince çalışana sistemde bir yol gösterilmeli mi? Bu soru, karar tablosuna "stok sorunu" girdisini ekletti.
+
+</Case>
+
+<Lenses>
+<Lens role="business-analyst">
+
+- **İki uçtan da teknik seç.** En az bir "söylenen" ve bir "yapılan" tekniği; biri öbürünü sınar.
+- **Atölyede kolaylaştırıcı olma.** Gereksinimin sahibi gibi görünen biri tarafsız olamaz; başka birini iste.
+- **Her oturumdan sonra teyit gönder.** Yanlış anlama en ucuz o gün düzelir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Atölyeye karar verebilecek biri olarak katıl.** Çelişkiyi masada çözmek, haftalarca e-posta yazmaktan iyidir.
+- **"Kullanır mıydınız?" cevabıyla sıralama yapma.** Kullanımı gösteren veri ya da bir prototip testi iste.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Talep listesini ihtiyaç kanıtı sanma.** En çok istenen şey bazen zaten vardır ve bulunamıyordur.
+- **Nicel ve nitel veriyi birlikte iste.** "Kaç kişi?" ve "neden?" sorularının ikisi de karar için gerekir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Gözlem ve görüşme senin araçların.** Analistle planı paylaş; aynı paydaşa iki kez aynı soruyu sormayın.
+- **Bulguyu gereksinime çevirmeye yardım et.** "Çalışan telefonla arıyor" bir gözlemdir; ondan çıkan soru ve karar analistle birlikte yazılır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Çıkarma, gereksinimi paydaşlardan ve kaynaklardan yinelemeli olarak türetmektir; hazır bir şeyi toplamak değildir.
+- Görüşme, gözlem, anket, atölye, beyin fırtınası, prototip ve belge incelemesi farklı şeyleri yakalar.
+- İnsanlar geçmişi yanlış hatırlar, görmedikleri özelliği tahmin edemez; söylenen ile yapılan ayrışır.
+- Teknikler üçlenir: en az bir "söylenen" ve bir "yapılan" tekniği birlikte kullanılır.
+- Çıkarma üç görevdir: hazırlan, yap, sonuçları paydaşla teyit et.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Neden 'toplama' yerine 'çıkarma' denir?">
+
+Gereksinimler hazır durmaz. Paydaş ihtiyacını çoğu zaman kelimelere dökemez ya da onu bir çözüm olarak söyler. Analist onu sorularla, gözlemle ve örneklerle ortaya çıkarır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir paydaş anketi soruyor: 'Yeni favori listesi özelliğini kullanır mıydınız?' Ne önerirsin?">
+
+Bu soruyu sormamayı. Nielsen'e göre insanlar görmedikleri bir özelliği kullanıp kullanmayacaklarını tahmin edemez. Bunun yerine bugün tekrar siparişi nasıl verdiklerini gözlemlemeyi ya da basit bir prototiple denemeyi öneririm.
+
+</SelfCheck>
+
+<SelfCheck question="Görüşmeler ve gözlem birbiriyle çelişti. Hangisine inanırsın?">
+
+İkisi de veridir. Gözlem gerçekte ne yapıldığını, görüşme insanların ne yaptıklarını düşündüklerini ve nedenini gösterir. Çelişki bir bulgudur: gayriresmî bir adım ya da belgelenmemiş bir kural vardır. Paydaşa geri dönüp gözlemi sorarım.
+
+</SelfCheck>
+
+<SelfCheck question="Atölyeyi neden tarafsız bir kolaylaştırıcı yürütmeli?">
+
+BABOK gereksinim atölyesini tarafsız bir kolaylaştırıcının rehberliğinde tanımlar. Gereksinimin sahibi ya da güçlü bir paydaş kolaylaştırırsa, tartışma onun görüşüne kayar ve öteki paydaşlar sessiz kalır.
+
+</SelfCheck>

@@ -3,7 +3,9 @@ summary: "Dikey ve yatay ölçekleme ve otomatik ölçekleme: makineyi büyütme
 outcomes:
   - "Dikey ve yatay ölçeklemenin farkını ve her birinin sınırını söyleyebilirsin."
   - "Otomatik ölçeklemenin neden anında olmadığını ve kampanya zirvelerine etkisini açıklayabilirsin."
-minutes: 5
+minutes: 3
+standard: 2
+skipTerms: ["yoğunluk"]
 sources:
   - label: "AWS Well-Architected — Güvenilirlik ilkeleri"
     url: "https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/design-principles.html"
@@ -11,11 +13,14 @@ sources:
     url: "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Chart from "~/components/diagrams/primitives/Chart.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Kampanya günü trafik on kat artacak. Sistem buna hazır mı? Ölçekleme iki yönde yapılır.
 
@@ -42,16 +47,43 @@ Kampanya günü trafik on kat artacak. Sistem buna hazır mı? Ölçekleme iki y
 
 ## Autoscaling
 
+<Chart
+  label="Bir sabahın sipariş trafiği"
+  caption="Demlik'e dakikada gelen sipariş isteği sabah yedide yaklaşık 10'dur, sekizde 32'ye çıkar ve dokuz buçuktan sonra 12'nin altına iner. Otomatik ölçekleme sipariş servisinin kopya sayısını bu eğriye göre ikiden dörde çıkarır ve sonra indirir. Kampüs lansmanı gibi önceden bilinen zirvelerde kopya sayısı sabahtan önce elle artırılır."
+  x={{ title: "Saat", labels: ["07.00", "07.30", "08.00", "08.30", "09.00", "09.30", "10.00"] }}
+  y={{ title: "Sipariş / dakika", max: 40 }}
+  series={[{ name: "Sipariş isteği", values: [10, 26, 32, 28, 18, 12, 8], tone: "accent" }]}
+/>
+
 **Autoscaling (otomatik ölçekleme)**, trafiğe göre kopya sayısının otomatik artıp azalmasıdır. Düzensiz trafikte maliyeti kontrol eder: gece az kopya, gündüz çok. Serverless'ın doğal davranışıdır. "Kampanya günü trafik on kat artacak; autoscaling limitlerini önceden yükseltelim."
 
 **Otomatik ölçekleme anında değildir:** yeni kopyaların açılması zaman alır. Ani zirvelerde (bilet satışı, canlı yayın) **önceden ölçeklendirme** gerekebilir.
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in trafiği her sabah aynı eğriyi çiziyor: 07.30 ile 09.00 arası zirve.
+
+1. **Önce dikey:** ilk yıl sipariş servisi tek ve büyük bir makinedeydi. Zirvede yavaşlıyordu ve tek makine bir arıza noktasıydı.
+2. **Sonra yatay:** oturumlar Redis'e taşınıp servis stateless olunca kopya eklemek mümkün oldu.
+3. **Otomatik ölçekleme:** zirvede iki kopyadan dörde çıkıyor. Yeni kopyanın açılması birkaç dakika sürüyor; 07.30'daki ani artışta ilk dakikalar yavaş geçiyordu. Kopya sayısı artık her gün 07.15'te önceden ikiden üçe çıkıyor.
+4. **Lansman:** kampüs lansmanı sabahı kopya sayısı bir gece önceden altıya çıkarıldı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Önceden bilinen trafik zirvelerini (kampanya, lansman) ekibe önceden bildir;** ölçekleme için süre gerekir.
 - **Zirve anı için kullanıcıya görünen davranışı tasarla:** bekleme odası, sıra, "yoğunluk var" mesajı.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Kampanya ve lansman takvimini altyapı ekibiyle paylaş.** Bilinen zirveye önceden ölçeklemek gerekir.
+- **Ölçekleme maliyetini trafikle birlikte izle.** Kullandıkça ödeme, zirve günlerinde faturayı büyütür.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -66,5 +98,17 @@ Kampanya günü trafik on kat artacak. Sistem buna hazır mı? Ölçekleme iki y
 <SelfCheck question="Otomatik ölçekleme neden bilet satışı gibi ani zirvelerde yetmeyebilir?">
 
 Yeni kopyaların açılması zaman alır; ani zirvede kapasite yetişmeyebilir. Bu durumlarda önceden ölçeklendirme gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Otomatik ölçekleme neden ani zirveleri her zaman karşılamaz?">
+
+Yeni kopyaların açılması zaman alır. Trafik birkaç saniyede on katına çıkarsa kopyalar yetişene kadar sistem yavaşlar; bilinen zirvelerde önceden ölçeklemek gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Yatay ölçeklemenin ön koşulu nedir?">
+
+Uygulamanın stateless olması: istekler arasında kendi belleğinde bilgi tutmaması. Aksi hâlde yeni kopyaya düşen kullanıcı oturumunu ya da verisini kaybeder.
 
 </SelfCheck>

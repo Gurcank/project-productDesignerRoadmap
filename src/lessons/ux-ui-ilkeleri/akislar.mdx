@@ -6,6 +6,8 @@ outcomes:
   - "Bir hata mesajının cevaplaması gereken üç soruyu bilirsin."
   - "Çıkmaz (dead end) ekranları tespit edip ileri götüren bir yol ekleyebilirsin."
 minutes: 10
+standard: 2
+skipTerms: ["Doğrulama", "doğrulama"]
 sources:
   - label: "NN/g — User Journeys vs. User Flows"
     url: "https://www.nngroup.com/articles/user-journeys-vs-user-flows/"
@@ -13,10 +15,12 @@ sources:
     url: "https://www.nngroup.com/articles/error-message-guidelines/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import FlowExample from "~/components/lesson/FlowExample.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir kayıt ekranı tasarladın: temiz, güzel, bir de buton. Geliştirici soruyor: "E-posta zaten kayıtlıysa ne olacak? Doğrulama e-postası gelmezse? Kullanıcı sayfayı kapatırsa?" Tasarımda cevap yok. Çünkü **ekran** çizdin, ama **akış** çizmedin.
 
@@ -81,7 +85,21 @@ Tasarımın ilk çıktısıdır; Figma, FigJam, Whimsical gibi araçlarda çizil
 | 404 | "Sayfa yok." | "Bu sayfayı bulamadık. Ana sayfaya dön ya da ara." |
 | Ödeme hatası | "Hata oluştu." | "Kartın reddedildi. Başka kart dene ya da bankanla görüş." |
 
-<Callout kind="tasarimci">
+<Case>
+
+"Son siparişini tekrarla" düğmesinin ilk tasarımı tek bir ekrandı: düğme ve "Siparişin alındı". Selin akışı çizince kutular çoğaldı:
+
+1. **Happy path:** düğmeye dokun → kayıtlı kartla öde → "Siparişin alındı".
+2. **Uç durumlar:** dükkân kapalı; ürün bugün bitmiş; kayıtlı kartın süresi dolmuş; son sipariş başka bir şehirde.
+3. **Hata akışı:** ödeme reddedildi → "Kartın reddedildi. Başka bir kart seç ya da yenisini ekle." İki eylem de bu ekrandan yapılabiliyor.
+4. **Çıkmaz:** "Dükkân kapalı" ekranı ilk taslakta yalnız bir mesajdı. Selin "Yakındaki açık dükkânlar" listesini ekledi.
+
+Can'ın yayından önce bulduğu "kapalı dükkânda da görünen düğme", akışta ikinci maddeydi; tasarımı yapılmış ama koda geçmemişti.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 Bir akış çizdikten sonra her kutuya şu sorular için bir cevap yaz:
 
@@ -93,7 +111,32 @@ Bir akış çizdikten sonra her kutuya şu sorular için bir cevap yaz:
 
 Bu beş soru, kabul kriterlerinin de iskeletidir: geliştiriciye ne tasarladığını ve ne tasarlamadığını açıkça verir.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Kapsamı akışla konuş.** Yalnız happy path'i içeren bir tahmin eksik bir tahmindir.
+- **Hangi uç durumların ilk sürüme gireceğine karar ver.** Hepsi aynı anda gerekmez; ama hepsi bilinmelidir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Akıştaki her dalı bir kabul kriterine çevir.** "Dükkân kapalıysa düğme görünmez."
+- **Hata akışını story'nin parçası say.** Ayrı bir "hatalar" story'si çoğu zaman en sona kalır.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Akışı iş kurallarıyla eşle.** Her karar kutusu bir kuraldır; kuralı yazılı olmayan kutu belirsizdir.
+- **Uç durumları kural tablosundan üret.** Koşulların her birleşimi bir dal olabilir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Testte happy path dışındaki dalları da dene.** Hata ekranı, en çok takılınan ekrandır.
+- **Çıkmazları kayıtta ara.** Kullanıcının durduğu ve geri tuşuna bastığı an bir bulgudur.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -116,5 +159,11 @@ Happy path dışındaki durumlar: boş, hata ve yükleme durumları ile uç duru
 <SelfCheck question="Bir hata mesajının cevaplaması gereken üç soru nedir?">
 
 Ne oldu, neden oldu, şimdi ne yapmalıyım. En sık atlanan ve en önemli olan üçüncüsüdür.
+
+</SelfCheck>
+
+<SelfCheck question={"Bir arama ekranında sonuç çıkmadığında yalnız \"Sonuç bulunamadı\" yazıyor. Bu ekran neden sorunludur, nasıl düzeltirsin?"}>
+
+Bir çıkmazdır: kullanıcının devam edecek bir yolu yoktur. Filtreleri temizleme düğmesi, yazım önerisi ya da popüler sonuçlar gibi ileri götüren en az bir eylem eklerim.
 
 </SelfCheck>

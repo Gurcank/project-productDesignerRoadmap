@@ -16,7 +16,7 @@ const { items, section } = Astro.props;
 
 <nav class="mobile-nav" aria-label="Ana menü">
   {
-    items.map((item) => (
+    items.filter((item) => item.mobile !== false).map((item) => (
       <a
         href={item.href}
         aria-current={section === item.id ? "page" : undefined}

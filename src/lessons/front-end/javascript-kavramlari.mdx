@@ -4,7 +4,8 @@ outcomes:
   - "Event'in erişilebilirliği nasıl belirlediğini açıklayabilirsin."
   - "Her eş zamansız işlemin neden bir bekleme ve bir hata hâli olduğunu söyleyebilirsin."
   - "DevTools'ta bir JSON yanıtını okuyup tasarımdaki boş alan kararlarını verebilirsin."
-minutes: 6
+minutes: 3
+standard: 2
 sources:
   - label: "MDN — Olaylar (events)"
     url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Events"
@@ -15,9 +16,12 @@ sources:
 skipTerms: ["state","fallback"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 JavaScript, sayfayı canlı yapan dildir. Kod yazmayacaksın; ama üç kavramın tasarım kararlarına doğrudan dokunduğunu bilmelisin.
 
@@ -25,25 +29,51 @@ JavaScript, sayfayı canlı yapan dildir. Kod yazmayacaksın; ama üç kavramın
 
 Kullanıcının yaptığı bir şey (tıklama, tuşa basma, kaydırma) bir **event (olay)**'tir; onu bekleyip tepki veren koda **event listener (olay dinleyici)** denir. Arayüzün etkileşimli olmasını sağlayan mekanizmadır.
 
-Tasarımcıyı ilgilendiren yanı: **hangi olayın dinlendiği erişilebilirliği belirler.** Yalnızca `click` dinlemek fareyle sınırlı kalır; klavye olayları da gerekir. Doğru HTML elemanı (gerçek bir buton) kullanıldığında bu otomatik gelir. "Bu `div`'e sadece tıklama olayı bağlanmış; klavyeyle çalışmıyor."
+Tasarımı ilgilendiren yanı: **hangi olayın dinlendiği erişilebilirliği belirler.** Yalnızca `click` dinlemek fareyle sınırlı kalır; klavye olayları da gerekir. Doğru HTML elemanı (gerçek bir buton) kullanıldığında bu otomatik gelir. "Bu `div`'e sadece tıklama olayı bağlanmış; klavyeyle çalışmıyor."
 
 ## Promise ve async
 
 Bazı işlemlerin sonucu hemen gelmez: sunucudan veri çekmek gibi. **Promise** "sonuç birazdan gelecek" sözüdür; **async/await** bu bekleyişi yönetme biçimidir. Tarayıcı veri beklerken donmaz, arayüz çalışmaya devam eder.
 
-**Tasarımcı için anlamı:** her eş zamansız işlemin bir **bekleme hâli** ve bir **hata hâli** vardır ve ikisi de tasarlanmalıdır. "Bu istek asenkron; yükleniyor ve hata durumlarını da tasarlayalım."
+**Tasarım için anlamı:** her eş zamansız işlemin bir **bekleme hâli** ve bir **hata hâli** vardır ve ikisi de tasarlanmalıdır. "Bu istek asenkron; yükleniyor ve hata durumlarını da tasarlayalım."
 
 ## Fetch ve JSON
 
 **fetch**, tarayıcının sunucudan veri istemesini sağlayan işlevdir; **JSON** veri alışverişinin standart metin formatıdır. API'lerle konuşmanın standart yoludur. DevTools'un Network sekmesinde bir isteğin yanıtına bakabilirsin: hangi alanların geldiğini görürsün ve tasarımda o alanlara göre karar verirsin. "Response'a baktım; `avatarUrl` alanı boş dönebiliyor, fallback tasarlayalım."
 
-<Callout kind="tasarimci">
+<StepFlow
+  label="Bir dokunuştan ekrana"
+  caption="Kullanıcı Son siparişini tekrarla düğmesine dokunur; bu bir olaydır. Olay dinleyici fetch ile sunucuya istek gönderir ve ekran bekleme hâline geçer. Sunucu JSON biçiminde bir yanıt döndürür. Yanıt başarılıysa ekran güncellenir; istek başarısız olursa hata hâli gösterilir."
+  steps={[
+    { title: "Olay", sub: "düğmeye dokunma", tone: "accent" },
+    { title: "fetch", sub: "istek gider · bekleme hâli" },
+    { title: "JSON yanıt", sub: "hangi alanlar geldi?" },
+    { title: "Ekran", sub: "başarı ya da hata hâli", tone: "progress" },
+  ]}
+/>
+
+<Case>
+
+"Son siparişini tekrarla" düğmesinin arkasında bu üç kavram çalışıyor:
+
+1. **Event:** düğme gerçek bir `button`; dokunma, tıklama ve klavye olaylarını kendiliğinden alıyor.
+2. **Async:** sipariş isteği gittiğinde düğme "Gönderiliyor…" hâline geçiyor ve ikinci kez basılamıyor; çift sipariş böyle önlendi.
+3. **JSON:** Selin Network sekmesinde yanıta baktı. `hazirOlmaDakika` alanı, dükkân hazırlık süresi girmediyse boş dönüyordu.
+4. **Tasarım:** boş olduğunda "Hazır olunca bildireceğiz" metni gösteriliyor; sayı uydurulmuyor.
+
+Hata hâli de tasarlandı: "Siparişin gönderilemedi. Tekrar dene." ve tek bir düğme.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Her veri çeken ekran için bekleme ve hata hâlini çiz.**
 - **Etkileşimli öğeleri gerçek buton/bağlantı olarak tarif et;** klavye otomatik gelsin.
 - **Network sekmesinde gerçek yanıta bak;** hangi alanın boş olabildiğini tasarımda karşıla.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -61,8 +91,14 @@ Yalnızca click dinleyen bir öğe fareyle sınırlı kalır; klavye olayları d
 
 </SelfCheck>
 
-<SelfCheck question="Asenkron bir işlem tasarımcıya hangi iki iş çıkarır?">
+<SelfCheck question="Asenkron bir işlem tasarıma hangi iki iş çıkarır?">
 
 Bekleme (yükleniyor) hâlini ve hata hâlini tasarlamak.
+
+</SelfCheck>
+
+<SelfCheck question="Bir düğmeye basınca istek gidiyor ve kullanıcı sonuç gelmeden tekrar basabiliyor. Ne olabilir, nasıl önlenir?">
+
+Aynı istek iki kez gidebilir; örneğin çift sipariş oluşur. Düğme istek sürerken bekleme hâline geçer ve devre dışı kalır; sunucu da aynı isteği iki kez işlememek için ayrıca kontrol yapar.
 
 </SelfCheck>

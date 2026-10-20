@@ -1,0 +1,34 @@
+---
+title: "Gherkin ile story ve kabul senaryoları"
+summary: "Bir user story'yi, iş kurallarını ve her kuralı gösteren somut örnekleri Given-When-Then (Türkçe: Diyelim ki – Eğer ki – O zaman) biçiminde yazar."
+kind: "belge"
+roles: ["business-analyst", "product-owner", "product-designer"]
+lessons: ["cevik-pratikler/refinement-invest-ve-story-bolme", "urun-gelistirme/gereksinimler-epic-user-story-acceptance-criteria"]
+sources:
+  - label: "Cucumber — Gherkin Reference"
+    url: "https://cucumber.io/docs/gherkin/reference/"
+  - label: "Cucumber — Gherkin localisation (Türkçe anahtar kelimeler)"
+    url: "https://cucumber.io/docs/gherkin/languages/"
+---
+
+## Ne zaman kullanılır?
+
+Bir story'nin kabul kriterlerini, iş kurallarını somut örneklerle göstermek istediğinde. Gherkin hem bir belge hem de bir testtir: aynı örnekler otomatik testlere çevrilebilir.
+
+## Yapı
+
+- **Özellik** (Feature): ürünün bir yeteneği.
+- **Kural** (Rule): uygulanması gereken tek bir iş kuralı.
+- **Örnek** ya da **Senaryo** (Example, Scenario): kuralı gösteren somut bir örnek. Cucumber 3–5 adım önerir.
+- **Diyelim ki** (Given): başlangıç durumu; genellikle geçmişte olmuş bir şey.
+- **Eğer ki** (When): bir olay ya da eylem.
+- **O zaman** (Then): beklenen, gözlenebilir sonuç.
+- **Ve**, **Fakat** (And, But): adım eklemek için.
+
+Cucumber, Gherkin'in kullanıcıların ve alan uzmanlarının konuştuğu dille yazılmasını önerir. Türkçe anahtar kelimelerin birden çok karşılığı vardır; şablon en okunaklı olanları kullanır.
+
+## Sık hatalar
+
+- **"Diyelim ki" içine kullanıcı eylemi yazmak.** Başlangıç durumu bir eylem değildir.
+- **"O zaman" içinde sistemin içini anlatmak.** Sonuç gözlenebilir olmalı: ekranda, bir mesajda, bir raporda. Bir veritabanı kaydı değil.
+- **Arayüzü anlatmak.** "Düğmeye tıklar" yerine "siparişi tekrarlar". Cucumber'ın önerisi: bilgisayarların olmadığı 1922'yi hayal et.

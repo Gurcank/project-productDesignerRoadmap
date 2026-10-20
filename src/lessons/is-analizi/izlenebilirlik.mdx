@@ -1,0 +1,151 @@
+---
+summary: "İzlenebilirlik her gereksinimi geldiği ihtiyaca ve onu karşılayan story ile doğrulayan teste bağlar. Bir değişiklik geldiğinde neyin etkileneceğini, bir gereksinimin neden var olduğunu bu bağlar gösterir."
+outcomes:
+  - "İleri ve geri izlenebilirliği ayırt edebilirsin."
+  - "Bir izlenebilirlik matrisini okuyup boşlukları bulabilirsin."
+  - "Bir değişikliğin etkisini bağları izleyerek çıkarabilirsin."
+minutes: 6
+standard: 2
+skipTerms: ["doğrulama"]
+sources:
+  - label: "BABOK Guide — Ek A: Sözlük (IIBA)"
+    url: "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"
+  - label: "NASA SE Handbook — Appendix D: Requirements Verification Matrix"
+    url: "https://www.nasa.gov/reference/appendix-d-requirements-verification-matrix/"
+  - label: "NASA SE Handbook — Appendix C: How to Write a Good Requirement"
+    url: "https://www.nasa.gov/reference/appendix-c-how-to-write-a-good-requirement/"
+  - label: "ISTQB Glossary — traceability"
+    url: "https://glossary.istqb.org/en_US/term/traceability"
+additions:
+  - "Gereksinim izlenebilirliği tanımı (BABOK sözlüğü, ISTQB sözlüğü)"
+  - "İki yönlü izlenebilirlik, tekil kimlik ve doğrulama matrisi (NASA SE Handbook, Ek C ve D)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Heatmap from "~/components/diagrams/primitives/Heatmap.astro";
+
+Sprintin ortasında Ozan bir haber getirdi: finans, kupon oranının %20'den %15'e inmesini istiyordu. "Küçük bir değişiklik," dedi, "tablodaki bir sayı."
+
+Zeynep sordu: "Hangi testler değişecek? Bildirim metninde oran yazıyor mu? Yardım sayfasında?" Kimse hemen cevap veremedi. Ayşe bir tabloyu açtı ve iki dakika sonra listeyi okudu. Bu ders, o tabloyu, yani izlenebilirliği anlatır.
+
+## İzlenebilirlik nedir?
+
+BABOK **gereksinim izlenebilirliğini** şöyle tanımlar: gereksinimler ve tasarımlar arasındaki ilişkileri, paydaşın ilk ihtiyacından gerçekten uygulanan çözüme kadar izleyebilmek. Sözlüğe göre değişiklik kontrolünü de destekler. Bir gereksinimin kaynağı bulunabilir, bir değişiklikten etkilenebilecek öteki gereksinimler ve tasarımlar bilinir.
+
+ISTQB'nin test sözlüğü daha kısa söyler: ilgili iş ürünleri arasında açık ilişkiler kurabilme yeteneği.
+
+Bağın iki yönü vardır:
+
+- **Geri izleme:** gereksinimden kaynağına. "Bu gereksinim neden var?" FG-3 (kupon), karar tablosunun 5. ve 8. kuralından gelir; tablo da Ozan'ın onayladığı iade politikasından.
+- **İleri izleme:** gereksinimden onu karşılayan tasarıma ve doğrulayan teste. "Bu gereksinim yapıldı mı, sınandı mı?" FG-3 → S-44 story'si → T-K5 ve T-K8 testleri → UAT-05 ve UAT-08.
+
+NASA'nın el kitabı iyi bir gereksinimin iki yönlü izlenebilir olmasını ve tekil bir kimlik taşımasını ister. Ek D'deki doğrulama matrisi, her gereksinimi bir kimlik ve geldiği belgeyle birlikte nasıl doğrulanacağına bağlar.
+
+## Matrisi okumak
+
+İzlenebilirlik matrisinin değeri dolu hücrelerde değil, **boş hücrelerdedir**:
+
+- Kaynağı olmayan gereksinim belki gereksizdir. NASA'nın sorusunu sor: olmasaydı en kötü ne olurdu?
+- Story'si olmayan gereksinim yapılmayacaktır.
+- Testi olmayan gereksinim doğrulanmamıştır.
+
+<Heatmap
+  label="İlk sürüm planlanırken izlenebilirlik"
+  caption="Matris, her gereksinimin kaç bağı olduğunu gösterir. Sütunlar kaynak, story, otomatik test ve kabul testidir. İş gereksinimi İG-1 yayından sonra ölçümle doğrulanır, bu yüzden story ve test sütunları boştur. Üç boşluk göze çarpıyor: PG-2'nin story'si yok; İOG-1'in, yani 5 saniye gereksiniminin, hiçbir kabul testi yok; GG-1'in, yani geçiş gereksiniminin, ne story'si ne testi var. FG-1 en çok bağlı satırdır: sekiz otomatik test ve on iki kabul senaryosu."
+  rows={["İG-1", "PG-1", "PG-2", "FG-1", "FG-2", "FG-3", "FG-4", "İOG-1", "GG-1"]}
+  cols={["Kaynak", "Story", "Oto. test", "UAT"]}
+  values={[
+    [1, null, null, null],
+    [2, 1, 0, 5],
+    [1, 0, 0, 3],
+    [2, 1, 8, 12],
+    [1, 1, 0, 13],
+    [1, 1, 2, 2],
+    [2, 1, 0, 5],
+    [1, 1, 1, 0],
+    [1, 0, 0, 0],
+  ]}
+  rowTitle="Gereksinim"
+/>
+
+## Etki analizi
+
+Bir değişiklik geldiğinde matris bir haritaya dönüşür. Değişen satırdan başla, bağları iki yöne izle:
+
+1. **Geri:** bu değişiklik hangi ihtiyaca dokunuyor? Kaynağı onaylayan kişi değişikliği de onaylamalı mı?
+2. **İleri:** hangi story, hangi tasarım, hangi test, hangi metin etkileniyor?
+
+Değişiklik kontrolünün süreci [Değişiklik kontrolü](/proje-yonetimi/degisiklik-kontrolu/) dersinde. İzlenebilirlik o sürecin "etki" sütununu birkaç dakikada doldurur.
+
+**İzlenebilirlik ≠ bürokrasi.** Her gereksinimi her test adımına bağlamak bakımı imkânsız kılar. Çoğu iş için gereksinim, story ve test senaryosu düzeyi yeter. Matris iş sürerken doldurulmazsa, yayından sonra yazılmış bir belgeden öteye geçmez.
+
+<Case>
+
+Matrisi ilk kez doldurduğunda Ayşe üç boşluk buldu:
+
+1. **PG-2'nin story'si yoktu.** Müşterinin iptalden önce tutarı görmesi kimsenin backlog'unda değildi. Deniz'in sipariş takımına S-47 olarak gitti.
+2. **İOG-1'in kabul testi yoktu.** 5 saniye, bir kullanıcının elle sınayabileceği bir şey değildi. Emre bir yük testi yazdı: P-1.
+3. **GG-1'in hiçbir şeyi yoktu.** Eski metinlerin kaldırılması ve destek eğitimi bir story'ye (S-46) ve bir yayın kontrol listesine bağlandı.
+
+Kupon değişikliği geldiğinde Ayşe FG-3'ün satırını izledi: S-44, T-K5, T-K8, UAT-05, UAT-08, bildirim metni ve Panel'deki iptal ekranı. Ozan etkiyi görünce değişikliği bir sonraki sürüme bıraktı.
+
+</Case>
+
+<Tool slug="izlenebilirlik-matrisi" />
+
+<Lenses>
+<Lens role="business-analyst">
+
+- **Kimliği ilk günden ver.** Kimliksiz gereksinim sonradan bağlanamaz.
+- **Matrisi her refinement'tan sonra güncelle.** Boş hücreyi iş sürerken bulursan ucuza kapatırsın.
+- **Etki analizini değişiklik talebine ekle.** Karar verene listeyi göster, sayıyı değil.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Matristeki boş hücreler bir risk listesidir.** Testi olmayan gereksinim, kabulde sürpriz demektir.
+- **Değişiklik talebinin etkisini matristen iste.** Etkilenen story ve test sayısı, takvim ve maliyet tahmininin girdisidir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- İzlenebilirlik, gereksinimleri ihtiyaçtan uygulanan çözüme ve teste kadar izleyebilmektir.
+- Geri izleme "neden var?", ileri izleme "yapıldı mı, sınandı mı?" sorusunu cevaplar.
+- Her gereksinimin tekil bir kimliği ve kaynağı olur; NASA iki yönlü izlenebilirlik ister.
+- Matrisin değeri boş hücrelerdedir: kaynaksız, story'siz ya da testsiz gereksinim.
+- Bir değişiklikte bağları izlemek, etkiyi dakikalar içinde gösterir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Geri izleme ile ileri izleme arasındaki fark nedir?">
+
+Geri izleme bir gereksinimi kaynağına, yani üst gereksinime ve ihtiyaca bağlar; "neden var?" sorusunu cevaplar. İleri izleme onu karşılayan tasarıma ve doğrulayan teste bağlar; "yapıldı mı, sınandı mı?" sorusunu cevaplar.
+
+</SelfCheck>
+
+<SelfCheck question="Matriste bir gereksinimin kaynak sütunu boş. Ne yaparsın?">
+
+Kaynağını ararım. Bulamazsam "olmasaydı en kötü ne olurdu?" diye sorarım. Cevap "hiçbir şey" ise gereksinim gereksiz olabilir ve çıkarılması önerilir.
+
+</SelfCheck>
+
+<SelfCheck question="Kupon oranı değişiyor. İzlenebilirlik matrisi etki analizine nasıl yardım eder?">
+
+FG-3'ün satırından ileri giderek etkilenen story'yi, otomatik testleri, kabul senaryolarını ve metinleri listelerim. Geri giderek kuralın kaynağını ve onu onaylayan kişiyi bulurum. Değişikliği onaylayacak kişi bu listeyle karar verir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir ekip, matrisi yayından sonra 'belgelemek için' doldurmayı planlıyor. Ne dersin?">
+
+O zaman matris yalnız bir belge olur. Değeri, iş sürerken boşlukları göstermesidir: story'si ya da testi olmayan gereksinim yayından önce bulunmalı.
+
+</SelfCheck>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+  <!-- A project: one launch, a dotted path with milestones, a target. Start and end are both visible. -->
+  <g class="il-star">
+    <circle class="twinkle" cx="34" cy="26" r="1.6"/>
+    <circle cx="92" cy="14" r="1.2"/>
+    <circle class="twinkle" cx="150" cy="40" r="1.4"/>
+    <circle cx="206" cy="18" r="1.1"/>
+    <circle class="twinkle" cx="300" cy="96" r="1.5"/>
+    <circle cx="244" cy="128" r="1.1"/>
+  </g>
+  <!-- Target planet with a ring, top right -->
+  <circle class="il-surface il-ink" cx="272" cy="42" r="20"/>
+  <path class="il-none il-glow" d="M246 48 C258 36 288 32 300 38"/>
+  <circle class="il-fill-green" cx="282" cy="34" r="3"/>
+  <!-- The planned path, dashed, with three milestone flags -->
+  <path class="il-none il-line il-dash" d="M86 118 C120 70 170 60 210 60 C232 60 244 54 252 48"/>
+  <g>
+    <path class="il-none il-ink il-thin" d="M126 82 V64"/>
+    <path class="il-fill-warm" d="M126 64 l12 4 -12 4 Z"/>
+    <path class="il-none il-ink il-thin" d="M172 66 V48"/>
+    <path class="il-fill-warm" d="M172 48 l12 4 -12 4 Z"/>
+    <path class="il-none il-ink il-thin" d="M216 60 V42"/>
+    <path class="il-fill-warm" d="M216 42 l12 4 -12 4 Z"/>
+  </g>
+  <!-- Ground: the curve of the home planet -->
+  <path class="il-deep" d="M0 180 V160 C70 144 150 140 230 146 C270 149 300 154 320 160 V180 Z"/>
+  <path class="il-none il-line" d="M0 160 C70 144 150 140 230 146 C270 149 300 154 320 160"/>
+  <!-- Launch tower -->
+  <path class="il-none il-line" d="M58 150 V98 M70 150 V98 M58 112 H70 M58 126 H70 M58 140 H70 M70 106 H80"/>
+  <!-- Rocket -->
+  <path class="il-surface il-ink" d="M86 92 C96 100 100 116 98 140 H74 C72 116 76 100 86 92 Z"/>
+  <circle class="il-fill-glow" cx="86" cy="114" r="5"/>
+  <path class="il-surface il-ink" d="M74 128 L66 142 H74 Z M98 128 L106 142 H98 Z"/>
+  <path class="il-fill-warm" d="M80 142 H92 L86 154 Z"/>
+</svg>

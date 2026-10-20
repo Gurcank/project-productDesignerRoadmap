@@ -5,7 +5,8 @@ outcomes:
   - "İkon butonlara erişilebilir ad verilmesi gerektiğini ve nedenini açıklayabilirsin."
   - "ARIA'nın birinci kuralını ve yanlış ARIA'nın neden hiç ARIA'dan kötü olabileceğini söyleyebilirsin."
   - "Ekranda beliren bir bildirimin ekran okuyucuya neden duyurulmadığını ve çözümünü bilirsin."
-minutes: 12
+minutes: 7
+standard: 2
 sources:
   - label: "W3C — WAI-ARIA Authoring Practices Guide"
     url: "https://www.w3.org/WAI/ARIA/apg/"
@@ -23,6 +24,9 @@ import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir filtre uyguluyorsun ve ekranda "12 sonuç bulundu" yazısı beliriyor. Görme yeteneği olan herkes bunu anında görüyor. Ama ekran okuyucu kullanan biri **hiçbir şey duymuyor;** sayfada bir şey değiştiğini bilmiyor. Bu, en sık atlanan erişilebilirlik ayrıntılarından biri.
 
@@ -125,7 +129,21 @@ Bu sitedeki arama sayfasında sonuç sayısı canlı bölgede duyuruluyor ("3 so
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in ödeme ekranı ekran okuyucuyla dinlendiğinde üç sorun çıktı:
+
+1. **Erişilebilir ad:** kart silme düğmesi yalnız bir çöp kutusu ikonuydu ve "düğme" diye okunuyordu. Ad verildi: "İş kartını sil, son dört hane 4417".
+2. **Alt metin:** dükkân logolarının alt metni dosya adıydı. Logolar dükkân adını taşıdı; dekoratif fincan çizimi boş alt metin aldı.
+3. **Canlı bölge:** kupon uygulandığında toplam tutar değişiyordu ama duyurulmuyordu. Toplam satırı nazik bir canlı bölge oldu.
+4. **ARIA:** seçili kart için ARIA eklenmedi; kartlar yerel radyo düğmesine çevrildi ve seçili durum kendiliğinden duyuruldu.
+
+İlk kural geçerliydi: doğru HTML, eklenen ARIA'dan iyidir.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Her görselin amacını sor:** bilgi mi taşıyor, süs mü? Bilgi taşıyorsa işlevini yaz, süsse boş bırak.
 - **İkon butonlarına ad yaz.** Teslimde "× → Diyaloğu kapat" gibi.
@@ -133,7 +151,32 @@ Bu sitedeki arama sayfasında sonuç sayısı canlı bölgede duyuruluyor ("3 so
 - **Ekranda beliren her bildirimi sor:** ekran okuyucu duyuyor mu?
 - **Bir kez ekran okuyucuyla kendi tasarımına dinle.** İlk beş dakikada çoğu eksik ortaya çıkar.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Ekran okuyucu deneyimini ürün kalitesi say.** Görünmeyen arayüz de bir arayüzdür.
+- **İçerik ekibinin alt metin sorumluluğunu netleştir.** Yükleyen kişi açıklamayı da yazar.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Erişilebilir adları kabul kriterine yaz.** Özellikle yalnız ikondan oluşan düğmeler için.
+- **Dinamik değişikliklerin duyurulmasını iste.** Toplam, sonuç sayısı, hata.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **İçerik gereksinimine alt metin alanını ekle.** Görsel yükleyen her form bir açıklama alanı ister.
+- **Durum değişikliklerini listele.** Hangisinin duyurulacağı bir gereksinimdir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Ekran okuyucu kullanıcısını gözlerken ses hızını kendi hızına ayarlama.** Deneyimi onun ayarında dinle.
+- **Duyurulmayan değişiklikleri kayıtta ara.** Kullanıcının "şimdi ne oldu?" dediği an bir bulgudur.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -156,5 +199,11 @@ Boş bırakılmalı (`alt=""`). Bu "unutmak" değil, ekran okuyucuya "bunu atla"
 <SelfCheck question="Bir filtre uygulandığında &quot;12 sonuç bulundu&quot; yazısı beliriyor. Ekran okuyucu kullanıcısı bunu neden duymayabilir ve çözüm nedir?">
 
 Görsel değişim ekran okuyucuya otomatik duyurulmaz. Çözüm: o alanı canlı bölge (`aria-live`) olarak tanımlamak, böylece içerik değiştiğinde duyurulur.
+
+</SelfCheck>
+
+<SelfCheck question="Yalnız bir çöp kutusu ikonundan oluşan düğme ekran okuyucuda nasıl okunur, ne yapılmalı?">
+
+Erişilebilir adı yoksa yalnız "düğme" diye okunur; kullanıcı ne yaptığını bilemez. Düğmeye ne sildiğini söyleyen bir ad verilmelidir: görünür metin, görünmez metin ya da aria-label.
 
 </SelfCheck>

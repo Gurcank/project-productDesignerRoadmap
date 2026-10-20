@@ -1,10 +1,12 @@
 ---
-summary: "Auth hem en çok kullanılan hem en az tasarlanan akıştır. Bölümün temeli iki soru: 'sen kimsin?' (kimlik doğrulama) ve 'ne yapabilirsin?' (yetkilendirme). İkisini karıştırmak güvenlik açıklarının en yaygın kavramsal kaynağıdır."
+summary: "Auth hem en çok kullanılan hem en az tasarlanan akıştır. Temelinde iki soru var: 'sen kimsin?' (kimlik doğrulama) ve 'ne yapabilirsin?' (yetkilendirme). İkisini karıştırmak açıkların yaygın kaynağıdır."
 outcomes:
   - "Authentication ile authorization'ı iki soruyla ayırabilirsin."
   - "401 ve 403'ün hangisine karşılık geldiğini ve neden farklı tasarım gerektirdiğini söyleyebilirsin."
   - "Yetkisi olmayan eylemi gizleme/pasif gösterme kararını bir tasarım kararı olarak görebilirsin."
-minutes: 7
+minutes: 4
+standard: 2
+skipTerms: ["Doğrulama", "doğrulama"]
 sources:
   - label: "OWASP — Authentication Cheat Sheet"
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
@@ -14,18 +16,21 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/403"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Auth, bir üründe **hem en çok kullanılan hem en az tasarlanan** akıştır. Herkes kayıt olur, herkes giriş yapar, herkes şifresini unutur; ama bu ekranlar genelde en sona bırakılır ve varsayılan hâlleriyle kalır.
 
 Bu bölümün iki hedefi var:
 
 1. **Teknik tarafı anlamak.** Session, token, OAuth, JWT gibi terimler her auth konuşmasında geçer ve karıştırılmaları güvenlik açığına yol açar.
-2. **Tasarım sorumluluğunu görmek.** Auth akışındaki kararların çoğu senin işin: hangi yöntemler sunulacak, hata mesajı ne diyecek, oturum ne kadar sürecek, hesabını kaybeden kullanıcı ne yapacak.
+2. **Tasarım sorumluluğunu görmek.** Auth akışındaki kararların çoğu tasarımın işi: hangi yöntemler sunulacak, hata mesajı ne diyecek, oturum ne kadar sürecek, hesabını kaybeden kullanıcı ne yapacak.
 
 Bölümdeki kavramlar eskimeyen kategoride. Değişken olanlar: hazır çözümler ve şifre politikası tavsiyeleri; ikincisi son yıllarda ciddi biçimde değişti ve muhtemelen bildiğinin tersi.
 
@@ -50,15 +55,71 @@ Bölümdeki kavramlar eskimeyen kategoride. Değişken olanlar: hazır çözüml
 
 **Authentication**, kullanıcının iddia ettiği kişi olduğunu kanıtlar. Giriş ekranında karşına çıkar. **Authorization**, kimliği doğrulanmış bir kullanıcının hangi kaynaklara erişebileceğini ve hangi işlemleri yapabileceğini belirler. Rol, izin ve ekip özelliklerinde karşına çıkar. "Kimlik doğrulama geçti ama bu sayfaya yetkisi yok."
 
+## Tasarımdaki karşılığı
+
 Bu ayrım tasarımda somutlaşır: **401** kimlik doğrulama sorunudur (giriş ekranına yönlendir), **403** yetkilendirme sorunudur (giriş ekranı işe yaramaz, ayrı bir ekran gerekir). "Kullanıcı giriş yapmış ama düzenleme yetkisi yok; butonu gizleyelim mi, pasif mi gösterelim?" sorusu da bir yetkilendirme tasarım sorusudur.
 
-<Callout kind="tasarimci">
+<StepFlow
+  label="Bir isteğin iki kapısı"
+  caption="Panel'e gelen her istek iki kapıdan geçer. Önce kimlik doğrulama: istek giriş yapmış birinden mi geliyor? Değilse 401 döner ve giriş ekranı gösterilir. Sonra yetkilendirme: bu kişinin bu işlemi yapmaya yetkisi var mı? Yoksa 403 döner ve yetki ekranı gösterilir. İki kapıdan da geçen istek işlenir."
+  steps={[
+  {
+    title: "İstek",
+    tone: "accent"
+  },
+  {
+    title: "Sen kimsin?",
+    sub: "yoksa 401 · giriş"
+  },
+  {
+    title: "Ne yapabilirsin?",
+    sub: "yoksa 403 · yetki ekranı"
+  },
+  {
+    title: "İşlem",
+    tone: "progress"
+  }
+]}
+/>
+
+<Case>
+
+Demlik Panel'de iki soru ayrı ayrı soruluyor:
+
+1. **Kimlik doğrulama:** her çalışan kendi e-postası ve şifresiyle giriyor; ortak bir "kafe hesabı" yok. Böylece fiyatı kimin değiştirdiği denetim kaydında görünüyor.
+2. **Yetkilendirme:** dükkân sahibi ciro raporunu görüyor ve iade onaylayabiliyor; çalışan göremiyor ve onaylayamıyor.
+3. **Gizle mi, pasif mi?** Çalışanın ekranında "İadeyi onayla" düğmesi gizli değil, pasif; yanında "Yalnız dükkân sahibi onaylayabilir" yazıyor. Çalışan müşteriye ne diyeceğini biliyor.
+4. **Sunucu:** düğme pasif olsa da kontrol sunucuda yapılıyor; istek doğrudan gönderilse bile 403 dönüyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Her kısıtlı ekran için iki durum çiz:** giriş yapılmamış (401) ve giriş yapılmış ama yetki yok (403).
 - **Yetkisiz eylem için karar ver:** gizle mi, pasif göster mi, "neden yapamıyorsun?" açıklaması ver mi?
 - **Auth ekranlarını en sona bırakma;** akışın kendisi bir ürün parçasıdır.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Kim neyi yapabilir sorusunu ürün kararı say.** Rol tablosu ekiple birlikte yazılır.
+- **Yetkisiz eylemin nasıl görüneceğine karar ver.** Gizlemek mi, açıklamayla pasif göstermek mi?
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kabul kriterine iki durumu ayrı yaz.** "Giriş yapmamış kullanıcı giriş ekranına gider; yetkisi olmayan yetki ekranını görür."
+- **Yetki kontrolünün sunucuda yapıldığını test senaryosuna ekle.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Rol ve izin tablosunu gereksinim olarak yaz.** Her işlem için hangi rolün yetkisi var?
+- **Ortak hesap isteğini sorgula.** Denetim kaydı kişi bazında ister.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -73,5 +134,17 @@ Bu ayrım tasarımda somutlaşır: **401** kimlik doğrulama sorunudur (giriş e
 <SelfCheck question="Authentication ile authorization arasındaki fark nedir? 401 ve 403 hangisine karşılık gelir?">
 
 Authentication "sen kimsin?" (kimlik doğrulama), authorization "ne yapabilirsin?" (yetkilendirme). 401 authentication sorunudur (giriş yapılmamış), 403 authorization sorunudur (giriş yapılmış ama yetki yok).
+
+</SelfCheck>
+
+<SelfCheck question="Bir düğmeyi yetkisi olmayan kullanıcıdan gizlemek güvenlik sağlar mı?">
+
+Sağlamaz. Düğme gizlense de istek doğrudan gönderilebilir. Yetki kontrolü sunucuda yapılmalıdır; arayüzdeki gizleme ya da pasif gösterim yalnız deneyimle ilgilidir.
+
+</SelfCheck>
+
+<SelfCheck question={"Ortak bir \"kafe hesabı\" yerine her çalışana ayrı hesap vermek neden önemlidir?"}>
+
+Kimin ne yaptığı ancak kişi bazında kimlik doğrulamayla izlenebilir. Ayrı hesap denetim kaydını anlamlı kılar ve ayrılan bir çalışanın erişimi tek başına kapatılabilir.
 
 </SelfCheck>

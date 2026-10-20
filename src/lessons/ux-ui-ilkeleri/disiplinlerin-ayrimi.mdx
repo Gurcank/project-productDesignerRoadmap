@@ -5,6 +5,7 @@ outcomes:
   - "Bir sorunun arayüzde mi, etkileşimde mi, görsel tasarımda mı yoksa hizmette mi olduğunu ayırt edebilirsin."
   - "İş ilanlarındaki \"UX/UI Designer\" gibi ifadelerin neyi kapsadığını yorumlayabilirsin."
 minutes: 8
+standard: 2
 sources:
   - label: "NN/g — The Definition of User Experience (UX)"
     url: "https://www.nngroup.com/articles/definition-user-experience/"
@@ -12,16 +13,16 @@ sources:
     url: "https://www.nngroup.com/articles/usability-101-introduction-to-usability/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Bu bölüm senin **ana alanın.** Amacı, şu ana kadar sezgiyle yaptığın şeylerin *adını ve gerekçesini* vermek.
+Bu bölüm tasarımın ortak dilidir. Amacı, sezgiyle yapılan şeylerin *adını ve gerekçesini* vermek.
 
-Fark şurada: "burası biraz boş duruyor" demek bir izlenimdir, tartışılamaz. "Bu bölümde görsel hiyerarşi yok; birincil eylem ikincil eylemle aynı ağırlıkta, bu yüzden göz nereye gideceğini bilmiyor" demek bir **argümandır,** savunulabilir. İkinci cümleyi kurabilen tasarımcı, kararını zevk tartışmasından çıkarır.
-
-Bir uyarı: bu bölümdeki "yasalar" fizik yasası değildir. Çoğu, belirli koşullarda yapılmış psikoloji çalışmalarından türetilmiş ve zamanla sloganlaştırılmıştır. Hangi kuralın nerede yanlış uygulandığını da göreceksin, çünkü bir kuralı yanlış yerde kullanmak, hiç bilmemekten daha kötü sonuç verebilir.
+Fark şurada: "burası biraz boş duruyor" demek bir izlenimdir, tartışılamaz. "Bu bölümde görsel hiyerarşi yok; birincil eylem ikincil eylemle aynı ağırlıkta, bu yüzden göz nereye gideceğini bilmiyor" demek bir **argümandır,** savunulabilir. İkinci cümleyi kurabilen kişi, kararı zevk tartışmasından çıkarır.
 
 Şimdi başlangıç noktası: kelimeler. Bu terimler günlük konuşmada birbirinin yerine kullanılır ve bu bir sorun değildir. Ama ne zaman gerçekten farklı şeyleri kastettiklerini bilmek, iş ilanlarını okurken ve ekipte kimin ne yaptığını anlarken işini görür.
 
@@ -73,7 +74,21 @@ Bankacılık, sağlık, kamu ve perakende projelerinde yaygındır. Ön yüzü v
   ]}
 />
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in mağaza puanı 4,3'tü ve yorumlarda "iade çok zor" sık geçiyordu. İlk öneri iade ekranını yeniden çizmekti.
+
+1. **UI:** iade ekranı düzgündü; düğmeler görünür, metin okunaklıydı.
+2. **UX:** sorun ekranın dışındaydı. İade kuralı üç yerde yazılıydı ve üçü birbirini tutmuyordu: uygulamadaki iptal metni, destek ekibinin şablonu ve dükkânların bildiği kural.
+3. **Hizmet tasarımı:** çözüm destek ekibini, dükkânları ve ödeme iadesini birlikte kapsadı. Ayşe kuralları tek bir karar tablosunda topladı.
+4. **Sonuç:** üç ay sonra iadeyle ilgili destek talepleri ayda 310'dan 140'a indi.
+
+Ekran yeniden çizilmeden de deneyim değişti.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 Bir geri bildirim aldığında önce **sorunun hangi katmanda olduğunu** bul:
 
@@ -84,7 +99,32 @@ Bir geri bildirim aldığında önce **sorunun hangi katmanda olduğunu** bul:
 
 Doğru katmanı bulmak, yanlış yere zaman harcamayı önler. İş ilanında da aynısı: "UX/UI Designer" yazıyorsa hangi katmanların ağırlıkta olduğunu **görüşmede sor.**
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Şikâyetin hangi katmanda olduğunu sor.** Ekran mı, süreç mi, hizmetin tamamı mı?
+- **İş ilanında ve ekip kuruluşunda terimleri doğru kullan.** "UI tasarımcısı" ile "ürün tasarımcısı" aynı işi tarif etmez.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Story'nin kapsamını disipline göre netleştir.** Görsel düzeltme ile akış değişikliği farklı büyüklüktedir.
+- **Hizmet sorunlarını yalnız ekran story'siyle çözmeye çalışma.** Destek ve operasyon da işin parçasıdır.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Hizmet tasarımında süreç modelini birlikte çiz.** Ekranın arkasındaki adımlar, deneyimin büyük kısmıdır.
+- **Kuralların tek kaynağını kur.** Çelişen kural, en iyi arayüzü de bozar.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Araştırmayı ekranla sınırlama.** Kullanıcının deneyimi destek hattında, dükkânda da sürer.
+- **UX bulgusunu UI bulgusundan ayır.** "Düğme görünmüyor" ile "süreç anlaşılmıyor" farklı çözümler ister.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -106,5 +146,11 @@ UI arayüz katmanıdır (ekranlar, butonlar, tipografi); UX ise kullanıcının 
 <SelfCheck question={"\"İade süreci kötü\" şikâyeti için neden her zaman iade sayfasını yeniden tasarlamak çözüm olmaz?"}>
 
 Çünkü sorun ekranda değil süreçte ya da politikada olabilir (iade koşulları, destek ekibinin yetkisi). Bu bir hizmet tasarımı sorunudur; arayüzü güzelleştirmek asıl nedeni çözmez.
+
+</SelfCheck>
+
+<SelfCheck question="Etkileşim tasarımı ile görsel tasarım arasındaki fark nedir?">
+
+Etkileşim tasarımı, kullanıcının eylemine arayüzün nasıl tepki vereceğini kurgular: geçişler, durumlar, geri bildirim. Görsel tasarım; renk, tipografi, boşluk ve hiyerarşiyle arayüzün nasıl göründüğünü belirler.
 
 </SelfCheck>

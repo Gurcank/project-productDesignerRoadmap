@@ -1,0 +1,52 @@
+---
+/**
+ * Renders the blocks the importer parsed out of a tool chapter (material-tools.ts):
+ * paragraphs, lists, tables, quotes and sub-headings. Inline markup and
+ * "(7.9)"-style references go through renderInlineMarkdown, the same renderer
+ * the quizzes use, so a reference links the same way everywhere.
+ *
+ * The text arrives verbatim from the material; this component only lays it out.
+ */
+import type { Block } from "~/lib/material-tools";
+import { renderInlineMarkdown } from "~/lib/inline-markdown";
+
+interface Props {
+  blocks: Block[];
+  /** Heading level for the material's sub-headings (### in the source). */
+  level?: 3 | 4;
+  /** Accessible name prefix for scrollable tables. */
+  label: string;
+}
+
+const { blocks, level = 3, label } = Astro.props;
+const Heading = `h${level}` as "h3" | "h4";
+const md = renderInlineMarkdown;
+---
+
+<div class="prose material-blocks">
+  {
+    blocks.map((block, index) => {
+      if (block.kind === "heading") return <Heading set:html={md(block.text)} />;
+      if (block.kind === "para") return <p set:html={md(block.text)} />;
+      if (block.kind === "quote") return <blockquote><p set:html={md(block.text)} /></blockquote>;
+      if (block.kind === "list") {
+        const List = block.ordered ? "ol" : "ul";
+        return <List>{block.items.map((item) => <li set:html={md(item)} />)}</List>;
+      }
+      return (
+        <div class="table-scroll" tabindex="0" role="region" aria-label={`${label}, tablo ${index + 1}`}>
+          <table>
+            <thead>
+              <tr>{block.head.map((cell) => <th scope="col" set:html={md(cell)} />)}</tr>
+            </thead>
+            <tbody>
+              {block.rows.map((row) => (
+                <tr>{row.map((cell, i) => (i === 0 ? <th scope="row" set:html={md(cell)} /> : <td set:html={md(cell)} />))}</tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+    })
+  }
+</div>

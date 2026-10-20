@@ -1,0 +1,130 @@
+---
+summary: "Rekabet yalnız benzer ürünlerden gelmez. Porter'ın beş gücü yeni girenleri, ikameleri, tedarikçileri, alıcıları ve rakipleri birlikte okur; hendek, rakibin kolayca kopyalayamayacağı avantajdır."
+outcomes:
+  - "Porter'ın beş gücünü bir ürün için sayıp yorumlayabilirsin."
+  - "Rakip ile ikameyi ayırt edebilirsin."
+  - "Giriş engellerini tanıyıp bir ürünün hendeğini adlandırabilirsin."
+minutes: 5
+standard: 2
+sources:
+  - label: "Wikipedia — Porter's five forces analysis"
+    url: "https://en.wikipedia.org/wiki/Porter%27s_five_forces_analysis"
+  - label: "Ash Maurya — Lean Canvas vs Business Model Canvas (LEANSpark, 2024)"
+    url: "https://leanspark.ai/compare/lean-canvas-vs-bmc"
+additions:
+  - "Beş güç, Porter 1979, giriş engellerinin yedi kaynağı, ikame örneği (Wikipedia)"
+  - "Haksız avantajın tanımı (Ash Maurya, Jason Cohen'e atıfla)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Hub from "~/components/diagrams/primitives/Hub.astro";
+
+Rakip analizi sunumunda iki zincirin kendi uygulaması vardı ve ikisi de Demlik'ten "daha az özellikli"ydi. Hakan sunumu dinledikten sonra tek bir şey sordu: "Büyük bir teslimat uygulaması yarın 'gel-al' düğmesi eklerse ne olur?"
+
+Sunumda o uygulama yoktu, çünkü kahve ön siparişi yapmıyordu. Ama 140 dükkânın çoğu zaten oradaydı. Bu ders, rekabeti benzer ürünlerin ötesinde okumayı anlatır.
+
+## Beş güç
+
+Michael E. Porter'ın 1979'da Harvard Business Review'da yayımlanan çerçevesi, bir sektörün kârlılık açısından ne kadar çekici olduğunu beş güçle açıklar. Wikipedia'nın özetiyle üçü yataydır: yeni girenlerin tehdidi, ikamelerin tehdidi ve mevcut rakipler arasındaki rekabet. İkisi dikeydir: tedarikçilerin ve alıcıların pazarlık gücü.
+
+<Hub
+  label="Demlik için beş güç"
+  caption="Ortada mevcut rakipler arasındaki rekabet durur: zincirlerin uygulamaları ve teslimat uygulamaları. Üstte iki tehdit vardır: yeni girenler, örneğin bir teslimat devinin gel-al özelliği; ve ikameler, yani kuyrukta beklemek ya da dükkânı telefonla aramak. Altta iki pazarlık gücü vardır: tedarikçiler, yani ödeme kuruluşu ve POS tedarikçisi; ve alıcılar, yani dükkânlar ve müşteriler. Dükkânların geçiş maliyeti kasa entegrasyonu yüzünden yüksek, müşterilerinki düşük."
+  center={{ title: "Mevcut rakipler", sub: "zincir, teslimat" }}
+  top={[
+    { title: "Yeni girenler", rel: "teslimat devi", tone: "progress" },
+    { title: "İkameler", rel: "kuyruk, telefon" },
+  ]}
+  bottom={[
+    { title: "Tedarikçiler", rel: "ödeme, POS" },
+    { title: "Alıcılar", rel: "dükkân, müşteri" },
+  ]}
+/>
+
+**Rakip ≠ ikame.** Wikipedia'daki örnekte Coca-Cola'nın ikamesi Pepsi değil, musluk suyudur. İkame aynı ihtiyacı farklı bir yoldan karşılar. Demlik'in en güçlü ikamesi başka bir uygulama değil, kuyrukta beklemektir.
+
+Wikipedia, Porter'ın çerçeveyi SWOT'un analitik titizlik eksikliğine bir tepki olarak geliştirdiğini de not eder. Havayolu örneği gücü gösterir: sabit maliyeti yüksek, değişken maliyeti düşük bir sektörde rakipler fiyatla yarışır ve kârlılık düşer.
+
+## Giriş engelleri
+
+Yeni girenin tehdidi, giriş engellerine bağlıdır. Porter yedi kaynak sayar:
+
+1. **Arz tarafı ölçek ekonomisi:** büyüdükçe birim maliyetin düşmesi.
+2. **Talep tarafı ölçek faydası:** ağ etkisi; kullanıcı arttıkça ürünün her kullanıcı için değerlenmesi.
+3. **Müşterinin geçiş maliyeti:** örneğin sık uçan yolcu programları.
+4. **Sermaye gereksinimi.**
+5. **Büyüklükten bağımsız yerleşiklik avantajı:** sadakat, marka.
+6. **Dağıtım kanallarına eşitsiz erişim.**
+7. **Devlet politikası:** patent, lisans, düzenleme.
+
+Wikipedia'nın Uber örneği, yasal engel düşünce müşterinin geçiş maliyeti olmadığı için bir pazarın nasıl hızla el değiştirdiğini gösterir.
+
+## Hendek
+
+Bu derste **hendek** (moat) kelimesini, rakibin kolayca aşamayacağı engel için kullanıyoruz. Lean Canvas'ta bunun adı **haksız avantajdır**. Maurya'nın Jason Cohen'den aktardığı tanımla haksız avantaj, kolayca kopyalanamayan ya da satın alınamayan şeydir.
+
+**Özellik ≠ hendek.** "Daha çok özelliğimiz var" bir hendek değildir; özellik kopyalanabilir. Ağ etkisi, geçiş maliyeti ve kanal erişimi daha zor kopyalanır.
+
+<Case>
+
+Elif sunumu beş güçle yeniden yazdı:
+
+1. **Yeni giren:** bir teslimat devinin gel-al özelliği. Müşteri kitlesi ve dükkân ağı hazır; en büyük tehdit buydu.
+2. **İkameler:** kuyruk ve telefon. Demlik'in asıl rakibi alışkanlıktı.
+3. **Tedarikçiler:** ödeme kuruluşu ve POS tedarikçisi. Ödeme ücretlerinin artması doğrudan katkıyı düşürürdü.
+4. **Alıcılar:** dükkânların geçiş maliyeti yüksekti (kasa entegrasyonu ve personel eğitimi), müşterilerinki düşüktü.
+5. **Hendek:** kasa entegrasyonu ve iki taraflı ağ etkisi: dükkân çoğaldıkça müşteri, müşteri çoğaldıkça dükkân gelir.
+
+Hakan'ın sorusunun cevabı da çıktı: teslimat devinin elinde kasa entegrasyonu yoktu. Yol haritasında entegrasyonu derinleştiren işler öne alındı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **İkameyi rakip listesine ekle.** Kullanıcının bugün o ihtiyacı nasıl karşıladığı, en güçlü rakibindir.
+- **Hendeği yol haritasına bağla.** Hangi işler kopyalanması zor bir avantajı büyütüyor?
+- **Geçiş maliyetini iki taraf için ayrı düşün.** Biri yüksek, diğeri düşük olabilir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Porter'ın beş gücü: yeni girenler, ikameler, mevcut rakipler, tedarikçilerin ve alıcıların pazarlık gücü.
+- İkame aynı ihtiyacı farklı yoldan karşılar; çoğu zaman en güçlü rakip odur.
+- Giriş engelleri yeni girenin tehdidini belirler; ağ etkisi ve geçiş maliyeti bunlardandır.
+- Hendek, rakibin kolayca kopyalayamayacağı ya da satın alamayacağı avantajdır.
+- Özellik bir hendek değildir; özellik kopyalanabilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Porter'ın beş gücü nelerdir?">
+
+Yeni girenlerin tehdidi, ikamelerin tehdidi, mevcut rakipler arasındaki rekabet, tedarikçilerin pazarlık gücü ve alıcıların pazarlık gücü.
+
+</SelfCheck>
+
+<SelfCheck question="Demlik için kuyrukta beklemek bir rakip mi, bir ikame mi?">
+
+Bir ikame. Aynı ihtiyacı, sabah kahvesini almayı, farklı bir yoldan karşılar. Rakip, aynı yoldan karşılayan başka bir üründür; örneğin bir zincirin ön sipariş uygulaması.
+
+</SelfCheck>
+
+<SelfCheck question="Bir rakip 'bizim de tekrar sipariş düğmemiz var' dedi. Demlik'in hendeği zayıfladı mı?">
+
+Pek değil. Bir özellik kolayca kopyalanır; bu yüzden hendek değildir. Demlik'in hendeği kasa entegrasyonu ve iki taraflı ağ etkisidir; bunlar bir düğmeyle kopyalanamaz.
+
+</SelfCheck>
+
+<SelfCheck question="Dükkânların geçiş maliyeti yüksek, müşterilerinki düşük. Bu, ürün stratejisini nasıl etkiler?">
+
+Dükkân tarafı daha sağlam bir hendektir; entegrasyonu derinleştirmek onu güçlendirir. Müşteri tarafında hendek zayıftır; müşteriyi tutmanın yolu deneyim ve alışkanlıktır.
+
+</SelfCheck>

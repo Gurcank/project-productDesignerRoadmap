@@ -1,0 +1,83 @@
+---
+/**
+ * Two or three overlapping sets: where roles share work (PM · PO · PjM), where
+ * desirability, viability and feasibility meet. Circles are outlines, never
+ * filled with translucent colour — overlapping alpha makes the label contrast
+ * depend on how many circles sit behind it.
+ */
+import DiagramFigure from "../DiagramFigure.astro";
+import { wrap } from "./util";
+
+interface Set {
+  title: string;
+  /** What only this set has. */
+  sub?: string;
+}
+
+interface Props {
+  label: string;
+  caption: string;
+  sets: [Set, Set] | [Set, Set, Set];
+  /** What all sets share, written in the centre. */
+  overlap?: string;
+}
+
+const { label, caption, sets, overlap } = Astro.props;
+const three = sets.length === 3;
+const R = three ? 92 : 104;
+const centres = three
+  ? [
+      { x: 132, y: 112 },
+      { x: 228, y: 112 },
+      { x: 180, y: 196 },
+    ]
+  : [
+      { x: 122, y: 120 },
+      { x: 238, y: 120 },
+    ];
+// Labels sit in the part of each circle no other circle covers.
+const anchors = three
+  ? [
+      { x: 92, y: 80 },
+      { x: 268, y: 80 },
+      { x: 180, y: 236 },
+    ]
+  : [
+      { x: 82, y: 112 },
+      { x: 278, y: 112 },
+    ];
+const centre = three ? { x: 180, y: 140 } : { x: 180, y: 124 };
+const height = three ? 300 : 240;
+---
+
+<DiagramFigure label={label} caption={caption}>
+  <svg class="dg-narrow" viewBox={`0 0 360 ${height}`} role="img" aria-label={label}>
+    <title>{label}</title>
+    {centres.map((c, i) => <circle class:list={["dg-line", { "dg-line--accent": i === 0, "dg-line--progress": i === 1 }]} cx={c.x} cy={c.y} r={R} stroke-width="2" />)}
+    {
+      sets.map((set, i) => (
+        <>
+          {wrap(set.title, 92, "label", 2).map((line, j) => (
+            <text class="dg-label" x={anchors[i]!.x} y={anchors[i]!.y + j * 15} text-anchor="middle">
+              {line}
+            </text>
+          ))}
+          {set.sub &&
+            wrap(set.sub, 92, "sub", 3).map((line, j) => (
+              <text class="dg-sub" x={anchors[i]!.x} y={anchors[i]!.y + 34 + j * 13} text-anchor="middle">
+                {line}
+              </text>
+            ))}
+        </>
+      ))
+    }
+    {
+      overlap &&
+        wrap(overlap, 70, "sub", 3).map((line, j, all) => (
+          <text class="dg-sub dg-strong" x={centre.x} y={centre.y + (j - (all.length - 1) / 2) * 13} text-anchor="middle">
+            {line}
+          </text>
+        ))
+    }
+  </svg>
+</DiagramFigure>

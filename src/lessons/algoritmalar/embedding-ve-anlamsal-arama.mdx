@@ -4,7 +4,8 @@ outcomes:
   - "Embedding'in kabaca nasıl çalıştığını söyleyebilirsin."
   - "Anlamsal aramanın ne kazandırıp ne kaybettirdiğini sayabilirsin."
   - "Ürün kodu aramak ile kavram aramak arasındaki farkı ve hibrit yaklaşımı açıklayabilirsin."
-minutes: 7
+minutes: 4
+standard: 2
 sources:
   - label: "pgvector"
     url: "https://github.com/pgvector/pgvector"
@@ -17,9 +18,12 @@ additions:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Şifremi unuttum" yazan bir kullanıcı, içinde bu kelimeler geçmeyen "Hesap kurtarma" sayfasını bulabilir mi? Kelime eşleştirmeyen aramada evet. Bu derste mekanizmayı ve bedelini göreceksin.
 
@@ -42,16 +46,74 @@ Bir metin, sayılardan oluşan uzun bir listeye (**vektör**, **embedding**) çe
 
 ## Pratikte: ikisi birden
 
+<Spectrum
+  label="Kelime mi, anlam mı?"
+  caption="Arama yöntemleri kesinlik ile kapsam arasında sıralanır. Sol uçta kelime eşleşmesi durur: sipariş kodu ya da kişi adı gibi birebir aranan şeyler için doğru araçtır ve neden eşleştiğini gösterebilir. Ortada hibrit arama vardır: kelime eşleşmesinin kesinliği ile anlamsal aramanın kapsamını birleştirir. Sağ uçta anlamsal arama durur: eş anlamlıları ve tam cümleli soruları yakalar ama tam eşleşme garantisi vermez."
+  left={{
+  title: "Kesinlik",
+  sub: "kelime eşleşmesi"
+}}
+  right={{
+  title: "Kapsam",
+  sub: "anlam yakınlığı"
+}}
+  marks={[
+  {
+    label: "Sipariş kodu",
+    at: 0.06
+  },
+  {
+    label: "Menü araması",
+    at: 0.25
+  },
+  {
+    label: "Hibrit",
+    at: 0.55
+  },
+  {
+    label: "Yardım merkezi soruları",
+    at: 0.88
+  }
+]}
+/>
+
 Çoğu iyi arama **hibrittir:** kelime eşleşmesi kesinliği, anlamsal arama kapsamı verir; sonuçlar birleştirilip sıralanır. Bu sitenin araması kelime tabanlıdır (derleme anında oluşturulmuş statik bir indeks); statik bir sitede vektör altyapısı taşımaya değmez.
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in yardım merkezinde müşteriler sorularını cümleyle yazıyordu ve kelime araması bulamıyordu.
+
+1. **Örnek:** "kartımı değiştirmek istiyorum" yazan, "Ödeme yöntemlerini yönetme" makalesini bulamıyordu; ortak kelime yoktu.
+2. **Seçenek:** anlamsal arama konuşuldu. Kazanç: eş anlamlılar ve cümleler. Bedel: her makale için vektör üretimi ve "neden bu sonuç?" sorusunun cevapsız kalması.
+3. **Karar:** yardım merkezinde 60 makale var. Önce en sık aranan 30 ifade için elle bir eş anlamlı listesi kuruldu: "kart değiştir" = "ödeme yöntemi". Boş sonuç oranı belirgin düştü.
+4. **Sonraki adım:** makale sayısı büyürse hibrit aramaya geçiş karar kaydında duruyor.
+
+Sipariş kodu araması hiçbir zaman anlamsal olmayacak; orada birebir eşleşme gerekiyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Kullanıcı ne arıyor?** Kod/numara arıyorsa birebir eşleşme şart; kavram arıyorsa anlamsal değerli.
 - **Açıklanabilirliği kaybetmeyi göze alıyor musun?** Vurgulama yapılamayan sonuç listesi daha az güven verir.
 - **Boş sonuç yerine yanlış sonuç gelmesi daha mı iyi?** Anlamsal aramada varsayılan budur ve bazı ürünlerde kabul edilebilir olmayabilir.
 - **"Yapay zekâ araması" isteği genelde budur** ve ayrı servis, ayrı gecikme, ayrı hata durumu demektir.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Anlamsal aramayı bir maliyet kararı olarak tart.** Vektör üretimi, altyapı ve açıklanamayan sonuçlar bedeldir.
+- **Önce eş anlamlı listesiyle başlamayı düşün.** Küçük içerikte çoğu zaman yeterlidir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Aramanın hangi alanlarda birebir eşleşme gerektirdiğini kabul kriterine yaz.** Kodlar, adlar, numaralar.
+- **Boş sonuç oranını izlenecek bir ölçü yap.**
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -66,5 +128,17 @@ Bir metin, sayılardan oluşan uzun bir listeye (**vektör**, **embedding**) çe
 <SelfCheck question="Anlamsal arama hangi aramalarda yanlış araçtır?">
 
 Ürün kodu, fatura numarası, kişi adı gibi birebir eşleşme gerektiren aramalarda; ayrıca "neden bu sonuç geldi" sorusuna açıklama gerektiğinde ve boş sonuç yerine yanlış sonucun kabul edilemediği durumlarda.
+
+</SelfCheck>
+
+<SelfCheck question="Bir fatura numarası araması için anlamsal arama neden yanlış araçtır?">
+
+Fatura numarası birebir eşleşme gerektirir. Anlamsal arama "en yakın" sonucu döndürür; yanlış bir faturayı, hiç sonuç vermemek yerine sessizce gösterebilir.
+
+</SelfCheck>
+
+<SelfCheck question="Hibrit arama neyi birleştirir?">
+
+Kelime eşleşmesinin kesinliğini ve anlamsal aramanın kapsamını. İki yöntemin sonuçları birleştirilip sıralanır; böylece hem birebir aranan kodlar bulunur hem eş anlamlı ya da cümleli sorular yakalanır.
 
 </SelfCheck>

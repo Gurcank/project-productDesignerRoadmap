@@ -5,7 +5,8 @@ outcomes:
   - "\"Agile plansız çalışmaktır\" yanlışını düzeltebilirsin."
   - "Agile Manifesto'nun dört değerini ve bunların bir tercih sıralaması olduğunu bilirsin."
   - "Lean ve SAFe'in ne olduğunu, hangi bağlamda karşına çıkacağını bilirsin."
-minutes: 9
+minutes: 8
+standard: 2
 sources:
   - label: "Agile Manifesto"
     url: "https://agilemanifesto.org"
@@ -15,26 +16,31 @@ sources:
     url: "https://www.atlassian.com/agile"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
+import Deeper from "~/components/lesson/Deeper.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
-İlk hafta bir toplantıda biri "biz agile çalışıyoruz" diyor, bir başkası "bu sözleşme waterfall mantığında yazılmış" diyor. İkisi de aynı projeden bahsediyor ve çelişkili görünüyor. Bu ders, iki kelimenin ne anlama geldiğini ve neden aynı projede birlikte karşına çıkabildiğini anlatıyor.
+Demlik'teki ilk haftanda iki cümle duyuyorsun. Elif "Sipariş takımı agile çalışıyor" diyor. Leyla ise "Kasa tedarikçisinin sözleşmesi waterfall mantığında yazılmış" diyor. İkisi de aynı kampüs lansmanından bahsediyor ve birbiriyle çelişiyor gibi görünüyor.
 
-Önceki bölüm "hangi belge, hangi karar" sorusunu cevapladı. Bu bölüm o kararların **hangi ritimle** alındığını anlatıyor: ekip haftayı nasıl bölüyor, hangi toplantıda ne konuşuluyor, ilerleme neyle ölçülüyor. Bu bölümün terimleri her gün duyacağın terimler: "standup'ta söylersin", "bu sprint'e sığmaz", "velocity düştü", "bu bir blocker". Bunları bilmemek seni ilk günden yavaşlatır.
-
-**Önemli bir uyarı:** Bu bölümdeki çerçevelerin (Scrum, Kanban) *resmî tanımı* ile şirketlerdeki *uygulaması* çoğu zaman aynı değildir. Derslerde önce resmî tanımı, sonra gerçekte ne olduğunu göreceksin. İkisini ayırt edebilmek, "biz Scrum yapıyoruz" diyen bir ekipte gerçekte ne olduğunu anlamanı sağlar.
+Çelişmiyorlar. Bu ders, iki kelimenin ne anlama geldiğini ve neden aynı projede birlikte karşına çıkabildiğini anlatıyor.
 
 ## İki felsefe, bir soru: belirsizlikle ne yapacağız?
 
 Waterfall ve agile arasındaki fark bir teknik tercih değil, **belirsizlikle nasıl baş edileceğine** dair bir duruş farkıdır.
 
+### Waterfall: önce hepsi, sonra hepsi
+
+**Waterfall** (şelale modeli), fazların sırayla ve **geri dönülmeden** ilerlediği geliştirme yaklaşımıdır: önce tüm gereksinimler, sonra tüm tasarım, sonra tüm kodlama, sonra test, sonra yayın.
+
 <StepFlow
   label="Waterfall: fazlar sırayla, geri dönüş yok"
-  caption="Her faz bir öncekinin bitmesini bekler. Bir hata ancak sonraki fazlarda fark edilirse, geri dönmek pahalıdır."
+  caption="Her faz bir öncekinin bitmesini bekler. Bir hata ancak sonraki fazlarda fark edilirse, geri dönmek pahalıdır. Kullanıcı ürünü ilk kez en sonda, yayında görür."
   steps={[
     { title: "Gereksinimler", sub: "Hepsi baştan yazılır" },
     { title: "Tasarım", sub: "Hepsi baştan tasarlanır" },
@@ -44,13 +50,9 @@ Waterfall ve agile arasındaki fark bir teknik tercih değil, **belirsizlikle na
   ]}
 />
 
-### Waterfall: önce hepsi, sonra hepsi
+Mantıklı olduğu yerler var: gereksinimlerin gerçekten baştan bilindiği ve değişmeyeceği işler. İnşaat, donanım üretimi, katı düzenlemeye tabi projeler. Yazılımda ise sorun çıkarır. Çünkü **kullanıcı ürünü ancak gördükten sonra ne istediğini anlar** ve o noktada geri dönüş pahalıdır.
 
-**Waterfall** (şelale modeli), fazların sırayla ve **geri dönülmeden** ilerlediği geliştirme yaklaşımıdır: önce tüm gereksinimler, sonra tüm tasarım, sonra tüm kodlama, sonra test, sonra yayın.
-
-Mantıklı olduğu yerler var: gereksinimlerin gerçekten baştan bilindiği ve değişmeyeceği işler. İnşaat, donanım üretimi, katı düzenlemeye tabi projeler. Yazılımda ise sorun çıkarır, çünkü **kullanıcı ürünü ancak gördükten sonra ne istediğini anlar** ve o noktada geri dönüş pahalıdır.
-
-Kamu ihalelerinde, kurumsal projelerde ve ajans sözleşmelerinde hâlâ yaygındır. Genelde olumsuz bir anlam yüklenerek kullanılır ("bu waterfall'a döndü"). "Sözleşme waterfall mantığında yazılmış; kapsamı önden dondurmamız gerekiyor."
+Kamu ihalelerinde, kurumsal projelerde ve ajans sözleşmelerinde hâlâ yaygındır. Genelde olumsuz bir anlam yüklenerek kullanılır: "Bu iş waterfall'a döndü."
 
 Waterfall her koşulda kötü değildir. **Kötü olan, belirsizliğin yüksek olduğu bir işte waterfall uygulamaktır.**
 
@@ -77,48 +79,89 @@ Waterfall her koşulda kötü değildir. **Kötü olan, belirsizliğin yüksek o
 </Pane>
 </Compare>
 
-Neredeyse her yazılım ekibinde bir biçimde karşına çıkar. "Agile çalışıyoruz" cümlesi çok geniş bir yelpazeyi kapsar; **ne kastedildiğini sormak gerekir.** "Agile çalışıyoruz ama iki haftalık sprint'lerimiz var, Kanban değil Scrum uyguluyoruz."
+"Agile çalışıyoruz" cümlesi çok geniş bir yelpazeyi kapsar; **ne kastedildiğini sormak gerekir.** İki yaygın karıştırma:
 
-İki yaygın karıştırma:
-
-- **Agile ≠ Scrum.** Agile bir zihniyet ve ilkeler bütünü; Scrum onu uygulayan bir çerçevedir.
+- **Agile ≠ Scrum.** Agile bir zihniyet ve ilkeler bütünüdür; Scrum onu uygulayan bir çerçevedir.
 - **Agile ≠ plansız çalışmak.** En yaygın yanlış anlama budur. Agile plan yapmamak değil, **planı sık güncellemektir.**
+
+Bir projenin parçalarına göre yaklaşım seçmeyi, yani hibrit çalışmayı [Yaklaşım seçimi](/proje-yonetimi/yaklasim-secimi/) dersi anlatıyor.
 
 ## Agile Manifesto: agile'ın referans noktası
 
-**Agile Manifesto** (Çevik Yazılım Geliştirme Bildirisi), 2001'de yazılan, çevik yaklaşımın dört değerini ve on iki ilkesini tanımlayan kısa metindir. 11–13 Şubat 2001'de Snowbird'de (Utah) toplanan 17 kişi tarafından yazıldı ve o günden beri revize edilmedi.
+**Agile Manifesto** (Çevik Yazılım Geliştirme Bildirisi), çevik yaklaşımın dört değerini ve on iki ilkesini tanımlayan kısa metindir. 11–13 Şubat 2001'de Snowbird'de (Utah) toplanan 17 kişi tarafından yazıldı ve o günden beri revize edilmedi.
 
 Dört değerin her biri bir **tercih sıralamasıdır:** sağdakini reddetmez, soldakini *daha değerli bulur.*
 
-| Soldakine daha çok değer veriyoruz | Sağdakinden |
+| Daha değerli | Değerli ama daha az |
 |---|---|
-| **Bireyler ve etkileşim** | Süreç ve araçlardan |
-| **Çalışan yazılım** | Kapsamlı dokümantasyondan |
-| **Müşteriyle iş birliği** | Sözleşme pazarlığından |
-| **Değişime uyum** | Plana bağlı kalmaktan |
+| **Bireyler ve etkileşim** | Süreç ve araçlar |
+| **Çalışan yazılım** | Kapsamlı dokümantasyon |
+| **Müşteriyle iş birliği** | Sözleşme pazarlığı |
+| **Değişime uyum** | Plana bağlı kalmak |
 
-Burada sık yapılan hata: "dokümantasyondan çok çalışan yazılım" maddesi, **dokümantasyon yazılmayacağı** anlamına gelmez. Metin bunu açıkça belirtir: sağdakinin de değeri vardır. İkisi çatıştığında çalışan yazılım öncelenir; dokümantasyon terk edilmez.
-
-Süreç tartışmalarında referans olarak kullanılır. Bir örnek: "Bu toplantı yapısı manifestonun ilk değeriyle çelişiyor: aracın raporlamasına insanların konuşmasından daha çok zaman ayırıyoruz."
-
-Manifesto çok da eleştirilir. "Agile industrial complex" ifadesi, manifestonun sertifikasyon ve danışmanlık sektörüne dönüşmesine yönelik eleştiriyi anlatır. Yani bir yaklaşımın adının kullanılması, onun *ruhunun* uygulandığı anlamına gelmez.
+Sık yapılan hata: "dokümantasyondan çok çalışan yazılım" maddesi, **dokümantasyon yazılmayacağı** anlamına gelmez. Metin bunu açıkça belirtir: sağdakinin de değeri vardır. İkisi çatıştığında çalışan yazılım öncelenir; dokümantasyon terk edilmez. On iki ilkeyi [Agile Manifesto ve 12 ilke](/cevik-pratikler/manifesto-ve-12-ilke/) dersi anlatıyor.
 
 ## Lean ve SAFe: iki ilgili kavram
 
-**Lean** (yalın), Toyota üretim sisteminden gelen, **değer üretmeyen her şeyi israf** sayan ve akışı düzgünleştirmeye odaklanan yaklaşımdır. İsrafın türlerini görünür kılar: yarım kalmış iş, gereksiz özellik, beklemeler, gereksiz aktarımlar. Kanban'ın ve Lean Startup'ın ortak atası bu düşüncedir. "Lean" kelimesi hem üretim hem startup bağlamında geçer; hangisi olduğunu bağlamdan çıkar. "Yarım kalmış beş özellik var; lean açısından bu envanter, değer değil."
+**Lean** (yalın), Toyota üretim sisteminden gelen, **değer üretmeyen her şeyi israf** sayan ve akışı düzgünleştirmeye odaklanan yaklaşımdır. İsrafın türlerini görünür kılar: yarım kalmış iş, gereksiz özellik, beklemeler, gereksiz aktarımlar. Kanban'ın ve Lean Startup'ın ortak atası bu düşüncedir. "Lean" kelimesi hem üretim hem startup bağlamında geçer; hangisi olduğunu bağlamdan çıkar.
 
-**SAFe** (Scaled Agile Framework), agile'ı çok sayıda ekibin bulunduğu **büyük organizasyonlarda** uygulamak için tasarlanmış, katmanlı ve ayrıntılı bir çerçevedir. Onlarca ekibin koordinasyonunu düzenlemeye çalışır. Tartışmalıdır: eleştirmenler agile'ın basitliğini kaybettiğini ve bürokrasi ürettiğini söyler; savunucular büyük ölçekte alternatifin kaos olduğunu. Büyük kurumsal şirketlerde ve bankalarda karşına çıkar; küçük ekiplerde karşına çıkarsa bu bir **uyarı işaretidir.** "Şirket SAFe'e geçti; artık çeyreklik büyük planlama toplantıları var."
+**SAFe** (Scaled Agile Framework), agile'ı çok sayıda ekibin bulunduğu **büyük organizasyonlarda** uygulamak için tasarlanmış, katmanlı ve ayrıntılı bir çerçevedir. Tartışmalıdır: eleştirmenler agile'ın basitliğini kaybettiğini ve bürokrasi ürettiğini söyler; savunucular büyük ölçekte alternatifin kaos olduğunu. Büyük kurumsal şirketlerde ve bankalarda karşına çıkar; küçük ekiplerde karşına çıkarsa bu bir **uyarı işaretidir.** Ölçekleme çerçevelerini [Ölçekleme](/cevik-pratikler/olcekleme-safe-less-spotify/) dersi anlatıyor.
 
-SAFe senin için **seviye 3** bir terim: adını duyduğunda hangi kategoride olduğunu bilmen yeterli, detayını öğrenmen gerekmiyor.
+<Case>
 
-<Callout kind="tasarimci">
+Kampüs lansmanında iki dünya yan yana durdu:
 
-- **"Agile çalışıyoruz" duyduğunda sor:** "Sprint var mı? Retro yapılıyor mu? Kimin önceliği belirliyor?" Cevap sana gerçek çalışma biçimini gösterir.
-- **Sözleşme waterfall, çalışma agile olabilir.** Bir müşteri projesinde kapsam sözleşmeyle dondurulmuşsa, değişiklik taleplerini baştan nasıl yöneteceğini konuş.
-- **Agile'ı bahane yapma.** "Agile'ız, plan yok" dersen, karşındakiler kapsamı ve süreyi göremez. Planı sık güncelle ama yaz.
+1. **Waterfall mantığı:** kasa tedarikçisiyle sözleşme sabit fiyatlı yazıldı. Kapsam şartnameyle önden donduruldu; değişiklik talep formu sözleşmenin ekiydi.
+2. **Agile mantığı:** öğrenci kartı indirimi sipariş takımının iki haftalık sprintlerinde, öğrencilerden gelen geri bildirimle şekillendi.
+3. **Buluşma noktası:** 8. haftada entegrasyon da indirim de pilot kafeye hazır olmalıydı. Leyla bunu tüzüğe yazdı.
+4. **Çelişkinin çözümü:** Elif ile Leyla aynı şeyden bahsetmiyordu. Biri sözleşmenin, öteki takımın çalışma biçimini anlatıyordu.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
+
+- **"Agile çalışıyoruz" duyduğunda sor:** "Sprint var mı? Retro yapılıyor mu? Önceliği kim belirliyor?" Cevap sana gerçek çalışma biçimini gösterir.
 - **Dokümantasyonu bırakma.** Özellikle tasarım kararlarının gerekçesi sonradan bulunamaz hâle gelir.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Agile'ı bahane yapma.** "Agile'ız, plan yok" dersen, karşındakiler kapsamı ve süreyi göremez. Planı sık güncelle ama yaz.
+- **Belirsizliği adlandır.** Hangi ürün kararı hâlâ açık? O parça sık teslimle öğrenilmeli.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Sık teslimin değeri, geri bildirimin backlog'a dönmesidir.** Her artımdan sonra sıranı güncelle.
+- **Waterfall bir sözleşmenin parçasını backlog'a işle.** Sabit kapsamlı bir iş, backlog'da da sabittir; çevresini ona göre sırala.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Sözleşme waterfall, çalışma agile olabilir.** Kapsam sözleşmeyle dondurulmuşsa değişiklik taleplerini baştan nasıl yöneteceğini konuş.
+- **Buluşma noktalarını yaz.** İki mantığın birleştiği tarih, projenin en riskli anıdır.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Manifestoyu doğru alıntıla.** "Agile'da X yapılmaz" cümlelerinin çoğu, değerlerin bir tercih sıralaması olduğu unutulduğu için kurulur.
+- **Adı değil ruhu sorgula.** Bir yaklaşımın adının kullanılması, ruhunun uygulandığı anlamına gelmez.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinimin ne kadar sabit olduğunu sen bilirsin.** Sabit olanı baştan yaz, değişecek olanı küçük parçalara böl.
+- **Belgeni konuşmayla destekle.** Kapsamlı belge değerlidir, ama yerini bir konuşma almaz.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Araştırma sık teslimin yakıtıdır.** Kullanıcı ürünü gördükten sonra ne istediğini anlar; araştırma bunu erkene çeker.
+- **Waterfall bir projede araştırmayı başa koymak yetmez.** Bulgular geç fazlarda da işlenebilmeli; bunu planda konuş.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -143,3 +186,21 @@ Agile bir zihniyet ve ilkeler bütünüdür (Agile Manifesto). Scrum, o ilkeleri
 Hayır. Metin dört değeri bir tercih sıralaması olarak yazar ve sağdaki maddelerin de değerli olduğunu açıkça belirtir. Anlamı: ikisi çatıştığında çalışan yazılım öncelenir; dokümantasyon terk edilmez.
 
 </SelfCheck>
+
+<SelfCheck question="Bir yönetici 'Biz agile'ız, o yüzden plan yapmıyoruz' diyor. Ne dersin?">
+
+Agile plan yapmamak değil, planı sık güncellemektir. Plan yazılır ve her turda öğrenilenlere göre güncellenir. Plan yoksa paydaşlar kapsamı ve süreyi göremez.
+
+</SelfCheck>
+
+<SelfCheck question="Bir kamu ihalesinde kapsam sözleşmeyle donduruldu, ama ekip sprintlerle çalışmak istiyor. Bu bir çelişki mi?">
+
+Değil. Sözleşme waterfall mantığında, ekibin çalışma biçimi agile olabilir. Önemli olan, kapsam değişikliklerinin nasıl yönetileceğini ve iki mantığın buluştuğu tarihleri baştan konuşmaktır.
+
+</SelfCheck>
+
+<Deeper title="Manifestoya yöneltilen eleştiri">
+
+Manifesto çok da eleştirilir. "Agile industrial complex" ifadesi, manifestonun bir sertifikasyon ve danışmanlık sektörüne dönüşmesine yönelik eleştiriyi anlatır. Yani bir yaklaşımın adının kullanılması, onun *ruhunun* uygulandığı anlamına gelmez.
+
+</Deeper>

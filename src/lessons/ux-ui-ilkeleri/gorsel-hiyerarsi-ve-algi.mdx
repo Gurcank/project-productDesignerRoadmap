@@ -5,7 +5,9 @@ outcomes:
   - "Gestalt ilkelerini (yakınlık, benzerlik, ortak alan...) form ve kart tasarımına uygulayabilirsin."
   - "Vurgunun kontrastla ve boşlukla nasıl üretildiğini bilirsin."
   - "F-pattern'in neden bir hedef değil bir uyarı işareti olduğunu söyleyebilirsin."
-minutes: 13
+minutes: 7
+standard: 2
+skipTerms: ["gövde"]
 sources:
   - label: "NN/g — Principles of Visual Design"
     url: "https://www.nngroup.com/articles/principles-visual-design/"
@@ -20,6 +22,10 @@ import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Bu tasarım karışık duruyor." Herkes bu cümleyi söyler ve kimse neden karışık olduğunu açıklayamaz. Bu ders o hissi **teknik bir gerekçeye** çeviriyor: karışıklığın üç kaynağını (ağırlık, gruplama, hizalama) ve her birinin çözümünü göreceksin.
 
@@ -37,6 +43,17 @@ Ağırlık üretmenin araçları:
 - **Yüzey farkı:** kutu, gölge, dolgu.
 
 Neredeyse her tasarım geri bildiriminde karşına çıkar. **En sık rastlanan kusur: bir ekranda birden fazla birincil eylem olması.** "Bu ekranda üç buton da dolu renkli; birincil eylem hangisi belli değil, ikisini ikincil stile alalım."
+
+<Layers
+  label="Ödeme ekranında önem sırası"
+  caption="Demlik'in ödeme ekranında öğeler görsel ağırlığa göre dört seviyede durur. En ağır öğe tek birincil eylemdir: dolu ve geniş Öde düğmesi. Sonra büyük ve kalın yazılmış toplam tutar gelir. Üçüncü seviyede seçili kart, çerçevesi ve tikiyle durur. En hafif seviyede ikincil eylemler vardır: kart ekle ve kupon kullan, çerçevesiz metin bağlantıları olarak."
+  layers={[
+    { title: "Öde", sub: "tek birincil eylem · dolu", tone: "accent" },
+    { title: "Toplam tutar", sub: "büyük ve kalın" },
+    { title: "Seçili kart", sub: "çerçeve ve tik" },
+    { title: "Kart ekle · kupon", sub: "ikincil · metin bağlantısı", tone: "plain" },
+  ]}
+/>
 
 <Compare>
 <Pane title="Hiyerarşi yok">
@@ -98,7 +115,19 @@ Bu desenler bir kural değil, **gözlemdir** ve **iyi tasarlanmamış** sayfalar
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Case>
+
+Ödeme ekranının eski hâlinde üç düğme vardı ve üçü de doluydu: "Öde", "Kart ekle", "Kupon kullan". Kayıtlı kartlar aynı ağırlıkta, alt alta listeleniyordu.
+
+1. **Teşhis:** birden fazla birincil eylem; seçili kart ile diğerleri arasında görsel fark yok. Testte beş kişiden dördü hangi kartın seçili olduğunu söyleyemedi.
+2. **Hiyerarşi:** tek dolu düğme "Öde"; diğerleri metin bağlantısına döndü.
+3. **Gestalt:** seçili kart çerçeve ve tikle diğerlerinden ayrıldı; kartlar ortak bir yüzeyde gruplandı.
+4. **Sonuç:** A/B testinde ödeme tamamlama %78,1'den %80,9'a çıktı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 Bir ekran "karışık" göründüğünde bu üç soruyu sor:
 
@@ -108,7 +137,32 @@ Bir ekran "karışık" göründüğünde bu üç soruyu sor:
 
 Çoğu zaman cevap bu üçünden birindedir. "Bence karışık" yerine "birincil eylem ikincil eylemle aynı ağırlıkta, bu yüzden göz nereye gideceğini bilmiyor" dersin.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **"Karışık" geri bildirimini ilkeyle iste.** Hangi öğe öne çıkmalı, hangisi geri çekilmeli?
+- **Bir ekranda tek birincil eylem kararını sahiplen.** Her paydaşın düğmesi birincil olamaz.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Birincil eylemi story'de belirt.** "Ekranın tek birincil eylemi Öde'dir."
+- **Görsel değişikliklerin davranışa etkisini ölçüyle kabul et.** Daha güzel değil, daha anlaşılır.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Ekrandaki önem sırasını iş önceliğiyle karşılaştır.** Kullanıcının en çok yaptığı iş en görünür olmalı.
+- **Durum bilgisinin görünür olmasını gereksinim yap.** "Seçili kart açıkça işaretlenir."
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **İlk bakışı test et.** "Bu ekranda ilk neyi gördün?" sorusu hiyerarşiyi ölçer.
+- **Tarama desenini kayıtta izle.** Gözün atladığı bölge bir bulgudur.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -131,5 +185,11 @@ Yakınlık (proximity) ilkesi: yakın olanlar ilişkili algılanır. Etiket kend
 <SelfCheck question="F-pattern iyi bir tasarım hedefi midir? Neden?">
 
 Hayır. F-pattern bir hedef değil, görsel hiyerarşisi zayıf sayfalarda ortaya çıkan bir gözlemdir. Net başlıklar, alt başlıklar ve hiyerarşi konulduğunda kullanıcı bu desenden çıkar; F-pattern görmek bir uyarı işaretidir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir ekranda üç düğmenin üçü de dolu renkli. Ne önerirsin?">
+
+Ekranın tek bir birincil eylemi olmalı. En önemli eylemi dolu bırakır, diğerlerini çerçeveli ya da metin bağlantısı olarak ikincil stile alırım; böylece göz önce birincil eyleme gider.
 
 </SelfCheck>

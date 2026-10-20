@@ -1,12 +1,14 @@
-# Product Designer Yol Haritası
+# SeeYourNextStep
 
-Bir product designer'ın yazılım ekibiyle aynı dili konuşabilmesi için hazırlanmış, Türkçe, kişisel bir öğrenme sitesi. Web'in nasıl çalıştığından yapay zekâ ile çalışmaya kadar **23 kategori, 234 ders ve 803 terim** var. Ana sayfa bir gezegen haritası: her kategori bir gök cismi, ilerlemen halkalarla görünür.
+Ürün ekibindeki roller için Türkçe bir öğrenme haritası: **sıradaki adımını gör.** Product Designer, Product Manager, Product Owner, Project Manager, Scrum Master, Business Analyst ve UX Researcher için ayrı yollar, tek bir ortak bilgi tabanı üzerinde. Şu an **31 kategori, 335 ders ve 994 terim** yayında. Araçlar'da 40 şablon, işaretlenebilir kontrol listeleri, proje akış haritası ve rolüne göre çalışma takvimi var. Ana sayfa bir gezegen haritası: her kategori bir gök cismi, rolünün yolu bir takımyıldızı.
 
 ## Özellikler
 
+- **Rol yolları:** rolünü seç; harita kendi yolunu çizer, her durakta önceliği (temel / önerilen / isteğe bağlı) gösterir ve "Sıradaki adımın" kartı seni bir sonraki derse götürür. İlerleme bütün rollerde ortaktır.
+- **Roller bölümü:** yedi rolün tanımı, neyden hesap verdiği, neye karar vermediği ve komşu rollerden farkı; yanlarında çalışan diğer roller.
 - **Gezegen haritası:** gezegenleri basılı tutup kendi alanında sürükleyebilirsin; üzerine gelince tamamlanma halkası çıkar.
-- **Dersler:** her adım bir ders anlatımı. "Tasarımcı olarak sen" kutuları, özet, kendini yoklama soruları ve kaynaklar içerir. Metindeki terimlerin üzerine gelince tanımı açılır.
-- **Sözlük ve arama:** 803 terimlik sözlük, tüm derslerde tam metin arama (Pagefind).
+- **Dersler:** her adım bir ders anlatımı. Rolüne göre mercek kutuları ("Tasarımcı olarak sen", "Product Manager olarak sen" …), özet, kendini yoklama soruları ve kaynaklar içerir. Metindeki terimlerin üzerine gelince tanımı açılır.
+- **Sözlük ve arama:** 994 terimlik sözlük, tüm derslerde tam metin arama (Pagefind).
 - **Çevrimdışı:** siteyi cihazına indirip internetsiz okuyabilirsin (service worker).
 - **İlerleme:** yalnızca tarayıcında saklanır (`localStorage`); Ayarlar'dan yedeklenir ve geri yüklenir.
 - **Erişilebilirlik:** WCAG 2.2 AA hedefi, klavye ile gezinme, hareket azaltma desteği, yazı boyutu ayarı.
@@ -40,7 +42,9 @@ npm run preview    # http://localhost:4322
 | `npm run build` / `build:fresh` | Siteyi + arama dizinini + çevrimdışı manifestini üretir (`fresh` önbellekleri de temizler) |
 | `npm run preview` | Derlenmiş siteyi sunar |
 | `npm run check` | TypeScript ve Astro denetimi |
-| `npm run validate` | İçerik doğrulaması (kaynaklar, bağlantılar, slug'lar) |
+| `npm test` | Birim testleri (slug, adım kimliği, çapraz referans kuralları) |
+| `npm run lint:lessons` | Ders standardı v2: yapı, görsel, rol mercekleri, Türkçe okunabilirlik (Ateşman) |
+| `npm run validate` | İçerik doğrulaması (kaynaklar, bağlantılar, donmuş slug'lar, rezerve kökler) |
 | `npm run import` / `import:check` | `ProductDesignerMaterials/` içeriğini `src/content/` altına aktarır / farkı denetler |
 | `npm run budget` | Sayfa başına JS/CSS/HTML bütçesini denetler (JS ≤ 60 KB) |
 
@@ -49,7 +53,10 @@ npm run preview    # http://localhost:4322
 ```text
 ProductDesignerMaterials/   Kaynak materyal (salt okunur)
 src/content/                Materyalden üretilen ham içerik (elle düzenlenmez)
-src/lessons/                Elle yazılmış dersler (MDX), kategori başına bir klasör
+src/authored/topics/        Site için yazılan adımların kayıtları (materyal dışı kategoriler)
+src/lessons/                Elle yazılmış dersler (MDX), kategori başına bir klasör; hepsi ders standardı v2
+docs/icerik/                Ders standardı, ortak vaka kitabı (Demlik) ve kapsam haritaları
+tests/                      Birim testleri (npm test)
 src/data/                   Kategori sırası, gezegen eşlemesi, menü
 src/components/             Harita, menüler, yıldız alanı, ders bileşenleri
 src/styles/tokens.css       Renk ve ölçü token'ları (tek kaynak)

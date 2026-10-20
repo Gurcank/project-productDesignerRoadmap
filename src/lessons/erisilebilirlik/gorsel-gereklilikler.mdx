@@ -6,6 +6,7 @@ outcomes:
   - "İkon 16px kalırken dokunma hedefini nasıl 24px ve üstüne çıkaracağını bilirsin."
   - "%200 yakınlaştırmada içeriğin kırpılmaması için esneyen kutuları neden kullanman gerektiğini açıklayabilirsin."
 minutes: 11
+standard: 2
 sources:
   - label: "W3C — Understanding SC 1.4.1 Use of Color"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html"
@@ -23,6 +24,9 @@ import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import ContrastDemo from "~/components/lesson/ContrastDemo.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir hero görselinin üzerine beyaz başlık koydun. Görselin sol tarafı koyu, sağ tarafı açık bir gökyüzü. Başlığın ilk kelimesi okunuyor, son kelimesi neredeyse görünmüyor. Kontrast "bir sayı" değil, **metnin gerçekten üzerinde durduğu renge** göre değişen bir ölçü.
 
@@ -98,7 +102,21 @@ Bu sitedeki Ayarlar sayfasında yazı boyutunu dört kademede büyütebilirsin; 
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik Panel tezgâhta, yoğun saatte ve bazen güneş alan bir camın önünde kullanılıyor. Selin görsel gereklilikleri bu koşulda denetledi:
+
+1. **Kontrast:** "Hazırlanıyor" durumunun açık sarı etiketi 4,5:1'in altındaydı; koyu metinle yeniden renklendirildi.
+2. **Yalnız renk değil:** sipariş durumları yalnız renkle ayrılıyordu. Her duruma bir ikon ve kısa bir metin eklendi.
+3. **Hedef boyutu:** "Hazır" düğmesi, eldivenli elle de basılabilecek kadar büyütüldü; yanındaki "İptal" ile arası açıldı.
+4. **Büyütme:** metin %200 büyütüldüğünde sipariş kartı yatay kaydırma gerektirmeden alt alta akıyor.
+
+Pilotta çıkan "fiş 50 cm'den okunmalı" gereksinimi de aynı mantıkla ekrana uygulandı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Görsel üzerindeki metne katman koy.** Her bölgede oranı kontrol et.
 - **Her durumu renk + ikon + metinle göster.** Bilgiyi renge bağlama.
@@ -107,7 +125,32 @@ Bu sitedeki Ayarlar sayfasında yazı boyutunu dört kademede büyütebilirsin; 
 - **Sabit yükseklikten kaçın.** Kutular içeriğe göre esnesin; metin `rem` ile.
 - **Koyu tema için kontrastı yeniden hesapla.**
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Kullanım koşulunu tasarım girdisi say.** Tezgâh, güneş, eldiven; laboratuvar değil.
+- **Marka rengi ile kontrast çatışırsa kontrastı seç.** Okunmayan marka rengi bir şey kazandırmaz.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kontrast ve hedef boyutunu kabul kriterine sayıyla yaz.** 4,5:1, 24 piksel.
+- **Durumların yalnız renkle ayrılmamasını iste.** Her durumun bir metni olsun.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Fiziksel kullanım koşulunu gereksinime yaz.** "Ekran 50 cm'den okunur."
+- **Durum listesini metinleriyle birlikte tanımla.** Her durumun adı arayüzde aynı geçsin.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Testi gerçek ortamda yap.** Tezgâhtaki ışık ve mesafe, ofiste görünmez.
+- **Renk körlüğü olan katılımcıyı dahil et.** Renkle ayrılan bilgi hemen ortaya çıkar.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -130,5 +173,11 @@ Bu sitedeki Ayarlar sayfasında yazı boyutunu dört kademede büyütebilirsin; 
 <SelfCheck question="Bir form alanında hata var. Kırmızı kenarlık yeterli mi? Değilse ne gerekir?">
 
 Yeterli değil. Bilgi yalnızca renkle aktarılmamalıdır (SC 1.4.1): renk körlüğü olan kullanıcı kırmızıyı ayırt edemeyebilir. Gerekenler: metinle yazılmış hata mesajı, alanın yanında ve alanla ilişkilendirilmiş; tercihen bir ikon; ve değişimin ekran okuyucuya duyurulması.
+
+</SelfCheck>
+
+<SelfCheck question="Sipariş durumları yalnız renkle (sarı, yeşil, gri) ayrılıyor. Hangi kullanıcılar ayırt edemez, nasıl düzeltirsin?">
+
+Renk körlüğü olanlar, düşük görüşlüler ve ekranı parlak ışıkta görenler. Her duruma bir metin ve ikon eklerim; renk ek bir ipucu olarak kalır.
 
 </SelfCheck>

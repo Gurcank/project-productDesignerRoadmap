@@ -1,0 +1,154 @@
+---
+summary: "İki şeyin birlikte değişmesi birinin diğerine yol açtığını göstermez. Ters nedensellik ve karıştırıcı değişkenler gözlenen ilişkiyi açıklayabilir; Simpson paradoksunda grupların eğilimi birleşince tersine bile döner."
+outcomes:
+  - "Bir korelasyonun üç olası açıklamasını sayabilirsin: neden, ters neden, karıştırıcı."
+  - "Simpson paradoksunu bir örnekle açıklayıp grup grup karşılaştırma yapabilirsin."
+  - "Bir gözlemden deneyle sınanacak bir hipotez çıkarabilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Wikipedia — Correlation does not imply causation"
+    url: "https://en.wikipedia.org/wiki/Correlation_does_not_imply_causation"
+  - label: "Wikipedia — Simpson's paradox"
+    url: "https://en.wikipedia.org/wiki/Simpson%27s_paradox"
+  - label: "Amplitude — Understanding retention analytics"
+    url: "https://amplitude.com/guides/retention-analytics"
+additions:
+  - "Korelasyon ile nedensellik ayrımı; Simpson paradoksunun tanımı, Edward H. Simpson 1951 ve UC Berkeley 1973 örneği (Wikipedia)"
+  - "Calm'ın hatırlatıcı örneği (Amplitude)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Heatmap from "~/components/diagrams/primitives/Heatmap.astro";
+
+Ece bir analiz paylaştı: hazır bildirimini açan müşterilerin %58'i 30 gün içinde ikinci siparişi veriyordu, açmayanların yalnız %33'ü. Toplantıda biri hemen önerdi: "Bildirimi herkes için varsayılan açık yapalım, ikinci sipariş 25 puan artar."
+
+Mert itiraz etti: "Belki bildirim tekrar siparişi getirmiyor. Belki zaten düzenli gelenler bildirimi açıyor." Bu ders, birlikte değişen iki şeyden neden-sonuç çıkarmanın tuzaklarını anlatır.
+
+## Üç açıklama
+
+**Korelasyon**, iki değişkenin birlikte değişmesidir. **Nedensellik**, birinin diğerine yol açmasıdır. Yalnız gözlenen bir ilişkiden neden-sonuç çıkarılamaz. Wikipedia bu hatanın klasik adını da verir: *cum hoc ergo propter hoc*, "bununla birlikte, öyleyse bu yüzden".
+
+Bildirim ile ikinci sipariş arasındaki ilişkinin en az üç açıklaması vardır:
+
+1. **Neden:** bildirim, müşteriyi geri getirir.
+2. **Ters neden:** düzenli müşteriler bildirimi açmaya daha yatkındır.
+3. **Karıştırıcı değişken** (confounder): üçüncü bir şey ikisini birden etkiler. Örneğin işe her sabah aynı yoldan gidenler hem bildirimi açar hem sık sipariş verir.
+
+Amplitude'un elde tutma rehberindeki bir örnek de bu türdendir: Calm'da günlük hatırlatıcı kuran kullanıcıların elde tutması üç kat yüksekti. Calm bunun üzerine hatırlatıcıyı herkese önerdi. Gözlem bir hipotez verir; hipotezi bir deney sınar.
+
+**Korelasyon ≠ işe yaramaz.** Korelasyon nereye bakılacağını söyler. Yalnız kararı tek başına taşımaz.
+
+## Simpson paradoksu
+
+Karıştırıcı değişkenin en şaşırtıcı biçimi **Simpson paradoksudur**. Wikipedia'nın tanımıyla bir eğilim grupların her birinde görünür, ama gruplar birleştirilince kaybolur ya da tersine döner. Adını 1951'de bunu anlatan Edward H. Simpson'dan alır. Bilinen örneklerinden biri UC Berkeley'nin 1973 lisansüstü kabul verileridir.
+
+Paradoks, gruplar farklı büyüklükteyken ortaya çıkar. Bir grubun payı karşılaştırılan iki tarafta çok farklıysa, toplam oran gruplardan çok karışımı yansıtır.
+
+<Heatmap
+  label="Simpson paradoksu: eski ve yeni ödeme ekranı"
+  caption="Yeni ödeme ekranı önce kampüs pilotunda denendi. Kampüste eski ekran yüzde 60, yeni ekran yüzde 65 tamamlama oranı gösterdi. Şehirde eski yüzde 85, yeni yüzde 88. İki grupta da yeni ekran daha iyi. Ama toplamda eski yüzde 80, yeni yüzde 69,6 görünüyor; çünkü yeni ekranı görenlerin beşte dördü tamamlama oranı zaten düşük olan kampüs kullanıcılarıydı."
+  rows={["Kampüs", "Şehir", "Toplam"]}
+  cols={["Eski ekran", "Yeni ekran"]}
+  values={[
+    [60, 65],
+    [85, 88],
+    [80, 69.6],
+  ]}
+  format="percent"
+  max={100}
+  rowTitle="Grup"
+/>
+
+| Grup | Eski ekran | Yeni ekran |
+|---|---|---|
+| Kampüs | %60 (1.000 kişi) | %65 (4.000 kişi) |
+| Şehir | %85 (4.000 kişi) | %88 (1.000 kişi) |
+| Toplam | %80 (5.000 kişi) | %69,6 (5.000 kişi) |
+
+Çözüm, rastgele atamadır. A/B testinde gruplar rastgele kurulduğu için kampüs kullanıcıları iki tarafa eşit dağılır ve karışım farkı ortadan kalkar.
+
+<Case>
+
+Takım iki gözlemi de deneye çevirdi:
+
+1. **Simpson:** yeni ödeme ekranı önce yalnız kampüs pilotunda açılmıştı ve kaba karşılaştırma onu yaklaşık 10 puan kötü gösteriyordu. Ece veriyi gruplara ayırınca yeni ekran iki grupta da öndeydi. Asıl karar, rastgele atamalı A/B testine bırakıldı; orada yeni ekran %80,9 ile kazandı.
+2. **Bildirim:** yeni kullanıcıların yarısında hazır bildirimi varsayılan açık geldi, yarısında kapalı. Bu rastgele bir atamaydı.
+3. **Sonuç:** ikinci sipariş oranındaki fark 3 puan çıktı, 25 puan değil. Bildirimin küçük bir etkisi vardı; 25 puanlık farkın çoğu, düzenli müşterilerin bildirimi zaten açmasından geliyordu.
+
+Bildirim varsayılan açık yapıldı, ama North Star tahmini 25 puana göre değil, 3 puana göre güncellendi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **"Bunu yapanlar daha çok kalıyor" cümlesini hipotez olarak yaz.** Karar deneyden sonra verilir.
+- **Etki tahminini deneyden al.** Gözlenen farkı hedefe yazmak, beklentiyi şişirir.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Bir özelliği kullananların başarısını özelliğe bağlama.** Onlar zaten en istekli kullanıcılar olabilir.
+- **Deneye uygun tasarla.** Varsayılan açık ya da kapalı gibi tek bir farkla iki sürüm hazırla.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Gözlemden gelen işi küçük bir deneyle başlat.** Büyük bir yatırımdan önce etkinin büyüklüğünü öğren.
+- **Pilot sonuçlarını genelleme.** Pilot grubu çoğu zaman bütün kullanıcılara benzemez.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Karşılaştırmada grupların büyüklüğünü sor.** Toplam oran gruplardan çok karışımı yansıtabilir.
+- **Verinin nasıl seçildiğini yaz.** Kim dahil, kim hariç? Seçim, sonucun yarısıdır.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Ters nedeni görüşmeyle araştır.** Bildirimi açanlar neden açıyor? Cevap, nedenin yönünü gösterebilir.
+- **Nitel bulguyu deneyle tamamla.** Görüşme mekanizmayı, deney büyüklüğü söyler.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Korelasyon iki şeyin birlikte değişmesidir; nedensellik birinin diğerine yol açmasıdır.
+- Bir korelasyonun üç açıklaması olabilir: neden, ters neden, karıştırıcı değişken.
+- Simpson paradoksunda grupların eğilimi birleşince kaybolur ya da tersine döner.
+- Karışım farkını rastgele atama ortadan kaldırır; nedensellik deneyle sınanır.
+- Gözlem bir hipotez verir; etki tahmini deneyden alınır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bildirimi açanların ikinci sipariş oranı %58, açmayanların %33. Bildirimin etkisi 25 puan mı?">
+
+Bilemeyiz. Düzenli müşteriler bildirimi açmaya daha yatkın olabilir (ters neden) ya da üçüncü bir şey ikisini birden etkileyebilir (karıştırıcı). Etkiyi rastgele atamalı bir deney ölçer; Demlik'te 3 puan çıktı.
+
+</SelfCheck>
+
+<SelfCheck question="Simpson paradoksu nedir?">
+
+Bir eğilimin grupların her birinde görünüp gruplar birleştirilince kaybolması ya da tersine dönmesidir. Gruplar farklı büyüklükte ve farklı oranlardayken toplam, karışımı yansıtır.
+
+</SelfCheck>
+
+<SelfCheck question="Yeni ekran hem kampüste hem şehirde daha iyi ama toplamda daha kötü. Nasıl olabilir?">
+
+Yeni ekranı görenlerin çoğu, tamamlama oranı zaten düşük olan kampüs kullanıcılarıydı. Toplam oran ekranın değil, grup karışımının farkını gösterir.
+
+</SelfCheck>
+
+<SelfCheck question="Rastgele atama Simpson paradoksunu nasıl önler?">
+
+Rastgele atama her grubun iki tarafa yaklaşık eşit dağılmasını sağlar. Karışım iki tarafta aynı olunca, kalan fark değişikliğe bağlanabilir.
+
+</SelfCheck>

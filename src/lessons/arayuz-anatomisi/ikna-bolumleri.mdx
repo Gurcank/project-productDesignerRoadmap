@@ -6,6 +6,7 @@ outcomes:
   - "Testimonial, case study ve stat block'un işini ayırabilirsin."
   - "Puanın yanına neden değerlendirme sayısı yazıldığını açıklayabilirsin."
 minutes: 8
+standard: 2
 sources:
   - label: "W3C WAI — Images Tutorial (alt metin kararları)"
     url: "https://www.w3.org/WAI/tutorials/images/"
@@ -20,10 +21,13 @@ includeTerms: ["rating", "table"]
 skipTerms: ["yorumlar"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Outside from "~/components/lesson/Outside.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Hero'yu okudun, ürünü anladın. Şimdi aklında başka bir soru var: "Bu gerçekten iyi mi, bana güvenilir mi?" Bir ürün sayfasının dönüşümü çoğunlukla bu soruya verdiği cevaba bağlıdır. Bu soruyu cevaplayan bölümlere **ikna bölümleri** diyoruz.
 
@@ -61,7 +65,34 @@ Güven sorunu bir yana, sahte yorum hukuki bir risktir. ABD'nin tüketici kurumu
 
 **Comparison table (karşılaştırma tablosu)**, ürünü rakiplerle ya da planları birbiriyle karşılaştırır. Karar vermeyi hızlandırır; ama rakip karşılaştırmasında dürüstlük şarttır, tek taraflı ve abartılı tablolar güven kaybettirir. Tablolar mobilde en çok bozulan bileşendir; yatay kaydırma mı, kart görünümüne dönüşme mi olacağı **baştan** kararlaştırılmalıdır.
 
-<Callout kind="tasarimci">
+<Tree
+  label="Güven sorusunu cevaplayan bölümler"
+  caption="Ziyaretçinin bu güvenilir mi sorusuna iki tür cevap verilir. Sosyal kanıt başkalarının deneyimini gösterir: logolar, referanslar ve vakalar, rakamlar ve puanlar. Güvence ise ürünün kendisi hakkındadır: güven rozetleri ve karşılaştırma tablosu. İkisinde de iddia doğru ve doğrulanabilir olmalıdır."
+  root={{
+    title: "Bu güvenilir mi?",
+    tone: "accent",
+    children: [
+      { title: "Sosyal kanıt", children: [{ title: "Logolar" }, { title: "Referans, vaka" }, { title: "Rakam, puan" }] },
+      { title: "Güvence", children: [{ title: "Güven rozeti" }, { title: "Karşılaştırma tablosu", tone: "progress" }] },
+    ],
+  }}
+/>
+
+<Case>
+
+"Dükkânlar için" sayfasının ikna bölümü yeniden yazıldı:
+
+1. **Rakam:** "140 bağımsız dükkân Demlik'le sipariş alıyor." Sayı Panel'deki gerçek sayıdan geliyor ve çeyrekte bir güncelleniyor.
+2. **Referans:** üç dükkân sahibinin adı, dükkânı ve izinleriyle fotoğrafı. Yazılı izin dosyada.
+3. **Puan:** uygulama mağazası puanı 4,3; yuvarlanıp "4,5" yazılmıyor.
+4. **Karşılaştırma:** "Demlik / telefonla sipariş / teslimat uygulaması" tablosu; rakiplerin adı yerine alternatiflerin türü.
+
+İlk taslaktaki "Türkiye'nin en sevilen kahve uygulaması" cümlesi çıkarıldı; dayanağı yoktu.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Kanıtı doğrulanabilir yaz:** isim, rakam, tarih. "Binlerce" yerine gerçek sayı.
 - **Testimonial'a isim, unvan ve fotoğraf iste.** Yoksa kullanma.
@@ -70,7 +101,14 @@ Güven sorunu bir yana, sahte yorum hukuki bir risktir. ABD'nin tüketici kurumu
 - **Logoları gri tonlamaya al ve optik olarak dengele.**
 - **Karşılaştırma tablosunun mobil stratejisini ilk taslakta çiz.**
 
-</Callout>
+</Lens>
+<Lens role="ux-researcher">
+
+- **Hangi kanıtın ikna ettiğini sor.** Ziyaretçi logoya mı, rakama mı, tanıdığı bir dükkâna mı güveniyor?
+- **Abartılı iddiaya tepkiyi gözle.** Dayanaksız iddia güveni azaltabilir.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -93,5 +131,11 @@ Logolar farklı biçim ve ağırlıkta olduğu için matematiksel olarak aynı b
 <SelfCheck question="Neden bir puanın yanına değerlendirme sayısı yazılır?">
 
 5,0 (2 yorum) ile 4,6 (1.200 yorum) çok farklı güven düzeyleri taşır. Sayı, puanın ne kadar kişiye dayandığını gösterir; tek başına 5,0 şüphe uyandırır.
+
+</SelfCheck>
+
+<SelfCheck question={"Pazarlama, puanı 4,3 olan bir uygulama için \"4,5 yıldız\" yazmak istiyor. Ne dersin?"}>
+
+Puan doğru yazılmalıdır. Yuvarlanmış ya da şişirilmiş bir iddia fark edildiğinde güveni yıpratır ve yanıltıcı reklam sayılabilir. Gerçek puan ve yorum sayısı birlikte gösterilir.
 
 </SelfCheck>

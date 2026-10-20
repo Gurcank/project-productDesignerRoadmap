@@ -3,7 +3,8 @@ summary: "Normalleştirme veriyi tekrarsız tutar; denormalizasyon hız için bi
 outcomes:
   - "Normalizasyon ile denormalizasyon arasındaki takası söyleyebilirsin."
   - "Denormalizasyonun arayüzdeki riskini (tutarsız sayılar) açıklayabilirsin."
-minutes: 5
+minutes: 3
+standard: 2
 sources:
   - label: "PostgreSQL — Tablolar arası ilişkiler"
     url: "https://www.postgresql.org/docs/current/tutorial-fk.html"
@@ -11,11 +12,14 @@ sources:
     url: "https://www.postgresql.org/docs/current/tutorial-join.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Ürün kartında "12 yorum" yazıyor ama detay sayfasında 8 yorum var. Kullanıcı ürünün bozuk olduğunu düşünüyor. Bu tutarsızlığın en yaygın sebebi, bu dersin konusu.
 
@@ -46,13 +50,54 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 Bu bir **takastır:** hız kazanırsın, tutarlılık riski alırsın. Kopya güncellenmezse arayüzde tutarsız sayılar görünür: "12 yorum" yazan ama 8 yorum listeleyen bir kart, kullanıcıya ürünün bozuk olduğunu düşündürür.
 
-<Callout kind="tasarimci">
+<Spectrum
+  label="Kopyala mı, referans ver mi?"
+  caption="Demlik'teki üç bilgi, normalizasyon ile denormalizasyon arasında farklı yerlerde durur. Sol uçta dükkân adı vardır: siparişe kopyalanmaz, dükkân tablosuna referans verilir; ad değişince her yerde değişir. Ortada Panel'deki bugünkü sipariş sayacı durur: hız için ayrıca tutulur ve her siparişte güncellenir. Sağ uçta sipariş anındaki ürün fiyatı vardır: bilerek kopyalanır, çünkü fiyat sonradan değişse de sipariş o anki fiyatı korumalıdır."
+  left={{
+  title: "Referans",
+  sub: "tek yerde"
+}}
+  right={{
+  title: "Kopya",
+  sub: "bilerek tekrar"
+}}
+  marks={[
+  {
+    label: "Dükkân adı",
+    at: 0.08
+  },
+  {
+    label: "Bugünkü sipariş sayacı",
+    at: 0.55
+  },
+  {
+    label: "Sipariş anındaki fiyat",
+    at: 0.92
+  }
+]}
+/>
+
+<Case>
+
+Demlik'te üç bilgi üç farklı karar aldı:
+
+1. **Dükkân adı:** siparişe kopyalanmıyor. Moda'daki dükkân adını değiştirdiğinde eski siparişler de yeni adla görünüyor.
+2. **Sipariş sayacı:** Panel'in üstündeki "bugün 23 sipariş" her açılışta saymak yerine ayrı tutulan bir sayaçtan geliyor. Bir gün iptal edilen siparişler sayaçtan düşülmedi; sayaç listeden fazla gösterdi. İptal işlemi sayacı da güncelleyecek şekilde düzeltildi.
+3. **Fiyat:** sipariş satırında ürünün o anki fiyatı kopyalanıyor. Bu bir hız kararı değil, bir iş kuralı: fiyat yarın değişse de dünkü siparişin tutarı değişmemeli.
+
+Ayşe üçüncüsünü iade kurallarına ekledi: iade her zaman siparişteki fiyattan yapılıyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Ekranda gösterilen her sayacın nereden geldiğini sor:** her seferinde sayılıyor mu, saklanıyor mu?
 - **Saklanan sayaçlarda tutarsızlık olasılığını kabul et** ve geliştiriciyle güncelleme akışını konuş.
 - **Raporlama sayılarında "son güncelleme" zamanını göstermeyi düşün.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -67,5 +112,17 @@ Bu bir **takastır:** hız kazanırsın, tutarlılık riski alırsın. Kopya gü
 <SelfCheck question="Normalizasyon ile denormalizasyon arasındaki takas nedir? Denormalizasyonun arayüzdeki riski nedir?">
 
 Normalizasyon tekrarı önler ve tutarlılık verir ama okumak için join gerektirir (yavaş olabilir). Denormalizasyon veriyi kopyalayarak okumayı hızlandırır ama kopyanın güncel tutulması sorumluluğu getirir. Arayüzdeki risk: kopya güncellenmezse tutarsız sayılar görünür ("12 yorum" yazan ama 8 yorum listeleyen kart).
+
+</SelfCheck>
+
+<SelfCheck question="Sipariş satırında ürün fiyatını kopyalamak neden doğrudur?">
+
+Fiyat zamanla değişir; bir sipariş verildiği andaki fiyatı korumalıdır. Bu kopya bir hız kararı değil, tarihsel kaydı doğru tutan bir iş kuralıdır.
+
+</SelfCheck>
+
+<SelfCheck question={"Ürün kartında \"12 yorum\" yazıyor ama listede 8 yorum var. En olası sebep nedir?"}>
+
+Denormalize edilmiş bir sayaç güncel tutulmamış: yorum silinmiş ya da gizlenmiş ama sayaç azaltılmamış. Sayacı güncelleyen her işlem gözden geçirilmeli.
 
 </SelfCheck>

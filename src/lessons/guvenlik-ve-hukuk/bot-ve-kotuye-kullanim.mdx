@@ -4,6 +4,8 @@ outcomes:
   - "CAPTCHA'nın neden son çare olması gerektiğini ve alternatiflerini (honeypot, hız sınırı) söyleyebilirsin."
   - "WAF'ın bir yama olmadığını açıklayabilirsin."
 minutes: 5
+standard: 2
+skipTerms: ["Doğrulama", "doğrulama"]
 sources:
   - label: "W3C — WCAG 2.2: Accessible Authentication (Minimum)"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html"
@@ -11,9 +13,12 @@ sources:
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 İletişim formun spam'le doldu. İlk refleks: "CAPTCHA ekleyelim." Ama bu çoğu zaman ilk değil, son seçenek olmalı.
 
@@ -23,24 +28,99 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 **CAPTCHA bir erişilebilirlik sorunudur:** görsel bulmacalar görme engelli kullanıcılar için engel oluşturur ve bilişsel yük ekler. WCAG 2.2'nin **Accessible Authentication** ölçütü, bilişsel işlev testi gerektiren kimlik doğrulama adımlarını sınırlar. Bu yüzden CAPTCHA son çare olmalı, ilk refleks değil.
 
+<Spectrum
+  label="Kullanıcıya yükü artan önlemler"
+  caption="Spam ve bot önlemleri kullanıcıya bindirdikleri yüke göre sıralanır. Sol uçta kullanıcının hiç görmediği önlemler durur: honeypot alanı ve hız sınırı. Ortada ağ katmanında çalışan WAF vardır; meşru kullanıcı genelde fark etmez. Sağ uçta CAPTCHA durur: her kullanıcıya bir test çözdürür ve bir erişilebilirlik engelidir; son çare olmalıdır."
+  left={{
+  title: "Görünmez",
+  sub: "kullanıcıya yük yok"
+}}
+  right={{
+  title: "Görünür",
+  sub: "herkese test"
+}}
+  marks={[
+  {
+    label: "Honeypot",
+    at: 0.06
+  },
+  {
+    label: "Hız sınırı",
+    at: 0.22
+  },
+  {
+    label: "WAF",
+    at: 0.5
+  },
+  {
+    label: "CAPTCHA",
+    at: 0.94
+  }
+]}
+/>
+
 ## WAF ve DDoS koruması
 
 **WAF (Web Application Firewall)**, kötü niyetli görünen istekleri uygulamaya ulaşmadan filtreleyen katmandır. **DDoS koruması**, sistemi çökertmeyi amaçlayan yoğun trafiği emen altyapıdır. İlk savunma hattı olarak çalışırlar; modern CDN sağlayıcıları bunları genelde birlikte sunar. "CDN'in WAF'ını açalım; bilinen saldırı kalıplarını en azından baştan filtrelesin."
 
 **WAF bir yama değildir:** koddaki açığı kapatmaz, yalnızca bazı saldırıları engeller. "WAF var" cümlesi bir güvenlik açığını mazur göstermez.
 
-<Callout kind="tasarimci">
+<Case>
+
+Kampüs lansmanından bir hafta önce bekleme listesi formu sahte kayıtlarla dolmaya başladı.
+
+1. **İlk öneri:** CAPTCHA. Selin itiraz etti: form ekran okuyucu kullanan öğrencilere de açıktı.
+2. **Honeypot:** forma görünmeyen bir alan eklendi; dolduran kayıtlar sessizce ayıklanıyor.
+3. **Hız sınırı:** aynı adresten dakikada birden fazla kayıt kabul edilmiyor.
+4. **Sonuç:** sahte kayıtların neredeyse tamamı durdu. CAPTCHA eklenmedi; "Dükkân öner" formu da aynı yöntemle korunuyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Spam sorununda sırayı izle:** honeypot ve hız sınırı → gerekirse CAPTCHA.
 - **CAPTCHA kullanılacaksa erişilebilir alternatifini** (ses, mantık dışı yöntemler, güvenilir cihaz) planla.
 - **Hız sınırına takılan gerçek kullanıcı için mesajı tasarla** (429 durumu).
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Kötüye kullanım önleminin dönüşüme etkisini tart.** CAPTCHA spam'i durdurur ama meşru kullanıcıyı da kaybettirir.
+- **Önce görünmez önlemleri iste.**
+
+</Lens>
+<Lens role="product-owner">
+
+- **Spam ve kötüye kullanım senaryosunu story'ye yaz.** Form yayına çıkmadan koruması belli olsun.
+- **CAPTCHA önerisini erişilebilirlik kriterleriyle sına.**
+
+</Lens>
+<Lens role="project-manager">
+
+- **Lansman öncesi kötüye kullanım riskini planla.** Yoğun ilgi, yoğun spam demektir.
+- **WAF ve DDoS korumasını altyapı kalemi olarak izle.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Kötüye kullanım kurallarını iş kuralı olarak yaz.** Kaç deneme, hangi süre, hangi kaynak?
+- **Ayıklanan kayıtların nasıl izleneceğini tanımla.**
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **CAPTCHA'nın etkisini yardımcı teknoloji kullanan katılımcıyla test et.**
+- **Spam önleminin meşru kullanıcıya görünüp görünmediğini gözle.**
+
+</Lens>
+</Lenses>
 
 <Summary>
 
 - Honeypot kullanıcıya yük bindirmez; CAPTCHA erişilebilirlik sorunudur ve son çare olmalıdır.
 - WAF ve DDoS koruması ilk savunma hattıdır; WAF koddaki açığı kapatmaz.
+- Önce görünmez önlemler denenir: honeypot ve hız sınırı.
 
 </Summary>
 
@@ -55,5 +135,17 @@ Bir erişilebilirlik sorunudur: görsel bulmacalar görme engelli kullanıcılar
 <SelfCheck question="WAF, koddaki bir açığı kapatır mı?">
 
 Hayır. Bazı saldırıları filtreler ama açığı kapatmaz. "WAF var" cümlesi bir güvenlik açığını mazur göstermez.
+
+</SelfCheck>
+
+<SelfCheck question="Honeypot neden CAPTCHA'dan önce denenmelidir?">
+
+Kullanıcıya hiçbir yük bindirmez: insanlar görmediği için doldurmaz, botlar doldurur. CAPTCHA ise her kullanıcıya bir test çözdürür ve erişilebilirlik engeli oluşturur.
+
+</SelfCheck>
+
+<SelfCheck question={"\"WAF var\" demek bir güvenlik açığını kapatır mı?"}>
+
+Hayır. WAF bazı bilinen saldırı kalıplarını filtreler ama koddaki açığı kapatmaz. Açık kodda düzeltilmelidir.
 
 </SelfCheck>

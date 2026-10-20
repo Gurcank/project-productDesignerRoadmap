@@ -3,7 +3,8 @@ summary: "React konuşmalarında sürekli geçen üç kelime: hook, side effect,
 outcomes:
   - "Hook, side effect ve re-render'ı bir cümleyle tanımlayabilirsin."
   - "'Sayfa açılışında istek iki kez gidiyor' ya da 'liste takılıyor' cümlelerinin hangi kavrama işaret ettiğini bilirsin."
-minutes: 5
+minutes: 3
+standard: 2
 sources:
   - label: "React — Custom hook'larla mantığı paylaşmak"
     url: "https://react.dev/learn/reusing-logic-with-custom-hooks"
@@ -14,9 +15,12 @@ sources:
 skipTerms: ["state"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bu üç kavram React konuşmalarında sürekli geçer. Bunlar derinlemesine öğrenmen gereken şeyler değil: duyduğunda ne dendiğini anlaman yeter. Ama her birinin ardında bir tasarım sonucu var.
 
@@ -32,12 +36,38 @@ Bu üç kavram React konuşmalarında sürekli geçer. Bunlar derinlemesine öğ
 
 **Re-render (yeniden çizim)**, state ya da props değiştiğinde bileşenin kendini yeniden hesaplamasıdır. Normal ve gerekli bir davranıştır. Ama gereksiz yeniden çizimler, özellikle uzun listelerde, arayüzü yavaşlatır ve doğrudan **INP** metriğini etkiler (performans dersinde). "Liste her tuş vuruşunda yeniden çiziliyor; arama girdisi takılıyor."
 
-<Callout kind="tasarimci">
+<StepFlow
+  label="Bir değişiklikten ekrana"
+  caption="Bir değer değişir: örneğin Panel'e yeni bir sipariş gelir ve liste state'i güncellenir. Bileşen yeniden çizilir; React yeni görünümü hesaplar. Ekran güncellenir. Ardından yan etkiler çalışır: örneğin yeni sipariş için ses çalınır. Yan etkinin ne zaman çalışacağı yanlış tanımlanırsa ses iki kez çalar ya da istek iki kez gider."
+  steps={[
+    { title: "State değişir", sub: "yeni sipariş geldi", tone: "accent" },
+    { title: "Re-render", sub: "görünüm yeniden hesaplanır" },
+    { title: "Ekran güncellenir" },
+    { title: "Side effect", sub: "ses, istek, zamanlayıcı", tone: "progress" },
+  ]}
+/>
+
+<Case>
+
+Sabah yoğunluğunda Panel'de "Hazır" düğmesi takılıyordu. Emre üç şey buldu:
+
+1. **Gereksiz re-render:** her yeni sipariş, listedeki otuz kartın hepsini yeniden çizdiriyordu. Yalnız değişen kart yeniden çizilecek hâle getirildi.
+2. **Side effect:** sayfa açılışında sipariş listesi isteği iki kez gidiyordu; yan etkinin bağımlılıkları yanlış tanımlanmıştı.
+3. **Custom hook:** yeni sipariş sesi, bildirim ve listeyi tazeleme mantığı üç bileşende tekrarlanıyordu; tek bir `useYeniSiparis` hook'unda toplandı.
+4. **Sonuç:** "Hazır" düğmesine basınca tepki gecikmesi hissedilmez oldu.
+
+Selin'in "takılıyor" geri bildirimi, ölçülecek bir şeye dönüştü: etkileşime tepki süresi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **"Takılıyor" geri bildirimini re-render ile ilişkilendir;** uzun liste ve anlık filtre tasarımlarında geliştiriciyle konuş.
 - **Bir etkileşimin tetiklediği isteklerin sayısını sor,** özellikle yazarken güncellenen arama kutularında.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -52,5 +82,17 @@ Bu üç kavram React konuşmalarında sürekli geçer. Bunlar derinlemesine öğ
 <SelfCheck question="Re-render neden bazen sorun olur?">
 
 State ya da props değiştiğinde yeniden çizim normaldir; ama gereksiz yeniden çizimler, özellikle uzun listelerde, arayüzü yavaşlatır ve INP metriğini kötüleştirir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir arama kutusuna yazarken liste takılıyor. Hangi kavram akla gelir, ne sorarsın?">
+
+Gereksiz re-render. Her tuş vuruşunda uzun listenin tamamı yeniden çiziliyor olabilir. Listenin nasıl filtrelendiğini, her tuşta istek gidip gitmediğini ve yazma bitince mi yoksa her harfte mi güncellendiğini sorarım.
+
+</SelfCheck>
+
+<SelfCheck question="Side effect nedir? Bir örnek ver.">
+
+Bileşenin ekrana çizmek dışında yaptığı işlerdir: veri çekmek, zamanlayıcı kurmak, tarayıcı olayını dinlemek. Örneğin sayfa açıldığında sipariş listesini sunucudan istemek.
 
 </SelfCheck>

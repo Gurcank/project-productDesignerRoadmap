@@ -28,6 +28,16 @@ const ProgressSchema = z.object({
 
 export type Progress = z.infer<typeof ProgressSchema>;
 
+/**
+ * Validates untrusted data as a progress record; null when it does not fit.
+ * Unknown keys are stripped — that is what lets a backup carry `prefs` (see
+ * backup.ts) and still restore on a build that has never heard of them.
+ */
+export function parseProgress(data: unknown): Progress | null {
+  const parsed = ProgressSchema.safeParse(data);
+  return parsed.success ? parsed.data : null;
+}
+
 export const EMPTY_PROGRESS: Progress = {
   version: 1,
   updatedAt: new Date(0).toISOString(),
@@ -146,9 +156,9 @@ export function importJson(text: string): string | null {
   } catch {
     return "Dosya geçerli bir JSON değil.";
   }
-  const parsed = ProgressSchema.safeParse(data);
-  if (!parsed.success) return "Dosya bu sitenin ilerleme biçimine uymuyor.";
-  write({ ...parsed.data, updatedAt: now() });
+  const parsed = parseProgress(data);
+  if (!parsed) return "Dosya bu sitenin ilerleme biçimine uymuyor.";
+  write({ ...parsed, updatedAt: now() });
   return null;
 }
 

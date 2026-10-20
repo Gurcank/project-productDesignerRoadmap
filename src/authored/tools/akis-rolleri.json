@@ -1,0 +1,89 @@
+{
+  "note": "Materyalin 20. bölümü her fazda Product Designer'ı ('Sen'), PM'i ve geliştiriciyi anlatır. Bu dosya aynı fazlara materyalde olmayan beş rolü ekler; her satır onu anlatan bir site dersine bağlanır.",
+  "sources": [
+    { "label": "Scrum Guide 2020", "url": "https://scrumguides.org/scrum-guide.html" },
+    { "label": "Watt — Project Management, 2. baskı", "url": "https://opentextbc.ca/projectmanagement/" },
+    { "label": "UK DDaT — Business analyst", "url": "https://understand-digital-data-roles-skills.service.gov.uk/role/business-analyst/" },
+    { "label": "UK DDaT — User researcher", "url": "https://understand-digital-data-roles-skills.service.gov.uk/role/user-researcher/" },
+    { "label": "NN/g — When to Use Which User-Experience Research Methods", "url": "https://www.nngroup.com/articles/which-ux-research-methods/" }
+  ],
+  "phases": {
+    "20.1": {
+      "product-owner": { "text": "Ürün hedefini sorar: bu problem hangi ürün hedefine hizmet ediyor?", "lesson": "cevik-pratikler/product-owner-isi" },
+      "project-manager": { "text": "İşin bir proje olup olmadığını sorar; iş gerekçesini ve ilk paydaş listesini başlatır.", "lesson": "proje-yonetimi/is-gerekcesi-ve-proje-tuzugu" },
+      "scrum-master": { "text": "Ekibin bu işe nasıl çalışacağını ve kimin karar vereceğini netleştirmeye yardım eder.", "lesson": "cevik-pratikler/scrum-master-isi" },
+      "business-analyst": { "text": "İş ihtiyacını ve kök nedeni çıkarır: çözüm değil, ihtiyaç.", "lesson": "is-analizi/is-ihtiyaci-ve-kok-neden" },
+      "ux-researcher": { "text": "Problemin kimin problemi olduğunu sorar; elde hangi kanıtın bulunduğuna bakar.", "lesson": "urun-gelistirme/arastirma-ve-kullanici-bilgisi" }
+    },
+    "20.2": {
+      "product-owner": { "text": "Keşiften çıkan fırsatları backlog'a taşımaya hazırlanır.", "lesson": "urun-yonetimi/surekli-kesif-ve-firsat-cozum-agaci" },
+      "project-manager": { "text": "Keşfin süresini ve kapsamını planlar; riskleri kaydeder.", "lesson": "proje-yonetimi/risk-yonetimi" },
+      "scrum-master": { "text": "Keşif işinin de görünür olmasını sağlar; spike'lar timebox ile yürür.", "lesson": "cevik-pratikler/scrum-master-isi" },
+      "business-analyst": { "text": "Paydaşlarla gereksinim çıkarma görüşmeleri ve atölyeleri yapar.", "lesson": "is-analizi/gereksinim-cikarma-teknikleri" },
+      "ux-researcher": { "text": "Yöntemi seçer, görüşmeleri yürütür, bulguları sentezler. Bu faz büyük ölçüde onundur.", "lesson": "urun-gelistirme/discovery-problemi-bulma-asamasi" }
+    },
+    "20.3": {
+      "product-owner": { "text": "Backlog'u sıralar; story'leri kabul kriterleriyle hazır hâle getirir.", "lesson": "cevik-pratikler/refinement-invest-ve-story-bolme" },
+      "project-manager": { "text": "Kapsamı ve WBS'i yazar, tahmin ve takvimi kurar.", "lesson": "proje-yonetimi/kapsam-ve-wbs" },
+      "scrum-master": { "text": "Refinement'ı kolaylaştırır; hazır ve bitti tanımlarının yazılmasına yardım eder.", "lesson": "cevik-pratikler/refinement-invest-ve-story-bolme" },
+      "business-analyst": { "text": "Gereksinimleri türlerine ayırır, iş kurallarını ve kabul kriterlerini yazar.", "lesson": "is-analizi/gereksinim-turleri" },
+      "ux-researcher": { "text": "Kapsam kararlarına araştırma kanıtı getirir: hangi ihtiyaç gerçekten büyük?", "lesson": "urun-yonetimi/varsayim-haritalama-ve-urun-deneyleri" }
+    },
+    "20.4": {
+      "product-owner": { "text": "Story map ile akışı sürümlere böler; ilk sürümün sınırını çizer.", "lesson": "cevik-pratikler/story-mapping" },
+      "project-manager": { "text": "Akış ve veri kararlarının takvime etkisini izler; bağımlılıkları kaydeder.", "lesson": "proje-yonetimi/bagimliliklar-ve-kritik-yol" },
+      "scrum-master": { "text": "Tasarım ve geliştirmenin birlikte çalışacağı bir ritim kurar.", "lesson": "cevik-pratikler/takim-dinamikleri-ve-calisma-sozlesmesi" },
+      "business-analyst": { "text": "Süreci BPMN ile çizer, bağlam diyagramıyla sistem sınırını belirler.", "lesson": "is-analizi/bpmn-temelleri" },
+      "ux-researcher": { "text": "Kart sıralama ve ağaç testiyle bilgi mimarisini sınar.", "lesson": "urun-gelistirme/arastirma-ve-kullanici-bilgisi" }
+    },
+    "20.5": {
+      "product-owner": { "text": "Tasarımı ürün hedefine ve kabul kriterlerine göre gözden geçirir.", "lesson": "cevik-pratikler/product-owner-isi" },
+      "project-manager": { "text": "Tasarım teslimlerinin kritik yola etkisini izler.", "lesson": "proje-yonetimi/gantt-ve-kilometre-taslari" },
+      "scrum-master": { "text": "Tasarım işinin sprint içinde görünür ve akışta kalmasını sağlar.", "lesson": "cevik-pratikler/akis-metrikleri-ve-cfd" },
+      "business-analyst": { "text": "Ekranları iş kurallarıyla karşılaştırır: her kural bir ekranda karşılanıyor mu?", "lesson": "is-analizi/is-kurallari-ve-karar-tablolari" },
+      "ux-researcher": { "text": "Prototiple kullanılabilirlik testi yapar; bulguyu handoff'tan önce verir.", "lesson": "urun-gelistirme/arastirma-ve-kullanici-bilgisi" }
+    },
+    "20.6": {
+      "product-owner": { "text": "Teknik kararların ürün hedefine etkisini sorar; geri dönüşü pahalı olanları ayırır.", "lesson": "urun-yonetimi/trade-off-ve-hayir-demek" },
+      "project-manager": { "text": "Tedarikçi, ortam ve kaynak kararlarını bütçe ve takvimle karşılaştırır.", "lesson": "proje-yonetimi/tedarikci-ve-sozlesme" },
+      "scrum-master": { "text": "Kararların kayda geçmesini ve takımın onları sahiplenmesini kolaylaştırır.", "lesson": "cevik-pratikler/scrum-master-isi" },
+      "business-analyst": { "text": "Veri gereksinimlerini ve veri sözlüğünü teknik kararlarla eşleştirir.", "lesson": "is-analizi/veri-gereksinimleri" },
+      "ux-researcher": { "text": "Erişilebilirlik ve performans gibi kullanıcıya dokunan teknik kısıtları sorar.", "lesson": "urun-gelistirme/arastirma-ve-kullanici-bilgisi" }
+    },
+    "20.7": {
+      "product-owner": { "text": "Sprint hedefini koyar, backlog'u sıralar, review'da artışı kabul eder.", "lesson": "cevik-pratikler/scrum-rehberi" },
+      "project-manager": { "text": "İlerlemeyi plana karşı izler; durum raporu ve RAID kaydını günceller.", "lesson": "proje-yonetimi/durum-raporu" },
+      "scrum-master": { "text": "Scrum olaylarını işletir, engelleri kaldırır, takımın akışını korur.", "lesson": "cevik-pratikler/scrum-master-isi" },
+      "business-analyst": { "text": "Geliştiricilerin sorularını kurallarla cevaplar; izlenebilirlik matrisini günceller.", "lesson": "is-analizi/izlenebilirlik" },
+      "ux-researcher": { "text": "Geliştirme sırasında çıkan soruları hızlı testlerle cevaplar.", "lesson": "urun-gelistirme/arastirma-ve-kullanici-bilgisi" }
+    },
+    "20.8": {
+      "product-owner": { "text": "İçerik ve metinlerin kabul kriterlerine uyduğunu kontrol eder.", "lesson": "urun-gelistirme/gereksinimler-epic-user-story-acceptance-criteria" },
+      "project-manager": { "text": "Hukuk ve içerik teslimlerini takvime bağlar; geç kalan teslimi eskale eder.", "lesson": "iletisim-ve-paydaslar/kotu-haber-ve-eskalasyon" },
+      "scrum-master": { "text": "İçerik ve SEO işinin sona bırakılmamasını sprint planında görünür kılar.", "lesson": "cevik-pratikler/anti-paternler" },
+      "business-analyst": { "text": "Yasal metinlerin ve onam kurallarının gereksinimlerde karşılandığını izler.", "lesson": "is-analizi/izlenebilirlik" },
+      "ux-researcher": { "text": "Gerçek metinlerle anlaşılırlık testi yapar.", "lesson": "urun-gelistirme/arastirma-ve-kullanici-bilgisi" }
+    },
+    "20.9": {
+      "product-owner": { "text": "Hangi bulgunun yayını bloke ettiğine karar verir.", "lesson": "test-ve-kalite/qa-ve-hata-raporu" },
+      "project-manager": { "text": "Kabul ölçütlerini ve imzayı yönetir; git ya da gitme kararını hazırlar.", "lesson": "proje-yonetimi/kalite-ve-kabul" },
+      "scrum-master": { "text": "Bitti tanımının gerçekten uygulanmasını sağlar.", "lesson": "urun-gelistirme/hazir-ve-bitmis-tanimlari-handoff" },
+      "business-analyst": { "text": "Kullanıcı kabul testini planlar ve yürütür.", "lesson": "is-analizi/cozum-degerlendirme-ve-uat" },
+      "ux-researcher": { "text": "Son kullanılabilirlik kontrolünü yapar; erişilebilirlik bulgularını destekler.", "lesson": "urun-gelistirme/arastirma-ve-kullanici-bilgisi" }
+    },
+    "20.10": {
+      "product-owner": { "text": "Yayının kapsamını ve duyuruyu onaylar.", "lesson": "urun-yonetimi/lansman-ve-gtm" },
+      "project-manager": { "text": "Yayın gününü, iletişim planını ve geri dönüş planını yürütür.", "lesson": "iletisim-ve-paydaslar/iletisim-plani" },
+      "scrum-master": { "text": "Yayın gününde takımın tek bir kanalda toplanmasını kolaylaştırır.", "lesson": "sirket-sozlugu/risk-ve-olay-dili" },
+      "business-analyst": { "text": "Müşteri hizmetlerine yeni kuralları ve SSS'yi iletir.", "lesson": "iletisim-ve-paydaslar/iletisim-plani" },
+      "ux-researcher": { "text": "Yayından sonraki geri bildirim kanallarını hazırlar.", "lesson": "urun-gelistirme/arastirma-ve-kullanici-bilgisi" }
+    },
+    "20.11": {
+      "product-owner": { "text": "Ölçümleri bir sonraki backlog sıralamasına çevirir.", "lesson": "urun-gelistirme/backlog-ve-onceliklendirme" },
+      "project-manager": { "text": "Projeyi kapatır, öğrenilen dersleri toplar.", "lesson": "proje-yonetimi/kapanis-ve-ogrenilen-dersler" },
+      "scrum-master": { "text": "Retrospektifi yürütür; çıkan eylemlerin sahibi ve tarihi olur.", "lesson": "cevik-pratikler/retro-formatlari" },
+      "business-analyst": { "text": "Çözümün iş ihtiyacını karşılayıp karşılamadığını değerlendirir.", "lesson": "is-analizi/cozum-degerlendirme-ve-uat" },
+      "ux-researcher": { "text": "Kopma noktalarını görüşmelerle açıklar: veri ne kadar, görüşme neden der.", "lesson": "urun-analitigi/huni-analizi" }
+    }
+  }
+}

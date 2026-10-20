@@ -1,0 +1,153 @@
+---
+summary: "Mevcut durum bugün işin nasıl yürüdüğünü, gelecek durum nasıl yürümesi gerektiğini anlatır. Boşluk analizi ikisi arasındaki farkları listeler; her fark bir değişikliğe, etkisine ve eforuna bağlanır."
+outcomes:
+  - "Mevcut durumu gözleme dayanarak, gelecek durumu ihtiyaca bağlayarak yazabilirsin."
+  - "Boşlukları listeleyip etki ve efora göre sıralayabilirsin."
+  - "Bir değişimin geçiş gereksinimlerini ve risklerini çıkarabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "BABOK Guide — Ek A: Sözlük (IIBA)"
+    url: "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"
+  - label: "IIBA — Business Analysis Standard: bilgi alanları ve görevler"
+    url: "https://www.iiba.org/knowledgehub/the-business-analysis-standard/5-applying-business-analysis-tasks/5-3-business-analysis-knowledge-areas/"
+additions:
+  - "Boşluk analizi ve geçiş gereksinimi tanımları (BABOK sözlüğü)"
+  - "Strateji analizinin dört görevi (IIBA Business Analysis Standard)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Matrix2x2 from "~/components/diagrams/primitives/Matrix2x2.astro";
+
+Ayşe'nin iki BPMN çizimi duvarda yan yanaydı. Solda bugün: yedi adım, dört telefon görüşmesi, bir Excel dosyası. Sağda yarın: dört adım, sıfır telefon.
+
+Ozan iki çizime uzun uzun baktı ve sordu: "Güzel. Ama hepsini aynı anda yapamayız. Nereden başlıyoruz?" Bu ders, iki durum arasındaki farkları listelemeyi ve onları bir sıraya koymayı anlatır.
+
+## Mevcut durum ve gelecek durum
+
+IIBA'nın Business Analysis Standard'ı **strateji analizini** dört görevle anlatır: mevcut durumu analiz et, gelecek durumu tanımla, riskleri değerlendir, değişim stratejisini tanımla.
+
+**Mevcut durum** (as-is, current state), işin bugün gerçekte nasıl yürüdüğüdür. El kitabında yazanı değil, gözlemlenen işi yazar. Bir telefon görüşmesi, bir Excel dosyası, birinin aklında tuttuğu bir kural da mevcut durumun parçasıdır.
+
+**Gelecek durum** (to-be, future state), değişimden sonra işin nasıl yürüyeceğidir. İhtiyaca ve amaca bağlanır: "Üç ayda iade talepleri 150'nin altına insin" amacına hizmet etmeyen bir adım, gelecek durumda yer almamalıdır.
+
+**Mevcut durum ≠ kötü olan her şey.** Bugün iyi işleyen adımları da yaz. Gözlemdeki telefonla arama, müşteriye başka ürün önerme fırsatıydı; gelecek durum onu kaybetmemeli, en azından bilerek bırakmalıdır.
+
+## Boşluk analizi
+
+BABOK **boşluk analizini** (gap analysis), bir kurumun mevcut durumuyla istenen gelecek durumunu karşılaştırıp ele alınması gereken farkları belirlemek diye tanımlar.
+
+Her boşluk bir satırdır ve üç şey söyler: bugün ne eksik, hangi değişiklikle kapanacak, etkisi ve eforu ne. Boşluk bir çözüm adı olarak yazılmaz. "Otomatik iade yok" yerine "İade elle başlatılıyor, destek ekibinin zamanını alıyor."
+
+<Matrix2x2
+  label="İade boşlukları: etki ve efor"
+  caption="Yedi boşluk etki ve efora göre yerleştirildi. Yüksek etki ve düşük efor köşesinde B1, tek kural kaynağı, ve B2, müşteriye bildirim, duruyor; bunlar hemen yapılır. B3, otomatik iade, yüksek etkili ama eforu da yüksek; planlanır. B4, çalışanın tutarı görmesi, orta etki ve düşük efor. B6, finans raporu, ortada. B5, eksik ürün işaretleme, orta etki ve yüksek efor. B7, telefonla ürün önerisini sisteme taşımak, düşük etki ve yüksek efor; şimdilik bırakılır."
+  x={{ title: "Efor", low: "düşük", high: "yüksek" }}
+  y={{ title: "Etki", low: "düşük", high: "yüksek" }}
+  quadrants={[
+    { title: "Hemen yap", sub: "yüksek etki, düşük efor", tone: "progress" },
+    { title: "Planla", sub: "yüksek etki, yüksek efor" },
+    { title: "Fırsat buldukça", sub: "düşük etki, düşük efor" },
+    { title: "Şimdilik bırak", sub: "düşük etki, yüksek efor" },
+  ]}
+  points={[
+    { label: "B1", x: 0.12, y: 0.74 },
+    { label: "B2", x: 0.35, y: 0.66 },
+    { label: "B3", x: 0.85, y: 0.68 },
+    { label: "B4", x: 0.18, y: 0.56 },
+    { label: "B5", x: 0.75, y: 0.56 },
+    { label: "B6", x: 0.58, y: 0.22 },
+    { label: "B7", x: 0.88, y: 0.12 },
+  ]}
+/>
+
+Matris bir başlangıçtır, karar değildir. Bağımlılıklar sırayı değiştirebilir: bir boşluk, başka birinin kapanması için şart olabilir.
+
+## Geçiş ve risk
+
+Gelecek duruma bir gecede geçilmez. BABOK'un **geçiş gereksinimi** bu geçiş için gereken yetenek ve koşullardır. Değişim bitince artık gerekmez. Örnekleri: eğitim, veri taşıma, eski metinleri kaldırmak, bir süre iki sistemi birlikte çalıştırmak.
+
+Strateji analizinin son iki görevi de buraya bakar. **Riskleri değerlendir:** geçiş sırasında ne ters gidebilir? **Değişim stratejisini tanımla:** değişim tek seferde mi, aşama aşama mı gelecek?
+
+<Case>
+
+Ayşe boşlukları as-is/to-be belgesine yazdı ve Ozan'la matrise yerleştirdi:
+
+1. **Hemen yap:** B1 (tek kural kaynağı) ve B2 (müşteriye bildirim). İkisi de az efor, yüksek etki.
+2. **Bağımlılık sırayı değiştirdi:** B5 (eksik ürün işaretleme) orta etkili ve pahalıydı. Ama karar tablosunun 3. ve 6. kuralı ona dayanıyordu. Ozan onu ilk sürüme aldı.
+3. **İlk sürüm:** B1–B5. **İkinci sürüm:** B6, finans raporu. **Sonraki çeyrek:** B7.
+4. **Geçiş:** eski metinler yayından önce kalkar, destek ekibi bir saat eğitim alır, yayın günü açık kalan elle başlatılmış iadeler eski yolla kapatılır.
+5. **Risk:** ödeme kuruluşu kısmi iadeyi otomatik kabul etmeyebilir. Bu bir varsayımdı; Ayşe ilk sprintten önce doğruladı.
+
+</Case>
+
+<Tool slug="as-is-to-be" />
+
+<Lenses>
+<Lens role="business-analyst">
+
+- **Mevcut durumu gözlemle doğrula.** Belgeden yazılan as-is, belgenin söylediğini anlatır.
+- **Boşluğu çözüm adıyla yazma.** Sorunu yaz; çözüm "değişiklik" sütununda durur.
+- **Geçişi ayrı bir liste yap.** Yayın günü ne olacağını kimse sormadan sen sor.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Matrisi sıralama için kullan, ama bağımlılığa bak.** Pahalı bir boşluk, ucuz bir boşluğun şartı olabilir.
+- **Bırakılan boşluğu da yaz.** "Şimdilik bırak" bir karardır; nedeniyle birlikte kayda geçsin.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Gelecek durumu amaca bağla.** Her adımın hangi ölçüyü hareket ettireceğini sor.
+- **Aşamalı geçişi bir yayın planına çevir.** İlk sürüm, amaca en çok katkı veren boşlukları kapatmalı.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Mevcut durumun iyi yanlarını bul.** Telefonla ürün önerme bir hizmet anıydı; gelecek durum onu bilerek bırakmalı.
+- **Gelecek durumu kullanıcıyla sına.** Bir prototip, to-be çizimindeki varsayımları erkenden test eder.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Mevcut durum gözlemlenen işi, gelecek durum ihtiyaca bağlı hedef işi anlatır.
+- Boşluk analizi iki durum arasındaki farkları listeler; her fark bir değişikliğe bağlanır.
+- Boşluklar etki ve efora göre sıralanır, ama bağımlılıklar sırayı değiştirebilir.
+- Geçiş gereksinimleri geçicidir: eğitim, veri taşıma, eski metinleri kaldırmak.
+- Strateji analizi dört görevdir: mevcut durum, gelecek durum, riskler, değişim stratejisi.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Mevcut durumu destek el kitabından yazmak neden yanıltıcıdır?">
+
+El kitabı olması gerekeni anlatır. Gerçek iş ondan sapabilir: gözlemdeki telefonla arama hiçbir belgede yoktu. As-is gözleme ve kayıtlara dayanmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="'Otomatik iade sistemi yok' iyi yazılmış bir boşluk mu?">
+
+Hayır, bir çözümün adıdır. Boşluk sorunu anlatmalı: "İade elle başlatılıyor ve destek ekibinin zamanını alıyor." Çözüm, değişiklik sütununda yazılır.
+
+</SelfCheck>
+
+<SelfCheck question="Matriste 'planla' köşesindeki bir boşluk ilk sürüme alındı. Bu bir hata mı?">
+
+Her zaman değil. Bir bağımlılık onu öne çekebilir. Demlik'te eksik ürün işaretleme pahalıydı ama karar tablosunun iki kuralı ona dayanıyordu. Matris bir başlangıçtır, karar değildir.
+
+</SelfCheck>
+
+<SelfCheck question="'Yayın günü açık kalan elle başlatılmış iadeler eski yolla kapatılır' hangi tür gereksinimdir?">
+
+Geçiş gereksinimi. Değişim sırasında gereklidir ve tamamlanınca gerekmez.
+
+</SelfCheck>

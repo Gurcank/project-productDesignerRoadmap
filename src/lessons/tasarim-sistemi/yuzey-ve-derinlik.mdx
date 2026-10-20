@@ -6,6 +6,7 @@ outcomes:
   - "İç içe kutularda köşe yarıçaplarını doğru ilişkilendirebilirsin."
   - "z-index kaosunun neden bir katman ölçeğiyle önlendiğini bilirsin."
 minutes: 8
+standard: 2
 sources:
   - label: "Material Design 3 — Elevation"
     url: "https://m3.material.io/styles/elevation/overview"
@@ -19,6 +20,9 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir sayfada bir menü açılıyor ve ekranın geri kalanı üzerinde "yüzüyor". Bir modal açılıyor, arkası kararıyor. Bir kart hafifçe yükseliyor. Hepsinde ortak olan şey: **katman ilişkisi.** Bu ders o ilişkiyi tutarlı bir sistem olarak nasıl kurduğunu anlatıyor.
 
@@ -91,7 +95,21 @@ Bu sitede derinlik **dört yüzey seviyesiyle** (koyu temada açıklıkla), aç�
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in ödeme ekranında üç katman üst üste biniyordu: sepet, "kart seç" sayfası ve bir kupon penceresi. Hepsinin gölgesi aynıydı.
+
+1. **Elevation:** üç seviye tanımlandı: kart, açılır sayfa, modal. Her seviyenin tek bir gölgesi var.
+2. **z-index:** sayılar rastgele değil, seviyelere bağlı: `z-kart`, `z-sayfa`, `z-modal`. Bildirim her zaman en üstte.
+3. **Köşe:** iç içe kutularda iç yarıçap, dış yarıçaptan iç boşluk kadar küçük.
+4. **Koyu mod:** Panel'in koyu temasında gölge görünmüyordu; derinlik yüzeyin açıklığıyla verildi.
+
+Kupon penceresinin sepetin altında kalması hatası, z-index seviyelere bağlanınca bir daha görülmedi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Elevation seviyelerini tanımla ve kullan.** Yeni bir bileşen "hangi seviyede?" sorusunu cevaplasın.
 - **Koyu tema için derinliği ayrıca tasarla.** Gölge yerine yüzey açıklığı.
@@ -99,7 +117,8 @@ Bu sitede derinlik **dört yüzey seviyesiyle** (koyu temada açıklıkla), aç�
 - **İç içe kutuda radius'u hesapla:** dış = iç + boşluk.
 - **Katman için ad iste.** "Modal" katmanı, `z-index: 300` token'ı.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -122,5 +141,11 @@ Dıştaki radius, içtekinden büyük olmalıdır: kabaca dış radius = iç rad
 <SelfCheck question="Koyu temada derinlik nasıl verilir ve neden?">
 
 Gölge koyu zeminde neredeyse görünmez olduğu için derinlik yüzey açıklığı artırılarak verilir: üstteki katman alttakinden biraz daha açık olur.
+
+</SelfCheck>
+
+<SelfCheck question="Bir bildirim, açık bir modalın altında kalıyor. Sistem düzeyinde nasıl önlenir?">
+
+z-index değerlerini rastgele sayılarla değil, tanımlı katman seviyeleriyle yönetmek. Bildirim seviyesi modalın üstünde tanımlanır; her bileşen kendi seviyesinin token'ını kullanır.
 
 </SelfCheck>

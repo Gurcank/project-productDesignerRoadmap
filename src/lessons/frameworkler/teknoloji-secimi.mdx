@@ -5,6 +5,7 @@ outcomes:
   - "'Vendor lock-in'den kaçınalım' hedefinin neden eksik olduğunu ve daha iyi sorunun ne olduğunu söyleyebilirsin."
   - "'Choose boring technology' ilkesini yenilik bütçesi olarak açıklayabilirsin."
 minutes: 7
+standard: 2
 sources:
   - label: "Choose Boring Technology — Dan McKinley"
     url: "https://boringtechnology.club/"
@@ -13,9 +14,12 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bu alt bölüm bir terim listesi değil, bir **karar çerçevesi.** Bu bölümde eskimeyen tek içerik burasıdır. Kod bilmeden de sorabileceğin sorular, teknik masada ciddiye alınmanın en hızlı yoludur.
 
@@ -36,6 +40,21 @@ Bir kütüphane ya da framework önerildiğinde sorulacak sorular. Hepsi meşrud
 7. **Vazgeçmek ne kadar zor?** Yarın değiştirmek istesek kaç dosyaya dokunmamız gerekir?
 8. **Kim sahibi?** Tek kişilik bir proje mi, şirket destekli mi? Satın alınırsa ne olur?
 
+<Tree
+  label="Sekiz sorunun dört başlığı"
+  caption="Sekiz soru dört başlıkta toplanır. İhtiyaç: hangi problemi çözüyor ve eklemesek ne olur. Sağlık: bakımı sürüyor mu ve kim sahibi. Maliyet: paket boyutu, ekibin öğrenme süresi ve vazgeçmenin bedeli. Kalite: erişilebilirliği nasıl."
+  root={{
+    title: "Teknoloji önerisi",
+    tone: "accent",
+    children: [
+      { title: "İhtiyaç", children: [{ title: "Hangi problem?" }, { title: "Eklemesek?" }] },
+      { title: "Sağlık", children: [{ title: "Bakım sürüyor mu?" }, { title: "Kim sahibi?" }] },
+      { title: "Maliyet", children: [{ title: "Paket boyutu" }, { title: "Ekip biliyor mu?" }, { title: "Çıkış maliyeti" }] },
+      { title: "Kalite", children: [{ title: "Erişilebilirlik", tone: "progress" }] },
+    ],
+  }}
+/>
+
 ## Vendor lock-in
 
 **Vendor lock-in (sağlayıcıya bağımlılık)**, bir sağlayıcının araçlarına o kadar bağlanmaktır ki çıkmak pratikte imkânsız hâle gelir. Her bağımlılık kötü değildir: karşılığında hız ve kolaylık alırsın. Sorun, bunun **bilinçsiz** olmasıdır. Doğru soru "bağımlı olalım mı?" değil, **"çıkmak isteseydik maliyeti ne olurdu ve bunu kabul ediyor muyuz?"** "Vercel'e bağımlılığı kabul ediyoruz ama veritabanını taşınabilir tutalım; ikisi birden kilitlenmesin."
@@ -44,13 +63,40 @@ Bir kütüphane ya da framework önerildiğinde sorulacak sorular. Hepsi meşrud
 
 **"Choose boring technology" (sıkıcı teknoloji seç)**, yeni ve heyecan verici olan yerine olgun ve öngörülebilir olanı seçme ilkesidir. Her yeni teknoloji bilinmeyen sorunlar getirir; bir projede taşıyabileceğin bilinmeyen sayısı sınırlıdır. Bu bütçeyi asıl probleme harcamak, araç seçimine harcamaktan iyidir. **Bu, "yeniliğe kapalı olmak" değil, yenilik bütçesini bilinçli harcamaktır.** "Bu projede yeni bir framework denemeyelim; asıl risk zaten teslim tarihinde."
 
-<Callout kind="tasarimci">
+<Case>
+
+Panel'in gün sonu raporuna grafik eklenecekti. Emre büyük bir grafik kütüphanesi önerdi; Ozan sekiz soruyu sordu:
+
+1. **Problem:** günün saatlerine göre sipariş sayısı; tek bir çubuk grafik.
+2. **Eklemesek:** basit bir SVG çubuk grafiği yaklaşık 60 satır kod.
+3. **Boyut ve erişilebilirlik:** kütüphane Panel'in paketini belirgin büyütüyordu; grafiklerin ekran okuyucu desteği sınırlıydı.
+4. **Çıkış maliyeti:** tek bir ekran için düşük; ama ileride on ekran olursa yüksek.
+
+Karar: şimdilik elle yazılmış bir grafik ve yanında aynı veriyi gösteren bir tablo. İkinci grafik ihtiyacında karar yeniden açılacak; bu cümle karar kaydına yazıldı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Önerinin takasını sor:** ne kazanıyoruz, neyi feda ediyoruz?
 - **Sekiz sorudan en az üçünü her teknoloji önerisinde sor.**
 - **Kilitlenmeyi bilinçli kabul et** ve çıkış maliyetini yazılı hâle getir.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Teknoloji önerisini bir ürün kararı gibi tart.** Ne kazanıyoruz, neyi feda ediyoruz, hangi ölçüyle bileceğiz?
+- **Çıkış maliyetini yazılı iste.** Bilinçli bağımlılık, bilinçsiz bağımlılıktan ucuzdur.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Yeni teknolojiyi risk kaydına ekle.** Bilinmeyen sayısı, takvim belirsizliğini artırır.
+- **Öğrenme süresini plana koy.** Ekibin bilmediği araç, ilk haftalarda yavaşlatır.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -72,5 +118,11 @@ Hangi problemi çözüyor? Eklemesek ne olur? Bakımı sürüyor mu? Paket boyut
 <SelfCheck question="'Vendor lock-in'den kaçınalım' doğru bir hedef mi? Daha iyi soru nedir?">
 
 Tam olarak değil: her bağımlılık karşılığında hız ve kolaylık sağlar. Daha iyi soru: "Çıkmak isteseydik maliyeti ne olurdu ve bunu kabul ediyor muyuz?" Sorun bağımlılık değil, bilinçsiz bağımlılıktır.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Bu projede yeni bir framework denemeyelim\" cümlesi yeniliğe karşı olmak mıdır?"}>
+
+Hayır. "Sıkıcı teknoloji" ilkesi, bir projede taşınabilecek bilinmeyen sayısının sınırlı olduğunu söyler. Yenilik bütçesi asıl probleme harcanır; risk zaten başka bir yerdeyse araç seçiminde yeni bilinmeyen eklenmez.
 
 </SelfCheck>

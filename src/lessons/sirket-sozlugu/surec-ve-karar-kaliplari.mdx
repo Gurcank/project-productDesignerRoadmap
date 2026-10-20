@@ -1,10 +1,11 @@
 ---
-summary: "Kapsam ve önceliklendirme dili (must-have, punt, park, descope), kapasite dili (bandwidth, heads-down, firefighting) ve dört kavram: ship it, bikeshedding, yak shaving, scope creep / gold plating. Tasarımcı için en özel tehlike bikeshedding'dir."
+summary: "Kapsam ve öncelik dili (must-have, punt, park, descope), kapasite dili (bandwidth, heads-down) ve dört kalıp: ship it, bikeshedding, yak shaving, scope creep ile gold plating. Herkesin fikri olan konu toplantıyı yutar."
 outcomes:
-  - "Kapsam ve kapasite kalıplarını toplantıda doğru kullanabilirsin."
+  - "Kapsam, öncelik ve kapasite cümlelerini doğru okuyup kurabilirsin."
   - "Punt ile park, scope creep ile gold plating arasındaki farkı söyleyebilirsin."
-  - "Bikeshedding'in neden tasarımcı için özel bir tehlike olduğunu ve panzehirini bilirsin."
-minutes: 8
+  - "Bikeshedding ve yak shaving'i fark edip toplantıyı ya da işi geri çevirebilirsin."
+minutes: 7
+standard: 2
 sources:
   - label: "Wikipedia — Law of triviality (bikeshedding)"
     url: "https://en.wikipedia.org/wiki/Law_of_triviality"
@@ -17,11 +18,18 @@ sources:
 skipTerms: ["Scope","scope","kapsam"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Matrix2x2 from "~/components/diagrams/primitives/Matrix2x2.astro";
 
-## Kapsam ve önceliklendirme dili
+Favori sipariş için yapılan refinement 60 dakika sürdü. İlk 20 dakika "Son siparişini tekrarla" düğmesinin rengi konuşuldu. Akışın kaç adım olacağına, yani asıl karara, beş dakika kaldı. Toplantıdan çıkarken Deniz, "Favori listesini punt mu ettik, park mı?" diye sordu. Kimse emin değildi.
+
+Bu ders bir işin kapsamı, önceliği ve kapasitesi konuşulurken kullanılan kelimeleri anlatır. Ayrıca toplantıları ve işleri sessizce yoldan çıkaran dört kalıbı.
+
+## Kapsam ve öncelik dili
 
 | Terim | Anlamı | Örnek |
 |---|---|---|
@@ -29,61 +37,116 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 | **Nice-to-have** | İyi olur ama şart değil | "Animasyonlar nice-to-have; süre daralırsa düşer." |
 | **Quick win** | Az emekle görünür fayda | "Bu bir quick win; yarım günde biter." |
 | **Low-hanging fruit** | Kolay ulaşılabilir kazanç | "Önce low-hanging fruit'lara bakalım." |
-| **Punt** | Bir kararı veya işi ileriye atmak | "Bunu bir sonraki sprint'e punt edelim." |
-| **Park** | Şimdilik bir kenara koymak, unutmamak | "Bu konuyu park edelim, kickoff'ta dönelim." |
-| **Deprioritize** | Öncelik sırasında aşağı indirmek | "Bu epic'i deprioritize ettik." |
-| **Descope / Cut** | Kapsamdan çıkarmak | "Süreye yetişmiyoruz; iki özelliği descope edelim." |
-| **Table it** | Konuyu ertelemek, şimdi tartışmamak | "Bunu table edelim, gündemimiz dolu." |
+| **Punt** | Bir işi ya da kararı ileriye atmak | "Bunu bir sonraki sprint'e punt edelim." |
+| **Park** | Şimdilik bir kenara koymak, unutmamak | "Bu konuyu park edelim." |
+| **Deprioritize** | Öncelikte aşağı indirmek | "Bu epic'i deprioritize ettik." |
+| **Descope / Cut** | Kapsamdan çıkarmak | "İki özelliği descope edelim." |
+| **Table it** | Şimdi tartışmamak, ertelemek | "Bunu table edelim, gündem dolu." |
 
-*Punt* ve *park* arasında ince bir fark var: **punt** işi belirli bir sonraki döneme atar; **park** ise "şimdi konuşmuyoruz ama unutmuyoruz" demektir ve genelde bir "parking lot" listesine yazılır.
+**Punt ≠ park.** Materyalin ayrımıyla **punt** işi belirli bir sonraki döneme atar. **Park** "şimdi konuşmuyoruz ama unutmuyoruz" demektir ve genelde bir park alanı listesine yazılır.
 
-## Kapasite ve iş yükü
+## Kapasite dili
 
 | Terim | Anlamı | Örnek |
 |---|---|---|
-| **Bandwidth** | Kapasite, ayrılabilecek zaman | "Bu hafta bandwidth'im yok." |
+| **Bandwidth** | Ayrılabilecek zaman | "Bu hafta bandwidth'im yok." |
 | **Capacity** | Ekibin fiilen çalışabileceği süre | "Kapasitemiz %60, iki kişi izinli." |
-| **Context switching** | Bağlam değiştirme kaybı | "Üç projeye bölünüyorum, context switching öldürüyor." |
-| **Heads-down** | Kesintisiz odaklanma modu | "Bugün heads-down çalışacağım." |
-| **Firefighting** | Sürekli acil işlerle uğraşma | "Bu hafta hep firefighting; planlı iş yapamadık." |
+| **Context switching** | Bağlam değiştirmenin kaybı | "Üç projeye bölünüyorum, context switching öldürüyor." |
+| **Heads-down** | Kesintisiz odaklanma | "Bugün heads-down çalışacağım." |
+| **Firefighting** | Sürekli acil işlerle uğraşmak | "Bu hafta hep firefighting; planlı iş yapamadık." |
 
-## Ship it
+## Dört kalıp
 
-**Ship it (yayınla / çıkar)**, bir işin tamamlanıp kullanıcıya ulaştırılmasıdır. "Bitti" ile "yayında" arasındaki farkı vurgular: yazılım kültüründe **değer, yayına çıkana kadar üretilmiş sayılmaz;** bu yüzden "shipping" bir erdem olarak anılır. "Ship it" aynı zamanda bir onay ifadesidir. "Mükemmel değil ama ship edelim; kullanıcı geri bildirimiyle iyileştiririz."
+**Ship it** bir işin tamamlanıp kullanıcıya ulaştırılmasıdır. Yazılım kültüründe değer, yayına çıkana kadar üretilmiş sayılmaz. Ama materyalin uyarısıyla "ship it" ile Definition of Done çelişiyorsa, sorun DoD'de değil acele etmededir.
 
-Aşırıya kaçtığında kalite bahanesine dönüşür. Karşı-kalıp: **"ship it" ile "Definition of Done" çelişiyorsa, sorun DoD'de değil acele etmededir.**
+**Bikeshedding**, bir ekibin asıl zor konu yerine, herkesin fikir söyleyebileceği önemsiz bir ayrıntıya takılmasıdır. Adı, bir nükleer santral toplantısında reaktör yerine bisiklet barakasının rengini tartışan komite benzetmesinden gelir. Sebebi basittir: herkes basit konuda fikir sahibi olabilir, zor konuda olamaz.
 
-## Bikeshedding
+<Matrix2x2
+  label="Bikeshedding: önem ve herkesin fikri"
+  caption="Dikey eksen konunun önemini, yatay eksen o konuda herkesin fikir söyleyip söyleyemeyeceğini gösterir. Sol üst asıl kararların yeridir: önemli ama az kişinin fikir sahibi olduğu konular; favori siparişte akışın kaç adım olacağı burada. Sağ alt bisiklet barakasıdır: önemsiz ama herkesin fikri olan konular; düğmenin rengi burada. Toplantılar kendiliğinden sağ alta kayar; çerçeve onları sol üste geri çeker."
+  x={{ title: "Herkesin fikri olabilir mi?", low: "az kişinin", high: "herkesin" }}
+  y={{ title: "Önem", low: "düşük", high: "yüksek" }}
+  quadrants={[
+    { title: "Asıl karar", sub: "önemli, uzmanlık ister", tone: "progress" },
+    { title: "Herkesin işi", sub: "önemli ve tanıdık" },
+    { title: "Uzman ayrıntısı", sub: "önemsiz, az kişinin konusu" },
+    { title: "Bisiklet barakası", sub: "önemsiz ama herkes konuşur" },
+  ]}
+  points={[
+    { label: "Akış kaç adım?", x: 0.15, y: 0.68 },
+    { label: "Düğme rengi", x: 0.85, y: 0.15 },
+  ]}
+/>
 
-**Bikeshedding (law of triviality)**: bir ekibin asıl zor ve önemli konu yerine, herkesin fikir söyleyebileceği önemsiz bir ayrıntıya saatlerce takılması. Yaygın bir Türkçe karşılığı yok; "önemsiz ayrıntıda boğulma" olarak açıklanır. Adı, bir nükleer santral tasarımı toplantısında reaktör yerine bisiklet barakasının rengini tartışan komite benzetmesinden gelir. Sebebi basit: **herkes basit konuda fikir sahibi olabilir, zor konuda olamaz;** katılım gösterme baskısı insanları kolay konuya iter.
+Materyal panzehiri de verir: **tartışmayı çerçevelemek.** Hedefi yaz, karar gerektiren soruyu açıkça sor, önemsiz konulara süre koy.
 
-**Tasarımcı için özel bir tehlikedir:** renk ve buton metni herkesin fikir söyleyebileceği konulardır; akış yapısı değildir. Bu yüzden toplantılar kolayca renk tartışmasına kayar. "Yirmi dakikadır buton rengini tartışıyoruz; bikeshedding yapıyoruz. Asıl karar akışın kaç adım olacağı."
+**Yak shaving**, asıl işi yapmak için önce başka bir şeyi, onun için de başka bir şeyi düzeltmek zorunda kalıp asıl işten uzaklaşmaktır. "Basit bir buton ekleyecektim, üç saattir derleme ayarıyla uğraşıyorum." Adlandırabilmek, fark edip durabilmeyi sağlar.
 
-**Panzehiri tartışmayı çerçevelemektir:** crit'e getirirken hedefi yazmak, karar gerektiren soruyu açıkça sormak ve önemsiz konuları timebox'lamak.
+**Scope creep** kapsamın dışarıdan gelen isteklerle sessizce büyümesidir. **Gold plating** ise kimse istemediği hâlde ekibin kendi kendine fazladan iş yapmasıdır: "Madem dokunuyorum, şunu da güzelleştireyim."
 
-## Yak shaving
+<Case>
 
-**Yak shaving**: asıl işi yapmak için önce başka bir şeyi, onun için de başka bir şeyi düzeltmek zorunda kalıp zincirin sonunda asıl işten çok uzaklaşmak. "Basit bir buton ekleyecektim, üç saattir derleme yapılandırmasıyla uğraşıyorum" durumunun adı. Adlandırabilmek, fark edip durabilmeyi sağlar. Geliştirme sırasında ve standup'ta "neden ilerlemedim" açıklamalarında karşına çıkar. "Yak shaving'e girdim; asıl işe dönmek için bunu şimdilik geçici çözümle bırakıyorum."
+Refinement'tan sonra Deniz bir sonraki toplantıyı çerçeveledi:
 
-## Scope creep ve gold plating
+1. **Soru:** "Bugünkü karar: favori sipariş kaç adımda tamamlanır?" Düğme rengi için 5 dakika ayrıldı.
+2. **Kapsam:** favori listesi bir sonraki sürüme **punt** edildi, sprint tarihiyle. Zamanlanmış sipariş **park** edildi; park alanı listesine yazıldı.
+3. **Gold plating:** Burak düğmeye bir animasyon eklemişti. Kimse istememişti; animasyon nice-to-have listesine taşındı.
+4. **Yak shaving:** Can derleme ayarıyla yarım gün kaybettiğini Daily Scrum'da söyledi. Geçici bir çözümle asıl işe döndü, ayar işi backlog'a girdi.
 
-**Scope creep** kapsamın sessizce büyümesidir. **Gold plating** ise kimsenin istemediği hâlde ekibin kendi kendine fazladan iş yapmasıdır; tasarımcılarda ve geliştiricilerde sık görülür: "madem dokunuyorum, şunu da güzelleştireyim." İlki dışarıdan gelen isteklerle, ikincisi içeriden kendiliğinden olur.
+</Case>
 
-<Callout kind="tasarimci">
+<Lenses>
+<Lens role="product-designer">
 
-- **Toplantıda renk tartışması başladığında sor:** bu kararın akışa etkisi ne? Akış sorusunu öne çek.
-- **Crit'e hedefi ve karar sorusunu yazarak getir.**
-- **Kapsam daralınca "descope" listesini sen öner:** nice-to-have'leri baştan işaretle.
-- **Kendi gold plating'ini fark et:** bu iyileştirmeyi kimse istedi mi?
+- **Toplantıyı akışa çevir.** Renk ve buton metni herkesin konuşabildiği konulardır; akış yapısı değildir.
+- **Gold plating'i fark et.** "Madem dokunuyorum" cümlesi, istenmeyen işin başlangıcıdır.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Punt ederken tarih ver, park ederken listeye yaz.** İkisi de "unuttuk" anlamına gelmesin.
+- **Scope creep'i adlandır.** Yeni bir isteğin neyi geri iteceğini açıkça söyle.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Must-have ile nice-to-have'i sprint hedefine göre ayır.** Süre daralınca neyin düşeceği baştan belli olsun.
+- **Descope kararını backlog'a işle.** Kapsamdan çıkan iş görünür kalsın.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Scope creep'i değişiklik talebine çevir.** Sessiz büyüme yerine maliyeti ve süresi yazılı bir karar.
+- **Firefighting'i ölç.** Planlı işin yerini acil işler alıyorsa, bu bir risk kaydı maddesidir.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Bikeshedding'i nazikçe adlandır.** "Yirmi dakikadır rengi konuşuyoruz; asıl karar akış" demek, toplantıyı geri çevirir.
+- **Context switching'i görünür kıl.** Bir kişinin üç işe bölünmesi takımın akışını yavaşlatır.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim listesini MoSCoW ile işaretle.** Must-have ile nice-to-have ayrımı kapsam pazarlığını kolaylaştırır.
+- **Gold plating'i gereksinimle sına.** Hangi gereksinim bu işi istiyor? Cevap yoksa kapsam dışıdır.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Bulguyu tartışmanın önemli köşesine taşı.** Kullanıcının takıldığı adım, rengin yerine konuşulacak asıl konudur.
+- **Park alanını araştırma sorusu olarak kullan.** Park edilen bir konu, sonraki görüşmenin sorusu olabilir.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
-- Kapsam dili: must-have, nice-to-have, punt (belirli döneme at), park (unutmadan beklet), descope.
-- Ship it: değer yayına çıkana kadar üretilmiş sayılmaz; acelenin kalite bahanesine dönmesine dikkat.
-- Bikeshedding tasarım toplantılarında renk ve metin tartışmasına kayma tehlikesidir; panzehiri çerçevelemek.
-- Yak shaving'i adlandırmak durabilmeyi sağlar; scope creep dışarıdan, gold plating içeriden gelen fazlalıktır.
+- Kapsam ve öncelik dili: must-have, nice-to-have, punt, park, descope; punt bir tarihe atar, park unutmamak için listeye yazar.
+- Kapasite dili: bandwidth, capacity, context switching, heads-down, firefighting.
+- Ship it yayına çıkmayı vurgular, ama Definition of Done'ı çiğnemez.
+- Bikeshedding herkesin fikri olan önemsiz konuya takılmaktır; panzehiri tartışmayı çerçevelemektir.
+- Yak shaving zincirleme yan işlerdir; scope creep dışarıdan, gold plating içeriden gelen fazlalıktır.
 
 </Summary>
 
@@ -91,24 +154,24 @@ Aşırıya kaçtığında kalite bahanesine dönüşür. Karşı-kalıp: **"ship
 
 <SelfCheck question="Punt ile park arasındaki ince fark nedir?">
 
-Punt işi belirli bir sonraki döneme atar. Park, "şimdi konuşmuyoruz ama unutmuyoruz" demektir ve genelde bir bekleme listesine yazılır.
+Punt işi belirli bir sonraki döneme atar. Park "şimdi konuşmuyoruz ama unutmuyoruz" demektir ve genelde bir park alanı listesine yazılır.
 
 </SelfCheck>
 
-<SelfCheck question="Bikeshedding nedir ve tasarımcı için neden özel bir tehlike? Panzehiri nedir?">
+<SelfCheck question="Bikeshedding nedir, panzehiri nedir?">
 
-Asıl zor konu yerine herkesin fikir söyleyebileceği önemsiz bir ayrıntıya saatlerce takılmak. Tasarımcı için tehlikeli çünkü renk ve buton metni herkesin fikir söyleyebileceği konulardır; akış yapısı değildir. Panzehiri tartışmayı çerçevelemek: hedefi yazmak, karar sorusunu açıkça sormak, önemsiz konuları timebox'lamak.
-
-</SelfCheck>
-
-<SelfCheck question="Yak shaving nedir? Adlandırabilmek neden işe yarar?">
-
-Asıl işi yapmak için başka bir şeyi, onun için de başka bir şeyi düzeltmek zorunda kalıp asıl işten uzaklaşmak. Adlandırabilmek fark edip durabilmeyi sağlar.
+Asıl zor konu yerine herkesin fikir söyleyebileceği önemsiz bir ayrıntıya takılmaktır. Panzehiri tartışmayı çerçevelemektir: hedefi yazmak, karar gerektiren soruyu açıkça sormak, önemsiz konulara süre koymak.
 
 </SelfCheck>
 
 <SelfCheck question="Gold plating ile scope creep arasındaki fark nedir?">
 
-Scope creep: kapsam dışarıdan gelen isteklerle sessizce büyür. Gold plating: kimse istemediği hâlde ekip kendi kendine fazladan iş yapar.
+Scope creep'te kapsam dışarıdan gelen isteklerle sessizce büyür. Gold plating'te kimse istemediği hâlde ekip kendi kendine fazladan iş yapar.
+
+</SelfCheck>
+
+<SelfCheck question="Yak shaving'i adlandırabilmek neden işe yarar?">
+
+Fark edip durabilmeyi sağlar. "Yak shaving'e girdim, geçici çözümle bırakıp asıl işe dönüyorum" diyebilmek, zincirin daha da uzamasını önler.
 
 </SelfCheck>

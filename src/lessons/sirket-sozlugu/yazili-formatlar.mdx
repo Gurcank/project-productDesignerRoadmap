@@ -1,10 +1,11 @@
 ---
-summary: "Kurumsal ortamda hangi belgenin ne işe yaradığı: one-pager, PRD/spec, RFC, ADR, status update, changelog, runbook, postmortem, brief. RFC karar öncesi tartışma, ADR karar sonrası kayıttır; iyi bir status update dört parçalıdır ve kötü haberi geciktirmek en yaygın hatadır."
+summary: "Kurumsal ortamda hangi belgenin ne işe yaradığı: one-pager, PRD, RFC, ADR, status update, changelog, runbook, postmortem, brief. RFC karar öncesi tartışma, ADR karar sonrası kayıttır; status update dört parçalıdır."
 outcomes:
-  - "Dokuz yazılı formatın ne için kullanıldığını ayırt edebilirsin."
-  - "RFC ile ADR arasındaki farkı söyleyebilirsin."
-  - "İyi bir status update'in dört parçasını ve en yaygın hatasını bilirsin."
-minutes: 7
+  - "Bir işin hangi aşamasında hangi belgenin yazıldığını söyleyebilirsin."
+  - "RFC ile ADR arasındaki farkı açıklayabilirsin."
+  - "Dört parçalı bir status update yazabilirsin."
+minutes: 6
+standard: 2
 sources:
   - label: "Martin Fowler — Architecture Decision Record"
     url: "https://martinfowler.com/bliki/ArchitectureDecisionRecord.html"
@@ -12,58 +13,131 @@ sources:
     url: "https://sre.google/sre-book/postmortem-culture/"
   - label: "Wikipedia — Request for Comments (kavramın kökeni)"
     url: "https://en.wikipedia.org/wiki/Request_for_Comments"
-skipTerms: ["Latency","Request","latency","gecikme","request"]
+skipTerms: ["Latency","Request","latency","gecikme","request","architecture"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+"Bunun için bir one-pager yaz." "Önce bir RFC açalım." "ADR'ye eklendi mi?" "Changelog'a düş." Selin bir haftada bu dört cümleyi duydu ve her seferinde aynı soruyu sordu: hepsi bir belge değil mi, farkları ne?
+
+Farkları, bir işin hangi anında yazıldıkları ve kimin için yazıldıklarıdır. Bu ders, kurumsal ortamda en sık geçen yazılı formatları ve bir işin ömrü boyunca hangi sırayla ortaya çıktıklarını anlatır.
+
+## Dokuz format
 
 | Format | Ne için |
 |---|---|
 | **One-pager** | Bir fikri tek sayfada sunmak, ön onay almak |
 | **PRD / Spec** | Ne yapılacağını ve neden yapılacağını tanımlamak |
 | **RFC** | Bir öneriyi yorum ve itiraz için açmak |
-| **ADR** | Alınan mimari kararı gerekçesiyle kaydetmek |
+| **ADR** | Alınan bir kararı gerekçesiyle kaydetmek |
 | **Status update** | İlerlemeyi paydaşlara düzenli bildirmek |
 | **Changelog / Release note** | Ne değiştiğini kullanıcıya anlatmak |
 | **Runbook** | Bilinen bir soruna adım adım müdahale talimatı |
 | **Postmortem** | Olay sonrası analiz ve önlemler |
-| **Brief** | Bir tasarım/içerik işine hedef ve kısıt vermek |
+| **Brief** | Bir tasarım ya da içerik işine hedef ve kısıt vermek |
 
-## RFC
+<StepFlow
+  label="Bir işin ömrü boyunca belgeler"
+  caption="Belgeler bir işin ömrü boyunca sırayla ortaya çıkar. Önce one-pager fikri tek sayfada sunar ve ön onay alır. PRD ne yapılacağını ve nedenini tanımlar. RFC karardan önce öneriyi yoruma açar; ADR kararı gerekçesiyle kaydeder. İş sürerken status update ilerlemeyi bildirir. Yayında changelog kullanıcıya ne değiştiğini anlatır."
+  steps={[
+    { title: "One-pager", sub: "fikir ve ön onay", tone: "accent" },
+    { title: "PRD", sub: "ne ve neden" },
+    { title: "RFC", sub: "karar öncesi: yoruma aç" },
+    { title: "ADR", sub: "karar sonrası: kaydet" },
+    { title: "Status update", sub: "iş sürerken: ilerleme" },
+    { title: "Changelog", sub: "yayında: ne değişti", tone: "progress" },
+  ]}
+/>
 
-**RFC (Request For Comments, görüş talebi belgesi)**, bir öneriyi karar alınmadan önce yazıya döküp ilgililerin yorum ve itirazına açmaktır. Kararı toplantıdan yazıya taşır. Faydaları: yazan kişi fikrini netleştirmek zorunda kalır, katılamayanlar da yorum yapabilir, itirazlar kayıt altına alınır ve karar alındığında herkes gerekçeyi görmüş olur. Orta ve büyük ekiplerde, önemli değişikliklerden önce karşına çıkar. "Bu değişiklik üç ekibi etkiliyor; RFC yazıp bir hafta yorum alalım."
+## RFC ve ADR
 
-**RFC karar öncesi** tartışmadır; **ADR karar sonrası** kayıttır. Biri girdi, diğeri çıktıdır.
+**RFC** (Request For Comments), bir öneriyi karar alınmadan önce yazıya döküp ilgililerin yorum ve itirazına açmaktır. Kararı toplantıdan yazıya taşır. Yazan kişi fikrini netleştirmek zorunda kalır, katılamayanlar da yorum yapabilir, itirazlar kayıt altına alınır.
+
+**ADR** (Architecture Decision Record), Martin Fowler'ın tanımıyla tek bir kararı yakalayan ve açıklayan kısa bir belgedir: kararın kendisi, bağlamı ve önemli sonuçları. Karar değişirse eski kayıt değiştirilmez; yerine geçen yeni bir kayda bağlanır.
+
+**RFC ≠ ADR.** Materyalin ayrımıyla RFC karar **öncesi** tartışmadır; ADR karar **sonrası** kayıttır. Biri girdi, diğeri çıktıdır.
 
 ## Status update
 
-**Status update (durum güncellemesi)**, bir işin ilerleyişini paydaşlara düzenli olarak bildiren kısa yazıdır. Yöneticilerin ve paydaşların sormasına gerek kalmadan bilgi akmasını sağlar; bu da kesintileri azaltır. İyi bir güncelleme genelde dört parçadan oluşur:
+**Status update** (durum güncellemesi), bir işin ilerleyişini paydaşlara düzenli olarak bildiren kısa yazıdır. Yöneticilerin sormasına gerek kalmadan bilgi akar ve kesintiler azalır. Materyale göre iyi bir güncelleme dört parçadır:
 
-1. **Durum:** yolunda / risk altında / gecikiyor.
+1. **Durum:** yolunda, risk altında ya da gecikiyor.
 2. **Bu hafta ne oldu.**
 3. **Sırada ne var.**
 4. **Neye ihtiyacım var.**
 
-"Durum: risk altında. Üçüncü parti entegrasyonu gecikti; ETA'yı bir hafta kaydırmamız gerekebilir."
+Materyalin en önemli uyarısı: **kötü haberi geciktirmek en yaygın hatadır.** Erken bildirilen gecikme yönetilebilir bir bilgidir; son anda bildirilen gecikme bir güven sorunudur. Projelerde bunun daha resmî hâli [Durum raporu](/proje-yonetimi/durum-raporu/) dersinde.
 
-**Kötü haberi geciktirmek en yaygın hatadır.** Erken bildirilen gecikme yönetilebilir bir bilgidir; son anda bildirilen gecikme bir güven sorunudur.
+<Case>
 
-<Callout kind="tasarimci">
+Favori sipariş özelliğinin belge izi şöyleydi:
 
-- **Büyük bir tasarım değişikliğinde RFC aç:** etkilenen herkes yorum yapabilsin.
-- **Kararı ADR olarak kaydet:** alternatifler ve gerekçeyle.
-- **Status update'ini dört parçayla yaz** ve gecikmeyi erken bildir.
-- **Brief verirken hedef ve kısıtı yaz.**
+1. **One-pager:** Elif, "her zamanki siparişi tek dokunuşla tekrarla" fikrini tek sayfada yazdı; Hakan ön onay verdi.
+2. **PRD:** problem, hedef metrik (30 günde ikinci sipariş), kapsam ve kapsam dışı.
+3. **RFC:** Ece, kayıtlı kartın ödeme kuruluşu tarafında mı Demlik'te mi tutulacağını bir hafta yoruma açtı.
+4. **ADR:** karar yazıldı: kart bilgisi Demlik'te tutulmaz, ödeme kuruluşunun saklama özelliği kullanılır. Reddedilen seçenek de gerekçesiyle kaydedildi.
+5. **Status update:** her cuma dört parçalı bir mesaj. Sprint 14'ün ilk mesajı: "Durum: risk altında. Kayıtlı kart testi bir gün gecikti."
+6. **Changelog:** yayında kullanıcıya tek satır: "Son siparişini artık tek dokunuşla tekrarlayabilirsin."
 
-</Callout>
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
+
+- **Brief'i iste ya da yaz.** Hedef ve kısıtı olmayan bir tasarım işi, tahminle başlar.
+- **Tasarım kararını ADR gibi kaydet.** Altı ay sonra "neden böyle?" sorusunun cevabı hazır olsun.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Önce one-pager, sonra PRD.** Tek sayfaya sığmayan fikir henüz net değildir.
+- **Önemli bir kararı RFC ile aç.** Toplantıya gelemeyenler de itiraz edebilsin.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Status update'i her sprint aynı kalıpla yaz.** Durum, ne oldu, sırada ne var, neye ihtiyaç var.
+- **Changelog'u kullanıcının diliyle yaz.** "Refactor" kullanıcıya bir şey söylemez.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Status update'te kötü haberi ilk satıra koy.** Erken haber yönetilebilir; geç haber güveni kırar.
+- **Kararları ADR ya da karar kaydında topla.** Değişiklik talepleri bu kayda bağlanır.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Retro kararlarını yazılı tut.** Bir ADR kadar kısa, ama sahibi ve tarihi belli.
+- **Postmortem'in suçlamasız yazılmasını sağla.** Belge kişiyi değil sistemi anlatır.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim değişikliğini RFC ile duyur.** Kural değişmeden önce etkilenenler görsün.
+- **ADR'nin reddedilen seçeneklerini oku.** Eski bir itirazın gerekçesi, yeni bir gereksinimi açıklar.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Araştırma bulgusunu one-pager'a sığdır.** Bulgu, öneri ve kanıt tek sayfada.
+- **Bulgunun hangi PRD'ye girdiğini izle.** Araştırma, bir belgeye girmediyse karara girmemiştir.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
-- Her formatın bir işi var: fikir (one-pager), tanım (PRD), tartışma (RFC), kayıt (ADR), bildirim (status update), kullanıcıya anlatım (changelog), müdahale (runbook), öğrenme (postmortem), yönlendirme (brief).
-- RFC karar öncesi, ADR karar sonrasıdır.
-- Status update: durum, bu hafta, sırada ne var, ihtiyaç. Kötü haberi erken ver.
+- Belgeler bir işin ömrü boyunca sırayla çıkar: one-pager, PRD, RFC, ADR, status update, changelog.
+- RFC karar öncesi tartışma, ADR karar sonrası kayıttır.
+- ADR kararı, bağlamını ve sonuçlarını kısaca kaydeder; değişen karar yeni bir kayda bağlanır.
+- Status update dört parçadır: durum, ne oldu, sırada ne var, neye ihtiyaç var.
+- Kötü haberi geciktirmek en yaygın hatadır.
 
 </Summary>
 
@@ -71,12 +145,24 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 <SelfCheck question="RFC ile ADR arasındaki fark nedir?">
 
-RFC karar öncesi tartışmadır: öneriyi yorum ve itiraza açar. ADR karar sonrası kayıttır: alınan kararı gerekçesi ve alternatifleriyle saklar. Biri girdi, diğeri çıktıdır.
+RFC karar öncesi tartışmadır: öneriyi yorum ve itiraza açar. ADR karar sonrası kayıttır: alınan kararı bağlamı ve sonuçlarıyla saklar. Biri girdi, diğeri çıktıdır.
 
 </SelfCheck>
 
 <SelfCheck question="İyi bir status update'in dört parçası nedir? En yaygın hata nedir?">
 
-Durum (yolunda / risk altında / gecikiyor), bu hafta ne oldu, sırada ne var, neye ihtiyacım var. En yaygın hata kötü haberi geciktirmek: erken bildirilen gecikme yönetilebilir, son anda bildirilen gecikme güven sorunudur.
+Durum (yolunda, risk altında, gecikiyor), bu hafta ne oldu, sırada ne var, neye ihtiyaç var. En yaygın hata kötü haberi geciktirmektir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir karar değişti. Eski ADR'yi güncellemek mi gerekir?">
+
+Hayır. Fowler'a göre eski kayıt değiştirilmez; yerine geçen yeni bir karar yazılır ve eskisine bağlanır. Böylece kararın tarihi okunabilir kalır.
+
+</SelfCheck>
+
+<SelfCheck question="Runbook ile postmortem arasındaki fark nedir?">
+
+Runbook bilinen bir soruna adım adım müdahale talimatıdır; olaydan önce yazılır. Postmortem bir olaydan sonra yazılan analiz ve önlemlerdir.
 
 </SelfCheck>

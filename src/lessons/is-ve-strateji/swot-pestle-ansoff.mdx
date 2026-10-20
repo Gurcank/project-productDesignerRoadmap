@@ -1,0 +1,137 @@
+---
+summary: "SWOT içerideki güçlü ve zayıf yanları dışarıdaki fırsat ve tehditlerle yan yana koyar. PESTLE dış çevreyi altı başlıkta tarar. Ansoff matrisi büyüme seçeneklerini riskine göre ayırır."
+outcomes:
+  - "SWOT'un dört alanını iç ve dış olarak ayırıp bir ürün için doldurabilirsin."
+  - "PESTLE başlıklarıyla dış çevreyi tarayabilirsin."
+  - "Ansoff matrisinin dört büyüme seçeneğini ve risklerini karşılaştırabilirsin."
+minutes: 5
+standard: 2
+skipTerms: ["onam"]
+sources:
+  - label: "Wikipedia — SWOT analysis"
+    url: "https://en.wikipedia.org/wiki/SWOT_analysis"
+  - label: "Wikipedia — PEST analysis"
+    url: "https://en.wikipedia.org/wiki/PEST_analysis"
+  - label: "Wikipedia — Ansoff matrix"
+    url: "https://en.wikipedia.org/wiki/Ansoff_matrix"
+additions:
+  - "SWOT'un iç ve dış ayrımı, stratejik uyum ve eleştirileri (Wikipedia)"
+  - "PEST, Francis Aguilar 1967 ve PESTLE varyantı (Wikipedia giriş bölümü)"
+  - "Ansoff matrisi, Igor Ansoff 1957 ve dört büyüme seçeneği (Wikipedia giriş bölümü)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Matrix2x2 from "~/components/diagrams/primitives/Matrix2x2.astro";
+
+Yıllık strateji günü öncesinde masada dört fikir vardı: tekrar siparişi artırmak, yeni kampüslere girmek, Demlik Panel'e stok modülü eklemek ve eve teslimata başlamak. Herkes kendi fikrini savunuyordu ve tartışma hiçbir yere gitmiyordu.
+
+Hakan'ın önerisi basitti: önce nerede durduğumuza, sonra seçeneklerin ne kadar riskli olduğuna bakalım. Bu ders, bunu yapan üç klasik aracı anlatır.
+
+## SWOT
+
+**SWOT** dört alanın baş harfleridir: güçlü yanlar (strengths), zayıf yanlar (weaknesses), fırsatlar (opportunities) ve tehditler (threats). Wikipedia'ya göre karar sürecinin başında kullanılır.
+
+İlk ikisi **içseldir**: şirketin kendi elindedir. Son ikisi **dışsaldır**: çevreden gelir. Wikipedia, içerideki güçlerin dışarıdaki fırsatlarla örtüştüğü yeri **stratejik uyum** olarak anar.
+
+Aynı madde, SWOT'un eleştirilerini de not eder: analiz durağandır, kişisel önyargıya açıktır ve dış etkenlere fazla odaklanarak tepkisel bir stratejiye götürebilir. Bu yüzden bir SWOT listesi bir karar değil, bir başlangıçtır.
+
+## PESTLE
+
+**PEST**, dış makro çevreyi dört başlıkta tarar: politik, ekonomik, sosyal ve teknolojik. Wikipedia çerçevenin kökenini Francis Aguilar'ın 1967'deki "çevre taraması" çalışmasına bağlar. **PESTLE** iki başlık ekler: hukuki (legal) ve çevresel (environmental).
+
+PESTLE, SWOT'un fırsat ve tehdit alanlarını doldurmanın bir yoludur. Her başlık bir soru sorar: bu alanda önümüzdeki dönemde neler değişebilir ve bize nasıl dokunur?
+
+**Liste ≠ strateji.** PESTLE ve SWOT neyin olduğunu söyler; ne yapılacağını söylemez. Seçim bir sonraki adımdır.
+
+## Ansoff matrisi
+
+**Ansoff matrisi**, Igor Ansoff'un 1957'de yayımladığı "Strategies for Diversification" makalesine dayanır. İki soruyu çaprazlar: mevcut ürünle mi, yeni ürünle mi? Mevcut pazarda mı, yeni pazarda mı? Dört büyüme seçeneğinin riski farklıdır.
+
+<Matrix2x2
+  label="Demlik'in dört büyüme fikri: Ansoff matrisi"
+  caption="Yatay eksen ürün, dikey eksen pazardır; ikisi de mevcuttan yeniye gider. Sol altta pazara nüfuz durur: mevcut ürünü mevcut pazarda büyütmek; tekrar siparişi artırmak buradadır ve riski en düşüktür. Sol üstte pazar geliştirme: mevcut ürünü yeni bir pazara götürmek; kampüs projesi buradadır. Sağ altta ürün geliştirme: mevcut pazara yeni ürün; dükkânlar için stok modülü buradadır. Sağ üstte çeşitlendirme: yeni ürünle yeni pazar; eve teslimat buradadır ve riski en yüksektir."
+  x={{ title: "Ürün", low: "mevcut", high: "yeni" }}
+  y={{ title: "Pazar", low: "mevcut", high: "yeni" }}
+  quadrants={[
+    { title: "Pazar geliştirme", sub: "mevcut ürün, yeni pazar" },
+    { title: "Çeşitlendirme", sub: "en yüksek risk" },
+    { title: "Pazara nüfuz", sub: "en düşük risk", tone: "progress" },
+    { title: "Ürün geliştirme", sub: "yeni ürün, mevcut pazar" },
+  ]}
+  points={[
+    { label: "Kampüs", x: 0.22, y: 0.62 },
+    { label: "Eve teslimat", x: 0.78, y: 0.65 },
+    { label: "Tekrar sipariş", x: 0.25, y: 0.15 },
+    { label: "Stok modülü", x: 0.75, y: 0.15 },
+  ]}
+/>
+
+Pazara nüfuzda hem ürünü hem müşteriyi tanırsın. Çeşitlendirmede ikisini de yeni baştan öğrenirsin; risk bu yüzden en yüksektir.
+
+<Case>
+
+Strateji günü üç adımda ilerledi:
+
+1. **SWOT:** güçlü yanlar 140 dükkân, kasa entegrasyonu ve yüksek tekrar sipariş. Zayıf yanlar ücretli kanalda zayıf LTV/CAC ve nakit yanması. Fırsatlar kampüsler ve dükkânların stok ihtiyacı. Tehditler bir teslimat devinin gel-al özelliği ve ödeme ücretlerinin artması.
+2. **PESTLE'den gelenler:** enflasyon (fiyat ve iskonto oranı), KVKK (izleme planı), üniversitelerin öğrenci işleri protokolleri ve mobil ödeme alışkanlığı.
+3. **Ansoff:** tekrar sipariş pazara nüfuzdu; kampüs pazar geliştirmeydi; stok modülü ürün geliştirme adayıydı. Eve teslimat çeşitlendirmeydi: yeni bir ürün, kurye ağı ve yeni bir rakip kümesi.
+
+**Karar:** bu yıl tekrar sipariş ve kampüs. Stok modülü için bir keşif çalışması açıldı. Eve teslimat reddedildi; gerekçe Ansoff'un sağ üst köşesiydi ve kasadaki 14 aylık pist.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **SWOT'u bir karara bağla.** Hangi güç hangi fırsatla örtüşüyor? Stratejik uyum orada.
+- **Büyüme fikrini Ansoff'ta yerleştir.** Sağ üst köşedeki bir fikir, en çok öğrenme ve en çok para ister.
+- **Reddedilen fikri gerekçesiyle yaz.** Bir sonraki strateji gününde aynı tartışma baştan başlamasın.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **PESTLE'nin hukuki başlığını gereksinime çevir.** KVKK gibi bir değişiklik, izleme planından onam ekranına kadar iş üretir.
+- **SWOT maddelerini kanıtla destekle.** "Yüksek tekrar sipariş" bir sayıya bağlanmalı: 30 günde %41.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- SWOT güçlü ve zayıf yanları (iç) fırsat ve tehditlerle (dış) yan yana koyar; bir karar değil, bir başlangıçtır.
+- PESTLE dış çevreyi altı başlıkta tarar: politik, ekonomik, sosyal, teknolojik, hukuki, çevresel.
+- Ansoff matrisi ürün ve pazar eksenleriyle dört büyüme seçeneği verir.
+- Pazara nüfuz en düşük, çeşitlendirme en yüksek risktir.
+- Araçlar neyin olduğunu söyler; seçim ve gerekçe ayrıca yazılır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="SWOT'ta hangi alanlar içsel, hangileri dışsaldır?">
+
+Güçlü ve zayıf yanlar içseldir: şirketin elindedir. Fırsatlar ve tehditler dışsaldır: çevreden gelir.
+
+</SelfCheck>
+
+<SelfCheck question="Kampüs projesi Ansoff matrisinde nereye düşer, neden?">
+
+Pazar geliştirmeye. Ürün aynıdır, Demlik uygulaması ve Panel; ama pazar yenidir: öğrenciler ve kampüs kafeleri.
+
+</SelfCheck>
+
+<SelfCheck question="Ansoff matrisinde çeşitlendirme neden en riskli seçenektir?">
+
+Hem ürün hem pazar yenidir. Şirket ne ürünü ne de müşteriyi tanır; ikisini birden öğrenmesi gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Ödeme ücretlerini artıracak bir düzenleme PESTLE'de ve SWOT'ta nereye yazılır?">
+
+PESTLE'de hukuki ya da ekonomik başlığa. SWOT'ta bir tehdit olarak, çünkü dışarıdan gelir ve brüt marjı doğrudan düşürür.
+
+</SelfCheck>

@@ -4,7 +4,8 @@ outcomes:
   - "Bir isteğin zor olmasının üç sebebini (çok iş, ölçek, belirsizlik) ayırt edebilirsin."
   - "'Alakaya göre sırala'nın neden bir istek olduğunu ve algoritma olmadığını açıklayabilirsin."
   - "Yavaş bir işlem için üç yolu (yapma, sonra yap, hızlı yap) ve hangisinin en ucuz olduğunu söyleyebilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "NN/g — Response Times: The 3 Important Limits"
     url: "https://www.nngroup.com/articles/response-times-3-important-limits/"
@@ -14,9 +15,12 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Bu özellik zor" cümlesini sık duyarsın. Zor ne demek? **Algoritma**, bir işi bitirmek için izlenen adımların tarifidir. Veri yapısı verinin **nasıl dizildiği**, algoritma o diziliş üzerinde **ne yapıldığıdır.** İkisi birlikte bir arayüzün neyi anında yapabileceğini belirler.
 
@@ -40,25 +44,59 @@ Neredeyse her yerde, ama en çok dört yerde: **arama kutusu** (ne eşleşecek, 
 
 Bir işlem yavaşsa üç yol vardır ve ilki çoğu zaman en iyisidir:
 
+<StepFlow
+  label="Yavaş bir işlem için üç yol"
+  caption="Bir işlem yavaşsa üç yol vardır ve sırası önemlidir. Önce işi hiç yapmamak sorulur: kullanıcı gerçekten hepsini istiyor mu, ilk yirmisi yeter mi? Sonra işi daha sonra yapmak: arka plana atıp hazır olunca haber vermek. En son işi daha hızlı yapmak: algoritmayı ya da veri yapısını değiştirmek. İlk yol çoğu zaman en ucuzudur."
+  steps={[
+  {
+    title: "İşi yapma",
+    sub: "isteği küçült",
+    tone: "accent"
+  },
+  {
+    title: "Sonra yap",
+    sub: "arka plana at"
+  },
+  {
+    title: "Daha hızlı yap",
+    sub: "algoritma, yapı",
+    tone: "progress"
+  }
+]}
+/>
+
 1. **İşi yapma.** Kullanıcı gerçekten tüm sonuçları istiyor mu, yoksa ilk 20 yeter mi?
 2. **Daha sonra yap.** Arka plana at, hazır olunca haber ver.
 3. **Daha hızlı yap.** Algoritmayı ya da veri yapısını değiştir.
 
-Tasarımcı olarak en çok etkileyebildiğin yer birincisidir: **isteği küçültmek, kodu hızlandırmaktan ucuzdur.**
+Tasarımın en çok etkileyebildiği yer birincisidir: **isteği küçültmek, kodu hızlandırmaktan ucuzdur.**
 
-<Callout kind="tasarimci">
+<Case>
+
+Müşteri sitesinin dükkân listesi için iki istek geldi:
+
+1. **"Alakaya göre sırala":** Burak'ın ilk sorusu "alaka ne?" oldu. Selin kuralı yazdı: önce şu an açık olanlar, sonra mesafe, eşitse dükkân adı. Belirsizlik çözülünce iş bir saat sürdü.
+2. **"Tüm dükkânlarda menü araması":** 140 dükkânın bütün menülerinde aynı anda arama. Burak bunun ayrı bir arama altyapısı demek olduğunu söyledi.
+3. **İsteği küçültmek:** Elif müşterinin asıl ihtiyacını sordu: "yakınımda filtre kahve nerede var?" Arama yakındaki 10 açık dükkânla sınırlandı.
+4. **Sonuç:** üç yolun ilki seçildi: işin büyük kısmı hiç yapılmadı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Her sıralama ve filtre kuralını yazılı olarak tanımla.** "En alakalı" tanımsızsa sistem bir şey seçer ve kullanıcı bunu rastgelelik olarak görür.
 - **"Kaç öğe?" sorusunu her listede sor;** cevap maliyeti belirler.
 - **Bir etkileşimin anında olması gerekiyorsa söyle;** bu farklı bir çözüm demektir, sonradan hızlandırma değil.
 - **Gecikmeyi gizlemek de bir tasarım aracıdır:** iskelet ekran, iyimser güncelleme, ilerleme göstergesi.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
 - Algoritma adımların tarifidir; veri yapısı üzerinde ne yapıldığını anlatır.
-- Zorluğun üç sebebi: çok iş, ölçek, belirsizlik; üçüncüsünü tasarımcı çözer.
+- Zorluğun üç sebebi: çok iş, ölçek, belirsizlik; üçüncüsü tasarımda çözülür.
 - Yavaş işlem için en ucuz yol, işi küçültmek ya da hiç yapmamaktır.
 
 </Summary>
@@ -67,12 +105,18 @@ Tasarımcı olarak en çok etkileyebildiğin yer birincisidir: **isteği küçü
 
 <SelfCheck question="Bir isteğin 'zor' olmasının üç sebebi nedir?">
 
-Çok iş (kapsamı böl), ölçek (kaç öğe olacağını netleştir) ve belirsizlik (kuralı tasarımcı tanımlar; örneğin neye göre sıralanacağı).
+Çok iş (kapsamı böl), ölçek (kaç öğe olacağını netleştir) ve belirsizlik (kural tasarımda tanımlanır; örneğin neye göre sıralanacağı).
 
 </SelfCheck>
 
 <SelfCheck question="Yavaş bir işlem için hangi üç yol vardır ve hangisi çoğunlukla en iyisidir?">
 
 İşi yapmamak (isteği küçültmek), daha sonra yapmak (arka plana atmak) ya da daha hızlı yapmak. İlki çoğu zaman en iyisidir; isteği küçültmek kodu hızlandırmaktan ucuzdur.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Alakaya göre sırala\" neden bir algoritma değil, bir istektir?"}>
+
+Alakanın ne olduğu tanımlanmamıştır. Hangi ölçütlerin hangi sırayla kullanılacağı (açık mı, mesafe, popülerlik) yazılmadan kimse onu koda dökemez; kuralı tanımlamak tasarımın işidir.
 
 </SelfCheck>

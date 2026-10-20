@@ -5,7 +5,8 @@ outcomes:
   - "\"Menüde 7'den fazla öğe olmasın\" cümlesinin neden yanlış olduğunu ve doğru referansı bilirsin."
   - "Bilişsel yükün üç kaynağını ve tasarımcının hangisini azalttığını söyleyebilirsin."
   - "Yanıt süresi eşiklerine göre hangi gecikmede hangi geri bildirimin gerektiğini seçebilirsin."
-minutes: 14
+minutes: 8
+standard: 2
 sources:
   - label: "Laws of UX"
     url: "https://lawsofux.com/"
@@ -24,6 +25,9 @@ import Outside from "~/components/lesson/Outside.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir toplantıda biri "Hick yasasına göre seçenekleri azaltmalıyız" diyor, bir başkası "Miller yasası, menüde yedi öğeden fazla olmaz" diyor. Kulağa bilimsel geliyor ve tartışmayı bitiriyor. Ama yarısı yanlış.
 
@@ -109,7 +113,21 @@ Yani 0,1 / 1 / 10 sayılarını "Doherty" diye anmak doğru değil. Sayıları d
 
 </Outside>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in ana ekranı her çeyrek biraz daha kalabalıklaşmıştı: kampanyalar, yeni dükkânlar, sadakat kartı, tüm menü. Selin yasaları gerekçe olarak kullandı:
+
+1. **Hick:** sabah müşterisinin çoğu her gün aynı şeyi alıyordu; aktif müşterilerin %54'ü son beş siparişinde hep aynı ürünü almıştı. Ana ekranın ilk seçeneği "Son siparişini tekrarla" oldu.
+2. **Fitts:** düğme başparmağın kolay eriştiği alt bölgeye ve geniş bir alana konuldu.
+3. **Jakob:** sepet ve ödeme akışı, kullanıcıların başka uygulamalardan bildiği sırayı izledi.
+4. **Bilişsel yük:** kampanyalar ayrı bir sekmeye taşındı; ana ekranda bir tane kaldı.
+
+Ürün ilkesi zaten yazılıydı: bir sipariş en çok üç dokunuş sürer.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Bir "yasayı" gerekçe yapmadan önce sınırını kontrol et.** Miller menü uzunluğu için doğru kaynak değil.
 - **Seçenek azaltmak yerine grupla.** Hick'in gerçek faydası gruplamadadır.
@@ -117,7 +135,32 @@ Yani 0,1 / 1 / 10 sayılarını "Doherty" diye anmak doğru değil. Sayıları d
 - **Sapmanın bedelini hesapla.** Jakob yasası yeniliği yasaklamıyor, maliyetini hatırlatıyor.
 - **Gereksiz bilişsel yükü ara.** Aynı ekranda birden fazla görev, tutarsız etiketler, gizli seçenekler.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Ana ekrana eklenen her öğenin bedelini sor.** Her seçenek karar süresini uzatır.
+- **Yasaları slogan olarak değil, gerekçe olarak kullan.** Sınırlarını bilmeden uygulanan kural yanıltır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Dokunuş sayısını kabul kriterine yaz.** "Tekrar sipariş en çok üç dokunuş."
+- **Yanıt süresi eşiklerini story'ye ekle.** Bir saniyeyi geçen işlemde geri bildirim gerekir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Bilişsel yükü süreç tasarımında da azalt.** Kullanıcının hatırlaması gereken bilgiyi sistem tutsun.
+- **Performans gereksinimini eşiklerle yaz.** Süre, kullanıcının algısını değiştirir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Yasanın tahminini testle sına.** Bağlam, genel kuraldan güçlüdür.
+- **Bilişsel yükü gözlemle.** Duraksama, geri dönme ve tekrar okuma işaretleridir.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -140,5 +183,11 @@ Miller'ın 1956 çalışması akılda tutulması gereken bilgiyle ilgilidir; men
 <SelfCheck question="Bir işlem ortalama 4 saniye sürüyor. Nasıl bir geri bildirim koyarsın?">
 
 Birkaç saniyelik gecikmede kullanıcıya sistemin çalıştığını gösteren bir durum işareti gerekir: skeleton ya da spinner. Süre uzadıkça ilerleme göstergesi ve tahmini süre eklenir. 1 saniyenin altında hiçbir şey gerekmez.
+
+</SelfCheck>
+
+<SelfCheck question="Bir ekip Jakob yasasını gerekçe göstererek bir rakibin ekranını birebir kopyalamak istiyor. Ne dersin?">
+
+Jakob yasası tanıdık kalıpları kullanmayı önerir, rakibi kopyalamayı değil. Kullanıcının alışık olduğu kalıplar korunur; ama ürünün kendi hedefi, içeriği ve kullanıcısı tasarımı belirler.
 
 </SelfCheck>

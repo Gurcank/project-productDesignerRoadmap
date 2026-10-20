@@ -4,7 +4,8 @@ outcomes:
   - "Sabit, doğrusal ve kare büyümeyi örnekle ayırt edebilirsin."
   - "'Her öğe için tüm öğeleri tekrar gez' kalıbının neden felaket olduğunu açıklayabilirsin."
   - "Gerçekçi veriyle prototiplemenin neden önemli olduğunu söyleyebilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "web.dev — Interaction to Next Paint (INP)"
     url: "https://web.dev/articles/inp"
@@ -14,9 +15,12 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Chart from "~/components/diagrams/primitives/Chart.astro";
+import Case from "~/components/lesson/Case.astro";
 
 10 satırlık prototipte filtre anında çalışıyor. Canlıda 3.000 satırla dondu. Neden? Cevap tek bir soruda: **bir işlemin maliyeti öğe sayısıyla nasıl büyüyor?** Teknik adı Big-O ama notasyonu bilmene gerek yok; gereken şey büyüme hissi.
 
@@ -32,20 +36,44 @@ Aradaki **logaritmik** tip (ikili arama, index) doğrusala çok yakın ama ondan
 
 ## Asıl tuzak: kare büyüme
 
+<Chart
+  kind="bar"
+  label="3.000 öğede işlem sayısı"
+  caption="Üç büyüme tipi 3.000 öğede çok farklı iş üretir. Sabit büyümede tek işlem yapılır. Doğrusal büyümede 3.000 işlem yapılır; bu milyonla ölçülünce 0,003 milyondur ve grafikte neredeyse görünmez. Kare büyümede her öğe her öğeyle karşılaştırılır: 9 milyon işlem. Arayüzü donduran farkın kaynağı budur."
+  x={{ title: "Büyüme tipi", labels: ["Sabit", "Doğrusal", "Kare"] }}
+  y={{ title: "İşlem (milyon)", max: 12 }}
+  series={[{ name: "3.000 öğede", values: [0.000001, 0.003, 9], tone: "accent" }]}
+/>
+
 En sık karşılaşılan performans felaketi "her öğe için tüm öğeleri tekrar gez" kalıbıdır. 100 öğede 10.000 işlem: fark edilmez. 3.000 öğede 9 milyon işlem: arayüz donar. Veritabanı tarafındaki adı **N+1 problemi:** listedeki her satır için ayrı bir sorgu atmak. Bir liste ekranı yavaşsa ilk şüpheli budur.
 
 ## Ekrandaki karşılığı
 
 Tarayıcı tarafında görünür eşik **INP:** bir tıklamadan sonra ekranın güncellenmesi yaklaşık 200 ms'yi aşarsa kullanıcı gecikmeyi hisseder. Kare büyüyen bir işlem bu bütçeyi tek başına tüketir. Somut sezgi: **10 öğede** hiçbir şey fark etmez, **1.000 öğede** yapı seçimi hissedilmeye başlar, **100.000+ öğede** yanlış yapı arayüzü kullanılamaz hâle getirir.
 
-<Callout kind="tasarimci">
+<Case>
+
+Panel'de her siparişin yanına "bu müşterinin bugünkü diğer siparişleri" rozeti eklendi.
+
+1. **İlk sürüm:** her sipariş için günün bütün siparişleri baştan taranıyordu. Her sipariş, her siparişle karşılaştırılıyordu: kare büyüme.
+2. **Test:** staging'de bir dükkânın günde 30 siparişi vardı; 900 karşılaştırma, fark edilmiyor.
+3. **Kampüs:** pilot kafe yoğun bir günde yüzlerce sipariş aldı; karşılaştırma sayısı yüz binleri geçti ve liste her yeni siparişte takıldı.
+4. **Düzeltme:** siparişler bir kez müşteriye göre bir sözlükte gruplanıyor; her rozet anahtarla bulunuyor. Büyüme doğrusala indi.
+
+Seed verisine o günden sonra 600 siparişli bir gün eklendi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarımda 8 satır göstermen, arkadaki listenin 8 olduğu anlamına gelmez;** filtre tüm veri üzerinde çalışır.
 - **"Hepsini seç" ve "hepsini dışa aktar" gibi istekler ölçekle patlar;** üst sınır sor.
 - **Gerçekçi veriyle prototiple.** Üç satırlık sahte veriyle test edilen tablo canlıda bambaşka davranır.
 - **Bir ekran yavaşsa şunu sor:** bu, veri miktarıyla mı büyüyor?
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -60,5 +88,17 @@ Tarayıcı tarafında görünür eşik **INP:** bir tıklamadan sonra ekranın g
 <SelfCheck question="Kare büyüme neden en sık felaket sebebidir?">
 
 Veri iki katına çıkınca süre dört katına çıkar: 100 öğede 10.000 işlem fark edilmez, 3.000 öğede 9 milyon işlem arayüzü dondurur.
+
+</SelfCheck>
+
+<SelfCheck question="Bir filtre 10 satırlık prototipte anında, 3.000 satırlık canlı veride çok yavaş çalışıyor. İlk şüphe nedir?">
+
+Kare büyüyen bir işlem: her öğe için tüm öğelerin yeniden gezilmesi. 3.000 öğede bu milyonlarca işlem demektir. Veritabanı tarafında karşılığı N+1 problemidir.
+
+</SelfCheck>
+
+<SelfCheck question="Logaritmik büyüme neden doğrusaldan çok daha iyidir?">
+
+Her adımda kalan veriyi yarıya indirir; bir milyon kayıtta yaklaşık yirmi adımda sonuç bulur. Doğrusal arama aynı kayıt için bir milyon adıma kadar gidebilir.
 
 </SelfCheck>

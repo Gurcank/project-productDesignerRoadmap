@@ -6,6 +6,7 @@ outcomes:
   - "Bir tasarım sisteminin neden teknik değil sahiplik ve benimseme sorunlarından öldüğünü açıklayabilirsin."
   - "Single source of truth ilkesinin neden token yaklaşımının gerekçesi olduğunu bilirsin."
 minutes: 11
+standard: 2
 sources:
   - label: "NN/g — Design Systems 101"
     url: "https://www.nngroup.com/articles/design-systems-101/"
@@ -19,16 +20,17 @@ import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir önceki bölüm "hangi süreçle, hangi ilkeyle" sorusunu cevapladı. Bu bölüm **"hangi değerle"** sorusunu cevaplıyor: renk, tipografi, boşluk, gölge, hareket. Yani tasarım kararlarının **sayıya ve isme** dönüştüğü katman.
 
-Bu bölüm senin için iki nedenle kritik.
+Bu bölüm iki nedenle kritik.
 
 **Birincisi,** yapay zekâya iş yaptırırken çıktının kalitesini en çok bu terimler belirler. "Modern ve şık olsun" bir talimat değildir; "8px tabanlı boşluk ölçeği, 1.25 oranlı tipografi ölçeği, tek bir vurgu rengi ve nötr grinin 9 basamaklı rampası" bir talimattır. İlkinden jenerik çıktı gelir, ikincisinden **kontrol edilebilir** çıktı.
 
 **İkincisi,** "yapay zekâyla üretilmiş" hissini veren şey genelde renk ya da font seçimi değil, **sistemsizliktir:** her bölümde farklı boşluk değeri, gerekçesiz gradient, birbiriyle ilişkisiz üç gri tonu. Sistem kurmayı bilmek bu histen kurtulmanın yoludur.
-
-Bu sitenin kendisi de küçük bir tasarım sistemi üzerine kurulu; derslerde ara ara "bu sitede nasıl yapıldı?" notları göreceksin.
 
 ## Dört kelime, dört kapsam
 
@@ -128,14 +130,29 @@ Adoption ölçülebilir: bileşenlerin kaç yerde kullanıldığı, kaç yerde "
 </Pane>
 </Compare>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in sistemi bir style guide olarak başladı: logo, renkler, font. Sonra büyüdü:
+
+1. **Component library:** Figma'da ve kodda aynı adlı bileşenler: buton, kart, liste satırı, giriş alanı.
+2. **Pattern library:** "kart ekle" ve "boş durum" gibi tekrar eden çözümler, ne zaman kullanılacaklarıyla birlikte.
+3. **Governance:** yeni bileşen önerisi iki haftada bir Selin, Ece ve Emre'nin katıldığı kısa bir toplantıda karara bağlanıyor.
+4. **Adoption:** Panel takımı ilk aylarda kendi butonlarını kullanmaya devam etti. Selin Panel'in en çok kullanılan üç ekranını Emre'yle birlikte sisteme taşıdı; geri kalanı kendiliğinden geldi.
+
+Sistemin tek doğru kaynağı kod oldu; Figma kütüphanesi koddan sonra güncelleniyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **"Design system var" duyduğunda sor:** "Kod paketi var mı, kim sahibi, nasıl katkı yapılıyor, kullanım oranı nedir?" Cevaplar sana belgenin mi yoksa çalışan sistemin mi olduğunu söyler.
 - **Bileşeni sisteme koymadan önce üç yerde ihtiyaç olduğunu gör.** Tek kullanımlık şey sistemi şişirir.
 - **Sistemi bir ürün olarak sahiplen.** Sahibi, sürümü, değişiklik günlüğü yoksa eskir.
 - **Küçük projede küçük sistem kur.** Birkaç token ve birkaç bileşen yeterlidir; sistemin büyüklüğü değil, kullanılması değer üretir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -158,5 +175,11 @@ Style guide kuralları anlatan bir belgedir (logo, renk, ton). Component library
 <SelfCheck question="Bir tasarım sistemi neden çoğu zaman teknik sebeplerle değil de başka sebeplerle ölür?">
 
 Çünkü kimse katkı yapamıyorsa (governance eksikliği) sistem eskir; kimse kullanmıyorsa (düşük adoption) gereksiz bir bakım yüküne dönüşür. Bunlar süreç ve sahiplik sorunlarıdır, teknik değil.
+
+</SelfCheck>
+
+<SelfCheck question="Bir takım tasarım sistemini kullanmıyor ve kendi bileşenlerini yazıyor. Ne yaparsın?">
+
+Nedenini sorarım: eksik bir bileşen mi, yavaş bir süreç mi, haberleri mi yok? Sistemin benimsenmesi teknik değil, ilişki ve süreç işidir. Takımla birlikte en çok kullandıkları ekranları taşımak ve bir katkı yolu açmak işe yarar.
 
 </SelfCheck>

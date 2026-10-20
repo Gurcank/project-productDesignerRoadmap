@@ -3,7 +3,8 @@ summary: "Hız sınırlama ve sayfalama: sınıra takılan gerçek kullanıcıya
 outcomes:
   - "Rate limiting'in neden gerektiğini ve sınıra takılan kullanıcıya ne gösterileceğini söyleyebilirsin."
   - "Offset ile cursor sayfalamanın farkını ve tasarıma etkisini açıklayabilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "MDN — 429 Too Many Requests"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/429"
@@ -13,11 +14,14 @@ sources:
     url: "https://docs.stripe.com/api/pagination"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Giriş ekranında kullanıcı şifreyi beş kez yanlış girdi. Altıncıyı denediğinde ne olmalı? Ve bin ürünlük listede "5. sayfaya git" butonu mümkün mü? Bu iki soru bu dersin konusu.
 
@@ -26,6 +30,29 @@ Giriş ekranında kullanıcı şifreyi beş kez yanlış girdi. Altıncıyı den
 **Rate limiting (hız sınırlama)**, bir kullanıcının ya da IP'nin belirli sürede atabileceği istek sayısının sınırlanmasıdır. Kötüye kullanımı, bot saldırılarını ve maliyet patlamalarını engeller; giriş ekranında şifre deneme saldırılarına karşı temel savunmadır. Giriş, arama, form gönderimi ve dış servis çağrılarında karşına çıkar. "Giriş denemesini dakikada 5 ile sınırlayalım; sonra 429 dönüp bekleme süresi gösterelim."
 
 Sınıra takılan **gerçek kullanıcıya** ne gösterileceği bir tasarım işidir. Sınır çok sıkı olursa meşru kullanımı da engeller.
+
+<StepFlow
+  label="Giriş denemesinde hız sınırı"
+  caption="Demlik Panel'de bir çalışan şifresini beş kez yanlış girer. Altıncı denemede sunucu 429 döndürür ve ne kadar beklemek gerektiğini bildirir. Ekran 60 saniyelik bir geri sayım gösterir ve şifre sıfırlama bağlantısını öne çıkarır. Süre dolunca giriş yeniden denenebilir."
+  steps={[
+  {
+    title: "5 hatalı deneme",
+    tone: "accent"
+  },
+  {
+    title: "429",
+    sub: "bekleme süresiyle"
+  },
+  {
+    title: "Geri sayım",
+    sub: "60 sn · şifreni mi unuttun?"
+  },
+  {
+    title: "Yeniden dene",
+    tone: "progress"
+  }
+]}
+/>
 
 ## Offset ve cursor
 
@@ -48,13 +75,44 @@ Sınıra takılan **gerçek kullanıcıya** ne gösterileceği bir tasarım işi
 
 **Bu teknik ayrımın doğrudan tasarım sonucu vardır:** sayfa numaralı bir arayüz istiyorsan offset gerekir. Ama offset'in iki bilinen zayıflığı var: çok derin sayfalarda yavaşlar, ve liste sürekli değişiyorsa kayıtlar sayfalar arasında kayabilir ya da tekrarlanabilir. Cursor bu sorunları çözer ama "5. sayfaya git" özelliğini imkânsız kılar. "Sayfa numarası istiyorsak offset gerekiyor; sonsuz kaydırma yapacaksak cursor daha sağlam."
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'te sınır ve sayfalama kararları iki ekranda verildi:
+
+1. **Giriş sınırı:** Panel'de beş hatalı denemeden sonra 60 saniye bekleme. Geri sayım ekranda; şifre sıfırlama bağlantısı öne çıkıyor.
+2. **Sipariş geçmişi:** müşterinin sipariş geçmişi sonsuz kaydırmayla geliyor; cursor kullanılıyor. Yeni sipariş eklendiğinde liste kaymıyor.
+3. **Gün sonu raporu:** dükkân sahibi ay sonunda muhasebeciye "12. sayfadaki siparişler" diyebilmek istedi. Raporda sayfa numaraları var; offset kullanılıyor. Rapor geçmiş günler için olduğundan liste değişmiyor, kayma sorunu yok.
+4. **Sınır:** sipariş servisine bir müşteriden dakikada en çok 10 sipariş isteği gelebiliyor; gerçek bir müşterinin bu sınıra takılması beklenmiyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Hız sınırı mesajını tasarla:** neden, ne kadar bekleme, ne yapılabilir.
 - **Sayfa numaralı arayüz ile sonsuz kaydırma arasında seçim yapmadan önce geliştiriciyle konuş;** teknik seçim arayüzü kısıtlar.
 - **"Atla ve 5. sayfaya git" ihtiyacı gerçek mi?** Cursor tabanlı bir listede bunu sunamazsın.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Sınırın meşru kullanıcıya etkisini tart.** Çok sıkı bir sınır, saldırganı değil müşteriyi durdurur.
+- **Sayfa numarası mı sonsuz kaydırma mı kararını kullanım amacına bağla.**
+
+</Lens>
+<Lens role="product-owner">
+
+- **Sınıra takılan kullanıcının ekranını story'ye yaz.** Bekleme süresi ve alternatif yol gösterilir.
+- **Sayfalama türünü kabul kriterinde belirt.** "Rapor sayfa numaralıdır."
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Sayfalama ihtiyacını iş sürecinden çıkar.** Kullanıcı belirli bir sayfaya geri dönmek zorunda mı?
+- **Hız sınırını iş kuralı olarak yaz.** Kaç deneme, ne kadar bekleme?
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -69,5 +127,17 @@ Sınıra takılan **gerçek kullanıcıya** ne gösterileceği bir tasarım işi
 <SelfCheck question="Offset ile cursor pagination arasındaki fark nedir? Sayfa numaralı arayüz için hangisi gerekir?">
 
 Offset "20. kayıttan itibaren 20 tane" der; sayfa numaralarını mümkün kılar ama derin sayfalarda yavaşlar ve değişen listede kayıt kayması olabilir. Cursor "şu kayıttan sonrakiler" der; daha sağlamdır ama sayfa numarası veremez. Sayfa numaralı arayüz için offset gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Sürekli yeni kayıt eklenen bir listede sayfa numarası kullanmanın riski nedir?">
+
+Offset tabanlı sayfalamada yeni kayıt eklendikçe kayıtlar sayfalar arasında kayar; kullanıcı bir kaydı iki kez görebilir ya da hiç görmeyebilir. Bu tür listelerde cursor tabanlı sayfalama daha sağlamdır.
+
+</SelfCheck>
+
+<SelfCheck question="Hız sınırına takılan kullanıcıya ne gösterilmeli?">
+
+Ne olduğunu, ne kadar beklemesi gerektiğini (mümkünse geri sayımla) ve varsa alternatif yolu, örneğin şifre sıfırlamayı. Yalnız "hata oluştu" demek yetmez.
 
 </SelfCheck>

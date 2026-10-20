@@ -1,0 +1,165 @@
+---
+summary: "Ürün ve proje rollerinin çoğu, kendisine bağlı olmayan insanlarla iş yapar. Etki, gücün nerede olduğunu, karşı tarafın hedeflerini ve ortak çıkarı bilmekten gelir; karşılıklılık ve verilen söz bunu güçlendirir."
+outcomes:
+  - "Bir iş için kimi etkilemen gerektiğini ve onların hedeflerini çıkarabilirsin."
+  - "Bir isteği karşı tarafın çıkarıyla birleştirerek sunabilirsin."
+  - "Etki ile manipülasyon arasındaki çizgiyi tanıyabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "Watt — Project Management, Ch. 5 Stakeholder Management"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-5-project-stakeholders-project-management/"
+  - label: "Wikipedia — Influence: Science and Practice"
+    url: "https://en.wikipedia.org/wiki/Influence:_Science_and_Practice"
+additions:
+  - "Proje yöneticisinin politikacıya benzetilmesi, ortamı değerlendirme, hedefleri belirleme, akranlar ve kaynak yöneticileri (Watt)"
+  - "Karşılıklılık, bağlılık ve tutarlılık, ortak hedefle kurulan güven ilkeleri (Cialdini, Wikipedia aracılığıyla)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Hub from "~/components/diagrams/primitives/Hub.astro";
+
+Kampüs menülerinin Panel'e girmesi için Leyla'nın Emre'den bir haftalık işe ihtiyacı vardı. Emre panel takımındaydı; işlerin sırasını Ozan veriyordu. Ozan'ın backlog'unda iade kuralları ve dükkân istekleri vardı. Leyla'nın kimseye "bunu yap" deme yetkisi yoktu.
+
+Proje yöneticileri, Product Owner'lar, analistler ve araştırmacılar çoğu zaman bu durumdadır. Bu ders, yetki olmadan iş yaptırmayı anlatır.
+
+## Proje yöneticisi bir politikacıdır
+
+Watt'ın proje yönetimi kitabı bunu açıkça söyler: proje yöneticileri politikacılara benzer. Doğası gereği güçlü değillerdir; iradelerini iş arkadaşlarına, alt yüklenicilere ve tedarikçilere dayatamazlar. Doğrudan kontrol ettikleri şey azdır; bu yüzden etkileme becerisi çok önemlidir.
+
+Watt'ın önerdiği ilk adımlar şunlardır:
+
+1. **Ortamı değerlendir.** Gücün nerede olduğunu bul: kim en çok sayılır, kimin eylemi en çok etkiler?
+2. **Hedefleri belirle.** Her birini ne yönlendiriyor? Açıkça söylenmeyen bir gündem var mı?
+3. **Problemi tanımla.** "Gerçek durum ne?" sorusunu tekrar tekrar sor.
+
+<Hub
+  label="Leyla'nın yetkisi olmadan çalıştığı insanlar"
+  caption="Ortada proje yöneticisi Leyla durur. Hiçbiri ona bağlı olmayan altı kişi ya da grupla iş yapar. Üstte işi doğrudan yapanlar vardır: panel geliştiricisi Emre, Emre'nin önceliğini veren Ozan ve POS tedarikçisi. Altta işin önünü açanlar vardır: öğrenci işleri, kampüs kafeleri ve müşteri hizmetleri."
+  center={{ title: "Leyla", sub: "proje yöneticisi" }}
+  top={[
+    { title: "Emre", rel: "Panel işi" },
+    { title: "Ozan", rel: "öncelik", tone: "progress" },
+    { title: "Tedarikçi", rel: "entegrasyon" },
+  ]}
+  bottom={[
+    { title: "Öğrenci işleri", rel: "protokol" },
+    { title: "Kafeler", rel: "kurulum" },
+    { title: "Müşteri hizm.", rel: "SSS" },
+  ]}
+/>
+
+## Ortak çıkarı bul
+
+Watt, akranlarla çalışmak için birkaç öneri verir: sponsorun desteğini al ve ekibe duyurmasını iste, açıkça destek iste, sık gözden geçirme toplantıları yap. Kaynak yöneticileriyle ilişkiyi ayrıca vurgular: proje yöneticisi insanı ve ekipmanı ödünç alır, ilişki iyiyse en iyilerini alır.
+
+Etkinin en güçlü biçimi, isteği karşı tarafın kendi hedefiyle birleştirmektir. Leyla'nın Ozan'a sorusu "bana Emre'yi ver" değil, "bu iş senin hangi hedefine yarar?" olmalıdır.
+
+## Karşılıklılık ve tutarlılık
+
+Robert Cialdini'nin *Influence* kitabı insanların ikna edilme biçimlerini inceler. Kitaptaki ilkelerden üçü yetkisiz etki için doğrudan kullanışlıdır:
+
+- **Karşılıklılık:** insanlar kendilerine yapılan iyiliğe karşılık verme eğilimindedir.
+- **Bağlılık ve tutarlılık:** insanlar verdikleri sözle tutarlı görünmek ister.
+- **Sevme:** ortak bir hedef için birlikte çalışmak zorunda kalan insanlar arasında güven oluşur.
+
+Kitap aynı ilkelerin istismar edilebildiğini de anlatır: istenmeyen bir hediyeyle borç duygusu yaratmak ya da cazip bir teklif kabul edildikten sonra koşulları değiştirmek.
+
+**Etki ≠ manipülasyon.** Etki karşı tarafın gerçek çıkarına dayanır ve açıkça yapılır. Karşı taraf neyin karşılığında ne verdiğini sonradan öğrendiğinde kendini kandırılmış hissediyorsa, o etki değildir.
+
+<Case>
+
+Leyla, Ozan'a "Emre'yi bir haftalığına ver" demek yerine üç şey hazırladı:
+
+1. **Ozan'ın hedefi:** panel takımının dükkân istekleri listesinde "menüyü bir şubeden diğerine kopyalama" ilk üçteydi.
+2. **Ortak iş:** kampüs menüleri için gereken değişiklik, aynı kopyalama özelliğiydi. Bütün çok şubeli dükkânlara da yarıyordu.
+3. **Karşılık:** Ayşe iade analizi için kafe personeliyle görüşmek istiyordu. Leyla ona kampüs kafelerinden iki görüşmeci buldu.
+
+Ozan dört gün verdi. Emre özelliği iki takımın da kabul kriterleriyle yazdı.
+
+</Case>
+
+<Lenses>
+<Lens role="project-manager">
+
+- **İstemeden önce karşı tarafın hedefini öğren.** "Bu sana nasıl yarar?" sorusunun cevabı hazır olsun.
+- **Sponsorun desteğini görünür kıl.** Akranlara projenin önceliğini sponsor duyurursa işin yarısı biter.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Ekibe değil soruna dayan.** Mühendisleri kararına ikna etmenin yolu, problemi birlikte görmektir.
+- **Verdiğin sözleri tut.** Tutarlılık yetkisiz etkinin sermayesidir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Paydaşın isteğini onun hedefine bağla.** Sıralamayı açıklarken "senin hedefin için şu önce" de.
+- **Diğer PO'larla ortak işi ara.** İki backlog'daki aynı ihtiyaç, tek bir işle karşılanabilir.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Takımın engelini kaldırmak için organizasyonu etkile.** Yetkin yok; ama sorunu görünür kılabilir, doğru kişiyi bulabilirsin.
+- **Karşılıklılığı takımlar arasında kur.** Bir takımın yardımı, sonraki işbirliğini kolaylaştırır.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Bilgi almak için önce değer ver.** Görüşmeciye analizin ona ne kazandıracağını söyle.
+- **Gizli gündemi sor.** Bir paydaşın bir gereksinimde ısrarı, söylenmeyen bir hedefe dayanıyor olabilir.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Tasarımı geliştiricinin sorunuyla birleştir.** "Bu bileşen iki ekranda da işine yarar" demek, tek ekranı savunmaktan güçlüdür.
+- **Küçük bir taahhütle başla.** Bir prototipe birlikte bakmak, büyük bir değişikliğe giden yolu açar.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Bulguyu karar vericinin hedefine bağla.** Araştırmanın etkisi, kimin hangi kararına yaradığıyla ölçülür.
+- **Ekibi araştırmaya kat.** Görüşmeyi birlikte izleyen ekip, bulguyu savunan bir müttefik olur.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Ürün ve proje rollerinin çoğu, kendisine bağlı olmayan insanlarla iş yapar.
+- Watt'a göre proje yöneticisi bir politikacı gibi gücün yerini ve paydaşların hedeflerini bulur.
+- En güçlü etki, isteği karşı tarafın hedefiyle birleştirmektir.
+- Karşılıklılık ve tutarlılık etkiyi güçlendirir; aynı ilkeler istismar da edilebilir.
+- Etki açık ve karşı tarafın gerçek çıkarına dayalıdır; manipülasyon değildir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Watt neden proje yöneticisini bir politikacıya benzetir?">
+
+Çünkü proje yöneticisi doğası gereği güçlü değildir; iradesini iş arkadaşlarına ve tedarikçilere dayatamaz. Doğrudan kontrol ettiği şey azdır; işi etkileyerek yürütür.
+
+</SelfCheck>
+
+<SelfCheck question="Başka bir takımdan bir geliştiricinin zamanına ihtiyacın var. İlk ne yaparsın?">
+
+O takımın önceliğini kimin verdiğini ve hedeflerinin ne olduğunu öğrenirim. Sonra isteğimi onların bir hedefine bağlayan ortak bir iş ararım.
+
+</SelfCheck>
+
+<SelfCheck question="Karşılıklılık ilkesi ne der?">
+
+İnsanlar kendilerine yapılan iyiliğe karşılık verme eğilimindedir. Ayşe'ye görüşmeci bulmak, Ozan'la ilişkiyi güçlendirir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir paydaşa küçük bir söz verdirip sonra koşulları değiştirmek neden etki değildir?">
+
+Karşı tarafı kandırır ve tutarlılık isteğini istismar eder. Paydaş fark ettiğinde güven kaybolur; bir sonraki istekte kapı kapalıdır.
+
+</SelfCheck>

@@ -1,11 +1,12 @@
 ---
-summary: "Yeni sürümün kullanıcılara nasıl ulaştırılacağı: rolling, blue-green, canary ve feature flag. Hepsi aynı soruyu cevaplar: bir şey ters giderse kaç kullanıcı etkilensin? Feature flag yayını ile açılışı ayırır."
+summary: "Rolling kopyaları tek tek geçirir, blue-green trafiği bir anda çevirir, canary önce küçük bir yüzdeye açar. Feature flag yayını açılıştan ayırır. Hepsi aynı soruyu cevaplar: sorun kaç kişiyi etkilesin?"
 outcomes:
   - "Dört deploy stratejisini ve kullanıcı etkisini sınırlama biçimlerini söyleyebilirsin."
   - "Blue-green ile canary farkını açıklayabilirsin."
   - "Feature flag'in en önemli katkısını (deploy ile release'i ayırmak) ve dört sonucunu sayabilirsin."
   - "Bayrakların biriktirdiği sorunu bilirsin."
-minutes: 8
+minutes: 5
+standard: 2
 sources:
   - label: "Martin Fowler — Blue Green Deployment"
     url: "https://martinfowler.com/bliki/BlueGreenDeployment.html"
@@ -15,11 +16,14 @@ sources:
     url: "https://martinfowler.com/articles/feature-toggles.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Yeni sürüm hazır. Bunu herkese aynı anda mı açarsın, yoksa önce küçük bir kısmına mı? Dört yaklaşım var ve hepsi aynı soruyu cevaplar: **bir şey ters giderse kaç kullanıcı etkilensin?**
 
@@ -48,6 +52,41 @@ Yeni sürüm hazır. Bunu herkese aynı anda mı açarsın, yoksa önce küçük
 
 "Blue-green yapalım; sorun çıkarsa saniyeler içinde geri dönebiliriz." "Önce %5'e açalım, metrikleri bir saat izleyelim, sorun yoksa artıralım."
 
+<Spectrum
+  label="Sorun çıkarsa kaç kullanıcı etkilenir?"
+  caption="Yayın stratejileri bir sorunun etki alanına göre sıralanır. Herkese birden açılan yayında sorun herkese ulaşır. Rolling geçişte iki sürüm bir süre birlikte çalışır. Blue-green etkiyi küçültmez ama geri dönüşü anlık yapar. Canary yeni sürümü önce küçük bir yüzdeye açar. Feature flag ile özellik önce yalnız ekibe açılabilir ve saniyeler içinde kapatılabilir."
+  left={{
+  title: "Herkes",
+  sub: "tek seferde"
+}}
+  right={{
+  title: "Küçük bir grup",
+  sub: "önce ekip, sonra %10"
+}}
+  marks={[
+  {
+    label: "Herkese birden",
+    at: 0.04
+  },
+  {
+    label: "Rolling",
+    at: 0.28
+  },
+  {
+    label: "Blue-green",
+    at: 0.5
+  },
+  {
+    label: "Canary",
+    at: 0.74
+  },
+  {
+    label: "Feature flag",
+    at: 0.95
+  }
+]}
+/>
+
 ## Feature flag
 
 **Feature flag (özellik anahtarı, toggle)**: bir özelliğin, kod yayınlandıktan sonra ayrı bir ayarla açılıp kapatılabilmesi. **Yayın (deploy) ile açılışı (release) birbirinden ayırır;** bu, bölümdeki en önemli fikirlerden biridir. Kod canlıda durur ama kullanıcıya kapalıdır. Dört sonucu:
@@ -61,13 +100,51 @@ Yeni sürüm hazır. Bunu herkese aynı anda mı açarsın, yoksa önce küçük
 
 **Bayraklar birikir ve teknik borç üretir.** Kullanılmayan bayraklar kodu dallandırır ve test edilmesi gereken durum sayısını katlar. Her bayrağın bir **sahibi** ve bir **kaldırılma tarihi** olmalıdır.
 
-<Callout kind="tasarimci">
+<Case>
+
+"Son siparişini tekrarla" düğmesi Demlik'te flag arkasında açıldı:
+
+1. **Yayın:** kod canlıya çıktı ama düğme kapalıydı. Bir hafta yalnız ekip kullandı; Can düğmenin kapalı dükkânlarda da göründüğünü buldu.
+2. **Kademe:** sonra kullanıcıların %10'u bir hafta. Durdurma koşulu önceden yazıldı: hatalı siparişler %1'i geçerse bayrak kapanır.
+3. **Herkes:** koşul tetiklenmedi; düğme herkese açıldı.
+4. **Bayrağın sonu:** bayrağın sahibi Deniz'di ve kaldırılma tarihi yazılıydı. Lansmandan iki hafta sonra kod içindeki dal silindi.
+5. **Servisler:** sipariş servisi rolling geçiyor; kopyalar tek tek yeni sürüme alınıyor. Bu yüzden yeni bir alan eski sürümü kırmayacak şekilde ekleniyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Büyük tasarım değişikliklerini flag arkasında kademeli açmayı öner:** önce iç ekip, sonra %10, sonra herkes.
 - **Canary'de hangi metriğin izleneceğini tasarım tarafından da belirle** (dönüşüm, hata, tıklama).
 - **Kullanılmayan bayrakların kaldırılmasını takip et;** eski tasarım dalları kodda kalmasın.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Lansmanı yayından ayır.** Kod hazır olduğunda değil, pazarlama ve destek hazır olduğunda aç.
+- **Durdurma koşulunu açılıştan önce yaz:** hangi metrik hangi eşiği geçerse kapanır?
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kademeli açılışın her basamağını kabul ölçütüne bağla.** Ekip, %10, herkes.
+- **Her bayrağa sahip ve kaldırılma tarihi ver;** bayrak temizliğini backlog'a koy.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Kademeli açılış basamaklarını takvime ayrı kilometre taşları olarak koy.**
+- **Kill switch'i risk planında karşı önlem olarak yaz;** geri almaktan hızlıdır.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Yarım işin ana dala girmesini flag ile mümkün kıl;** uzun yaşayan dallar akışı yavaşlatır.
+- **Biriken bayrakları retroda görünür yap.** Her biri test edilecek bir durum daha demek.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -88,5 +165,11 @@ Blue-green: iki tam ortam vardır, trafik bir anda yeniye çevrilir; geri dönü
 <SelfCheck question="Feature flag'in en önemli katkısı nedir? Dört sonucunu say.">
 
 Yayın (deploy) ile açılışı (release) birbirinden ayırır. Sonuçlar: yarım kalmış iş ana dala girebilir; özellik yeni yayın gerekmeden pazarlama takvimine göre açılabilir; sorun çıkarsa saniyeler içinde kapatılabilir (kill switch); A/B testi ve kademeli açılım bunun üstüne kurulur.
+
+</SelfCheck>
+
+<SelfCheck question="Rolling deployment neden API ve veritabanı uyumluluğu gerektirir?">
+
+Geçiş sırasında eski ve yeni sürüm bir süre birlikte çalışır. Yeni sürümün eklediği bir alan ya da değiştirdiği bir uç nokta eski sürümü kırarsa, geçiş sırasında kullanıcılar hata görür.
 
 </SelfCheck>

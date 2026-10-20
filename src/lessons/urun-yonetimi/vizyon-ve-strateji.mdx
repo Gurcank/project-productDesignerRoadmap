@@ -1,0 +1,141 @@
+---
+summary: "Vizyon yaratmak istediğimiz geleceği anlatır; strateji o geleceğe giderken hangi problemleri çözeceğimizi seçer. İyi strateji odak, içgörü, eylem ve yönetimden oluşur; en zor kısmı neyi yapmayacağını seçmektir."
+outcomes:
+  - "Ürün vizyonunu, ürün ilkelerini ve ürün stratejisini birbirinden ayırabilirsin."
+  - "Stratejinin dört parçasını ve neden çoğu kurumda strateji olmadığını anlatabilirsin."
+  - "Bir stratejiyi takımlara verilecek sonuçlara çevirebilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "SVPG — Marty Cagan, Vision vs. Strategy (2016)"
+    url: "https://www.svpg.com/vision-vs-strategy/"
+  - label: "SVPG — Marty Cagan, Product Strategy – Overview (2020)"
+    url: "https://www.svpg.com/product-strategy-overview/"
+additions:
+  - "Ürün vizyonu, ürün ilkeleri ve ürün stratejisi (Cagan)"
+  - "Stratejinin dört parçası: odak, içgörü, eylem, yönetim (Cagan)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Demlik'in ofisinde bir duvar dolusu yapışkan not vardı: grup siparişi, sadakat puanı, eve teslimat, yeni şehirler, kalori bilgisi, karanlık mod, kampüs, abonelik… Kırka yakın fikir, her birinin bir savunucusu.
+
+Yeni katılan bir geliştirici duvara baktı ve sordu: "Bunların hangisi önemli? Neye göre seçiyoruz?" Kimse tek cümleyle cevap veremedi. Bu ders, o cevabı veren iki şeyi anlatır: vizyon ve strateji.
+
+## Vizyon: nereye gidiyoruz?
+
+Marty Cagan'a göre **ürün vizyonu**, yaratmaya çalıştığımız geleceği anlatır. Genellikle 2–5 yıl ileriye bakar; donanım şirketlerinde 5–10 yıl.
+
+Vizyon bir şartname değildir. Cagan onu **ikna edici bir parça** olarak tanımlar: bir hikâye tahtası, bir anlatı ya da bir prototip olabilir. Amacı takımlara, yatırımcılara ve iş ortaklarına ilham vermek ve onları o geleceği gerçek yapmaya çağırmaktır. İyi bir vizyon işe alımın da en etkili araçlarındandır.
+
+Vizyona inanmak biraz da bir inanç sıçramasıdır: oraya nasıl, hatta gidilip gidilemeyeceği bilinmez. Cagan, Jeff Bezos'un sözünü aktarır: vizyonda inatçı, ayrıntıda esnek ol.
+
+Vizyonla birlikte genellikle **ürün ilkeleri** de yazılır: ürünün hangi değerlere bağlı kalacağını söyleyen kısa cümleler. İkisi çoğu zaman birlikte "vizyon" diye anılır.
+
+## Strateji: hangi problemleri çözüyoruz?
+
+Cagan'ın tanımıyla **ürün stratejisi**, şirketin ihtiyaçlarını karşılayarak vizyonu nasıl gerçeğe çevireceğimizdir. Strateji ayrıntıyı değil, genel yaklaşımı ve onun gerekçesini anlatır; ayrıntı taktiktir.
+
+<Layers
+  label="Vizyondan teslimata"
+  caption="Dört katman yukarıdan aşağı birbirine bağlanır. Vizyon nereye gitmek istediğimizi anlatır. Strateji, oraya varmak için hangi problemleri çözeceğimizi seçer. Keşif, o problemleri gerçekten çözecek taktikleri bulur. Teslimat da bulunan çözümü inşa edip pazara çıkarır."
+  layers={[
+    { title: "Vizyon", sub: "nereye gitmek istiyoruz?", tone: "accent" },
+    { title: "Strateji", sub: "hangi problemleri çözeceğiz?", tone: "progress" },
+    { title: "Keşif", sub: "hangi çözüm işe yarar?" },
+    { title: "Teslimat", sub: "çözümü inşa et ve çıkar" },
+  ]}
+/>
+
+Cagan'a göre şirketlerin çoğunda bir hedef ("geliri ikiye katla") ve bir yol haritası (taktikler) vardır, ama ikisinin arasında strateji yoktur. Sonuç, sürekli özellik çıkaran ama hedefe yaklaşmayan takımlardır.
+
+**Vizyon ≠ strateji.** Vizyon ilham verici olmalı; strateji ise çok kasıtlı. Cagan bu farkı liderlik ile yönetim farkına benzetir: liderlik yönü gösterir, yönetim oraya götürür.
+
+## Stratejinin dört parçası
+
+Cagan stratejiyi dört zor işe ayırır:
+
+1. **Odak:** neyin gerçekten önemli olduğuna karar vermek ve dolayısıyla neyi yapmayacağını seçmek. Cagan, duvarında 50 büyük hedef asılı şirketleri örnek verir: her takım hepsine biraz dokunur, hiçbiri ilerlemez.
+2. **İçgörü:** veriden ve müşteriden öğrenmek. İşin dinamikleri, yetenekler, yeni teknolojiler, rekabet, pazar ve müşteri hakkında.
+3. **Eylem:** içgörüyü hangi takımın hangi hedefi izleyeceğine çevirmek ve takımlara stratejik bağlamı vermek.
+4. **Yönetim:** takımlar ilerlerken engelleri kaldırmak, mikro yönetime düşmeden.
+
+Cagan, Richard Rumelt'in *Good Strategy/Bad Strategy* kitabından bir düşünceyi öne çıkarır: kötü strateji çoğu zaman bir hesap hatası değil, seçim yapmanın zorluğundan kaçmaktır. Liderler birbiriyle yarışan değerler ve taraflar arasında seçim yapamayınca kötü strateji doğar.
+
+<Case>
+
+Elif, duvardaki notları kaldırmadan önce bir sayfa yazdı:
+
+1. **Vizyon (üç yıl):** "Bağımsız kahve dükkânlarında hiç kimse kahvesi için kuyrukta beklemesin."
+2. **Ürün ilkeleri:** bir sipariş en çok üç dokunuş sürer; dükkânın düzenini bozmayız; müşteriye sürpriz ücret yok.
+3. **Odak (bu yıl):** düzenli sabah müşterisi.
+4. **İçgörü:** aktif müşterilerin %54'ü son beş siparişinde hep aynı ürünü alıyor; ilk siparişten sonra 30 günde ikinci sipariş %41.
+5. **Eylem:** sipariş takımının sonucu "30 günde ikinci sipariş %41'den %50'ye"; panel takımınınki iade taleplerini 150'nin altına indirmek.
+6. **Yapmayacaklarımız:** eve teslimat, kampüs dışında yeni şehir, zincir kafeler için özel uygulama.
+
+Duvardaki kırk notun otuzu bu sayfaya göre "şimdi değil" oldu. Geliştiricinin sorusunun cevabı artık tek cümleydi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Yapmayacaklarını yaz.** Odak, bir listeye "hayır" diyebildiğinde gerçek olur.
+- **İçgörüyü stratejinin kaynağı yap.** Her stratejik seçimin arkasında bir veri ya da müşteri öğrenimi göster.
+- **Takımlara özellik değil sonuç ver.** Stratejiyi bir hedefe çevir, çözümü takıma bırak.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Ürün hedefini stratejiden türet.** Scrum'daki ürün hedefi, stratejinin takımına düşen parçasıdır.
+- **Backlog'u odakla temizle.** Odak dışında kalan öğeleri gerekçesiyle backlog'un dışına al.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Takımın bağlamı bilip bilmediğini sor.** Vizyonu ve stratejiyi anlatamayan bir takım, kendi kararlarını veremez.
+- **Aynı anda çok hedefi görünür yap.** Takımın zamanı yüzde yüzü aşan yükümlülüklere dağılıyorsa, bunu PM ve PO ile konuş.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Vizyon 2–5 yıl sonra yaratmak istediğimiz geleceği ikna edici biçimde anlatır; şartname değildir.
+- Ürün ilkeleri ürünün bağlı kalacağı değerlerdir ve vizyonla birlikte yazılır.
+- Strateji vizyona giderken hangi problemleri çözeceğimizi seçer; keşif taktiği bulur, teslimat inşa eder.
+- Stratejinin dört parçası: odak, içgörü, eylem, yönetim.
+- Kötü strateji çoğu zaman seçim yapmaktan kaçmaktır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Vizyon ile strateji arasındaki fark nedir?">
+
+Vizyon nereye gitmek istediğimizi, yaratmak istediğimiz geleceği anlatır ve ilham vermelidir. Strateji oraya varmak için hangi problemleri çözeceğimizi seçer ve çok kasıtlı olmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir şirketin 'geliri ikiye katla' hedefi ve dolu bir yol haritası var. Cagan'a göre ne eksik?">
+
+Strateji. Hedef ile taktikler arasında, hangi problemlerin çözüleceğini ve neyin yapılmayacağını seçen bir katman yok. Bu yüzden takımlar özellik çıkarır ama hedefe yaklaşmaz.
+
+</SelfCheck>
+
+<SelfCheck question="Duvarda 50 stratejik hedef asılı. Ne önerirsin?">
+
+Odak. Hepsi eşit derecede önemli değildir. Gerçekten kritik birkaç hedefi seçip her birini bir takıma vermeyi, gerisini açıkça "şimdi değil" diye yazmayı öneririm.
+
+</SelfCheck>
+
+<SelfCheck question="Ürün ilkeleri neden vizyonla birlikte yazılır?">
+
+Vizyon nereye gidileceğini söyler, ilkeler yol boyunca hangi değerlerden vazgeçilmeyeceğini. Demlik'te "dükkânın düzenini bozmayız" ilkesi, müşteriyi memnun eden ama baristayı zorlayan bir özelliği durdurur.
+
+</SelfCheck>

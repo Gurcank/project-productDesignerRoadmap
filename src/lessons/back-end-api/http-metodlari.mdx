@@ -4,7 +4,8 @@ outcomes:
   - "Beş HTTP metodunu ve güvenli ile idempotent olmanın ne demek olduğunu söyleyebilirsin."
   - "POST'un idempotent olmamasının tasarımdaki sonucunu açıklayabilirsin."
   - "Veri değiştiren bir GET'in neden ciddi hata olduğunu bilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "MDN — HTTP istek metotları"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods"
@@ -16,9 +17,12 @@ sources:
     url: "https://docs.stripe.com/api/idempotent_requests"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Kullanıcı "Sipariş ver" butonuna iki kez bastı. İki sipariş mi oluştu? Cevap, o butonun arkasındaki HTTP metoduna bağlı.
 
@@ -36,19 +40,83 @@ Kullanıcı "Sipariş ver" butonuna iki kez bastı. İki sipariş mi oluştu? Ce
 
 ## Safe ve idempotent
 
+<Tree
+  label="Metotlar, ne yaptıklarına göre"
+  caption="Beş metot üç gruba ayrılır. GET yalnız okur; güvenli ve idempotenttir. PUT ve DELETE veriyi değiştirir ama idempotenttir: aynı istek on kez gönderilse de sonuç aynıdır. POST ve çoğu zaman PATCH ise idempotent değildir: aynı istek iki kez gönderilirse iki sonuç doğabilir, örneğin iki sipariş."
+  root={{
+  title: "HTTP metotları",
+  tone: "accent",
+  children: [
+    {
+      title: "Okur",
+      sub: "güvenli, idempotent",
+      children: [
+        {
+          title: "GET"
+        }
+      ]
+    },
+    {
+      title: "Değiştirir, idempotent",
+      children: [
+        {
+          title: "PUT"
+        },
+        {
+          title: "DELETE"
+        }
+      ]
+    },
+    {
+      title: "Değiştirir, idempotent değil",
+      children: [
+        {
+          title: "POST"
+        },
+        {
+          title: "PATCH (genelde)",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
 **Safe (güvenli)**, veriyi değiştirmeyip yalnızca okumak demektir. **Idempotent**, aynı isteği bir kez de gönderirsen on kez de gönderirsen sonucun aynı olması demektir.
 
 Bu ayrım hem güvenlik hem kullanıcı deneyimi kararlarını belirler. **En somut karşılığı:** POST idempotent değildir; bir kullanıcı "Sipariş ver" butonuna iki kez basarsa iki sipariş oluşabilir. Bu yüzden butonun basıldıktan sonra devre dışı kalması ve yükleme durumu göstermesi yalnızca estetik değil, **veri bütünlüğü meselesidir.** "Sipariş butonu POST atıyor ve idempotent değil; çift tıklamayı engellemeliyiz ya da sunucuya idempotency key göndermeliyiz."
 
 GET'in veri değiştirmemesi bir **kuraldır,** teknik zorunluluk değil. Veri değiştiren bir GET yazmak mümkündür ama ciddi bir hatadır: tarayıcılar ve önbellekler GET'i güvenli varsayar ve isteği kendiliğinden tekrarlayabilir.
 
-<Callout kind="tasarimci">
+<Case>
+
+Kampüs pilotunun ilk haftasında Panel'de aynı öğrencinin iki siparişi göründü. Öğrenci "Öde"ye zayıf bağlantıda iki kez basmıştı.
+
+1. **Neden:** sipariş isteği POST'tu; idempotent değildi. İki istek iki sipariş oluşturdu.
+2. **Arayüz:** düğme basıldığı anda "Gönderiliyor…" hâline geçiyor ve ikinci kez basılamıyor.
+3. **Sunucu:** her ödeme ekranı bir idempotency key üretiyor. Aynı anahtarla gelen ikinci istek yeni sipariş oluşturmuyor, ilkinin sonucunu döndürüyor.
+4. **İade:** çift çekilen tutar iade edildi; Ayşe olayı iade kuralları analizine örnek olarak ekledi.
+
+Arayüzdeki önlem kullanıcıyı korur; sunucudaki önlem veriyi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Veri değiştiren her eylem için çift gönderimi tasarla:** buton basıldıktan sonra devre dışı + yükleme durumu.
 - **Geliştiriciye sor:** bu istek idempotent mi, değilse bir idempotency key var mı?
 - **Silme ve toplu işlemleri geri alınabilir tasarla;** DELETE idempotent olsa da kullanıcı için geri dönüşü zordur.
 
-</Callout>
+</Lens>
+<Lens role="business-analyst">
+
+- **"Aynı işlem iki kez gelirse ne olur?" sorusunu her iş kuralına sor.** Ödeme, sipariş ve iade için cevap yazılı olmalı.
+- **Idempotency gereksinimini kabul kriterine çevir.** "Aynı ödeme isteği ikinci kez sipariş oluşturmaz."
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -64,5 +132,17 @@ GET'in veri değiştirmemesi bir **kuraldır,** teknik zorunluluk değil. Veri d
 <SelfCheck question="GET ile POST arasındaki fark nedir? Hangisi idempotent değildir ve tasarımdaki karşılığı nedir?">
 
 GET veri okur ve hiçbir şeyi değiştirmez; POST kayıt oluşturur ya da işlem tetikler. POST idempotent değildir: aynı istek iki kez giderse iki kayıt oluşabilir. Bu yüzden gönder butonunun basıldıktan sonra devre dışı kalması ve yükleme göstermesi veri bütünlüğü meselesidir.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Sipariş ver\" düğmesini devre dışı bırakmak çift siparişi tamamen önler mi?"}>
+
+Tamamen önlemez. Ağ gecikmesi, sayfa yenileme ya da tekrar deneyen bir istemci yine ikinci isteği gönderebilir. Sunucuda bir idempotency key ile aynı isteğin ikinci kez işlenmesi engellenmelidir.
+
+</SelfCheck>
+
+<SelfCheck question="Neden veri değiştiren bir işlem GET ile yapılmamalı?">
+
+Tarayıcılar, önbellekler ve bağlantı önizleyicileri GET'i güvenli varsayar ve kendiliğinden tekrarlayabilir. Veri değiştiren bir GET, kullanıcı fark etmeden işlemin tekrarlanmasına yol açabilir.
 
 </SelfCheck>

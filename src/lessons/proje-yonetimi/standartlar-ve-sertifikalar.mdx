@@ -1,0 +1,124 @@
+---
+summary: "PMBOK Rehberi ne yapılacağını ilkeler ve alanlarla anlatır; PRINCE2 nasıl yapılacağını adım adım bir yöntemle verir. PMP ve PRINCE2 sertifikaları bu ikisine dayanır."
+outcomes:
+  - "PMBOK Rehberi ile PRINCE2 arasındaki farkı anlatabilirsin."
+  - "PMBOK 8. baskının ilke ve performans alanlarını tanırsın."
+  - "PMP başvuru koşullarını ve PRINCE2 sertifika ailesini özetleyebilirsin."
+minutes: 5
+standard: 2
+sources:
+  - label: "PMI — PMBOK Guide (8. baskı tanıtım sayfası)"
+    url: "https://www.pmi.org/standards/pmbok"
+  - label: "Watt, Project Management (2. baskı) — 4. Framework for Project Management"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-4-framework-for-project-management-project-management/"
+  - label: "PMI — Project Management Professional (PMP) Certification"
+    url: "https://www.pmi.org/certifications/project-management-pmp"
+  - label: "PeopleCert — PRINCE2 sertifika ailesi"
+    url: "https://www.peoplecert.org/browse-certifications/project-programme-and-portfolio-management"
+additions:
+  - "PMBOK 8. baskı (Kasım 2025): altı ilke, yedi performans alanı"
+  - "PMBOK'un eski baskılarındaki on bilgi alanı (Watt, bölüm 4)"
+  - "PMP başvuru koşulları ve PRINCE2 sertifika ailesi (2026-10-18'de doğrulandı)"
+flags: ["degisken"]
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Leyla'nın iş ilanlarında iki kısaltma sık geçiyor: PMP ve PRINCE2. Hakan da toplantıda "PMBOK'a göre bunu nasıl yapardık?" diye sordu. Üçü de proje yönetimi için yazılmış başvuru kaynaklarıdır. Ama aynı şeyi söylemezler ve biri diğerinin yerine geçmez.
+
+Bu ders onları bir haritaya yerleştirir. Hangisi ne işe yarar, hangisi neyi ölçer?
+
+## PMBOK Rehberi: neyi yönetirsin?
+
+**PMBOK Rehberi** (A Guide to the Project Management Body of Knowledge), PMI'ın yayımladığı proje yönetimi standardıdır. PMI'ın kendi ifadesiyle proje yönetiminin küresel standardını tanımlar.
+
+Son baskı **sekizinci** baskıdır ve Kasım 2025'te yayımlandı. Yedinci baskının ilke ve performans alanı yapısını korur, ama sadeleştirir. Rehber üç katmanda okunabilir.
+
+<Layers
+  label="PMBOK 8. baskının yapısı"
+  caption="En üstte altı ilke var: proje yöneticisinin nasıl davranacağını söyler. Ortada yedi performans alanı var: neyin yönetileceğini söyler. En altta uyarlama var: bu ikisinin projenin bağlamına göre nasıl ayarlanacağını anlatır. Rehber bir yöntem değildir; hangi adımı hangi sırayla atacağını dayatmaz."
+  layers={[
+    { title: "6 ilke", sub: "nasıl davranırsın", tone: "accent" },
+    { title: "7 performans alanı", sub: "neyi yönetirsin", tone: "progress" },
+    { title: "Uyarlama", sub: "bağlamına göre ayarlarsın" },
+  ]}
+/>
+
+**Altı ilke:** bütüne bakmak, değere odaklanmak, kaliteyi işin içine yerleştirmek, hesap verebilir biçimde yönetmek, sürdürülebilirliği gözetmek ve yetkin ekipler kurmak.
+
+**Yedi performans alanı:** yönetişim, kapsam, takvim, finans, paydaşlar, kaynaklar ve risk. Bu bölümün dersleri bu alanların neredeyse hepsini tek tek anlatıyor.
+
+Eski baskılarda yapı farklıydı. PMBOK, projeyi **on bilgi alanına** bölüyordu: entegrasyon, kapsam, zaman, maliyet, kalite, insan kaynakları, iletişim, risk, tedarik ve paydaşlar. Eski bir kitapta ya da kursta bu listeyi görürsen şaşırma; aynı konuları başka bir düzenle anlatır.
+
+## PRINCE2: nasıl yaparsın?
+
+**PRINCE2**, projeleri yönlendirmek, yönetmek ve teslim etmek için yapılandırılmış bir yöntemdir. PeopleCert onu adım adım, açık ve pratik bir yaklaşım olarak tanımlar. Her büyüklükte projeye uygulanabilir.
+
+Fark şudur: PMBOK "bir projede şu alanları yönetmelisin" der. PRINCE2 ise "projeyi şu rollerle, şu aşamalarla, şu kararlarla yürüt" der.
+
+**PMBOK ≠ PRINCE2.** Biri bir bilgi gövdesi ve standarttır, öteki bir yöntemdir. Bu yüzden birbirini dışlamazlar: PMBOK'tan kavramları, PRINCE2'den yönetim yapısını alabilirsin.
+
+PRINCE2'nin bir ailesi vardır. **PRINCE2 Agile**, yapılandırılmış yöntemi çevik tekniklerle birleştirir. Aynı ailede programlar için MSP, portföyler için MoP, proje ofisleri için P3O ve risk için M_o_R bulunur.
+
+## Sertifikalar
+
+**PMP** (Project Management Professional), PMI'ın sertifikasıdır. Başvurmak için iki koşul gerekir:
+
+- **Deneyim:** son on yılda proje yönettiğin süre. Lise diplomasıyla 5 yıl, ön lisansla 4 yıl, lisansla 3 yıl gerekir.
+- **Eğitim:** 35 saatlik proje yönetimi eğitimi. Geçerli bir CAPM sertifikası da bu koşulu karşılar.
+
+**PRINCE2** sertifikaları iki basamaklıdır: **Foundation** ve **Practitioner**. PRINCE2 Agile de aynı iki basamağı izler.
+
+Sertifika koşulları, sınav içeriği ve ücretler sık değişir. Bu dersteki bilgiler 18 Ekim 2026'da doğrulandı. Başvurmadan önce kurumun sayfasından güncel hâlini kontrol et.
+
+**Sertifika ≠ beceri.** Sertifika ortak bir dil ve belli bir deneyim olduğunu gösterir. Bir projeyi iyi yönetip yönetemeyeceğini ise sahada gösterdiğin iş belirler.
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Hedeflediğin işlerin ilanlarını oku.** Hangi sertifikanın istendiğini oradan öğrenirsin. Sertifikayı ilana göre seç, alışkanlığa göre değil.
+- **PMP için deneyimini şimdiden kayda geçir.** Başvuruda her projeyi ayrı ayrı yazarsın; süreleri ve rolünü not et.
+- **Standardı yöntem gibi uygulama.** PMBOK bir kontrol listesi değildir; projene uymayan parçayı uyarla.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- PMBOK Rehberi, PMI'ın proje yönetimi standardıdır; 8. baskısı Kasım 2025'te çıktı.
+- PMBOK 8 altı ilke ve yedi performans alanıyla yapılanır; eski baskılar on bilgi alanı kullanırdı.
+- PRINCE2 yapılandırılmış bir yöntemdir; PMBOK neyi, PRINCE2 nasıl sorusuna cevap verir.
+- PMP için deneyim ve 35 saat eğitim gerekir; PRINCE2 Foundation ve Practitioner basamaklarından oluşur.
+- Sertifika koşulları değişir; başvurmadan önce kurumun sayfasından doğrula.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="PMBOK 8. baskının yedi performans alanı nelerdir?">
+
+Yönetişim, kapsam, takvim, finans, paydaşlar, kaynaklar ve risk.
+
+</SelfCheck>
+
+<SelfCheck question="PMBOK ile PRINCE2'nin farkı nedir?">
+
+PMBOK bir standart ve bilgi gövdesidir: hangi alanların yönetilmesi gerektiğini söyler, sıra dayatmaz. PRINCE2 bir yöntemdir: projeyi hangi rollerle, aşamalarla ve kararlarla yürüteceğini adım adım verir.
+
+</SelfCheck>
+
+<SelfCheck question="Lisans mezunu bir arkadaşın iki yıldır proje yönetiyor ve PMP'ye başvurmak istiyor. Ne söylersin?">
+
+Lisansla başvurmak için üç yıllık proje yönetimi deneyimi gerekiyor; bir yıl daha beklemesi gerekir. Bu arada 35 saatlik eğitimi tamamlayabilir. Koşullar değişebileceği için PMI'ın sayfasından güncel hâline bakmasını söylersin.
+
+</SelfCheck>
+
+<SelfCheck question="Eski bir kitapta 'on bilgi alanı' görüyorsun. Bu yanlış mı?">
+
+Yanlış değil, eski. PMBOK'un önceki baskıları projeyi on bilgi alanına bölüyordu. Yedinci ve sekizinci baskılar ilke ve performans alanı yapısına geçti. Konular büyük ölçüde aynıdır; düzen farklıdır.
+
+</SelfCheck>

@@ -1,0 +1,40 @@
+---
+title: "Use case"
+summary: "Bir aktörün sistemle hedefine ulaşmasını adım adım anlatır: ana başarı senaryosu, her adımda ters gidebilecekler ve sonuçta ne garanti edildiği."
+kind: "belge"
+roles: ["business-analyst", "product-owner", "product-manager"]
+lessons: ["is-analizi/iyi-gereksinim-use-case-ve-user-story"]
+sources:
+  - label: "Alistair Cockburn — Basic Use Case Template (1998)"
+    url: "https://cs.otago.ac.nz/coursework/cosc461/uctempla.htm"
+  - label: "BABOK Guide — Ek A: Sözlük (IIBA)"
+    url: "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"
+---
+
+## Ne zaman kullanılır?
+
+Bir etkileşimin birçok yolu ve birçok hata durumu olduğunda: ödeme, iptal, iade, kayıt. User story bir ihtiyacı konuşmaya açar; use case o konuşmanın sonunda bütün yolları tek yerde toplar.
+
+## Alanlar
+
+Şablon Alistair Cockburn'ün 1998 tarihli temel use case şablonunu izler.
+
+- **Ad:** hedefin kendisi, etkin bir fiille: "Siparişi iptal et".
+- **Bağlamdaki hedef:** aktör bunu neden yapıyor?
+- **Kapsam:** hangi sistem, kara kutu olarak.
+- **Seviye:** özet, ana görev ya da alt işlev.
+- **Birincil aktör** ve **tetikleyici.**
+- **Ön koşul** ve **sonuçta garanti edilen:** başarıda ne olur, başarısızlıkta bile ne korunur.
+- **Ana başarı senaryosu:** tetikleyiciden hedefe kadar numaralı adımlar.
+- **Uzantılar:** "2a. koşul: eylem". Hangi adımda neyin ters gidebileceği.
+- **İlgili bilgi:** öncelik, sıklık, açık sorular.
+
+## Nasıl doldurulur?
+
+Cockburn şablonu bir kerede doldurmayı önermez. Önce ad, hedef, kapsam, seviye ve aktör yazılır; sonra tetikleyici ve ana senaryo; en son uzantılar.
+
+## Sık hatalar
+
+- **Arayüzü anlatmak.** "Kırmızı düğmeye tıklar" değil, "iptali onaylar". Ekran değişir, niyet değişmez.
+- **Uzantısız use case.** Ana senaryo işin kolay kısmıdır; gereksinimlerin çoğu uzantılardan çıkar.
+- **Sistemin içini anlatmak.** Use case aktör ile sistem arasında gözlenebilenleri yazar.

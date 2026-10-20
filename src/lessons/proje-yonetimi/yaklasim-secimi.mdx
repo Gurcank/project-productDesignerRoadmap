@@ -1,0 +1,163 @@
+---
+summary: "Her proje başlatma, planlama, uygulama ve kapanıştan geçer. Bu evreleri bir kez mi, döngüler hâlinde mi yürüteceğin, işin ne kadar belirsiz olduğuna bağlıdır."
+outcomes:
+  - "Bir projenin dört evresini ve her evrede ne olduğunu sayabilirsin."
+  - "Öngörücü, uyarlanabilir ve hibrit yaklaşımı ayırabilirsin."
+  - "Bir işin hangi parçasının hangi yaklaşıma uyduğuna gerekçeyle karar verebilirsin."
+minutes: 8
+standard: 2
+sources:
+  - label: "Watt, Project Management (2. baskı) — 3. The Project Life Cycle (Phases)"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-3-the-project-life-cycle-phases-project-management/"
+  - label: "PMI — What Is Project Management? (Project Management Approaches)"
+    url: "https://www.pmi.org/about/what-is-project-management"
+additions:
+  - "Proje yaşam döngüsünün dört evresi (Watt, bölüm 3)"
+  - "Öngörücü, uyarlanabilir ve hibrit yaklaşımların tanımı (PMI)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+
+Leyla kampüs projesini planlarken iki ayrı istek aldı. Hakan "Bana bir tarih ve bir bütçe ver, ona göre söz vereyim" diyor. Elif ise "Öğrenci kartı indirimini öğrencilerle deneyerek şekillendirelim, şimdiden kesinleştirmeyelim" diyor.
+
+İkisi de haklı. Kafelerle sözleşme, şartı belli bir iştir. Öğrencilerin indirimi nasıl kullanacağı ise henüz belli değil. Aynı projenin parçaları farklı biçimde yönetilmek istiyor.
+
+## Bir projenin dört evresi
+
+Her projenin bir başı, bir ortası ve bir sonu vardır. Bu yolculuğa **proje yaşam döngüsü** (project life cycle) denir. Tipik bir projede dört evre bulunur.
+
+1. **Başlatma** (initiation): ihtiyaç ya da fırsat tanımlanır. İki soru sorulur: "Bu işi yapabilir miyiz?" ve "Bu işi yapmalı mıyız?" Onay gelince proje yöneticisi atanır.
+2. **Planlama** (planning): yapılacak bütün işler, bağımlılıklar, süreler ve bütçe çıkarılır.
+3. **Uygulama** (implementation): plan hayata geçer. İlerleme plana göre ölçülür, sapmalar kaydedilir ve düzeltilir. Proje yöneticisinin zamanının çoğu burada geçer.
+4. **Kapanış** (closure): sonuç teslim edilir, sözleşmeler kapatılır, ekip serbest bırakılır, öğrenilen dersler yazılır.
+
+Bu evrelerin her biri bu bölümde ayrı bir derste anlatılıyor. Ama önce bir karar gerekir: evreleri bir kez mi yürüteceksin, yoksa küçük döngüler hâlinde tekrar tekrar mı?
+
+## Üç yaklaşım
+
+PMI proje yönetiminde üç ana yaklaşım sayar. Farkları, işin ne kadar belirsiz olduğundan doğar.
+
+**Öngörücü** (predictive) yaklaşım, gereksinimler baştan belli ve sabitse en iyisidir. Ayrıntılı bir plan yapılır ve ona göre ilerlenir. Her evre bitmeden sonrakine geçilmez. Çoğu zaman "waterfall" diye anılan yaklaşım budur.
+
+**Uyarlanabilir** (adaptive) yaklaşım, gereksinimler belirsizse ve yol boyunca değişecekse uygundur. İş küçük parçalar hâlinde, tekrar eden döngülerle yürür. Değişiklik bir sorun değil, sürecin doğal parçası sayılır. Scrum ve Kanban bu ailedendir.
+
+**Hibrit** (hybrid) yaklaşım ikisini birleştirir. Projenin belli olan parçaları planla, belirsiz olanları döngülerle yönetilir.
+
+Felsefi farkı [Waterfall ve agile](/calisma-bicimi/waterfall-ve-agile/) dersi anlatıyor. Bu ders daha pratik bir soruyu cevaplar: önündeki iş için hangisini seçeceksin?
+
+<Spectrum
+  label="Kampüs projesinin parçaları öngörücü ile uyarlanabilir arasında"
+  caption="Aynı proje içinde parçalar farklı yerlerde durur. Kafe sözleşmeleri ve donanım kurulumu belli işlerdir: öngörücü yönetilir. Kasa entegrasyonu şartname yazılınca netleşir, ortada durur. Öğrenci kartı indiriminin nasıl kullanılacağı ise öğrencilerle denenerek bulunur: uyarlanabilir yönetilir. Projenin bütünü bu yüzden hibrittir."
+  left={{ title: "Öngörücü", sub: "gereksinim belli" }}
+  right={{ title: "Uyarlanabilir", sub: "gereksinim belirsiz" }}
+  marks={[
+    { label: "Kafe sözleşmeleri", at: 0.08 },
+    { label: "Donanım kurulumu", at: 0.22 },
+    { label: "Kasa entegrasyonu", at: 0.48 },
+    { label: "İndirim deneyimi", at: 0.86 },
+  ]}
+/>
+
+## Nasıl seçersin?
+
+Seçimi tek bir soruya indirebilirsin: **bu işin gereksinimleri bugün ne kadar belli ve yol boyunca ne kadar değişecek?**
+
+| Soru | Öngörücüye işaret | Uyarlanabilire işaret |
+|---|---|---|
+| Ne istendiği belli mi? | Evet, yazılabilir | Hayır, denenerek bulunacak |
+| Ne sıklıkla değişir? | Seyrek | Sık |
+| Yarım bir sonuç işe yarar mı? | Hayır, ancak bütünü değerli | Evet, parça parça teslim edilebilir |
+| Değişikliğin maliyeti | Yüksek (donanım, sözleşme) | Düşük (yazılım, metin) |
+
+Bu tablo bir puanlama değildir. Hangi soruda hangi yana düştüğünü görmek, kararını gerekçelendirmeni sağlar.
+
+**Hibrit ≠ kararsızlık.** Hibrit, "biraz plan, biraz agile" demek değildir. Hangi parçanın hangi yaklaşımla yönetileceği ve ikisinin nerede buluşacağı açıkça yazılır.
+
+<Case>
+
+Leyla projeyi parçalara ayırdı ve her parça için yaklaşım seçti:
+
+1. **Kafe sözleşmeleri, kurulum, eğitim:** öngörücü. Tarihleri ve maliyetleri belli; Hakan'a bunlar için kesin tarih verdi.
+2. **Kasa entegrasyonu:** önce şartname, sonra plan. Şartname bitene kadar tarihi bir aralık olarak verdi.
+3. **Öğrenci kartı indirimi:** uyarlanabilir. Sipariş takımı bunu iki haftalık sprintlerinde, öğrenci geri bildirimiyle şekillendirecek.
+4. **Buluşma noktası:** 8. hafta. O hafta entegrasyon da indirim de pilot kafeye hazır olmalı. Bunu tüzüğe yazdı.
+
+</Case>
+
+<Tool slug="proje-tuzugu" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Yaklaşımı projeye değil, parçaya seç.** Tek etiket yapıştırmak, belirsiz parçayı sahte bir kesinliğe zorlar.
+- **Buluşma noktalarını yaz.** Döngüyle yürüyen iş ile planla yürüyen iş hangi tarihte birleşiyor?
+- **Belirsiz parçaya tarih değil aralık ver.** Aralığın ne zaman daralacağını da söyle.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Neyin denenerek bulunacağını sen söylersin.** Ürün kararı hâlâ açıksa o parça uyarlanabilir yönetilmeli.
+- **Sabit tarihi olan işi kabul et.** Lansman tarihi bir kısıttır; içine neyin sığacağını öncelikle belirlersin.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Projeden gelen döngüsel işi backlog'a al.** İndirim gibi parçalar sprintlerde, senin sıralamanla yürür.
+- **Buluşma tarihini sıralamaya yansıt.** 8. haftaya yetişmesi gereken işleri öne çek.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Plana bağlı tarihleri takıma görünür kıl.** Sprint dışında verilmiş bir söz varsa takım bunu planlamada bilmeli.
+- **Hibrit yapıda sürtünmeyi izle.** Proje takvimi sprint ritmini bozuyorsa bunu retroda konuştur.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinimlerin olgunluğunu ölç.** Hangi parçanın kuralları yazılabilir durumda, hangisi henüz değil?
+- **Öngörücü parçanın şartnamesini sen netleştirirsin.** Kasa entegrasyonunun arayüzü belirsizse tarih de belirsizdir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Bir proje dört evreden geçer: başlatma, planlama, uygulama ve kapanış.
+- Öngörücü yaklaşım, gereksinimler belli ve sabitken baştan ayrıntılı plan yapar.
+- Uyarlanabilir yaklaşım, belirsiz ve değişen işi kısa döngülerle yürütür.
+- Hibrit yaklaşım, belli parçaları planla, belirsiz parçaları döngülerle yönetir.
+- Seçimin ölçütü işin belirsizliğidir; karar projenin bütününe değil, parçalarına verilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Başlatma evresinde sorulan iki soru nedir?">
+
+"Bu işi yapabilir miyiz?" (fizibilite) ve "Bu işi yapmalı mıyız?" (gerekçe). İkisinin cevabı olumlu olunca proje onaylanır ve proje yöneticisi atanır.
+
+</SelfCheck>
+
+<SelfCheck question="Uyarlanabilir yaklaşım hangi durumda öngörücüden daha uygundur?">
+
+Gereksinimler belirsizse ve proje boyunca değişmesi bekleniyorsa. Bu durumda baştan yapılan ayrıntılı plan çabuk eskir. Kısa döngüler, öğrendikçe yön değiştirmeyi sağlar.
+
+</SelfCheck>
+
+<SelfCheck question="Yönetici 'Bu proje agile olacak, plan yapmayalım' diyor. Projede donanım alımı ve bir tedarikçi sözleşmesi de var. Ne dersin?">
+
+Donanım ve sözleşme, değişikliği pahalı ve gereksinimi belli işlerdir; bunlar planla yönetilmelidir. Uygulamadaki belirsiz parçalar döngülerle yürüyebilir. Yani proje hibrittir. Uyarlanabilir yaklaşım da plan yapar; yalnız planı daha kısa aralıklarla günceller.
+
+</SelfCheck>
+
+<SelfCheck question="Hibrit bir projede en sık atlanan şey nedir?">
+
+Buluşma noktası. Planla ve döngüyle yürüyen parçaların hangi tarihte birleşeceği yazılmazsa, iki taraf da kendi ritminde ilerler ve pilot gibi ortak bir an geldiğinde biri hazır olmaz.
+
+</SelfCheck>

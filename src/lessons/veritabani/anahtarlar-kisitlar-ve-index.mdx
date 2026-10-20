@@ -4,7 +4,8 @@ outcomes:
   - "Sıralı sayısal ID'leri URL'de göstermenin sakıncasını söyleyebilirsin."
   - "'Kullanıcı silinince siparişlerine ne olacak?' sorusunun neden bir ürün kararı olduğunu açıklayabilirsin."
   - "Kısıtın uygulama kodundaki kontrolden farkını ve index'in bedelini bilirsin."
-minutes: 8
+minutes: 5
+standard: 2
 sources:
   - label: "PostgreSQL — Kısıtlar"
     url: "https://www.postgresql.org/docs/current/ddl-constraints.html"
@@ -16,9 +17,12 @@ sources:
     url: "https://use-the-index-luke.com/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Aynı adı taşıyan iki kullanıcıyı sistem nasıl ayırır? Bir kullanıcı silinince siparişlerine ne olur? Liste neden 4 saniyede açılıyor? Üç sorunun cevabı bu dersin kavramlarında.
 
@@ -42,18 +46,87 @@ Bu sorunun cevabı bir **ürün kararıdır,** teknik değil: kullanıcı silini
 
 ## Index
 
+<Tree
+  label="Siparişler tablosunun anahtarları"
+  caption="Demlik'in siparişler tablosunda dört tür yapı vardır. Birincil anahtar her siparişi benzersiz tanımlar ve tahmin edilemez bir kimliktir. Yabancı anahtarlar siparişi müşteriye ve dükkâna bağlar. Kısıtlar kuralları veritabanında uygular: tutar negatif olamaz, durum yalnız tanımlı değerlerden biri olabilir. İndeks, dükkân ve tarihe göre aramayı hızlandırır; Panel'in sipariş listesi bu sorguyu kullanır."
+  root={{
+  title: "siparisler",
+  tone: "accent",
+  children: [
+    {
+      title: "Birincil anahtar",
+      children: [
+        {
+          title: "id · tahmin edilemez"
+        }
+      ]
+    },
+    {
+      title: "Yabancı anahtar",
+      children: [
+        {
+          title: "musteri_id"
+        },
+        {
+          title: "dukkan_id"
+        }
+      ]
+    },
+    {
+      title: "Kısıt",
+      children: [
+        {
+          title: "tutar ≥ 0"
+        },
+        {
+          title: "durum listeden"
+        }
+      ]
+    },
+    {
+      title: "İndeks",
+      children: [
+        {
+          title: "dukkan_id + tarih",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
 **Index (dizin)**, bir sütundaki değerlere göre hızlı arama yapmayı sağlayan yardımcı yapıdır; kitabın arkasındaki dizin gibi. İndeks yoksa veritabanı tüm satırları tek tek tarar: on bin kayıtta fark edilmez, on milyon kayıtta sayfa açılmaz. **Yavaş sayfa şikâyetlerinin en yaygın tek sebebi eksik indekstir.** "Filtreleme yaptığımız sütunda indeks var mı? Liste 4 saniyede geliyor."
 
 İndeks bedava değildir: okumayı hızlandırır ama **yazmayı yavaşlatır** ve yer kaplar. Her sütuna indeks koymak bir çözüm değil, ayrı bir problemdir.
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'te bu dersin üç sorusu da gerçekten soruldu:
+
+1. **Index:** Panel'in sipariş listesi kampüs pilotundan sonra 4 saniyede açılmaya başladı. Sorgu dükkân ve tarihe göre süzüyordu ama bu iki sütunda indeks yoktu. İndeks eklenince liste yarım saniyenin altına indi.
+2. **Foreign key:** "Müşteri hesabını silerse siparişleri ne olacak?" Dükkânın gün sonu raporu bozulmamalıydı. Siparişler kalıyor; müşteri bilgisi anonimleştiriliyor ve Panel'de "silinmiş müşteri" yazıyor.
+3. **Birincil anahtar:** sipariş adresleri tahmin edilemez kimlikler kullanıyor. Müşteriye ve baristaya gösterilen kısa kod ise ayrı: "A-417", her gün baştan sayan bir sıra.
+4. **Kısıt:** tutarın negatif olamayacağı kuralı veritabanında. Bir iade hatası tutarı eksiye düşürmeye çalıştığında kayıt reddedildi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **URL'lerde sayısal ID yerine okunur slug ya da tahmin edilemez kimlik iste.**
 - **Silme akışlarında "ilişkili kayıtlara ne olur?" ürün kararını önceden ver** ve "silinmiş kullanıcı" gibi görünümleri tasarla.
 - **Benzersizlik hatası mesajlarını tasarla;** giriş ekranında bilgi sızdırmamaya dikkat et.
 - **Yavaş filtre/sıralama şikâyetinde "bu sütunda indeks var mı?" sor.**
 
-</Callout>
+</Lens>
+<Lens role="business-analyst">
+
+- **Silme ve ilişki kurallarını iş kararı olarak yaz.** "Müşteri silinince siparişleri anonimleştirilir, silinmez."
+- **Benzersizlik kurallarını listele.** Hangi alan tekil olmalı; telefon mu, e-posta mı?
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -75,5 +148,11 @@ Bir kaydın var olmayan bir kayda bağlanmasını engeller. Cevabı bir ürün k
 <SelfCheck question="Index ne işe yarar ve bedeli nedir?">
 
 Bir sütundaki değerlere göre hızlı arama sağlar; indeks yoksa veritabanı tüm satırları tarar. Bedeli: okumayı hızlandırır ama yazmayı yavaşlatır ve yer kaplar.
+
+</SelfCheck>
+
+<SelfCheck question="Sıralı sayısal sipariş numaralarını adreste göstermek neden risklidir?">
+
+Bilgi sızdırır: biri numaralara bakarak kaç sipariş olduğunu tahmin edebilir. Ayrıca numaraları tek tek deneyerek başkasının kaydına erişme girişimini kolaylaştırır. Dışarıya açık kayıtlarda tahmin edilemez kimlikler kullanılır.
 
 </SelfCheck>

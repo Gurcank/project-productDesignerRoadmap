@@ -1,0 +1,138 @@
+---
+summary: "İyi bir pano kimin hangi kararı vereceğini bilir. Az sayıda metriği karşılaştırmayla gösterir, kümülatif grafiklerden ve eksenle oynanan çizimlerden kaçınır, her sayının tanımını yanında taşır."
+outcomes:
+  - "Bir panoyu kitlesine ve vereceği karara göre tasarlayabilirsin."
+  - "Kümülatif grafiğin neden büyüme ölçüsü olmadığını açıklayabilirsin."
+  - "Yanıltıcı grafik hilelerini tanıyıp düzeltebilirsin."
+minutes: 6
+standard: 2
+skipTerms: ["pano"]
+sources:
+  - label: "a16z — 16 Startup Metrics (2015)"
+    url: "https://a16z.com/16-startup-metrics/"
+  - label: "Kerry Rodden — How to choose the right UX metrics for your product (GV, 2015)"
+    url: "https://medium.com/gv-library/how-to-choose-the-right-ux-metrics-for-your-product-5f46359ab5be"
+additions:
+  - "Kümülatif grafikler, grafik hileleri, indirmenin vanity metrik oluşu, 'aktif' tanımı (a16z)"
+  - "Ham sayıları normalleştirme (Kerry Rodden)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Chart from "~/components/diagrams/primitives/Chart.astro";
+
+Demlik'in eski panosunda 34 grafik vardı. En üstteki "toplam indirme" çizgisi sürekli yükseliyordu ve yatırımcı sunumlarının ilk slaytına konuyordu. Hakan her pazartesi panoyu açıyor, sonra kapatıp Elif'e "durum ne?" diye soruyordu.
+
+Pano bir veri deposu değil, bir karar aracıdır. Bu ders, bir panonun kime ve hangi karar için yapıldığını, ve en sık görülen grafik yanılgılarını anlatır.
+
+## Önce kitle ve karar
+
+Bir pano üç soruyla başlar:
+
+1. **Kim bakacak?** Yönetim, ürün takımı, operasyon.
+2. **Hangi kararı verecek?** Yatırım mı artacak, bir hata mı düzeltilecek, bir dükkân mı aranacak?
+3. **Ne sıklıkla?** Haftalık bir yönetim toplantısı ile günlük bir operasyon kontrolü farklı panolar ister.
+
+Yönetimin panosu az sayıda metrik taşır: North Star ve girdileri. Takımın panosu kendi girdisine iner. Her metrik yalnız bir sayı değil, bir **karşılaştırma** gösterir: geçen hafta, geçen yılın aynı haftası ya da hedef. Karşılaştırmasız bir sayı iyi mi kötü mü, okunamaz.
+
+## Kümülatif grafik büyümeyi göstermez
+
+a16z'nin metrik rehberi açık bir uyarı yapar: kümülatif grafikler her zaman yukarı gider, iş küçülürken bile. Bu yüzden büyüme ölçüsü değildir; rehber yerine aylık gelir ya da aylık yeni müşteri gibi dönemlik değerleri önerir. Aynı rehber indirmeyi bir vanity metrik sayar.
+
+<Chart
+  kind="line"
+  label="Aynı veri, iki grafik: haftalık ve kümülatif indirme"
+  caption="Sekiz haftalık indirme verisi iki biçimde. Kümülatif çizgi 3.200'den 21.800'e her hafta yükselir. Aynı dönemde haftalık indirme 3.400'lük tepeden 2.000'e düşmüştür; yeni indirme yaklaşık yüzde 40 azalmıştır. Kümülatif grafik bu düşüşü göstermez, çünkü her hafta bir öncekinin üstüne eklenir."
+  x={{ title: "Hafta", labels: ["1", "2", "3", "4", "5", "6", "7", "8"] }}
+  y={{ title: "İndirme (bin)", max: 24 }}
+  series={[
+    { name: "Kümülatif", values: [3.2, 6.6, 9.7, 12.6, 15.2, 17.6, 19.8, 21.8], tone: "plain", dashed: true },
+    { name: "Haftalık", values: [3.2, 3.4, 3.1, 2.9, 2.6, 2.4, 2.2, 2.0], tone: "accent" },
+  ]}
+/>
+
+**Kümülatif ≠ büyüme.** Kümülatif bir çizginin eğimi düzleşmeye başlıyorsa, dönemlik değer zaten düşüyordur.
+
+## Grafik hileleri
+
+a16z'nin listesindeki üç hile panolarda da sık görülür:
+
+- **Y eksenini etiketlememek.** Okuyan neyin ölçüldüğünü ve birimini bilemez.
+- **Ekseni daraltmak.** Ekseni sıfırdan değil, verinin hemen altından başlatmak küçük bir değişimi büyük gösterir.
+- **Mutlak sayı olmadan yüzde.** "Yüzde 200 büyüme" 3 kullanıcıdan 9'a da olabilir.
+
+Kerry Rodden ham sayıların normalleştirilmesini önerir. Toplam izleme süresi kullanıcı sayısıyla birlikte büyür; kullanıcı başına izleme süresi ise deneyimin değişip değişmediğini gösterir. Panoda "toplam sipariş" yanında "müşteri başına sipariş" de durur.
+
+Son kural: **her metrik tanımıyla birlikte durur.** a16z "aktif" kelimesinin tanımlanmadan kullanılmasını sık bir hata olarak gösterir. Panoda "aktif müşteri" yazıyorsa, yanında "son 30 günde en az bir siparişi tamamlanmış" da yazar.
+
+<Case>
+
+Ece eski panoyu üç adımda yeniden kurdu:
+
+1. **Yönetim panosu:** üst satırda North Star (haftalık tamamlanan sipariş) ve beş girdi. Her biri geçen haftayla ve geçen yılın aynı haftasıyla.
+2. **Takım panoları:** sipariş takımının panosu ikinci sipariş oranını kanala göre ayırdı; panel takımınınki iade taleplerini dükkâna göre.
+3. **Kaldırılanlar:** "toplam indirme" kümülatif grafiği kaldırıldı. Yerine haftalık yeni aktif müşteri kondu. Haftalık indirmenin sekiz haftada yaklaşık %40 düştüğü ilk kez bu grafikte görüldü; pazarlama nedenini aramaya başladı.
+
+34 grafik 9'a indi. Hakan artık pazartesi sabahı Elif'e "durum ne?" diye değil, "ödeme tamamlama neden iki puan düştü?" diye soruyordu.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Panoyu bir toplantıya bağla.** Hangi toplantıda, hangi karar için açılıyor? Cevap yoksa grafik fazladır.
+- **Kümülatif grafiği sunuma koyma.** Dönemlik değeri göster; büyüme oradan okunur.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Takımın panosunu Sprint Review'da aç.** Teslim edilen işin girdiyi oynatıp oynatmadığı orada konuşulur.
+- **Metrik tanımlarını panoya yaz.** Tanım tartışması her toplantıda yeniden başlamasın.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Pano bir rapor gereksinimidir.** Kitle, karar, sıklık ve her metriğin tanımı yazılmadan pano kurulmaz.
+- **Kaynağı tek tut.** Panodaki her sayı izleme planındaki bir olaydan gelmeli.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Pano bir karar aracıdır: önce kitle, karar ve sıklık seçilir.
+- Her metrik bir karşılaştırmayla gösterilir: geçen dönem, geçen yıl ya da hedef.
+- Kümülatif grafikler iş küçülürken bile yükselir; büyüme dönemlik değerden okunur.
+- Etiketsiz eksen, daraltılmış eksen ve mutlak sayısız yüzde yanıltır.
+- Ham sayılar normalleştirilir; her metrik tanımıyla birlikte durur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Toplam kullanıcı' grafiği her ay yükseliyor. Bu, ürünün büyüdüğünü gösterir mi?">
+
+Hayır. Kümülatif bir grafik her dönemin üstüne eklendiği için, yeni kullanıcı azalırken bile yükselir. Büyümeyi aylık yeni kullanıcı ya da aylık aktif kullanıcı gösterir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir grafikte Y ekseni 78'den başlıyor ve 78'den 80'e çıkış çok dik görünüyor. Sorun nedir?">
+
+Eksen daraltılmış. 2 puanlık değişim olduğundan çok büyük görünür. Eksen sıfırdan başlatılmalı ya da daraltıldığı açıkça belirtilmeli.
+
+</SelfCheck>
+
+<SelfCheck question="Pazarlama 'aktif kullanıcı %200 arttı' diyor. Hangi iki soruyu sorarsın?">
+
+"Aktif" nasıl tanımlandı? Mutlak sayılar ne: kaçtan kaça çıktı? Tanımı ve mutlak sayısı olmayan bir yüzde karar vermeye yetmez.
+
+</SelfCheck>
+
+<SelfCheck question="Yönetim panosu ile takım panosu nasıl farklılaşır?">
+
+Yönetim panosu az sayıda metrik taşır: North Star ve girdileri. Takım panosu kendi girdisinin ayrıntısına iner; kanal, dükkân ya da platform kırılımlarıyla.
+
+</SelfCheck>

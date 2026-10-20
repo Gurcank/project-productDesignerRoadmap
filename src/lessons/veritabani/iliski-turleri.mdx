@@ -4,7 +4,8 @@ outcomes:
   - "Üç ilişki türünü örnekle ayırabilirsin."
   - "Bire çok ilişkinin arayüzdeki karşılığını (liste, boş durum, sayfalama) söyleyebilirsin."
   - "Çoka çok ilişkide ara tabloda neden ek bilgi tutulduğunu açıklayabilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "PostgreSQL — Yabancı anahtarlar (öğretici)"
     url: "https://www.postgresql.org/docs/current/tutorial-fk.html"
@@ -12,9 +13,12 @@ sources:
     url: "https://www.postgresql.org/docs/current/tutorial-join.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Kullanıcı birden fazla ekipte olabilir mi?" Bu soru bir tasarım sorusu gibi duruyor ama bir **ilişki türü** sorusu: ve cevabı arayüzü doğrudan belirliyor. Bu bir tasarım toplantısında konuşulması gereken bir konudur.
 
@@ -32,13 +36,72 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 Ara tabloda **ek bilgi** de tutulabilir ve bu çoğu zaman gerekir: "kullanıcı bu ekibe ne zaman katıldı", "bu ekipteki rolü ne". Bu ihtiyacı önceden fark etmezsen model sonradan değişir.
 
-<Callout kind="tasarimci">
+<Tree
+  label="Demlik'te üç ilişki"
+  caption="Demlik'in veri modelinde üç ilişki türü de vardır. Bire çok: bir müşterinin birçok siparişi, bir siparişin birçok satırı vardır. Çoka çok: bir çalışan birden fazla dükkânda çalışabilir, bir dükkânın birçok çalışanı vardır; bu ilişki ara tabloyla kurulur ve rol ara tabloda tutulur. Bire bir: her dükkânın tek bir kasa entegrasyonu ayarı vardır."
+  root={{
+  title: "İlişkiler",
+  tone: "accent",
+  children: [
+    {
+      title: "Bire çok",
+      children: [
+        {
+          title: "Müşteri → siparişler"
+        },
+        {
+          title: "Sipariş → satırlar"
+        }
+      ]
+    },
+    {
+      title: "Çoka çok",
+      children: [
+        {
+          title: "Çalışan ↔ dükkân",
+          sub: "rol ara tabloda"
+        }
+      ]
+    },
+    {
+      title: "Bire bir",
+      children: [
+        {
+          title: "Dükkân → kasa ayarı",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
+<Case>
+
+Panel'in ilk sürümünde her çalışan tek bir dükkâna bağlıydı. Bir gün Ozan'a bir soru geldi: "Barista iki şubemizde de çalışıyor; iki ayrı hesap mı açacak?"
+
+1. **İlişki değişti:** çalışan → dükkân bire çoktan çoka çoğa döndü; bir ara tablo eklendi.
+2. **Ara tablodaki bilgi:** rol dükkân başına tutuluyor. Aynı kişi bir şubede "sahip", diğerinde "çalışan" olabiliyor.
+3. **Arayüz:** Panel'in üstüne dükkân seçici geldi; çalışan hangi dükkânın siparişlerine baktığını görüyor.
+4. **Bedel:** mevcut çalışan kayıtları yeni tabloya taşındı; bir hafta sürdü. Soru ilk tasarım toplantısında sorulsaydı bir gün sürerdi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Her ilişki için sayıyı sor:** bir tane mi, birden fazla mı? Cevap ekranın tek alan mı liste mi olacağını belirler.
 - **Bire çok ilişkilerde liste, boş durum ve sayfalama tasarla.**
 - **Çoka çok ilişkide ilişkinin kendi bilgisini (rol, tarih) tasarıma kat.**
 
-</Callout>
+</Lens>
+<Lens role="business-analyst">
+
+- **İlişki türünü gereksinim çıkarmada sor.** "Bir çalışan birden fazla dükkânda olabilir mi?" sorusu modeli belirler.
+- **Ara tabloda tutulacak bilgiyi erken yakala.** Rol, katılma tarihi, yetki.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -53,5 +116,17 @@ Ara tabloda **ek bilgi** de tutulabilir ve bu çoğu zaman gerekir: "kullanıcı
 <SelfCheck question="Çoka çok ilişkide ara tabloda ek bilgi tutmak neden sık gerekir? Bir örnek ver.">
 
 İlişkinin kendisi hakkında bilgi tutmak gerekir. Örnek: kullanıcı–ekip ilişkisinde "bu ekibe ne zaman katıldı" ve "bu ekipteki rolü ne". Bu ihtiyaç önceden fark edilmezse model sonradan değişir.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Bir kullanıcının birden fazla rolü olabilir mi?\" sorusu neden erken sorulmalı?"}>
+
+Cevap ilişki türünü belirler: bire çok mu, çoka çok mu? Sonradan değiştirmek ara tablo eklemeyi ve mevcut veriyi taşımayı gerektirir; ekranı değiştirmekten çok daha pahalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Bire çok ilişkinin arayüzdeki tipik karşılığı nedir?">
+
+Bir liste. Liste de boş durum, sıralama, sayfalama ve kaç öğe gösterileceği kararlarını getirir.
 
 </SelfCheck>

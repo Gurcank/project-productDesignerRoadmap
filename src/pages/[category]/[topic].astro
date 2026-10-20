@@ -2,11 +2,16 @@
 import { getCollection, render } from "astro:content";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import StepList from "~/components/StepList.astro";
+import { hasQuiz } from "~/lib/quizzes";
 import { getPublishedCategories, topicHref, topicId, topicSlug } from "~/lib/content";
 import { DIAGRAM_BY_SECTION } from "~/components/diagrams";
 import { getGlossary } from "~/lib/glossary";
 import TermTooltips from "~/components/TermTooltips.astro";
 import BrowseNav from "~/components/ui/BrowseNav.astro";
+import { ROLE_LABEL } from "~/data/role-ids";
+import { TIER_LABEL } from "~/data/roles";
+import { getRoutes, getStepTiers, groupStates } from "~/lib/routes";
+import { nextInPath } from "~/lib/role-path";
 
 export async function getStaticPaths() {
   const published = await getPublishedCategories();
@@ -45,8 +50,7 @@ const lessonSources = lesson?.data.sources ?? topic.data.sources;
 const lessonFlags = lesson ? lesson.data.flags : topic.data.flags;
 
 // Categories written for this site have no quiz; linking to one would 404.
-const quizzes = await getCollection("quizzes");
-const hasQuiz = quizzes.some((quiz) => quiz.data.category === category.slug);
+const quiz = await hasQuiz(category.slug);
 
 /*
  * The diagram sits between the section intro and the term cards: the intro says
@@ -55,6 +59,31 @@ const hasQuiz = quizzes.some((quiz) => quiz.data.category === category.slug);
  * untouched (ADR-002).
  */
 const Diagram = lesson ? null : (DIAGRAM_BY_SECTION[topic.data.sectionNumber as keyof typeof DIAGRAM_BY_SECTION] ?? null);
+
+// This step on each role's route: its tier, and where the route goes next.
+const tiers = (await getStepTiers()).get(id) ?? [];
+const tierGroups = groupStates(
+  tiers.map(({ state, tier }) => ({ state, value: tier })),
+  (tier) => tier,
+);
+const titleById = new Map(
+  (await getPublishedCategories()).flatMap(({ category: owner, topics: list }) =>
+    list.map((entry) => [topicId(entry), { title: entry.data.title, category: owner.title }] as const),
+  ),
+);
+// Only where it differs from the pager: at a category's end the route jumps on.
+const pagerNext = next ? topicId(next) : null;
+const routeNext = groupStates(
+  (await getRoutes())
+    .filter((route) => route.state !== "all")
+    .flatMap((route) => {
+      const step = nextInPath(route, id);
+      return step && step.id !== pagerNext ? [{ state: route.state, value: step.id }] : [];
+    }),
+  (target) => target,
+);
+// Search can narrow to a role: a step counts for roles where it is temel or önerilen.
+const searchRoles = tiers.filter(({ tier }) => tier !== "istege-bagli").map(({ state }) => ROLE_LABEL[state].name);
 
 const FLAG_LABEL: Record<string, { text: string; title: string }> = {
   degisken: {
@@ -77,7 +106,7 @@ const FLAG_LABEL: Record<string, { text: string; title: string }> = {
         activeId={id}
         categorySlug={category.slug}
         categoryTitle={category.title}
-        quizHref={hasQuiz ? `/${category.slug}/test/` : undefined}
+        quizHref={quiz ? `/${category.slug}/test/` : undefined}
       />
     </aside>
 
@@ -91,10 +120,20 @@ const FLAG_LABEL: Record<string, { text: string; title: string }> = {
       data-pagefind-filter={`kategori:${category.title}`}
       data-pagefind-meta={`kategori:${category.title}`}
     >
+      <span hidden data-pagefind-filter="tur:Ders"></span>
+      {searchRoles.map((name) => <span hidden data-pagefind-filter={`rol:${name}`}></span>)}
       <header class="topic__head">
         {/* One line of facts above the title: where you are, how long, caveats. */}
         <p class="topic__eyebrow">
           <a class="topic__category" href={`/${category.slug}/`}>{category.title}</a>
+          {
+            tierGroups.map((group) => (
+              <span class="topic__chip topic__tier" data-tier={TIER_LABEL[group.value].code} data-for-role={group.states.join(" ")}>
+                <span class="sr-only">Rolün için: </span>
+                {TIER_LABEL[group.value].label}
+              </span>
+            ))
+          }
           {topic.data.sectionNumber && <span class="topic__chip">{topic.data.sectionNumber}</span>}
           {lesson ? (
             <span class="topic__chip">~{lesson.data.minutes ?? 8} dk</span>
@@ -119,6 +158,7 @@ const FLAG_LABEL: Record<string, { text: string; title: string }> = {
           }
         </p>
         <h1>{topic.data.title}</h1>
+        {lesson && <p class="topic__summary">{lesson.data.summary}</p>}
         {
           lesson && lesson.data.outcomes.length > 0 && (
             <div class="lesson-outcomes">
@@ -201,7 +241,7 @@ const FLAG_LABEL: Record<string, { text: string; title: string }> = {
               title={next.data.title}
               attrs={{ "data-advance": true }}
             />
-          ) : hasQuiz ? (
+          ) : quiz ? (
             <BrowseNav
               direction="forward"
               href={`/${category.slug}/test/`}
@@ -220,6 +260,22 @@ const FLAG_LABEL: Record<string, { text: string; title: string }> = {
           )
         }
       </nav>
+
+      {
+        routeNext.map((group) => {
+          const target = titleById.get(group.value);
+          return (
+            target && (
+              <p class="route-next" data-for-role={group.states.join(" ")} data-pagefind-ignore>
+                Yolunda sıradaki:{" "}
+                <a href={`/${group.value}/`}>
+                  {target.category} · {target.title}
+                </a>
+              </p>
+            )
+          );
+        })
+      }
     </article>
 
     {
@@ -444,6 +500,40 @@ const FLAG_LABEL: Record<string, { text: string; title: string }> = {
 
   .topic__chip {
     color: var(--c-text-muted);
+  }
+
+  .topic__tier {
+    border-color: var(--c-text-secondary);
+    color: var(--c-text);
+    font-weight: 600;
+  }
+
+  .topic__tier[data-tier="t"] {
+    border-color: var(--c-text);
+    background-color: var(--c-text);
+    color: var(--c-surface);
+  }
+
+  .topic__tier[data-tier="i"] {
+    border-style: dashed;
+    color: var(--c-text-secondary);
+  }
+
+  /* The lesson's one-sentence promise ("Tek cümlede", lesson standard v2). */
+  .topic__summary {
+    margin-block-start: var(--spacing-3);
+    font-size: var(--text-lg);
+    line-height: 1.5;
+    color: var(--c-text-secondary);
+  }
+
+  .route-next {
+    margin-block-start: var(--spacing-4);
+    padding: var(--spacing-3) var(--spacing-4);
+    border: 1px dashed var(--c-border-strong);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
   }
 
   .topic__head h1 {

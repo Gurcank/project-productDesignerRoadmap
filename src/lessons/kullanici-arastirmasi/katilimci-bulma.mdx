@@ -1,0 +1,150 @@
+---
+summary: "Doğru katılımcı, hizmetin gerçek ya da olası kullanıcısıdır. Kriterler yazılır, engelli ve desteğe ihtiyaç duyan kullanıcılar baştan planlanır, kanal seçilir; teşvik ve kişisel verinin korunması işe alımın parçasıdır."
+outcomes:
+  - "Bir araştırma turu için işe alım kriterleri yazabilirsin."
+  - "Katılımcı bulmanın kanallarını ve sınırlarını karşılaştırabilirsin."
+  - "Teşviki ve katılımcının kişisel verisini doğru yönetebilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "GOV.UK Service Manual — Finding participants for user research"
+    url: "https://www.gov.uk/service-manual/user-research/find-user-research-participants"
+  - label: "GOV.UK Service Manual — Write a recruitment brief"
+    url: "https://www.gov.uk/service-manual/user-research/write-a-recruitment-brief"
+additions:
+  - "İşe alım kriterleri, kapsayıcılık, işe alım kanalları, brief ve screener, teşvik, katılımcı gizliliği (GOV.UK Service Manual)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+İlk kampüs turu için en kolay yol ofisteydi. Stajyerlerin üçü üniversite öğrencisiydi ve görüşmeye hemen razı oldular. Mert'in önerisi tersine oldu: "Onlar Demlik'in her ekranını biliyor. Kahvelerini de ofisin karşısından alıyorlar."
+
+Yanlış kişiyle yapılan doğru görüşme, yanlış bir cevap verir. Bu ders, doğru katılımcıyı bulmayı anlatır.
+
+## Kimi arıyoruz?
+
+GOV.UK'nin rehberine göre araştırmanın işe yaraması için katılımcılar hizmetin **gerçek ya da olası kullanıcıları** olmalıdır. Kendi personelin, hizmetin halka açık kısmı için iyi bir katılımcı değildir; bilgisi ve deneyimi onu farklı kullandırır.
+
+İşe alım **kriterleri** bunu yazıya döker. Rehberin saydığı kriter türleri şunlardır:
+
+- Belirli bir demografi: örneğin 16–24 yaş arası gençler.
+- Belirli bir kullanıcı grubu: küçük işletme sahipleri, dükkân çalışanları.
+- Belirli bir deneyim: yakın zamanda taşınmış ya da bir başvuru yapmış olmak.
+- Sorunlu bir durum: önemli bir belgesini kaybetmiş olmak.
+- Erişim biçimi: ekran okuyucu ya da ses tanıma yazılımı kullanmak, internete yalnız kütüphaneden girmek.
+
+Kriterlerin dışında rehber bir dağılım ister: yaş, cinsiyet, etnik köken, engellilik ve sosyoekonomik durum.
+
+**Kapsayıcılık baştan planlanır.** Rehber, engelli ya da yardımcı teknoloji kullanan, dijital becerisi sınırlı ve desteğe ihtiyaç duyan insanları araştırmaya dahil etmeyi şart koşar. Bu katılımcıları bulmak bir aya kadar sürebilir.
+
+## Nereden buluruz?
+
+GOV.UK beş kanal sayar:
+
+| Kanal | Ne zaman? |
+|---|---|
+| İşe alım ajansı | Genel halk için en iyisi |
+| Meslek kuruluşu, dernek, topluluk | Belirli bir katılımcı türü için |
+| Mevcut kullanıcılar | İzinleri varsa; örneğin bir "araştırmaya katıl" kaydıyla |
+| Mekânda bulmak | Kütüphane, okul gibi yerlerde; kimseye baskı yapmadan |
+| Çalışanlar | Yalnız iç kullanıcılar için |
+
+Ajansla çalışılıyorsa yazılı bir **brief** gönderilir: tarih, süre, yer, katılımcı sayısı, kriterler ve teşvik. Ajans bundan bir **screener**, yani eleme metni yazar. Rehberin uyarısı nettir: screener her zaman kontrol edilir; ajanslar bazen engelli ya da dijital becerisi sınırlı insanları varsayılan olarak dışlar.
+
+<Layers
+  shape="funnel"
+  label="Kampüs görüşmelerinin işe alım hunisi"
+  caption="Katılımcılar Demlik'in araştırma paneli üzerinden bulundu. Panelde izin vermiş 1.240 kişi vardı. Kampüste sabah dersi olan öğrenci kriterine uyan 180 kişi çıktı. Yaş, bölüm ve kullanım sıklığına göre dağılım gözetilerek 30 kişi davet edildi. On iki kişi kabul etti; sekizi katıldı. Biri ekran okuyucu kullanıyordu."
+  layers={[
+    { title: "Panel: 1.240 kişi", sub: "izinli kayıt", tone: "accent" },
+    { title: "Kritere uyan: 180", sub: "kampüs, sabah dersi" },
+    { title: "Davet: 30", sub: "dağılım gözetildi" },
+    { title: "Kabul: 12", sub: "randevu verildi" },
+    { title: "Katılan: 8", sub: "1'i ekran okuyucuyla", tone: "progress" },
+  ]}
+/>
+
+## Teşvik ve gizlilik
+
+Rehbere göre halkın zamanına karşılık bir **teşvik** vermek olağandır. İki ayrıntı önemlidir:
+
+- Teşvik **oturumun başında** verilir. Böylece katılımcı belirli bir cevap vermek zorunda hissetmez ve sorunlu bir oturum bitirilebilir.
+- Engelli katılımcıların ek masrafları da karşılanabilir: refakatçi, taksi, işaret dili tercümanı.
+
+İşe alım kişisel veri toplar: iletişim bilgisi, eleme cevapları. Rehberin üç kuralı vardır: gereken en az bilgiyi topla, yalnız ihtiyacı olan meslektaşlarla paylaş, gerekmediği anda sil.
+
+**Gönüllü ≠ temsil eden.** En istekli katılımcılar çoğu zaman en ilgili kullanıcılardır. Kriter ve dağılım, gönüllülüğün yanlılığını dengeler.
+
+<Case>
+
+Mert stajyerler yerine paneli kullandı:
+
+1. **Kriter:** kampüste sabah dersi olan, son bir ayda en az bir kez kahve siparişi vermiş öğrenci.
+2. **Dağılım:** farklı bölümler ve sınıflar, Demlik'i sık ve seyrek kullananlar; her turda en az bir yardımcı teknoloji kullanan katılımcı.
+3. **Kanal:** uygulamadaki "Araştırmalara katıl" kaydı, 1.240 izinli kişi. Kriterlere uyan 180 kişiden 30'u davet edildi, sekizi katıldı.
+4. **Teşvik:** 150 TL kahve kredisi, oturumun başında.
+5. **Gizlilik:** ad ve telefon yalnız randevu için; altı ay sonra siliniyor.
+
+Stajyerler bir işe yaradı: görüşme rehberini onlarla prova etti.
+
+</Case>
+
+<Tool slug="onam-ornegi" />
+
+<Lenses>
+<Lens role="ux-researcher">
+
+- **Kriteri araştırma sorusundan türet.** Soruyu kim cevaplayabilir? Kriter onu tarif eder.
+- **Screener'ı her zaman oku.** Engelli ya da dijital becerisi sınırlı katılımcının elenip elenmediğini kontrol et.
+- **Teşviki başta ver.** Katılımcı borçlu hissetmemeli.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Ekibi katılımcı yapma.** Arayüzü bilen biri, kullanıcının takıldığı yeri göremez; prova için kullan.
+- **Yardımcı teknoloji kullanan katılımcıyı iste.** Erişilebilirlik sorunları en erken onda görünür.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Katılımcılar hizmetin gerçek ya da olası kullanıcılarıdır; kendi personelin halka açık kısım için değildir.
+- Kriterler yazılır; yaş, engellilik ve sosyoekonomik durum gibi bir dağılım gözetilir.
+- Engelli ve desteğe ihtiyaç duyan katılımcılar baştan planlanır; bulmak bir ay sürebilir.
+- Kanallar: ajans, topluluk, izinli mevcut kullanıcılar, mekân, iç kullanıcılar için çalışanlar.
+- Teşvik oturumun başında verilir; kişisel veri en az düzeyde toplanır ve gerekmeyince silinir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Neden kendi çalışanların halka açık bir hizmetin araştırması için iyi katılımcı değildir?">
+
+Bilgileri ve deneyimleri hizmeti gerçek kullanıcılardan çok farklı kullanmalarına yol açar. Takılacakları yer, gerçek kullanıcının takılacağı yer değildir.
+
+</SelfCheck>
+
+<SelfCheck question="Teşvik neden oturumun başında verilir?">
+
+Katılımcı belirli bir cevap vermesi gerektiğini düşünmesin diye. Ayrıca sorunlu bir oturum, teşvik konusu açılmadan bitirilebilir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir ajansın gönderdiği screener'da ne kontrol edilir?">
+
+Brief'teki kriterlerin karşılanıp karşılanmadığı ve ajansın standart sorularının istenen katılımcıları dışlayıp dışlamadığı; özellikle engelli ve dijital becerisi sınırlı insanlar.
+
+</SelfCheck>
+
+<SelfCheck question="Katılımcıların telefon numaralarını görüşme notlarıyla aynı dosyada saklamak neden sorunludur?">
+
+Gizlilik kuralına aykırıdır: kişisel veri yalnız ihtiyacı olanla paylaşılır ve gerekmediğinde silinir. Notlar ekiple paylaşılırken iletişim bilgisi de dağılır; katılımcıya bir kod vermek yeterlidir.
+
+</SelfCheck>

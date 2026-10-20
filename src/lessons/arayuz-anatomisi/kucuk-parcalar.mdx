@@ -6,6 +6,7 @@ outcomes:
   - "İkon buton için zorunlu üç şeyi sayabilirsin."
   - "Arayüz Anatomisi bölümünün kavramlarını bir testle yoklayabilirsin."
 minutes: 7
+standard: 2
 sources:
   - label: "W3C — WCAG 2.2: Target Size (Minimum)"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html"
@@ -20,14 +21,20 @@ skipTerms: ["header","fallback"]
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bu bölümün son dersi küçük parçalara ayrılmış. Ama küçük, önemsiz demek değil: en çok erişilebilirlik hatası küçük parçalarda çıkar.
 
-## Parçalar
+## Kişiyi gösteren ve ayıran parçalar
 
 **Avatar**, bir kişiyi ya da kurumu temsil eden küçük, genelde dairesel görseldir. Kişiyi hızlı tanıtır. Fotoğraf yoksa bir **fallback** gerekir: baş harfler, üretilmiş bir renk ya da varsayılan ikon. Tasarlamazsan kırık görsel ikonu çıkar. "Fotoğrafı olmayan kullanıcılar için baş harfli fallback tasarlayalım; renk isimden türetilsin."
 
 **Divider (ayırıcı çizgi)**, içerik grupları arasına konan ince çizgidir. Ama **çoğu zaman boşluk daha iyi bir ayırıcıdır**: çizgi görsel gürültü ekler, boşluk eklemez; ayrıca yakınlık ilkesiyle aynı ayrımı yapar. Çizgi, boşluğun yetmediği yoğun arayüzlerde (tablo satırları, ayar listeleri) anlamlıdır. "Bu çizgileri kaldırıp aralığı 16'dan 32'ye çıkaralım."
+
+## Eylem ve okuma parçaları
 
 **Icon button**, yalnızca ikondan oluşan butondur. Yer kazandırır; bedeli **anlam belirsizliği ve erişilebilirlik riski**. Üç şey zorunludur:
 
@@ -45,20 +52,56 @@ Yaygın olmayan ikonlarda metin etiket kullanmak daha güvenlidir. "İkon 16px k
 
 **Blockquote, code block, kbd.** Blockquote öne çıkarılmış alıntıdır; code block kod parçasıdır (genelde renklendirilmiş ve kopyalanabilir); `kbd` klavye tuşunu gösteren küçük etikettir (`Ctrl` `K`). İçerik türlerini görsel olarak ayırır. Kod bloğunda **kopyala butonu** neredeyse zorunlu bir beklentidir: "Kod bloklarına kopyala butonu ve dil etiketi ekleyelim."
 
+<Tree
+  label="Küçük parçalar ve işleri"
+  caption="Küçük parçalar dört işe hizmet eder. Kişiyi temsil eden avatar. İçeriği ayıran divider; çoğu zaman yerine boşluk tercih edilir. Eylem sunan icon button, FAB ve başa dön düğmesi. Okumaya yardım eden ilerleme çubuğu ile alıntı, kod ve klavye etiketleri."
+  root={{
+    title: "Küçük parçalar",
+    tone: "accent",
+    children: [
+      { title: "Kişi", children: [{ title: "Avatar" }] },
+      { title: "Ayırma", children: [{ title: "Divider" }] },
+      { title: "Eylem", children: [{ title: "Icon button" }, { title: "FAB" }, { title: "Başa dön" }] },
+      { title: "Okuma", children: [{ title: "İlerleme çubuğu" }, { title: "Alıntı, kod, kbd", tone: "progress" }] },
+    ],
+  }}
+/>
+
 <Callout kind="ornek" title="Bu sitede nasıl?">
 
 Bu sitede uzun bir dersten çıkıp geri döndüğünde kaldığın kaydırma konumu hatırlanır; yani "başa dön" butonuna da, okuma ilerleme çubuğuna da ihtiyaç duyulmamıştır. Bu bir tercih, kural değil: çok uzun içeriklerde bu iki parça hâlâ işe yarar.
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in sipariş geçmişindeki küçük parçalar bir tasarım incelemesinde tek tek konuşuldu:
+
+1. **Avatar:** dükkân logosu olmayan dükkânlar için baş harf ve dükkân adından türeyen bir renk; kırık görsel ikonu kalmadı.
+2. **Divider:** her sipariş satırı arasındaki çizgiler kaldırıldı; aralık 8'den 16 piksele çıktı.
+3. **Icon button:** "Tekrarla" ikonu 20 piksel kaldı ama dokunma alanı 44 piksele büyütüldü; erişilebilir adı "Bu siparişi tekrarla".
+4. **FAB:** önerildi ama kullanılmadı; ana ekranda "Son siparişini tekrarla" zaten birincil eylemdi.
+
+Liste daha sade göründü; hiçbir öğe kaldırılmadı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Avatar için fallback çiz:** baş harf, renk, ikon.
 - **Önce boşluk dene,** çizgiyi gerekirse ekle.
 - **Her icon button için ad, tooltip ve 24×24 hedefi yaz.**
 - **FAB ve sticky öğeler için alt boşluk bırak.**
 
-</Callout>
+</Lens>
+<Lens role="ux-researcher">
+
+- **Yalnız ikonlu düğmelerin anlaşılıp anlaşılmadığını test et.** "Bu ne yapar?" sorusu yeterlidir.
+- **Dokunma hatalarını kayıtta say.** Küçük hedef, yanlış dokunuş üretir.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -69,9 +112,9 @@ Bu sitede uzun bir dersten çıkıp geri döndüğünde kaldığın kaydırma ko
 
 </Summary>
 
-## Bölüm testi: Arayüz Anatomisi
+## Kendini yokla
 
-Aşağıdaki sorular bölümün tamamını kapsar. Her cevap açılır kutudadır; önce kendin cevapla.
+İlk iki soru bu derse, diğerleri bölümün tamamına dairdir. Önce kendin cevapla.
 
 <SelfCheck question="İkon buton kullanırken zorunlu olan üç şey nedir?">
 

@@ -1,0 +1,158 @@
+[
+  {
+    "term": "HEART çerçevesi",
+    "english": "HEART framework",
+    "definition": "Kullanıcı deneyimini beş kategoride ölçen çerçeve: mutluluk, katılım, benimseme, elde tutma ve görev başarısı (Rodden ve ark., Google, 2010).",
+    "topic": "iyi-metrik",
+    "aliases": [
+      "HEART"
+    ]
+  },
+  {
+    "term": "Hedef-sinyal-metrik",
+    "english": "Goals-Signals-Metrics",
+    "definition": "Metrik seçme sırası: önce hedef, sonra hedefin davranışta nasıl göründüğü (sinyal), en son sinyalin zaman içinde izlenecek ölçüsü (metrik).",
+    "topic": "iyi-metrik",
+    "aliases": [
+      "Goals-Signals-Metrics"
+    ]
+  },
+  {
+    "term": "Metrik ağacı",
+    "english": "Metric tree",
+    "definition": "North Star'ı onu üreten girdilere ve takım metriklerine bağlayan ağaç. İçindeki bağlar varsayımdır ve veriyle sınanır.",
+    "topic": "metrik-agaci"
+  },
+  {
+    "term": "Girdi metriği",
+    "english": "Input metric",
+    "definition": "North Star'ı en doğrudan etkileyen ve takımların ürünle hareket ettirebildiği üç beş tamamlayıcı etkenden biri.",
+    "topic": "metrik-agaci",
+    "aliases": [
+      "Girdi metrikleri"
+    ]
+  },
+  {
+    "term": "AARRR",
+    "english": "Pirate metrics",
+    "definition": "Kullanıcı yolculuğunu beş aşamada ölçen çerçeve: edinme, aktivasyon, elde tutma, tavsiye, gelir. Dave McClure'ün \"korsan metrikleri\".",
+    "topic": "aarrr",
+    "aliases": [
+      "Korsan metrikleri"
+    ]
+  },
+  {
+    "term": "Aha anı",
+    "english": "Aha moment",
+    "definition": "Kullanıcının ürünün değerini ilk kez deneyimlediği an. Aktivasyon bu anı gösteren bir davranışla tanımlanır.",
+    "topic": "aarrr"
+  },
+  {
+    "term": "Huni analizi",
+    "english": "Funnel analysis",
+    "definition": "Bir hedefe giden adımlarda her adımda kaç kişinin kaldığını ölçüp kaybın en çok nerede olduğunu bulma.",
+    "topic": "huni-analizi"
+  },
+  {
+    "term": "Kohort",
+    "english": "Cohort",
+    "definition": "Aynı dönemde aynı şeyi yapmış kullanıcı grubu: aynı ay ilk siparişini verenler, aynı hafta kaydolanlar.",
+    "topic": "kohort-ve-elde-tutma",
+    "aliases": [
+      "Kohort tablosu"
+    ]
+  },
+  {
+    "term": "Elde tutma",
+    "english": "Retention",
+    "definition": "Kullanıcıların zaman içinde ne kadarının ürüne döndüğünün ölçüsü. N-gün, sınırsız ve aralık tanımları farklı sorular sorar.",
+    "topic": "kohort-ve-elde-tutma"
+  },
+  {
+    "term": "Churn",
+    "english": "Churn",
+    "definition": "Bir dönemde kaybedilen müşterinin önceki dönemin toplamına oranı; elde tutmanın tersi.",
+    "topic": "kohort-ve-elde-tutma",
+    "aliases": [
+      "Müşteri kaybı oranı"
+    ]
+  },
+  {
+    "term": "Davranışsal kohort",
+    "english": "Behavioral cohort",
+    "definition": "Kullanıcıları üründe yaptıkları ya da yapmadıkları eylemlere göre gruplamak. Fark gösterir, nedenini kanıtlamaz.",
+    "topic": "segmentasyon"
+  },
+  {
+    "term": "Segmentasyon",
+    "english": "Segmentation",
+    "definition": "Kullanıcıları ortak bir özelliğe göre gruplara ayırmak: davranış, edinme kanalı ya da değer.",
+    "topic": "segmentasyon"
+  },
+  {
+    "term": "İzleme planı",
+    "english": "Tracking plan",
+    "definition": "Hangi olayların izleneceğini, kodda nerede yaşadıklarını ve iş açısından neden gerektiklerini yazan belge; veri toplamanın tek kaynağı.",
+    "topic": "izleme-plani",
+    "aliases": [
+      "Tracking plan"
+    ]
+  },
+  {
+    "term": "En küçük saptanabilir etki",
+    "english": "Minimum detectable effect",
+    "definition": "Bir A/B testinin yakalamaya değer bulduğu en küçük fark. Yarıya inerse gereken örneklem yaklaşık dört katına çıkar.",
+    "topic": "ab-testi-tasarimi",
+    "aliases": [
+      "MDE"
+    ]
+  },
+  {
+    "term": "İstatistiksel güç",
+    "english": "Statistical power",
+    "definition": "Belirli büyüklükte bir etki gerçekten varsa testin onu yakalama olasılığı; çoğu zaman %80 seçilir.",
+    "topic": "ab-testi-tasarimi"
+  },
+  {
+    "term": "Anlamlılık düzeyi",
+    "english": "Significance level",
+    "definition": "Gerçekte fark yokken veride bu büyüklükte bir farkı şans eseri görme olasılığının kabul edilen üst sınırı; çoğu zaman %5.",
+    "topic": "ab-testi-tasarimi",
+    "aliases": [
+      "İstatistiksel anlamlılık"
+    ]
+  },
+  {
+    "term": "Koruyucu metrik",
+    "english": "Guardrail metric",
+    "definition": "Bir deneyde bozulmaması gereken metrik. Birincil metrik artsa bile koruyucu bozulursa değişiklik açılmaz.",
+    "topic": "ab-testi-tasarimi",
+    "aliases": [
+      "Koruyucu metrikler"
+    ]
+  },
+  {
+    "term": "Örneklem oranı uyuşmazlığı",
+    "english": "Sample ratio mismatch",
+    "definition": "Deney gruplarındaki kullanıcı oranının planlanandan anlamlı biçimde sapması. Eksik kullanıcılar nadiren rastgeledir; sonuca güvenilmez.",
+    "topic": "deney-tuzaklari",
+    "aliases": [
+      "SRM"
+    ]
+  },
+  {
+    "term": "Karıştırıcı değişken",
+    "english": "Confounding variable",
+    "definition": "İki değişkeni birden etkileyerek aralarında olmayan bir neden-sonuç ilişkisi varmış gibi gösteren üçüncü değişken.",
+    "topic": "korelasyon-ve-nedensellik",
+    "aliases": [
+      "Confounder"
+    ]
+  },
+  {
+    "term": "Simpson paradoksu",
+    "english": "Simpson's paradox",
+    "definition": "Grupların her birinde görülen bir eğilimin gruplar birleştirilince kaybolması ya da tersine dönmesi.",
+    "topic": "korelasyon-ve-nedensellik"
+  }
+]

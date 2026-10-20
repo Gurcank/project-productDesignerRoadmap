@@ -5,7 +5,8 @@ outcomes:
   - "Bento grid'in neden Grid ile kurulduğunu açıklayabilirsin."
   - "Gap'in margin'e göre avantajını bilirsin."
   - "Aspect ratio'nun yerleşim kaymasını nasıl önlediğini söyleyebilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "MDN — Flexbox"
     url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Flexbox"
@@ -18,10 +19,12 @@ sources:
 skipTerms: ["layout","grid","header"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import LayoutAxes from "~/components/lesson/LayoutAxes.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Header'da logo solda, menü sağda olsun" ile "ana kart iki sütun iki satır kaplasın" iki ayrı yerleşim isteğidir ve iki farklı araçla kurulur. Hangisinin hangisi olduğunu bilmek, tasarım tesliminde niyetini net anlatmanı sağlar.
 
@@ -43,13 +46,28 @@ Karıştırma: *CSS Grid* bir kod tekniğidir; tasarım dosyandaki *layout grid*
 
 **aspect-ratio**, bir kutunun en-boy oranını sabitler. Görsel yüklenmeden önce yer ayrılmasını sağlar; böylece içerik geldiğinde yerleşim kaymaz (performans dersindeki CLS).
 
-<Callout kind="tasarimci">
+<Case>
+
+Panel'in sipariş ekranı iki yerleşim aracını birlikte kullanıyor:
+
+1. **Grid:** sipariş listesi tablette iki sütunlu bir ızgara; yeni sipariş geldiğinde kartlar satır satır diziliyor.
+2. **Flex:** her kartın içi tek eksenli: solda saat, ortada ürünler, sağda "Hazır" düğmesi. Ortadaki alan esniyor, düğme sabit genişlikte.
+3. **Gap:** kartlar arası 24, kart içindeki öğeler arası 8 piksel; tasarım sisteminin boşluk ölçeğinden.
+4. **Oran:** ürün fotoğrafları 4:3 `aspect-ratio` ile yer ayırıyor; fotoğraf gelmeden kart yüksekliği belli.
+
+Selin kartı Figma'da auto layout ile kurmuştu; Emre aynı yapıyı flex ile birebir yazdı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Her yerleşim kararına bir ad ver:** "bu sıra flex, bu bölüm grid".
 - **Boşlukları "kartlar arası gap, kart içi padding" diye ayır.**
 - **Görsellere oran tanımla** (16:9, 4:3); geliştirici yer ayırabilsin.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -65,5 +83,17 @@ Karıştırma: *CSS Grid* bir kod tekniğidir; tasarım dosyandaki *layout grid*
 <SelfCheck question="Flexbox ile CSS Grid arasındaki temel fark nedir? Bento grid hangisiyle kurulur?">
 
 Flexbox tek eksende (satır ya da sütun), Grid iki eksende aynı anda dizer. Bento grid, farklı boyutlarda kutuların iki boyutlu yerleşimi olduğu için CSS Grid ile kurulur.
+
+</SelfCheck>
+
+<SelfCheck question="Kartlar arasındaki boşluğu margin yerine gap ile vermenin avantajı nedir?">
+
+Gap yalnız öğelerin arasına boşluk koyar; ilk ve son öğenin dışına koymaz. Margin ile verilen boşluk kenarlarda fazladan boşluk bırakır ve düzeltmek için ek kural gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir header'da logo solda, menü sağda duracak. Flex mi, Grid mi?">
+
+Flex. Öğeler tek bir eksende dizilir; aradaki boşluk otomatik dağıtılabilir. Grid iki boyutlu yerleşimler için daha uygundur.
 
 </SelfCheck>

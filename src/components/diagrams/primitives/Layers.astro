@@ -1,0 +1,70 @@
+---
+/**
+ * Stacked levels: a pyramid (test pyramid, OKR from strategy to task), a plain
+ * stack (layers of a system), or a funnel (each level narrower than the one
+ * above). The shape carries the claim — wider means more — so the caption must
+ * say what the width means.
+ */
+import DiagramFigure from "../DiagramFigure.astro";
+import { boxClass, wrap, type Tone } from "./util";
+
+interface Layer {
+  title: string;
+  sub?: string;
+  tone?: Tone;
+}
+
+interface Props {
+  label: string;
+  caption: string;
+  /** Top first. */
+  layers: Layer[];
+  shape?: "stack" | "pyramid" | "funnel";
+}
+
+const { label, caption, layers, shape = "stack" } = Astro.props;
+
+const H = 50;
+const GAP = 6;
+const MIN = 150;
+const MAX = 340;
+const n = layers.length;
+const widthOf = (i: number) => {
+  if (shape === "stack" || n === 1) return MAX;
+  const t = i / (n - 1);
+  return shape === "pyramid" ? MIN + t * (MAX - MIN) : MAX - t * (MAX - MIN);
+};
+const rows = layers.map((layer, i) => {
+  const w = widthOf(i);
+  return {
+    ...layer,
+    w,
+    x: 180 - w / 2,
+    y: 8 + i * (H + GAP),
+    title: wrap(layer.title, w - 20, "label", 1),
+    sub: layer.sub ? wrap(layer.sub, w - 20, "sub", 1) : [],
+  };
+});
+const height = 8 + n * (H + GAP) + 2;
+---
+
+<DiagramFigure label={label} caption={caption}>
+  <svg class="dg-narrow" viewBox={`0 0 360 ${height}`} role="img" aria-label={label}>
+    <title>{label}</title>
+    {
+      rows.map((row) => (
+        <>
+          <rect class={boxClass(row.tone)} x={row.x} y={row.y} width={row.w} height={H} rx="8" />
+          <text class="dg-label" x="180" y={row.y + (row.sub.length ? 21 : 30)} text-anchor="middle">
+            {row.title[0]}
+          </text>
+          {row.sub.length > 0 && (
+            <text class="dg-sub" x="180" y={row.y + 38} text-anchor="middle">
+              {row.sub[0]}
+            </text>
+          )}
+        </>
+      ))
+    }
+  </svg>
+</DiagramFigure>

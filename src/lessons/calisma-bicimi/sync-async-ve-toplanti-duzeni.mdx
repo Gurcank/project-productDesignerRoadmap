@@ -5,7 +5,8 @@ outcomes:
   - "Bir konunun toplantı mı yoksa yazılı mı çözülmesi gerektiğine karar verebilirsin."
   - "Context switching'in ve dağınık toplantıların neden maliyetli olduğunu açıklayabilirsin."
   - "Ortak çalışma saatlerinin neden toplantıyla doldurulmaması gerektiğini bilirsin."
-minutes: 9
+minutes: 8
+standard: 2
 sources:
   - label: "Atlassian — Takım iş birliği ve uzaktan çalışma"
     url: "https://www.atlassian.com/agile"
@@ -13,21 +14,23 @@ sources:
     url: "https://scrumguides.org/scrum-guide.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Timeline from "~/components/diagrams/primitives/Timeline.astro";
 
-Sabah dokuzda başladın ve iki toplantın var: 10:00'da ve 11:30'da. Toplam üç saat değil, bir buçuk saat. Ama öğleye kadar hiçbir şey çizemedin. Neden? Çünkü iki toplantı arasındaki boşluk, **kullanılamaz parçalara** bölünmüş bir zaman.
+Selin salı sabahı dokuzda başladı ve iki toplantısı vardı: 10.00'da ve 11.30'da. Toplam üç saat değil, bir buçuk saat. Ama öğleye kadar hiçbir şey çizemedi. Neden? Çünkü iki toplantı arasındaki boşluk, **kullanılamaz parçalara** bölünmüş bir zamandı.
 
 Bu ders ekibin *ne zaman aynı anda, ne zaman ayrı ayrı çalıştığına* bakıyor. Uzaktan ve farklı saat dilimlerinde çalışmanın yaygınlaşmasıyla bu ayrım bir **çalışma kültürü konusu** hâline geldi.
 
 ## Sync ve async: iki iletişim biçimi
 
 **Sync** (synchronous, eş zamanlı), herkesin aynı anda katıldığı iletişimdir: toplantı, görüşme. **Async** (asynchronous, eş zamansız) ise herkesin kendi zamanında katıldığı iletişimdir: yazılı mesaj, doküman yorumu, kayıtlı video.
-
-İkisinin farklı güçleri var:
 
 <Compare>
 <Pane title="Sync (toplantı)">
@@ -48,45 +51,107 @@ Bu ders ekibin *ne zaman aynı anda, ne zaman ayrı ayrı çalıştığına* bak
 </Pane>
 </Compare>
 
-Modern uzaktan ekiplerin çoğu **async-first** çalışır: varsayılan yazılıdır, toplantı istisnadır. "Bunu async halledelim" demek, "toplantı yapmayalım, yazışalım" demektir. "Bunun için toplantıya gerek yok; async yorum bırakın, yarın karar veririm."
+Modern uzaktan ekiplerin çoğu **async-first** çalışır: varsayılan yazılıdır, toplantı istisnadır. "Bunu async halledelim" demek, "toplantı yapmayalım, yazışalım" demektir.
 
 Hangisini ne zaman kullanmalı? Basit bir kural: **tartışma gerektiren, belirsiz, duygusal ya da hızlı karar isteyen konular sync; bilgi paylaşımı, durum güncellemesi ve kararın kaydı gereken konular async.**
 
 ### Async standup
 
-**Async standup** (yazılı günlük güncelleme), günlük hizalamanın toplantı yerine yazılı kanaldan yapılmasıdır. **Farklı saat dilimlerinde çalışan ekipler için tek uygulanabilir yoldur.** Ayrıca yazılı olduğu için sonradan aranabilir. Slack kanallarında, günün başında yazılır.
+**Async standup** (yazılı günlük güncelleme), günlük hizalamanın toplantı yerine yazılı kanaldan yapılmasıdır. **Farklı saat dilimlerinde çalışan ekipler için tek uygulanabilir yoldur.** Ayrıca yazılı olduğu için sonradan aranabilir.
 
-Riski: **engeller yazıda gömülü kalıp kimsenin dikkatini çekmeyebilir.** Bu yüzden engeller ayrıca işaretlenir. "Async standup'a yazdım ama kimse görmemiş; engeli ayrıca etiketlemem lazımmış."
+Riski: **engeller yazıda gömülü kalıp kimsenin dikkatini çekmeyebilir.** Bu yüzden engeller ayrıca işaretlenir.
 
 ## Bağlam değiştirme: görünmeyen maliyet
 
-**Context switching** (bağlam değiştirme), bir işten başka bir işe geçerken **zihnin yeniden yüklenmesi için harcanan kayıptır.** Çok işe aynı anda başlamanın neden verimsiz olduğunu açıklar. Aynı zamanda WIP limitinin (Kanban dersinden hatırla) ve odak zamanının gerekçesidir.
-
-"Günde üç projeye bölünüyorum; context switching yüzünden hiçbirinde ilerleyemiyorum." İş yükü ve toplantı yoğunluğu tartışmalarında karşına çıkar.
+**Context switching** (bağlam değiştirme), bir işten başka bir işe geçerken **zihnin yeniden yüklenmesi için harcanan kayıptır.** Çok işe aynı anda başlamanın neden verimsiz olduğunu açıklar. Aynı zamanda WIP limitinin ve odak zamanının gerekçesidir.
 
 ### Odak zamanı
 
-**Focus time** (deep work, maker time, odak zamanı), **toplantısız, kesintisiz** bırakılan uzun çalışma bloklarıdır. Tasarım ve geliştirme gibi işler kesintisiz sürede üretilir. Güne dağılmış üç toplantı, teorik olarak 1,5 saat alsa bile, geriye kalan zamanı kullanılamaz parçalara böler. Başlangıçtaki hikâyenin cevabı budur.
+**Focus time** (deep work, maker time, odak zamanı), **toplantısız, kesintisiz** bırakılan uzun çalışma bloklarıdır. Tasarım ve geliştirme gibi işler kesintisiz sürede üretilir. Güne dağılmış toplantılar, teorik olarak kısa sürse bile, geriye kalan zamanı kullanılamaz parçalara böler. Selin'in sabahının cevabı budur.
 
-Takvimde bloke edilmiş saatler olarak görünür. Bazı ekiplerde "toplantısız çarşamba" gibi **kurumsal kurallar** vardır. "Toplantıları öğleden sonraya toplayalım; sabahlar focus time kalsın."
+<Timeline
+  label="Selin'in salı sabahı, önce ve sonra"
+  caption="Saatler 09.00'dan itibaren sayılır. Önce: 10.00'da yarım saatlik, 11.30'da bir saatlik iki toplantı vardı. Aradaki bir saat ve öncesindeki bir saat, derin çalışma için fazla kısaydı. Sonra: toplantılar öğleden sonraya, 14.00 ile 15.30 arasına toplandı. Sabah 09.00'dan 13.00'e kadar dört saatlik kesintisiz bir odak bloğu açıldı. Toplantı süresi değişmedi; değişen, zamanın nasıl bölündüğüdür."
+  unit="saat"
+  span={8}
+  every={1}
+  rows={[
+    { label: "Önce · 10.00 toplantı", start: 1, end: 1.5 },
+    { label: "Önce · 11.30 toplantı", start: 2.5, end: 3.5 },
+    { label: "Sonra · odak bloğu", start: 0, end: 4, tone: "progress" },
+    { label: "Sonra · toplantılar", start: 5, end: 6.5, tone: "accent" },
+  ]}
+/>
+
+Takvimde bloke edilmiş saatler olarak görünür. Bazı ekiplerde "toplantısız çarşamba" gibi **kurumsal kurallar** vardır.
 
 ### Ortak çalışma saatleri
 
 **Overlap hours** (core hours, ortak çalışma saatleri), farklı saat dilimlerindeki ekip üyelerinin **hepsinin çalışır olduğu ortak zaman aralığıdır.** Sync iletişimin mümkün olduğu **tek penceredir.** Bu pencere dar olduğunda ekip async'e geçmek zorundadır; bu bir tercih değil, bir sonuçtur.
 
-Uluslararası ekiplerde ve uzaktan çalışma sözleşmelerinde karşına çıkar. "Overlap yalnızca 3 saat; o saatleri toplantıyla doldurmayalım, kritik kararlara saklayalım."
-
 Mantığı: pencere dardır. Yazıyla halledilebilecek her şeyi pencerenin **dışına** (async'e) taşırsan, pencerede gerçekten aynı anda konuşman gereken konulara yer kalır.
 
-<Callout kind="tasarimci">
+Bu kuralları bir takımın ortak, yazılı anlaşmasına çevirmeyi [Takım dinamikleri ve çalışma sözleşmesi](/cevik-pratikler/takim-dinamikleri-ve-calisma-sozlesmesi/) dersi anlatıyor.
 
-- **Tasarım incelemesini yazılı başlat.** Figma'da yorum bırakmak ya da kısa bir kayıtlı walkthrough, toplantı yerine ilk adım olabilir; sync toplantıyı yalnızca anlaşmazlık varsa yap.
-- **Odak saatlerini takvime koy.** Tasarım derin odak ister; sabahlarını bloke etmek, "yoğunum" demekten daha ikna edicidir.
-- **Async'te engelleri etiketle.** Durum güncellemende "engelim var" kısmını ayrı ve görünür yaz.
-- **Dar overlap saatlerini karar toplantısına sakla.** Bilgi paylaşımını yazıya taşı.
-- **Kararı her zaman yazıya dök.** Sync toplantı yapsan bile, sonunda üç satırlık özet gönder.
+<Case>
 
-</Callout>
+Selin'in salı sabahından sonra sipariş takımı çalışma sözleşmesine üç madde ekledi:
+
+1. **Ortak saatler 10.00–16.00.** Bu saatlerde mesajlara iki saat içinde dönülür; dışında beklenmez.
+2. **Toplantılar öğleden sonra, toplu.** Çarşamba öğleden sonra hiç toplantı yok: odak zamanı.
+3. **Gelemeyen yazar.** Daily'ye katılamayan, panoya kısa bir not bırakır ve engelini ayrıca etiketler.
+
+Bir ay sonra Selin'in haftada üç sabahı kesintisizdi. Toplantı sayısı aynıydı.
+
+</Case>
+
+<Tool slug="calisma-sozlesmesi" />
+
+<Lenses>
+<Lens role="product-designer">
+
+- **Tasarım incelemesini yazılı başlat.** Figma'da yorum ya da kısa bir kayıtlı anlatım ilk adım olabilir; toplantıyı yalnız anlaşmazlık varsa yap.
+- **Odak saatlerini takvime koy.** Sabahlarını bloke etmek, "yoğunum" demekten daha ikna edicidir.
+- **Kararı her zaman yazıya dök.** Sync toplantı yapsan bile sonunda üç satırlık özet gönder.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Toplantı davetine bir karar yaz.** Karar gerektirmeyen bilgi paylaşımı yazılı yapılabilir.
+- **Ortak saatleri kendi toplantılarınla doldurma.** Dar pencere ekibin kritik kararları içindir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Refinement'ı yazılı hazırlıkla başlat.** Öğeler önceden okunursa toplantı kısa ve odaklı geçer.
+- **Kararlarını kartın altına yaz.** Async bir takımda karar, yazılı olduğu yerde yaşar.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Durum güncellemesini async yap.** Haftalık bir yazılı rapor, herkesi aynı saate toplamaktan daha ucuzdur.
+- **Dağıtık ekipte overlap'i planla.** Saat farkı büyükse, karar toplantılarını o pencereye göre takvime koy.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Toplantıları toplayarak odak bloğu aç.** Olayları günün bir bölümünde kümelemek, takımın kesintisiz zamanını korur.
+- **Async standup'ta engeli görünür kıl.** Yazıda gömülen engel, sözlü olandan daha kolay kaybolur.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim sorularını async topla.** Soruları yazılı biriktirip tek bir oturumda konuşmak, paydaşın gününü bölmez.
+- **Belirsiz konuyu sync'e taşı.** Bir kuralda anlaşmazlık varsa yazışmak yerine kısa bir görüşme daha hızlıdır.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Görüşmeleri günün tek bölümüne topla.** Araştırma da derin dikkat ister; araya giren toplantılar sentezi böler.
+- **Bulguları async paylaş, tartışmayı sync yap.** Önce yazılı özet, sonra karar için kısa bir oturum.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -109,5 +174,17 @@ Overlap hours, sync iletişimin mümkün olduğu tek penceredir ve dardır. Topl
 <SelfCheck question="Güne dağılmış üç kısa toplantı neden gün boyu üretkenliği bozar?">
 
 Toplantılar teorik olarak kısa sürse bile geriye kalan zamanı kullanılamaz parçalara böler ve her seferinde zihnin yeniden yüklenmesi gerekir (context switching). Tasarım gibi işler kesintisiz süre ister; bu yüzden odak zamanı blokları gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir konu için toplantı mı, yazışma mı? 'Yeni bildirim metni için üç seçenek var, birini seçmeliyiz.'">
+
+Seçenekler yazılı paylaşılıp herkesin görüşü async toplanabilir. Görüşler çatışırsa ya da karar acilse kısa bir sync görüşme yapılır. Her durumda karar yazıya dökülür.
+
+</SelfCheck>
+
+<SelfCheck question="Takımın yarısı İstanbul'da, yarısı altı saat geride. Daily nasıl yapılmalı?">
+
+Ortak çalışma saatleri dar olduğu için Daily yazılı (async) yapılabilir; herkes günün başında güncellemesini yazar. Engeller ayrıca işaretlenir ki gözden kaçmasın. Ortak pencere, gerçekten birlikte konuşulması gereken kararlara saklanır.
 
 </SelfCheck>

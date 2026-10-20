@@ -1,0 +1,183 @@
+---
+/**
+ * Earned value, live: four numbers in, the project's honest position out —
+ * behind or ahead, over or under, and where the money is heading if nothing
+ * changes. Every index comes with a sentence, because "SPI 0,85" means nothing
+ * to a sponsor and "takvimin gerisinde" does.
+ *
+ * Server-rendered with the case book's week-7 numbers, so without JavaScript
+ * it is a worked example.
+ */
+import DemoFrame from "./DemoFrame.astro";
+import { evm, verdict, type EvmInput } from "~/lib/demos/evm";
+
+interface Props {
+  caption: string;
+  start: EvmInput;
+}
+
+const { caption, start } = Astro.props;
+const r = evm(start);
+const tl = (n: number | null) => (n === null ? "—" : `${n.toLocaleString("tr-TR")} TL`);
+const idx = (n: number | null) => (n === null ? "—" : n.toLocaleString("tr-TR", { minimumFractionDigits: 2 }));
+const fields = [
+  { key: "bac", label: "Toplam bütçe (BAC)" },
+  { key: "pv", label: "Planlanan değer (PV)" },
+  { key: "ev", label: "Kazanılmış değer (EV)" },
+  { key: "ac", label: "Gerçekleşen maliyet (AC)" },
+] as const;
+---
+
+<DemoFrame
+  title="Kazanılmış değer hesaplayıcı"
+  hint="Dört değeri değiştir; sapmalar, oranlar ve tamamlanma tahmini yeniden hesaplanır."
+  caption={caption}
+>
+  <div class="evm" data-evm>
+    <div class="evm__inputs">
+      {
+        fields.map((f) => (
+          <label class="evm__field">
+            <span>{f.label}</span>
+            <input type="number" min="0" step="10000" inputmode="numeric" value={start[f.key]} data-evm-input={f.key} />
+          </label>
+        ))
+      }
+    </div>
+    <dl class="evm__out">
+      <div>
+        <dt>Takvim sapması (SV = EV − PV)</dt>
+        <dd data-evm-out="sv">{tl(r.sv)}</dd>
+      </div>
+      <div>
+        <dt>Maliyet sapması (CV = EV − AC)</dt>
+        <dd data-evm-out="cv">{tl(r.cv)}</dd>
+      </div>
+      <div>
+        <dt>Takvim performansı (SPI = EV ÷ PV)</dt>
+        <dd><span data-evm-out="spi">{idx(r.spi)}</span> <small data-evm-out="spiText">{verdict(r.spi, "takvim")}</small></dd>
+      </div>
+      <div>
+        <dt>Maliyet performansı (CPI = EV ÷ AC)</dt>
+        <dd><span data-evm-out="cpi">{idx(r.cpi)}</span> <small data-evm-out="cpiText">{verdict(r.cpi, "bütçe")}</small></dd>
+      </div>
+    </dl>
+    <p class="evm__summary" aria-live="polite" data-evm-summary>
+      Bu gidişle proje <strong>{tl(r.eac)}</strong> tutar
+      {r.overrun !== null && r.overrun > 0 ? `: bütçeyi ${tl(r.overrun)} aşar.` : r.overrun !== null && r.overrun < 0 ? `: bütçenin ${tl(-r.overrun)} altında kalır.` : "."}
+    </p>
+  </div>
+</DemoFrame>
+
+<script>
+  import { evm, verdict } from "~/lib/demos/evm";
+
+  for (const root of document.querySelectorAll<HTMLElement>("[data-evm]")) {
+    const tl = (n: number | null) => (n === null ? "—" : `${n.toLocaleString("tr-TR")} TL`);
+    const idx = (n: number | null) => (n === null ? "—" : n.toLocaleString("tr-TR", { minimumFractionDigits: 2 }));
+    const read = (key: string) => Number(root.querySelector<HTMLInputElement>(`[data-evm-input="${key}"]`)?.value.replace(",", ".") ?? 0) || 0;
+    const set = (key: string, text: string) => {
+      const el = root.querySelector<HTMLElement>(`[data-evm-out="${key}"]`);
+      if (el) el.textContent = text;
+    };
+    const summary = root.querySelector<HTMLElement>("[data-evm-summary]")!;
+    let last = "";
+    const update = () => {
+      const r = evm({ bac: read("bac"), pv: read("pv"), ev: read("ev"), ac: read("ac") });
+      set("sv", tl(r.sv));
+      set("cv", tl(r.cv));
+      set("spi", idx(r.spi));
+      set("cpi", idx(r.cpi));
+      set("spiText", verdict(r.spi, "takvim"));
+      set("cpiText", verdict(r.cpi, "bütçe"));
+      const tail = r.overrun !== null && r.overrun > 0 ? `: bütçeyi ${tl(r.overrun)} aşar.` : r.overrun !== null && r.overrun < 0 ? `: bütçenin ${tl(-r.overrun)} altında kalır.` : ".";
+      const text = `${tl(r.eac)}${tail}`;
+      if (text !== last) {
+        summary.replaceChildren("Bu gidişle proje ", Object.assign(document.createElement("strong"), { textContent: tl(r.eac) }), ` tutar${tail}`);
+        last = text;
+      }
+    };
+    root.addEventListener("input", update);
+  }
+</script>
+
+<style>
+  .evm {
+    display: grid;
+    gap: var(--spacing-4);
+  }
+
+  .evm__inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--spacing-3);
+  }
+
+  .evm__field {
+    display: grid;
+    gap: var(--spacing-1);
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .evm__field input {
+    min-block-size: 44px;
+    padding-inline: var(--spacing-2);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface);
+    color: var(--c-text);
+    font: inherit;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .evm__field input:focus-visible {
+    outline: 2px solid var(--c-focus);
+    outline-offset: 2px;
+  }
+
+  .evm__out {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--spacing-2);
+    margin: 0;
+  }
+
+  .evm__out > div {
+    padding: var(--spacing-2) var(--spacing-3);
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-sunken);
+  }
+
+  .evm__out dt {
+    font-size: var(--text-xs);
+    color: var(--c-text-muted);
+  }
+
+  .evm__out dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--c-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .evm__out dd small {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    color: var(--c-text-secondary);
+  }
+
+  .evm__summary {
+    color: var(--c-text-secondary);
+  }
+
+  .evm__summary :global(strong) {
+    color: var(--c-progress-text);
+    font-variant-numeric: tabular-nums;
+  }
+</style>

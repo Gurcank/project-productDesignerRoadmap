@@ -1,0 +1,128 @@
+---
+summary: "AARRR bir kullanıcının yolculuğunu beş aşamada ölçer: edinme, aktivasyon, elde tutma, tavsiye ve gelir. Her aşama bir soru ve bir metrik taşır; huni bir döngünün yalnız bir parçasını gösterir."
+outcomes:
+  - "AARRR'ın beş aşamasını ve her birinin sorduğu soruyu sayabilirsin."
+  - "Bir ürün için aktivasyon anını tanımlayıp ölçebilirsin."
+  - "AARRR hunisinin neyi gösterip neyi göstermediğini açıklayabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "Amplitude — AARRR: Come aboard the pirate metrics framework (2024)"
+    url: "https://amplitude.com/blog/pirate-metrics-framework"
+  - label: "Reforge — Growth Loops are the New Funnels (2018)"
+    url: "https://www.reforge.com/blog/growth-loops"
+additions:
+  - "AARRR'ın beş aşaması ve örnek metrikler (Dave McClure; Amplitude'un anlatımı)"
+  - "Hunilerin sınırları (Reforge)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Pazarlama bir ayda 12.000 yeni kayıt getirdiğini söyledi ve kutladı. Elif aynı ayın sipariş sayısına baktı: neredeyse hiç değişmemişti.
+
+Kayıtlar neredeydi? Kaydolup hiç sipariş vermeyenler, bir kez verip dönmeyenler, dönüp kimseye söylemeyenler… Yeni kayıt, yolculuğun yalnız ilk adımıydı. Bu ders, o yolculuğu beş adımda ölçen çerçeveyi anlatır.
+
+## Beş aşama
+
+Girişimci ve yatırımcı Dave McClure'ün ortaya koyduğu **AARRR**, ilk harflerinin korsan bağırışına benzemesi yüzünden "korsan metrikleri" diye de anılır. Amplitude'un anlatımıyla aşamalar şunlardır:
+
+| Aşama | Sorduğu soru | Örnek metrik |
+|---|---|---|
+| **Edinme** (acquisition) | Kullanıcı bize nereden geliyor? | Yeni kayıt, kanal başına müşteri edinme maliyeti |
+| **Aktivasyon** (activation) | Kullanıcı ürünün değerini keşfediyor mu? | Aktivasyon oranı, aktivasyona kadar geçen süre |
+| **Elde tutma** (retention) | Kullanıcı geri geliyor mu? | Elde tutma oranı, churn |
+| **Tavsiye** (referral) | Kullanıcı başkalarını getiriyor mu? | Davet edenler, davetle gelenler |
+| **Gelir** (revenue) | Kullanıcı ödeyen müşteriye dönüşüyor mu? | Ücretliye geçiş, kullanıcı başına gelir |
+
+**Aktivasyon** çoğu zaman en zor tanımlanan aşamadır. Amplitude bunu kullanıcının değeri keşfettiği "aha" anı olarak anlatır. Sık anılan örneği Facebook'tur: ilk yıllarında, ilk günlerinde yedi arkadaş edinen kullanıcılar ürünün değerini hızla görüyordu.
+
+<Layers
+  shape="funnel"
+  label="Demlik'in bir aylık AARRR hunisi"
+  caption="Bir ayın hunisi yukarıdan aşağı daralır. Edinme: 12.000 yeni kayıt. Aktivasyon: bunların yüzde 55'i, 6.600 kişi, yedi gün içinde ilk siparişini tamamlar. Elde tutma: ilk siparişi verenlerin yüzde 41'i 30 gün içinde ikinci siparişi verir. Tavsiye ve gelir en altta durur; Demlik'te gelir dükkânlardan gelir, müşteriden değil."
+  layers={[
+    { title: "Edinme", sub: "12.000 kayıt", tone: "accent" },
+    { title: "Aktivasyon", sub: "%55 · ilk sipariş" },
+    { title: "Elde tutma", sub: "%41 · 2. sipariş" },
+    { title: "Tavsiye", sub: "davet, öneri" },
+    { title: "Gelir", sub: "dükkândan", tone: "progress" },
+  ]}
+/>
+
+## Sıra ve sınırlar
+
+AARRR bir **huni** olarak çizilir: her aşamada bir önceki aşamadakilerin bir kısmı kalır. Bu, en çok nerede kayıp olduğunu görmeyi kolaylaştırır.
+
+Ama huninin bir sınırı vardır. [Büyüme döngüleri ve PLG](/urun-yonetimi/buyume-donguleri-ve-plg/) dersinde gördüğün Reforge yazısına göre huni, bir döngünün yalnız bir adımını açıklar. Tavsiyeyle gelen kullanıcı yeniden edinmenin başına döner; huni bu dönüşü göstermez.
+
+**Edinme ≠ büyüme.** Yeni kayıt sayısı artarken aktivasyon ve elde tutma düşüyorsa, ürün büyümüyor; yalnız kovaya su dökülüyor.
+
+<Case>
+
+Elif 12.000 kaydı AARRR'a yerleştirdi:
+
+1. **Edinme:** kasadaki QR kartı %45, Instagram reklamı %35, arkadaş daveti %20.
+2. **Aktivasyon:** Demlik'te "aha" anı kuyruğa girmeden ilk kahveyi almaktı. Tanım: kayıttan sonra 7 gün içinde ilk siparişin tamamlanması. Oran %55, yani 6.600 kişi.
+3. **Elde tutma:** 30 günde ikinci sipariş %41. Kanala göre ayırınca fark büyüktü: QR %52, Instagram %28.
+4. **Tavsiye ve gelir:** "dükkân öner" ve arkadaş daveti tavsiye aşamasıydı; gelir dükkânların komisyonundan geliyordu.
+
+Pazarlama ve Elif bir sonraki ayın hedefini kayıt sayısı yerine "aktive olan kayıt" olarak yazdı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Aktivasyonu bir davranışla tanımla.** "Uygulamayı açtı" değil, kullanıcının değeri gördüğü an.
+- **Hedefi huninin bir alt aşamasına koy.** Yalnız edinmeyi hedeflemek, sızdıran bir kovayı doldurmaktır.
+- **Huniyi kanala göre böl.** Aynı sayıdaki kayıt, farklı kanallardan çok farklı müşteriler getirir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Aktivasyonu ilk deneyimin hedefi yap.** İlk siparişe kadar geçen adımlar, backlog'un en değerli işlerinden olabilir.
+- **Aşamaları story'lere bağla.** Her iyileştirmenin hangi aşamayı hareket ettireceğini yaz.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- AARRR: edinme, aktivasyon, elde tutma, tavsiye, gelir; Dave McClure'ün "korsan metrikleri".
+- Her aşama bir soru sorar ve bir metrik taşır.
+- Aktivasyon, kullanıcının değeri keşfettiği "aha" anıdır ve bir davranışla tanımlanır.
+- Huni kaybın nerede olduğunu gösterir, ama bir büyüme döngüsünün yalnız bir parçasıdır.
+- Yeni kayıt büyüme değildir; aktivasyon ve elde tutma olmadan kova sızdırır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="AARRR'ın beş aşaması nedir?">
+
+Edinme (kullanıcı nereden geliyor), aktivasyon (değeri keşfediyor mu), elde tutma (geri geliyor mu), tavsiye (başkalarını getiriyor mu) ve gelir (ödeyen müşteriye dönüşüyor mu).
+
+</SelfCheck>
+
+<SelfCheck question="Bir ürünün aktivasyon metriği 'uygulamayı ilk kez açanlar'. Neden zayıf?">
+
+Uygulamayı açmak, değeri gördüğünü göstermez. Aktivasyon, kullanıcının ürünün değerini deneyimlediği bir davranışla tanımlanmalı; Demlik'te ilk siparişin tamamlanması gibi.
+
+</SelfCheck>
+
+<SelfCheck question="Kayıtlar iki katına çıktı ama haftalık sipariş değişmedi. Huninin nerelerine bakarsın?">
+
+Aktivasyona ve elde tutmaya. Yeni gelenler ilk siparişi veriyor mu, verenler dönüyor mu? Kanala göre de ayırırım: yeni kayıtların artışı düşük kaliteli bir kanaldan gelmiş olabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Reforge yazarlarına göre AARRR hunisinin sınırı nedir?">
+
+Huni tek yönlüdür ve bir büyüme döngüsünün yalnız bir adımını açıklar. Tavsiyeyle gelen kullanıcının yeniden edinmeye dönmesini, yani bileşik etkiyi göstermez.
+
+</SelfCheck>

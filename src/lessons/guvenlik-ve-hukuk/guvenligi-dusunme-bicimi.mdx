@@ -1,10 +1,11 @@
 ---
-summary: "Güvenlik açıklarının çoğu bir tasarım kararının sonucudur. Tehdit modeli, 'kim, neden, nasıl saldırır?' sorusunu sistemli sorar; saldırı yüzeyi her yeni özellik ve alanla büyür ve sadelik burada bir güvenlik faydası üretir."
+summary: "Güvenlik açıklarının çoğu bir tasarım kararının sonucudur. Tehdit modeli 'kim, neden, nasıl saldırır?' sorusunu sistemli sorar; saldırı yüzeyi her yeni özellikle büyür ve sadelik güvenlik kazandırır."
 outcomes:
   - "Tasarım kararlarının güvenlik sonucunu gösteren üç örnek verebilirsin."
   - "Tehdit modelinin neden tasarım aşamasında yapılması gerektiğini açıklayabilirsin."
   - "Saldırı yüzeyi ile sadelik arasındaki ilişkiyi söyleyebilirsin."
 minutes: 7
+standard: 2
 sources:
   - label: "OWASP — Threat Modeling Cheat Sheet"
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html"
@@ -12,11 +13,14 @@ sources:
     url: "https://top10.owasp.org/2025/0x00_2025-Introduction"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Güvenlik, "geliştiricinin işi" sanılan ama tasarımcının sürekli içine düştüğü bir alan. Sebep basit: **güvenlik açıklarının çoğu bir tasarım kararının sonucudur.** Birkaç örnek bölümün tamamını özetliyor:
+Güvenlik, "geliştiricinin işi" sanılan ama ürün ve tasarım kararlarının sürekli içine düştüğü bir alan. Sebep basit: **güvenlik açıklarının çoğu bir tasarım kararının sonucudur.** Birkaç örnek bölümün tamamını özetliyor:
 
 - URL'de sıralı ID göstermek → başkasının kaydına erişim denemesini kolaylaştırır (IDOR).
 - "Bu e-posta kayıtlı değil" hata mesajı → saldırgana hesap listesi verir.
@@ -34,15 +38,94 @@ Bu bölümün amacı seni güvenlik uzmanı yapmak değil; **kendi kararlarını
 
 ## Attack surface
 
+<Tree
+  label="Demlik'in tehdit modelinden üç satır"
+  caption="Demlik'in tehdit modelinde üç öncelikli risk vardır. Dükkân sahibi hesabının ele geçirilmesi: ciroya, iadelere ve faturalara erişim verir; önlem zorunlu iki aşamalı doğrulama. Öğrenci kartı indiriminin istismarı: paylaşılan kart numaralarıyla indirim kullanmak; önlem haftalık kart listesi ve günlük sınır. Müşteri telefonlarının sızması: önlem yalnız gereken veriyi toplamak ve erişimi daraltmak."
+  root={{
+  title: "Tehdit modeli",
+  tone: "accent",
+  children: [
+    {
+      title: "Sahip hesabı ele geçirilir",
+      children: [
+        {
+          title: "Zorunlu MFA"
+        }
+      ]
+    },
+    {
+      title: "Öğrenci indirimi istismarı",
+      children: [
+        {
+          title: "Kart listesi, günlük sınır"
+        }
+      ]
+    },
+    {
+      title: "Telefonlar sızar",
+      children: [
+        {
+          title: "En az veri, dar erişim",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
 **Attack surface (saldırı yüzeyi)**, bir sisteme dışarıdan dokunulabilecek tüm noktaların toplamıdır. Her yeni özellik, her yeni form alanı, her yeni üçüncü parti entegrasyon yüzeyi büyütür. **Tasarım karşılığı:** kaldırılan bir özellik, korunması gereken bir yüzeyin de kaldırılması demektir. **Sadelik burada bir güvenlik faydası üretir.** "Bu dosya yükleme özelliğini gerçekten istiyor muyuz? Saldırı yüzeyini belirgin biçimde büyütüyor."
 
-<Callout kind="tasarimci">
+<Case>
+
+Kampüs lansmanından önce Burak, Leyla ve Ayşe bir saatlik bir tehdit modeli oturumu yaptı:
+
+1. **Neyi koruyoruz?** Dükkân sahibi hesapları, öğrenci indirimi ve müşterilerin telefon numaraları.
+2. **Kim, nasıl?** İndirim için en olası istismar öğrenci kartı numaralarının paylaşılmasıydı. Bir numara bir günde onlarca siparişte kullanılabilirdi.
+3. **Önlem:** kart numarası haftalık listede olmalı ve bir kart günde en çok iki indirimli siparişte kullanılabilir. Sınır aşılınca indirim uygulanmıyor, sipariş normal fiyatla devam ediyor.
+4. **Saldırı yüzeyi:** "öğrenci kartının fotoğrafını yükle" önerisi reddedildi. Dosya yükleme yüzeyi büyütüyordu ve kart fotoğrafı gereksiz kişisel veriydi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Yeni özellik önerirken "bu saldırı yüzeyini nasıl değiştiriyor?" diye sor** (dosya yükleme, URL girişi, üçüncü parti gömme).
 - **Tehdit modeli toplantısına katıl:** en yüksek riskli kullanıcı akışlarını (giriş, ödeme, hesap kurtarma) sen bilirsin.
 - **Gereksiz özelliği ve alanı kaldırmayı bir güvenlik kazanımı olarak savun.**
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Yeni özellikte saldırı yüzeyini kapsam kararına dahil et.** Her yeni alan ve entegrasyon, korunacak bir yüzeydir.
+- **Tehdit modelini önceliklendirme aracı olarak kullan.** Her şeyi korumak imkânsız; en olası ve en zararlı risk önce.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kötüye kullanım senaryolarını kabul kriterine yaz.** "Bir kart günde en çok iki indirimli siparişte kullanılır."
+- **Güvenlik bulgularını backlog'da öncelikli tut.**
+
+</Lens>
+<Lens role="project-manager">
+
+- **Tehdit modeli oturumunu takvime koy.** Tasarım aşamasında yapılmazsa sonradan mimari değişir.
+- **Güvenlik risklerini risk kaydına ekle.** Olasılık ve etkiyle.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **İş kurallarını kötüye kullanım açısından sına.** "Bu kural nasıl istismar edilir?" sorusu bir gereksinim çıkarır.
+- **Toplanan her veri alanını gerekçelendir.**
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Araştırmada güvenlik önlemlerinin sürtünmesini ölç.** Fazla sıkı önlem meşru kullanıcıyı da durdurur.
+- **Kullanıcının riski nasıl algıladığını sor.**
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -63,5 +146,11 @@ Mimari ve akış kararları saldırı imkânlarını belirler. Örnekler: URL'de
 <SelfCheck question="Attack surface ile tasarım sadeliği arasındaki ilişki nedir?">
 
 Her yeni özellik, form alanı ve üçüncü parti entegrasyon saldırı yüzeyini büyütür. Kaldırılan bir özellik, korunması gereken bir yüzeyin de kaldırılması demektir; yani sadelik bir güvenlik faydası üretir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir özelliği kaldırmak neden bir güvenlik kazancı olabilir?">
+
+Her özellik ve form alanı saldırı yüzeyini büyütür. Kaldırılan bir özellik korunması gereken bir yüzeyi de kaldırır; sadelik bu yüzden güvenlik faydası üretir.
 
 </SelfCheck>

@@ -1,0 +1,141 @@
+---
+summary: "Ürünler tanıtım, büyüme, olgunluk ve düşüş evrelerinden geçer; her evre farklı strateji ister. Tutmayan bir özelliği emekliye ayırmak da bir ürün kararıdır ve dört adımla, müşteriye saygıyla yapılır."
+outcomes:
+  - "Ürün yaşam döngüsünün dört evresini ve dayandığı öncülleri sayabilirsin."
+  - "Bir özelliğin emekliye ayrılmayı hak edip etmediğini sorularla sınayabilirsin."
+  - "Bir özelliği dört adımda, müşteriyi en az etkileyerek kaldırabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "Universal Marketing Dictionary (AMA Dictionary) — Product Life Cycle"
+    url: "https://marketing-dictionary.org/p/product-life-cycle/"
+  - label: "Intercom — Des Traynor, How to sunset a feature (2015)"
+    url: "https://www.intercom.com/blog/how-to-sunset-a-feature/"
+additions:
+  - "Ürün yaşam döngüsünün dört evresi ve dört öncülü (AMA sözlüğü)"
+  - "Bir özelliği emekliye ayırmanın dört adımı (Des Traynor)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Chart from "~/components/diagrams/primitives/Chart.astro";
+
+Demlik'in ilk yılında eklenen "masaya servis" özelliği hâlâ duruyordu: müşteri masadan sipariş veriyor, barista kahveyi masaya getiriyordu. 140 dükkânın 12'sinde açıktı ve siparişlerin %3'ünü taşıyordu.
+
+Her yeni ekranda Selin onun için de bir yer bulmak zorundaydı; her yeni sipariş kuralında Ece onu da test ediyordu. Elif bir gün yol haritasına baktı: özellik iki yıldır "iyileştirilecek" satırındaydı ve hiç iyileştirilmemişti. Bu ders, ürünlerin ve özelliklerin yaşam döngüsünü ve bir özelliği kaldırmanın doğru yolunu anlatır.
+
+## Yaşam döngüsünün dört evresi
+
+Amerikan Pazarlama Derneği'nin sözlüğünden alınan tanıma göre yeni bir ürünün doğumdan ölüme geçtiği düşünülen dört evre vardır:
+
+- **Tanıtım:** ürün piyasaya çıktıktan sonraki yavaş satış büyümesi.
+- **Büyüme:** ürün kabul gördükçe gelen hızlı satış artışı.
+- **Olgunluk:** potansiyel alıcıların çoğu ürünü benimseyince satış büyümesinin düzleşmesi.
+- **Düşüş:** ürünün yerini bir ikamesi aldıkça ya da gözden düştükçe satışların azalması.
+
+<Chart
+  label="Ürün yaşam döngüsü (temsilî)"
+  caption="Temsilî bir yaşam döngüsü eğrisi. Tanıtım evresinde satışlar yavaş artar. Büyüme evresinde hızla yükselir. Olgunlukta düzleşir ve tepe noktasına ulaşır. Düşüş evresinde azalmaya başlar. Eğri gerçek bir ürünün verisi değildir; evrelerin biçimini gösterir."
+  x={{ title: "Zaman", labels: ["Tanıtım", "", "Büyüme", "", "Olgunluk", "", "Düşüş"] }}
+  y={{ title: "Satış", max: 100 }}
+  series={[{ name: "Satış", values: [5, 12, 35, 70, 90, 88, 55], tone: "progress" }]}
+/>
+
+Model dört öncüle dayanır. Ürünlerin ömrü sınırlıdır. Satışlar ayrı evrelerden geçer ve her evre satıcı için farklı anlam taşır. Kâr evreye göre değişir. Her evre farklı bir strateji ister. Aynı sözlük bir uyarı da ekler: ürünlerin bu döngüden sistematik ve öngörülebilir biçimde geçip geçmediği tartışmalıdır.
+
+**Model ≠ kehanet.** Yaşam döngüsü bir ürünün nerede olduğunu konuşmak için bir dildir; ne zaman düşüşe geçeceğini söylemez. Demlik bugün büyüme evresinde; öncelik yeni dükkân ve tekrar siparişte. Olgunluğa geçtiğinde verimlilik ve elde tutma öne çıkacak.
+
+## Özelliklerin de ömrü vardır
+
+Des Traynor, Intercom'daki 2015 tarihli yazısında her özelliğin tutmayacağını söyler. Yaygın tepki, tutmayan özellikten hiç söz etmemek ya da onu yol haritasının dibine, hiç gelmeyecek bir güne bırakmaktır. Traynor'a göre doğrusu bunu kabul edip özelliği kaldırmaktır.
+
+İlk adım, durumun gerçekten çaresiz olduğunu doğrulamaktır. Traynor şu soruları sorar:
+
+- Özelliği kullanabilen müşterilerin yüzde kaçı onu sık kullanıyor?
+- Bu müşteriler gelirin yüzde kaçı?
+- Kullanımı artırmak için ne denedik?
+- Kullanmayanlar neden kullanmadığını söylüyor?
+- Geri dönebilsek onu farklı mı yapardık, yoksa hiç mi yapmazdık?
+
+Ne kadar tuhaf olursa olsun, birileri o özelliği iş akışına katmıştır. Ona ne kadar çok kişi bağlıysa kaldırmak o kadar zordur.
+
+## Dört adımda emeklilik
+
+Traynor'un yöntemi dört adımdır:
+
+1. **Durumun çaresiz olduğunu doğrula:** yukarıdaki sorular.
+2. **Yeni kullanıcılara sunmayı bırak:** özelliği bir bayrakla yeni kullanıcılardan gizle; pazarlama sitesinden ve satış konuşmalarından kaldır.
+3. **Kullanıcıları ikiye ayır:** gerçekten kullananlar ve arada bir deneyenler. Deneyenler için özelliği sessizce gizle.
+4. **Kalanlara yaşam sonunu duyur:** neden kaldırıldığını net söyle, bir kapanış tarihi ver, kesintiyi anladığını göster, verilerini nasıl alacaklarını ve ihtiyaçlarını başka nasıl karşılayacaklarını anlat. Traynor tipik bir haber süresi olarak bir aydan bir yıla kadar bir aralık verir.
+
+**"Ne zararı var?" iyi bir soru değildir.** Traynor'a göre kimsenin kullanmadığı bir özellik, tanımı gereği kullanışsızdır. Kaldırıldığında ürün odaklanır ve yeni fikirlere yer açılır.
+
+<Case>
+
+Elif "masaya servis" için Traynor'un sorularını cevapladı:
+
+1. **Kullanım:** 12 dükkânda açık, siparişlerin %3'ü. Yoğun kullanan dükkân 4.
+2. **Deneme:** iki kez yeniden tasarlanmış, kullanım artmamış. Dükkânlar barista sayısının yetmediğini söylüyordu.
+3. **Karar:** kaldırmak.
+4. **Yeni dükkânlara kapatıldı.** Pazarlama sitesinden çıkarıldı.
+5. **Az kullanan 8 dükkânda gizlendi.** Hiçbiri sormadı.
+6. **4 dükkâna üç ay önceden haber verildi.** Ozan her biriyle konuştu. Alternatif: masadaki QR'dan gel-al siparişi ve hazır olunca isimle çağırma.
+
+Selin bir sonraki tasarımda bir ekran durumu eksik çizdi; Ece'nin test listesi kısaldı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Ürünün evresini stratejiye yaz.** Büyüme evresinde doğru olan öncelik, olgunlukta yanlış olabilir.
+- **Kaldırmayı bir karar olarak sahiplen.** Yol haritasının dibinde bekleyen özellik, verilmemiş bir karardır.
+- **Gelir sorusunu atlama.** Az kullanılan bir özellik, gelirin büyük bir kısmını getiren birkaç müşteriye bağlı olabilir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Emekliliği backlog'da iş olarak planla.** Bayrak, gizleme, duyuru ve veri dışa aktarma birer story'dir.
+- **Gerçek kullanıcılarla konuş.** Kaldırma kararından en çok etkilenecek olanlar birkaç kişidir; onları tanı.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Ürün yaşam döngüsü dört evredir: tanıtım, büyüme, olgunluk, düşüş.
+- Model, ürünlerin ömrünün sınırlı olduğunu ve her evrenin farklı strateji istediğini varsayar; öngörü gücü tartışmalıdır.
+- Tutmayan özellikler de kaldırılır; önce kullanım, gelir ve denemeler sorularla sınanır.
+- Dört adım: doğrula, yeni kullanıcılara kapat, deneyenlerden gizle, gerçek kullanıcılara tarih ve alternatifle duyur.
+- Kimsenin kullanmadığı özellik ürünü yavaşlatır; kaldırmak ürüne odak kazandırır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Ürün yaşam döngüsünün dört evresi nedir?">
+
+Tanıtım (yavaş satış büyümesi), büyüme (hızlı artış), olgunluk (alıcıların çoğu benimseyince düzleşme) ve düşüş (ikame ürün ya da gözden düşme nedeniyle azalma).
+
+</SelfCheck>
+
+<SelfCheck question="Bir özellik müşterilerin yalnız %2'si tarafından kullanılıyor. Hemen kaldırır mısın?">
+
+Hemen değil. Önce bu müşterilerin gelirin ne kadarını getirdiğini, kullanımı artırmak için ne denendiğini ve kullanmayanların neden kullanmadığını sorarım. Az kullanıcı, gelirin büyük bir kısmını taşıyor olabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Emeklilik duyurusunda hangi bilgiler olmalı?">
+
+Neyin kaldırıldığı ve nedeni, kesin bir kapanış tarihi, kesinti için anlayış, verinin nasıl alınacağı ve aynı ihtiyacı başka nasıl karşılayabilecekleri.
+
+</SelfCheck>
+
+<SelfCheck question="Bir ekip arkadaşın 'özellik dursun, kimseye zararı yok' diyor. Ne cevap verirsin?">
+
+Kullanılmayan özelliğin bir maliyeti vardır: her yeni tasarımda, her testte ve her ekranda yer kaplar ve ürünü karmaşıklaştırır. Traynor'a göre kaldırmak ürüne odak kazandırır ve yeni fikirlere yer açar.
+
+</SelfCheck>

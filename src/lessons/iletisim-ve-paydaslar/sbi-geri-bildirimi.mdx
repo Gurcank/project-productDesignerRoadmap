@@ -1,0 +1,152 @@
+---
+summary: "SBI geri bildirimi üç parçaya ayırır: belirli bir durum, gözlenen bir davranış ve onun etkisi. Yargı yerine gözlem verir; ardından niyeti sorarak konuşmayı iki yönlü yapar."
+outcomes:
+  - "Bir geri bildirimi durum, davranış ve etki olarak kurabilirsin."
+  - "Yargıyı gözlemlenebilir davranışa çevirebilirsin."
+  - "Niyet sorusuyla geri bildirimi bir konuşmaya dönüştürebilirsin."
+minutes: 5
+standard: 2
+sources:
+  - label: "Center for Creative Leadership — Use Situation-Behavior-Impact (SBI) to Understand Intent (2025)"
+    url: "https://www.ccl.org/articles/leading-effectively-articles/closing-the-gap-between-intent-vs-impact-sbii/"
+additions:
+  - "SBI ve SBII adımları, örnekleri ve geri bildirim kaygısına etkisi (Center for Creative Leadership)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Sprint 13'ün review'ında Zeynep açık hataları anlatırken Burak üç kez sözünü kesti. Zeynep son iki maddeye geçemedi. Toplantıdan sonra Kaan, Burak'a bir şey söylemesi gerektiğini biliyordu. Aklına ilk gelen cümle şuydu: "Çok kabaydın."
+
+O cümle Burak'ı savunmaya iterdi ve hiçbir şey değişmezdi. Bu ders, geri bildirimi bir yargı olmaktan çıkarıp bir gözleme çevirmeyi anlatır.
+
+## Kafamızdaki hikâyeler
+
+Center for Creative Leadership'in (CCL) yazısı tanıdık bir döngüyle başlar. Biri bizi hayal kırıklığına uğrattığında hakkında genellikle olumsuz varsayımlar kurarız. Sonra o varsayımlara göre davranırız. Çoğu zaman kafamızda bir hikâye kurduğumuzu fark etmeyiz.
+
+Yazının vurgusu iki cümledir: birinin niyetini bilmenin tek yolu sormaktır; ona etkisini bildirmenin tek yolu söylemektir.
+
+## Üç adım ve bir soru
+
+CCL'nin **SBI** (Situation-Behavior-Impact) yöntemi geri bildirimi üç adıma ayırır:
+
+<StepFlow
+  label="SBI ve niyet sorusu"
+  caption="Geri bildirim dört adımda verilir. Durum: belirli bir an, örneğin dünkü Sprint Review. Davranış: gözlenebilir olan, örneğin Zeynep anlatırken üç kez sözünü kesmek. Etki: davranışın sonucu ve senin üzerindeki etkisi, örneğin son iki maddenin konuşulamaması. Niyet: karşı tarafın ne amaçladığını sormak; bu adım konuşmayı iki yönlü yapar."
+  steps={[
+    { title: "Durum", sub: "belirli bir an ve yer", tone: "accent" },
+    { title: "Davranış", sub: "gözlenebilir olan, yargı değil" },
+    { title: "Etki", sub: "sonuç ve senin üzerindeki etkisi" },
+    { title: "Niyet", sub: "ne amaçlıyordun?", tone: "progress" },
+  ]}
+/>
+
+1. **Durum:** davranışın olduğu belirli an. CCL "geçen hafta" gibi genel ifadelerden kaçınmayı önerir: "Bu sabah 11'deki ekip toplantısında…"
+2. **Davranış:** gözlenebilir olan. Görüş ve yargı eklenmez. CCL'nin örneği: "Bütçeyi anlatırken sözümü kestin." "Kabaydın" değil.
+3. **Etki:** davranışın sonucu ve senin üzerindeki etkisi. Yargı yerine gerçek duygu söylenir: "kaygılandım", "gurur duydum".
+
+CCL dördüncü bir adım ekler ve yönteme **SBII** der: **niyet**. Karşı tarafa ne amaçladığı sorulur: "Bununla neyi hedefliyordun?" Sonra dinlenir. Geri bildirim tek yönlüdür; niyet sorusu onu iki yönlü bir konuşmaya çevirir.
+
+CCL'ye göre SBI geri bildirim vermenin kaygısını ve alanın savunmacılığını azaltır.
+
+**Gözlem ≠ yargı.** "Sözümü kestin" bir gözlemdir; kişi itiraz edemez. "Kabaydın" bir yargıdır; kişi itiraz eder ve konuşma davranıştan kişiliğe kayar.
+
+**SBI yalnız eleştiri için değildir.** CCL'nin örneklerinden biri olumludur: "Sana sorulmadan o sorunu ele aldığında etkilendim."
+
+<Case>
+
+Kaan, "çok kabaydın" cümlesini SBI'ya çevirdi ve ertesi sabah Burak'la konuştu:
+
+1. **Durum:** "Dünkü Sprint Review'da, Zeynep açık hataları anlatırken…"
+2. **Davranış:** "…üç kez sözünü kestin."
+3. **Etki:** "Zeynep son iki maddeye geçemedi. Kafe fişindeki okunma sorunu konuşulmadan kaldı; bu beni endişelendirdi."
+4. **Niyet:** "Ne olmasını istiyordun?"
+
+Burak'ın cevabı Kaan'ı şaşırttı: süreyi yetiştirmeye çalışıyordu, çünkü demo uzamıştı. Birlikte bir çözüm buldular: sonraki review'larda hata listesi ilk 15 dakikaya alındı.
+
+</Case>
+
+<Lenses>
+<Lens role="scrum-master">
+
+- **Retro ve 1:1'lerde SBI'ı modelle.** Takım yöntemi senden görerek öğrenir.
+- **Niyet sorusunu atlama.** Çoğu "kötü davranış"ın arkasında bir süreç sorunu çıkar.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Paydaşa geri bildirimi de SBI ile ver.** "Toplantıda yeni bir istek ekledin, sprint hedefi değişti" yargı değildir.
+- **Olumlu geri bildirimi somutlaştır.** "Harika iş" yerine hangi davranışın neyi sağladığını söyle.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Story kabulünde geri bildirimi davranışa bağla.** "Kabul kriterinin ikinci maddesi karşılanmadı" yargı değil, gözlemdir.
+- **Takımın yaptığı iyi işi Review'da adlandır.** Somut övgü, tekrarlanmasını sağlar.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Tedarikçiye geri bildirimi de durumla başlat.** "Altıncı haftanın test ortamı…" tarih, tartışmayı somut tutar.
+- **Etkiyi projenin diliyle söyle.** "Kritik yolda bir hafta kaybettik" bir etki cümlesidir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim belgesine gelen yorumu da SBI ile ver.** "Üçüncü kural ikinciyle çelişiyor" bir gözlemdir.
+- **Görüşmeciye teşekkürü somut yap.** Hangi bilgisinin hangi kuralı netleştirdiğini söyle.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Tasarım eleştirisinde davranışı değil ekranı tarif et.** "Buton metni eylemi söylemiyor" bir gözlemdir; "kötü olmuş" değil.
+- **Kendi tasarımına gelen yargıyı gözleme çevir.** "Neyi gördün de böyle düşündün?" diye sor.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Bulguyu SBI gibi kur.** Durum, gözlenen davranış ve kullanıcıya etkisi; yorum en sonda.
+- **Niyet sorusu araştırmacının sorusudur.** "O anda ne yapmaya çalışıyordun?" görüşmede de çalışır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- SBI geri bildirimi üç parçaya ayırır: durum, davranış, etki.
+- Durum belirli, davranış gözlenebilir, etki yargısız anlatılır.
+- Niyet sorusu (SBII) geri bildirimi iki yönlü bir konuşmaya çevirir.
+- Gözleme itiraz edilmez; yargıya edilir.
+- SBI olumlu geri bildirim için de kullanılır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Toplantılarda hep çok konuşuyorsun' cümlesini SBI'ya nasıl çevirirsin?">
+
+Belirli bir durum ve gözlenebilir bir davranış seçerim: "Salı günkü refinement'ta, üç story'nin ikisinde ilk sen konuştun ve Selin söz alamadı. Selin'in fikrini duymak istiyordum." Ardından niyetini sorarım.
+
+</SelfCheck>
+
+<SelfCheck question="Davranış ile yargı arasındaki fark nedir?">
+
+Davranış gözlenebilir ve tartışılmazdır: "sözümü kestin." Yargı bir yorumdur: "kabaydın." Yargı karşı tarafı savunmaya iter; davranış üzerine konuşulabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Niyet sorusu neden eklenir?">
+
+Davranışın etkisi ile kişinin niyeti farklı olabilir. Sormak, varsayımları düzeltir ve konuşmayı iki yönlü yapar. Burak'ın örneğinde asıl sorun bir süreç sorunuydu.
+
+</SelfCheck>
+
+<SelfCheck question="SBI ile olumlu bir geri bildirim örneği ver.">
+
+"Dünkü pilot toplantısında (durum), kafe personelinin sorularını not alıp bugün cevapladın (davranış). Personel ilk kez kendini dinlenmiş hissettiğini söyledi; ben de rahatladım (etki)."
+
+</SelfCheck>

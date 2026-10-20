@@ -5,7 +5,9 @@ outcomes:
   - "Bir oran ve tabandan tipografi ölçeği çıkarabilirsin."
   - "Gövde ve başlık için neden farklı satır yüksekliği oranı kullanıldığını söyleyebilirsin."
   - "Bir makale sayfasında satır uzunluğu için neden max-width verildiğini bilirsin."
-minutes: 13
+minutes: 8
+standard: 2
+skipTerms: ["Gövde", "gövde"]
 sources:
   - label: "Butterick — Practical Typography: Line length"
     url: "https://practicaltypography.com/line-length.html"
@@ -21,6 +23,9 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import TypeScaleDemo from "~/components/lesson/TypeScaleDemo.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Web'in içeriğinin ezici çoğunluğu **metindir.** Bu yüzden tipografi kararları, tek tek renk kararlarından daha çok etki eder. Bir sayfanın "profesyonel" ya da "amatör" hissettirmesinde çoğu zaman font seçiminden çok **boyut, aralık ve satır uzunluğu** rol oynar.
 
@@ -107,7 +112,21 @@ Bu site iki yazı tipi ailesi kullanıyor: başlıklarda kitap hissi veren bir s
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'te üç font ailesi kullanılıyordu: biri başlıkta, biri gövdede, biri fiyatlarda.
+
+1. **Typeface:** tek aileye inildi; iki ağırlık (normal ve kalın). Yüklenen dosya sayısı azaldı, ilk çizim hızlandı.
+2. **Ölçek:** 16 piksel gövde, 1,25 oranlı ölçek; beş basamak.
+3. **Rakamlar:** fiyat ve süre listelerinde sabit genişlikli rakamlar; "165 TL" ile "15 TL" alt alta hizalı.
+4. **Türkçe:** ğ, ş, İ ve ı her ağırlıkta denendi; kalın İ'nin noktası satır yüksekliğine çarpmıyor.
+
+Panel'de gövde metni bir basamak büyütüldü; tezgâhta uzaktan okunuyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Font dosyası sayısını say.** "3 ağırlık, 1 aile" gibi bir bütçe belirle.
 - **Ölçeği token yap, ara değer üretme.** Her boyut ölçekten gelsin.
@@ -115,7 +134,8 @@ Bu site iki yazı tipi ailesi kullanıyor: başlıklarda kitap hissi veren bir s
 - **Okuma sütunu sınırla.** Geniş ekranda uzun metin için `max-width` iste.
 - **Türkçe karakterleri test et.** Seçtiğin fontta `ı İ ğ ş ç ö ü` gerçek metinde nasıl görünüyor?
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -138,5 +158,11 @@ Typeface tasarımın kendisidir (Inter), font ise belirli bir ağırlık, stil v
 <SelfCheck question="Gövde metni ve büyük başlık için satır yüksekliği neden farklı olmalı?">
 
 Yazı büyüdükçe satır yüksekliği oranı küçülmelidir. Gövde için 1,5 civarı rahat okunur; aynı oran 40px'lik bir başlıkta satırları kopuk ve dağınık gösterir, orada 1,1–1,2 uygundur.
+
+</SelfCheck>
+
+<SelfCheck question="Bir ürün dört farklı font ailesi kullanıyor. Hangi iki gerekçeyle azaltmayı önerirsin?">
+
+Tutarlılık: çok aile, sistemsiz ve dağınık bir görünüm verir. Hız: her aile ve ağırlık ayrı bir dosyadır ve ilk çizimi geciktirebilir. Çoğu üründe tek aile ve birkaç ağırlık yeterlidir.
 
 </SelfCheck>

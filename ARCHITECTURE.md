@@ -1,4 +1,4 @@
-# ARCHITECTURE — Product Designer Yol Haritası
+# ARCHITECTURE — SeeYourNextStep
 
 > **Ne** yapıldığı [SPEC.md](SPEC.md)'de. Bu belge **nasıl** yapıldığını ve **neden öyle** yapıldığını
 > tutar. Her karar ADR biçiminde: bağlam → alternatifler → karar → ödünleşim.
@@ -112,6 +112,9 @@ hesap yok, sunucu yok, gizlilik sorunu yok, maliyet sıfır.
 
 ## ADR-006 — i18n: Astro yerleşik yönlendirme, TR varsayılan
 
+> **Durum: ertelendi (Ekim 2026).** Kullanıcı EN arayüzünü ertelemeyi seçti; site şu an yalnız TR.
+> `src/i18n` ve `/en/` rotaları yok. Aşağıdaki karar EN eklenirse uygulanacak plan olarak duruyor.
+
 `defaultLocale: "tr"`, `prefixDefaultLocale: false` → TR `/`, EN `/en/`. Arayüz sözlükleri
 `src/i18n/{tr,en}.json`.
 
@@ -124,6 +127,10 @@ içerik iki kez sonuçlanır.
 ---
 
 ## ADR-007 — Tema: `data-theme` + sistem varsayılanı, flaş yok
+
+> **Durum: kısmen geçersiz (15 Ekim 2026).** Galaksi yeniden tasarımından beri tek tema var: gece
+> gökyüzü. `<html data-theme="dark">` sabit yazılır, açık tema ve tema anahtarı yok. Geçerli kalan kısım:
+> ilk boyamadan önce çalışan satır içi `<head>` betiği kuralı; bugün rolü (ADR-018) ve yıldız ayarını uyguluyor.
 
 `<html data-theme="dark|light">`; seçim yoksa `prefers-color-scheme`, o da yoksa koyu.
 
@@ -266,6 +273,12 @@ Düğme, hangi sürümün indirildiğini `localStorage`'da `build` karmasıyla t
 der. `navigator.storage.persist()` istenir (en iyi çaba). Okuma konumu (`pdr.scroll.v1`) ilerleme modelinden
 ayrıdır: yedeğe/Zod şemasına/`updatedAt`'a girmez, çünkü ders düzenlenince eskir.
 
+**"Yolunu indir" (Faz 13).** Ayarlar'da üçüncü kapsam: seçili rolün yolundaki **temel ve önerilen**
+bölümler (isteğe bağlılar dahil edilince bir rolün yolu bütün siteye yaklaşıyordu: PM için 28/31 bölüm,
+~47 MB; şimdi 21 bölüm, ~37 MB). Liste build'de `getRoutes()`'tan çıkar ve düğmenin `data-paths`
+özniteliğine yazılır; düğme rol değişince kendini yeniden anlatır. Kayıt anahtarı `path:<rol>`, manifest
+değişmedi. Roller, Araçlar, sözlük ve arama zaten ortak (`shared`) dosyalarda.
+
 **Ödünleşim.** İndirme ~19 MB (sıkıştırılmamış üst sınır). Hepsini indirmek mobil veriyi harcar, bu yüzden
 otomatik değil, kullanıcı tetikler. Yeni derlemede kullanıcı elle güncellemezse eski kopyayı görür; sayfalar yine
 arka planda tazelenir.
@@ -273,6 +286,11 @@ arka planda tazelenir.
 ---
 
 ## ADR-014 — Ana sayfa şeması: 64rem'de mobil rotadan farklı bir yerleşime geçer
+
+> **Durum: yerini aldı (15 Ekim 2026).** `RoadmapRoute.astro` ve `RoadmapPath.astro` artık yok. Ana
+> sayfa haritası `GalaxyMap.astro`: her alan bir kuşak, her kategori o kuşak içinde sürüklenebilen
+> bir gezegen (`galaxy-drag.ts`), tek bir SVG katmanı gezegenleri rota sırasıyla birleştirir. JS yokken
+> sıralı bağlantı listesidir. Rolün haritayı nasıl değiştirdiği ADR-017'de. Aşağıdaki metin tarihsel kayıttır.
 
 **Bağlam.** `RoadmapRoute.astro` tek bir düzen kuralı kullanıyordu: kartlar dikey bantlarda,
 genişlik arttıkça 2 sonra 4 sütuna bölünen bir ızgara. Masaüstünde bu, geniş ekranı doldurmuyordu —
@@ -347,18 +365,195 @@ metin rengine alındı.
 **Ödünleşim.** Etiketler hover/odakta görünür; keşfedilebilirlik için kapalı hâlde yalnız çizgiler var.
 Dört bağlantı olduğu için kabul edildi; menü büyürse etiketlerin sürekli görünmesi yeniden düşünülmeli.
 
+## ADR-019 — Yazılmış adımlar `src/authored/` altında; kimlikler donmuş bir listede
+
+**Bağlam.** Materyalde olmayan üç kategori (Programlama Dilleri, Veri Yapıları, Algoritmalar) adım
+dosyalarını `src/content/topics/` içinde, `origin: "new"` ile tutuyordu. İçe aktarıcı yalnız kendi
+kategorilerinin klasörlerini silerek onları koruyordu. Bu iki sorun yaratıyordu: CLAUDE.md'nin "
+`src/content/` üretilmiştir" kuralı harfiyen doğru değildi, ve içe aktarıcıya bu adlardan biriyle bir
+kural eklenirse elle yazılmış adımlar sessizce silinirdi. Çok rollü plan ~100 yeni adım getiriyor; bu
+istisna onların hepsini aynı riske sokardı.
+
+**Karar.**
+- Elle yazılan adımlar `src/authored/topics/<kategori>/NN-slug.md` altında. `topics` collection iki
+  klasörü birlikte yükler ([`src/data/topic-roots.ts`](src/data/topic-roots.ts), tek kaynak).
+  Collection kimliği klasör önekini taşır, böylece iki klasör çakışamaz; URL ve ilerleme anahtarı
+  kimlikten değil, kategori + dosya adından gelir ([`src/lib/topic-id.ts`](src/lib/topic-id.ts)).
+- İçe aktarıcı `src/content/{topics,categories,quizzes}` klasörlerinin **tamamını** yeniden yazar.
+  `import:check` hem ayrışmayı hem de içe aktarıcının üretmediği fazla dosyayı yakalar; satır
+  sonlarını karşılaştırmaz (Windows'ta `core.autocrlf` her dosyayı "ayrışmış" gösteriyordu).
+- `validate` her klasörde yalnız kendi `origin` değerine izin verir ve aynı kimliği iki dosyada
+  bulursa kırılır.
+- **Donmuş kimlikler:** [`src/data/frozen-topic-ids.json`](src/data/frozen-topic-ids.json) yalnız
+  büyüyen bir liste. İçindeki bir kimlik sitede yoksa `validate` kırılır; listede olmayan yeni bir
+  kimlik de kırar, ta ki `npm run validate -- --update-frozen` ile bilerek dondurulana kadar.
+  Slug'ın donma anı böylece açık bir adım olur.
+- Aynı turda eklenen iki sessiz hata kapısı: rezerve URL kökleri (`RESERVED_ROOTS`,
+  `src/data/categories.ts`; hem kategori slug'ı hem `src/pages` kökleri denetlenir) ve harita
+  görselleri (her kategorinin gezegeni, her gezegenin paleti ve deseni, her alanın `--hue-*` /
+  `--c-area-*` token'ı ve alan tonları arasında en az 25°). İkisi de çalışma anında hata vermeden
+  bozulurdu: bilinmeyen slug Ay'a, bilinmeyen alan boş bir `var()`'a düşüyordu.
+
+**Taşımanın kanıtı.** `git mv` yalnız yeniden adlandırma gösterdi; 283 HTML dosyasının sha256 özeti
+taşımadan önce ve sonra birebir aynı.
+
+**Ödünleşim.** Collection kimlikleri artık `content/topics/…` ve `authored/topics/…` önekli; kimliği
+doğrudan URL gibi kullanan bir kod yazılırsa yanlış olur — her zaman `topicId()` kullanılır.
+
+---
+
+## ADR-017 — Roller: tek bilgi tabanı üzerinde yollar
+
+**Bağlam.** Site Product Designer için kurulmuştu. Kullanıcı Product Manager, Project Manager, Product
+Owner, Scrum Master, Business Analyst ve UX Researcher için de yol istedi; konular ortak, öncelikler
+farklı.
+
+**Alternatifler.** Rol başına ayrı bölüm (`/urun-yoneticisi/...`): ortak konular kopyalanır, ilerleme
+bölünür. Tek harita + yalnız etiket: rol kendi sırasını göremez.
+
+**Karar.**
+- Ders bir kez yazılır. Rol bir **yoldur**: [`src/data/roles.ts`](src/data/roles.ts) içinde sıralı
+  kategori listesi, her durak için bir öncelik (temel / önerilen / isteğe bağlı) ve gerekirse konu
+  bazlı istisna (`topics`, `"atla"` dahil). Yolda olmayan kategori "yol dışı"dır ama açıktır.
+- Yollar build'de [`src/lib/role-path.ts`](src/lib/role-path.ts) ile gerçek adımlara karşı derlenir;
+  aynı derleyici `validate` ve testlerde çalışır. Henüz adımı olmayan kategori durak olarak kalır
+  ("hazırlanıyor" gezegeni) ama adım vermez.
+- Tarayıcıya yalnız sıkıştırılmış biçim gider ([`role-payload.ts`](src/lib/role-payload.ts): id'ler
+  bir kez, her yol indeks listesi + harf başına öncelik). Sekiz yolun tamamı ana sayfada ~16 KB ham, 3,8 KB gzip; bütçede "veri" sayılır.
+- **Sıradaki adımın** ([`next-step.ts`](src/lib/next-step.ts)): son açılan ders bitmemişse o; değilse
+  oradan ileri, sonra başa dönerek ilk bitmemiş temel/önerilen adım; onlar bitince isteğe bağlı. Rol
+  yüzdesi temel + önerilen üzerinden; isteğe bağlı ayrı sayılır.
+- İlerleme ortak ve **değişmedi**: kimlik `kategori/slug`, rol değişince `pdr.progress.v1` bayt bayt
+  aynı kalır (tarayıcıda sınandı). Product Designer yolu eski 23 kategorinin sırasını korur; `validate`
+  bunu denetler.
+- Harita: gezegenler yerinden oynamaz. Rol yalnız çizginin sırasını, durak rozetini ("3 · Temel") ve
+  yol dışı gezegenin görünüşünü (küçük, soluk disk, kesikli yörünge; ad kontrastı korunur) değiştirir.
+  DOM'u yeniden sıralamak ya da CSS `order` odak sırasını görselden ayırırdı.
+
+**Ödünleşim.** Rozetler her rol için statik render edilir (31 gezegende ~150 küçük span). Yol verisi
+elle yazılmış bir öncelik yargısıdır; derslerin v2 yazımında konu bazlı istisnalar gözden geçirilir.
+
+## ADR-018 — Rol ilk boyamadan önce: `html[data-role]` + üretilmiş CSS
+
+**Karar.** Rol ayrı bir tercih anahtarında (`pdr.role.v1`), ilerleme şemasında değil: şema v1 kalır,
+`updatedAt` yalnız ilerleme değişince oynar, head betiği JSON ayrıştırmadan okur. BaseLayout'taki
+satır içi betik `?rol=` → `localStorage` sırasıyla rolü bulur ve `html[data-role]` yazar; ilerlemesi
+olup rolü olmayan okur Product Designer'a geçirilir ve ana sayfada bir kez not görür
+(`pdr.role.auto`). Role bağlı her parça statik render edilir ve `data-for-role="…"` taşır;
+[`role-css.ts`](src/lib/role-css.ts) üretilen kısa bir `<style>` ile diğerlerini gizler. Rol yoksa —
+JS kapalıyken de — durum `none`'dır: harita Keşif modunda tam listedir, seçici gizlenir.
+
+**Mercekler** aynı mekanizmayı kullanır. `<Lenses>` slotunu iki kez basar: açıkta yalnız seçili rolün
+`<Lens>`'i, "Diğer roller" `<details>`'ı içinde öbürleri görünür; hangisinin nerede görüneceğini yine
+üretilmiş CSS söyler, HTML dizgisi işlenmez. İkinci kopya Pagefind'den hariçtir. Terim eklentisi
+(`rehype-term-refs`) önce düzyazıyı işaretler, mercekler kalanı alır; yoksa bir terimin tek ipucu
+katlanmış bir merceğe düşebilirdi. 232 "Tasarımcı olarak sen" kutusu
+[`scripts/codemods/callout-to-lens.ts`](scripts/codemods/callout-to-lens.ts) ile mekanik olarak
+Product Designer merceğine çevrildi; derlenmiş metin öncesiyle birebir aynı (span boşlukları hariç).
+
+Yedek dosyası rolü `prefs.role` olarak taşır ([`backup.ts`](src/lib/backup.ts)). Zod bilinmeyen
+anahtarı attığı için eski build yeni yedeği, yeni build eski yedeği okur (test edildi).
+
+**Ödünleşim.** Betik satır içi ve senkron kalmak zorunda (ADR-007 ile aynı neden). Her rol durumu
+HTML'de durduğu için sayfa biraz büyür; bütçe ve DOM boyutu izlenir.
+
+## ADR-020 — Medya: veri güdümlü diyagram ilkelleri, demolar, tema içi illüstrasyonlar
+
+**Bağlam.** 234 dersin 179'unda diyagram yoktu ve her şekil tek kullanımlık, elle çizilmiş bir
+bileşendi. Yüzlerce derse görsel eklemek için her şekli baştan çizmek ölçeklenmez.
+
+**Karar.**
+- **12 ilkel** ([`src/components/diagrams/primitives/`](src/components/diagrams/primitives)):
+  Matrix2x2, Cycle, Timeline, Network, Tree, Swimlane, Layers, Venn, Spectrum, Chart, Heatmap ve
+  Hub (Faz 6: ortada sistem, çevresinde en çok altı etiketli varlık; bağlam diyagramı, paydaş halkası).
+  İlişki etiketi çizgide değil kutunun içinde, çünkü 360 genişlikte çizgi etiketleri birbirine çarpar. Veri
+  props ile verilir; hepsi `DiagramFigure` ve `dg-*` sözlüğünü kullanır. Telefon için üç yol: 360
+  genişliğinde dar düzen (`dg-narrow`), ya da kendi genişliğinde kalıp yana kayma (`--dg-min`) ve
+  görünür "yana kaydır" ipucu. Veri taşıyan ilkeller altlarında JS'siz bir "Tablo olarak göster"
+  verir. Etiketler build'de sarılır; sığmayan etiket build'i kırar ve kendini adlandırır (Faz 3'te
+  iki kez yakaladı).
+- **Demolar** ([`src/components/demos/`](src/components/demos)): `DemoFrame` içinde, mantığı
+  `src/lib/demos/*.ts` altında test edilen saf fonksiyonlarda. Sunucuda çözülmüş örnekle render
+  edilir; JS'siz de öğretir. Kartlar yeniden dizilmez (görsel sıra = odak sırası). RICE demosu 574
+  bayt gzip. Faz 4'te üç demo daha: belirsizlik konisi (737 B), kritik yol (1.093 B, `Network`
+  ilkeliyle aynı `criticalPath` fonksiyonunu kullanır) ve kazanılmış değer (786 B). Duyurular
+  (`aria-live`) yalnız sonuç değişince yapılır, her tuş vuruşunda değil. Faz 5'te Monte Carlo öngörüsü
+  (1.008 B; tohumlu üreteç, sunucu ve betik aynı sayıları verir). Betiğin oluşturduğu öğeler Astro'nun
+  kapsamlı CSS özniteliğini taşımaz; onların kuralları `:global()` ile kök sınıfın altına yazılır
+  (`.mc :global(.mc__bar)`). Faz 5'te ilk etkileşimden sonra stilsiz kalan çubuklarla yakalandı.
+  Faz 9'da RACI denetleyici (617 B): her iş bir fieldset, rol başına bir seçim kutusu; telefonda yan
+  kaydırma olmadan sığar. Mantık `src/lib/demos/raci.ts`, testli.
+  Faz 8'de A/B örneklem hesaplayıcısı (1.171 B; Evan Miller'ın hesaplayıcısıyla aynı sonucu verir,
+  test edilir). Yüzde alanları `type="text" inputmode="decimal"`: `type="number"` İngilizce yerel
+  ayarlı tarayıcıda "1,5"teki virgülü yutup 15 yapıyordu. `Chart` ve `Heatmap` sayıları `tr-TR` ile
+  yazar (12,48 · %69,6); 10'un altındaki ölçeklerde eksen işaretleri ondalık alır, yoksa tekrar eder.
+- **Materyalden araçlar** (Faz 9): 20., 21. bölümler ve Ek A konu sayfası değil, araçtır. Ayrıştırıcılar
+  `src/lib/material-tools.ts` içinde saf fonksiyonlardır; içe aktarıcı onları çalıştırıp
+  `src/data/generated/tools/*.json` yazar ve `import:check` bu dosyaları da karşılaştırır. Metin birebir
+  kalır; yalnız yapı (paragraf, liste, tablo, alt başlık, onay kutusu) tanınır ve satır içi biçim
+  `renderInlineMarkdown` ile çizilir. `section-refs.ts` "20.x" ve "21.x" referanslarını araç
+  sayfalarının `#s-20-x` çapalarına bağlar. Kontrol listesi kimlikleri bölüm numarası ve madde
+  metninden türer ve konu kimlikleri gibi dondurulur (`validate --update-frozen`); materyal metni
+  değişirse kimlik değişir ve validate kırılır. Akış haritasındaki materyal dışı rol satırları
+  `src/authored/tools/akis-rolleri.json` içindedir; sayfa her satırın dersini build'de doğrular.
+- **İllüstrasyonlar** (`src/assets/illustrations/*.svg`): yalnız `il-*` sınıfları; renkler
+  `--c-illu-*` token'larından. `<Illustration>` satır içi gömer (public/ değil: SW hash'siz
+  dosyayı sonsuza dek tutar). `validate` ham renk, öznitelik rengi, betik/dış referans, viewBox ve 12
+  KB sınırını denetler. Planlanan svgo hattı kurulmadı: elle yazılan SVG'ler zaten küçük ve yeni
+  bağımlılık gerekmedi.
+- Kontrast hesapla: ısı haritasının beş seviyesi 6,77–14,85:1 (seviye 3–4'te koyu mürekkep).
+
+**Ödünleşim.** Şekiller kalıplara sığar; bir ders gerçekten özel bir şekil isterse tek kullanımlık
+bileşen yazılır (eski yaklaşım). Genişlik tahmini bir ortalama glif genişliğine dayanır; çok geniş
+harflerle dolu bir etiket marjı aşabilir.
+
+## ADR-021 — Araçlar: şablonlar tek veriden sayfa, Markdown ve CSV üretir
+
+**Karar.** `/araclar/` hub'ı ve `/araclar/<slug>/` sayfaları `templates` koleksiyonundan
+(`src/tools/sablonlar/<slug>/index.mdx`) üretilir. "Belge" şablonunun yanında `ornek.md` ve
+`bos.md`; "tablo" şablonunun sütunları ve örnek satırları frontmatter'da — sayfa tablosu, Markdown ve
+CSV aynı veriden çıkar ([`src/lib/templates.ts`](src/lib/templates.ts)). İndirmeler statik dosya:
+`[name].csv.ts` / `[name].md.ts` (uzantı dosya adında, yoksa `trailingSlash: "always"` sona `/`
+ekliyor). CSV UTF-8 BOM + `;` + CRLF ([`src/lib/csv.ts`](src/lib/csv.ts)): Türkçe Excel ancak böyle
+"ş"yi doğru okur. Dersler `<Tool slug>` ile bağlanır; bilinmeyen slug build'i kırar. Telefonda alt
+çubukta Sözlük'ün yerini Araçlar aldı; Sözlük sol menüde ve Araçlar'dan erişilir.
+
+Yazılmış quizler (`src/authored/quizzes`, `overrides` ile) ve yazılmış terimler
+(`src/authored/terms`, sıradan kelimeler için `inline: false`) aynı fazda geldi
+([`src/lib/quizzes.ts`](src/lib/quizzes.ts), [`src/lib/authored-terms.ts`](src/lib/authored-terms.ts)).
+
+## ADR-022 — Ders standardı v2 ölçülür: `npm run lint:lessons`
+
+**Karar.** Standart [`docs/icerik/ders-standardi.md`](docs/icerik/ders-standardi.md)'de, ortak vaka
+[`docs/icerik/vaka.md`](docs/icerik/vaka.md)'de. Denetleyici satır tabanlıdır (yeni MDX bağımlılığı
+yok): yapı, görsel, mercek kapsamı (rol yollarından hesaplanır), ≥3 soru, süre ve Türkçe okunabilirlik
+(Ateşman 1997; hece = ünlü sayısı; [`src/lib/readability.ts`](src/lib/readability.ts), testli).
+Yalnız `standard: 2` taşıyan dersler hata verir; diğerleri uyarı ve ortalama puanla görünür, CI
+"v2: N/M" yazar. Süre, ders hızında (dakikada ~130 kelime) hesaplanır; 180 öğrenme içeriği için
+fazla hızlıydı. Liste maddeleri ayrı cümle sayılır.
+
+Pilot: üç ders v2'ye geçti (Ateşman 74,3 · 75,3 · 76,4; v1 ortalaması 64,3).
+
+---
+
 ```
 ProductDesignerRoadmap/
 ├─ ProductDesignerMaterials/     kaynak — SALT OKUNUR, dokunulmaz
 ├─ SPEC.md  ARCHITECTURE.md  CLAUDE.md
 ├─ scripts/
 │  ├─ import-materials.ts        içe aktarıcı (+ --check, --only=NN)
+│  ├─ validate-content.ts        içerik kapısı (+ --update-frozen)
 │  └─ clean.ts                   iki önbellek konumunu da siler (ADR-011)
+├─ tests/                        saklama sözleşmesi olan kurallar (slug, kimlik, referans)
 ├─ src/
 │  ├─ content/                   topics | categories | quizzes — ÜRETİLMİŞ, elle düzenlenmez
+│  ├─ authored/topics/           site için yazılan adımlar (ADR-019)
+│  ├─ lessons/                   elle yazılmış dersler, MDX (ADR-015)
 │  ├─ content.config.ts          Zod şemaları
 │  ├─ data/
-│  │  ├─ categories.ts           sıra, slug, alan — tek doğru kaynak
+│  │  ├─ categories.ts           sıra, slug, alan, rezerve kökler — tek doğru kaynak
+│  │  ├─ topic-roots.ts          adım klasörleri ve izin verilen origin
+│  │  ├─ frozen-topic-ids.json   yayındaki adım kimlikleri, yalnız büyür
 │  │  └─ generated/              section-map.json, stats.json
 │  ├─ plugins/                   rehype-term-cards, rehype-cross-refs
 │  ├─ lib/                       progress, theme, content, inline-markdown
@@ -377,7 +572,10 @@ ProductDesignerRoadmap/
 | `npm run build` | Statik derleme |
 | `npm run build:fresh` | Önbellekleri temizle + derle — **eklenti değişikliklerinde zorunlu** |
 | `npm run check` | `astro check` (tip kontrolü) |
+| `npm test` | Birim testleri (`tsx --test`, `tests/`) |
 | `npm run clean` | Önbellekleri temizle |
 | `npm run import` | Materyali içeri aktar |
-| `npm run import:check` | Kaynak ile üretilmiş içerik ayrışmış mı |
-| `npm run validate` | İçerik kapısı: sayımlar, kart alanları, çapraz referanslar (Faz 1) |
+| `npm run import:check` | Kaynak ile üretilmiş içerik ayrışmış mı, fazla dosya var mı |
+| `npm run validate` | İçerik kapısı: sayımlar, kart alanları, çapraz referanslar, donmuş kimlikler, rezerve kökler, gezegen ve alan token'ları |
+| `npm run validate -- --update-frozen` | Yeni yayınlanan adımların kimliklerini dondurur |
+| `npm run budget` | Sayfa başına JS / CSS / HTML / veri bütçesi (derlemeden sonra) |

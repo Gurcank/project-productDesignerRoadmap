@@ -1,10 +1,11 @@
 ---
-summary: "Code review'un kültür tarafı ve senin de dahil olduğun bir pratik: iyi bir incelemede sırayla neye bakılır (doğru problem, kabul kriterleri, uç durumlar, tasarım, anlaşılırlık), yorum yazma biçimi ve inceleme süresi."
+summary: "Code review'un kültür tarafı: sırayla doğru problem, kabul kriterleri, uç durumlar, tasarıma uygunluk ve anlaşılırlık incelenir. Soru sorulur, öneri zorunludan ayrılır; inceleme süresi de kalitedir."
 outcomes:
   - "İyi bir incelemede sırayla bakılacak beş şeyi söyleyebilirsin."
   - "Neden biçime bakılmadığını açıklayabilirsin."
   - "İyi yorum yazma ilkelerini (soru sor, zorunlu ile öneriyi ayır, iyiyi de söyle, sayıyı sınırla) bilirsin."
-minutes: 5
+minutes: 3
+standard: 2
 sources:
   - label: "Google Mühendislik Pratikleri — Code Review: Neye bakılır"
     url: "https://google.github.io/eng-practices/review/reviewer/looking-for.html"
@@ -14,11 +15,14 @@ sources:
     url: "https://www.atlassian.com/agile/software-development/code-reviews"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Pull request mekaniği Git bölümünde anlatıldı. Burada **kültür tarafı** var ve bu, senin de dahil olduğun bir pratik.
+Pull request mekaniği Git bölümünde anlatıldı. Burada **kültür tarafı** var ve bu, kod yazmayanların da dahil olduğu bir pratik.
 
 ## Neye bakılır
 
@@ -27,9 +31,36 @@ Pull request mekaniği Git bölümünde anlatıldı. Burada **kültür tarafı**
 1. **Doğru problemi mi çözüyor?** En üst seviye soru. Kod kusursuz olabilir ama yanlış şeyi yapıyor olabilir.
 2. **Kabul kriterlerini karşılıyor mu?** Boş durum, hata durumu ve yükleme durumu dahil mi?
 3. **Uç durumlar düşünülmüş mü?** Çok uzun metin, boş liste, yavaş bağlantı.
-4. **Tasarıma uygun mu?** Senin alanın: ölçüler, durumlar, responsive davranış, erişilebilirlik.
+4. **Tasarıma uygun mu?** Tasarımcının alanı: ölçüler, durumlar, responsive davranış, erişilebilirlik.
 5. **Anlaşılır mı?** Altı ay sonra biri okuduğunda anlayacak mı?
 6. **Biçim:** buna bakılmaz; formatter'ın işidir.
+
+<StepFlow
+  label="İnceleme sırası"
+  caption="İyi bir inceleme en büyük sorudan başlar: bu değişiklik doğru problemi mi çözüyor? Sonra kabul kriterlerine bakılır, boş, hata ve yükleme durumları dahil. Ardından uç durumlar ve tasarıma uygunluk gelir. En son anlaşılırlık incelenir. Biçime bakılmaz; o formatter'ın işidir."
+  steps={[
+  {
+    title: "Doğru problem",
+    tone: "accent"
+  },
+  {
+    title: "Kabul kriteri",
+    sub: "boş, hata, yükleme"
+  },
+  {
+    title: "Uç durum",
+    sub: "uzun metin, boş liste"
+  },
+  {
+    title: "Tasarım",
+    sub: "ölçü, durum, a11y"
+  },
+  {
+    title: "Anlaşılırlık",
+    tone: "progress"
+  }
+]}
+/>
 
 ## Yorum yazma biçimi
 
@@ -40,14 +71,27 @@ Pull request mekaniği Git bölümünde anlatıldı. Burada **kültür tarafı**
 
 **Süre de bir kalite meselesidir:** günlerce bekleyen bir PR, dalın eskimesine, çakışmaya ve yazanın bağlamı unutmasına yol açar. Birçok ekip bir inceleme süresi hedefi koyar.
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'te inceleme kuralları:
+
+1. **Kapı:** ana dala birleşmek için bir onay ve geçen testler gerekiyor.
+2. **Tasarım incelemesi:** arayüz değiştiren PR'larda Selin preview linkinden bakıyor. Yorumları ölçü ve durumlar üzerine; renk tartışması token'a gidiyor.
+3. **Yorum dili:** öneriler `nit:` ile başlıyor ve birleşmeyi bloke etmiyor. Ece bir PR'a otuz yorum yazmak yerine Burak'la on dakika konuştu.
+4. **Süre:** hedef, bir iş günü içinde ilk inceleme. İki günü geçen PR'lar sabah toplantısında anılıyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **İncelemede kendi sorunu (tasarıma uygunluk) odak tut;** diğerlerini ekibe bırak.
 - **Yorumlarını soru olarak yaz ve `nit:` ile ayır.**
 - **İyi uygulanmış bir detayı da yaz;** tasarıma saygı gösteren geri bildirim kültürü kurar.
 - **İnceleme beklemesini kısa tut:** PR'ı gün içinde incele.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -62,5 +106,17 @@ Pull request mekaniği Git bölümünde anlatıldı. Burada **kültür tarafı**
 <SelfCheck question="Kod incelemesinde ilk bakılacak soru nedir? Biçime neden bakılmaz?">
 
 "Doğru problemi mi çözüyor?" Kod kusursuz olabilir ama yanlış şeyi yapıyor olabilir. Biçime bakılmaz çünkü o formatter'ın işidir; insan dikkatini oraya harcamak israftır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir PR'a otuz yorum yazmak üzeresin. Ne yaparsın?">
+
+Otuz yorumlu bir inceleme, incelemeden çok yeniden yazma talebidir. Yorum yazmayı bırakıp yazanla konuşurum; zorunlu olanları öneriden ayırırım.
+
+</SelfCheck>
+
+<SelfCheck question="Neden bazı yorumlar nit: ile işaretlenir?">
+
+Öneri niteliğindeki yorumu zorunlu olandan ayırmak için. Böylece hangi yorumun birleşmeyi bloke ettiği, hangisinin yalnız bir öneri olduğu herkes için bellidir.
 
 </SelfCheck>

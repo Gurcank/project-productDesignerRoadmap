@@ -1,11 +1,12 @@
 ---
-summary: "Bir arayüzün kullanılabilir sayılmasının ölçütleri: usability, Nielsen'in 10 ilkesi, sezgisel değerlendirme, affordance ve signifier, geri bildirim, kademeli gösterim ve geri alma. Tasarım geri bildirimini gerekçelendirmenin dili."
+summary: "Bir arayüzün kullanılabilir sayılmasının ölçütleri: Nielsen'in 10 ilkesi, sezgisel değerlendirme, affordance ve signifier, geri bildirim, kademeli gösterim ve geri alma."
 outcomes:
   - "Kullanılabilirliğin ölçülebilir bir kavram olduğunu ve neleri ölçtüğünü söyleyebilirsin."
   - "Bir tasarım sorununu Nielsen'in on ilkesinden birine bağlayıp gerekçelendirebilirsin."
   - "Affordance ile signifier farkını bir örnekle anlatabilirsin."
   - "Onay diyaloğuna alternatif olarak geri alınabilir bir tasarım önerebilirsin."
 minutes: 14
+standard: 2
 sources:
   - label: "NN/g — 10 Usability Heuristics for User Interface Design"
     url: "https://www.nngroup.com/articles/ten-usability-heuristics/"
@@ -19,12 +20,15 @@ additions:
   - "Aldatıcı tasarım (dark pattern): kullanıcıyı yanıltan ya da zorlayan kalıpların adları ve neden bir kullanılabilirlik sorunu olmadığı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Outside from "~/components/lesson/Outside.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir toplantıda bir tasarımı eleştiriyorsun ve "bana biraz karışık geldi" diyorsun. Karşındaki ikna olmuyor çünkü bir izlenim, tartışılamaz. Aynı şeyi şöyle söylesen: "Dosya yüklenirken hiçbir geri bildirim yok; kullanıcı işlemin çalışıp çalışmadığını bilemiyor, bu Nielsen'in 1 numaralı ilkesine aykırı." Artık savunulabilir bir iddia var.
 
@@ -64,6 +68,17 @@ Jakob Nielsen ve Rolf Molich tarafından 1990'da geliştirildi; Nielsen 1994'te 
 **Heuristic evaluation** (sezgisel değerlendirme), birkaç uzmanın arayüzü belirli ilkelere göre **tek tek inceleyip** sorun listesi çıkarmasıdır. Hızlı ve ucuzdur; kullanıcı bulmayı gerektirmez. Yeni bir ürün devraldığında ya da yayına çıkmadan önceki denetimde işe yarar. "Heuristic evaluation yaptım: 14 sorun buldum, 4'ü kritik."
 
 Genelde **birden fazla değerlendiriciyle** yapılır, çünkü tek kişi sorunların bir kısmını kaçırır. Uyarılar:
+
+<StepFlow
+  label="Sezgisel değerlendirme"
+  caption="Sezgisel değerlendirme dört adımda yürür. Önce birkaç değerlendirici arayüzü birbirinden bağımsız inceler. Her biri bulduğu sorunu ihlal ettiği ilkeye bağlayarak yazar. Sonra listeler birleştirilir ve aynı sorunlar tek maddeye indirilir. Son adımda kritik sorunlar işaretlenir ve düzeltme sırası belirlenir."
+  steps={[
+    { title: "Bağımsız incele", sub: "her değerlendirici ayrı", tone: "accent" },
+    { title: "İlkeye bağla", sub: "sorun + ihlal edilen ilke" },
+    { title: "Listeleri birleştir", sub: "tekrarları ayıkla" },
+    { title: "Kritikleri işaretle", sub: "düzeltme sırası", tone: "progress" },
+  ]}
+/>
 
 - **Kullanıcı testinin yerine geçmez.**
 - **Değerlendirici etkisi:** aynı arayüzü inceleyen iki kişi büyük ölçüde farklı sorunlar bulabilir.
@@ -128,11 +143,25 @@ Kullanılabilirlik ilkeleri kullanıcının işini kolaylaştırmak içindir. Bu
 - **Roach motel:** Üye olmak tek tıkta, iptal etmek sayfalarca iş olan akışlar.
 - **Gizli maliyet:** Son adımda ortaya çıkan ek ücretler.
 
-Bu kalıplar kısa vadede metrik artırabilir ama güveni yıpratır ve bazı ülkelerde düzenleme konusu olmaya başlamıştır; yasal durum ülkeye göre değişir ve zamanla güncellenir; güncel mevzuatı kontrol et. Tasarımcı olarak bir metriği artırması istenen bir akış, bu kalıplardan birine yaklaşıyorsa bunu **açıkça söylemek** senin sorumluluğundur.
+Bu kalıplar kısa vadede metrik artırabilir ama güveni yıpratır. Bazı ülkelerde düzenleme konusu olmaya başladılar; yasal durum ülkeye göre değişir, güncel mevzuatı kontrol et. Metriği artırması istenen bir akış bu kalıplardan birine yaklaşıyorsa bunu **açıkça söylemek** ekipteki herkesin sorumluluğudur.
 
 </Outside>
 
-<Callout kind="tasarimci">
+<Case>
+
+Selin Demlik Panel'in sipariş ekranında Ayşe ile birlikte sezgisel değerlendirme yaptı. İkisi ayrı ayrı inceledi, sonra listelerini birleştirdi:
+
+1. **Görünürlük:** sipariş kabul edildiğinde ekranda hiçbir değişiklik olmuyordu; çalışanlar düğmeye iki kez basıyordu. Düğmeye bir onay durumu eklendi.
+2. **Hata önleme:** "Siparişi iptal et" düğmesi "Hazır" düğmesinin hemen yanındaydı. İptal ayrı bir menüye alındı.
+3. **Geri alma:** bir ürünü yanlışlıkla "bugünlük kapat" yapan çalışan için beş saniyelik "Geri al" bildirimi eklendi.
+4. **Kullanıcı testi:** iki dükkânda yapılan testte sezgisel değerlendirmenin kaçırdığı bir sorun çıktı: yoğun saatte ekran, çalışanın 50 cm uzaktan okuyamayacağı kadar küçüktü.
+
+Değerlendirme hızlıydı; ama kullanıcı testinin yerine geçmedi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Geri bildirimini ilkeye bağla.** "Karışık" yerine "1 numara: sistem durumu görünmüyor" de.
 - **Sorunun ilkesini bul, çözümü sonra düşün.** İlke hata türünü adlandırır; çözümün biçimi ayrı bir iştir.
@@ -140,7 +169,32 @@ Bu kalıplar kısa vadede metrik artırabilir ama güveni yıpratır ve bazı ü
 - **Etkileşimli her öğeye bir signifier ver.** Tıklanabilir olduğu belli olmayan bir öğe yoksayılır.
 - **Kullanıcıyı yanıltan akıştan uzak dur.** Kısa vadeli metrik, uzun vadeli güveni yer.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Yayın öncesi denetimde sezgisel değerlendirme iste.** Ucuzdur, hızlıdır, kullanıcı bulmayı gerektirmez.
+- **Bulguyu kullanıcı testinin yerine koyma.** Uzman, kullanıcının bağlamını bilmez.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Geri almayı onay diyaloğuna tercih et.** Kabul kriterine "işlem geri alınabilir" yaz.
+- **Kritik bulguları sıralamada öne al.** İlkeye bağlanmış sorun, tartışmayı kısaltır.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Hata önlemeyi iş kuralına çevir.** Yanlış işlemi en baştan imkânsız kılan kural, en iyi hata mesajından iyidir.
+- **Geri alınamayan işlemleri listele.** Bunlar ek onay ya da yetki ister.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Sezgisel değerlendirmeyi testten önce yap.** Bariz sorunlar ayıklanınca test daha derin sorunlara ulaşır.
+- **Değerlendirici sayısını artır.** Tek kişi sorunların bir kısmını kaçırır.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -163,5 +217,11 @@ Affordance imkânın kendisidir, signifier o imkânı görünür kılan ipucudur
 <SelfCheck question={"Silme butonuna basınca \"Emin misiniz?\" diyaloğu göstermek yerine ne yapılabilir ve bu neden daha iyi olabilir?"}>
 
 İşlemi hemen yapıp geri alınabilir bir toast göstermek ("Silindi, Geri al"). Sürekli onay sormak kullanıcıyı otomatik onaylamaya alıştırır ve diyaloğun koruma işlevi kaybolur; geri alma hem hızlı hem güvenlidir.
+
+</SelfCheck>
+
+<SelfCheck question="Sezgisel değerlendirme neden tek kişiyle değil, birkaç değerlendiriciyle yapılır?">
+
+Tek değerlendirici sorunların bir kısmını kaçırır; farklı kişiler büyük ölçüde farklı sorunlar bulabilir. Bağımsız incelenip birleştirilen listeler daha çok sorunu kapsar.
 
 </SelfCheck>

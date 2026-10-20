@@ -1,0 +1,253 @@
+---
+/**
+ * Appendix A as a tool. The material's own calendar is written for the Product
+ * Designer and follows its chapters; it is shown verbatim. Under it, every
+ * role's route (roles.ts) is cut into study weeks with the appendix's daily
+ * ritual — five days of 20 minutes — so each role gets the same rhythm on its
+ * own path. A reader with a role sees only theirs; without one, all seven.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import MaterialBlocks from "~/components/tools/MaterialBlocks.astro";
+import data from "~/data/generated/tools/study-plan.json";
+import type { StudyPlanData } from "~/lib/material-tools";
+import { getCollection } from "astro:content";
+import { ROLE_IDS, ROLE_LABEL } from "~/data/role-ids";
+import { CATEGORY_BY_SLUG } from "~/data/categories";
+import { formatDuration, getPublishedCategories, topicId, topicMinutes } from "~/lib/content";
+import { getRoute } from "~/lib/routes";
+import { planWeeks, WEEKLY_MINUTES } from "~/lib/study-plan";
+
+const plan = data as unknown as StudyPlanData;
+const lessons = new Map((await getCollection("lessons")).map((lesson) => [lesson.id, lesson.data.minutes]));
+const topics = new Map(
+  (await getPublishedCategories()).flatMap(({ topics: list }) => list.map((topic) => [topicId(topic), topic] as const)),
+);
+
+const roles = await Promise.all(
+  ROLE_IDS.map(async (id) => {
+    const route = await getRoute(id);
+    const core = route.steps
+      .filter((step) => step.tier !== "istege-bagli")
+      .map((step) => {
+        const topic = topics.get(step.id);
+        return {
+          id: step.id,
+          title: topic?.data.title ?? step.id,
+          category: CATEGORY_BY_SLUG.get(step.category)!.title,
+          minutes: lessons.get(step.id) ?? (topic ? topicMinutes(topic) : 0),
+        };
+      });
+    const optional = route.steps.length - core.length;
+    const weeks = planWeeks(core);
+    return { id, name: ROLE_LABEL[id].name, weeks, core: core.length, optional, total: core.reduce((s, c) => s + c.minutes, 0) };
+  }),
+);
+---
+
+<BaseLayout
+  title="Çalışma takvimi"
+  description="Materyalin altı aylık çalışma takvimi ve her rol için kendi yolundan çıkarılmış haftalık plan."
+  section="araclar"
+>
+  <article class="cal" data-pagefind-body data-pagefind-filter="tur:Çalışma takvimi" data-pagefind-meta="kategori:Araçlar">
+    <p class="cal__back"><a href="/araclar/">Araçlar</a></p>
+    <header>
+      <p class="cal__kind">Materyalden · Ek A</p>
+      <h1>Çalışma takvimi</h1>
+      <p class="cal__lead">
+        İki takvim var. Birincisi materyalin kendisi: Product Designer için, bölüm bölüm altı ay. İkincisi her rolün kendi
+        yolundan çıkarılmış haftalık plan; aynı ritimle, haftada beş gün, günde 20 dakika.
+      </p>
+      <p class="cal__jump"><a href="#rolune-gore">Rolüne göre haftalık plana geç</a></p>
+    </header>
+
+    <section aria-labelledby="materyal" class="cal__section">
+      <h2 id="materyal">{plan.title}</h2>
+      <MaterialBlocks blocks={plan.blocks} label="Çalışma takvimi" />
+    </section>
+
+    <section id="rolune-gore" aria-labelledby="rolune-gore-baslik" class="cal__section">
+      <h2 id="rolune-gore-baslik">Rolüne göre haftalık plan</h2>
+      <p class="cal__assumption">
+        <span class="flag flag--new">Materyal dışı</span>
+        Bu plan materyalin ritmini (günde 15–20 dakika) senin rolünün yoluna uygular. Varsayım: haftada beş gün, günde 20
+        dakika, yani haftada {WEEKLY_MINUTES} dakika. Yalnız temel ve önerilen dersler sayılır; isteğe bağlı dersler sona kalır.
+        Ders süreleri sitenin kendi tahminleridir.
+      </p>
+
+      <div class="cal__overview" data-for-role="none all">
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Rollere göre plan özeti">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Rol</th>
+                <th scope="col">Ders</th>
+                <th scope="col">Süre</th>
+                <th scope="col">Hafta</th>
+              </tr>
+            </thead>
+            <tbody>
+              {roles.map((role) => (
+                <tr>
+                  <th scope="row">
+                    <a href={`/araclar/calisma-takvimi/?rol=${role.id}#rolune-gore`}>{role.name}</a>
+                  </th>
+                  <td>{role.core}</td>
+                  <td>{formatDuration(role.total)}</td>
+                  <td>{role.weeks.length}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="cal__hint">Bir rol seçersen yalnız onun haftaları görünür. Rolü seçmek için tablodaki adına dokun.</p>
+      </div>
+
+      {
+        roles.map((role) => (
+          <div class="cal__role" data-for-role={role.id}>
+            <h3>{role.name}: {role.weeks.length} hafta</h3>
+            <p class="cal__summary">
+              {role.core} ders, toplam {formatDuration(role.total)}.
+              {role.optional > 0 && ` Ayrıca ${role.optional} isteğe bağlı ders, çekirdek bittikten sonra.`}
+            </p>
+            <ol class="cal__weeks">
+              {role.weeks.map((week) => (
+                <li class="cal__week">
+                  <p class="cal__week-head">
+                    <strong>Hafta {week.week}</strong> <span>{week.minutes} dk</span>
+                  </p>
+                  <ul>
+                    {week.steps.map((step) => (
+                      <li>
+                        <a href={`/${step.id}/`}>{step.title}</a> <span class="cal__cat">{step.category}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ol>
+          </div>
+        ))
+      }
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .cal {
+    max-width: 52rem;
+    margin-inline: auto;
+    padding: var(--spacing-8) var(--spacing-4) var(--spacing-24);
+  }
+
+  .cal__back a,
+  .cal__jump a {
+    display: inline-flex;
+    gap: var(--spacing-1);
+    min-height: 24px;
+    align-items: center;
+    color: var(--c-action);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .cal__back a::before {
+    content: "←";
+  }
+
+  .cal__kind {
+    margin-block-start: var(--spacing-6);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-action);
+  }
+
+  .cal h1 {
+    margin-block-start: var(--spacing-2);
+    font-size: var(--text-4xl);
+    letter-spacing: -0.03em;
+  }
+
+  .cal__lead {
+    margin-block: var(--spacing-3) var(--spacing-2);
+    font-size: var(--text-lg);
+    color: var(--c-text-secondary);
+  }
+
+  .cal__section {
+    margin-block-start: var(--spacing-12);
+    padding: var(--spacing-6);
+    border-radius: var(--radius-lg);
+    background-color: var(--c-surface-reading);
+  }
+
+  .cal__section > h2 {
+    margin-block-end: var(--spacing-4);
+    font-size: var(--text-2xl);
+  }
+
+  .cal__assumption,
+  .cal__hint,
+  .cal__summary {
+    color: var(--c-text-secondary);
+  }
+
+  .cal__overview {
+    margin-block-start: var(--spacing-4);
+  }
+
+  .cal__overview th a {
+    display: inline-flex;
+    min-height: 24px;
+    align-items: center;
+  }
+
+  .cal__role h3 {
+    margin-block-start: var(--spacing-6);
+    font-size: var(--text-xl);
+  }
+
+  .cal__weeks {
+    display: grid;
+    gap: var(--spacing-3);
+    margin: var(--spacing-4) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cal__week {
+    padding: var(--spacing-3) var(--spacing-4);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+  }
+
+  .cal__week-head {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-2);
+    color: var(--c-text);
+  }
+
+  .cal__week-head span {
+    color: var(--c-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .cal__week ul {
+    display: grid;
+    gap: var(--spacing-1);
+    margin-block-start: var(--spacing-2);
+    padding-inline-start: var(--spacing-6);
+    list-style: disc;
+  }
+
+  .cal__cat {
+    color: var(--c-text-muted);
+    font-size: var(--text-xs);
+  }
+</style>

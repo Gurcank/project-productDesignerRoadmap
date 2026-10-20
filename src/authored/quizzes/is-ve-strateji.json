@@ -1,0 +1,56 @@
+{
+  "category": "is-ve-strateji",
+  "sources": [
+    { "label": "Strategyzer — The Business Model Canvas", "url": "https://www.strategyzer.com/library/the-business-model-canvas" },
+    { "label": "Ash Maurya — Lean Canvas vs Business Model Canvas (LEANSpark, 2024)", "url": "https://leanspark.ai/compare/lean-canvas-vs-bmc" },
+    { "label": "a16z — 16 Startup Metrics (2015)", "url": "https://a16z.com/16-startup-metrics/" },
+    { "label": "Salesforce — TAM, SAM, and SOM: Made Simple (2025)", "url": "https://www.salesforce.com/blog/small-business/tam-sam-som/" },
+    { "label": "Wikipedia — Porter's five forces analysis", "url": "https://en.wikipedia.org/wiki/Porter%27s_five_forces_analysis" },
+    { "label": "Wikipedia — Value-based pricing", "url": "https://en.wikipedia.org/wiki/Value-based_pricing" },
+    { "label": "Wikipedia — Net present value", "url": "https://en.wikipedia.org/wiki/Net_present_value" },
+    { "label": "Wikipedia — Ansoff matrix", "url": "https://en.wikipedia.org/wiki/Ansoff_matrix" },
+    { "label": "What Matters — What is an OKR? Definition and examples", "url": "https://www.whatmatters.com/faqs/okr-meaning-definition-example" }
+  ],
+  "items": [
+    {
+      "question": "Yeni bir girişim kuruyorsun ve yatırımcıya iş modelini anlatacaksın. İş modeli kanvası mı, Lean Canvas mı?",
+      "answer": "Ürün-pazar uyumundan önceysem Lean Canvas. Maurya'ya göre asıl soru işin mimarisi değil, en riskli varsayımın doğru olup olmadığıdır; Lean Canvas problem, çözüm, kilit metrikler ve haksız avantajla buna odaklanır. Kanvasa tarih ve sürüm yazarım."
+    },
+    {
+      "question": "Bir pazar yeri girişimi 'yıllık 250 milyon TL gelirimiz var' diyor; bu rakam platformdan geçen toplam satış. Sorun ne?",
+      "answer": "Bu GMV'dir, gelir değil. Gelir platformun aldığı paydır; komisyon ve abonelik gibi. Demlik'te ayda 20,79 milyon TL GMV'ye karşı gelir 1,457 milyon TL."
+    },
+    {
+      "question": "Ücretli kanaldan gelen bir müşterinin LTV'si 227 TL, CAC'ı 180 TL. Reklam bütçesini üç katına çıkarır mısın?",
+      "answer": "Hayır. LTV/CAC yalnız 1,3 ve geri ödeme yaklaşık 10 ay; pay çok ince. Daha geniş kitleye ulaşmak CAC'ı da yükseltir. Önce churn'ü düşürmeyi öneririm; %8'den %6'ya inmesi LTV'yi yaklaşık 303 TL'ye çıkarır."
+    },
+    {
+      "question": "Bir ekip LTV'yi müşteri başına gelir üzerinden hesapladı. Neyi düzeltirsin?",
+      "answer": "LTV katkı üzerinden hesaplanır: gelirden müşteriye hizmetin değişken maliyetleri düşülür. Demlik'te sipariş başına gelir 9,90 TL ama katkı 5,50 TL; gelirle hesaplanan LTV neredeyse iki kat şişer."
+    },
+    {
+      "question": "Sunumda 'Türkiye kahve pazarı milyarlarca lira' yazıyor. Yatırımcı 'bunun ne kadarı sizin?' diye soruyor. Nasıl cevaplarsın?",
+      "answer": "Aşağıdan yukarı hesapla: birim dükkân, birim değeri dükkân başına yıllık gelir potansiyeli. 4.000 dükkân × 125.000 TL ≈ 500 milyon TL TAM; uygun 1.800 dükkân SAM; üç yılda 600 dükkân SOM. Her halkanın varsayımını yanına yazarım."
+    },
+    {
+      "question": "Bir rakip 'bizim de tekrar sipariş düğmemiz var' diye duyurdu. Hendeğin zayıfladı mı?",
+      "answer": "Pek değil. Özellik kopyalanabilir; bu yüzden hendek değildir. Demlik'in hendeği kasa entegrasyonu ve iki taraflı ağ etkisidir. Asıl tehdit, dükkân ağı hazır olan bir teslimat devinin gel-al özelliğidir."
+    },
+    {
+      "question": "Finans komisyonu %6'dan %8'e çıkarmayı öneriyor. Ürün tarafında ne sorarsın?",
+      "answer": "Dükkânın Demlik'ten aldığı değeri: Demlik olmasa gelmeyecek ek siparişler. Fiyatı değere göre değerlendiririm. Sonra değişikliği küçük bir dükkân grubunda, dükkân kaybı ve yeni dükkân kazanımı gibi koruyucularla denerim."
+    },
+    {
+      "question": "Bir proje üç yılda %67 ROI gösteriyor. Kurul 'aynı parayı bankaya koysak?' diye soruyor. Neyi hesaplarsın?",
+      "answer": "NPV'yi. ROI zamanı hesaba katmaz. Getirileri iskonto oranıyla bugüne indirgerim; Demlik'in kampüs projesinde %30 oranla NPV yaklaşık +0,03 milyon TL, yani zar zor pozitif. Geri ödeme süresini de yanına koyarım."
+    },
+    {
+      "question": "Masada dört fikir var: tekrar sipariş, yeni kampüsler, dükkânlara stok modülü, eve teslimat. Riskleri nasıl karşılaştırırsın?",
+      "answer": "Ansoff matrisiyle. Tekrar sipariş pazara nüfuzdur, en düşük risk. Kampüs pazar geliştirme, stok modülü ürün geliştirmedir. Eve teslimat yeni ürün ve yeni pazar, yani çeşitlendirmedir ve en yüksek risktir."
+    },
+    {
+      "question": "Takım bu çeyreğin OKR'ına 'uygulama puanını 4,3'te tut' yazmak istiyor. Ne önerirsin?",
+      "answer": "Bunu KPI olarak izlemeyi. OKR bir değişim ölçüsüdür, KPI bir sağlık ölçüsü. Puan bozulmaya başlarsa düzeltmek bir OKR olabilir. Bu çeyreğin anahtar sonuçları stratejiye bağlı değişimleri ölçmeli: 30 günde ikinci sipariş %41'den %50'ye gibi."
+    }
+  ]
+}

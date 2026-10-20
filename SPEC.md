@@ -1,4 +1,4 @@
-# SPEC — Product Designer Yol Haritası
+# SPEC — SeeYourNextStep
 
 > Bu belge **ne** yapıldığını tanımlar. **Nasıl** yapıldığı [ARCHITECTURE.md](ARCHITECTURE.md)'de.
 > Kararlar değiştiğinde bu dosya güncellenir; kod ile belge çelişirse belge yanlıştır, düzeltilir.
@@ -50,15 +50,145 @@ devam · tam metin arama (Pagefind) · terim sözlüğü · kart içi terim tan�
 (koyu / açık / sistem, varsayılan koyu) · ilerleme yedekleme (JSON dışa/içe aktarma) · satır içi
 diyagramlar.
 
+**Var — roller (Faz 1).** Yedi rol yolu (Product Designer, Product Manager, Product Owner, Project
+Manager, Scrum Master, Business Analyst, UX Researcher) ve rolsüz **Keşif modu**. Ana sayfada rol
+seçici, role göre çizilen harita (durak numarası + temel / önerilen / isteğe bağlı rozeti, yol dışı
+gezegen küçük ve soluk), rolün yüzdesi ve **Sıradaki adımın** kartı; Ayarlar'da rol seçimi; yedekte
+rol. Paylaşılabilir `/?rol=<id>`. Henüz yazılmamış kategoriler haritada "hazırlanıyor" olarak durur (şu an yok; bütün kategoriler yayında).
+
 **Var — mobil.** Alt gezinme çubuğu · okuma ilerleme çubuğu · adımlar arası kaydırma · ana ekrana
 eklenebilir manifest · **çevrimdışı okuma** (ADR-012). Çevrimdışı katmanı yalnız üretim
 derlemesinde etkindir; `astro dev` altında service worker kaydedilmez, kalmış olan sökülür —
 gerekçesi ve bedeli ADR-012'de.
 
+**Var — Araçlar (Faz 3–10).** `/araclar/`: doldurulmuş örnekli 40 şablon (PRD, RACI, risk kaydı;
+proje tüzüğü, iş gerekçesi, WBS, takvim, RAID, değişiklik talebi, durum raporu, kapanış raporu;
+sprint hedefi, çalışma sözleşmesi, retro panosu, hazır ve bitti tanımı, Gherkin story; BRD, use case,
+as-is/to-be, karar tablosu, izlenebilirlik matrisi, UAT; one-pager, fırsat-çözüm ağacı, deney kartı,
+Now-Next-Later, lansman planı; izleme planı, metrik kartı, A/B test planı, Lean Canvas; paydaş kaydı,
+iletişim planı, DACI karar kaydı, toplantı ve karar notu; araştırma planı, görüşme rehberi, test
+senaryosu, onam örneği, içgörü kartı),
+Markdown ve Türkçe Excel'de açılan CSV indirmeleri (ADR-021).
+
+**Var — Proje Yönetimi (Faz 4).** Materyal dışı ilk tam kategori: 18 v2 ders (yaşam döngüsü,
+standartlar, tüzük, WBS, tahmin, kritik yol, Gantt, kaynak, EVM, risk, RAID, değişiklik, kalite,
+RAG raporu, tedarik, kapanış, program/portföy), 3 demo (belirsizlik konisi, kritik yol, EVM),
+10 soruluk yazılmış quiz, 30 terim. Kapsam haritası `docs/icerik/kapsam-proje-yonetimi.md`;
+birincil kaynak Watt, *Project Management* (CC BY 4.0).
+
+**Var — Çevik Pratikler (Faz 5).** 13 v2 ders (Manifesto ve 12 ilke, Scrum Rehberi, PO ve SM'nin işi,
+kolaylaştırma, retro formatları, refinement ve story bölme, story mapping, akış metrikleri ve CFD,
+Monte Carlo öngörü, takım dinamikleri, ölçekleme, anti-paternler), Monte Carlo demosu, 10 soruluk quiz,
+27 terim. Çalışma Biçimi'nin 7 dersi v2'ye taşındı; Scrum dersindeki "beş toplantı" hatası
+düzeltildi (beş olay = sprint + dört olay). Kapsam haritası `docs/icerik/kapsam-cevik-pratikler.md`.
+
+**Var — İş Analizi (Faz 6).** 13 v2 ders (BABOK haritası, iş ihtiyacı ve kök neden, çıkarma teknikleri,
+gereksinim türleri, iyi gereksinim ve use case, Given-When-Then, BPMN, as-is/to-be ve boşluk analizi,
+iş kuralları ve karar tabloları, bağlam diyagramı, veri gereksinimleri, izlenebilirlik, UAT), yeni `Hub`
+diyagram ilkeli, 10 soruluk quiz, 27 terim. Bütün dersler tek bir analizi izler: Demlik'in iade kuralları.
+Kapsam haritası `docs/icerik/kapsam-is-analizi.md`; birincil kaynak BABOK sözlüğü ve IIBA Business
+Analysis Standard'ın açık sayfaları (tam metin üyelik ister, kullanılmadı).
+
+**Var — Ürün Yönetimi ve Ürün Geliştirme v2 (Faz 7).** 12 v2 ders (PM'in işi ve dört risk, vizyon ve
+strateji, değer önerisi ve konumlandırma, sürekli keşif ve fırsat-çözüm ağacı, varsayım testleri, Kano,
+değer/efor ve gecikme maliyeti, sonuç odaklı yol haritası, PRD anatomisi, lansman, büyüme döngüleri ve
+PLG, yaşam döngüsü ve özellik emekliliği, trade-off ve hayır demek), 10 soruluk quiz, 25 terim. Ürün
+Geliştirme'nin kalan 9 dersi v2'ye taşındı; bölümün 11 dersinin hepsi artık v2. Kapsam haritası
+`docs/icerik/kapsam-urun-yonetimi.md`; birincil kaynaklar Cagan (SVPG), Torres (Product Talk), Dunford,
+Traynor (Intercom) ve diğerleri.
+
+**Var — Ürün Analitiği ve İş Modeli (Faz 8).** Ürün Analitiği ve Deney: 11 v2 ders (iyi metrik ve HEART,
+North Star ve metrik ağacı, AARRR, huni, kohort ve elde tutma, segmentasyon, izleme planı, A/B testi
+tasarımı, deney tuzakları, pano tasarımı, korelasyon ve nedensellik), A/B örneklem demosu, 10 soruluk
+quiz, 20 terim. İş Modeli ve Strateji: 10 v2 ders (iş modeli kanvası ve Lean Canvas, gelir modelleri,
+birim ekonomisi, TAM/SAM/SOM, rekabet ve hendekler, fiyatlandırma, ROI ve NPV, finansal okuryazarlık,
+SWOT/PESTLE/Ansoff, stratejiden OKR'a), 10 soruluk quiz, 28 terim. Vaka kitabına analitik ve iş
+rakamları eklendi. Kapsam haritaları `docs/icerik/kapsam-urun-analitigi.md` ve
+`kapsam-is-ve-strateji.md`; birincil kaynaklar Evan Miller, Microsoft ExP, Rodden (HEART), Amplitude,
+Twilio Segment, a16z, Strategyzer, Maurya, Salesforce, What Matters ve Wikipedia giriş bölümleri.
+
+**Var — İletişim, Şirket Sözlüğü v2 ve materyalden araçlar (Faz 9).** İletişim ve Paydaş Yönetimi: 12 v2
+ders (paydaş analizi ve güç-ilgi haritası, RACI/DACI/RAPID, iletişim planı, piramit ilkesi ve BLUF,
+toplantı yönetimi, veriyle hikâye, yetkisiz etki, müzakere ve BATNA, çatışma, SBI geri bildirimi, kötü
+haber ve eskalasyon, dağıtık ekipler), RACI denetleyici demosu, 4 şablon, 10 soruluk quiz, 17 terim.
+Şirket Sözlüğü'nün 7 dersi v2'ye taşındı ve içe aktarılmış quizin yerine rol-nötr, yazılmış bir quiz
+geçti. Materyalin 20., 21. bölümleri ve Ek A artık araç: içe aktarıcı onları
+`src/data/generated/tools/` altına yapı olarak yazar, metin birebir kalır. `/araclar/kontrol-listeleri/`
+(209 madde; tikler ve "geçerli değil" işaretleri ilerleme kaydında, yedekle taşınır),
+`/araclar/akis-haritasi/` (11 faz; materyalde olmayan beş rolün satırı "materyal dışı" ve ders
+bağlantılı) ve `/araclar/calisma-takvimi/` (materyalin takvimi ve her rolün yolundan haftada 100
+dakikalık plan). Materyaldeki "(21.9)" ve "Bölüm 20" referansları bu sayfalara bağlanır.
+Kapsam haritası `docs/icerik/kapsam-iletisim-ve-paydaslar.md`.
+
+**Var — Kullanıcı Araştırması ve Tasarım/Temel v2 (Faz 10).** Kullanıcı Araştırması: 12 v2 ders
+(araştırma planı, yöntem haritası, katılımcı bulma, görüşme, kullanılabilirlik testi, anket, bağlamsal
+sorgu ve günlük çalışması, kart sıralama ve ağaç testi, sentez, içgörü paylaşımı, etik ve KVKK,
+ResearchOps), 5 şablon, 10 soruluk quiz, 17 terim. Web Temelleri, UX/UI İlkeleri, Tasarım Sistemi,
+Erişilebilirlik ve Arayüz Anatomisi'nin 50 dersi v2'ye taşındı: her birine vakadan bir örnek, eksik rol
+mercekleri, en az üç kendini yokla sorusu ve görseli olmayan 15 derse bir diyagram eklendi (Arayüz Anatomisi'nin "Küçük parçalar" dersindeki eksik "Kendini yokla" bölümü de tamamlandı); ana metindeki
+tasarımcıya özgü cümleler rol-nötr yazıldı. Web Temelleri'nin içe aktarılmış quizinin yerine rol-nötr,
+yazılmış bir quiz geçti. Kaynaklar GOV.UK Service Manual (kullanıcı araştırması bölümü), NN/g
+(Rohrer, Farrell, Flaherty, Tankala ve Sherwin, Laubheimer, Kaplan) ve KVKK. Kapsam haritası
+`docs/icerik/kapsam-kullanici-arastirmasi.md`.
+
+**Var — Mühendislik, ilk yarı v2 (Faz 11a).** Front-end (13), Programlama Dilleri (11), Framework'ler (4)
+ve Kütüphaneler'in (8) 36 dersi v2'ye taşındı: her birine vakadan bir örnek ("Mühendislik işleri"),
+en az üç kendini yokla sorusu ve görseli olmayan her derse bir diyagram eklendi; çok kısa dersler
+derinleştirildi, ana metindeki tasarımcıya özgü cümleler rol-nötr yazıldı. "Dil seçimi" dersine PM, PO,
+PjM ve BA, "SQL" dersine BA mercekleri eklendi. Programlama Dilleri'ne ilk kez bir quiz yazıldı; Front-end,
+Framework'ler ve Kütüphaneler'in içe aktarılmış quizlerinin yerini rol-nötr kopyaları aldı.
+
+**Var — Mühendislik, ikinci yarı v2 (Faz 11b).** Back-end/API (15), Veritabanı (12), Veri Yapıları (9) ve
+Algoritmalar'ın (9) 45 dersi v2'ye taşındı: her birine vakadan bir örnek, bir diyagram (Veri Yapıları'nda
+takvim ağını gösteren bir Hub dahil) ve en az üç kendini yokla sorusu eklendi; bölüm başlığı olmayan
+dersler bölümlere ayrıldı, "seviye 2/3" ifadeleri kaldırıldı. Back-end/API'de PM, PO ve BA; Veritabanı'nda
+BA; Algoritmalar'ın filtre, öneri ve anlamsal arama derslerinde PM ve PO mercekleri yazıldı. Veri Yapıları
+ve Algoritmalar'a ilk kez quiz yazıldı; Back-end/API ve Veritabanı quizlerinin yerini rol-nötr kopyaları
+aldı. Mühendislik alanının sekiz kategorisinin hepsi v2.
+
+**Var — Kimlik, güvenlik ve mimari v2 (Faz 12a).** Auth (11), Güvenlik ve Hukuk (11) ve Sistem Mimarisi'nin
+(13) 35 dersi v2'ye taşındı: her birine vakadan bir örnek, bir diyagram (Sistem Mimarisi'nde sipariş servisi
+ve olay akışı için iki Hub dahil) ve en az üç kendini yokla sorusu eklendi; uzun özetler kısaltıldı, "seviye
+2/3" ifadeleri ve ana metindeki tasarımcıya özgü cümleler kaldırıldı. Auth'ta PM, PO ve BA; Güvenlik ve
+Hukuk'ta PM, PO, PjM, BA ve UXR; Sistem Mimarisi'nde PM mercekleri yazıldı. Auth ile Güvenlik ve Hukuk
+quizlerinin yerini rol-nötr kopyaları aldı. KVKK dersindeki birinci tekil şahıslı not ("Ben hukukçu değilim",
+"bu turda açamadım") nötr bir doğrulama uyarısına çevrildi; Kurul duyurusu hâlâ birincil kaynaktan
+doğrulanmadı.
+
+**Var — Teslimat, kalite ve yapay zekâ v2 (Faz 12b).** Git ve GitHub (11), DevOps ve Yayın (12), Test ve
+Kalite (10) ve Yapay Zekâ ile Çalışma'nın (10) 43 dersi v2'ye taşındı; böylece 335 dersin hepsi v2'de. Her
+derse vakadan bir örnek, bir diyagram (kalite dersinde severity × priority matrisi dahil) ve en az üç kendini
+yokla sorusu eklendi. DevOps'ta PM, PO, PjM ve SM; Test ve Kalite'de bunlara ek BA; Yapay Zekâ'da yolu olan
+altı rolün hepsi için mercek yazıldı. Kubernetes dersindeki açıklanmamış "Seviye 3" kaldırıldı; hosting
+dersindeki birinci tekil şahıslı not nötrleşti. Dört kategorinin quizi rol-nötr kopyalarla değişti. Vaka
+kitabına "Teslimat, kalite ve yapay zekâ işleri" bölümü eklendi.
+
+**Var — Son tur (Faz 13).** v2: 335/335, `lint:lessons` sıfır hata. 70 sayfada (her kategorinin ana sayfası
+ve bir dersi, harita, Roller, Araçlar, Ayarlar, Ara, Sözlük) axe WCAG 2.2 AA taraması: ihlal yok. Kontrast
+hesapla: en düşük gövde metni 5,65:1 (`--c-text-muted`, açılır yüzeyde), kontrol kenarlığı 4,13:1. İki
+fontta da Türkçe glifler yüklü alt kümeyle çiziliyor. Turda bulunan ve düzeltilen: ana sayfadaki rol
+seçicide ok tuşu ilk rolde seçimi tamamlayıp paneli kapatıyor, odak `<body>`'ye düşüyordu; artık klavyeyle
+panel açık kalıyor, fareyle seçimde odak "Değiştir"e geçiyor. Planda olup yapılmamış "Yolunu indir" eklendi.
+Eskimiş ADR-006, ADR-007 ve ADR-014'e durum notu düşüldü.
+
+**Uçtan uca senaryo (Faz 13, 20 Ekim 2026, `npm run preview`, 375 px).** Sekiz adımın hepsi geçti:
+1. Boş depolamayla açılış; rol seçici klavyeyle Project Manager'a getirildi.
+2. Harita PjM yolunu çizdi (25 durak, 6 temel); "Yolculuğa başla" → Ürün Geliştirme · Ekipteki roller.
+3. Derste önce "Project Manager olarak sen", diğerleri "Diğer roller (6)" içinde. "Bu dersi bitirdim" →
+   ilerleme 1/112, sıradaki adım "Ürün geliştirme yaşam döngüsü".
+4. Risk kaydı CSV'si: UTF-8 BOM, `;` ayraç, CRLF, Türkçe karakterler bozulmadan (Excel'de açma elle
+   denenmedi; biçim Türkçe Excel'in beklediği biçim).
+5. Rol PM'e çevrildi; aynı tamamlanan ders, 1/190.
+6. Ayarlar'dan yedek metni alındı, ilerleme sıfırlandı, rol Scrum Master'a çevrildi; yedek geri yüklenince
+   ilerleme ve rol (PM) geri geldi.
+7. "Yolunu indir" (PM, 21 bölüm) → sunucu kapatıldı: yoldaki ders stilleriyle açıldı, yol dışındaki bir
+   ders "Bu sayfa çevrimdışı yok" sayfasını gösterdi.
+8. JS yokken: `<html>` `data-role` taşımaz, yalnız Keşif rozetleri görünür, 31 gezegen düz bağlantıdır;
+   derslerde mercekler "Rollere göre bakış" listesine düşer (derlenmiş HTML'den doğrulandı; tarayıcıda JS
+   kapatılamadı).
+
 **Henüz yok — planlı, yapılmadı.** EN arayüz (`/en/`, `src/i18n`): kullanıcı ertelemeyi seçti,
-şu an TR tek dil · Araçlar bölümü (`/araclar/` — kontrol listeleri, proje akış haritası, çalışma
-takvimi, kaynaklar): rota yok, üst menüdeki bağlantı bu yüzden `ready: false` ile gizli ·
-framework ve kütüphane profil sayfaları · Cloudflare Pages yayını.
+şu an TR tek dil · Araçlar'da Ek B kaynakları ve diğer şablonlar · framework ve kütüphane profil sayfaları · Cloudflare Pages yayını.
 
 **Yok — bilinçli olarak.** Hesap/giriş sistemi · sunucu tarafı veri · cihazlar arası senkron
 (mimari hazır, uygulama sonraki faz) · içerik EN çevirisi · yorum/not alma · aralıklı tekrar
@@ -74,12 +204,14 @@ eşlemesi orada; başka hiçbir yerde tekrarlanmaz.
 | Alan | Kategoriler (sıra = materyal bölüm sırası) |
 |---|---|
 | Temel | 1 Web Temelleri |
-| Ürün ve Ekip | 2 Ürün Geliştirme · 3 Çalışma Biçimi · 18 Şirket Ortamı Sözlüğü |
-| Tasarım | 4 UX/UI Süreç ve İlkeler · 5 Tasarım Sistemi · 6 Erişilebilirlik · 7 Arayüz Anatomisi |
+| Ürün ve Ekip | 2 Ürün Geliştirme · 3 Çalışma Biçimi · 18 Şirket Ortamı Sözlüğü · İletişim ve Paydaş Yönetimi (materyal dışı) |
+| Strateji ve Ürün | Ürün Yönetimi · Ürün Analitiği ve Deney · İş Modeli ve Strateji (üçü de materyal dışı) |
+| Teslimat | Proje Yönetimi · Çevik Pratikler · İş Analizi (materyal dışı, bu site için yazıldı) |
+| Tasarım | 4 UX/UI Süreç ve İlkeler · Kullanıcı Araştırması · 5 Tasarım Sistemi · 6 Erişilebilirlik · 7 Arayüz Anatomisi |
 | Mühendislik | 8 Front-end · **Programlama Dilleri** · 9a Framework'ler · 9b Kütüphaneler · 10 Back-end ve API · 11 Veritabanı · **Veri Yapıları** · **Algoritmalar** |
 | Sistem ve Operasyon | 14 Sistem Mimarisi · 12 Auth · 13 Güvenlik ve Hukuk · 15 Git ve GitHub · 16 DevOps ve Yayın · 17 Test ve Kalite |
 | Yapay Zekâ | 19 AI ile Profesyonel Çalışma |
-| Araçlar (şema dışı) | 22 Sözlük · **[henüz yok]** 20 Proje Akış Haritası · 21 Kontrol Listeleri · Ek A Takvim · Ek B Kaynaklar |
+| Araçlar (şema dışı) | 22 Sözlük · 20 Proje Akış Haritası · 21 Kontrol Listeleri · Ek A Takvim · **[henüz yok]** Ek B Kaynaklar |
 
 **Kalın** olanlar materyalde yoktu, yazıldı (bkz. §7): Programlama Dilleri 11 adım, Veri Yapıları 9,
 Algoritmalar 9. Framework'ler (5) ve Kütüphaneler (9) materyalin 9. bölümünden yeniden yapılandırıldı.
@@ -103,8 +235,9 @@ Veritabanı'ndan (11) sonra: N+1, index ve sorgu maliyeti orada anlatılıyor.
 /en/...                                    [henüz yok] aynı yapı, arayüz İngilizce
 ```
 
-Rezerve kökler: `ara`, `sozluk`, `araclar`, `ayarlar`, `en`. Son ikisi — `araclar` ve `en` — yalnız
-rezerve; rota üretilmiyor. Üst menüdeki Araçlar bağlantısı bu yüzden `ready: false` ile gizli.
+Rezerve kökler (`RESERVED_ROOTS`, `src/data/categories.ts`; `validate` denetler): `ara`, `sozluk`,
+`araclar`, `ayarlar`, `roller`, `en`, `offline`, `404`, `pagefind`, `_astro`,
+`manifest.webmanifest`. `en` yalnız rezerve; rota üretilmiyor.
 Slug'lar Türkçe ve **sabittir** — materyal güncellense bile değişmez, çünkü ilerleme kayıtları
 onlara bağlı. Slug değişirse o adımın ilerlemesi kaybolur.
 
@@ -136,9 +269,10 @@ toplu açma seçeneği.
 erişilir. *[henüz yok]* Navbar'ın içine gömülü arama alanı ve Cmd/Ctrl+K kısayolu — arama şu an
 kendi sayfasında yaşıyor.
 
-**Araçlar. [henüz yok]** İşaretlenebilir kontrol listeleri (21), faz faz akış haritası (20),
-çalışma takvimi (Ek A), kaynaklar (Ek B). Rota üretilmiyor; ilerleme modelindeki `checklists`
-alanı (§4) bu sayfalar için ayrılmış, henüz hiçbir şey yazmıyor.
+**Araçlar.** İşaretlenebilir kontrol listeleri (21), faz faz akış haritası (20) ve çalışma takvimi
+(Ek A) yayında. Tikler ilerleme modelindeki `checklists` alanına madde kimliğiyle yazılır; "geçerli
+değil" işareti aynı alanda `<kimlik>~na` anahtarıyla durur, şema `version: 1` kalır. Madde kimlikleri
+`src/data/frozen-checklist-ids.json` ile dondurulur. *[henüz yok]* Kaynaklar (Ek B).
 
 ## 4. İlerleme modeli
 
@@ -152,7 +286,8 @@ alanı (§4) bu sayfalar için ayrılmış, henüz hiçbir şey yazmıyor.
 }
 ```
 
-- Tek anahtar: `pdr.progress.v1`.
+- Tek anahtar: `pdr.progress.v1`. Seçili rol ayrı bir tercih anahtarında (`pdr.role.v1`, ADR-018);
+  rol değişince ilerleme kaydı değişmez. Yedek dosyası rolü `prefs.role` olarak taşır.
 - **Okurken Zod ile doğrulanır.** Bozuksa sıfırlanır ve kullanıcıya bildirilir — dışarıdan gelen
   her girdi çalışma zamanında doğrulanır, `localStorage` dışarıdır.
 - Tik → anında yerel kayıt → ilgili tüm görünümler (yan menü, kategori yüzdesi, ana sayfa halkası)
@@ -243,10 +378,10 @@ kriteri olarak kullanılır. Site, anlattığı kuralları uygular.
 ## 7. Yazılacak yeni içerik
 
 Kural: her sayfa **"materyal dışı"** rozetiyle yayınlanır, en az bir birincil kaynak linki taşır,
-**kod öğretmez**, Product Designer kararlarına bağlanır.
+**kod öğretmez**, rol merceklerine bağlanır (her temel/önerilen rol için bir `<Lens>`).
 
 Şablon: *ne olduğu · nerede ve neden kullanılır · hangi problemi çözer · güçlü yanlar · zayıf
-yanlar · alternatifler · bir Product Designer'ın bilmesi gerekenler.*
+yanlar · alternatifler · rol mercekleri.*
 
 - **Programlama Dilleri (11 adım, yazıldı):** dil seçimi neden ürün kararıdır · JavaScript ·
   TypeScript · Python · Java · C# · Go · PHP · SQL · karşılaştırma tablosu, artı Ruby/Swift/Kotlin/

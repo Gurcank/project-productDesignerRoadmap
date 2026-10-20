@@ -5,7 +5,8 @@ outcomes:
   - "Core Web Vitals'ın laboratuvar değil saha verisi olduğunu açıklayabilirsin."
   - "Hero görselinin neden lazy load edilmeyeceğini bilirsin."
   - "TTFB ve LCP'ye bakarak sorunun sunucuda mı ön yüzde mi olduğunu ayırabilirsin."
-minutes: 13
+minutes: 8
+standard: 2
 sources:
   - label: "web.dev — Core Web Vitals"
     url: "https://web.dev/articles/vitals"
@@ -30,6 +31,10 @@ skipTerms: ["layout","header"]
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Chart from "~/components/diagrams/primitives/Chart.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Hero görselinin boyutu, kaç font ağırlığı yüklendiği, animasyonların ağırlığı: hepsi tasarım kararı, hepsi aynı zamanda **ölçülebilir bir hız maliyeti.** Bu ders, o ölçülerin adlarını ve eşiklerini verir.
 
@@ -49,7 +54,7 @@ Metrikler ve eşikler değişebilir. Nitekim **INP, 12 Mart 2024'te FID'in yerin
 
 ## Üç metrik ayrıntıda
 
-**LCP (Largest Contentful Paint)**, ekrandaki en büyük görünür öğenin (genelde hero görseli ya da ana başlık) ne zaman çizildiğidir; "sayfa açıldı mı?" hissinin ölçüsü. Tasarımcıyı doğrudan ilgilendirir: **hero görseli genelde LCP öğesidir.** Ağır bir hero görseli seçmek ölçülebilir bir maliyettir. "LCP 4,2 saniye; hero görselini WebP'ye çevirip önceliklendirelim."
+**LCP (Largest Contentful Paint)**, ekrandaki en büyük görünür öğenin (genelde hero görseli ya da ana başlık) ne zaman çizildiğidir; "sayfa açıldı mı?" hissinin ölçüsü. Tasarımı doğrudan ilgilendirir: **hero görseli genelde LCP öğesidir.** Ağır bir hero görseli seçmek ölçülebilir bir maliyettir. "LCP 4,2 saniye; hero görselini WebP'ye çevirip önceliklendirelim."
 
 **INP (Interaction to Next Paint)**, kullanıcı bir şeye tıkladığında ekranda bir tepki görünene kadar geçen süredir; "bu site takılıyor" hissinin ölçüsü. FID yalnızca ilk etkileşimi ölçerdi; INP **tüm etkileşimleri** ölçüp en kötüye yakın bir değeri raporladığı için geçmesi daha zordur. Ağır JavaScript kullanan arayüzlerde sorun çıkar. "Filtre değiştirince 600ms takılma var; listeyi sanallaştıralım."
 
@@ -65,6 +70,17 @@ Metrikler ve eşikler değişebilir. Nitekim **INP, 12 Mart 2024'te FID'in yerin
 
 **Image optimization.** Web sayfalarının ağırlığının büyük kısmı görsellerdir. Üç kural: **modern format** (WebP, AVIF), **cihaza uygun boyut** (telefona 2000px görsel göndermek israftır), **ekran dışındakileri sonradan yükle.** Ama hero görseli lazy load **edilmemelidir:** o LCP öğesidir ve öncelikli yüklenmelidir. "Hero görselini öncelikli yükleyelim, alttaki galeriyi lazy load edelim."
 
+<Chart
+  kind="bar"
+  label="Dükkân sayfasının LCP değeri"
+  caption="Demlik'in dükkân sayfasında en büyük görünür öğe, dükkânın kapak fotoğrafıdır. İyileştirmeden önce LCP 4,2 saniyeydi; kötü eşiği olan 4 saniyenin üstündeydi. Fotoğraf WebP'ye çevrildi, telefona uygun boyutta gönderildi ve öncelikli yüklendi; üç font ağırlığı ikiye indi. Sonra LCP 2,1 saniyeye düştü; iyi eşiği olan 2,5 saniyenin altında."
+  x={{ title: "Ölçüm", labels: ["Önce", "Sonra"] }}
+  y={{ title: "LCP (saniye)", max: 8 }}
+  series={[
+    { name: "LCP, 75. yüzdelik", values: [4.2, 2.1], tone: "accent" },
+  ]}
+/>
+
 **Font loading.** Özel font yüklenene kadar metnin davranışı iki türlüdür: **FOIT** metin görünmez kalır; **FOUT** yedek fontla gösterilip sonra değişir. FOIT kullanıcıyı boş ekrana baktırır; genelde FOUT tercih edilir. Ama yedek fontun metrikleri farklıysa değişim anında metin sıçrar ve CLS bozulur; yedek fontu birincil fonta yakın seçmek bunu azaltır. "Üç font ağırlığı yüklüyoruz ve ikisi kullanılmıyor; kaldıralım."
 
 **Preload / prefetch.** Preload "bunu şimdi ve öncelikli indir" (hero görseli, kritik font); prefetch "muhtemelen sonra gerekecek, boşta indir" (kullanıcının gitmesi olası sonraki sayfa). Doğru kullanıldığında algılanan hızı belirgin artırır; aşırı kullanıldığında gereksiz veri indirir ve asıl kritik kaynaklarla yarışır.
@@ -77,14 +93,29 @@ Bu sitenin ilk yüklemedeki toplam JavaScript'i 60 KB bütçesinin altında tutu
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in dükkân sayfası saha verisinde yavaş görünüyordu. Ece ve Selin üç metriğe tek tek baktı:
+
+1. **LCP 4,2 sn:** en büyük öğe dükkânın kapak fotoğrafıydı. WebP'ye çevrildi, telefona uygun boyutta gönderildi, öncelikli yüklendi. Üç font ağırlığı ikiye indi. LCP 2,1 saniyeye düştü.
+2. **CLS:** ürün fotoğrafları yüklendikçe liste kayıyordu; 4:3 oranla yer ayrıldı.
+3. **INP:** Panel'de "Hazır" düğmesi yoğun saatte takılıyordu; gereksiz yeniden çizimler giderildi.
+4. **Bütçe:** dükkân sayfası için LCP 2,5 saniye ve ilk yükte JavaScript sınırı yazıldı; derleme aşılırsa uyarıyor.
+
+Ölçüm Lighthouse'ta değil, gerçek kullanıcı verisinde yapıldı; ofisin Wi-Fi'ında sayfa zaten hızlıydı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Hero görselini bir bütçeyle seç:** hedef boyut ve format teslimde yazılı olsun.
 - **Her görsele oran ve alan ayır;** her dinamik bileşene yer ayır (CLS).
 - **Font ağırlığı sayısını sınırla;** yedek fontu birincil fonta yakın seç.
 - **"Yavaş" geri bildiriminde önce TTFB ve LCP'ye bak;** sorun sunucuda mı ön yüzde mi?
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -114,5 +145,11 @@ Sunucu ve ağ tarafında: rendering stratejisi (her istekte hesaplama), sunucu b
 <SelfCheck question="FOIT ile FOUT arasındaki fark nedir? Hangisi tercih edilir ve yan etkisi nedir?">
 
 FOIT font yüklenene kadar metni görünmez tutar; FOUT yedek fontla gösterip sonra değiştirir. FOUT tercih edilir çünkü kullanıcı boş ekrana bakmaz; yan etkisi, yedek font metrikleri farklıysa metnin sıçraması ve CLS'nin bozulmasıdır.
+
+</SelfCheck>
+
+<SelfCheck question="TTFB iyi ama LCP kötü. Sorun büyük olasılıkla nerededir?">
+
+Ön yüzde: görsel, font ya da JavaScript. Sunucu ilk yanıtı hızlı veriyor; en büyük öğenin çizilmesini geciktiren şey tarayıcı tarafında yüklenen ve çalışan kaynaklardır.
 
 </SelfCheck>

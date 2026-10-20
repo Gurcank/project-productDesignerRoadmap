@@ -48,9 +48,22 @@ export function loadManifest(): Promise<OfflineManifest | null> {
   return manifestPromise;
 }
 
-export function plan(manifest: OfflineManifest, scope: Scope): { urls: string[]; bytes: number } {
-  const lists =
-    scope === "all" ? Object.values(manifest.categories) : manifest.categories[scope] ? [manifest.categories[scope]!] : [];
+/**
+ * The files a scope needs. A role's path is stored under its own scope key
+ * (`path:<role>`) but downloads the categories passed in `categories`.
+ */
+export function plan(
+  manifest: OfflineManifest,
+  scope: Scope,
+  categories?: readonly string[],
+): { urls: string[]; bytes: number } {
+  const lists = categories
+    ? categories.flatMap((slug) => (manifest.categories[slug] ? [manifest.categories[slug]!] : []))
+    : scope === "all"
+      ? Object.values(manifest.categories)
+      : manifest.categories[scope]
+        ? [manifest.categories[scope]!]
+        : [];
   const files = [...manifest.shared, ...lists.flat()];
   return { urls: files.map((file) => file.url), bytes: files.reduce((sum, file) => sum + file.bytes, 0) };
 }
@@ -70,6 +83,7 @@ export async function download(
   manifest: OfflineManifest,
   scope: Scope,
   onProgress: (progress: Progress) => void,
+  categories?: readonly string[],
 ): Promise<Progress> {
   const registration = await navigator.serviceWorker.ready;
   const worker = registration.active;
@@ -78,7 +92,7 @@ export async function download(
   // Ask the browser not to evict what the reader chose to keep. Best effort.
   navigator.storage?.persist?.().catch(() => {});
 
-  const { urls } = plan(manifest, scope);
+  const { urls } = plan(manifest, scope, categories);
 
   return new Promise((resolve) => {
     const listener = (event: MessageEvent) => {

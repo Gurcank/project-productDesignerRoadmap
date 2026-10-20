@@ -1,5 +1,5 @@
 {
-  "name": "product-designer-roadmap",
+  "name": "seeyournextstep",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -9,10 +9,12 @@
     "build:fresh": "tsx scripts/clean.ts && astro build && pagefind --site dist && tsx scripts/offline-manifest.ts",
     "preview": "astro preview",
     "check": "astro check",
+    "test": "tsx --test \"tests/**/*.test.ts\"",
     "clean": "tsx scripts/clean.ts",
     "import": "tsx scripts/import-materials.ts",
     "import:check": "tsx scripts/import-materials.ts --check",
     "validate": "tsx scripts/validate-content.ts",
+    "lint:lessons": "tsx scripts/lint-lessons.ts",
     "budget": "tsx scripts/check-budget.ts"
   },
   "dependencies": {

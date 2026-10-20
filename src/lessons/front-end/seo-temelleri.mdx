@@ -1,11 +1,12 @@
 ---
-summary: "Arama motorlarının siteni bulup anlamasını sağlayan temeller: title ve meta description, canonical, robots.txt ve sitemap.xml, structured data, Open Graph, favicon. Tasarımcıyı ilgilendiren kısmı sanıldığından büyük."
+summary: "Arama motorlarının siteni bulup anlamasını sağlayan temeller: title ve meta description, canonical, robots.txt ve sitemap.xml, structured data, Open Graph, favicon. Çoğu içerik ve tasarım kararıdır."
 outcomes:
   - "Hangi SEO parçalarının doğrudan tasarım işi olduğunu söyleyebilirsin."
   - "Canonical'ın hangi problemi çözdüğünü açıklayabilirsin."
   - "Yayında sık yapılan robots.txt hatasını bilirsin."
   - "OG görselinin neden bir tasarım işi olduğunu anlatabilirsin."
-minutes: 9
+minutes: 5
+standard: 2
 sources:
   - label: "Google Search Central — Title bağlantıları"
     url: "https://developers.google.com/search/docs/appearance/title-link"
@@ -20,9 +21,12 @@ sources:
 skipTerms: ["title"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir sitenin güzel olması, bulunması demek değil. Arama motorları siteni nasıl okuyor, bir bağlantı paylaşıldığında ne görünüyor? Bunun çoğu kod değil; **içerik ve tasarım kararı.**
 
@@ -52,14 +56,44 @@ Klasik bir yayın hatası: **staging'deki "botları engelle" ayarının canlıya
 
 **Favicon**, tarayıcı sekmesinde ve yer imlerinde görünen küçük ikondur. Marka tanınırlığı için etkilidir ve sık unutulur. Küçük boyutta okunabilmesi için logonun sadeleştirilmiş sürümü kullanılır; tam logo 16px'te okunmaz.
 
-<Callout kind="tasarimci">
+<Tree
+  label="Bir sayfanın dışarıda görünen yüzleri"
+  caption="Bir sayfa üç yerde dışarıya görünür. Arama sonucunda başlık, meta açıklama ve varsa yapılandırılmış veriyle zenginleştirilmiş görünüm. Bir mesajlaşma uygulamasında paylaşıldığında Open Graph başlığı ve görseli. Tarayıcı sekmesinde favicon. Bunların arkasında, botlara yol gösteren robots.txt, sitemap.xml ve canonical durur."
+  root={{
+    title: "Sayfa dışarıda",
+    tone: "accent",
+    children: [
+      { title: "Arama sonucu", children: [{ title: "Title" }, { title: "Meta description" }, { title: "Structured data" }] },
+      { title: "Paylaşım", children: [{ title: "OG başlık ve görsel" }] },
+      { title: "Sekme", children: [{ title: "Favicon" }] },
+      { title: "Botlar için", children: [{ title: "robots.txt · sitemap · canonical", tone: "progress" }] },
+    ],
+  }}
+/>
+
+<Case>
+
+Moda'daki dükkân, Demlik sayfasının linkini Instagram profiline koydu ve paylaşımda yalnız çıplak bir bağlantı göründü.
+
+1. **Open Graph:** dükkân sayfalarına şablon bir OG görseli eklendi: sabit arka plan, değişen dükkân adı ve logo. Selin şablonu bir kez çizdi; 140 dükkânın her biri kendi görselini aldı.
+2. **Title:** bütün dükkân sayfalarının başlığı "Demlik" idi. Şablon "Moda Kahve · Demlik" oldu.
+3. **Canonical:** `?kategori=soguk` gibi filtreli adresler, dükkânın ana sayfasını canonical olarak gösteriyor.
+4. **robots.txt:** staging'de bütün botlar engelliydi. Kampüs sayfası yayına çıkmadan önce canlıdaki robots.txt kontrol listesine eklendi.
+
+Favicon da sadeleşti: tam logo yerine yalnız fincan simgesi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Her sayfa türü için başlık ve açıklama şablonu yaz** (ürün adı, kategori adı…).
 - **Paylaşım görselini şablon olarak tasarla** ve oranını sabitle.
 - **Favicon için sadeleştirilmiş logo üret;** 16px'te dene.
 - **Yayın öncesi robots.txt'i kontrol listesine ekle.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -82,5 +116,11 @@ Aynı içeriğe birden fazla adresten ulaşılması problemini. Filtre ve sıral
 <SelfCheck question="OG görseli neden bir tasarım işidir?">
 
 Bir bağlantı paylaşıldığında görünen görsel odur ve tıklanmayı doğrudan etkiler; tanımlanmamışsa paylaşım çıplak bir bağlantı olarak görünür. Şablon bir OG görseli tasarlamak her sayfa için ayrı görsel üretmeden bunu çözer.
+
+</SelfCheck>
+
+<SelfCheck question="Bir sayfa sosyal medyada paylaşılınca yalnız çıplak bir link görünüyor. Ne eksik, kim çözer?">
+
+Open Graph etiketleri: paylaşım başlığı, açıklaması ve görseli. Görseli tasarım üretir, etiketleri geliştirici ekler; her sayfa için ayrı görsel yerine şablon bir OG görseli kullanılabilir.
 
 </SelfCheck>

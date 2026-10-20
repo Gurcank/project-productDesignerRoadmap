@@ -3,7 +3,8 @@ summary: "Okunaklılığı öne alan genel amaçlı dil; veri işleme, otomasyon
 outcomes:
   - "Python'un en güçlü olduğu üç yeri sayabilirsin."
   - "Yapay zekâ özelliğinin neden ayrı bir servis olduğunu ve tasarıma etkisini söyleyebilirsin."
-minutes: 5
+minutes: 3
+standard: 2
 sources:
   - label: "Python — Hakkında"
     url: "https://www.python.org/about/"
@@ -16,13 +17,40 @@ additions:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Python, okunaklılığı öne alan, genel amaçlı bir dildir. Veri işleme, otomasyon ve yapay zekâda fiilî standarttır.
 
 ## Nerede karşına çıkar
+
+<Tree
+  label="Python'un güçlü olduğu alanlar"
+  caption="Python üç alanda güçlüdür. Veri ve yapay zekâda fiilî standarttır: model eğitimi, veri temizliği, analiz. Otomasyonda tek seferlik işler, veri taşıma ve rapor üretimi için kullanılır. Back-end'de Django ve FastAPI gibi framework'lerle web servisleri yazılır. Tarayıcıda çalışmaz."
+  root={{
+  title: "Python",
+  tone: "accent",
+  children: [
+    {
+      title: "Veri ve yapay zekâ",
+      sub: "fiilî standart"
+    },
+    {
+      title: "Otomasyon",
+      sub: "betik, rapor"
+    },
+    {
+      title: "Back-end",
+      sub: "Django, FastAPI",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 - **Veri ve yapay zekâ.** Model eğitimi, veri temizliği, analiz: bu alanın kütüphaneleri Python'da yaşar. Bir ürüne yapay zekâ girecekse arkada büyük ihtimalle Python vardır.
 - **Otomasyon ve betikler.** Tek seferlik işler, veri taşıma, rapor üretimi.
@@ -40,12 +68,25 @@ Python, okunaklılığı öne alan, genel amaçlı bir dildir. Veri işleme, oto
 
 **Alternatifler:** ekip zaten JavaScript biliyorsa back-end için Node.js; yüksek trafikli, basit servisler için Go; yalnızca istatistik ağırlıklı analizde R.
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'te Python yalnız bir yerde ve bilinçli olarak kullanılıyor:
+
+1. **Rapor:** haftalık metrik raporu ve kohort tablosu her pazartesi sabahı bir Python betiğiyle üretiliyor. Veri işleme kütüphaneleri orada hazır.
+2. **Ayrı:** betik ana uygulamanın parçası değil; veritabanının okuma kopyasından okuyor, canlı sistemi yormuyor.
+3. **Ekip:** betiği Burak yazdı; ekibin geri kalanı TypeScript yazıyor. Betiğin kısa bir belgesi var, çünkü onu bilen tek kişi o.
+4. **Yapay zekâ:** "tahmini hazır olma süresini yapay zekâ hesaplasın" fikri konuşuldu. Bunun ayrı bir servis, gecikme ve hata hâli demek olduğu not edildi; şimdilik dükkânın girdiği süre kullanılıyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **"Yapay zekâ ekleyelim" dendiğinde arkada muhtemelen Python vardır** ve bu genelde **ayrı bir servis** demektir: ana uygulamayla ağ üstünden konuşur. Yani gecikme ve hata durumu tasarlanmalıdır.
 - **Model çalıştırmak yavaştır.** Saniyeler sürebilir; "yükleniyor" yerine ilerlemeli ya da arka plana atılmış bir akış tasarlaman gerekebilir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -60,5 +101,17 @@ Python, okunaklılığı öne alan, genel amaçlı bir dildir. Veri işleme, oto
 <SelfCheck question="Yapay zekâ özelliği neden genelde ayrı bir servistir ve bu tasarımı nasıl etkiler?">
 
 Bu alanın kütüphaneleri Python'da yaşar ve ana uygulamayla ağ üstünden konuşan ayrı bir servis çalışır. Bu yüzden gecikme ve hata durumları olur; model çalıştırmak saniyeler sürebildiğinden ilerleme göstergeli ya da arka plana atılmış akışlar tasarlamak gerekebilir.
+
+</SelfCheck>
+
+<SelfCheck question="Ürüne yapay zekâ ile çalışan bir özellik eklenecek. Arayüzde neyi planlamak gerekir?">
+
+Özellik büyük olasılıkla ayrı bir servis olarak çalışır ve yanıtı saniyeler sürebilir. Gecikme için ilerlemeli bir bekleme ya da arka plana atılan bir akış, servis yanıt vermezse bir hata hâli tasarlanmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Ekip zaten JavaScript biliyor ve basit bir web servisi yazacak. Python mı, Node.js mi?">
+
+Büyük olasılıkla Node.js. Ekip aynı dili iki tarafta kullanır, yeni bir dil öğrenmek gerekmez. Python'un asıl avantajı veri ve yapay zekâ ekosistemidir; basit bir web servisinde bu avantaj öne çıkmaz.
 
 </SelfCheck>

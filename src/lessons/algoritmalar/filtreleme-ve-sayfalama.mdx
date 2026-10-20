@@ -4,7 +4,8 @@ outcomes:
   - "Filtre birleşimlerinin neden maliyeti katladığını söyleyebilirsin."
   - "'Kaç sonuç var' gösteriminin üç seçeneğini ve maliyetlerini karşılaştırabilirsin."
   - "Filtre durumunun neden URL'de yaşaması gerektiğini açıklayabilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "MDN — URLSearchParams"
     url: "https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams"
@@ -16,9 +17,12 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Altı filtre, her biri iki seçenekli: tasarımda küçük bir panel. Arkada ise onlarca farklı sorgu şekli.
 
@@ -40,12 +44,52 @@ Aynısı **facet sayıları** için geçerlidir: her filtre seçeneğinin yanın
 
 ## Filtre durumu nerede yaşıyor
 
+<Tree
+  label="Bir filtre panelinin dört maliyeti"
+  caption="Küçük bir filtre paneli arkada dört ayrı maliyet getirir. Filtre birleşimleri: her birleşim ayrı bir sorgu şeklidir ve indeksten yararlanmayabilir. Toplam sonuç sayısı: tam sayı pahalıdır, yaklaşık gösterim ucuzdur. Facet sayıları: her seçeneğin yanındaki rakam ayrı bir sayımdır. Filtre durumu: URL'de yaşarsa paylaşılabilir ve geri tuşu çalışır."
+  root={{
+  title: "Filtre paneli",
+  tone: "accent",
+  children: [
+    {
+      title: "Birleşimler",
+      sub: "sorgu şekli · indeks"
+    },
+    {
+      title: "Toplam sayı",
+      sub: "1.000+ ucuz"
+    },
+    {
+      title: "Facet sayıları",
+      sub: "her seçenek bir sayım"
+    },
+    {
+      title: "Durum",
+      sub: "URL'de",
+      tone: "progress"
+    }
+  ]
+}}
+/>
+
 Bu bir tasarım kararıdır ve genelde atlanır:
 
 - **URL'de:** paylaşılabilir, geri tuşu çalışır, yenilemede kaybolmaz. Neredeyse her zaman doğru cevap.
 - **Yalnızca bellekte:** paylaşılamaz, geri tuşu filtreyi değil sayfayı bırakır.
 
-<Callout kind="tasarimci">
+<Case>
+
+Müşteri sitesinin dükkân listesine filtreler eklendi: "Şu an açık", "Kampüste", "Bitki bazlı süt var".
+
+1. **Durum URL'de:** `?acik=1&kampus=1`. Öğrenciler filtrelenmiş listeyi birbirine gönderebiliyor; geri tuşu filtreyi bırakmıyor.
+2. **Sayı:** 140 dükkânlık bir listede "12 dükkân" demek ucuz; tam sayı gösteriliyor.
+3. **Facet sayıları:** ilk taslakta her filtrenin yanında "(34)" gibi sayılar vardı. Sayılar her filtre değişiminde yeniden hesaplanıyordu ve kullanıcı testinde kimse onlara bakmadı. Kaldırıldı.
+4. **Kullanım:** iki ay sonra analitik, "Bitki bazlı süt var" filtresinin neredeyse hiç kullanılmadığını gösterdi; filtre kaldırıldı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Filtre listesini kısa tut ve gerçekten kullanılanı ölç.** Her filtre kalıcı bir maliyettir.
 - **Sonuç sayısını göstermek zorunda mısın?** "1.000+" çoğu zaman yeterli ve çok daha ucuz.
@@ -53,7 +97,20 @@ Bu bir tasarım kararıdır ve genelde atlanır:
 - **Filtreyi URL'e yaz;** paylaşılabilirlik ve geri tuşu sonradan eklenmesi zor davranışlardır.
 - **Filtre sonucu boşsa ne olacak?** En dar filtreyi gevşetmeyi öner; kullanıcıyı çıkmazda bırakma.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Her filtreyi kullanım verisiyle tart.** Kullanılmayan filtre ekranda yer, arkada bakım yükü bırakır.
+- **Tam sayı gösteriminin değerini sor.** "1.000+" çoğu kararda yeterlidir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Filtre durumunun URL'de yaşamasını kabul kriterine yaz.** Paylaşma ve geri tuşu bunu gerektirir.
+- **Facet sayılarını ayrı bir story say.** Ucuz görünür ama ayrı bir iştir.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -68,5 +125,17 @@ Bu bir tasarım kararıdır ve genelde atlanır:
 <SelfCheck question="Facet sayıları neden pahalıdır?">
 
 Her filtre seçeneğinin yanındaki sayı, o filtre uygulanmış hâlin ayrıca sayılması demektir. Altı filtre × beş seçenek = otuz ayrı sayım.
+
+</SelfCheck>
+
+<SelfCheck question="Her filtre seçeneğinin yanında sonuç sayısı göstermek neden pahalıdır?">
+
+Her sayı, o seçenek uygulanmış hâlin ayrıca sayılması demektir. Altı filtre, her biri beş seçenek, otuz ayrı sayım eder ve her filtre değişiminde yeniden hesaplanır.
+
+</SelfCheck>
+
+<SelfCheck question="Filtre durumu neden URL'de tutulmalı?">
+
+URL'de tutulan filtre paylaşılabilir, sayfa yenilenince kaybolmaz ve geri tuşu beklendiği gibi çalışır. Yalnız bellekte tutulan filtre bu üçünü de kaybeder.
 
 </SelfCheck>

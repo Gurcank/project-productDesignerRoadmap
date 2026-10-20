@@ -4,31 +4,68 @@
  * service worker's; this is the button, the progress and the honest status.
  */
 interface Props {
-  /** "all" or a category slug. */
+  /** "all", a category slug, or "path" — the chosen role's categories. */
   scope: string;
   label: string;
+  /** For scope "path": role id → the published categories on its route. */
+  paths?: Record<string, string[]>;
 }
 
-const { scope, label } = Astro.props;
+const { scope, label, paths } = Astro.props;
 ---
 
-<div class="offline-dl" data-offline data-scope={scope}>
+<div class="offline-dl" data-offline data-scope={scope} data-paths={paths ? JSON.stringify(paths) : undefined}>
   <button type="button" class="offline-dl__button" data-offline-button>{label}</button>
   <progress class="offline-dl__bar" max="100" value="0" aria-label="İndirme ilerlemesi" data-offline-bar hidden></progress>
   <p class="offline-dl__status" role="status" data-offline-status>Kontrol ediliyor…</p>
 </div>
 
 <script>
-  import { download, formatSize, isSupported, loadManifest, plan, readStored } from "~/lib/offline";
+  import { download, formatSize, isSupported, loadManifest, plan, readStored, type OfflineManifest } from "~/lib/offline";
+  import { $role } from "~/lib/role";
+  import { ROLE_LABEL } from "~/data/role-ids";
 
   for (const root of document.querySelectorAll<HTMLElement>("[data-offline]")) {
-    const scope = root.dataset.scope!;
     const button = root.querySelector<HTMLButtonElement>("[data-offline-button]")!;
     const bar = root.querySelector<HTMLProgressElement>("[data-offline-bar]")!;
     const status = root.querySelector<HTMLElement>("[data-offline-status]")!;
     const idleLabel = button.textContent ?? "";
+    const paths: Record<string, string[]> | null = root.dataset.paths ? JSON.parse(root.dataset.paths) : null;
 
     const say = (text: string) => (status.textContent = text);
+
+    // What a click would download right now. A path follows the chosen role,
+    // so it is worked out again whenever the role changes.
+    const target = (): { scope: string; categories?: string[] } | null => {
+      if (root.dataset.scope !== "path") return { scope: root.dataset.scope! };
+      const role = $role.get();
+      if (!role || role === "all" || !paths?.[role]) return null;
+      return { scope: `path:${role}`, categories: paths[role] };
+    };
+
+    const describe = (manifest: OfflineManifest) => {
+      const current = target();
+      if (!current) {
+        button.disabled = true;
+        say("Önce bir rol seç; yolundaki bölümler indirilir.");
+        return;
+      }
+      button.disabled = false;
+      const { bytes } = plan(manifest, current.scope, current.categories);
+      const stored = readStored()[current.scope] ?? readStored()["all"];
+      const who = current.categories ? `${ROLE_LABEL[$role.get()!].name} yolu · ${current.categories.length} bölüm · ` : "";
+
+      if (stored && stored.build === manifest.build) {
+        button.textContent = "Yeniden indir";
+        say(`${who}İndirildi · ${new Date(stored.at).toLocaleDateString("tr-TR")} · internet olmadan açılır.`);
+      } else if (stored) {
+        button.textContent = "Güncelle";
+        say(`${who}Yeni sürüm var · ~${formatSize(bytes)}. Kayıtlı kopyan eski kalmış olabilir.`);
+      } else {
+        button.textContent = idleLabel;
+        say(`${who}~${formatSize(bytes)} · Wi-Fi ile indirmen önerilir.`);
+      }
+    };
 
     const init = async () => {
       // `astro dev` registers no worker and writes no manifest (ADR-012): saying so
@@ -44,30 +81,27 @@ const { scope, label } = Astro.props;
         return;
       }
 
-      const { bytes } = plan(manifest, scope);
-      const stored = readStored()[scope] ?? readStored()["all"];
-
-      if (stored && stored.build === manifest.build) {
-        button.textContent = "Yeniden indir";
-        say(`İndirildi · ${new Date(stored.at).toLocaleDateString("tr-TR")} · internet olmadan açılır.`);
-      } else if (stored) {
-        button.textContent = "Güncelle";
-        say(`Yeni sürüm var · ~${formatSize(bytes)}. Kayıtlı kopyan eski kalmış olabilir.`);
-      } else {
-        say(`~${formatSize(bytes)} · Wi-Fi ile indirmen önerilir.`);
-      }
+      describe(manifest);
+      if (paths) $role.listen(() => describe(manifest));
 
       button.addEventListener("click", async () => {
+        const current = target();
+        if (!current) return;
         button.disabled = true;
         bar.hidden = false;
         bar.value = 0;
         say("İndiriliyor…");
 
         try {
-          const result = await download(manifest, scope, ({ done, total }) => {
-            bar.value = total ? Math.round((done / total) * 100) : 0;
-            say(`İndiriliyor · ${done}/${total}`);
-          });
+          const result = await download(
+            manifest,
+            current.scope,
+            ({ done, total }) => {
+              bar.value = total ? Math.round((done / total) * 100) : 0;
+              say(`İndiriliyor · ${done}/${total}`);
+            },
+            current.categories,
+          );
           bar.hidden = true;
           button.textContent = "Yeniden indir";
           say(

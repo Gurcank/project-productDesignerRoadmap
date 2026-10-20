@@ -1,0 +1,169 @@
+---
+summary: "RACI bir işte kimin ne yaptığını, DACI ve RAPID bir kararda kimin ne rol aldığını yazar. Üçünün ortak kuralı: hesap veren ya da karar veren tek kişidir."
+outcomes:
+  - "RACI'nin dört harfini ve tek A kuralını uygulayabilirsin."
+  - "Bir kararın rollerini DACI ya da RAPID ile yazabilirsin."
+  - "Bir iş ya da karar için hangi çerçevenin uygun olduğunu seçebilirsin."
+minutes: 7
+standard: 2
+skipTerms: ["Input","input"]
+sources:
+  - label: "Wikipedia — Responsibility assignment matrix"
+    url: "https://en.wikipedia.org/wiki/Responsibility_assignment_matrix"
+  - label: "Atlassian Team Playbook — DACI"
+    url: "https://www.atlassian.com/team-playbook/plays/daci"
+  - label: "Bain & Company — RAPID Decision Making (2023)"
+    url: "https://www.bain.com/insights/rapid-decision-making/"
+additions:
+  - "RACI'nin dört rolü ve alternatifleri (Wikipedia)"
+  - "DACI rolleri (Atlassian Team Playbook)"
+  - "RAPID rolleri; Agree rolünün seyrek atanması; tek karar verici (Bain & Company)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import RaciChecker from "~/components/demos/RaciChecker.astro";
+
+Lansmandan bir hafta önce koordinasyon toplantısında biri sordu: "Lansmana git kararını kim veriyor?" Leyla "ben" dedi, aynı anda Hakan da "ben" dedi. Sonra ikisi de güldü, ama kimse cevabı yazmadı.
+
+Kimin karar verdiği belli değilse karar ya hiç verilmez ya da iki kez verilir. Bu ders, bir işte ve bir kararda kimin ne rol aldığını yazan üç çerçeveyi anlatır.
+
+## RACI: işte kim ne yapar?
+
+**RACI**, Wikipedia'nın tanımıyla görevler ya da çıktılar için sorumlulukları gösteren bir proje yönetimi tekniğidir. Satırlar işler, sütunlar rollerdir. Her hücreye dört harften biri yazılır:
+
+- **R — Responsible (yapan):** işi fiilen yapan. Her işte en az bir R olur.
+- **A — Accountable (hesap veren):** işin doğru tamamlanmasından nihai olarak hesap veren ve onaylayan.
+- **C — Consulted (danışılan):** görüşü alınan uzman. İletişim iki yönlüdür.
+- **I — Informed (bilgilendirilen):** ilerlemeden haberdar edilen. İletişim tek yönlüdür.
+
+Wikipedia, bazı proje yönetimi kuramlarına göre her işte **tek bir A** olması gerektiğini not eder. Pratikte en çok bozulan kural budur.
+
+<RaciChecker
+  caption="Kampüs projesinin RACI tablosundan dört iş. Tablo iki sorunlu işle açılır. Lansman kararında hem Leyla hem Hakan A yazılı, hesap verebilirlik bölünmüş; üstelik kimse R değil. Pilot kafenin kabul testinde de kimse R değil; işi kimse yapmıyor. Lansman kararında Leyla'yı R yapıp pilot testinde kafeleri R yapınca tablo temizlenir."
+  roles={["Leyla", "Hakan", "Elif", "Ozan", "Kafeler"]}
+  tasks={[
+    { task: "Proje tüzüğünü yazmak", cells: ["R", "A", "C", "C", "I"] },
+    { task: "Kafe personeli eğitimi", cells: ["A", "I", "", "C", "R"] },
+    { task: "Lansman kararı (git / gitme)", cells: ["A", "A", "C", "C", "I"] },
+    { task: "Pilot kafenin kabul testi", cells: ["A", "I", "C", "C", "C"] },
+  ]}
+/>
+
+## DACI ve RAPID: kararda kim ne yapar?
+
+RACI işler içindir. Bir **kararın** rollerini yazmak için iki çerçeve daha sık kullanılır.
+
+**DACI** (Atlassian'ın anlatımıyla):
+
+- **Driver (sürücü):** paydaşları toplar, bilgiyi derler, kararın kapsamını belirler ve kararın kararlaştırılan tarihte alınmasını sağlar.
+- **Approver (onaylayıcı):** kararı veren tek kişi. Atlassian bunu özellikle vurgular: "evet, bir!"
+- **Contributors (katkı verenler):** bilgisi olan ve öneri yapanlar. Sesleri var, oyları yok.
+- **Informed (bilgilendirilenler):** karar verilince haberdar edilenler.
+
+**RAPID**, Bain & Company'nin tescilli aracıdır. Beş rolü vardır:
+
+- **Recommend (öneren):** süreci yürütür ve karar verene bir öneri hazırlar. Karar başına tek kişidir.
+- **Agree (onay veren):** önerinin uygulanabilir olduğunu onaylar; örneğin yasal bir zorunluluk için. Bain bu rolün seyrek atanmasını önerir. Öneren ile anlaşamazsa son sözü karar veren söyler.
+- **Perform (uygulayan):** karar alınınca uygulayacak olanlar.
+- **Input (girdi veren):** uzmanlık ve bilgi verenler, kararın etkileyeceği kişiler.
+- **Decide (karar veren):** son kararı verir ve kurumu eyleme bağlar. İdeal olarak tek kişidir.
+
+**A ≠ A.** RACI'nin A'sı hesap veren, RAPID'in A'sı onay verendir. RAPID'de hesap veren karar verici D'dir. Aynı harf, iki çerçevede farklı şeyler söyler.
+
+## Hangisi ne zaman?
+
+| Durum | Çerçeve |
+|---|---|
+| Çok ekipli bir projede işlerin dağılımı | RACI |
+| Bir kararı tarihine kadar yürütmek | DACI |
+| Yasal ya da düzenleyici bir onayın gerektiği karar | RAPID (Agree rolü) |
+
+Bain'in önerisiyle her karar için açık roller gerekmez. Yüksek değerli ya da sık verilen kararlarla başlanır.
+
+<Case>
+
+Leyla toplantıdan sonra üç belge yazdı:
+
+1. **RACI:** lansman kararında Hakan A, Leyla R oldu. Pilot kafenin kabul testinde kafeler R oldu; testi baristalar yapıyordu.
+2. **DACI (ikinci dalga kararı):** Driver Leyla, Approver Hakan; katkı verenler Elif, Ozan, finans ve Mert; bilgilendirilenler kafeler, müşteri hizmetleri ve iki takım. Karar tarihi lansmandan altı hafta sonraydı.
+3. **RAPID (öğrenci kartı protokolü):** Recommend Leyla, Agree hukuk (KVKK uyumu), Perform sipariş takımı, Input öğrenci işleri, Mert ve Selin, Decide Hakan.
+
+Lansman kararı bir sonraki toplantıda iki dakika sürdü. Herkes kimin karar verdiğini biliyordu.
+
+</Case>
+
+<Tool slug="daci" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **RACI'yi tüzükle birlikte yaz.** Her satırda tek A ve en az bir R olduğunu denetle.
+- **Önemli kararlar için ayrı bir DACI aç.** RACI'deki "karar" satırı, kararın nasıl alınacağını söylemez.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Ürün kararlarında Driver ol, Approver'ı sor.** Kararı kimin verdiğini bilmeden yürütülen tartışma uzar.
+- **Katkı verenleri dinle, ama oy saydırma.** Ses ile oy aynı şey değildir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Backlog kararlarında A sensin.** Scrum'da sıralama Product Owner'ındır; bunu tabloda da görünür kıl.
+- **Takımın kararlarını RACI'ye taşıma.** Nasıl yapılacağına takım karar verir.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Karar rollerini takımın gündemine getir.** "Bunu kim onaylıyordu?" sorusu tekrarlanıyorsa bir DACI zamanıdır.
+- **Takımın kendi kararını korumayı unutma.** Dışarıdan gelen bir A, takımın özyönetimini kemirebilir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim onayının RACI'sini yaz.** Kim onaylar, kime danışılır, kim bilgilendirilir?
+- **Yasal bir onay varsa RAPID'in Agree rolünü kullan.** Hukukun onayı karar vermekle aynı şey değildir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- RACI işler içindir: yapan, hesap veren, danışılan, bilgilendirilen.
+- Her işte tek bir A ve en az bir R olur.
+- DACI kararlar içindir: sürücü, tek onaylayıcı, katkı verenler, bilgilendirilenler.
+- RAPID beş rol tanımlar; Agree seyrek atanır, karar veren idealde tektir.
+- RACI'nin A'sı ile RAPID'in A'sı aynı şey değildir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir RACI satırında iki A var. Sorun nedir?">
+
+Hesap verebilirlik bölünmüştür. İş ters gittiğinde iki kişi birbirine bakar, karar gerektiğinde ikisi anlaşana kadar beklenir. Satırda tek bir A olmalı.
+
+</SelfCheck>
+
+<SelfCheck question="DACI'de katkı verenler ile onaylayıcı arasındaki fark nedir?">
+
+Katkı verenlerin bilgisi ve önerisi karara girer ama oyları yoktur. Kararı tek kişi verir: onaylayıcı.
+
+</SelfCheck>
+
+<SelfCheck question="Öğrenci kartı protokolünde hukukun rolü RAPID'de neden Agree, Decide değil?">
+
+Hukuk, önerinin KVKK'ya uygun ve uygulanabilir olduğunu onaylar; kararı vermez. Kararı ve sorumluluğunu Hakan üstlenir. Hukuk ile öneren anlaşamazsa son sözü yine karar veren söyler.
+
+</SelfCheck>
+
+<SelfCheck question="Takım bir sprintin işlerini RACI tablosuna dökmek istiyor. Ne önerirsin?">
+
+Gerek yok. RACI çok ekipli işlerde ve paydaşlar arasında rolleri netleştirmek içindir. Takımın kendi işi Sprint Backlog'da ve takımın sorumluluğundadır.
+
+</SelfCheck>

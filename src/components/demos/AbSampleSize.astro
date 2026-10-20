@@ -1,0 +1,187 @@
+---
+/**
+ * How long an A/B test must run, decided before it starts. Change the baseline,
+ * the smallest lift worth detecting, power, significance and traffic; the
+ * sample per variation and the days needed are recomputed. The point the
+ * lesson makes is in the summary line: halve the effect and the sample grows
+ * about fourfold.
+ *
+ * Server-rendered with the case book's payment test, so without JavaScript it
+ * is a worked example.
+ */
+import DemoFrame from "./DemoFrame.astro";
+import { sampleSize, type AbInput } from "~/lib/demos/ab-sample";
+
+interface Props {
+  caption: string;
+  start: Required<AbInput>;
+}
+
+const { caption, start } = Astro.props;
+const r = sampleSize(start);
+const fmt = (n: number | null) => (n === null ? "—" : n.toLocaleString("tr-TR"));
+const pct = (n: number) => (n * 100).toLocaleString("tr-TR", { maximumFractionDigits: 1 });
+---
+
+<DemoFrame
+  title="A/B örneklem hesaplayıcı"
+  hint="Değerleri değiştir; varyasyon başına gereken kişi sayısı ve testin süresi yeniden hesaplanır."
+  caption={caption}
+>
+  <div class="ab" data-ab>
+    <div class="ab__inputs">
+      <label class="ab__field">
+        <span>Taban dönüşüm oranı (%)</span>
+        <input type="text" inputmode="decimal" autocomplete="off" value={pct(start.baseline)} data-ab-input="baseline" />
+      </label>
+      <label class="ab__field">
+        <span>En küçük saptanacak etki (puan)</span>
+        <input type="text" inputmode="decimal" autocomplete="off" value={pct(start.mde)} data-ab-input="mde" />
+      </label>
+      <label class="ab__field">
+        <span>Güç (1 − β)</span>
+        <select data-ab-input="power">
+          <option value="0.8" selected={start.power === 0.8}>%80</option>
+          <option value="0.9" selected={start.power === 0.9}>%90</option>
+        </select>
+      </label>
+      <label class="ab__field">
+        <span>Anlamlılık düzeyi (α)</span>
+        <select data-ab-input="alpha">
+          <option value="0.05" selected={start.alpha === 0.05}>%5</option>
+          <option value="0.01" selected={start.alpha === 0.01}>%1</option>
+        </select>
+      </label>
+      <label class="ab__field">
+        <span>Teste giren günlük kişi</span>
+        <input type="number" min="1" step="100" inputmode="numeric" value={start.dailyTraffic} data-ab-input="traffic" />
+      </label>
+    </div>
+    <dl class="ab__out">
+      <div>
+        <dt>Varyasyon başına</dt>
+        <dd data-ab-out="per">{fmt(r.perVariation)}</dd>
+      </div>
+      <div>
+        <dt>İki varyasyon toplam</dt>
+        <dd data-ab-out="total">{fmt(r.total)}</dd>
+      </div>
+      <div>
+        <dt>Gereken süre</dt>
+        <dd><span data-ab-out="days">{fmt(r.days)}</span> gün</dd>
+      </div>
+    </dl>
+    <p class="ab__summary" aria-live="polite" data-ab-summary>
+      {r.perVariation === null
+        ? "Bu değerlerle bir test tanımlanamıyor: taban oran ile etkinin toplamı %100'ün altında olmalı."
+        : `Taban %${pct(start.baseline)}, hedef en az %${pct(start.baseline + start.mde)}. Sonuca ancak ${fmt(r.total)} kişi teste girdikten sonra bak.`}
+    </p>
+  </div>
+</DemoFrame>
+
+<script>
+  import { sampleSize } from "~/lib/demos/ab-sample";
+
+  for (const root of document.querySelectorAll<HTMLElement>("[data-ab]")) {
+    const fmt = (n: number | null) => (n === null ? "—" : n.toLocaleString("tr-TR"));
+    const pct = (n: number) => (n * 100).toLocaleString("tr-TR", { maximumFractionDigits: 1 });
+    const read = (key: string) => {
+      const el = root.querySelector<HTMLInputElement | HTMLSelectElement>(`[data-ab-input="${key}"]`);
+      return Number(el?.value.replace(",", ".") ?? 0) || 0;
+    };
+    const set = (key: string, text: string) => {
+      const el = root.querySelector<HTMLElement>(`[data-ab-out="${key}"]`);
+      if (el) el.textContent = text;
+    };
+    const summary = root.querySelector<HTMLElement>("[data-ab-summary]")!;
+    let last = summary.textContent ?? "";
+    const update = () => {
+      const baseline = read("baseline") / 100;
+      const mde = read("mde") / 100;
+      const r = sampleSize({ baseline, mde, alpha: read("alpha"), power: read("power"), dailyTraffic: read("traffic") });
+      set("per", fmt(r.perVariation));
+      set("total", fmt(r.total));
+      set("days", fmt(r.days));
+      const text =
+        r.perVariation === null
+          ? "Bu değerlerle bir test tanımlanamıyor: taban oran ile etkinin toplamı %100'ün altında olmalı."
+          : `Taban %${pct(baseline)}, hedef en az %${pct(baseline + mde)}. Sonuca ancak ${fmt(r.total)} kişi teste girdikten sonra bak.`;
+      if (text !== last) {
+        summary.textContent = text;
+        last = text;
+      }
+    };
+    root.addEventListener("input", update);
+    root.addEventListener("change", update);
+  }
+</script>
+
+<style>
+  .ab {
+    display: grid;
+    gap: var(--spacing-4);
+  }
+
+  .ab__inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--spacing-3);
+  }
+
+  .ab__field {
+    display: grid;
+    gap: var(--spacing-1);
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .ab__field input,
+  .ab__field select {
+    min-block-size: 44px;
+    padding-inline: var(--spacing-2);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface);
+    color: var(--c-text);
+    font: inherit;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ab__field input:focus-visible,
+  .ab__field select:focus-visible {
+    outline: 2px solid var(--c-focus);
+    outline-offset: 2px;
+  }
+
+  .ab__out {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: var(--spacing-2);
+    margin: 0;
+  }
+
+  .ab__out > div {
+    padding: var(--spacing-2) var(--spacing-3);
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-sunken);
+  }
+
+  .ab__out dt {
+    font-size: var(--text-xs);
+    color: var(--c-text-muted);
+  }
+
+  .ab__out dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--c-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ab__summary {
+    color: var(--c-text-secondary);
+  }
+</style>

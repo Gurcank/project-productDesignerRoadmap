@@ -1,0 +1,146 @@
+---
+summary: "'Ne zaman biter?' sorusunun dürüst cevabı tek bir tarih değil, olasılığı olan bir aralıktır. Monte Carlo bu aralığı takımın gerçek teslim geçmişinden üretir; ortalamaya dayalı tarih ise çoğu zaman kaçırılır."
+outcomes:
+  - "Ortalama velocity ya da throughput ile verilen sözün neden riskli olduğunu açıklayabilirsin."
+  - "Monte Carlo simülasyonunun nasıl çalıştığını anlatabilirsin."
+  - "'%85 olasılıkla 8 hafta' gibi bir cevabı paydaşa anlatıp bir karara bağlayabilirsin."
+minutes: 8
+standard: 2
+sources:
+  - label: "ProKanban — Kanban Playbook 4.3: When can I start telling customers when work will be done?"
+    url: "https://prokanban.org/kanban-playbook/forecasting-delivery"
+  - label: "ProKanban — Can't we just use Story Points with Monte Carlo Simulations"
+    url: "https://prokanban.org/blog/story-points-with-mcs"
+  - label: "Scrum Guide (Kasım 2020) — The Sprint"
+    url: "https://scrumguides.org/scrum-guide.html"
+additions:
+  - "Monte Carlo simülasyonuyla olasılıklı öngörü (ProKanban)"
+  - "Throughput'un story point'e göre öngörü girdisi olarak avantajı (ProKanban)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import MonteCarloForecast from "~/components/demos/MonteCarloForecast.astro";
+
+Hakan, favori sipariş epic'inin tamamını sordu: "Otuz öğe kalmış. Ne zaman biter?" Deniz hızlı bir hesap yaptı. Takım son on haftada ortalama 4,7 öğe bitirmişti. Otuz bölü 4,7, yaklaşık 6,4 hafta. "Altı buçuk hafta" dedi.
+
+Kaan aynı veriye başka bir yoldan baktı ve farklı bir cümle kurdu: "Yüzde 85 olasılıkla sekiz hafta." İki cevap da aynı geçmişten geliyordu. Hangisi daha dürüsttü? Bu ders bu farkı anlatır.
+
+## Ortalamanın tuzağı
+
+Ortalama, geçmişin ortasıdır. Ortalamaya göre verilen bir tarih, kabaca **yarı yarıya** tutar: bazı haftalar ortalamanın üstünde, bazıları altında geçer. Sipariş takımının son on haftası 2 ile 7 öğe arasında değişti. "Altı buçuk hafta" cümlesi bu dalgalanmayı saklar.
+
+**Velocity** da bir ortalamadır: geçmiş sprintlerde biten story point'lerin ortalaması. Planlamada işe yarar, ama tek başına bir teslim tarihi vermez. Story point ve velocity'nin temelini [Tahmin ve ölçüm](/calisma-bicimi/tahmin-ve-olcum-story-point-velocity-capacity/) dersi anlatıyor.
+
+Scrum Rehberi bu konuda açıktır. Burn-down, burn-up ya da kümülatif akış gibi öngörü pratikleri yararlıdır; ama ampirizmin yerine geçmez. Karmaşık ortamlarda ne olacağı bilinmez. İleriye dönük kararlarda yalnız olmuş olan kullanılabilir.
+
+## Monte Carlo simülasyonu
+
+**Monte Carlo simülasyonu**, takımın gerçek teslim geçmişinden binlerce olası gelecek üretir. ProKanban'ın anlattığı yöntem iki girdiyle çalışır:
+
+1. **Geçmiş throughput:** her hafta (ya da gün) kaç öğe bittiği. Hiçbir şeyin bitmediği haftalar da sayılır.
+2. **Kalan öğe sayısı:** "ne zaman biter?" sorusunun konusu.
+
+Simülasyon her turda geçmişten rastgele bir hafta seçer ve o haftanın throughput'unu kalan işten düşer. İş bitene kadar devam eder ve kaç hafta sürdüğünü kaydeder. Bunu binlerce kez yapar. Sonuç bir dağılımdır: turların yüzde kaçı kaç haftada bitmiş?
+
+Cevap bir yüzdeliktir: "Turların %85'i 8 hafta ya da daha kısa sürede bitti." Aynı yöntem ters soruyu da cevaplar: "Şu tarihe kadar kaç öğe biter?"
+
+<MonteCarloForecast
+  history={[4, 6, 3, 5, 7, 4, 5, 6, 2, 5]}
+  remaining={30}
+  caption="Başlangıç verisi sipariş takımının son on haftasıdır: haftada 2 ile 7 arası öğe, ortalama 4,7. Otuz öğe için 5.000 olası gelecek hesaplandı. Turların yarısı 7 hafta ya da daha kısa sürede bitiyor; %85'i ve %95'i 8 haftada. Ortalamaya göre verilen 6,4 haftalık tarih, turların çoğunda kaçırılıyor. Geçmişe birkaç düşük hafta eklersen aralık genişler; bu, sistemin daha az öngörülebilir olduğunu söyler."
+/>
+
+## Ne zaman güvenilir?
+
+ProKanban üç uyarı yapar:
+
+- **Kararlı bir sistem gerekir.** Geçmiş performans geleceğin makul bir göstergesi değilse, öngörü de değildir. Teknik olarak 10 bitmiş öğeyle bir öngörü çalıştırılabilir. Ama throughput haftadan haftaya çok dalgalanıyorsa, sonuç bu dalgalanmayı yansıtır.
+- **Geniş aralık bir hata değildir.** Sistemin değişkenliği hakkında doğru bir bilgidir. Akış iyileştikçe throughput tutarlı hâle gelir ve aralık daralır.
+- **Belirsizlik ortadan kalkmaz, görünür olur.** Bu, her planlama konuşması için daha iyi bir başlangıçtır.
+
+### Neden story point değil, öğe sayısı?
+
+Monte Carlo story point'le de çalıştırılabilir; simülasyon birimi umursamaz. ProKanban yine de öğe sayısını önerir. Story point'le çalışmak için backlog'daki her öğeyi tahmin etmek gerekir. Öğe sayısı ise bir sayımdır: tahmin gerekmez. Öğelerin aynı boyutta olması gerekmez, ama makul büyüklükte olmaları gerekir.
+
+**Öngörü ≠ söz.** Öngörü bir olasılıktır: "%85 olasılıkla 8 hafta". Söz ise bir taahhüttür. Konuşma "ne zaman bitecek?" sorusundan "ne kadar emin olmak istiyoruz ve hangi ödünleşimi yaparız?" sorusuna döner.
+
+<Case>
+
+Kaan, Hakan'a iki cevabı yan yana gösterdi:
+
+1. **Ortalamaya göre:** 6,4 hafta. Simülasyonda bu süreye kadar biten tur oranı yarıdan azdı.
+2. **Monte Carlo'ya göre:** %50 olasılıkla 7, %85 olasılıkla 8 hafta.
+3. **Hakan'ın sorusu değişti:** "Altı haftada bitmesi için ne gerekir?"
+4. **Ödünleşim konuşuldu:** Deniz, story map'teki "Sonra" şeridinde duran altı öğeyi ertelemeyi önerdi. Kalan öğe sayısı 30'dan 24'e indi. Yeni simülasyon %85 olasılıkla 6 haftayı gösterdi.
+5. **Karar:** Hakan 6 haftayı kabul etti ve ertelenen altı öğenin kullanım verisine göre yeniden konuşulmasını istedi.
+
+Deniz'in hesabı yanlış değildi. Ama bir olasılığı söylemiyordu.
+
+</Case>
+
+<Lenses>
+<Lens role="scrum-master">
+
+- **Throughput'u her gün kaydet, sıfırları da.** Simülasyonun tek girdisi gerçek teslim geçmişidir.
+- **Aralığın genişliğini retroya getir.** Geniş aralık, akışın dalgalı olduğunu söyler; iyileştirme oradan başlar.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Tarih yerine yüzdelik ver.** "%85 olasılıkla 8 hafta" cümlesi paydaşla bir ödünleşim konuşması açar.
+- **Kapsamı aralığın kolu olarak kullan.** Kalan öğe sayısını azaltmak, olasılığı en hızlı değiştiren karardır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Yol haritasına ortalama tarih yazma.** Ortalama, kabaca yarı yarıya tutan bir tarihtir.
+- **Hangi güven düzeyinin gerektiğine karar ver.** Bir lansman için %95, bir iç demo için %50 yeterli olabilir.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Proje takvimine olasılığı taşı.** Kilometre taşını takımın %85'lik öngörüsüne göre koy, ortalamaya göre değil.
+- **Tahmin toplantısının maliyetini düşün.** Öğe sayısıyla öngörü, her öğeyi tek tek tahmin etmeyi gerektirmez.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Ortalamaya dayalı bir tarih kabaca yarı yarıya tutar; dalgalanmayı saklar.
+- Scrum Rehberi'ne göre öngörü pratikleri ampirizmin yerine geçmez; yalnız olmuş olan kullanılabilir.
+- Monte Carlo, geçmiş throughput'tan binlerce olası gelecek üretir ve cevabı bir olasılıkla verir.
+- Güvenilir öngörü kararlı bir sistem ister; geniş aralık sistemin değişkenliği hakkında doğru bir bilgidir.
+- Öngörü bir söz değildir: konuşmayı "hangi güven düzeyi ve hangi ödünleşim?" sorusuna çevirir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Monte Carlo simülasyonu hangi iki girdiyle 'ne zaman biter?' sorusunu cevaplar?">
+
+Geçmiş throughput (hiçbir şeyin bitmediği dönemler dahil, dönem başına biten öğe sayısı) ve kalan öğe sayısı.
+
+</SelfCheck>
+
+<SelfCheck question="Ortalama throughput'a göre verilen bir tarih neden riskli?">
+
+Ortalama geçmişin ortasıdır; bazı dönemler altında, bazıları üstünde geçer. Ortalamaya göre verilen bir tarih kabaca yarı yarıya tutar ve dalgalanmayı gizler.
+
+</SelfCheck>
+
+<SelfCheck question="Takımın öngörüsü '%50: 5 hafta, %95: 14 hafta' çıktı. Bu ne söylüyor, ne yaparsın?">
+
+Aralık çok geniş: takımın throughput'u çok dalgalı, yani sistem öngörülebilir değil. Bu bir hata değil, doğru bir bilgidir. Paydaşa geniş aralığı dürüstçe gösterirsin ve akışı kararlı hâle getirmeye çalışırsın: WIP'i sınırlamak, öğeleri makul büyüklüğe bölmek.
+
+</SelfCheck>
+
+<SelfCheck question="Paydaş 'Bana tek bir tarih ver' diyor. Ne yaparsın?">
+
+Ona bir tarih ve o tarihin olasılığını birlikte verirsin: "%85 olasılıkla 8 hafta." Daha erken bir tarih isteniyorsa hangi ödünleşimin gerektiğini konuşursun: kapsamı azaltmak olasılığı en hızlı değiştirir.
+
+</SelfCheck>

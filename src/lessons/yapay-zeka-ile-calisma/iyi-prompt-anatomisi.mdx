@@ -1,10 +1,11 @@
 ---
-summary: "İyi bir talimatın yedi bileşeni var: rol, bağlam, görev, kısıt, format, kabul kriteri, örnek. Eksik olan her bileşen, modelin senin yerine karar verdiği bir yerdir. En çok atlananlar kısıt, kabul kriteri ve 'neye benzemesin'."
+summary: "İyi bir talimatın yedi bileşeni var: rol, bağlam, görev, kısıt, format, kabul kriteri, örnek. Eksik her bileşen, modelin senin yerine karar verdiği yerdir. En çok kısıt ve kabul kriteri atlanır."
 outcomes:
   - "Yedi bileşeni ve her birinin hangi soruyu cevapladığını sayabilirsin."
   - "En çok atlanan üç bileşeni ve neden iterasyonu en çok onların düşürdüğünü açıklayabilirsin."
   - "Negatif kısıtın neden gerekli olduğunu ve 'jenerik' çıktının sebebini söyleyebilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "Anthropic Docs — Prompt engineering genel bakış"
     url: "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview"
@@ -14,11 +15,16 @@ sources:
     url: "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/multishot-prompting"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Bir talimatın yedi bileşeni var. Hepsi her seferinde gerekmez ama **eksik olan her bileşen, modelin senin yerine karar verdiği bir yer** demektir.
+"Bir story yaz" diyen kişi ile yedi bileşeni veren kişi aynı modelden çok farklı çıktı alır. Bileşenlerin hepsi her seferinde gerekmez ama **eksik olan her bileşen, modelin senin yerine karar verdiği bir yer** demektir.
+
+## Yedi bileşen
 
 | # | Bileşen | Neyi cevaplar | Karşılığı |
 |---|---|---|---|
@@ -32,19 +38,100 @@ Bir talimatın yedi bileşeni var. Hepsi her seferinde gerekmez ama **eksik olan
 
 **En çok atlanan üçü: kısıt, kabul kriteri ve "neye benzemesin".** Üçü de "istemediğim şeyi baştan eleme" işlevi görür ve iterasyon sayısını en çok düşüren şey budur.
 
+<Layers
+  label="Bir talimatın yedi bileşeni"
+  caption="İyi bir talimat yedi bileşenden oluşur. Rol, hangi bakış açısından yaklaşılacağını söyler. Bağlam işin neyin parçası olduğunu, görev tam olarak ne yapılacağını anlatır. Kısıt neye uyulacağını, format çıktının biçimini belirler. Kabul kriteri bitti tanımıdır. Örnek ya da referans neye benzeyip neye benzemeyeceğini gösterir."
+  layers={[
+  {
+    title: "Rol",
+    sub: "bakış açısı",
+    tone: "accent"
+  },
+  {
+    title: "Bağlam",
+    sub: "brief"
+  },
+  {
+    title: "Görev",
+    sub: "user story"
+  },
+  {
+    title: "Kısıt",
+    sub: "neye uymalı"
+  },
+  {
+    title: "Format",
+    sub: "çıktı biçimi"
+  },
+  {
+    title: "Kabul kriteri",
+    sub: "bitti tanımı"
+  },
+  {
+    title: "Örnek",
+    sub: "neye benzemesin",
+    tone: "progress"
+  }
+]}
+/>
+
 ## Negatif kısıt
 
 **Negative constraint (olumsuz kısıt)**, ne istediğini değil **ne istemediğini** açıkça yazmaktır. Bir model, belirtilmeyen her yerde **en yaygın kalıba** yönelir, çünkü eğitim verisinde en çok o vardır. "Jenerik" çıktının sebebi budur: **yasaklamadığın varsayılan, gelecektir.** Tasarım taleplerinde en kritik bileşendir.
 
 "Eşit üç sütunlu ikon + başlık + iki satır gri metin kartı kullanma. Sebepsiz gradient başlık kullanma. Sıralı olmayan içeriğe 01/02/03 numarası verme."
 
-<Callout kind="tasarimci">
+<Case>
+
+Deniz "Son siparişini tekrarla" story'sini yapay zekâyla taslak hâline getirdi:
+
+1. **Rol ve bağlam:** "Bir Product Owner gibi düşün. Demlik bir kahve ön sipariş uygulaması; sabah müşterilerinin %54'ü son beş siparişinde hep aynı ürünü alıyor."
+2. **Görev ve kısıt:** "Bu düğme için bir story ve kabul kriterleri yaz. Tekrar sipariş her zaman son siparişin dükkânına gider; ödeme kuralları değişmez."
+3. **Format ve kabul:** "Kullanıcı hikâyesi kalıbı, ardından Given-When-Then; en çok yedi kriter."
+4. **Neye benzemesin:** "Favori listesi önerme; o varsayım ayrıca sınandı."
+5. **Sonuç:** ilk taslakta kapalı dükkân durumu eksikti. Deniz bunu ekledi; kalan kriterler kullanılabilirdi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Her talimatta yediyi tara:** hangisi yoksa model onun yerine karar veriyor.
 - **Yasak listeni oluştur ve yeniden kullan:** aynı jenerik kalıplar hep gelir; bir kez yaz, kalıcı talimat dosyasına taşı (sonraki derslerde).
 - **Referans ver:** "şuna benzesin, şuna benzemesin" bir moodboard'dur.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Kısıtı stratejiden getir.** "Bu çeyrek tekrar siparişe odaklanıyoruz" cümlesi modelin yönünü değiştirir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Görev bileşenini story gibi yaz:** kim, ne, neden. Kabul kriterini ayrı ver.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Format bileşenini kullan:** durum raporu, risk kaydı ya da RAID formatını açıkça iste.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Ekipte iyi bir prompt şablonunu paylaşılan kaynak yap;** herkes aynı yedi bileşenle başlasın.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Bağlama iş kurallarını ve sözlüğü ekle.** Model terimleri senin tanımınla kullansın.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Rol bileşeninde tarafsızlık iste:** "yönlendirici soru yazma" bir kısıttır.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -66,5 +153,11 @@ Rol, bağlam, görev, kısıt, format, kabul kriteri, örnek/referans. En çok a
 <SelfCheck question="Negatif kısıt neden gereklidir? Yasaklamadığın varsayılan ne olur?">
 
 Model belirtilmeyen her yerde en yaygın kalıba yönelir, çünkü eğitim verisinde en çok o vardır. Yasaklamadığın varsayılan gelecektir; "jenerik" çıktının sebebi budur.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Jenerik\" çıktının sebebi nedir ve hangi bileşen bunu önler?"}>
+
+Belirtilmeyen her yerde model en yaygın kalıba yönelir. Negatif kısıt, yani ne istemediğini açıkça yazmak, bunu önler: yasaklamadığın varsayılan gelir.
 
 </SelfCheck>

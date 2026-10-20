@@ -6,6 +6,7 @@ outcomes:
   - "\"Mobil uygulama mı yapalım, PWA mı?\" tartışmasında seçenekleri tartabilirsin."
   - "Manifest dosyasındaki hangi değerlerin senin tasarım kararın olduğunu bilirsin."
 minutes: 11
+standard: 2
 sources:
   - label: "MDN — Progressive web apps nedir?"
     url: "https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/What_is_a_progressive_web_app"
@@ -23,6 +24,9 @@ import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 İki farklı siteyi düşün. Birinde bir bağlantıya basıyorsun, ekran bir an beyaza dönüyor ve yeni sayfa geliyor. Diğerinde basıyorsun, içerik anında değişiyor, sanki bir uygulamanın içindesin. İkisi de web sitesi. Fark, **sayfa geçişlerini nasıl yaptıklarında.**
 
@@ -79,14 +83,6 @@ Burada tasarımcıyı ilgilendiren asıl nokta: geçişi JavaScript yaptığı i
 
 "Client-side routing'de sayfa değişince focus'u başlığa taşımamız lazım; yoksa ekran okuyucu kullanıcısı geçişi fark etmiyor" cümlesi, bu yüzden bir tasarım notudur.
 
-<Callout kind="tasarimci" title="SPA, tasarımcıya ne yükler?">
-
-- Her ekranın **paylaşılabilir bir adresi** olmalı mı? Çoğu zaman evet; sen söylersin.
-- Geçişte **odak nereye gidecek?** Sen belirtmezsen kimse düşünmez.
-- Yükleme, boş ve hata durumları ayrı ayrı tasarlanmalı: sayfa yenilenmediği için bunlar geçişin *içinde* yaşanır.
-
-</Callout>
-
 ## PWA: web sitesi, uygulama gibi
 
 **PWA** (Progressive Web App, ilerici web uygulaması), cihaza **kurulabilen, çevrimdışı çalışabilen** ve uygulama gibi davranabilen web sitesidir. Uygulama mağazasına girmeden uygulama benzeri deneyim sunar. Tek kod tabanıyla hem web hem "kurulu uygulama" elde edilir.
@@ -137,6 +133,65 @@ Bir yan etkisi var: bir güncellemenin kullanıcıya neden geç ulaştığının
 
 </Callout>
 
+<Case>
+
+Demlik Panel bir SPA'dır; kafelerdeki tabletlerde ana ekrana eklenmiş bir PWA olarak çalışır.
+
+1. **Sorun:** bir dükkân çalışanı sipariş ayrıntısından geri tuşuna bastı ve Panel'den tamamen çıktı. Panel sayfa geçişlerinde adresi güncellemiyordu.
+2. **Düzeltme:** Emre her ekrana kendi adresini verdi; geri tuşu bir önceki ekrana dönüyor. Ekran okuyucu kullanan çalışan için geçişte sayfa başlığı duyuruluyor.
+3. **PWA:** tabletin ana ekranındaki ikon ve ad manifestten geliyor: "Demlik Panel". Selin ikonu kafe tezgâhında tanınacak biçimde sadeleştirdi.
+4. **Bağlantı:** Wi-Fi koptuğunda ekranın üstünde "Bağlantı yok, siparişler gelince görünecek" bandı çıkıyor.
+
+Kampüs kafelerinin tablet kurulumu (WBS 4.2) bu kurulumla yapıldı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer" title="SPA, tasarımcıya ne yükler?">
+
+- Her ekranın **paylaşılabilir bir adresi** olmalı mı? Çoğu zaman evet; sen söylersin.
+- Geçişte **odak nereye gidecek?** Sen belirtmezsen kimse düşünmez.
+- Yükleme, boş ve hata durumları ayrı ayrı tasarlanmalı: sayfa yenilenmediği için bunlar geçişin *içinde* yaşanır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **SPA kararının bedelini kapsamına koy.** Adres, geri tuşu ve odak yönetimi ayrı iş ister.
+- **PWA'yı native uygulamaya alternatif olarak tart.** Kurulum ve mağaza onayı olmadan ana ekranda durur.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Geri tuşu ve paylaşılabilir adresi kabul kriterine yaz.** SPA'da kendiliğinden çalışmaz.
+- **Çevrimdışı davranışı tanımla.** Bağlantı kopunca ne görünür, ne saklanır?
+
+</Lens>
+<Lens role="project-manager">
+
+- **Cihaz kurulumunu ayrı bir iş olarak planla.** PWA'nın tabletlere eklenmesi, eğitim ve destek ister.
+- **Tarayıcı desteğini risk kaydında izle.** Bazı PWA özellikleri her platformda aynı çalışmaz.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Erişilebilirlik ve geri tuşunu Definition of Done'a ekle.** SPA'da en sık atlanan işlerdir.
+- **Platform farklarını review'da göster.** Aynı ekran, tablette ve telefonda farklı davranabilir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Çevrimdışı senaryoyu iş kuralı olarak yaz.** Bağlantı yokken gelen sipariş nasıl ele alınır?
+- **Her ekranın adresini bağlam diyagramına bağla.** Hangi ekran hangi işin parçası?
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Kurulum anını test et.** "Ana ekrana ekle" kullanıcıya ne kadar anlaşılır?
+- **Geri tuşu beklentisini gözle.** Kullanıcı geri tuşuna bastığında nereye dönmeyi bekliyor?
+
+</Lens>
+</Lenses>
+
 <Summary>
 
 - MPA her geçişte yeni belge ister; basit ve sağlam, URL/geri tuşu kendiliğinden çalışır.
@@ -149,14 +204,20 @@ Bir yan etkisi var: bir güncellemenin kullanıcıya neden geç ulaştığının
 
 ## Kendini yokla
 
-<SelfCheck question="SPA ile MPA arasındaki fark nedir? SPA'nın tasarımcı olarak sana yüklediği iki ekstra sorumluluk say.">
+<SelfCheck question="SPA ile MPA arasındaki fark nedir? SPA'nın ekibe yüklediği iki ekstra sorumluluğu say.">
 
-SPA'da sayfa bir kez yüklenir, geçişler yenilemeden yapılır; MPA'da her geçişte sunucudan yeni belge gelir. SPA'da tasarımcının ekstra sorumluluğu: (a) URL'in her ekranda doğru güncellenmesi ve paylaşılabilir olması, (b) sayfa geçişinde odak yönetimi ve ekran okuyucuya geçişin bildirilmesi. Yükleme, boş ve hata durumlarının ayrı tasarlanması da kabul edilir.
+SPA'da sayfa bir kez yüklenir, geçişler yenilemeden yapılır; MPA'da her geçişte sunucudan yeni belge gelir. SPA'da ekstra sorumluluklar: (a) URL'in her ekranda doğru güncellenmesi ve paylaşılabilir olması, (b) sayfa geçişinde odak yönetimi ve ekran okuyucuya geçişin bildirilmesi. Yükleme, boş ve hata durumlarının ayrı tasarlanması da kabul edilir.
 
 </SelfCheck>
 
 <SelfCheck question="PWA ile responsive site aynı şey mi?">
 
 Hayır. Responsive olmak, sitenin farklı ekran boyutlarına uyması demektir. PWA ise ek olarak kurulabilirlik (manifest) ve çevrimdışı çalışma (service worker) sunar; bunlar ayrıca kurulur.
+
+</SelfCheck>
+
+<SelfCheck question="Bir SPA'da kullanıcı bir ürün sayfasını arkadaşına gönderiyor ama link ana sayfayı açıyor. Sorun nedir?">
+
+SPA geçişte adresi güncellemiyor; her ekranın kendi URL'i yok. Client-side routing ile her ekrana adres verilmeli, link doğrudan o ekranı açmalıdır.
 
 </SelfCheck>

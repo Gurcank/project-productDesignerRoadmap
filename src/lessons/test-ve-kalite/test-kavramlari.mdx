@@ -1,10 +1,11 @@
 ---
-summary: "Test coverage 'kod çalıştırıldı mı?'yı ölçer, 'doğru mu?'yu değil; hedefe dönüşünce bozulur. Flaky test altyapının en yıkıcı sorunudur: düzelt ya da karantinaya al, yeniden denemeyle örtme. Mock, stub ve fixture testi hızlı tutar; aşırı mock'lama tehlikelidir."
+summary: "Coverage kodun çalıştırılıp çalıştırılmadığını ölçer, doğruluğunu değil; hedef olunca bozulur. Flaky test güveni öldürür: düzelt ya da karantinaya al. Mock testi hızlandırır, aşırısı anlamsızlaştırır."
 outcomes:
   - "Coverage'ın neyi ölçüp neyi ölçmediğini ve neden hedef olmaması gerektiğini söyleyebilirsin."
   - "Flaky test'in neden yıkıcı olduğunu ve doğru tepkiyi açıklayabilirsin."
   - "Mock/stub/fixture'ı ve aşırı mock'lamanın riskini bilirsin."
 minutes: 6
+standard: 2
 sources:
   - label: "Martin Fowler — Test Coverage"
     url: "https://martinfowler.com/bliki/TestCoverage.html"
@@ -15,9 +16,12 @@ sources:
 skipTerms: ["Scope","scope","kapsam"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 PR'da bir yorum: "Bu değişiklik kapsamı %84'ten %81'e düşürüyor." Bu ne demek ve ne kadar önemli?
 
@@ -37,13 +41,81 @@ PR'da bir yorum: "Bu değişiklik kapsamı %84'ten %81'e düşürüyor." Bu ne d
 
 **Aşırı mock'lama tehlikelidir:** her şey taklit edilirse test gerçek sistemi değil kendi kurgusunu doğrular. Fixture verisi de gerçekçi olmalıdır: seed verisi için geçerli kural burada da geçer; uzun isimler, boş alanlar ve uç değerler içermelidir.
 
-<Callout kind="tasarimci">
+<Spectrum
+  label="Ne kadar taklit?"
+  caption="Bir test bağımlılıklarının ne kadarını taklit ettiğine göre sıralanabilir. Sol uçta her şey gerçektir: test gerçekçidir ama yavaş ve ağa bağlıdır. Ortada gerçek veritabanı ile mock'lanmış dış servisler durur. Sağa doğru daha çok parça taklit edilir; test hızlanır. En sağda her şey mock'tur: test artık gerçek sistemi değil, kendi kurgusunu doğrular."
+  left={{
+  title: "Her şey gerçek",
+  sub: "yavaş, ağa bağlı"
+}}
+  right={{
+  title: "Her şey mock",
+  sub: "hızlı, kendi kurgusu"
+}}
+  marks={[
+  {
+    label: "E2E, test modu",
+    at: 0.06
+  },
+  {
+    label: "Gerçek DB, mock ödeme",
+    at: 0.4
+  },
+  {
+    label: "Unit, mock'lu API",
+    at: 0.7
+  },
+  {
+    label: "Aşırı mock",
+    at: 0.95
+  }
+]}
+/>
+
+<Case>
+
+Demlik'te üç kavram üç kararla somutlaştı:
+
+1. **Coverage:** sipariş servisinin kapsamı %78. Hedef olarak konmadı; ödeme ve iade modüllerinde test edilmemiş satırları bulmak için kullanılıyor.
+2. **Flaky:** Panel'de "Hazır" E2E testi haftada iki kez rastgele kalıyordu. Liste 15 saniyede bir tazelendiği için test bazen siparişi göremiyordu. Test karantinaya alındı; Defne sabit beklemeyi "sipariş görünene kadar bekle" ile değiştirdi.
+3. **Mock ve fixture:** testler ödeme kuruluşunun API'sini mock'luyor. Fixture'da "Moda" dükkânı ve uzun adlı bir ürün var: "Büyük boy yulaf sütlü karamelli soğuk latte".
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Fixture verisine uç durumlarını ver:** uzun isim, boş alan, çok büyük sayı, yabancı karakter.
 - **Kapsam yüzdesinin yerine "kritik akışlar test edilmiş mi?" sorusunu sor.**
 - **Kararsız testlerin ekibi nasıl etkilediğini** (yeniden çalıştır alışkanlığı) fark et ve düzeltilmesini savun.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Kapsam yüzdesini kalite ölçütü olarak raporlama.** Kritik akışların test edildiğini sor.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kararsız testi backlog'a sahibiyle gir;** "tekrar çalıştır" alışkanlığına izin verme.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Kapsamı yönetim raporunda hedef yapma;** Goodhart yasası rakamı anlamsızlaştırır.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **"Tekrar çalıştır" refleksini retroda görünür yap.** Karantina ve düzeltme sahibi belirlensin.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Fixture verisine gerçek uç durumları yazdır:** uzun ad, boş alan, sınır değer.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -64,5 +136,11 @@ PR'da bir yorum: "Bu değişiklik kapsamı %84'ten %81'e düşürüyor." Bu ne d
 <SelfCheck question="Flaky test neden test altyapısının en yıkıcı sorunudur? Doğru tepki nedir?">
 
 Ekip "yine takıldı, tekrar çalıştır" demeye başlar ve tüm test setine olan güven ölür; gerçek bir hata olduğunda da aynı refleksle geçilir. Doğru tepki: düzelt ya da karantinaya al, otomatik yeniden denemeyle örtme.
+
+</SelfCheck>
+
+<SelfCheck question={"Yönetim \"kapsam %90 olsun\" diye bir hedef koymak istiyor. Ne olur, ne önerirsin?"}>
+
+Kapsam hedefe dönüşünce ekip, yüzdeyi yükselten ama değer üretmeyen testler yazmaya başlar. Kapsamı bir teşhis aracı olarak kullanmayı, hedef olarak kritik akışların test edilmesini öneririm.
 
 </SelfCheck>

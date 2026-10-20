@@ -1,0 +1,135 @@
+---
+summary: "Her lansman aynı emeği hak etmez. Lansman katmanları kaynağı beklenen pazar ve iş etkisine göre dağıtır; mesaj konumlandırmadan türetilir ve hazırlık mühendisliğin dışındaki ekipleri de kapsar."
+outcomes:
+  - "Bir lansmanı beklenen etkisine göre katmanına yerleştirebilirsin."
+  - "Konumlandırmadan bir lansman mesajı türetebilirsin."
+  - "Bir lansman planının bölümlerini ve başarı ölçüsünü yazabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "Pragmatic Institute — Jim Semick, Prioritize Product Launch Resources with Product Launch Tiers"
+    url: "https://www.pragmaticinstitute.com/resources/articles/product/prioritize-product-launch-resources-with-launch-tiers/"
+  - label: "April Dunford — A Quickstart Guide to Positioning (2021)"
+    url: "https://www.aprildunford.com/post/a-quickstart-guide-to-positioning"
+additions:
+  - "Üç lansman katmanı ve etkiye göre kaynak dağıtımı (Pragmatic Institute)"
+  - "Konumlandırma ile mesaj farkı (April Dunford)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Aynı hafta Demlik'te üç şey yayına hazırdı: kampüs lansmanı, "Son siparişini tekrarla" ve panel takımının yeni iade kuralı. Pazarlama ekibinin tek bir sorusu vardı: "Üçü için de basın bülteni mi yazıyoruz?"
+
+Hayır, yazmıyorlardı. Ama hangisine ne kadar emek verileceğine kimse karar vermemişti. Bu ders, lansmanları etkisine göre ayırmayı ve bir lansmanı yalnız mühendisliğin değil bütün şirketin işi olarak planlamayı anlatır. Alpha, beta ve GA gibi yayın biçimleri [Yayın türleri](/urun-gelistirme/yayin-turleri/) dersinde.
+
+## Lansman katmanları
+
+Pragmatic Institute'taki bir yazıda Jim Semick, her ürün güncellemesinin yepyeni bir ürün lansmanı kadar destek gerektirmediğini söyler. Önerisi, lansmanları beklenen **pazar ve iş etkisine** göre katmanlara ayırmak ve kaynağı buna göre dağıtmaktır:
+
+<Layers
+  shape="pyramid"
+  label="Üç lansman katmanı"
+  caption="Lansmanlar üç katmana ayrılır. En üstte birinci katman vardır: seyrek, stratejik, yeni bir kategori ya da şirket için büyük bir an; en çok kaynağı alır. Ortada ikinci katman: artımlı iyileştirmeler; biraz ses çıkarır. En altta üçüncü katman: mevcut müşterilere bakım sürümleri; genel bir duyuru dışında kaynak gerektirmez."
+  layers={[
+    { title: "1. katman", sub: "stratejik an", tone: "progress" },
+    { title: "2. katman", sub: "artımlı iyileştirme", tone: "accent" },
+    { title: "3. katman", sub: "bakım, küçük güncelleme" },
+  ]}
+/>
+
+| Katman | Ne zaman? | Semick'in örneği |
+|---|---|---|
+| 1 | Yeni bir ürün kategorisi, bir satın alma; iş için büyük bir an | İlk iPhone |
+| 2 | Artımlı bir iyileştirme; pazarda biraz ses çıkarmak istenir | Bir sonraki model |
+| 3 | Mevcut müşterilere bakım sürümü; gelir eklemez ama memnuniyet için önemlidir | Küçük bir işletim sistemi güncellemesi |
+
+**Efor ≠ katman.** Semick'in örneği öğreticidir: bir SaaS uygulamasına kullanım ölçümü eklemek normalde üçüncü katmandır. Ama şirket ciddi bir müşteri kaybı yaşıyor ve sorunu ancak bu ölçümle bulabilecekse, aynı iş birinci katman olabilir. Geliştirme eforu aynıdır; değişen beklenen sonuçtur. Katmanı pazar ve iş etkisi belirler.
+
+## Mesaj konumlandırmadan türer
+
+April Dunford'a göre konumlandırma mesaj değildir; mesaj konumlandırmanın üstüne kurulur. Önce ürünün kimin için neyin lideri olduğu belli olur, sonra bunu söyleyen cümle yazılır.
+
+Bir lansman mesajı genellikle tek bir ana cümle ve onu destekleyen iki üç cümleden oluşur. Ana cümle, hedef müşterinin gözünden neyin değiştiğini söyler; özelliğin teknik adını değil.
+
+## Lansman bir takım işidir
+
+Lansman yalnız kodun yayına çıkması değildir. Destek ekibi soruları, dükkân ilişkileri dükkânların sorularını, pazarlama da duyuruyu aynı gün bilmelidir. Bir lansman planı şu soruları cevaplar:
+
+1. **Katman ve gerekçesi.**
+2. **Kimin için, ne değişiyor?**
+3. **Ana mesaj.**
+4. **Kanallar ve kim neyi hazırlıyor.**
+5. **Yayın adımları:** önce kime açılıyor, hangi ölçüye bakılıyor, ne olursa durduruluyor?
+6. **Başarı ölçüsü:** lansmanın kendi ölçüsü ve ürün sonucu ayrı ayrı.
+
+<Case>
+
+Elif ve pazarlama üç lansmanı katmanlara ayırdı:
+
+1. **Kampüs lansmanı, birinci katman.** Yeni bir pazar, üniversitelerle protokol, kampanya bütçesi. Planı Leyla'nın projesinin parçasıydı.
+2. **"Son siparişini tekrarla", ikinci katman.** Mevcut müşterilere artımlı bir iyileştirme ama çeyrek sonucunun ana girişimi. Ana mesaj: "Dünkü kahven bir dokunuş uzağında." Önce kullanıcıların %10'una, bir hafta sonra herkese.
+3. **Yeni iade kuralı, üçüncü katman.** Panel'de bir not ve destek ekibine bir saatlik eğitim.
+
+Pazarlamanın sorusunun cevabı netti: basın bülteni yalnız kampüs için. Ozan dükkânlara "tekrar siparişler artabilir" notunu yayından bir hafta önce Panel'e koydu; destek ekibi kısa bir soru-cevap listesi aldı.
+
+</Case>
+
+<Tool slug="lansman-plani" />
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Katmanı etkiye göre seç, eforu değil.** Küçük bir iş büyük bir sonucun anahtarı olabilir.
+- **İki ölçü yaz.** Lansmanın kendi ölçüsü (kaç kişi denedi) ve ürün sonucu (davranış değişti mi) ayrıdır.
+- **Desteği ilk haberdar edilenlerden yap.** İlk soruyu müşteri değil destek ekibi sormalı.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Yayın adımlarını sprint planına bağla.** Yüzdelik açılış ve durdurma koşulu, bitti tanımının parçası olabilir.
+- **Lansman maddelerini backlog'da görünür kıl.** Duyuru kartı ve mağaza notu da birer iştir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Lansmanlar beklenen pazar ve iş etkisine göre katmanlara ayrılır; büyük etkiye çok kaynak verilir.
+- Birinci katman stratejik bir an, ikinci katman artımlı iyileştirme, üçüncü katman bakım güncellemesidir.
+- Geliştirme eforu katmanı belirlemez; beklenen sonuç belirler.
+- Mesaj konumlandırmanın üstüne kurulur; özelliğin adını değil müşteri için değişeni söyler.
+- Lansman planı katmanı, mesajı, kanalları, sahipleri, yayın adımlarını ve iki ayrı ölçüyü yazar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Lansman katmanları neye göre belirlenir?">
+
+Beklenen pazar ve iş etkisine göre. Büyük etki beklenen lansmanlar daha çok kaynak alır; küçük etkili olanlar genel bir duyuruyla yetinir.
+
+</SelfCheck>
+
+<SelfCheck question="İki günlük bir iş birinci katman lansman olabilir mi?">
+
+Evet. Semick'in örneğinde bir ölçüm eklemesi normalde üçüncü katmandır, ama ciddi bir müşteri kaybını çözmenin anahtarıysa birinci katman olur. Katmanı efor değil beklenen sonuç belirler.
+
+</SelfCheck>
+
+<SelfCheck question="'Yeni özelliğimiz: Hızlı Tekrar Sipariş Modülü' neden zayıf bir lansman mesajıdır?">
+
+Özelliğin adını söyler, müşteri için neyin değiştiğini söylemez. "Dünkü kahven bir dokunuş uzağında" gibi bir cümle, hedef müşterinin gözünden değeri anlatır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir lansman planında neden iki ayrı başarı ölçüsü yazılır?">
+
+Lansmanın kendi ölçüsü, örneğin kaç kişinin özelliği denediği, duyurunun işe yarayıp yaramadığını gösterir. Ürün sonucu ise müşterinin davranışının değişip değişmediğini gösterir. Biri tutarken diğeri tutmayabilir.
+
+</SelfCheck>

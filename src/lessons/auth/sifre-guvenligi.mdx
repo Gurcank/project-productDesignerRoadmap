@@ -1,11 +1,13 @@
 ---
-summary: "Şifre güvenliğinde muhtemelen bildiğinin tersi doğru: karmaşıklık kuralları ve zorunlu değiştirme artık önerilmiyor, uzunluk ve sızmış şifre kontrolü öneriliyor. Şifreler özetlenir, şifrelenmez. Sıfırlama akışı en az tasarlanan ama en çok kullanılan destek akışıdır."
+summary: "Şifre güvenliğinde bildiğinin tersi doğru olabilir: karmaşıklık kuralı ve zorunlu değiştirme önerilmiyor; uzunluk ve sızmış şifre kontrolü öneriliyor. Şifreler özetlenir, şifrelenmez."
 outcomes:
   - "Güncel NIST rehberliğine göre şifre politikasının ne söylediğini (uzunluk, karmaşıklık kuralı yok, rotasyon yok, blocklist) söyleyebilirsin."
   - "Şifrenin neden özetlendiğini (hash) ve şifrelenmediğini açıklayabilirsin."
   - "Şifre sıfırlama akışının doğru adımlarını ve user enumeration'ı bilirsin."
   - "E-posta doğrulamanın akışı kesmesi gerekip gerekmediğini tartışabilirsin."
-minutes: 10
+minutes: 5
+standard: 2
+skipTerms: ["Doğrulama", "doğrulama"]
 sources:
   - label: "NIST SP 800-63B Revizyon 4 — Parola gereksinimleri"
     url: "https://pages.nist.gov/800-63-4/sp800-63b.html"
@@ -18,9 +20,12 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bu derste muhtemelen bildiğinin tersi olan bilgiler var. Şifre politikası tavsiyeleri son yıllarda köklü biçimde değişti.
 
@@ -47,6 +52,31 @@ Bu değişikliklerin sebebi güvenliği gevşetmek değil, **tersine sıkılaşt
 
 **Password reset**, en çok kullanılan destek akışıdır ve genelde en az tasarlanan akıştır. Doğru kurgusu:
 
+<StepFlow
+  label="Şifre sıfırlama akışı"
+  caption="Doğru kurulmuş bir şifre sıfırlama beş adımdır. Kullanıcı e-postasını girer ve adres kayıtlı olsun olmasın aynı mesajı görür. Adres kayıtlıysa tek kullanımlık, kısa ömürlü bir bağlantı gider. Kullanıcı yeni şifresini belirler. Mevcut bütün oturumlar sonlandırılır. Son olarak şifrenin değiştiği bildirilir."
+  steps={[
+  {
+    title: "E-posta gir",
+    sub: "hep aynı mesaj",
+    tone: "accent"
+  },
+  {
+    title: "Tek kullanımlık bağlantı"
+  },
+  {
+    title: "Yeni şifre"
+  },
+  {
+    title: "Oturumlar kapanır"
+  },
+  {
+    title: "Bildirim",
+    tone: "progress"
+  }
+]}
+/>
+
 1. E-posta gir.
 2. Tek kullanımlık, kısa ömürlü bağlantı gönder.
 3. Yeni şifre belirlet.
@@ -59,14 +89,29 @@ Güvenlik ile UX'in çeliştiği klasik nokta: "bu e-posta kayıtlı değil" dem
 
 **Email verification**, kullanıcının girdiği adrese gerçekten sahip olduğunun kontrol edilmesidir. Sahte kayıtları azaltır ve şifre sıfırlamanın güvenli çalışmasını sağlar. **Tasarım kararı:** doğrulama kayıt akışını kesmeli mi, arka planda mı ilerlemeli? Kesmek tamamlama oranını düşürür. Yaygın orta yol: kullanıcıyı içeri al, doğrulanmamış hesabın bazı işlemlerini kısıtla ve kalıcı bir uyarı şeridi göster. "Doğrulanana kadar yalnızca bir uyarı şeridi gösterelim."
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik Panel'in şifre kuralları güncel rehberliğe göre yeniden yazıldı:
+
+1. **Eski kural:** "en az 8 karakter, bir büyük harf, bir rakam, bir sembol" ve 90 günde bir değiştirme. Çalışanların şifreleri "Demlik2024!" gibi kalıplara dönmüştü.
+2. **Yeni kural:** en az 15 karakter; boşluk ve Türkçe karakter serbest. Yardımcı metin bir örnek veriyor: "sabah üçüncü latte hep köpüklü".
+3. **Sızmış şifre:** bilinen ihlallerde geçen şifreler reddediliyor; mesaj nedenini söylüyor.
+4. **Sıfırlama:** "Bu adres kayıtlıysa bir bağlantı gönderdik." Bağlantı 30 dakika geçerli; şifre değişince bütün oturumlar kapanıyor ve e-posta bildirimi gidiyor.
+
+Yapıştırma serbest; şifre yöneticisi kullanan çalışanların sayısı ilk ayda arttı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Şifre alanı yardımcı metnini güncel politikaya göre yaz:** uzunluğu öne çıkar, karmaşıklık kuralı listesi koyma.
 - **Yapıştırmayı ve şifre yöneticisini engelleme.**
 - **Sıfırlama akışının beş adımını tasarla** ve e-posta kayıtlı olsun olmasın aynı mesajı göster.
 - **E-posta doğrulamada** kayıt akışını kesmeyen orta yolu (kısıtlı hesap + uyarı şeridi) değerlendir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -94,5 +139,11 @@ Mevcut tüm oturumlar sonlandırılmalı ve kullanıcıya "şifreniz değişti" 
 <SelfCheck question="Şifre sıfırlamada 'bu e-posta kayıtlı değil' demek neden sakıncalı olabilir?">
 
 User enumeration: saldırgana hangi e-postaların sistemde kayıtlı olduğunu söyler. Çözüm, e-posta kayıtlı olsun olmasın aynı mesajı göstermektir ("Bu adres kayıtlıysa bir bağlantı gönderdik").
+
+</SelfCheck>
+
+<SelfCheck question={"Şifre sıfırlama ekranında \"Bu e-posta kayıtlı değil\" demek neden sakıncalı olabilir?"}>
+
+Saldırgana hangi adreslerin sistemde kayıtlı olduğunu söyler (kullanıcı sayımı). Yaygın çözüm, adres kayıtlı olsun olmasın aynı mesajı göstermektir: "Bu adres kayıtlıysa bir bağlantı gönderdik."
 
 </SelfCheck>

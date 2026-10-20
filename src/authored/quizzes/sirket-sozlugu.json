@@ -1,0 +1,51 @@
+{
+  "category": "sirket-sozlugu",
+  "overrides": true,
+  "sources": [
+    { "label": "Google Mühendislik Pratikleri — Review yorumları (Nit)", "url": "https://google.github.io/eng-practices/review/reviewer/comments.html" },
+    { "label": "Martin Fowler — Architecture Decision Record", "url": "https://martinfowler.com/bliki/ArchitectureDecisionRecord.html" },
+    { "label": "Atlassian — Olay şiddet seviyeleri", "url": "https://www.atlassian.com/incident-management/kpis/severity-levels" }
+  ],
+  "items": [
+    {
+      "question": "Berlin'deki bir geliştiriciye 'taslağı EOD'a kadar gönderirim' yazdın. Ne yanlış anlaşılabilir, nasıl yazarsın?",
+      "answer": "EOD kimin gününün sonu olduğunu söylemez; iki saat farkla iki farklı saat anlaşılabilir. Saat ve şehirle yazarım: 'perşembe 18.00, İstanbul saati'."
+    },
+    {
+      "question": "Bir incelemeye beş yorum yazdın; ikisi bloke edici, üçü küçük öneri. Okur bunu nasıl anlar?",
+      "answer": "Küçük önerilerin başına 'nit:' yazarım. Ön ek, yorumun bloke etmediğini tek kelimeyle söyler; böylece 'bu boşluk 16 olmalı' ile 'bu akış çalışmıyor' aynı ağırlıkta okunmaz."
+    },
+    {
+      "question": "Yöneticinle 1:1'ler her hafta sprint durumunu anlatmakla geçiyor. Sorun ne, ne değiştirirsin?",
+      "answer": "1:1 bir durum raporu toplantısına dönmüş; bu bilgi zaten başka kanallardan akıyor. Gündemi ben hazırlarım: engeller, karşılıklı geri bildirim ve gelişim."
+    },
+    {
+      "question": "Toplantıda 'bunu punt edelim' ve 'bunu park edelim' dendi. İkisinin farkı nedir?",
+      "answer": "Punt işi belirli bir sonraki döneme atar; park 'şimdi konuşmuyoruz ama unutmuyoruz' demektir ve bir park alanı listesine yazılır."
+    },
+    {
+      "question": "Bir refinement'ın ilk 20 dakikası düğme rengine gitti; asıl karar olan akış konuşulamadı. Bunun adı ne, nasıl önlenir?",
+      "answer": "Bikeshedding: herkesin fikri olabilen önemsiz bir ayrıntıya takılmak. Tartışmayı çerçevelerim: hedefi yazar, karar gerektiren soruyu açıkça sorar, önemsiz konulara süre koyarım."
+    },
+    {
+      "question": "Bir geliştirici 'madem dokunuyorum, şu ekrana da animasyon ekledim' diyor ve kimse istememiş. Bu scope creep mi?",
+      "answer": "Hayır, gold plating: kimse istemediği hâlde ekibin kendi kendine fazladan iş yapması. Scope creep ise kapsamın dışarıdan gelen isteklerle sessizce büyümesidir."
+    },
+    {
+      "question": "Retroda 'şuna bir bakalım' diye bir madde yazıldı. Neden yapılmayacak, nasıl düzeltirsin?",
+      "answer": "Sahibi ve tarihi yok; bu yüzden bir action item değil. 'Kayıtlı kart için uçtan uca test — Zeynep, Sprint 15 sonu' gibi bir sahibi ve tarihi olan iş hâline getiririm."
+    },
+    {
+      "question": "Toplantıda biri 'kasa sistemine dokunamayız' dedi. Bu bir kısıt mı?",
+      "answer": "Önce sorgularım; bu cümle çoğu zaman bir varsayımdır. Bilinmiyorsa bir spike ile, örneğin iki günde kasa arayüzünü deneyerek sınarım. Gerçekten değişmezse kısıt olarak yazılır."
+    },
+    {
+      "question": "Bir karar için önce RFC açıldı, sonra ADR yazıldı. İkisi aynı belge değil mi?",
+      "answer": "Değil. RFC karar öncesi tartışmadır: öneriyi yorum ve itiraza açar. ADR karar sonrası kayıttır: kararı, bağlamını ve sonuçlarını saklar. Biri girdi, diğeri çıktıdır."
+    },
+    {
+      "question": "Bir ekip arkadaşın karara itiraz etmişti; karar verildi ve iki haftadır işi hep 'biraz sonra' diyor. Ne yaparsın?",
+      "answer": "Bu sessiz sabotajın işareti olabilir. Önce itirazının gerçekten dinlenip dinlenmediğine bakarım ve onu karar kaydına yazdırırım. Disagree and commit ancak itiraz dinlendiğinde çalışır; yoksa 'sus ve uy' olur."
+    }
+  ]
+}

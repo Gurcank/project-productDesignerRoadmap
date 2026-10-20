@@ -1,0 +1,118 @@
+---
+/**
+ * A small line or bar chart: burndown, velocity, retention curve, cumulative
+ * flow. Series are told apart by line style (solid, dashed) and a label at the
+ * end of each line — never by colour alone. The table under it has every
+ * number the drawing has.
+ */
+import DiagramFigure from "../DiagramFigure.astro";
+import DataTable from "../DataTable.astro";
+
+interface Series {
+  name: string;
+  values: (number | null)[];
+  tone?: "accent" | "progress" | "plain";
+  dashed?: boolean;
+}
+
+interface Props {
+  label: string;
+  caption: string;
+  kind?: "line" | "bar";
+  x: { title: string; labels: string[] };
+  y: { title: string; max?: number; unit?: string };
+  series: Series[];
+}
+
+const { label, caption, kind = "line", x, y, series } = Astro.props;
+
+const LEFT = 48;
+const RIGHT = 120;
+const TOP = 16;
+const PLOT_H = 190;
+const W = 640;
+const plotW = W - LEFT - RIGHT;
+const all = series.flatMap((s) => s.values).filter((v): v is number => v !== null);
+const max = y.max ?? Math.ceil(Math.max(...all) / 5) * 5;
+const n = x.labels.length;
+const xAt = (i: number) => LEFT + (kind === "bar" ? (i + 0.5) * (plotW / n) : n === 1 ? plotW / 2 : (i / (n - 1)) * plotW);
+const yAt = (v: number) => TOP + PLOT_H - (v / max) * PLOT_H;
+// Small scales (a 3 % threshold, 1.5 million TL) need a decimal, or the ticks repeat.
+const step = max < 10 ? 10 : 1;
+const ticks = [0, 0.25, 0.5, 0.75, 1].map((t) => Math.round(max * t * step) / step);
+const num = (v: number) => v.toLocaleString("tr-TR");
+const tone = (s: Series) => (s.tone === "progress" ? "dg-line--progress" : s.tone === "plain" ? "" : "dg-line--accent");
+const unit = y.unit ?? "";
+const barW = (plotW / n) * 0.7 / series.length;
+---
+
+<DiagramFigure label={label} caption={caption}>
+  <svg viewBox={`0 0 ${W} ${TOP + PLOT_H + 46}`} role="img" aria-label={label}>
+    <title>{label}</title>
+    {
+      ticks.map((t) => (
+        <>
+          <path class="dg-line" d={`M${LEFT} ${yAt(t)} H${LEFT + plotW}`} stroke-dasharray={t === 0 ? undefined : "1 5"} />
+          <text class="dg-sub" x={LEFT - 8} y={yAt(t) + 4} text-anchor="end">
+            {num(t)}
+            {unit}
+          </text>
+        </>
+      ))
+    }
+    {
+      x.labels.map((text, i) => (
+        <text class="dg-sub" x={xAt(i)} y={TOP + PLOT_H + 18} text-anchor="middle">
+          {text}
+        </text>
+      ))
+    }
+    <text class="dg-label" x={LEFT + plotW / 2} y={TOP + PLOT_H + 40} text-anchor="middle">{x.title}</text>
+    <text class="dg-label" transform={`translate(14 ${TOP + PLOT_H / 2}) rotate(-90)`} text-anchor="middle">{y.title}</text>
+
+    {
+      kind === "bar"
+        ? series.map((s, si) =>
+            s.values.map((v, i) =>
+              v === null ? null : (
+                <rect
+                  class:list={["dg-box", { "dg-box--accent": s.tone !== "progress" && s.tone !== "plain", "dg-box--progress": s.tone === "progress" }]}
+                  x={xAt(i) - (barW * series.length) / 2 + si * barW}
+                  y={yAt(v)}
+                  width={barW - 2}
+                  height={TOP + PLOT_H - yAt(v)}
+                  rx="3"
+                />
+              ),
+            ),
+          )
+        : series.map((s) => {
+            const points = s.values.map((v, i) => (v === null ? null : { x: xAt(i), y: yAt(v) })).filter((p): p is { x: number; y: number } => p !== null);
+            const end = points.at(-1);
+            return (
+              <>
+                <path class:list={["dg-line", tone(s), { "dg-line--dashed": s.dashed }]} d={points.map((p, i) => `${i ? "L" : "M"}${p.x} ${p.y}`).join(" ")} stroke-width="2.5" />
+                {points.map((p) => (
+                  <circle class="dg-dot" cx={p.x} cy={p.y} r="3" />
+                ))}
+                {end && (
+                  <text class="dg-sub dg-strong" x={end.x + 10} y={end.y + 4}>
+                    {s.name}
+                  </text>
+                )}
+              </>
+            );
+          })
+    }
+  </svg>
+  {
+    kind === "bar" && series.length > 1 && (
+      <ul class="dg-key">
+        {series.map((s) => (
+          <li data-tone={s.tone ?? "accent"}>{s.name}</li>
+        ))}
+      </ul>
+    )
+  }
+  <DataTable slot="data" caption={label} head={[x.title, ...series.map((s) => s.name)]} rows={x.labels.map((text, i) => [text, ...series.map((s) => (s.values[i] === null ? "—" : `${num(s.values[i]!)}${unit}`))])} />
+</DiagramFigure>

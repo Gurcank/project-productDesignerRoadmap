@@ -6,6 +6,7 @@ outcomes:
   - "Plan kartı ile özellik matrisinin birbirini nasıl tamamladığını söyleyebilirsin."
   - "'En popüler' rozetinin ne zaman güven kaybettirdiğini bilirsin."
 minutes: 6
+standard: 2
 sources:
   - label: "W3C WAI-ARIA APG — Switch Pattern"
     url: "https://www.w3.org/WAI/ARIA/apg/patterns/switch/"
@@ -16,9 +17,12 @@ sources:
 includeTerms: ["table", "tier", "badge", "switch"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir ürünün sitesinde en çok ziyaret edilen ve satın almaya en yakın sayfa fiyat sayfasıdır. Burada kullanıcı bir karar verir ve karar kolaylaştıkça dönüşüm artar. Fiyat sayfasının bileşenlerinin ayrı adları vardır.
 
@@ -42,9 +46,37 @@ Anahtarın **hangi durumda olduğu net** olmalı. İki seçenekli anahtar tasar�
 
 **Feature matrix**, tüm özelliklerin ve hangi planda olduğunun tik/çarpı ile gösterildiği ayrıntılı tablodur. İkisi birlikte çalışır: **kart hızlı karar, matris derin karşılaştırma** içindir. Matris fiyat sayfasının altında durur; "Tüm özellikleri karşılaştır" ile açılan varsayılan kapalı bir bölüm olabilir.
 
+<Tree
+  label="Bir fiyat sayfasının parçaları"
+  caption="Bir fiyat sayfası üç parçadan oluşur. Üstte plan kartları durur; kartlardan biri öne çıkarılmış plan olabilir. Kartların üstünde aylık ve yıllık arasında geçiş yapan faturalama anahtarı vardır. Altta, hızlı karar sonrası derin karşılaştırma için özellik matrisi durur."
+  root={{
+    title: "Fiyat sayfası",
+    tone: "accent",
+    children: [
+      { title: "Faturalama anahtarı", sub: "aylık · yıllık" },
+      { title: "Plan kartları", sub: "hızlı karar", children: [{ title: "Öne çıkan plan", sub: "doğru iddia", tone: "progress" }] },
+      { title: "Özellik matrisi", sub: "derin karşılaştırma" },
+    ],
+  }}
+/>
+
 İki uyarı: tik ve çarpı **yalnızca ikonla** değil, erişilebilir metinle de ifade edilmeli ("Dahil", "Dahil değil"); ve mobilde tablo stratejisi (yatay kaydırma, kart görünümü) baştan seçilmeli.
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in dükkânlar için fiyat sayfası bu kalıpların çoğunu bilerek kullanmıyor:
+
+1. **Tek plan:** dükkân aylık 1.500 TL abonelik ve sipariş tutarının %6'sı komisyon öder. Üç plan yoktur; karşılaştırma tablosu da yoktur.
+2. **Hesap örneği:** kartın altında "165 TL'lik bir siparişte komisyon 9,90 TL" satırı; soyut yüzde somut bir sayıya dönüyor.
+3. **Faturalama anahtarı yok:** yıllık seçenek sunulmuyor; bu yüzden anahtar da yok.
+4. **İlk ay:** "Demlik Panel'in ilk ayı ücretsiz" rozeti tek vurgu.
+
+Müşteri tarafında sipariş ücreti olmadığı için uygulamada fiyat sayfası yok; ürün ilkesi: "Müşteriye sürpriz ücret yok."
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Üç plan hedefle,** fazlasını matrise taşı.
 - **Her plan kartına "kimin için" satırı yaz.**
@@ -52,7 +84,14 @@ Anahtarın **hangi durumda olduğu net** olmalı. İki seçenekli anahtar tasar�
 - **"En çok tercih edilen" iddiasının dayanağı olsun.**
 - **Tik ve çarpılar için metin karşılığı yaz.**
 
-</Callout>
+</Lens>
+<Lens role="ux-researcher">
+
+- **Fiyat sayfasında "hangisi bana uygun?" sorusunu test et.** Kullanıcı planı neye göre seçiyor?
+- **Yüzdeyi somut sayıyla anlatmanın etkisini gözle.** Komisyon gibi oranlar çoğu zaman yanlış tahmin edilir.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -75,5 +114,11 @@ Karşılaştırma için yeterli, karar felcine yol açmayacak kadar azdır (Hick
 <SelfCheck question="Plan kartı ile özellik matrisi nasıl birlikte çalışır?">
 
 Plan kartları özet verir ve hızlı karar sağlar; matris detay arayan kullanıcı için sayfanın altında durur ve derin karşılaştırma sunar.
+
+</SelfCheck>
+
+<SelfCheck question="Bir fiyat sayfasında beş plan var ve kullanıcılar karar veremiyor. Ne önerirsin?">
+
+Plan sayısını üçe indirmeyi ve her kartın üstüne "kimin için" satırı eklemeyi. Ayrıntılar özellik matrisine taşınır; kart hızlı karar, matris derin karşılaştırma içindir.
 
 </SelfCheck>

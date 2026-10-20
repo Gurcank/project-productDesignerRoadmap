@@ -1,0 +1,148 @@
+---
+summary: "Bağlamsal araştırma insanları kendi ortamlarında gözler; günlük çalışması davranışı günler ya da haftalar boyunca kendi kayıtlarıyla toplar. Biri derinlik, diğeri zaman verir; ikisi de tek oturumun göremediğini gösterir."
+outcomes:
+  - "Gözlemin üç biçimi arasında araştırma sorusuna göre seçim yapabilirsin."
+  - "Bir saha ziyaretini çift olarak planlayıp yürütebilirsin."
+  - "Bir günlük çalışmasında olay, aralık ve sinyal tabanlı kaydı seçebilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "GOV.UK Service Manual — Contextual research and observation"
+    url: "https://www.gov.uk/service-manual/user-research/contextual-research-and-observation"
+  - label: "NN/g — Kim Flaherty, Diary Studies: Understanding Long-Term User Behavior and Experiences (2024)"
+    url: "https://www.nngroup.com/articles/diary-studies/"
+  - label: "NN/g — When to Use Which User-Experience Research Methods (2022)"
+    url: "https://www.nngroup.com/articles/which-ux-research-methods/"
+additions:
+  - "Bağlamsal araştırmanın kullanımı, süresi, gözlemin üç biçimi ve çift çalışma (GOV.UK Service Manual)"
+  - "Günlük çalışmasının kullanımı ve olay, aralık, sinyal tabanlı kayıt (Kim Flaherty, NN/g)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+
+Pilot kafedeki baristalardan birine siparişleri nasıl takip ettiği sorulduğunda cevabı netti: "Ekrana bakıyorum." Ertesi sabah Mert ile Ayşe tezgâhın yanında durdu. Barista 07.45'ten 09.30'a kadar ekrana neredeyse hiç bakmadı; yazıcıdan çıkan fişi alıp bardakların önüne dizdi.
+
+İnsanlar işlerini anlatırken alışkanlıklarını atlar. Bu ders, insanları kendi ortamlarında ve zaman içinde görmenin iki yolunu anlatır.
+
+## Bağlamsal araştırma
+
+GOV.UK'ye göre **bağlamsal araştırma** (contextual research), insanları evlerinde, işlerinde ya da okullarında ziyaret edip bir işi nasıl yaptıklarını gözlemektir. Katılımcı kendi ekipmanını kullanır, olağan dikkat dağıtıcılarıyla birlikte. Rehber şu durumlarda önerir:
+
+- Geniş bir problemi anlamak.
+- Gerçek veri, belge ve cihazla kullanımı görmek.
+- Engelleri ve insanların bunları nasıl aştığını öğrenmek.
+- Hizmeti işletenleri gözlemek: çağrı merkezi, vaka görevlisi ya da bir barista.
+
+Rohrer'in yöntem listesindeki **bağlamsal sorgu** (contextual inquiry) da aynı fikre dayanır: katılımcının ortamında gözlem ve birlikte sorgulama. Karmaşık sistemler için geliştirilmiştir.
+
+Rehbere göre ziyaret 1–3 saat sürer. Gözlem yorucudur: günde en fazla dört bir saatlik ya da iki üç saatlik ziyaret planlanır.
+
+## Ne kadar soracaksın?
+
+GOV.UK gözlemin üç biçimini ayırır. Hangisinin seçileceği, araştırma sorusuna bağlıdır:
+
+<Spectrum
+  label="Gözlemde araştırmacının müdahalesi"
+  caption="Sol uçta sessiz gözlem durur: araştırmacı hiç soru sormaz, davranış en doğal hâlindedir ama nedenini anlamak zorlaşır. Ortada ara sıra soru sorulan gözlem vardır; doğallık ile anlayış dengelenir. Sağ uçta katılımcıdan her adımı anlatması istenir; en derin anlayışı verir ama davranış artık doğal değildir."
+  left={{ title: "Daha doğal", sub: "neden'i kaçırabilir" }}
+  right={{ title: "Daha derin", sub: "davranış değişir" }}
+  marks={[
+    { label: "Sessiz gözlem", at: 0.08 },
+    { label: "Ara sıra soru", at: 0.5 },
+    { label: "Her adımı anlat", at: 0.92 },
+  ]}
+/>
+
+Rehber ziyaretlerin **çift olarak** yapılmasını önerir: biri yönetir, diğeri not alır, fotoğraf çeker ve kaydı yönetir. Böylece ziyaret güvenli olur ve ekipten daha çok kişi kullanıcıyla tanışır.
+
+**Anlatılan ≠ yapılan.** "Ekrana bakıyorum" bir alışkanlığın anlatımıdır. Tezgâhtaki fişler, alışkanlığın kendisidir.
+
+## Günlük çalışması
+
+Bir ziyaret, bir anı gösterir. Bazı sorular ise zamana yayılır: insanlar ne sıklıkla sipariş veriyor, hangi günler vazgeçiyor? NN/g'den Kim Flaherty'ye göre **günlük çalışması** (diary study), davranışı ve deneyimi zaman içinde ve bağlamında toplayan nitel bir yöntemdir. Birkaç günden bir aya ya da daha uzun sürer; uzaktan ve eşzamansız yürür.
+
+Flaherty üç kayıt biçimi sayar:
+
+| Kayıt | Ne zaman? | Ne zaman uygun? |
+|---|---|---|
+| Olay tabanlı | İlgili olay olunca | Olay çok sık değilse; her etkileşimin ayrıntısı |
+| Aralık tabanlı | Belirli aralıklarla | Etkileşimler çok sıksa |
+| Sinyal tabanlı | Araştırmacı mesaj atınca | Katılımcının unutma riski varsa |
+
+Çoğu çalışma bunları karıştırır. Planlamada kayıt sıklığı, süre, katılımcı sayısı, teşvik ve yanıt şartları, bir pilot, çalışma öncesi brifing ve çalışma sonrası görüşme yer alır.
+
+<Case>
+
+Kampüs ekibi iki yöntemi birlikte kullandı:
+
+1. **Gözlem:** Mert ile Ayşe pilot kafede iki sabah, 07.45–09.30. Ayşe not aldı. İlk sabah sessiz gözlem; ikinci sabah sakin anlarda kısa sorular.
+2. **Bulgu:** yoğun dakikalarda fişler tezgâhta üst üste biniyordu. Pilotta çıkan "fiş 50 cm'den okunmalı" gereksinimi böyle anlaşıldı.
+3. **Günlük:** on öğrenci, iki hafta. Her siparişte kısa bir not ve fotoğraf (olay tabanlı); her akşam 21.00'de tek soru: "Bugün kahveni nereden aldın?" (sinyal tabanlı).
+4. **Sonuç:** sonundaki 20 dakikalık görüşmelerle birleşince, on kişiden yedisinin derse geç kaldığı günlerde sipariş vermekten vazgeçtiği görüldü.
+
+Görüşmelerdeki tek bir "aslında…" cümlesi, iki haftalık kayıtta bir kalıba dönüştü.
+
+</Case>
+
+<Lenses>
+<Lens role="ux-researcher">
+
+- **Soruyu gözlem biçimine eşle.** "Ne yapıyor?" sessiz gözlem, "Neden?" ara sıra soru ister.
+- **Günlükte unutmayı planla.** Olay tabanlı kayda bir akşam sinyali eklemek boş günleri yakalar.
+- **Çift çalış.** Not alan biri olmadan yöneten kişi gözlemi kaçırır.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Bir ziyarete katıl.** Gerçek ışık, gürültü ve acele, ekranın nasıl görünmesi gerektiğini değiştirir.
+- **Fotoğrafları tasarım kararına bağla.** Tezgâhtaki fiş, bir tipografi kararının gerekçesidir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **As-is süreci gözlemle doğrula.** Anlatılan süreç ile tezgâhtaki süreç çoğu zaman farklıdır.
+- **Geçici çözümleri kaydet.** Kullanıcının uydurduğu yol, eksik bir gereksinimi gösterir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Bağlamsal araştırma insanları kendi ortamlarında, kendi ekipmanlarıyla gözler.
+- Gözlem sessizden her adımı anlatmaya uzanır; doğallık ile anlayış arasında seçim yapılır.
+- Ziyaretler çift olarak yapılır; biri yönetir, diğeri kayıt tutar.
+- Günlük çalışması davranışı günler ya da haftalar boyunca bağlamında toplar.
+- Kayıt olay, aralık ya da sinyal tabanlıdır; çoğu çalışma bunları karıştırır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Sessiz gözlemin artısı ve eksisi nedir?">
+
+Davranış en doğal hâlindedir, araştırmacı akışı bozmaz. Ama soru sorulmadığı için bir davranışın nedenini anlamak zorlaşabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir günlük çalışmasında hangi durumda sinyal tabanlı kayıt eklenir?">
+
+Katılımcının kayıt yapmayı unutma riski olduğunda. Araştırmacının mesajı bir hatırlatma olur; olay olmayan günler de kayda geçer.
+
+</SelfCheck>
+
+<SelfCheck question="Neden saha ziyaretleri çift olarak yapılır?">
+
+Biri yönetirken diğeri not alır, fotoğraf çeker ve kaydı yönetir; gözlem kaçmaz. Ziyaret daha güvenli olur ve ekipten daha çok kişi kullanıcıyı tanır.
+
+</SelfCheck>
+
+<SelfCheck question="Öğrencilerin hangi sıklıkla sipariş verdiğini öğrenmek istiyorsun. Görüşme mi, günlük çalışması mı?">
+
+Günlük çalışması. Sıklık ve alışkanlık zamana yayılır; tek oturumluk bir görüşmede insanlar sıklığı tahmin eder. Günlük, davranışı olduğu gün kaydeder.
+
+</SelfCheck>

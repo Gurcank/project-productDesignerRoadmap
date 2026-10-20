@@ -1,0 +1,355 @@
+---
+/**
+ * Chapter 21 as a tool: every item a checkbox whose tick lives in the progress
+ * record (`checklists`, keyed by the frozen item id), so ticks survive a reload
+ * and travel with a backup. "Geçerli değil" is the material's own rule — mark an
+ * item that does not apply instead of deleting it — stored next to the tick as
+ * `<id>~na`, which keeps the progress schema at version 1.
+ *
+ * The text comes verbatim from the importer (src/data/generated/tools/).
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import MaterialBlocks from "~/components/tools/MaterialBlocks.astro";
+import data from "~/data/generated/tools/checklists.json";
+import type { ChecklistData, ChecklistItem } from "~/lib/material-tools";
+import { renderInlineMarkdown } from "~/lib/inline-markdown";
+import { toolSectionAnchor } from "~/lib/section-refs";
+
+const checklists = data as unknown as ChecklistData;
+const quickAnchor = "s-21-hizli";
+const total = (items: ChecklistItem[]) => items.length;
+const lists = checklists.lists.map((list) => ({
+  ...list,
+  anchor: toolSectionAnchor(list.number),
+  items: list.groups.flatMap((g) => g.items),
+}));
+const allItems = [...lists.flatMap((l) => l.items), ...checklists.quick.items];
+const blockers = allItems.filter((i) => i.blocker).length;
+---
+
+<BaseLayout
+  title="Kontrol listeleri"
+  description="Bir sitede olması gerekenler: teknik, tasarım, erişilebilirlik, içerik, performans, güvenlik, hukuk, operasyon ve yayın günü listeleri."
+  section="araclar"
+>
+  <article class="lists" data-pagefind-body data-pagefind-filter="tur:Kontrol listesi" data-pagefind-meta="kategori:Araçlar">
+    <p class="lists__back"><a href="/araclar/">Araçlar</a></p>
+    <header>
+      <p class="lists__kind">Materyalden · Bölüm 21</p>
+      <h1>Kontrol listeleri</h1>
+      <p class="lists__lead">
+        Dokuz liste ve küçük projeler için hızlı bir sürüm: toplam {allItems.length} madde, {blockers} tanesi bloke edici. Tiklerin ilerlemenle birlikte bu tarayıcıda saklanır
+        ve yedeğe girer.
+      </p>
+      <noscript><p class="lists__note">JavaScript kapalı: maddeleri okuyabilirsin, ama işaretlerin kaydedilmez.</p></noscript>
+    </header>
+
+    <MaterialBlocks blocks={checklists.intro} label="Kontrol listeleri, giriş" />
+
+    <nav class="lists__toc glass" aria-labelledby="listeler">
+      <h2 id="listeler">Listeler</h2>
+      <ol>
+        {
+          lists.map((list) => (
+            <li>
+              <a href={`#${list.anchor}`}>{list.title}</a>
+              <span class="lists__count" data-list-count={list.anchor}>0 / {total(list.items)}</span>
+            </li>
+          ))
+        }
+        <li>
+          <a href={`#${quickAnchor}`}>{checklists.quick.title}</a>
+          <span class="lists__count" data-list-count={quickAnchor}>0 / {total(checklists.quick.items)}</span>
+        </li>
+      </ol>
+    </nav>
+
+    {
+      [
+        ...lists.map((list) => ({ anchor: list.anchor, number: list.number, title: list.title, intro: list.intro, groups: list.groups })),
+        { anchor: quickAnchor, number: "", title: checklists.quick.title, intro: checklists.quick.intro, groups: [{ title: "", items: checklists.quick.items }] },
+      ].map((list) => (
+        <section class="list" id={list.anchor} aria-labelledby={`${list.anchor}-baslik`} data-list={list.anchor}>
+          <h2 id={`${list.anchor}-baslik`}>
+            {list.number && <span class="list__number">{list.number}</span>}
+            {list.title}
+          </h2>
+          {list.intro.length > 0 && <MaterialBlocks blocks={list.intro} label={list.title} />}
+          {list.groups.map((group) => (
+            <>
+              {group.title && <h3>{group.title}</h3>}
+              <ul class="list__items">
+                {group.items.map((item) => (
+                  <li class="item" data-item={item.id}>
+                    <input type="checkbox" id={`k-${item.id}`} class="item__box" data-check={item.id} />
+                    <label for={`k-${item.id}`} class="item__text">
+                      {item.blocker && <span class="item__blocker">Bloke edici</span>}
+                      <span set:html={renderInlineMarkdown(item.text)} />
+                    </label>
+                    <button type="button" class="item__na" aria-pressed="false" data-na={item.id}>
+                      Geçerli değil
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ))}
+        </section>
+      ))
+    }
+
+    <aside class="lists__source">
+      <p>
+        Bu listeler materyalin 21. bölümünden birebir alınmıştır. Maddelerin yanındaki numaralar ilgili konuya bağlanır. Hukuki
+        maddeler genel bilgilendirmedir, hukuki tavsiye değildir.
+      </p>
+    </aside>
+  </article>
+</BaseLayout>
+
+<script>
+  import { initProgress, $progress, setChecklistItem } from "~/lib/progress";
+
+  const NA = "~na";
+  initProgress();
+
+  const update = () => {
+    const ticks = $progress.get().checklists;
+    for (const item of document.querySelectorAll<HTMLElement>("[data-item]")) {
+      const id = item.dataset.item!;
+      const box = item.querySelector<HTMLInputElement>("[data-check]")!;
+      const na = item.querySelector<HTMLButtonElement>("[data-na]")!;
+      const done = ticks[id] === true;
+      const skipped = ticks[id + NA] === true;
+      box.checked = done;
+      box.disabled = skipped;
+      na.setAttribute("aria-pressed", String(skipped));
+      item.classList.toggle("is-done", done);
+      item.classList.toggle("is-na", skipped);
+    }
+    for (const list of document.querySelectorAll<HTMLElement>("[data-list]")) {
+      const items = [...list.querySelectorAll<HTMLElement>("[data-item]")];
+      const settled = items.filter((i) => i.classList.contains("is-done") || i.classList.contains("is-na")).length;
+      const count = document.querySelector<HTMLElement>(`[data-list-count="${list.dataset.list}"]`);
+      if (count) count.textContent = `${settled} / ${items.length}`;
+    }
+  };
+
+  document.addEventListener("change", (event) => {
+    const box = event.target as HTMLElement;
+    if (!(box instanceof HTMLInputElement) || !box.dataset.check) return;
+    setChecklistItem(box.dataset.check, box.checked);
+  });
+  document.addEventListener("click", (event) => {
+    const button = (event.target as HTMLElement).closest<HTMLButtonElement>("[data-na]");
+    if (!button) return;
+    const id = button.dataset.na!;
+    const next = button.getAttribute("aria-pressed") !== "true";
+    setChecklistItem(id + NA, next);
+    if (next) setChecklistItem(id, false);
+  });
+
+  $progress.subscribe(update);
+</script>
+
+<style>
+  .lists {
+    max-width: 52rem;
+    margin-inline: auto;
+    padding: var(--spacing-8) var(--spacing-4) var(--spacing-24);
+  }
+
+  .lists__back a {
+    display: inline-flex;
+    gap: var(--spacing-1);
+    min-height: 24px;
+    align-items: center;
+    color: var(--c-action);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .lists__back a::before {
+    content: "←";
+  }
+
+  .lists__kind {
+    margin-block-start: var(--spacing-6);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-action);
+  }
+
+  .lists h1 {
+    margin-block-start: var(--spacing-2);
+    font-size: var(--text-4xl);
+    letter-spacing: -0.03em;
+  }
+
+  .lists__lead {
+    margin-block: var(--spacing-3) var(--spacing-8);
+    font-size: var(--text-lg);
+    color: var(--c-text-secondary);
+  }
+
+  .lists__note {
+    color: var(--c-text-secondary);
+  }
+
+  .lists__toc {
+    margin-block: var(--spacing-8);
+    padding: var(--spacing-4) var(--spacing-6);
+    border-radius: var(--radius-lg);
+  }
+
+  .lists__toc h2 {
+    font-size: var(--text-lg);
+  }
+
+  .lists__toc ol {
+    display: grid;
+    gap: var(--spacing-1);
+    margin-block-start: var(--spacing-2);
+    padding-inline-start: var(--spacing-6);
+  }
+
+  .lists__toc li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--spacing-2);
+  }
+
+  .lists__toc a {
+    display: inline-flex;
+    min-height: 24px;
+    align-items: center;
+  }
+
+  .lists__count {
+    color: var(--c-text-muted);
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .list {
+    margin-block-start: var(--spacing-12);
+    scroll-margin-top: var(--spacing-8);
+  }
+
+  .list h2 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--spacing-2);
+    font-size: var(--text-2xl);
+  }
+
+  .list__number {
+    color: var(--c-text-muted);
+    font-size: var(--text-base);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .list h3 {
+    margin-block: var(--spacing-6) var(--spacing-2);
+    font-size: var(--text-lg);
+  }
+
+  .list__items {
+    display: grid;
+    gap: var(--spacing-1);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+    gap: var(--spacing-3);
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-reading);
+  }
+
+  .item__box {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    margin-block-start: 0.2rem;
+    accent-color: var(--c-progress);
+    border: 2px solid var(--c-control-border);
+    cursor: pointer;
+  }
+
+  .item__box:focus-visible,
+  .item__na:focus-visible {
+    outline: 2px solid var(--c-focus);
+    outline-offset: 2px;
+  }
+
+  .item__text {
+    color: var(--c-text);
+    cursor: pointer;
+  }
+
+  .item__blocker {
+    display: inline-block;
+    margin-inline-end: var(--spacing-2);
+    padding: 0 var(--spacing-2);
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--c-text);
+  }
+
+  .item__na {
+    min-block-size: 32px;
+    padding-inline: var(--spacing-2);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-full);
+    background: transparent;
+    color: var(--c-text-secondary);
+    font: inherit;
+    font-size: var(--text-xs);
+    cursor: pointer;
+  }
+
+  .item__na[aria-pressed="true"] {
+    color: var(--c-text);
+    font-weight: 600;
+  }
+
+  /* Done is a tick plus muted text, never colour alone. */
+  .item.is-done .item__text,
+  .item.is-na .item__text {
+    color: var(--c-text-muted);
+  }
+
+  .item.is-na .item__text {
+    text-decoration: line-through;
+  }
+
+  .lists__source {
+    margin-block-start: var(--spacing-12);
+    color: var(--c-text-secondary);
+    font-size: var(--text-sm);
+  }
+
+  @media (max-width: 30rem) {
+    .item {
+      grid-template-columns: auto 1fr;
+    }
+
+    .item__na {
+      grid-column: 2;
+      justify-self: start;
+    }
+  }
+</style>

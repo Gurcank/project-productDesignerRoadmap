@@ -5,7 +5,8 @@ outcomes:
   - "Beş kullanıcı kuralının üç sınırını söyleyebilirsin."
   - "A/B testin ön koşullarını ve düşük trafikte neden yanıltıcı olduğunu açıklayabilirsin."
   - "Kullanıcıya \"beğendin mi?\" diye sormanın neden yöntem hatası olduğunu bilirsin."
-minutes: 14
+minutes: 9
+standard: 2
 sources:
   - label: "NN/g — Usability Testing 101"
     url: "https://www.nngroup.com/articles/usability-testing-101/"
@@ -18,12 +19,14 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Yeni tasarım daha iyi mi?" Bu soruya cevap vermenin birkaç yolu var ve her biri başka bir şeyi ölçüyor. Kullanıcıya sorabilirsin, onu izleyebilirsin, iki sürümü yarıştırabilirsin ya da analitiğe bakabilirsin. Yanlış yöntemi seçersen, doğru görünen yanlış bir cevap alırsın.
 
@@ -137,7 +140,21 @@ Zaman içinde karşılaştırılabilir bir sayı üretir. Standart ölçekler (S
 | Isı haritası / kayıt | Kullanıcı sayfada ne yapıyor? | Davranış sorusu |
 | Anket | Kullanıcı ne düşündüğünü söylüyor? | Karşılaştırma, memnuniyet |
 
-<Callout kind="tasarimci">
+<Case>
+
+Ödeme adımındaki %22'lik düşüş için ekip yöntemleri birleştirdi:
+
+1. **Funnel:** analitik, ödemeyi bırakanların çoğunun kart seçim ekranında ayrıldığını gösterdi. "Nerede" cevaplandı.
+2. **Kullanılabilirlik testi:** beş kişiden dördü hangi kartın seçili olduğunu söyleyemedi. "Neden" cevaplandı.
+3. **A/B testi:** seçili kartı vurgulayan yeni ekran iki tam hafta denendi; ödeme tamamlama %78,1'den %80,9'a çıktı.
+4. **Anket:** çeyreklik mutluluk anketinde en sık geçen dert kartı güncelleyememekti; bir sonraki işi gösterdi.
+
+Testin nasıl yürütüldüğü [Kullanılabilirlik testi](/kullanici-arastirmasi/kullanilabilirlik-testi/) dersinde.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Soruya göre yöntem seç.** "Neden?" için test, "ne kadar?" için analitik.
 - **Davranışı gözle, beyana güvenme.** "Kolaydı" demesi yetmez; görevi tamamladı mı?
@@ -146,7 +163,32 @@ Zaman içinde karşılaştırılabilir bir sayı üretir. Standart ölçekler (S
 - **Kullanıcı verisi topluyorsan gizliliği düşün.** Isı haritası ve kayıtlarda form alanlarını maskele.
 - **Sıfır testten kaçın.** Üç kişiye gösterilen bir ekran, hiç gösterilmeyen ekrandan her zaman iyidir.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **"Ne kadar" ile "neden"i birlikte iste.** Funnel kaybın yerini, test nedenini gösterir.
+- **A/B testini sonuna kadar bekle.** İlk günün farkı çoğu zaman gürültüdür.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Bulguyu backlog'a ölçüyle getir.** "Beş kişiden dördü" bir önceliklendirme gerekçesidir.
+- **Test için sprintte zaman ayır.** Değerlendirme işi plansız kalınca yapılmaz.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Çözüm değerlendirmesinde ölçüyü baştan yaz.** Hangi oran değişirse çözüm işe yaramış sayılır?
+- **Nicel veriyi segmentle oku.** Ortalama, farklı grupların farklı davranışını gizleyebilir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Yöntemi soruya göre seç.** Beğeni sormak davranışı ölçmez.
+- **Nitel ve nicel bulguyu tek hikâyede birleştir.** Sayı ölçeği, gözlem nedeni gösterir.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -169,5 +211,11 @@ Kaybın nerede olduğunu söyler. "Dönüşüm düşük" bir durum tespitidir ve
 <SelfCheck question="Bir kullanıcı testinde &quot;bunu beğendiniz mi?&quot; diye sormak neden yöntem hatasıdır?">
 
 Çünkü beyan edilen tercih ile gerçek davranış sık sık ayrışır. Test, görev verip davranışı gözlemlemektir; kullanıcı nezaketen ya da kendini suçlamamak için "kolaydı" diyebilirken görevi tamamlayamamış olabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir A/B testinin ilk gününde yeni tasarım 5 puan önde. Testi durdurup yeni tasarımı herkese açmalı mısın?">
+
+Hayır. İlk günlerin farkı çoğu zaman rastlantıdır; test önceden belirlenen süre ve örneklem tamamlanana kadar sürer. Erken durdurmak yanlış bir kazanan seçme riskini artırır.
 
 </SelfCheck>

@@ -4,7 +4,9 @@ outcomes:
   - "Webhook'un yönünün neden ters olduğunu ve hangi ara durumu zorunlu kıldığını söyleyebilirsin."
   - "Üçüncü parti entegrasyonun getirdiği bağımlılık ve riskleri sayabilirsin."
   - "Yayınlanabilir ve gizli API anahtarı farkını açıklayabilirsin."
-minutes: 7
+minutes: 4
+standard: 2
+skipTerms: ["bağımlılık"]
 sources:
   - label: "Stripe — Webhooks"
     url: "https://docs.stripe.com/webhooks"
@@ -14,9 +16,12 @@ sources:
     url: "https://docs.stripe.com/api/idempotent_requests"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Kullanıcı ödemeyi tamamladı, kart çekildi, ama sipariş ekranı hâlâ "ödeme bekleniyor" diyor. Panik. Arka planda ne oluyor olabilir? Cevap, dış dünyayla entegrasyonun nasıl çalıştığında.
 
@@ -25,6 +30,29 @@ Kullanıcı ödemeyi tamamladı, kart çekildi, ama sipariş ekranı hâlâ "öd
 **Webhook**, bir dış servisin bir olay gerçekleştiğinde **senin** sunucunu çağırmasıdır. Yönü terstir: normalde sen dış servise sorarsın; webhook'ta o sana haber verir. "Ödeme onaylandı", "e-posta açıldı", "kargo teslim edildi" bilgileri böyle gelir. Sürekli sorup durmaktan (polling) çok daha verimlidir. "Ödeme onayını webhook'la alalım; kullanıcı sayfayı kapatsa bile sipariş güncellensin."
 
 **Tasarım açısından kritik bir sonucu var:** webhook gecikmeli gelebilir. Kullanıcı ödemeyi tamamladıktan sonra sipariş durumu hemen güncellenmeyebilir. Bu ara durum ("işleniyor") tasarlanmalıdır; yoksa kullanıcı "param gitti ama sipariş yok" paniği yaşar.
+
+<StepFlow
+  label="Ödemeden siparişe: webhook"
+  caption="Müşteri ödeme ekranında öder. Ödeme kuruluşu kartı çeker. Kuruluş, bir webhook ile Demlik'in sunucusuna ödemenin onaylandığını bildirir; bu birkaç saniye sürebilir. Demlik siparişi ödendi olarak işaretler ve kafeye gönderir. Webhook gelene kadar müşteri ödemenin alındığını ve siparişin iletildiğini söyleyen bir ara ekran görür."
+  steps={[
+  {
+    title: "Müşteri öder",
+    tone: "accent"
+  },
+  {
+    title: "Kart çekilir",
+    sub: "ödeme kuruluşu"
+  },
+  {
+    title: "Webhook",
+    sub: "birkaç saniye · ara ekran"
+  },
+  {
+    title: "Sipariş kafede",
+    tone: "progress"
+  }
+]}
+/>
 
 ## Üçüncü parti entegrasyon ve SDK
 
@@ -36,13 +64,44 @@ Her üçüncü parti bir **bağımlılık ve risktir:** paket boyutu, performans
 
 **API key (API anahtarı)**, bir dış servise kimliğini kanıtlayan gizli dizidir. Servisin seni tanıması ve faturalandırması için vardır. **Kritik ayrım:** bazı servisler iki tür anahtar verir: ön yüze gömülebilen **yayınlanabilir (publishable)** anahtar ve yalnızca sunucuda kalması gereken **gizli (secret)** anahtar. İkincisini ön yüz koduna koymak ciddi bir güvenlik açığıdır ve otomatik tarayıcılar tarafından kısa sürede bulunur. "Bu anahtar gizli; ön yüzde kullanamayız, isteği sunucudan geçirelim."
 
-<Callout kind="tasarimci">
+<Case>
+
+Kampüs pilotunda bir öğrenci ödeme yaptı, ekranda "Ödeme bekleniyor" yazdı ve iki kez daha ödemeye çalıştı.
+
+1. **Neden:** ödeme onayı ödeme kuruluşundan webhook ile geliyordu; yoğun saatte birkaç saniye gecikti. Ekran o arada "bekleniyor" diyordu.
+2. **Ara ekran:** artık ödeme tamamlanınca "Ödemen alındı, sipariş kafeye iletiliyor" yazıyor ve tekrar ödeme düğmesi görünmüyor.
+3. **Gizli anahtar:** ödeme kuruluşunun gizli anahtarı yalnız sunucuda; uygulama yalnız yayınlanabilir anahtarı kullanıyor.
+4. **SDK:** harita SDK'sı Panel'in ana paketine girmemesi için yalnız gerektiği ekranda yükleniyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Ödeme, e-posta, kargo gibi webhook'lu akışlarda "işleniyor" ara durumunu çiz** ve ne kadar süreceğini, kullanıcının ne yapacağını yaz.
 - **Üçüncü parti bileşenlerin (harita, ödeme formu) ağırlığını ve çökme hâlini hesaba kat.**
 - **Gizli bilgi isteyen tasarımlardan kaçın:** anahtar türünü geliştiriciyle teyit et.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Her üçüncü partiyi bir bağımlılık ve risk olarak listele.** Servis çökerse ürün ne yapar?
+- **Ara durumların müşteri güvenine etkisini tart.** "Param gitti mi?" sorusu, destek ve iade maliyeti demektir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Webhook gecikmesini kabul kriterine yaz.** "Ödeme onayı gelene kadar ara ekran gösterilir, tekrar ödeme yapılamaz."
+- **Dış servis hatası için story ekle.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Entegrasyon gereksiniminde olay listesini çıkar.** Karşı sistem hangi olayları, hangi gecikmeyle bildirir?
+- **Gecikmeli ya da hiç gelmeyen bildirim için iş kuralı yaz.**
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -63,5 +122,11 @@ Dış servisin, bir olay olduğunda senin sunucunu çağırmasıdır. Gecikmeli 
 <SelfCheck question="Yayınlanabilir ve gizli API anahtarı arasındaki fark nedir?">
 
 Yayınlanabilir anahtar ön yüz koduna gömülebilir; gizli anahtar yalnızca sunucuda kalmalıdır. Gizli anahtarı ön yüze koymak ciddi bir güvenlik açığıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Webhook ile polling arasındaki fark nedir?">
+
+Polling'de sen dış servise belirli aralıklarla "değişiklik var mı?" diye sorarsın. Webhook'ta dış servis bir olay olduğunda senin sunucunu çağırır. Webhook daha verimlidir ama gecikmeli gelebilir; ara durum tasarlanmalıdır.
 
 </SelfCheck>

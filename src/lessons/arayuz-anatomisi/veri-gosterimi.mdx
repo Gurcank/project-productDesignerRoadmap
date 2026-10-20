@@ -5,7 +5,8 @@ outcomes:
   - "Badge, chip ve tag'i ayırt edebilirsin; uygulanmış filtrenin hangisi olduğunu söylersin."
   - "Pagination ile infinite scroll arasındaki takası ve erişilebilirlik sorununu açıklayabilirsin."
   - "İyi bir filtre tasarımının kurallarını sayabilirsin."
-minutes: 12
+minutes: 8
+standard: 2
 sources:
   - label: "W3C WAI — Tables Tutorial"
     url: "https://www.w3.org/WAI/tutorials/tables/"
@@ -24,6 +25,10 @@ import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir yönetim panelinde on bin sipariş var. Kullanıcı bunlardan birini bulmak, hepsini görmek istemiyor. Veri gösterimi, çok sayıda kaydı **bulunabilir, karşılaştırılabilir ve işlenebilir** yapma işidir. Panel arayüzlerinin ana malzemesidir.
 
@@ -36,6 +41,18 @@ Tablo mobilde en çok bozulan bileşendir. Üç strateji var: **yatay kaydırma,
 **List**, öğelerin alt alta dizildiği gösterimdir. Tablodan daha esnektir: her satırda farklı yapıda içerik olabilir (avatar, başlık, alt metin, rozet, eylem). Mobilde tablodan çok daha iyi çalışır: "Mobilde tabloyu listeye çevirelim; her satır kart gibi görünsün."
 
 **Card**, tek bir nesneyi temsil eden, kendi sınırı olan kutudur. Gestalt'ın "ortak bölge" ilkesiyle grupları ayırır ve her nesneyi bağımsız olarak taranabilir yapar. Kartın tamamı tıklanabilir olabilir; ama o zaman içinde ayrı bir buton olması sorun çıkarır (iç içe tıklanabilir alanlar). "Kartın tamamı tıklanabilir olsun ama içindeki 'Favorilere ekle' butonu ayrı çalışsın." Ekran okuyucu için tek ve anlamlı bir bağlantı adı gerekir; her metin parçasını ayrı link yapmak kullanıcıyı boğar.
+
+<Spectrum
+  label="Tablo, liste ve kart"
+  caption="Üç gösterim, kullanıcının ne yapacağına göre seçilir. Sol uçta tablo durur: çok sayıda kaydı aynı sütunlarda karşılaştırmak için. Ortada liste vardır: her satırda biraz farklı içerik taşıyabilir ve mobilde iyi çalışır. Sağ uçta kart durur: her nesneyi tek başına, görsel ağırlıkla taramak ve göz atmak için."
+  left={{ title: "Karşılaştır", sub: "aynı sütunlar" }}
+  right={{ title: "Göz at", sub: "nesne nesne" }}
+  marks={[
+    { label: "Tablo", at: 0.1 },
+    { label: "Liste", at: 0.5 },
+    { label: "Kart", at: 0.9 },
+  ]}
+/>
 
 ## Badge, chip, tag
 
@@ -96,7 +113,21 @@ Bu sitenin Ara sayfası bir arama alanıdır: etiketli, sonuç sayısı duyurula
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik Panel'in sipariş ekranı yoğun saatte 30'a yakın siparişi gösteriyordu.
+
+1. **Masaüstü tablo:** saat, sipariş no, ürünler, durum, eylem. Başlık satırı sabit; durum sütunu badge.
+2. **Tablette liste:** aynı veri satır satır; durum ve "Hazır" düğmesi her satırın sağında.
+3. **Filtre:** "Bekleyen", "Hazır", "Teslim edildi" chip'leri; seçili chip kaldırılabilir.
+4. **Toplu işlem:** pilotta istenen "seçilenleri hazır işaretle" eklendi; yanlışlıkla seçimi geri almak için toast'ta "Geri al".
+
+Sayfalama yerine bugünün siparişleri tek listede; dünkü siparişler gün sonu raporunda.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Tabloyu mobilde nasıl göstereceğini baştan seç:** kaydırma, kart ya da sütun gizleme.
 - **Etiketleri doğru türde çiz:** durum badge, seçim chip, sınıflandırma tag.
@@ -105,7 +136,20 @@ Bu sitenin Ara sayfası bir arama alanıdır: etiketli, sonuç sayısı duyurula
 - **Her aramanın boş sonuç hâlini tasarla.**
 - **Toplu işlemde "tümünü seç"in kapsamını yaz.**
 
-</Callout>
+</Lens>
+<Lens role="business-analyst">
+
+- **Hangi alanın listede, hangisinin ayrıntıda görüneceğini yaz.** Liste her şeyi taşımaz.
+- **Filtre ve sıralama ölçütlerini iş sorusundan türet.** Çalışan hangi soruyla bakıyor?
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Kullanıcının listede ne aradığını gözle.** Karşılaştırıyor mu, göz mü atıyor?
+- **Yoğun anda test et.** Otuz satır ile beş satır aynı ekranı farklı yapar.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -128,5 +172,11 @@ Badge durumu ya da sayıyı gösterir, tıklanmaz. Chip kullanıcının seçtiğ
 <SelfCheck question="Pagination ile infinite scroll arasındaki takas nedir? Infinite scroll'un erişilebilirlik sorunu nedir?">
 
 Pagination konum duygusu, kontrol ve paylaşılabilir URL verir; infinite scroll keşif akışlarında daha doğal hisseder ama footer'a ulaşmayı imkânsızlaştırır ve konum duygusunu kaybettirir. Klavye kullanıcısı sayfanın sonuna asla ulaşamaz ve yeni içerik ekran okuyucuya duyurulmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir tablo mobilde sığmıyor. Hangi üç stratejiden biri seçilir ve karar neye bağlıdır?">
+
+Yatay kaydırma, kart görünümüne dönüşme ya da sütun gizleme. Kullanıcının mobilde karşılaştırma mı yoksa tek kayda bakma mı yaptığına ve hangi sütunların vazgeçilmez olduğuna bağlıdır.
 
 </SelfCheck>

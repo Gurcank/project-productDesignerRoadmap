@@ -1,0 +1,54 @@
+{
+  "category": "programlama-dilleri",
+  "sources": [
+    { "label": "MDN — JavaScript", "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
+    { "label": "TypeScript — Resmî site", "url": "https://www.typescriptlang.org/" },
+    { "label": "Python — About", "url": "https://www.python.org/about/" },
+    { "label": "Go — Documentation", "url": "https://go.dev/doc/" },
+    { "label": "PostgreSQL — SQL tutorial", "url": "https://www.postgresql.org/docs/current/tutorial-sql.html" },
+    { "label": "Apple — Human Interface Guidelines", "url": "https://developer.apple.com/design/human-interface-guidelines/" },
+    { "label": "Material Design 3", "url": "https://m3.material.io/" }
+  ],
+  "items": [
+    {
+      "question": "Ekipte biri \"sipariş servisini daha hızlı bir dile taşıyalım\" diyor. İlk ne sorarsın?",
+      "answer": "Yavaşlığın gerçekten dilden gelip gelmediğini. Çoğu zaman neden bir veritabanı sorgusu, ağ ya da gereksiz istekler olur. Önce ölçülür; dil değiştirmek aylar süren bir mimari iştir ve kullanıcı tarafında çoğu zaman görünmez."
+    },
+    {
+      "question": "Bir dili seçtiren dört etken nedir?",
+      "answer": "Ekosistem (o iş için hazır kütüphane), ekip (bilen ve işe alınabilen kişi), çalışma ortamı (tarayıcıda JavaScript, iOS'ta Swift gibi kısıtlar) ve devralınan kod (var olan sistemin dili)."
+    },
+    {
+      "question": "\"Bu ciro bilgisini yalnız dükkân sahibi görsün; diğer kullanıcılarda ekranda gizleyelim\" isteğinde sorun nedir?",
+      "answer": "Tarayıcıya gönderilen her şey kullanıcı tarafından görülebilir; gizlenen bilgi kodda ve ağ yanıtında durur. Yetki kontrolü sunucuda yapılmalı ve bilgi yetkisi olmayana hiç gönderilmemelidir."
+    },
+    {
+      "question": "Kod TypeScript ile yazılmış; yine de dışarıdan gelen eksik bir alan yüzünden ekran bozuldu. Neden?",
+      "answer": "TypeScript tipleri derlemede denetler ve sonra silinir. Çalışma anında gelen veri (API yanıtı, form, tarayıcı deposu) tiplerle korunmaz; ayrıca bir şemayla doğrulanmalıdır."
+    },
+    {
+      "question": "Ürüne yapay zekâ ile çalışan bir özellik eklenecek. Arayüz açısından neyi planlarsın?",
+      "answer": "Özellik büyük olasılıkla ayrı bir servistir ve yanıtı saniyeler sürebilir. İlerlemeli bir bekleme ya da arka plana atılan bir akış ve servis yanıt vermezse bir hata hâli tasarlanır."
+    },
+    {
+      "question": "Bir listenin üstünde \"toplam 12.483 sonuç\" yazıyor ve ekran yavaş açılıyor. Ne önerirsin?",
+      "answer": "Tam sayım için veritabanı her seferinde bütün eşleşen kayıtları sayar. \"10.000+\" gibi yaklaşık bir gösterim ya da yalnız sonraki sayfanın varlığını söylemek çok daha ucuzdur."
+    },
+    {
+      "question": "Bir analist iptal edilen siparişlerin sebeplerini SQL ile saymak istiyor. Sorguyu nerede çalıştırmalı?",
+      "answer": "Canlı veritabanında değil, analiz için ayrılmış bir okuma kopyasında. Ağır bir sorgu canlı sistemi yavaşlatabilir."
+    },
+    {
+      "question": "Bir uygulamanın iOS ve Android sürümleri birebir aynı mı görünmeli?",
+      "answer": "Genelde hayır. Marka, renk ve akış ortak kalır; gezinme, geri davranışı ve sistem bileşenleri her platformun kendi kurallarına (HIG ve Material) uyar. Aksi hâlde iki platformda da yabancı hissettirir."
+    },
+    {
+      "question": "Kafelerdeki kasa yazılımı .NET ile yazılmış ve bir tedarikçiye ait. Ekip bu sistemle nasıl çalışır?",
+      "answer": "Koda dokunmadan, yazılı bir arayüz şartnamesi üzerinden: hangi verinin hangi biçimde gidip geleceği orada kararlaştırılır. Değişiklik ihtiyaçları şartname değişikliği olarak tedarikçiye iletilir ve onun takvimine bağlıdır."
+    },
+    {
+      "question": "Tipli ve tipsiz diller arasındaki fark tasarımı nasıl etkiler?",
+      "answer": "Tipli dillerde bazı hatalar kod yazılırken yakalanır ve kullanıcıya daha az hata ulaşır; boş olabilen alanlar da açıkça işaretlenir. Tipsiz dillerde hatalar çalışırken çıkar; boş ve hatalı veri durumlarının tasarımı daha da kritiktir."
+    }
+  ]
+}

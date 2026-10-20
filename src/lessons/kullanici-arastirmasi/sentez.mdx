@@ -1,0 +1,139 @@
+---
+summary: "Sentez ham notları bulguya ve eyleme çevirir. Gözlemler tarafsız notlara yazılır, benzerleri gruplanır, gruplardan bulgu çıkar, her bulgu bir eyleme bağlanır. Analiz oturumdan hemen sonra ve gözlemleyen herkesle yapılır."
+outcomes:
+  - "Bir oturumun notlarından tarafsız gözlem notları çıkarabilirsin."
+  - "Gözlemleri gruplayıp bulgu cümleleri yazabilirsin."
+  - "Her bulguyu bir tasarım, araştırma ya da backlog eylemine bağlayabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "GOV.UK Service Manual — Analyse a research session"
+    url: "https://www.gov.uk/service-manual/user-research/analyse-a-research-session"
+  - label: "GOV.UK Service Manual — Plan a round of user research"
+    url: "https://www.gov.uk/service-manual/user-research/plan-round-of-user-research"
+additions:
+  - "Analizin zamanı ve katılımcıları, gözlem notu, gruplama, bulgu ve eylem adımları (GOV.UK Service Manual)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Sekiz görüşme bitti. Mert'in defterinde yirmi sayfa not, Selin'in bilgisayarında altı saatlik kayıt vardı. Elif'in sorusu basitti: "Peki ne öğrendik?" Mert "Yarın söylerim" dedi. Ertesi gün notların yarısı, yazanın bile çözemediği kısaltmalardan ibaretti.
+
+Notlar kendiliğinden bulguya dönüşmez. Bu ders, ham veriyi ekibin üzerinde çalışabileceği bulgulara ve eylemlere çevirmeyi anlatır.
+
+## Ne zaman ve kimle?
+
+GOV.UK'ye göre analiz, ham veriyi (notlar, eskizler, fotoğraflar, kayıtlar) süzmek, düzenlemek ve yorumlamaktır. Rehberin iki zaman kuralı vardır:
+
+- **Mümkün olan en kısa sürede.** Oturum tazeyken.
+- **Her iki saatlik araştırma için bir saatlik analiz** planlanır.
+
+Analize **oturumu gözleyen herkes** katılır. Rehberin gerekçesi: birden çok kişi, araştırmacı yanlılığı riskini ve tek kişinin yorumunun ağırlığını azaltır.
+
+## Gözlemden eyleme
+
+<StepFlow
+  label="Bir oturumun analizi"
+  caption="Analiz dört adımda ilerler. Önce gözlemler çıkarılır: her yapışkan nota tek bir gözlem, görülen ya da duyulan şey yazılır. Sonra notlar duvarda gruplanır; kümeler belirince gruplara ad verilir. Ardından her grup için bulgu cümlesi yazılır. Son adımda her bulgu bir eyleme bağlanır: tasarım fikri, yeni araştırma sorusu ya da yeni bir user story."
+  steps={[
+    { title: "Gözlemleri çıkar", sub: "bir not, bir gözlem", tone: "accent" },
+    { title: "Grupla ve adlandır", sub: "kümeler belirene kadar" },
+    { title: "Bulguyu yaz", sub: "farklı renk not" },
+    { title: "Eyleme bağla", sub: "üçüncü renk", tone: "progress" },
+  ]}
+/>
+
+**1. Gözlemleri çıkar.** Rehber tek renk yapışkan not ister. Her nota **tek bir gözlem** yazılır: görülen ya da duyulan şey, birebir alıntı ya da davranış. Ne anlama geldiği yazılmaz; not tarafsız kalır ve kullanıcının sesini taşır.
+
+**2. Grupla.** Notlar duvarda temalara göre dizilir: konular, yolculuk adımları, sayfalar ya da kullanıcı türleri. Başkasının notu da taşınabilir. Kümeler belirene kadar sürer; buna **benzerlik diyagramı** (affinity diagramming) denir. Gruplara ad verilir, ilgisiz notlar atılır, büyük gruplar alt temalara bölünür.
+
+**3. Bulguyu yaz.** Farklı renk bir notta kısa bir ifade. Rehberin örneği: "İnsanlar ilerleme çubuğuna tıklayıp gezinebileceklerini sanıyor."
+
+**4. Eyleme bağla.** Üçüncü renk notlar. Rehberin saydığı eylemler: yeni tasarım fikri, yeni araştırma sorusu, prototipte değişiklik, yeni ya da ayrıntılandırılmış user story, stratejik içgörü.
+
+**Gözlem ≠ yorum.** "Öğrenci bildirimi görmedi" bir gözlemdir. "Bildirimler işe yaramıyor" bir yorumdur; gözlemlerin toplamından çıkar, tek bir nottan değil.
+
+<Case>
+
+O günden sonra kampüs görüşmelerinin analizi her görüşme gününün akşamında yapıldı. Mert'le birlikte Selin, Elif ve Zeynep katıldı.
+
+1. **Gözlem notları:** "Hazır bildirimi geldiğinde dersteydim." "Geç kaldığım sabah sipariş vermem; ne kadar bekleyeceğimi bilmiyorum." Her biri ayrı bir not, katılımcı koduyla.
+2. **Gruplar:** "Ders saati ile hazır olma zamanı", "Bekleme süresi belirsizliği", "Kampüs içi yol".
+3. **Bulgu:** "Öğrenciler, kahvenin ne zaman hazır olacağını bilmediklerinde sipariş vermiyor."
+4. **Eylemler:** Selin için tasarım fikri, tahmini hazır olma saatini sipariş öncesinde göstermek. Mert için yeni araştırma sorusu, geç kalma ne sıklıkla oluyor. Bu soru günlük çalışmasına dönüştü.
+
+Elif ertesi sabah sorusunun cevabını yapışkan notların fotoğrafıyla aldı.
+
+</Case>
+
+<Tool slug="icgoru-karti" />
+
+<Lenses>
+<Lens role="ux-researcher">
+
+- **Analizi takvime oturumla birlikte koy.** İki saatlik araştırma için bir saat.
+- **Notları tarafsız tut.** Yorumu not aşamasında yazarsan gruplama yorumu çoğaltır.
+- **Her bulgunun kaç katılımcıdan geldiğini yaz.** Bir kişinin cümlesi, kalıp değildir.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Analize katıl.** Gördüğün oturumun notlarını sen de yaz.
+- **Eylem notlarına tasarım fikri olarak başla.** Bulgu bir çözüm değildir; çözümü ayrı not et.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Bulgudan eyleme geçişi sahiplen.** Hangi eylem hangi karara girdi, izle.
+- **Stratejik içgörüyü yol haritasına taşı.** Her bulgu bir sprint işi değildir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Bulguları gereksinime çevir.** "Hazır olma saati sipariş öncesinde görünür" bir gereksinim adayıdır.
+- **İzlenebilirliği kur.** Her gereksinimin hangi bulgudan geldiğini yaz.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Analiz oturumdan hemen sonra yapılır; iki saatlik araştırma için bir saat ayrılır.
+- Oturumu gözleyen herkes katılır; böylece tek kişinin yanlılığı azalır.
+- Her not tek bir gözlemdir: görülen ya da duyulan şey, yorum değil.
+- Notlar gruplanıp adlandırılır; gruplardan kısa bulgu cümleleri çıkar.
+- Her bulgu bir eyleme bağlanır: tasarım fikri, araştırma sorusu, story ya da stratejik içgörü.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Neden analize oturumu gözleyen herkes katılır?">
+
+Birden çok kişi, araştırmacı yanlılığı riskini ve tek kişinin yorumunun etkisini azaltır. Ayrıca ekip bulgulara sahip çıkar.
+
+</SelfCheck>
+
+<SelfCheck question="'Kullanıcı ödeme ekranını kafa karıştırıcı buldu' iyi bir gözlem notu mudur?">
+
+Hayır, bir yorumdur. Gözlem notu görüleni ya da duyulanı yazar: "Ödemeden önce 'Hangi kartla ödüyorum?' diye sordu" ya da "Kart seçimine iki kez dokundu."
+
+</SelfCheck>
+
+<SelfCheck question="Bulgu ile eylem arasındaki fark nedir?">
+
+Bulgu ne öğrendiğimizi söyler: "Öğrenciler hazır olma zamanını bilmeyince sipariş vermiyor." Eylem ne yapacağımızı söyler: bir tasarım fikri, yeni bir araştırma sorusu ya da bir user story.
+
+</SelfCheck>
+
+<SelfCheck question="Sekiz görüşmenin analizine kaç saat ayırmalısın, görüşmeler 45 dakikaysa?">
+
+Toplam araştırma altı saattir. İki saate bir saat kuralıyla en az üç saatlik analiz planlanır; görüşme günlerine bölünebilir.
+
+</SelfCheck>

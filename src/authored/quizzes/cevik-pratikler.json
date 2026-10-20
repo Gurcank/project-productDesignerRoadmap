@@ -1,0 +1,53 @@
+{
+  "category": "cevik-pratikler",
+  "sources": [
+    { "label": "Scrum Guide (Kasım 2020)", "url": "https://scrumguides.org/scrum-guide.html" },
+    { "label": "The Kanban Guide (Mayıs 2025)", "url": "https://kanbanguides.org/the-kanban-guide/2025.5/" },
+    { "label": "Agile Manifesto", "url": "https://agilemanifesto.org/" },
+    { "label": "Humanizing Work — Splitting User Stories", "url": "https://www.humanizingwork.com/the-humanizing-work-guide-to-splitting-user-stories/" },
+    { "label": "ProKanban — Forecasting delivery", "url": "https://prokanban.org/kanban-playbook/forecasting-delivery" },
+    { "label": "Google re:Work — Understand team effectiveness", "url": "https://rework.withgoogle.com/intl/en/guides/understand-team-effectiveness" }
+  ],
+  "items": [
+    {
+      "question": "Bir takım arkadaşın 'Agile Manifesto dokümantasyonu reddeder' diyor. Ne dersin?",
+      "answer": "Manifesto kapsamlı dokümantasyondan çok çalışan yazılıma değer verir; ama sağdaki maddelerin de değeri olduğunu açıkça söyler. İkisi çatıştığında çalışan yazılım öne geçer. Dokümantasyon yasaklanmaz."
+    },
+    {
+      "question": "Sprint planlama bitti, ama sprint hedefi yazılmadı. Takım 'öğeler belli, yeter' diyor. Rehbere göre sorun ne?",
+      "answer": "Scrum Rehberi'ne göre sprint hedefi planlama bitmeden yazılmış olmalıdır; sprint backlog'unun taahhüdüdür. Hedef olmadan sprint bir görev listesine döner ve sprint ortasındaki öncelik tartışmalarında bir ölçüt kalmaz."
+    },
+    {
+      "question": "Üç bölüm yöneticisi backlog'u birlikte sıralayan bir 'ürün kurulu' kurmak istiyor. Rehbere göre ne dersin?",
+      "answer": "Product Owner bir kişidir, komite değildir. Yöneticiler ihtiyaçlarını PO'ya getirir ve onu ikna etmeye çalışır; sıralama kararından PO hesap verir. Kurumun PO'nun kararlarına saygı göstermesi, PO'nun başarılı olmasının ön koşuludur."
+    },
+    {
+      "question": "Takım üç retrodur aynı sorunu yazıyor ama hiçbir şey değişmiyor. Retronun hangi aşamaları atlanıyor olabilir?",
+      "answer": "İçgörü üretme ve ne yapacağına karar verme aşamaları. Veri toplanıyor ama nedeni sorulmuyor ve sahibi olan bir eylem çıkmıyor. 5 Neden gibi bir etkinlikle kök nedene inilir, sahibi ve kontrol tarihi olan tek bir eylem yazılır."
+    },
+    {
+      "question": "Bir geliştirici büyük bir story'yi 'önce veritabanı, sonra arayüz' diye bölmek istiyor. Neden iyi bir bölme değildir, ne önerirsin?",
+      "answer": "Bu yatay bir bölmedir; veritabanı katmanı tek başına müşteriye değer vermez. Dikey bölme önerirsin: her parça bütün katmanlardan geçer ve küçük ama çalışan bir şey verir. 'Bunun en basit sürümü ne?' sorusu iyi bir başlangıçtır."
+    },
+    {
+      "question": "Takım ilk sürümde story map'in yalnız 'Siparişi seç' sütunundaki bütün story'leri yapmak istiyor. Ne dersin?",
+      "answer": "Bu, haritayı sütun sütun kesmektir: sürüm sonunda müşteri siparişi seçebilir ama ödeyemez. Önce her faaliyetten en gerekli story'yi alıp uçtan uca çalışan en küçük sistemi, yani yürüyen iskeleti kurmayı önerirsin."
+    },
+    {
+      "question": "Bir Kanban panosunda ortalama 12 iş var ve takım haftada 4 iş bitiriyor. Ortalama cycle time nedir ve WIP 20'ye çıkarsa ne olur?",
+      "answer": "Little Yasası'na göre cycle time = WIP ÷ throughput = 12 ÷ 4 = 3 hafta. Throughput aynı kalırken WIP 20'ye çıkarsa ortalama cycle time 5 haftaya uzar: daha çok işe başlamak her işi daha geç bitirir."
+    },
+    {
+      "question": "Paydaş tek bir teslim tarihi istiyor. Takımın ortalama throughput'una göre hesap 6,4 hafta veriyor. Neden bu tarihi vermezsin, yerine ne verirsin?",
+      "answer": "Ortalamaya dayalı bir tarih kabaca yarı yarıya tutar ve dalgalanmayı gizler. Takımın geçmiş throughput'uyla bir Monte Carlo simülasyonu çalıştırıp bir olasılıkla cevap verirsin: örneğin '%85 olasılıkla 8 hafta'. Daha erken bir tarih isteniyorsa kapsamı konuşursun."
+    },
+    {
+      "question": "Bir yönetici 'En iyi geliştiricileri bir araya getirirsek en iyi takımı kurarız' diyor. Project Aristotle'a göre ne dersin?",
+      "answer": "Araştırmada belirleyici olan, takımda kimin olduğundan çok takımın nasıl birlikte çalıştığıydı; en başta psikolojik güvenlik. Bireysel performans Google'daki takım etkililiğiyle anlamlı bir bağ göstermedi."
+    },
+    {
+      "question": "Şirket, iki ayrı ürün üzerinde çalışan üç takım için 'Spotify modelini' uygulamak istiyor. Ne önerirsin?",
+      "answer": "Modelin yazarları ve Spotify'da çalışanlar onun hiç tam uygulanmadığını ve kopyalanmaması gerektiğini söylüyor. Ayrıca ölçekleme çerçeveleri aynı ürün üzerindeki takımlar içindir. Önce çözülmek istenen koordinasyon sorununu adlandırırsın; çoğu zaman düzenli bir takımlar arası toplantı ve bağımlılık kaydı yeterlidir."
+    }
+  ]
+}

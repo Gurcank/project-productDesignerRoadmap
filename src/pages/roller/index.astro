@@ -1,0 +1,371 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import RoleEmblem from "~/components/RoleEmblem.astro";
+import { ROLE_IDS, ROLE_LABEL } from "~/data/role-ids";
+import { ROLE_BY_ID } from "~/data/roles";
+import { OTHER_ROLES } from "~/data/other-roles";
+
+const pages = new Map((await getCollection("roles")).map((entry) => [entry.id, entry.data]));
+const roles = ROLE_IDS.map((id) => {
+  const page = pages.get(id);
+  if (!page) throw new Error(`src/roles/${id}.mdx yok`);
+  return { ...ROLE_LABEL[id], ...ROLE_BY_ID.get(id)!, page };
+});
+
+// One list, deduplicated: every source the role pages and the short definitions rest on.
+const sources = [
+  ...new Map(
+    [...roles.flatMap((role) => role.page.sources), ...OTHER_ROLES.map((role) => role.source)].map((source) => [source.url, source]),
+  ).values(),
+];
+---
+
+<BaseLayout title="Roller" description="Bir ürün ekibinde kim ne yapar: yedi rolün tanımı, sorumlulukları ve öğrenme yolu." section="roller">
+  <div class="roles" data-pagefind-body data-pagefind-filter="tur:Rol" data-pagefind-meta="kategori:Roller">
+    <header class="roles__head">
+      <h1>Roller</h1>
+      <p class="roles__lead">
+        Bir ürün ekibinde kim ne yapar, neye karar verir, neyi başkasına bırakır? Yedi rolün kendi öğrenme yolu var;
+        yanlarında çalıştıkları rollerin kısa tanımı da aşağıda.
+      </p>
+      <p class="roles__note">
+        Unvanlar şirketten şirkete değişir; küçük bir ekipte bir kişi iki rolü birden üstlenir. Burada anlatılan unvan
+        değil, işin kendisi.
+      </p>
+    </header>
+
+    <ul class="role-grid">
+      {
+        roles.map((role) => (
+          <li class="role-card glass">
+            <div class="role-card__head">
+              <RoleEmblem role={role.id} />
+              <div>
+                <h2 class="role-card__name">
+                  <a href={`/roller/${role.id}/`}>{role.name}</a>
+                </h2>
+                <p class="role-card__tr">{role.tr}</p>
+              </div>
+            </div>
+            <p class="role-card__summary">{role.summary}</p>
+            <p class="role-card__focus">“{role.focus}”</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <section class="roles__section" aria-labelledby="karsilastirma">
+      <h2 id="karsilastirma">Yan yana</h2>
+      <p class="roles__hint">Aynı ürün üzerinde çalışan yedi rol, beş soruda.</p>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Rollerin karşılaştırması">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Rol</th>
+              <th scope="col">Sorduğu soru</th>
+              <th scope="col">Neyden hesap verir?</th>
+              <th scope="col">Zaman ufku</th>
+              <th scope="col">Tipik çıktı</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              roles.map((role) => (
+                <tr>
+                  <th scope="row">
+                    <a href={`/roller/${role.id}/`}>{role.name}</a>
+                  </th>
+                  <td>{role.focus}</td>
+                  <td>{role.page.accountable[0]}</td>
+                  <td>{role.page.horizon}</td>
+                  <td>{role.page.artifacts.slice(0, 2).join(", ")}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="roles__section" aria-labelledby="karisan">
+      <h2 id="karisan">En sık karıştırılan üçlü</h2>
+      <dl class="trio">
+        <div>
+          <dt>Product Manager</dt>
+          <dd><strong>Ne ve neden?</strong> Hangi problemin çözüleceğine ve önceliğe karar verir; sonucun sahibidir.</dd>
+        </div>
+        <div>
+          <dt>Product Owner</dt>
+          <dd>
+            <strong>Sırada ne var?</strong> Scrum'da backlog'dan ve takımın ürettiği değerden hesap verir. Çoğu şirkette PM
+            ile aynı kişidir.
+          </dd>
+        </div>
+        <div>
+          <dt>Project Manager</dt>
+          <dd>
+            <strong>Nasıl ve ne zaman?</strong> Söz verilen kapsamın, zamanında ve bütçesinde teslim edilmesini yönetir.
+          </dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="roles__section" aria-labelledby="digerleri">
+      <h2 id="digerleri">Yanında çalışan diğer roller</h2>
+      <p class="roles__hint">Bu rollerin kendi yolu yok; bilgilerinin çoğunu paylaştıkları yol önerildi.</p>
+      <ul class="others">
+        {
+          OTHER_ROLES.map((role) => (
+            <li class="others__item">
+              <p class="others__name">
+                {role.name} <span class="others__tr">· {role.tr}</span>
+              </p>
+              <p class="others__summary">{role.summary}</p>
+              <p class="others__nearest">
+                {role.nearest === "all" ? (
+                  <>Önerilen: tüm harita, <a href="/?rol=all">Keşif modu</a></>
+                ) : (
+                  <>
+                    En yakın yol: <a href={`/roller/${role.nearest}/`}>{ROLE_LABEL[role.nearest].name}</a>
+                  </>
+                )}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <aside class="sources" aria-labelledby="kaynaklar">
+      <h2 id="kaynaklar" class="sources__title">Kaynaklar</h2>
+      <ul>
+        {
+          sources.map((source) => (
+            <li>
+              <a href={source.url} rel="noreferrer">
+                {source.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </aside>
+  </div>
+</BaseLayout>
+
+<style>
+  .roles {
+    max-width: 68rem;
+    margin-inline: auto;
+    padding: var(--spacing-12) var(--spacing-4) var(--spacing-24);
+  }
+
+  .roles__head h1 {
+    font-size: var(--text-4xl);
+    letter-spacing: -0.03em;
+  }
+
+  .roles__lead {
+    max-inline-size: var(--measure);
+    margin-block-start: var(--spacing-3);
+    font-size: var(--text-lg);
+    color: var(--c-text-secondary);
+  }
+
+  .roles__note {
+    max-inline-size: var(--measure);
+    margin-block-start: var(--spacing-3);
+    font-size: var(--text-sm);
+    color: var(--c-text-muted);
+  }
+
+  .role-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: var(--spacing-4);
+    margin: var(--spacing-8) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .role-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+    padding: var(--spacing-6);
+    border-radius: 1.25rem;
+  }
+
+  .role-card__head {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+  }
+
+  .role-card__name {
+    font-size: var(--text-lg);
+  }
+
+  /* The whole card is the target; the name link stretches over it. */
+  .role-card {
+    position: relative;
+  }
+
+  .role-card__name a {
+    color: var(--c-text);
+    text-decoration: none;
+  }
+
+  .role-card__name a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .role-card:hover {
+    border-color: var(--c-action);
+  }
+
+  .role-card:has(a:focus-visible) {
+    outline: 2px solid var(--c-focus);
+    outline-offset: 2px;
+  }
+
+  .role-card__name a:focus-visible {
+    outline: none;
+  }
+
+  .role-card__tr {
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .role-card__summary {
+    color: var(--c-text-secondary);
+  }
+
+  .role-card__focus {
+    margin-block-start: auto;
+    font-size: var(--text-sm);
+    font-style: italic;
+    color: var(--c-text-muted);
+  }
+
+  .roles__section {
+    margin-block-start: var(--spacing-16);
+  }
+
+  .roles__section h2 {
+    font-size: var(--text-2xl);
+  }
+
+  .roles__hint {
+    margin-block: var(--spacing-2) var(--spacing-4);
+    color: var(--c-text-secondary);
+  }
+
+  .table-scroll th[scope="row"] a {
+    color: var(--c-text);
+  }
+
+  .trio {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: var(--spacing-4);
+    margin: var(--spacing-4) 0 0;
+  }
+
+  .trio div {
+    padding: var(--spacing-4);
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-lg);
+    background-color: var(--c-surface-raised);
+  }
+
+  .trio dt {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .trio dd {
+    margin: var(--spacing-2) 0 0;
+    color: var(--c-text-secondary);
+  }
+
+  .trio strong {
+    color: var(--c-text);
+  }
+
+  .others {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    gap: var(--spacing-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .others__item {
+    padding: var(--spacing-4);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--c-surface-raised);
+  }
+
+  .others__name {
+    font-weight: 600;
+  }
+
+  .others__tr {
+    font-weight: 400;
+    color: var(--c-text-secondary);
+  }
+
+  .others__summary {
+    margin-block-start: var(--spacing-1);
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .others__nearest {
+    margin-block-start: var(--spacing-2);
+    font-size: var(--text-sm);
+    color: var(--c-text-muted);
+  }
+
+  /* A link inside a sentence is told by its underline, not by colour (SC 1.4.1). */
+  .others__nearest a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .sources {
+    margin-block-start: var(--spacing-16);
+    padding: var(--spacing-6);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--c-surface-raised);
+  }
+
+  .sources__title {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-text-muted);
+  }
+
+  .sources ul {
+    margin-block-start: var(--spacing-2);
+    padding-inline-start: var(--spacing-4);
+    font-size: var(--text-sm);
+  }
+
+  /* Standalone links, so each needs its own 24px of room (SC 2.5.8). */
+  .sources li + li {
+    margin-block-start: var(--spacing-2);
+  }
+</style>

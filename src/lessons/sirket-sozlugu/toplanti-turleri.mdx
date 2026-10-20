@@ -1,10 +1,11 @@
 ---
-summary: "On dört toplantı türünün amacı ve toplantı hijyeninin üç sorusu: gündem var mı, karar mı bilgilendirme mi, çıktı ne. Sync'ten çıkan karar yazıya dökülmezse katılmayanlar için alınmamış sayılır."
+summary: "On dört toplantı türünün amacı ve toplantı hijyeninin üç sorusu: gündem var mı, karar mı bilgilendirme mi, çıktı ne? Sync'ten çıkan karar yazıya dökülmezse katılmayanlar için alınmamış sayılır."
 outcomes:
-  - "Başlıca toplantı türlerinin amacını ayırt edebilirsin."
-  - "Sync'in faydasını, maliyetini ve ardından yapılacak kritik alışkanlığı söyleyebilirsin."
-  - "Bir toplantının işe yarayıp yaramadığını belirleyen üç şeyi bilirsin."
-minutes: 5
+  - "Bir toplantı davetinin adından amacını okuyabilirsin."
+  - "Design critique ile design review'u, sync ile toplantıyı ayırt edebilirsin."
+  - "Toplantı hijyeninin üç sorusuyla bir toplantıyı değerlendirebilirsin."
+minutes: 6
+standard: 2
 sources:
   - label: "Atlassian — Standup toplantıları"
     url: "https://www.atlassian.com/agile/scrum/standups"
@@ -13,9 +14,18 @@ sources:
 skipTerms: ["Alignment","Architecture","Scope","alignment","hizalama","architecture","scope","kapsam"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Cycle from "~/components/diagrams/primitives/Cycle.astro";
+
+Ayşe'nin ilk haftasının takviminde dokuz davet vardı: "Kickoff", "Refinement", "Design crit", "Design review", "Sync: iade", "Office hours", "All-hands" ve iki tane "1:1". Hangisine hazırlanması, hangisinde konuşması, hangisini yalnız dinlemesi gerektiğini bilmiyordu.
+
+Toplantının adı amacını söyler, ama yalnız adı bilene. Bu ders, bir şirketin takviminde en sık görülen toplantıları ve bir toplantının işe yarayıp yaramadığını anlamanın üç sorusunu anlatır. Bir toplantının nasıl yönetildiği [Toplantı yönetimi](/iletisim-ve-paydaslar/toplanti-yonetimi/) dersinde.
+
+## On dört toplantı
 
 | Toplantı | Amacı |
 |---|---|
@@ -29,56 +39,135 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 | **Design review** | Uygulanmış arayüzün tasarıma uygunluk kontrolü |
 | **Architecture review** | Mimari kararın tartışılması ve onaylanması |
 | **Postmortem** | Olay sonrası kök neden ve önlem |
-| **1:1** | Yönetici ile birebir |
+| **1:1** | Yöneticiyle birebir |
 | **All-hands / Town hall** | Şirket geneli bilgilendirme |
-| **Sync** | Belirli bir konu için hızlı hizalama görüşmesi |
+| **Sync** | Belirli bir konu için hızlı hizalama |
 | **Office hours** | Belirli saatlerde açık soru-cevap penceresi |
 
-Design critique ile design review'u karıştırma: ilki **tasarımı hedeflere göre** tartışır, ikincisi **uygulanmış arayüzün tasarıma uygunluğunu** kontrol eder.
+**Critique ≠ review.** Design critique tasarımı **hedeflere göre** tartışır; design review **uygulanmış arayüzün tasarıma uygunluğunu** kontrol eder. Biri tasarım yapılırken, diğeri kod yazıldıktan sonra yapılır.
+
+Bu toplantıların beşi bir döngü kurar: Scrum çalışan bir takımın sprint takvimi.
+
+<Cycle
+  label="Sipariş takımının sprint toplantıları"
+  caption="Sipariş takımı iki haftalık sprintlerle çalışır. Sprint pazartesi 10.00'da planlamayla başlar. Her gün 09.45'te 15 dakikalık Daily Scrum, yani standup vardır. Her çarşamba bir saatlik refinement yapılır. İkinci haftanın cuması 14.00'te review, 15.30'da retrospektif vardır. Retrospektifin çıktısı bir sonraki sprintin planlamasına girer."
+  steps={[
+    { title: "Planning", sub: "pazartesi 10.00–12.00", tone: "accent" },
+    { title: "Daily Scrum", sub: "her gün 09.45, 15 dk" },
+    { title: "Refinement", sub: "çarşamba, 1 saat" },
+    { title: "Review", sub: "2. cuma 14.00" },
+    { title: "Retro", sub: "2. cuma 15.30", tone: "progress" },
+  ]}
+  back="sonraki sprint"
+/>
 
 ## Sync
 
-**Sync** (sync up, touch base, catch up, huddle), belirli bir konuyu hızlıca konuşmak için yapılan kısa, genelde plansız görüşmedir. Yazışmanın uzadığı durumlarda beş dakikalık bir konuşma yirmi mesajı bitirir. Tersi de doğrudur: her konuyu sync'e taşımak herkesin odak zamanını parçalar. Slack'te "quick sync?" mesajı olarak karşına çıkar. "Bu yazışarak uzayacak; 10 dakika sync yapalım ve kararı yazıya dökelim."
+**Sync** (sync up, touch base, huddle), belirli bir konuyu hızlıca konuşmak için yapılan kısa ve genelde plansız görüşmedir. Yazışmanın uzadığı durumda beş dakikalık bir konuşma yirmi mesajı bitirir. Tersi de doğrudur: her konuyu sync'e taşımak herkesin odak zamanını parçalar.
 
-**Kritik alışkanlık: sync'ten çıkan kararı yazıya dökmek.** Konuşulan ama yazılmayan karar, katılmayanlar için hiç alınmamış sayılır.
+Materyalin "kritik alışkanlık" dediği şey: **sync'ten çıkan kararı yazıya dökmek.** Konuşulan ama yazılmayan karar, katılmayanlar için hiç alınmamış sayılır.
 
 ## Toplantı hijyeni
 
-Bir toplantının işe yarayıp yaramadığını belirleyen üç şey:
+Materyale göre bir toplantının işe yarayıp yaramadığını üç şey belirler:
 
-1. **Gündem var mı?** Gündemsiz toplantı, kimin ne için orada olduğunu bilmediği bir toplantıdır.
-2. **Karar mı, bilgilendirme mi?** Bilgilendirme toplantısının çoğu yazılı olabilir. Toplantı **karar ve tartışma** için ayrılmalıdır.
+1. **Gündem var mı?** Gündemsiz toplantıda kimse ne için orada olduğunu bilmez.
+2. **Karar mı, bilgilendirme mi?** Bilgilendirmenin çoğu yazılı olabilir. Toplantı karar ve tartışma için ayrılır.
 3. **Çıktı ne?** Aksiyon maddeleri yazılmadıysa toplantı bitmemiştir.
 
-Yaygın bir kalıp: **"Bu toplantı bir e-posta olabilir miydi?"** Bunu sormak meşrudur ve iyi ekiplerde teşvik edilir.
+Yaygın bir soru: **"Bu toplantı bir e-posta olabilir miydi?"** Materyale göre bunu sormak meşrudur ve iyi ekiplerde teşvik edilir.
 
-<Callout kind="tasarimci">
+<Case>
 
-- **Davet ederken gündemi ve beklenen kararı yaz.**
-- **Sync'ten sonra kararı kanala yaz,** katılmayanlar da görsün.
-- **Bilgilendirmeyi yazıya çevirmeyi öner:** toplantıyı karar için sakla.
-- **Toplantıdan çıkarken aksiyon maddelerini sahiplerle yaz.**
+Kaan, Ayşe'nin takvimini onunla birlikte okudu:
 
-</Callout>
+1. **Kickoff:** iade kuralları analizinin başlangıcı. Hazırlık gerekiyordu: kapsam ve paydaşlar Ayşe'den bekleniyordu.
+2. **Design crit ve design review:** ilki Selin'in iade ekranı taslağını hedeflere göre tartışacaktı; ikincisi uygulanmış ekranı tasarımla karşılaştıracaktı. Ayşe ilkinde kurallar için gerekliydi, ikincisinde değil.
+3. **Sync: iade:** müşteri hizmetleriyle 15 dakika. Kararı Ayşe aynı gün kanala yazdı.
+4. **All-hands ve office hours:** dinlemek ve soru sormak için.
+5. **1:1:** gündemi Ayşe'nin kendisi hazırlayacaktı.
+
+Ayşe ikinci haftasında dokuz davetten ikisini reddetti ve gerekçesini yazdı: "Notları okuyacağım."
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
+
+- **Critique'e hedefle gel.** "Bu ekran şu hedefe hizmet ediyor" demeden başlayan eleştiri renge kayar.
+- **Design review'u takvime koy.** Uygulanmış ekranı tasarımla karşılaştırmak, yayından önce yapılır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Bilgilendirmeyi yazıya taşı.** Toplantıyı karar ve tartışmaya sakla.
+- **Kickoff'ta başarı ölçütünü söyle.** Projenin sonunda neye bakılacağı ilk gün belli olsun.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Refinement'ın ve review'un sahibi ol.** Biri backlog'u netleştirir, diğeri paydaşın geri bildirimini toplar.
+- **Review'u demoya indirme.** Paydaşın söz söylediği bir oturumdur.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Kickoff'u tüzükle yap.** Hedef, kapsam, roller ve paydaşlar aynı belgede.
+- **Koordinasyon toplantısını karar ve engele ayır.** Durum bilgisi yazılı gider.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Scrum olaylarının amacını koru.** Standup bir durum raporuna, retro bir şikâyet saatine dönmesin.
+- **"E-posta olabilir miydi?" sorusunu meşru kıl.** Takım toplantı yükünü kendisi sorgulayabilmeli.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Sync'in kararını gereksinim belgesine işle.** Koridorda değişen kural, belgede değişmediyse değişmemiştir.
+- **Hangi toplantıda gerektiğini seç.** Critique'te kural soruları için gereklisin; review'da çoğu zaman değil.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Bulgu paylaşımını doğru toplantıya götür.** Karar verilecekse refinement, geri bildirim isteniyorsa critique.
+- **Office hours'u araştırma için kullan.** Ekip, soru getirmek için senin saatlerini bilmeli.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
-- Her toplantı türünün tek bir amacı var; critique tasarımı hedeflere, review uygulamayı tasarıma göre ölçer.
-- Sync hızlı çözer ama odak zamanını parçalar; ardından kararı yazıya dök.
-- Üç hijyen sorusu: gündem, karar/bilgilendirme, çıktı.
+- Her toplantı türünün tek bir amacı vardır; adı bu amacı söyler.
+- Design critique tasarımı hedeflere, design review uygulamayı tasarıma göre değerlendirir.
+- Scrum çalışan bir takımın beş toplantısı bir sprint döngüsü kurar.
+- Sync hızlı çözer ama odak zamanını parçalar; ardından karar yazıya dökülür.
+- Toplantı hijyeni: gündem, karar mı bilgilendirme mi, çıktı ne?
 
 </Summary>
 
 ## Kendini yokla
 
+<SelfCheck question="Design critique ile design review arasındaki fark nedir?">
+
+Critique tasarımı hedeflere göre değerlendirir ve tasarım yapılırken olur. Review uygulanmış arayüzün tasarıma uygunluğunu kontrol eder ve kod yazıldıktan sonra olur.
+
+</SelfCheck>
+
 <SelfCheck question="Sync yapmanın faydası ve maliyeti nedir? Sync'ten sonraki kritik alışkanlık nedir?">
 
-Faydası: yazışmanın uzadığı durumda beş dakikalık konuşma yirmi mesajı bitirir. Maliyeti: herkesin odak zamanını parçalar. Kritik alışkanlık: sync'ten çıkan kararı yazıya dökmek; konuşulan ama yazılmayan karar katılmayanlar için alınmamış sayılır.
+Faydası: uzayan bir yazışmayı beş dakikada bitirir. Maliyeti: herkesin odak zamanını parçalar. Kritik alışkanlık, çıkan kararı yazıya dökmektir.
 
 </SelfCheck>
 
 <SelfCheck question="Bir toplantının işe yarayıp yaramadığını belirleyen üç şey nedir?">
 
-(1) Gündem var mı? (2) Karar mı bilgilendirme mi: bilgilendirmenin çoğu yazılı olabilir. (3) Çıktı ne: aksiyon maddeleri yazılmadıysa toplantı bitmemiştir.
+Gündem var mı? Karar mı, bilgilendirme mi? Çıktı ne? Aksiyon maddeleri yazılmadıysa toplantı bitmemiştir.
+
+</SelfCheck>
+
+<SelfCheck question="Haftalık bir toplantıda yalnız durum bilgisi paylaşılıyor. Ne önerirsin?">
+
+"Bu bir e-posta olabilir miydi?" diye sorarım. Durum bilgisi yazılı gidebilir; toplantı varsa karar ve tartışma gerektiren konulara ayrılır.
 
 </SelfCheck>

@@ -1,0 +1,146 @@
+---
+summary: "İzleme planı hangi olayların neden ve nasıl izleneceğini yazar. İş hedefinden başlar, olayları nesne ve eylemle adlandırır, değerleri özelliklere koyar ve veri toplamanın tek kaynağı olur."
+outcomes:
+  - "Bir iş hedefinden izlenecek kullanıcı eylemlerine inebilirsin."
+  - "Olay ve özellikleri tutarlı bir kuralla adlandırabilirsin."
+  - "Bir izleme planını kişisel veriyi azaltarak yazabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "Twilio Segment — Data Collection Best Practices"
+    url: "https://www.twilio.com/docs/segment/protocols/tracking-plan/best-practices"
+  - label: "KVKK — 6698 sayılı Kişisel Verilerin Korunması Kanunu (İngilizce çeviri)"
+    url: "https://www.kvkk.gov.tr/Icerik/6649/Personal-Data-Protection-Law"
+additions:
+  - "İzleme felsefesi, iş hedeflerinden olaylara, adlandırma kuralları, izleme planının tanımı (Twilio Segment)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Ece analitik aracında "sipariş" kelimesini aradı ve dokuz olay buldu: `order_done`, `OrderComplete`, `siparis_tamam`, `Order Completed`, `checkout_success`… Bazılarını iOS, bazılarını Android, bazılarını web gönderiyordu. Hangisinin doğru sayıyı verdiğini kimse bilmiyordu.
+
+Her geliştirici o güne kadar kendi bildiği gibi olay eklemişti. Bu ders, ölçmeye başlamadan önce yazılması gereken belgeyi, izleme planını anlatır. Analitik araçların teknik tarafı [Hata izleme ve analitik](/devops-ve-yayin/hata-izleme-ve-analitik/) dersinde.
+
+## Hedeften olaya
+
+Twilio Segment'in rehberine göre izleme, öğrenmek ve harekete geçmek içindir. Rehber üç soruyla başlar: müşterilerin ürünü nasıl kullandığını hangi olaylar aydınlatır? İnsanlar ürünü nasıl bulur, nasıl öder, nasıl kullanmaya başlar? Yolculuğun en önemli adımları hangileri?
+
+Sıra şöyledir:
+
+1. **İş hedeflerini yaz.** Ölçülebilir iş sonuçları: yeni müşteri kazanmak, yeni kayıtları aktive etmek, mevcut müşteriden gelir artırmak. Veriyi kullanacak paydaşlarla konuşarak.
+2. **Kullanıcı eylemlerini hedeflere eşle.** Bir hedefi hangi eylemler gösterir ya da önceden haber verir?
+3. **Olayları ve özellikleri tanımla.**
+
+<Tree
+  label="İş hedefinden özelliğe"
+  caption="İzleme planı bir iş hedefinden aşağı iner. Hedef: ödeme tamamlamayı artırmak. Bu hedefi iki kullanıcı eylemi gösterir: ödemeyi başlatmak ve siparişi tamamlamak. Her eylem bir olay olur: Checkout Started ve Order Completed. Olayların altında onları anlamlı kılan özellikler durur: sepet tutarı, kayıtlı kart kullanıldı mı ve dükkân."
+  root={{
+    title: "Ödeme tamamlamayı artır",
+    sub: "iş hedefi",
+    tone: "accent",
+    children: [
+      {
+        title: "Checkout Started",
+        sub: "olay · ödeme ekranı açıldı",
+        children: [{ title: "cart_value, payment_saved_card", sub: "özellikler" }],
+      },
+      {
+        title: "Order Completed",
+        sub: "olay · sunucuda onaylandı",
+        tone: "progress",
+        children: [{ title: "order_value, shop_id, source", sub: "özellikler" }],
+      },
+    ],
+  }}
+/>
+
+## Adlandırma kuralları
+
+Segment, kuralın kendisinden çok bir kural seçip ona uymanın önemli olduğunu söyler. Kendi önerileri şunlardır:
+
+- **Büyük-küçük harf standardı seç.** Segment olay adlarında her kelimesi büyük harfle başlayan yazımı (Title Case), özellik adlarında alt çizgili küçük harfi (snake_case) önerir.
+- **Bir ad yapısı seç.** Segment **Nesne + Eylem** kullanır: "Order" + "Completed".
+- **Olay adını dinamik üretme.** Tarih ya da kimlik içeren adlar analiz edilemez.
+- **Özellik olabilecek değeri olay adına koyma.** Tutar `order_value` özelliğidir.
+- **Özellik anahtarlarını dinamik üretme.** `feature_1`, `feature_2` gibi adlar belirsizdir.
+
+Segment'in en başarılı müşterileri az sayıda çekirdek olayı, bağlam veren zengin özelliklerle izler. Rehber, doğrudan bir iş hedefine bağlı az olayla başlamayı önerir.
+
+## İzleme planı tek kaynaktır
+
+Segment'in tanımıyla **izleme planı**, hangi olayların izleneceğini, kodda nerede yaşadıklarını ve iş açısından neden gerektiklerini netleştirir. Pazarlamacıyı, PM'i, mühendisi ve analisti aynı sayfaya getirir. Hangi araçla yazılırsa yazılsın, veri toplamanın tek doğru kaynağı olmalıdır.
+
+**Daha çok olay ≠ daha çok bilgi.** Kişisel veride KVKK'nın ilkesi de aynı yönü gösterir: veri amaçla bağlantılı, sınırlı ve ölçülü olmalıdır. Bir olaya ad, telefon ya da e-posta eklemek çoğu zaman hiçbir analize hizmet etmez.
+
+<Case>
+
+Ece ve Ayşe dokuz "sipariş" olayını bir izleme planına çevirdi:
+
+1. **Hedefler:** North Star (haftalık tamamlanan sipariş), ödeme tamamlama, 30 günde ikinci sipariş, iade talepleri.
+2. **Tek olay:** "Order Completed", sunucuda, ödeme onaylanınca. Uygulamadan gönderilen eski olaylar kaldırıldı; iki platformun farklı saymasının önüne geçildi.
+3. **Özellikler:** `order_value`, `shop_id`, `payment_saved_card`, `source`.
+4. **Yeni olaylar:** "Reorder Tapped" ve iade analizi için "Order Cancelled" (`cancelled_by`, `reason`).
+5. **Kişisel veri:** olaylardan ad ve telefon çıkarıldı; müşteri anonim bir kimlikle izleniyor.
+
+Plan Araçlar'daki şablonla bir tabloya yazıldı; artık yeni bir olay plana girmeden koda girmiyor.
+
+</Case>
+
+<Tool slug="izleme-plani" />
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Her olayı bir hedefe bağla.** Bağlanmayan olay neden toplanıyor?
+- **Yeni özelliğin olaylarını PRD'ye yaz.** Ölçüm, yayından sonra eklenecek bir şey değildir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **İzleme planı bir gereksinim belgesidir.** Olay, ne zaman tetiklendiği ve özellikleri, kabul kriterleri kadar net yazılmalı.
+- **Veri azaltmayı sor.** Her özellik için "bu hangi analize hizmet ediyor?" sorusunu sor; cevap yoksa çıkar.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- İzleme planı iş hedefinden başlar, kullanıcı eylemlerine, oradan olaylara ve özelliklere iner.
+- Bir adlandırma kuralı seç ve uygula; Segment Nesne + Eylem, olaylarda Title Case, özelliklerde snake_case önerir.
+- Değerler olay adına değil özelliklere girer; adlar dinamik üretilmez.
+- Az sayıda çekirdek olay ve zengin özelliklerle başla.
+- İzleme planı veri toplamanın tek kaynağıdır; kişisel veri amaçla sınırlı tutulur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Order Completed 165 TL' neden iyi bir olay adı değil?">
+
+Değer olay adına girmiş. Her farklı tutar ayrı bir olay olur ve analiz edilemez. Olay "Order Completed", tutar `order_value` özelliği olmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="İzleme planına olay eklerken ilk soru ne olmalı?">
+
+"Bu olay hangi iş hedefine hizmet ediyor?" Segment'in önerisiyle olaylar doğrudan bir hedefe bağlı olmalı; bağlanmayan olay veri karmaşasına katkı verir.
+
+</SelfCheck>
+
+<SelfCheck question="Aynı olay hem iOS'tan hem web'den farklı adlarla geliyor. Ne önerirsin?">
+
+Tek bir ad ve tek bir tanım: bir Nesne + Eylem adı, aynı özellikler, mümkünse sunucuda tetiklenen tek olay. İzleme planına yazılır ve eski adlar kaldırılır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir geliştirici olaylara müşterinin telefon numarasını eklemek istiyor. Ne dersin?">
+
+Hangi analize hizmet ettiğini sorarım. KVKK'ya göre kişisel veri amaçla bağlantılı, sınırlı ve ölçülü olmalı. Ürün analizi için anonim bir müşteri kimliği yeterlidir.
+
+</SelfCheck>

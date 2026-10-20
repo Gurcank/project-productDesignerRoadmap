@@ -1,0 +1,159 @@
+---
+summary: "İletişim planı hangi bilginin kime, neden, ne zaman, hangi yolla ve kim tarafından iletileceğini yazar. Paydaşı bilgiye boğmadan karar verecek kadar bilgilendirir ve eskalasyon eşiğini önceden koyar."
+outcomes:
+  - "Bir paydaşın iletişim gereksinimini çıkarabilirsin."
+  - "Kime, neden, ne, ne zaman, nasıl ve kim sorularıyla bir iletişim planı yazabilirsin."
+  - "Plana bir eskalasyon eşiği ekleyebilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "Watt — Project Management, Ch. 15 Communications Planning"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-15-communications-planning-project-management/"
+additions:
+  - "İletişim gereksinimi analizi, yöntem seçimi, iletişim planının adımları ve saat dilimleri (Watt)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Timeline from "~/components/diagrams/primitives/Timeline.astro";
+
+Kampüs kafelerinden biri tablet kurulumunun tarihini öğrenciler aracılığıyla duydu. Müşteri hizmetleri lansmanı Instagram'dan öğrendi. Öğrenci işleri ise protokolün son hâlini toplantıdan iki gün önce aldığını söyledi.
+
+Bilgi eksik değildi; Leyla'nın e-postalarında hepsi vardı. Eksik olan, kimin neyi ne zaman bilmesi gerektiğinin baştan yazılmasıydı. Bu ders, paydaş haritasından bir iletişim planına geçmeyi anlatır.
+
+## Önce gereksinim
+
+Watt'ın proje yönetimi kitabında **iletişim planlaması**, hangi bilginin, kime, hangi biçimde ve ne zaman verileceğini tanımlamaktır. İlk adım **iletişim gereksinimi analizidir**: paydaşın iyi karar vermek için neye ihtiyacı var?
+
+Bu analiz iki hatadan korur:
+
+- **Boğmak:** her şeyi herkese göndermek. Paydaş önemli olanı bulamaz.
+- **Kısmak:** yalnız iyi haberi göndermek. Watt açıkça yazar: paydaşa giden iletişim iyi haber de, kötü haber de olabilir.
+
+Amaç, paydaşı karar verecek kadar bilgilendirmektir.
+
+## Planın altı sorusu
+
+Watt'ın sıraladığı adımlar altı soruya iner:
+
+1. **Kime?** Paydaşlar, paydaş kaydından.
+2. **Neden?** Paydaşın beklentisi.
+3. **Ne?** Bu beklentiyi karşılayan bilgi: durum, kapsam değişikliği, riskler, eylem maddeleri, kabul.
+4. **Ne zaman?** Sıklık ya da tetikleyici olay.
+5. **Nasıl?** Yöntem. Watt, paydaşın tercih ettiği yolu önerir.
+6. **Kim?** Mesajı kimin ileteceği.
+
+Yöntem seçerken Watt birkaç etken sayar: bilginin ne kadar acil olduğu, eldeki araçlar, ekibin bu araçlarla deneyimi ve ekibin bir arada mı, dağınık mı çalıştığı.
+
+<Timeline
+  label="Kampüs projesinin iletişim ritmi"
+  caption="On dört haftalık projede iletişim. Hakan her pazartesi bir durum e-postası alır; kafelerle iki haftada bir telefonla konuşulur; öğrenci işleriyle ayda bir toplantı yapılır. Bunlar baştan sona sürer. Bazı iletişimler bir olaya bağlıdır: ödeme kuruluşuna 8. haftada, entegrasyon hazır olunca yazılır; müşteri hizmetleri 12. haftada eğitim alır; lansman duyurusu 14. haftadadır."
+  unit="hafta"
+  span={14}
+  every={2}
+  rows={[
+    { label: "Hakan · haftalık", start: 0, end: 14, tone: "accent" },
+    { label: "Kafeler · 2 haftada 1", start: 0, end: 14 },
+    { label: "Öğrenci işleri · aylık", start: 0, end: 14 },
+    { label: "Ödeme kuruluşu", start: 8, kind: "milestone" },
+    { label: "Müşteri hizm. eğitimi", start: 12, kind: "milestone" },
+    { label: "Lansman duyurusu", start: 14, kind: "milestone", tone: "progress" },
+  ]}
+/>
+
+**Plan ≠ rapor.** Plan iletişimin kendisi değildir; kimin neyi ne zaman alacağını söyler. En sık kullanılan parçası olan [durum raporu](/proje-yonetimi/durum-raporu/) ayrı bir derste.
+
+## Eskalasyon eşiği
+
+Planın altına tek bir satır daha yazılır: hangi durumda düzenli rapor beklenmeden haber verilir? Bu satır, kötü haberin ne zaman ve kime gideceğini önceden kararlaştırır. Ayrıntısı [Kötü haber ve eskalasyon](/iletisim-ve-paydaslar/kotu-haber-ve-eskalasyon/) dersinde.
+
+<Case>
+
+Leyla paydaş kaydından bir plan çıkardı:
+
+1. **Hakan:** her pazartesi 10.00'da durum e-postası; ilk cümle sonuç.
+2. **Öğrenci işleri:** ayda bir toplantı, Leyla ve Hakan birlikte.
+3. **Kafeler:** iki haftada bir telefon; duyurular bir mesaj grubunda. Telefon, kafelerin tercihiydi.
+4. **Müşteri hizmetleri:** lansmandan iki hafta önce eğitim ve SSS; Ayşe hazırladı.
+5. **Ödeme kuruluşu:** kilometre taşlarında e-posta; Emre yazdı.
+6. **Eşik:** "Kritik yoldaki bir iş bir haftadan fazla kayarsa Hakan aynı gün telefonla haber alır."
+
+Altıncı satır altıncı haftada kullanıldı.
+
+</Case>
+
+<Tool slug="iletisim-plani" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Planı paydaş kaydından türet.** Kayıtta olup planda olmayan paydaş, bilgisiz kalır.
+- **Kanalı paydaşa sor.** Kafeler telefonu, sponsor kısa e-postayı tercih edebilir.
+- **Eşiği planın içine yaz.** Kötü haberin yolu, iyi haberinki kadar planlıdır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Ürün kararlarının kime ne zaman duyurulacağını planla.** Satış ve müşteri hizmetleri lansmanı dışarıdan öğrenmemeli.
+- **Yol haritası değişikliğini bir iletişim olayı say.** Değişiklik, plandaki herkese aynı gün gitmeli.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Sprint Review'u planın parçası yap.** Paydaşların ürünü görüp söz söylediği yer orasıdır.
+- **Backlog'daki büyük değişiklikleri duyur.** Bir paydaşın beklediği iş geri itildiyse, bunu senden duymalı.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Takıma gelen iletişimi düzenle.** Paydaş soruları için bir kanal, takımın odak zamanını korur.
+- **Bilgi akışındaki tıkanmayı fark et.** Takımın paydaşlardan geç öğrendiği şeyler bir engel olabilir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **İletişim gereksinimi de bir gereksinimdir.** Paydaş hangi kararı vermek için bilgi istiyor?
+- **Değişen kuralları duyuracak kişiyi yaz.** Müşteri hizmetleri yeni iade kuralını ilk günden bilmeli.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- İletişim planı hangi bilginin kime, ne zaman, hangi yolla ve kim tarafından iletileceğini yazar.
+- İlk adım gereksinim analizidir: paydaşın karar vermek için neye ihtiyacı var?
+- Paydaşı bilgiye boğma; iyi haber kadar kötü haberi de planla.
+- Yöntemi paydaşın tercihine, aciliyete ve ekibin dağılımına göre seç.
+- Planın altına eskalasyon eşiğini yaz.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="İletişim gereksinimi analizi hangi soruyu sorar?">
+
+Paydaşın iyi karar vermek için neye ihtiyacı olduğunu. Bu soru, paydaşı bilgiye boğmayı ve gereken bilgiyi saklamayı birlikte önler.
+
+</SelfCheck>
+
+<SelfCheck question="Planın altı sorusu nedir?">
+
+Kime, neden, ne, ne zaman, nasıl ve kim. Kime ve neden paydaş kaydından gelir; diğerleri her paydaş için ayrı ayrı cevaplanır.
+
+</SelfCheck>
+
+<SelfCheck question="Kafeler e-postaları okumuyor, telefonla aranınca hemen cevap veriyor. Planda ne değişir?">
+
+Kafelerin kanalı telefon olur. Watt'ın önerisiyle yöntem, paydaşın tercih ettiği yoldur. Toplu duyurular için kafelerin zaten kullandığı bir mesaj grubu eklenebilir.
+
+</SelfCheck>
+
+<SelfCheck question="Eskalasyon eşiği neden plana yazılır?">
+
+Kötü haberin ne zaman ve kime gideceği önceden kararlaştırılmış olur. Kimse "bunu şimdi söylesem mi?" diye tartmaz; eşik aşılınca haber verilir.
+
+</SelfCheck>

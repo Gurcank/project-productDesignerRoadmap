@@ -1,10 +1,12 @@
 ---
-summary: "API iki yazılımın konuşma sözleşmesidir. Endpoint, contract ve sürümleme kavramları; ön yüz ile arka yüzün paralel çalışmasını ve tasarımcının boş/uç durumları öngörmesini sağlar."
+summary: "API iki yazılımın konuşma sözleşmesidir. Endpoint, contract ve sürümleme kavramları; ön yüz ile arka yüzün paralel çalışmasını ve boş ya da uç durumların önceden görülmesini sağlar."
 outcomes:
   - "API, endpoint ve resource'u ayırt edebilirsin."
-  - "Sözleşmenin tasarımcı için değerini (hangi alanlar boş olabilir) söyleyebilirsin."
+  - "Sözleşmenin tasarım için değerini (hangi alanlar boş olabilir) söyleyebilirsin."
   - "Kırıcı değişiklik ve sürümlemenin neden mobil uygulamalarda kritik olduğunu açıklayabilirsin."
-minutes: 7
+minutes: 4
+standard: 2
+skipTerms: ["alan adı"]
 sources:
   - label: "MDN — Glossary: API"
     url: "https://developer.mozilla.org/en-US/docs/Glossary/API"
@@ -14,9 +16,12 @@ sources:
     url: "https://swagger.io/docs/specification/about/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Bu ekran için gereken veriyi tek bir API çağrısıyla alabilir miyiz?" Bu soruyu sorabilmen için API'nin ne olduğunu ve etrafındaki kavramları bilmelisin.
 
@@ -32,19 +37,74 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 **API contract (sözleşme)**, bir endpoint'in hangi girdileri kabul ettiğini ve hangi çıktıyı döndürdüğünü tanımlayan anlaşmadır. Ön yüz ile arka yüzün **paralel çalışmasını** mümkün kılar: sözleşme belirlendikten sonra iki taraf birbirini beklemez. OpenAPI (Swagger) belgesi bunun standart biçimidir.
 
-Tasarımcı için önemi: sözleşme, hangi alanların geleceğini ve **hangilerinin boş olabileceğini** söyler; yani hangi boş ve uç durumları tasarlaman gerektiğini. "Sözleşmeye bakalım: `discount` alanı opsiyonel, o zaman indirimsiz kart görünümünü de tasarlamalıyız."
+Tasarım için önemi: sözleşme, hangi alanların geleceğini ve **hangilerinin boş olabileceğini** söyler; yani hangi boş ve uç durumları tasarlaman gerektiğini. "Sözleşmeye bakalım: `discount` alanı opsiyonel, o zaman indirimsiz kart görünümünü de tasarlamalıyız."
 
 ## Sürümleme
 
 Sözleşmeyi habersiz değiştirmek (**breaking change**, kırıcı değişiklik) ön yüzü kırar. **API versioning**, API'nin değişirken eski kullanıcılarını kırmamasını sağlar; genelde adrese sürüm koyarak (`/api/v2/...`). Bir API'yi dışarıya açtıysan kullananları haberdar etmeden değiştiremezsin. **Mobil uygulamalar özellikle kritiktir:** kullanıcı güncellemeyi yüklemediyse eski sürümü kullanmaya devam eder. "Bu değişiklik kırıcı; v2 açalım ve v1 için altı aylık geçiş süresi verelim."
 
-<Callout kind="tasarimci">
+<StepFlow
+  label="Bir API sözleşmesinin hayatı"
+  caption="Sözleşme önce yazılır: endpoint'in girdileri ve çıktıları, hangi alanların boş olabileceği. Ön yüz ve arka yüz bu sözleşmeye göre birbirini beklemeden çalışır. Endpoint yayına çıkar. Sözleşmeyi kıran bir değişiklik gerekirse yeni bir sürüm açılır ve eski sürüm bir geçiş süresi boyunca çalışmaya devam eder; özellikle güncellenmemiş mobil uygulamalar için."
+  steps={[
+  {
+    title: "Sözleşme",
+    sub: "girdi, çıktı, boş alanlar",
+    tone: "accent"
+  },
+  {
+    title: "Paralel çalışma",
+    sub: "ön yüz ve arka yüz"
+  },
+  {
+    title: "Yayın"
+  },
+  {
+    title: "Kırıcı değişiklik",
+    sub: "v2 + geçiş süresi",
+    tone: "progress"
+  }
+]}
+/>
+
+<Case>
+
+"Son siparişini tekrarla" özelliği için Burak ve Ece önce sözleşmeyi yazdı:
+
+1. **Endpoint:** `POST /api/siparisler/tekrar`; girdi: son siparişin numarası; çıktı: yeni sipariş, tutar ve tahmini hazır olma süresi.
+2. **Boş alan:** `hazirOlmaDakika` opsiyonel; dükkân hazırlık süresi girmediyse boş geliyor. Selin bu durum için "Hazır olunca bildireceğiz" metnini çizdi.
+3. **Paralel:** sözleşme bitince Ece ekranı sahte veriyle kurdu; Burak sunucu tarafını yazdı. İkisi aynı gün birleştirildi.
+4. **Mobil:** alan adı `hazirOlma`'dan `hazirOlmaDakika`'ya değişti. Eski mobil sürümler eski adı bekliyordu; iki alan üç ay birlikte gönderildi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarlamadan önce sözleşmeye (ya da gerçek yanıta) bak:** hangi alanlar zorunlu, hangisi opsiyonel?
 - **Her opsiyonel alan için boş hâlini tasarla.**
 - **Mobil uygulamalı üründe bir alanı kaldırmadan önce sor:** eski sürümler kırılır mı?
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Sözleşmeyi takvimin parçası say.** Sözleşme erken yazılırsa ön yüz ve arka yüz birbirini beklemez.
+- **Kırıcı değişikliğin mobil bedelini sor.** Güncellemeyen kullanıcılar eski sürümle kalır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Story'nin kabul kriterine sözleşmeyi bağla.** Hangi alan gelir, hangisi boş olabilir?
+- **Boş alanların ekran hâlini aynı story'de iste.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Veri gereksinimini sözleşmeyle eşle.** Her alanın anlamı, biçimi ve zorunluluğu yazılı olsun.
+- **Entegrasyon gereksiniminde sürüm politikasını sor.** Karşı sistem ne kadar süre geriye uyumlu kalır?
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -56,7 +116,7 @@ Sözleşmeyi habersiz değiştirmek (**breaking change**, kırıcı değişiklik
 
 ## Kendini yokla
 
-<SelfCheck question="API contract'ın tasarımcı için değeri nedir?">
+<SelfCheck question="API contract'ın tasarım için değeri nedir?">
 
 Hangi alanların geleceğini ve hangilerinin boş olabileceğini söyler; yani hangi boş ve uç durumları tasarlaman gerektiğini. Ayrıca ön yüz ile arka yüzün paralel çalışmasını sağlar.
 
@@ -65,5 +125,11 @@ Hangi alanların geleceğini ve hangilerinin boş olabileceğini söyler; yani h
 <SelfCheck question="Mobil uygulamalarda API sürümlemesi neden kritiktir?">
 
 Kullanıcı güncellemeyi yüklemediyse eski sürümü kullanmaya devam eder; API habersiz değişirse eski sürümler kırılır.
+
+</SelfCheck>
+
+<SelfCheck question="Mobil uygulama kullanan bir üründe API alanının adı değişecek. Neden dikkatli olunmalı?">
+
+Kullanıcıların bir kısmı uygulamayı güncellemez ve eski sürüm eski alan adını bekler. Kırıcı değişiklik için yeni bir sürüm açılır ya da iki alan bir geçiş süresi boyunca birlikte gönderilir.
 
 </SelfCheck>

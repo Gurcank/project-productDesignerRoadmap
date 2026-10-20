@@ -1,0 +1,142 @@
+---
+summary: "Araştırma, ekip öğrendiğini kullanabildiğinde işe yarar. Bulgular düzenli ve erken paylaşılır: show and tell, araştırma duvarı, kendi başına anlaşılan sunum. Her bulgu ne öğrenildiğini ve önemini söyler."
+outcomes:
+  - "Bulguları kime, ne zaman ve hangi biçimde paylaşacağını seçebilirsin."
+  - "Kendi başına anlaşılan bir bulgu slaytı yazabilirsin."
+  - "Araştırma duvarı ve içgörü deposuyla öğrenilenleri sprintler boyunca görünür tutabilirsin."
+minutes: 5
+standard: 2
+sources:
+  - label: "GOV.UK Service Manual — Sharing user research findings"
+    url: "https://www.gov.uk/service-manual/user-research/sharing-user-research-findings"
+additions:
+  - "Paylaşımın amacı, kitlesi, sıklığı, biçimleri, sunum yapısı ve bulgu slaytının anatomisi (GOV.UK Service Manual)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Geçen yıl bir ajans Demlik için kırk sayfalık bir araştırma raporu yazmıştı. Rapor ortak klasörde duruyordu. Mert ekibe kaç kişinin onu açtığını sordu; iki el kalktı, ikisi de ilk sayfadan öteye geçmemişti.
+
+Okunmayan bir rapor, yapılmamış bir araştırmadan farksızdır. Bu ders, bulguları ekibin kullanacağı biçimde paylaşmayı anlatır.
+
+## Neden, kime, ne zaman?
+
+GOV.UK'nin rehberine göre araştırma, ancak ekip öğrendiğini hizmeti iyileştirmek için kullanabiliyorsa işe yarar. Bulgular şunları besler: tasarım kararları, önceliklendirme, yeni user story'ler, kullanıcı ihtiyaçlarının iyileştirilmesi ve yol haritası. Paylaşımın kitlesi de ekiple sınırlı değildir: paydaşlar, diğer araştırmacılar ve ekipler, kullanıcılar.
+
+Rehberin zaman kuralı iki kelimedir: **düzenli ve erken.** Her hafta ya da her sprint, sabit bir zamanda; bulgu kesinleşmeyi beklemeden.
+
+## Paylaşımın biçimleri
+
+<Tree
+  label="Bulguları paylaşmanın yolları"
+  caption="Bulgular üç biçimde paylaşılır. Konuşarak: show and tell oturumları ve kısa sunumlar. Göstererek: araştırma duvarı, birkaç dakikalık video klipler ve alıntılı posterler. Yazarak: kendi başına anlaşılan bir sunum, blog yazıları ve bulguların etiketlendiği bir içgörü deposu."
+  root={{
+    title: "Bulguları paylaş",
+    tone: "accent",
+    children: [
+      { title: "Konuşarak", children: [{ title: "Show and tell" }, { title: "Kısa sunum" }] },
+      { title: "Göstererek", children: [{ title: "Araştırma duvarı" }, { title: "Video klip" }, { title: "Alıntılı poster" }] },
+      { title: "Yazarak", children: [{ title: "Sunum dosyası" }, { title: "Blog yazısı" }, { title: "İçgörü deposu", tone: "progress" }] },
+    ],
+  }}
+/>
+
+**Araştırma duvarı,** rehbere göre ekibin her gün gördüğü bir yerde yolculuk haritalarını, personaları, içgörüleri, ekran görüntülerini ve analitik veriyi bir arada tutar. **İçgörü deposu** ise rehberde değil, ResearchOps uygulamasında geçen bir araçtır: bulguların etiketlenip aranabildiği ortak bir yer.
+
+## Bulgu slaytı
+
+Rehber bir sunum yapısı önerir: araştırma için 1–2 slayt, bulgular için 5–10 slayt, sıradaki adımlar için 1–2 slayt. Sunum **kendi başına anlaşılır** olmalıdır; çevik bir ekipte rapor yazmaya vakit kalmaz, sunum öğrenilenlerin kaydı olur.
+
+Her bulgu slaytı dört parçadan oluşur:
+
+1. **Öğrenileni söyleyen başlık.** "Görüşme sonuçları" değil, "Öğrenciler hazır olma saatini bilmeyince sipariş vermiyor."
+2. **Temel olgu:** 1–2 cümle.
+3. **Önemi ve sonuçları:** 1–2 cümle.
+4. **Kanıt:** ilgili bir fotoğraf, ekran görüntüsü ya da kullanıcının kendi sözü.
+
+**Konu başlığı ≠ bulgu başlığı.** "Ödeme ekranı" bir konudur. "Kullanıcılar hangi kartla ödediklerini bilmiyor" bir bulgudur.
+
+<Case>
+
+Mert raporu bırakıp bir ritim kurdu:
+
+1. **Show and tell:** her ikinci perşembe 30 dakika. Bütün ekip ve isteyen paydaşlar.
+2. **Araştırma duvarı:** ekip alanında. Kampüs yolculuğu, günlük çalışmasından fotoğraflar, ağaç testi sonucu.
+3. **Bulgu slaytı:** "Öğrencilerin 10'da 7'si geç kaldığı günlerde sipariş vermiyor." Altında günlük çalışmasından bir alıntı ve bir fotoğraf; önem satırı: "Kampüste kaybettiğimiz siparişlerin bir kısmı, bekleme süresinin belirsizliğinden geliyor."
+4. **İçgörü deposu:** her bulgu etiketli; "kampüs", "ödeme", "Panel".
+
+Ozan bir sonraki refinement'a bu slaytı açarak başladı.
+
+</Case>
+
+<Tool slug="icgoru-karti" />
+
+<Lenses>
+<Lens role="ux-researcher">
+
+- **Bulguyu başlığa yaz.** Başlığı okuyan, slaytın geri kalanını okumasa da öğrenmeli.
+- **Erken paylaş.** Kesin olmayan bulguyu "ilk işaret" diye etiketle, ama sakla.
+- **Kanıt koy.** Kullanıcının kendi sözü, araştırmacının özetinden ikna edicidir.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Tasarımı bulguyla birlikte göster.** Bir ekranın gerekçesi, yanındaki bulgu slaytıdır.
+- **Araştırma duvarını tasarım eleştirisinde kullan.** Tartışma kişisel zevkten kanıta kayar.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Show and tell'e paydaş davet et.** Karar verecek kişi bulguyu ilk elden duysun.
+- **Sıradaki adım slaytında karar iste.** Bulgu, bir karar olmadan dosyada kalır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Bulgu slaytını refinement'a getir.** Story'nin gerekçesi bulgudur.
+- **İçgörü deposunu backlog'a bağla.** Story'de bulgunun bağlantısı dursun.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Araştırma, ekip öğrendiğini kullanabildiğinde işe yarar; bulgular kararları ve backlog'u besler.
+- Paylaşım düzenli ve erkendir: her hafta ya da sprint, sabit bir zamanda.
+- Biçimler: show and tell, araştırma duvarı, video klip, poster, sunum ve içgörü deposu.
+- Sunum kendi başına anlaşılır; bulgu slaytı öğrenileni başlığa yazar.
+- Her bulgu temel olguyu, önemini ve bir kanıtı taşır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="İyi bir bulgu slaytının dört parçası nedir?">
+
+Öğrenileni söyleyen bir başlık, 1–2 cümlelik temel olgu ve 1–2 cümlelik önem. Bir de kanıt: fotoğraf, ekran görüntüsü ya da kullanıcının kendi sözü.
+
+</SelfCheck>
+
+<SelfCheck question="Neden bulgular kesinleşmeden de paylaşılır?">
+
+Ekip kararlarını beklemeden verir; geç gelen bulgu, verilmiş bir kararı değiştiremez. Erken paylaşım, bulgunun kesin olmadığını belirterek yapılır.
+
+</SelfCheck>
+
+<SelfCheck question="Çevik bir ekipte neden sunum kendi başına anlaşılır olmalıdır?">
+
+Ayrı bir rapor yazmaya vakit yoktur. Sunum, sprintler boyunca öğrenilenlerin kaydı olur; toplantıya katılmayan biri de okuyup anlayabilmelidir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir slaytın başlığı 'Tur 3: kullanılabilirlik testi'. Nasıl düzeltirsin?">
+
+Başlığı bulguya çeviririm: örneğin "5 katılımcıdan 4'ü hangi kartla ödediğini söyleyemedi." Tur bilgisi slaytın altına ya da araştırma slaytına gider.
+
+</SelfCheck>

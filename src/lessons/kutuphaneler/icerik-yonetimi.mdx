@@ -1,10 +1,11 @@
 ---
-summary: "İçeriğin sahipliğini pazarlama ekibine devreden sistemler: CMS, headless CMS ve MDX. Tasarımcının sorumluluğu: CMS'te tanımlanan alan yapısı tasarımın esnekliğini belirler."
+summary: "İçeriğin sahipliğini pazarlama ekibine devreden sistemler: CMS, headless CMS ve MDX. Tasarımın sorumluluğu: CMS'te tanımlanan alan yapısı tasarımın esnekliğini belirler."
 outcomes:
   - "Klasik CMS ile headless CMS arasındaki farkı söyleyebilirsin."
   - "İçerik modelinin neden tasarımla birlikte kurulması gerektiğini açıklayabilirsin."
   - "MDX'in ne işe yaradığını ve nerede karşına çıkacağını bilirsin."
 minutes: 5
+standard: 2
 sources:
   - label: "Sanity — Dokümantasyon"
     url: "https://www.sanity.io/docs"
@@ -15,12 +16,16 @@ sources:
   - label: "MDX"
     url: "https://mdxjs.com/"
 flags: ["degisken"]
-skipTerms: ["payload"]
+skipTerms: ["payload", "gövde"]
 ---
 
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Blogda bir yazı yayınlamak için geliştiriciye mi yazman gerekiyor? İçerik ekibi kendi içeriğini kendi yönetebiliyorsa, arkada bir içerik yönetim sistemi var demektir.
 
@@ -28,7 +33,23 @@ Blogda bir yazı yayınlamak için geliştiriciye mi yazman gerekiyor? İçerik 
 
 **CMS (Content Management System)**, içerik editörlerinin geliştiriciye ihtiyaç duymadan içerik girmesini sağlayan sistemdir. İçeriğin sahipliğini pazarlama ekibine devreder. **Klasik CMS** (WordPress gibi) içerik ve görünümü birlikte yönetir; **headless CMS** içeriği yalnızca veri olarak sunar ve görünümü senin ön yüzün belirler. Böylece aynı içerik web, mobil ve başka kanallarda kullanılabilir. "Blog içeriğini headless CMS'e alalım; her yazı için deploy beklemesinler." Sanity, Strapi, Payload yaygın adlardır; ürün isimleri, fiyatlandırma ve özellikler sık değişir.
 
-**Tasarımcı için önemli:** CMS'te tanımlanan **alan yapısı**, tasarımın esnekliğini belirler. Alanları önceden düşünmezsen editör beklenmedik uzunlukta ya da biçimde içerik girer ve tasarım bozulur. Bu yüzden **içerik modeli tasarımla birlikte kurulmalıdır.**
+**Tasarım için önemli:** CMS'te tanımlanan **alan yapısı**, tasarımın esnekliğini belirler. Alanları önceden düşünmezsen editör beklenmedik uzunlukta ya da biçimde içerik girer ve tasarım bozulur. Bu yüzden **içerik modeli tasarımla birlikte kurulmalıdır.**
+
+<Tree
+  label="Bir yardım makalesinin içerik modeli"
+  caption="Demlik'in yardım merkezindeki her makale beş alandan oluşur. Başlık zorunludur ve en çok 70 karakterdir. Kısa özet zorunludur ve arama sonucunda görünür. Gövde zorunludur. Görsel opsiyoneldir; yoksa makale görselsiz düzende gösterilir. Kategori zorunludur ve listeden seçilir; editör yeni kategori uyduramaz."
+  root={{
+    title: "Yardım makalesi",
+    tone: "accent",
+    children: [
+      { title: "Başlık", sub: "zorunlu · en çok 70" },
+      { title: "Özet", sub: "zorunlu · aramada görünür" },
+      { title: "Gövde", sub: "zorunlu" },
+      { title: "Görsel", sub: "opsiyonel · boş hâl" },
+      { title: "Kategori", sub: "listeden seçilir", tone: "progress" },
+    ],
+  }}
+/>
 
 ## MDX
 
@@ -36,17 +57,32 @@ Blogda bir yazı yayınlamak için geliştiriciye mi yazman gerekiyor? İçerik 
 
 <Callout kind="ornek" title="Bu sitede nasıl?">
 
-Bu sitedeki dersler MDX ile yazılmıştır: metnin içinde "Tasarımcı olarak sen" kutuları, karşılaştırmalar ve canlı demolar bileşen olarak yer alır. İçerik şeması da tasarımla birlikte kurulmuştur: bir ders kaynak bağlantısı olmadan yayınlanamaz.
+Bu sitedeki dersler MDX ile yazılmıştır: metnin içinde rol mercekleri, karşılaştırmalar ve canlı demolar bileşen olarak yer alır. İçerik şeması da tasarımla birlikte kurulmuştur: bir ders kaynak bağlantısı olmadan yayınlanamaz.
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in yardım merkezi önce sitenin kodunun içindeydi; her yeni makale bir geliştiricinin işiydi.
+
+1. **Headless CMS:** makaleler bir headless CMS'e taşındı; destek ekibi kendisi yazıp yayımlıyor. Aynı içerik müşteri uygulamasının "Yardım" ekranında da gösteriliyor.
+2. **İçerik modeli:** Selin ile destek ekibinin lideri alanları birlikte belirledi: başlık, özet, gövde, görsel, kategori.
+3. **Sınırlar:** başlık 70 karakterle sınırlı; uygulamadaki liste iki satırı geçmiyor. Görselsiz makale için ayrı bir düzen çizildi.
+4. **İlk sorun:** destek ekibi ilk haftada "Diğer" adında bir kategori istedi. Kategori listeden seçildiği için önce kart sıralama yapıldı.
+
+İade kuralı makalesi artık tek yerde yazılı; uygulama, site ve destek şablonu aynı metni gösteriyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **İçerik modelini tasarımla birlikte kur:** her alan için uzunluk sınırı, zorunluluk ve boş durum.
 - **Beklenmedik içeriği tasarla:** çok uzun başlık, görseli olmayan kart, eksik alan.
 - **Headless CMS'in masada olup olmadığını sor** (örneğin PHP/WordPress içerik ekibi varsa).
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -58,8 +94,20 @@ Bu sitedeki dersler MDX ile yazılmıştır: metnin içinde "Tasarımcı olarak 
 
 ## Kendini yokla
 
-<SelfCheck question="Headless CMS'te tasarımcının sorumluluğu nedir? İçerik modeli neden tasarımla birlikte kurulmalı?">
+<SelfCheck question="Headless CMS'te tasarımın sorumluluğu nedir? İçerik modeli neden tasarımla birlikte kurulmalı?">
 
 CMS'te tanımlanan alan yapısı tasarımın esnekliğini belirler. Alanlar önceden düşünülmezse editör beklenmedik uzunlukta ya da biçimde içerik girer ve tasarım bozulur.
+
+</SelfCheck>
+
+<SelfCheck question="Klasik CMS ile headless CMS arasındaki fark nedir?">
+
+Klasik CMS içeriği ve görünümü birlikte yönetir. Headless CMS içeriği yalnızca veri olarak sunar; görünümü ön yüz belirler. Böylece aynı içerik web, mobil ve başka kanallarda kullanılabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir CMS'te başlık alanına uzunluk sınırı konmazsa ne olur?">
+
+Editör beklenmedik uzunlukta başlık girer; kartlar taşar, listeler bozulur. Her alan için uzunluk sınırı, zorunluluk ve boş hâl tasarımla birlikte belirlenmelidir.
 
 </SelfCheck>

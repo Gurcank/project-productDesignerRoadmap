@@ -5,7 +5,9 @@ outcomes:
   - "Anlamı yalnız renkle taşımanın neden erişilebilirlik ihlali olduğunu söyleyebilirsin."
   - "WCAG AA kontrast eşiklerini (4,5:1, 3:1, 3:1) ve hangi öğeye hangisinin uygulandığını bilirsin."
   - "OKLCH'in HSL'e göre avantajını anlatabilirsin."
-minutes: 13
+minutes: 8
+standard: 2
+skipTerms: ["gövde"]
 sources:
   - label: "W3C — Understanding SC 1.4.3 Contrast (Minimum)"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html"
@@ -21,6 +23,9 @@ import ContrastDemo from "~/components/lesson/ContrastDemo.astro";
 import Swatches from "~/components/lesson/Swatches.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir arkadaşın gri bir metni açık gri zemine koymuş ve "çok şık" demiş. Sen okuyamıyorsun. O okuyor çünkü gençsin, parlak ekrana bakıyorsun, ya da zaten ne yazdığını biliyorsun. Bir yaşlı kullanıcı güneşin altında okuyamayacak. İşte **renk kararının işlev tarafı:** zevk meselesi değil, ölçülebilir bir kural.
 
@@ -121,11 +126,25 @@ Eşikler **tavsiye değil, birçok ülkede yasal gerekliliğin dayanağıdır.**
 
 <Callout kind="ornek" title="Bu sitede nasıl?">
 
-Bu sitenin renk çiftleri kontrast **hesaplanarak** doğrulanıyor: gövde metni 4,5:1, arayüz öğeleri 3:1. Üstelik boş bir onay kutusu *yalnızca kenarlığından* ibaret olduğu için kenarlık rengi ayrı bir token (3:1 kuralına tabi); dekoratif kenarlıklar ise o kurala tabi değil ve ayrı bir token. Palet bir gece gökyüzü: derin lacivert zemin ve yıldız ışığı rengi metin (sakin okuma), camgöbeği nebula (eylem) ve kutup ışığı yeşili (ilerleme: sitenin kendi işi tek parlak yeşille işaretlenir); haritadaki alanlar yön bulmak için ayrıca birer pastel tonla ayrışır. Tamamlanma durumu yalnızca renkle değil, tik ve soluk metinle birlikte taşınıyor.
+Bu sitenin renk çiftleri kontrast **hesaplanarak** doğrulanıyor: gövde metni 4,5:1, arayüz öğeleri 3:1. Üstelik boş bir onay kutusu *yalnızca kenarlığından* ibaret olduğu için kenarlık rengi ayrı bir token (3:1 kuralına tabi); dekoratif kenarlıklar ise o kurala tabi değil ve ayrı bir token. Palet bir gece gökyüzü: derin lacivert zemin ve yıldız ışığı rengi metin sakin okuma içindir. Camgöbeği nebula eylemi, kutup ışığı yeşili ilerlemeyi gösterir. Haritadaki alanlar yön bulmak için ayrıca birer pastel tonla ayrışır. Tamamlanma durumu yalnızca renkle değil, tik ve soluk metinle birlikte taşınıyor.
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in ödeme ekranında hata ve indirim aynı turuncuyla gösteriliyordu.
+
+1. **Anlamsal renk:** turuncu yalnız uyarıya ayrıldı; indirim yeşile, hata kırmızıya bağlandı. Üçü de birer semantic token oldu.
+2. **Kontrast:** Selin turuncu metnin beyaz zemindeki kontrastını hesapladı: 4,5:1'in altındaydı. Metin için rampanın daha koyu basamağı seçildi.
+3. **Yalnız renk değil:** hata mesajının yanına bir ikon, indirim satırının başına "−%10" yazısı eklendi; renk körlüğü olan kullanıcı da ayırt edebiliyor.
+4. **Format:** rampa OKLCH'de kuruldu; basamaklar arası açıklık farkı eşit görünüyor.
+
+Kampüs indirimi bu yüzden ekranda hem yeşil hem yazılı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Önce nötr rampayı kur.** Arayüzün çoğu nötr; renk azlıkta çalışır.
 - **Tek bir vurgu rengi seç** ve yalnızca birincil eylemde kullan.
@@ -133,7 +152,8 @@ Bu sitenin renk çiftleri kontrast **hesaplanarak** doğrulanıyor: gövde metni
 - **Kontrastı hesapla.** Metin 4,5:1, arayüz öğesi 3:1. Dark mode için ayrıca yeniden hesapla.
 - **Rampayı OKLCH ile kurmayı düşün,** ama eski tarayıcı yedeğini ver.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -156,5 +176,11 @@ Normal metin 4,5:1, büyük metin 3:1 (≈24px ya da kalınsa ≈18,66px ve üst
 <SelfCheck question="OKLCH'in HSL'e göre avantajı nedir?">
 
 Algısal tekdüzelik. HSL'de aynı açıklık değerine sahip iki renk (sarı ve mavi gibi) gözle farklı parlaklıkta görünür; OKLCH'te eşit açıklık değeri eşit algılanan parlaklık üretir. Bu, rampa kurmayı ve kontrast korumayı öngörülebilir hâle getirir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir form alanının hatalı olduğunu yalnızca kenarlığını kırmızı yaparak göstermek neden yetmez?">
+
+Bilgi yalnız renkle taşınıyor; renk körlüğü olan ya da ekranı parlak ışıkta gören kullanıcı farkı göremez. Bir ikon ve hata metni de eklenmelidir.
 
 </SelfCheck>

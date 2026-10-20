@@ -1,0 +1,42 @@
+---
+title: "İzlenebilirlik matrisi"
+summary: "Her gereksinimi geldiği kaynağa, onu karşılayan story'ye ve onu doğrulayan teste bağlar; boş bir hücre, kanıtsız ya da sahipsiz bir gereksinimi gösterir."
+kind: "tablo"
+roles: ["business-analyst", "project-manager", "product-owner"]
+lessons: ["is-analizi/izlenebilirlik", "is-analizi/cozum-degerlendirme-ve-uat"]
+sources:
+  - label: "BABOK Guide — Ek A: Sözlük (IIBA)"
+    url: "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"
+  - label: "NASA SE Handbook — Appendix D: Requirements Verification Matrix"
+    url: "https://www.nasa.gov/reference/appendix-d-requirements-verification-matrix/"
+table:
+  columns: ["Kimlik", "Gereksinim", "Tür", "Kaynak", "Story", "Test", "Durum"]
+  example:
+    - ["İG-1", "Üç ayda iade talepleri ayda 310'dan 150'nin altına iner", "İş", "İhtiyaç", "—", "Yayından 3 ay sonra ölçüm", "Ölçülüyor"]
+    - ["PG-1", "Çalışan iptalden önce iade tutarını görür", "Paydaş", "İG-1; görüşme, gözlem", "S-41", "Dükkân iptali senaryoları (UAT-02, 03, 05, 06, 08)", "Geçti"]
+    - ["PG-2", "Müşteri iptalden önce iade tutarını görür", "Paydaş", "İG-1; destek talepleri", "S-47", "UAT-01, UAT-04, UAT-07", "Geçti"]
+    - ["FG-1", "İade tutarı karar tablosuna göre hesaplanır", "İşlevsel", "PG-1, PG-2", "S-42", "T-K1…T-K8; UAT-01…UAT-12", "Geçti"]
+    - ["FG-2", "İade ödeme kuruluşuna otomatik gönderilir", "İşlevsel", "İG-1", "S-43", "UAT-01…UAT-13", "Geçti"]
+    - ["FG-3", "Kupon gereken iptalde %20 kupon eklenir", "İşlevsel", "Karar tablosu", "S-44", "T-K5, T-K8; UAT-05, UAT-08", "Düzeltildi, geçti"]
+    - ["FG-4", "Dükkân iptalinde müşteriye sebebiyle bildirim gider", "İşlevsel", "İG-1; destek talepleri", "S-45", "UAT-02, UAT-03, UAT-05, UAT-06, UAT-08", "Geçti"]
+    - ["İOG-1", "İade kararı 5 saniye içinde müşterinin ekranında", "İşlevsel olmayan", "PG-2", "S-42", "P-1 (yük testi)", "Geçti"]
+    - ["GG-1", "Eski iade metinleri kaldırılır; destek eğitimi", "Geçiş", "Kök neden", "S-46", "Yayın kontrol listesi", "Bekliyor"]
+  blankRows: 12
+---
+
+## Ne zaman kullanılır?
+
+Gereksinimler bir sayfaya sığmayacak kadar çoğaldığında ve biri "bunu değiştirirsek ne etkilenir?" ya da "bunun testi var mı?" diye sorduğunda. Düzenlenmiş sektörlerde ve sözleşmeli işlerde çoğu zaman zorunludur.
+
+## Nasıl doldurulur?
+
+1. **Her gereksinime tekil bir kimlik ver.** Kimlik değişmez; gereksinim silinse bile kimlik yeniden kullanılmaz.
+2. **Kaynağı yaz:** bu gereksinim hangi üst gereksinimden ya da hangi ihtiyaçtan geliyor? Kaynağı olmayan gereksinim gerekli mi, sor.
+3. **İleriye bağla:** onu karşılayan story ya da tasarım, onu doğrulayan test.
+4. **Boş hücreleri oku.** Testi olmayan gereksinim doğrulanmamıştır; kaynağı olmayan gereksinim belki gereksizdir.
+5. **Değişiklik gelince matrisi kullan:** değişen satırdan ileri ve geri giderek etkilenen her şeyi bul.
+
+## Sık hatalar
+
+- **Matrisi yayından sonra doldurmak.** O zaman yalnız bir belgedir; değeri iş sürerken boşlukları göstermesidir.
+- **Çok ince bağlamak.** Her satırı her test adımına bağlamak bakımı imkânsız kılar. Story ve test senaryosu düzeyi çoğu iş için yeter.

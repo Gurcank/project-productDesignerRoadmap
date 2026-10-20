@@ -1,10 +1,11 @@
 ---
-summary: "Kullanıcı giriş yaptıktan sonra sonraki her istekte onu nasıl tanırız? Session'da bilgi sunucuda durur ve anında iptal edilebilir; token'da bilgi jetonun kendisindedir ve ölçeklenmesi kolaydır ama iptali zordur. 'Modern = JWT' bir yanılgıdır."
+summary: "Giriş yaptıktan sonra sunucu seni nasıl tanır? Session'da bilgi sunucuda durur ve anında iptal edilebilir; token'da bilgi jetondadır, ölçeklenmesi kolay ama iptali zordur. 'Modern = JWT' bir yanılgıdır."
 outcomes:
   - "Session ile token tabanlı yaklaşım arasındaki temel takası (iptal edilebilirlik ↔ ölçeklenebilirlik) söyleyebilirsin."
   - "'Modern uygulamalar JWT kullanır, session eskidir' yanılgısını düzeltebilirsin."
   - "'Tüm cihazlardan çıkış yap' özelliğinin hangi yaklaşımda kolay olduğunu bilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "OWASP — Session Management Cheat Sheet"
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html"
@@ -12,11 +13,14 @@ sources:
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Giriş yaptın. Sonraki sayfada neden tekrar şifre sormuyor? Sunucu seni nasıl hatırlıyor? İki temel yaklaşım var.
 
@@ -49,13 +53,62 @@ Sunucunun, kullanıcı bilgilerini içeren **imzalı** bir belge verip artık ke
 
 **Yaygın bir yanılgı:** "modern uygulamalar JWT kullanır, session eskidir." Doğru değil. Session, tek bir web uygulaması için çoğu zaman **daha güvenli ve daha basittir;** token'ın avantajları dağıtık sistemlerde ortaya çıkar. Seçim bir takastır: iptal edilebilirlik mi, ölçeklenebilirlik mi?
 
-<Callout kind="tasarimci">
+<Tree
+  label="Kullanıcıyı hatırlamanın iki yolu"
+  caption="Giriş yapan kullanıcı iki yolla hatırlanır. Session'da bilgi sunucuda bir kayıtta durur; tarayıcı yalnız kaydın kimliğini taşır. Kayıt silinince erişim anında biter; tüm cihazlardan çıkış böyle yapılır. Token'da bilgi imzalı jetonun içindedir; sunucu kayıt tutmaz, birden çok servis jetonu doğrulayabilir; ama jeton süresi dolana kadar geçerli kalır."
+  root={{
+  title: "Kullanıcıyı hatırla",
+  tone: "accent",
+  children: [
+    {
+      title: "Session",
+      sub: "bilgi sunucuda",
+      children: [
+        {
+          title: "Anında iptal"
+        },
+        {
+          title: "Sunucu kayıt tutar"
+        }
+      ]
+    },
+    {
+      title: "Token",
+      sub: "bilgi jetonda",
+      children: [
+        {
+          title: "Kolay ölçeklenir"
+        },
+        {
+          title: "İptali zor",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
+<Case>
+
+Demlik iki yaklaşımı iki yerde kullanıyor:
+
+1. **Panel ve web sitesi: session.** Oturum kayıtları Redis'te. Dükkân sahibi Panel'de "tüm cihazlardan çıkış yap" diyebiliyor; işten ayrılan bir çalışanın erişimi anında bitiyor.
+2. **Mobil uygulama: token.** Kısa ömürlü bir erişim jetonu ve uzun ömürlü bir yenileme jetonu. Mobil uygulama çerezle değil, jetonla çalışıyor.
+3. **İptal:** müşteri telefonunu kaybettiğini bildirince yenileme jetonu sunucuda iptal ediliyor; erişim jetonu en geç birkaç dakika içinde geçersiz oluyor.
+4. **Karar kaydı:** "Panel'i de JWT'ye taşıyalım" önerisi bir kez geldi. Anında iptal ihtiyacı yüzünden reddedildi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **"Tüm cihazlardan çıkış yap" gibi özellikleri baştan iste;** yaklaşımı seçerken belirleyicidir.
 - **Mobil uygulama da olacaksa** jeton tabanlı yaklaşımın gerekebileceğini ekibe sor.
 - **"JWT mi session mı?" tartışmasında takası sor:** iptal mi ölçek mi?
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -76,5 +129,11 @@ Sunucunun, kullanıcı bilgilerini içeren **imzalı** bir belge verip artık ke
 <SelfCheck question="'Modern uygulamalar JWT kullanır, session eskidir' ifadesi doğru mu?">
 
 Hayır. Session, tek bir web uygulaması için çoğu zaman daha güvenli ve daha basittir. Token'ın avantajları dağıtık sistemlerde, mobil istemcilerde ve çok servisli mimarilerde ortaya çıkar; bu bir takastır, bir moda değil.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Tüm cihazlardan çıkış yap\" özelliği hangi yaklaşımda daha kolaydır, neden?"}>
+
+Session'da. Oturum bilgisi sunucuda durduğu için kayıtlar silinince erişim anında biter. Token'da jeton kendini kanıtladığı için süresi dolana kadar geçerli kalır; iptal ek bir mekanizma ister.
 
 </SelfCheck>

@@ -1,4 +1,4 @@
-# Proje kuralları — Product Designer Yol Haritası
+# Proje kuralları — SeeYourNextStep
 
 > Global `~/.claude/CLAUDE.md` geçerli. Bu dosya onu **ezmez, üzerine ekler**; çelişki varsa bu
 > dosya kazanır. Burada yalnız bu projeye özgü, koddan veya git geçmişinden okunamayan kurallar var.
@@ -12,10 +12,16 @@ yanlış iddia görürsen **düzeltme** — tur raporunda bildir. Bugüne kadar 
 
 **2. `src/content/` üretilmiştir, elle düzenlenmez.** `scripts/import-materials.ts` çıktısı. Bir
 konu sayfasını değiştirmek istiyorsan içe aktarıcıyı değiştir ve yeniden çalıştır. Elle düzenleme
-bir sonraki içe aktarmada sessizce kaybolur; `npm run import:check` bu ayrışmayı yakalar.
+bir sonraki içe aktarmada sessizce kaybolur; `npm run import:check` bu ayrışmayı yakalar. Site için
+yazılan adımlar `src/authored/topics/` altında durur (`origin: "new"`); içe aktarıcı oraya dokunmaz,
+`src/content/` içinde kendi üretmediği her dosyayı da hata sayar (ADR-019).
 
 **3. Slug'lar donmuştur.** İlerleme kayıtları `kategori/adim-slug` anahtarına bağlı. Slug değişirse
-kullanıcının o adımdaki ilerlemesi kaybolur. Slug değiştirmen gerekiyorsa **önce sor**.
+kullanıcının o adımdaki ilerlemesi kaybolur. Slug değiştirmen gerekiyorsa **önce sor**. Yayındaki her
+kimlik `src/data/frozen-topic-ids.json` içinde; biri kaybolursa `npm run validate` kırılır. Yeni adım
+yayına girerken `npm run validate -- --update-frozen` ile dondurulur — liste yalnız büyür. **Rol
+kimlikleri de donmuştur** (`src/data/role-ids.ts`): `pdr.role.v1` ve paylaşılan `?rol=` linkleri
+onlara bağlı. `pdr.*` saklama anahtarları yeni adla bile değişmez — tarihsel ad alanıdır.
 
 **4. Materyalde olmayan hiçbir bilgi kaynaksız yayınlanmaz.** Yeni içerik "materyal dışı" rozeti ve
 en az bir birincil kaynak linki taşır. Şablon SPEC §7'de.
@@ -54,8 +60,51 @@ bırakır ve arama anlamsız sonuç döndürür (Social → sona). Hash'siz her 
 **`tsconfig` yol eşlemesi `./` ile başlamalı** (`"~/*": ["./src/*"]`). `baseUrl` yokken `tsx`
 göreli olmayan yolu reddediyor.
 
+**Yazılmış terimler config yüklenirken okunur.** `src/authored/terms/*.json` değiştiyse dev
+sunucusunu yeniden başlat ve `build:fresh` çalıştır; terim eklentisi onları bir kez okur. Yeni bir
+content koleksiyonu eklediysen de dev sunucusu yeniden başlatılmalı.
+
+**Diyagram etiketi sığmazsa build kırılır** (`primitives/util.ts`). Dev'de belirti: ders sayfası
+açılır ama gövde boştur; sebep sunucu günlüğündedir ("Diyagram etiketi sığmıyor").
+
+**Betiğin oluşturduğu öğe kapsamlı CSS almaz.** Demo betiği `document.createElement` ile öğe
+üretiyorsa, o öğenin kuralı `<style>` içinde `.kok :global(.oge)` olarak yazılır. Yoksa ilk çizim
+doğru görünür, ilk etkileşimden sonra öğeler stilsiz kalır ve hata da vermez.
+
+**Terim ipucu yanlış anlama bağlanabilir.** Eklenti kelimeyi eşler, anlamı bilmez: İş Analizi'nde
+"doğrulama" (verification) Ürün Geliştirme'deki "Validation" terimine, "yalın" (sade) "Lean"e
+bağlanmıştı. Yeni dersten sonra `dist/<kategori>/*/index.html` içindeki `data-term` eşleşmelerini oku;
+yanlış olanı o dersin `skipTerms`'üne yaz ve `build:fresh` çalıştır.
+
+**Dev açıkken eklenen ders bazen görünmez.** Yeni bir `.mdx` dev sunucusu çalışırken eklenince sayfa
+bazen dersi değil adım metnini ("Ders anlatımı src/lessons/… dosyasındadır") gösterir; hata da vermez.
+Dev sunucusunu yeniden başlat. Kontrol: sayfada `<figure>` var mı.
+
+**Matrix2x2 noktası başlık alanına düşmesin.** Her çeyreğin üst kısmında başlık ve alt yazı durur; üst
+çeyreklerde y ≈ 0,8–1, alt çeyreklerde y ≈ 0,3–0,5 bu alana denk gelir ve nokta yazının üstüne biner.
+Noktaları üst çeyreklerde 0,55–0,75, alt çeyreklerde 0,05–0,25 arasına koy; 768'de ekranda bak.
+
+**Demoda ondalık alan `type="number"` olmaz.** İngilizce yerel ayarlı tarayıcıda "1,5" yazılınca
+virgül yutulur ve değer 15 olur; hata da vermez. `type="text" inputmode="decimal"` kullan, okurken
+virgülü noktaya çevir. Grafik ölçeğini (`y.max`) dörde tam bölünen bir sayı seç; yoksa eksen
+işaretleri 0 / 6 / 11 / 17 gibi düzensiz çıkar.
+
+**Uzun alıntıyı boş satırla böl.** Lint, yalnız `>` içeren satırlarla birleşen bir alıntının tamamını tek
+paragraf sayar; 120 kelimeyi geçince hata verir. Alıntıyı ikiye bölmek için araya boş bir satır koy.
+
+**Paragrafı sıra sayısıyla başlatma.** "7. haftada…" Markdown'da numaralı liste olur; yazıyla yaz.
+
 **Astro 7 markdown eklentileri.** `markdown.rehypePlugins` artık kabul edilmiyor; `processor:
 unified({...})` kullanılıyor. Nedeni ve ödünleşimi ADR-010'da.
+
+## Ders yazımı
+
+Bütün dersler (335/335) **ders standardı v2**'de; yeni ya da yeniden yazılan her ders de ona uyar
+([docs/icerik/ders-standardi.md](docs/icerik/ders-standardi.md)) ve frontmatter'da `standard: 2`
+taşır; `npm run lint:lessons` temiz olmadan ders bitmiş sayılmaz. Örnekler ortak vakadan gelir
+([docs/icerik/vaka.md](docs/icerik/vaka.md)); vakadaki sayı ve isimler değişmez, yeni bilgi oraya
+eklenir. Dersin temel/önerilen olduğu her rolün `<Lens>`'i yazılır. Bir kaynağı açıp ne dediğini
+okumadan alıntılama: 200 dönmesi yetmez, bazı sayfalar boş ya da yönlendirmeli gelir.
 
 ## Stil ve bileşen kuralları
 

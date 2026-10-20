@@ -4,7 +4,8 @@ outcomes:
   - "Kümenin neyi iyi, neyi yapamadığını söyleyebilirsin."
   - "'Tümünü seç'in üç farklı kapsamını ve maliyetini açıklayabilirsin."
   - "Filtre değişince seçime ne olacağını neden tasarlaman gerektiğini bilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "MDN — Set"
     url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set"
@@ -14,9 +15,12 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir tabloda üç satır seçtin. "Seçili mi?" kontrolü anında yapılıyor. Arkadaki yapı büyük ihtimalle bir **kümedir.** Küme, aynı öğeyi iki kez tutamayan bir topluluktur: sırası yok, tekrarı yok, tek cevapladığı soru **"bu öğe içinde var mı?"** Sözlüğün değer tutmayan hâli gibi düşün.
 
@@ -45,26 +49,63 @@ Sıra yoktur ("seçtiği sırayla göster" için tek başına yetmez); sayı tut
 
 Çoklu seçim tasarlarken kolayca atlanan soru: **"tümünü seç" hangi "tüm"?**
 
+<Tree
+  label="Tümünü seç: hangi tüm?"
+  caption="Tümünü seç onay kutusu üç farklı kapsam anlamına gelebilir. Ekranda görünen sayfa: ucuzdur, seçim tarayıcıda tutulur. Filtreye uyan bütün kayıtlar: seçim tarayıcıya taşınmaz, sunucuya filtre tarif edilir. Veritabanındaki her şey: en geniş kapsam, en riskli toplu işlem. Ayrıca filtre değişince seçimin korunup korunmayacağı kararlaştırılmalıdır."
+  root={{
+  title: "Tümünü seç",
+  tone: "accent",
+  children: [
+    {
+      title: "Görünen sayfa",
+      sub: "ucuz · tarayıcıda"
+    },
+    {
+      title: "Filtreye uyanlar",
+      sub: "sunucuya tarif"
+    },
+    {
+      title: "Her şey",
+      sub: "en riskli",
+      tone: "progress"
+    }
+  ]
+}}
+/>
+
 - Ekranda görünen sayfa mı?
 - Filtreye uyan tüm kayıtlar mı?
 - Veritabanındaki her şey mi?
 
 Üçü farklı davranıştır ve farklı maliyettedir. Görünen sayfayı seçmek ucuzdur; "filtreye uyan 40.000 kaydı seç" ise seçim kümesini tarayıcıya taşımak yerine sunucuya "şu filtreye uyan her şey" diye tarif etmeyi gerektirir. Tasarımda tek bir onay kutusu gibi görünür ama arkada iki ayrı mekanizmadır. Netleştirmezsen geliştirici birini seçer ve kullanıcı diğerini bekler. Aynı şekilde: **seçim filtre değişince ne olacak?** Korunacak mı, sıfırlanacak mı?
 
-<Callout kind="tasarimci">
+<Case>
+
+Pilotta kafeler sabah yoğunluğunda birden fazla siparişi aynı anda "hazır" işaretlemek istedi.
+
+1. **Kapsam:** "Tümünü seç" yalnız ekranda görünen bekleyen siparişleri seçiyor. Seçili sayısı düğmenin üstünde yazıyor: "6 sipariş seçildi".
+2. **Filtre:** filtre değişince seçim sıfırlanıyor. Korunsaydı çalışan, ekranda görmediği siparişleri hazır işaretleyebilirdi.
+3. **Küme:** seçim bir kümede tutuluyor; bir siparişe iki kez tıklamak onu iki kez eklemiyor, çıkarıyor.
+4. **Geri al:** toplu işaretlemeden sonra beş saniyelik "Geri al" bildirimi çıkıyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **"Tümünü seç"in kapsamını yaz** (sayfa mı, filtre sonucu mu) ve seçili sayısını göster ("40.812 kayıt seçildi"); yıkıcı toplu işlemlerde tek güvenlik ağıdır.
 - **Filtre değişince seçime ne olacağına karar ver** ve kullanıcıya söyle.
 - **Tekillik kuralını görünür kıl:** "Bu etiket zaten ekli" sessizce yok saymaktan iyidir.
 - **Sırası olan seçim istiyorsan ayrıca belirt;** küme sırasızdır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
 - Küme tekrarsız ve sırasızdır; tek sorusu "içinde var mı?" ve anlık cevap verir.
 - Çoklu seçim, filtre kesişimi ve yetki kontrolü kümeyle kurulur.
-- "Tümünü seç" üç farklı kapsam olabilir; kapsamı ve filtre değişince seçimin ne olacağını tasarımcı belirlemelidir.
+- "Tümünü seç" üç farklı kapsam olabilir; kapsamı ve filtre değişince seçimin ne olacağı tasarımda belirlenmelidir.
 
 </Summary>
 
@@ -73,5 +114,17 @@ Sıra yoktur ("seçtiği sırayla göster" için tek başına yetmez); sayı tut
 <SelfCheck question="'Tümünü seç' hangi üç farklı kapsamı kastedebilir?">
 
 Ekranda görünen sayfayı, filtreye uyan tüm kayıtları ya da veritabanındaki her şeyi. Üçü farklı davranış ve maliyettir; netleştirilmezse geliştirici birini seçer, kullanıcı diğerini bekler.
+
+</SelfCheck>
+
+<SelfCheck question="Bir tabloda filtre değiştiğinde seçimi korumanın riski nedir?">
+
+Kullanıcı ekranda görmediği kayıtları seçili bırakabilir ve toplu işlemle onları da etkileyebilir. Seçim korunacaksa kaç gizli seçili öğe olduğu açıkça gösterilmelidir.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Kırmızı ve M beden\" filtresi hangi küme işlemidir?"}>
+
+Kesişimdir: kırmızı ürünler kümesi ile M bedenli ürünler kümesinin ikisinde de olan ürünler. Kümeler arası kesişim, birleşim ve fark ucuz işlemlerdir.
 
 </SelfCheck>

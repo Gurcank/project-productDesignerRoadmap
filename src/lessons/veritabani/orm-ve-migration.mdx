@@ -3,8 +3,9 @@ summary: "ORM SQL yerine kodla veri erişimi sağlar (Prisma, Drizzle); migratio
 outcomes:
   - "ORM'in faydasını ve SQL bilmemeyi neden mazur göstermediğini söyleyebilirsin."
   - "Migration'ın ne olduğunu ve veri modeli kararlarının neden erken verilmesi gerektiğini açıklayabilirsin."
-  - "Seed verisinin tasarımcı için değerini ve iyi bir seed'in içeriğini bilirsin."
-minutes: 8
+  - "Seed verisinin tasarım için değerini ve iyi bir seed'in içeriğini bilirsin."
+minutes: 5
+standard: 2
 sources:
   - label: "Prisma — Dokümantasyon"
     url: "https://www.prisma.io/docs"
@@ -15,9 +16,12 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Şema nasıl değişir? Geliştirici veritabanıyla nasıl konuşur? Test verisi neden önemli? Üç sorunun üç cevabı: migration, ORM ve seed.
 
@@ -35,21 +39,58 @@ TypeScript ekosisteminin iki yaygın ORM'i: **Prisma** kendi şema dilini kullan
 
 ## Migration
 
+<StepFlow
+  label="Bir şema değişikliğinin yolu"
+  caption="Şema değişikliği bir migration dosyası olarak yazılır ve sürüm kontrolüne alınır. Önce geliştiricinin bilgisayarında uygulanır ve seed verisiyle denenir. Sonra staging'de, gerçeğe yakın veriyle çalıştırılır. En son canlıya alınır. Her ortamda aynı adım aynı biçimde uygulandığı için şemalar birbirinden ayrışmaz."
+  steps={[
+  {
+    title: "Migration yaz",
+    sub: "sürüm kontrolünde",
+    tone: "accent"
+  },
+  {
+    title: "Local",
+    sub: "seed verisiyle dene"
+  },
+  {
+    title: "Staging",
+    sub: "gerçeğe yakın veri"
+  },
+  {
+    title: "Canlı",
+    tone: "progress"
+  }
+]}
+/>
+
 **Migration (şema değişikliği)**, veritabanı şemasında yapılan değişikliğin sürüm kontrolüne alınmış ve tekrarlanabilir bir adım olarak kaydedilmesidir. Şema değişikliğinin her ortamda (local, staging, production) aynı biçimde uygulanmasını sağlar; geri alınabilir olmayı hedefler. "Yeni alanı migration ile ekleyelim; staging'de deneyip sonra production'a alalım."
 
-**Tasarımcı için önemli sonuç:** veri modelini değiştirmek ekran değiştirmekten pahalıdır. Yeni bir alan eklemek görece kolaydır; var olan bir alanın anlamını değiştirmek ya da bir ilişkiyi bire çoktan çoka çoğa çevirmek mevcut verinin de dönüştürülmesini gerektirir. Bu yüzden model kararları erken verilmelidir.
+**Tasarım için önemli sonuç:** veri modelini değiştirmek ekran değiştirmekten pahalıdır. Yeni bir alan eklemek görece kolaydır; var olan bir alanın anlamını değiştirmek ya da bir ilişkiyi bire çoktan çoka çoğa çevirmek mevcut verinin de dönüştürülmesini gerektirir. Bu yüzden model kararları erken verilmelidir.
 
 ## Seed ve schema drift
 
 **Seed**, geliştirme ortamını gerçekçi örnek veriyle doldurmaktır; **schema drift** ise bir ortamdaki şemanın diğerlerinden farklılaşmasıdır. Seed doğrudan senin işine yarar: **gerçekçi seed verisi olmadan tasarımın uç durumları test edilemez.** "Ahmet Yılmaz" ile test edilen bir kart, gerçek veride 60 karakterlik bir şirket unvanıyla karşılaşınca taşar. İyi seed verisi kasten uzun isimler, boş alanlar, aşırı büyük sayılar ve eksik ilişkiler içerir. "Seed verisine çok uzun isimler ve boş açıklamalar da koyalım; tasarımı gerçek koşulda görelim."
 
-<Callout kind="tasarimci">
+<Case>
+
+`hazirlik_dakika` sütunu Demlik'e bir migration ile eklendi:
+
+1. **Migration:** sütun nullable olarak eklendi; mevcut 140 dükkânın değeri boş başladı. Hiçbir eski kayıt dönüştürülmek zorunda kalmadı.
+2. **ORM:** sütun eklenince TypeScript tipleri güncellendi; alanı kullanan ekranlar derlemede görünür oldu.
+3. **Seed:** geliştirme veritabanına kasten zor kayıtlar eklendi: 60 karakterlik bir dükkân adı ("Moda Kahve Kavurma ve Pastane Evi Ltd."), logosu olmayan bir dükkân, hazırlık süresi 45 dakika olan bir dükkân.
+4. **Bulgu:** uzun ad dükkân kartını taşırıyordu; Selin iki satırda kesme kuralını o gün yazdı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Seed verisi için uç durum listesi hazırla:** uzun isim, boş alan, çok büyük sayı, yabancı karakter, eksik ilişki.
 - **Veri modeli değişikliklerini erken iste;** sonradan pahalıdır.
 - **ORM kullanan bir projede yavaş listeleri incelerken üretilen sorguya bakılmasını iste.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -68,8 +109,14 @@ Hayır. Karmaşık sorgularda ORM'in ürettiği SQL verimsiz olabilir ve N+1 ür
 
 </SelfCheck>
 
-<SelfCheck question="Seed verisi tasarımcıyı neden ilgilendirir? İyi seed verisi ne içerir?">
+<SelfCheck question="Seed verisi tasarımı neden ilgilendirir? İyi seed verisi ne içerir?">
 
 Gerçekçi seed verisi olmadan tasarımın uç durumları test edilemez. İyi seed verisi kasten uzun isimler, boş alanlar, aşırı büyük sayılar ve eksik ilişkiler içerir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir alanın anlamını değiştirmek neden yeni bir alan eklemekten pahalıdır?">
+
+Yeni alan mevcut veriye dokunmadan eklenebilir. Anlamı değişen bir alanda ise mevcut kayıtların hepsi yeni anlama dönüştürülmek zorundadır; bu hem riskli hem uzun bir iştir.
 
 </SelfCheck>

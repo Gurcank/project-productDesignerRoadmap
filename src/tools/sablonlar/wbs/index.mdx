@@ -1,0 +1,53 @@
+---
+title: "İş kırılım yapısı (WBS)"
+summary: "Projenin bütün işini teslimatlara ve iş paketlerine böler; her paketin sahibi ve tahmini yanında durur."
+kind: "tablo"
+roles: ["project-manager", "business-analyst", "product-owner"]
+lessons: ["proje-yonetimi/kapsam-ve-wbs", "proje-yonetimi/tahmin"]
+sources:
+  - label: "Watt, Project Management (2. baskı) — 9. Scope Planning"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-9-scope-planning-project-management/"
+table:
+  columns: ["Kod", "Teslimat / iş paketi", "Seviye", "Ne üretir (bitti tanımı)", "Sahip", "Süre (hafta)", "Maliyet (TL)"]
+  example:
+    - ["1", "Proje yönetimi", "Teslimat", "Haftalık rapor, risk kaydı, kapanış raporu", "Leyla", "14", "120.000"]
+    - ["2", "Kasa entegrasyonu", "Teslimat", "12 kafede siparişin kasaya düşmesi", "Tedarikçi", "", "900.000"]
+    - ["2.1", "Arayüz şartnamesi", "İş paketi", "Kasa sürümleri ve alanları yazılı, iki tarafça onaylı", "Ayşe", "2", ""]
+    - ["2.2", "Entegrasyon geliştirme", "İş paketi", "Test ortamında sipariş kasaya düşüyor", "Tedarikçi", "4", ""]
+    - ["2.3", "Entegrasyon testi", "İş paketi", "Test senaryolarının hepsi geçti", "Zeynep", "2", ""]
+    - ["3", "Uygulama değişiklikleri", "Teslimat", "Kampüs menüsü ve indirim yayında", "Deniz", "", "600.000"]
+    - ["3.1", "Öğrenci kartı indirimi", "İş paketi", "Kart doğrulanınca %10 indirim uygulanıyor", "Deniz", "4", ""]
+    - ["3.2", "Kampüs menüleri", "İş paketi", "12 kafenin menüsü uygulamada", "Ozan", "2", ""]
+    - ["4", "Kafe hazırlığı", "Teslimat", "12 kafe sipariş almaya hazır", "Leyla", "", "360.000"]
+    - ["4.1", "Kafe sözleşmeleri", "İş paketi", "12 sözleşme imzalı", "Hakan", "3", ""]
+    - ["4.2", "Kurulum ve eğitim", "İş paketi", "Tablet ve yazıcı kurulu, personel eğitimli", "Ozan", "3", ""]
+    - ["5", "Kampüs ve lansman", "Teslimat", "Dönem başında 12 kafe açık", "Leyla", "", "240.000"]
+    - ["5.1", "Öğrenci işleri protokolü", "İş paketi", "İmzalı protokol, kart doğrulama erişimi", "Hakan", "3", ""]
+    - ["5.2", "Pilot kafe", "İş paketi", "Bir kafede iki hafta sorunsuz sipariş", "Leyla", "2", ""]
+    - ["5.3", "12 kafeye açılış", "İş paketi", "12 kafede sipariş alınıyor", "Ozan", "3", ""]
+  blankRows: 12
+---
+
+## Ne zaman kullanılır?
+
+Tüzük imzalandıktan sonra, takvim ve bütçe çıkarılmadan önce. WBS olmadan yapılan bir takvim, hatırlanan işlerin takvimidir; unutulanlar sonra sürpriz olarak gelir.
+
+## Kim doldurur?
+
+Proje yöneticisi kolaylaştırır, ama tek başına yazmaz. İşi yapacak kişiler, yani ekip, analist ve tedarikçi, birlikte doldurur. İş paketinin sahibi tahmini de verir.
+
+## Nasıl doldurulur?
+
+1. **En üste projeyi yaz.** Sonra ana teslimatları sırala. Teslimatlar fiil değil, isimdir: "entegrasyon testi", "testi yap" değil.
+2. **Her teslimatı böl.** Tahmin edebildiğin büyüklüğe gelince dur. O seviye iş paketidir.
+3. **Yüzde yüz kuralını uygula.** Bir teslimatın altındaki paketler toplandığında teslimat tamamlanıyor mu? Eksik varsa ekle. Hiçbir teslimata ait olmayan iş varsa ya kapsam dışıdır ya da bir teslimat eksiktir.
+4. **"Ne üretir" sütununu doldur.** Bir paketin bittiğini nasıl anlayacağını burada yaz.
+5. **Süre ve maliyeti paket seviyesinde ver.** Teslimat satırı alt paketlerin toplamıdır.
+
+Proje yönetimi de bir iştir; kendi satırını unutma.
+
+## Sık hatalar
+
+- **Eylem listesi yazmak.** "Toplantı yap" bir iş paketi değildir.
+- **Takvimle karıştırmak.** WBS'de sıra yoktur; sıra, bağımlılıklarla takvimde kurulur.
+- **Çok ince bölmek.** Yarım günlük görevler ekibin kendi planlamasında yaşar.

@@ -1,0 +1,165 @@
+---
+summary: "İlkeli müzakere pozisyonlar yerine çıkarlara bakar, iki tarafa da yarayan seçenekler üretir ve nesnel ölçütlere dayanır. BATNA anlaşma olmazsa ne yapacağındır; her teklifin gerçek ölçüsüdür."
+outcomes:
+  - "Bir müzakerede pozisyonu çıkardan ayırabilirsin."
+  - "Müzakereye girmeden önce BATNA'nı belirleyebilirsin."
+  - "Bir anlaşmayı nesnel bir ölçüte dayandırabilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Wikipedia — Getting to Yes"
+    url: "https://en.wikipedia.org/wiki/Getting_to_Yes"
+  - label: "Program on Negotiation, Harvard Law School — What is a BATNA?"
+    url: "https://www.pon.harvard.edu/tag/batna/"
+additions:
+  - "İlkeli müzakerenin dört ilkesi, pozisyon pazarlığının sakıncaları, Sina örneği, BATNA'nın geliştirilmesi (Getting to Yes, Wikipedia aracılığıyla)"
+  - "BATNA'nın tanımı ve kullanımı (Program on Negotiation)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Altıncı haftanın perşembesi tedarikçi koordinatörü telefonda aynı cümleyi üçüncü kez kurdu: "Sözleşme sabit fiyatlı; ek kaynak koyamayız." Leyla da kendi cümlesini tekrarlıyordu: "Test ortamı pazartesi hazır olmalı." İki taraf da yerinden kıpırdamıyordu.
+
+İkisi de bir pozisyonu savunuyordu. Bu ders, pozisyonların arkasındaki çıkarlara inip iki tarafın da kabul edebileceği bir anlaşma bulmayı anlatır.
+
+## İlkeli müzakere
+
+Roger Fisher ve William Ury, 1981'de Harvard Negotiation Project'te *Getting to Yes* kitabını yazdı. Kitap önce **pozisyon pazarlığını** eleştirir: tarafların bir dizi pozisyon üzerinde çekişmesi akıllıca olmayan sonuçlar üretir, verimsizdir ve ilişkiyi tehlikeye atar.
+
+Yerine **ilkeli müzakere** önerir. Dört ilkesi vardır:
+
+1. **İnsanları problemden ayır.** Müzakereciler önce insandır; algı, duygu ve iletişim ayrıca ele alınır.
+2. **Pozisyonlara değil çıkarlara odaklan.** Pozisyon ne istediğindir; çıkar neden istediğin.
+3. **Karşılıklı kazanç için seçenekler üret.** Önce birlikte seçenek düşün, sonra seç.
+4. **Nesnel ölçütlerde ısrar et.** Piyasa değeri ya da emsal gibi iki tarafın iradesinden bağımsız bir ölçüt bul.
+
+Kitabın bilinen örneği 1978'deki Sina müzakeresidir. İsrail ve Mısır aynı toprak parçası için pozisyon tutuyordu. Ama İsrail'in çıkarı güvenlik, Mısır'ınki egemenlikti. Çıkarlara inmek 1979 barış antlaşmasının yolunu açtı.
+
+## BATNA
+
+**BATNA** (best alternative to a negotiated agreement), müzakere edilmiş bir anlaşmanın en iyi alternatifidir: anlaşma olmazsa izleyeceğin yol. *Getting to Yes* bunu, karşı taraf daha güçlü olduğunda başvurulacak araç olarak anlatır.
+
+Harvard'ın müzakere programına göre BATNA, önerilen her anlaşmanın gerçek ölçüsüdür. İki yönden korur: çok kötü koşulları kabul etmekten ve kabul etmek çıkarına olan koşulları reddetmekten. Güçlü bir BATNA müzakere gücünü de artırır.
+
+BATNA'yı geliştirmek için kitabın üç adımı vardır: anlaşma olmazsa yapabileceklerinin listesini çıkar, en umut vericileri gerçek seçeneklere çevir ve en iyisini seç.
+
+<Tree
+  label="Tedarikçi müzakeresi: pozisyonlardan çıkarlara"
+  caption="Müzakerenin haritası. Sorun: entegrasyon test ortamı 6. haftada hazır değil. Leyla'nın çıkarı dönem başında lansman, tedarikçinin çıkarı sabit fiyatlı sözleşmede zarar etmemek ve ilk kampüs referansını almak. Nesnel ölçüt sözleşmedeki 8. hafta kilometre taşıdır. Üretilen seçenekler: test ortamı 7. haftanın sonunda, iki hafta ek bir mühendis, lansman duyurusunda tedarikçinin anılması. Leyla'nın BATNA'sı kafelere ayrı tablet koymaktır; iki haftada kurulabilir ama kasa entegrasyonu olmaz."
+  root={{
+    title: "Test ortamı 6. haftada hazır değil",
+    sub: "sorun",
+    tone: "accent",
+    children: [
+      {
+        title: "Çıkarlar",
+        sub: "pozisyonların arkası",
+        children: [
+          { title: "Leyla: dönem başında lansman" },
+          { title: "Tedarikçi: zarar etmemek, referans" },
+        ],
+      },
+      { title: "Ölçüt: sözleşmede 8. hafta", sub: "nesnel" },
+      {
+        title: "Seçenekler",
+        sub: "karşılıklı kazanç",
+        tone: "progress",
+        children: [
+          { title: "Test ortamı 7. hafta sonunda" },
+          { title: "İki hafta ek mühendis" },
+          { title: "Lansman duyurusunda anılmak" },
+        ],
+      },
+      { title: "BATNA: kafelere ayrı tablet", sub: "2 haftada kurulur, entegrasyon yok" },
+    ],
+  }}
+/>
+
+**BATNA ≠ tehdit.** BATNA'yı bilmek, onu masaya vurmak demek değildir. Program, umutsuz derecede zayıfsa BATNA'nı paylaşmamayı önerir. Güçlü olsa bile açıklamayı geciktirmeyi ve karşı tarafın onu küçümsemesine şaşırmamayı öğütler.
+
+<Case>
+
+Leyla telefonu kapattı ve hazırlık yaptı:
+
+1. **BATNA:** iş gerekçesindeki ikinci seçenek, kafelere ayrı tablet. İki haftada kurulabilirdi, ama kasa entegrasyonu olmazdı. Kötüydü, ama vardı.
+2. **Çıkarlar:** kendi çıkarı dönem başında lansmandı, bir test ortamı değil. Tedarikçinin çıkarı sabit fiyatlı sözleşmede zarar etmemek ve ilk kampüs referansıydı.
+3. **Ölçüt:** sözleşmede "entegrasyon hazır, 8. hafta" yazıyordu. Tartışma kimin haklı olduğundan bu tarihe kaydı.
+4. **Seçenekler:** test ortamı 7. haftanın sonunda; tedarikçi iki hafta ek bir mühendis veriyor, fiyat değişmiyor; Demlik lansman duyurusunda tedarikçiyi anıyor.
+
+Tedarikçi üçüncü seçeneği ilk kez duyduğunda sesi değişti. Anlaşma bir saatte yapıldı. Leyla BATNA'sını hiç söylemedi.
+
+</Case>
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Müzakereden önce BATNA'nı yaz.** İş gerekçesindeki elenmiş seçenekler çoğu zaman BATNA'nın kaynağıdır.
+- **Sözleşmeyi nesnel ölçüt olarak kullan.** Kilometre taşı, "kim haklı" tartışmasını bitirir.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Paydaş "şunu istiyorum" dediğinde nedenini sor.** Çıkar bulunduğunda seçenekler çoğalır.
+- **Yol haritası pazarlığında ölçüt öner.** Gecikme maliyeti gibi bir ölçüt, en yüksek sesi değil en değerli işi öne alır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **"Hayır" demeden önce seçenek üret.** "Bu sprintte değil ama şu sprintte, şu küçük hâliyle" bir seçenektir.
+- **Kapsam pazarlığını kabul kriterine bağla.** Nesnel bir ölçüt duygusal tartışmayı söndürür.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Takımlar arası pazarlıkta çıkarları masaya koydur.** İki takımın pozisyonu çatışır, çıkarları çoğu zaman çatışmaz.
+- **İnsanı problemden ayır.** Tartışma kişiselleşiyorsa ara ver, problemi yeniden tanımla.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim pazarlığında çıkarı belgeleyin.** "Neden bu alan zorunlu?" sorusunun cevabı, alternatif çözümleri açar.
+- **Nesnel ölçüt olarak iş kuralını kullan.** Mevzuat ya da sözleşme, tercihten güçlüdür.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Pozisyon pazarlığı akıllıca olmayan sonuç üretir, verimsizdir ve ilişkiyi yıpratır.
+- İlkeli müzakere: insanları problemden ayır, çıkarlara odaklan, seçenek üret, nesnel ölçüt kullan.
+- BATNA anlaşma olmazsa izleyeceğin yoldur; her teklif onunla karşılaştırılır.
+- BATNA'yı müzakereden önce geliştir: seçenekleri listele, gerçekleştir, en iyisini seç.
+- BATNA'yı bilmek onu tehdit olarak kullanmak demek değildir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Pozisyon ile çıkar arasındaki fark nedir?">
+
+Pozisyon ne istediğindir: "Test ortamı pazartesi hazır olmalı." Çıkar neden istediğindir: "Dönem başında lansman yapmalıyız." Çıkar bilindiğinde başka seçenekler de görünür.
+
+</SelfCheck>
+
+<SelfCheck question="BATNA nedir ve ne işe yarar?">
+
+Anlaşma olmazsa izleyeceğin en iyi yoldur. Önerilen her anlaşmayı onunla karşılaştırırsın; seni çok kötü koşulları kabul etmekten ve iyi koşulları reddetmekten korur.
+
+</SelfCheck>
+
+<SelfCheck question="Nesnel ölçüt müzakereye ne katar?">
+
+Tartışmayı iki tarafın iradesinden bağımsız bir dayanağa taşır: piyasa değeri, emsal, sözleşme maddesi. Konu kimin haklı olduğu olmaktan çıkar.
+
+</SelfCheck>
+
+<SelfCheck question="Tedarikçi 'BATNA'nız ne?' diye doğrudan sordu ve BATNA'n zayıf. Ne dersin?">
+
+Dürüst ama açık etmeyen bir cevap: başka olasılıklar üzerinde çalıştığımızı, ama şu an masadaki anlaşmaya odaklanmak istediğimizi söylerim. Zayıf bir BATNA paylaşılmaz.
+
+</SelfCheck>

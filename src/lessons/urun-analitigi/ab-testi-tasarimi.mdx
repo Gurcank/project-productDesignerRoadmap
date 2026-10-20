@@ -1,0 +1,146 @@
+---
+summary: "A/B testi, kullanıcıları rastgele iki gruba ayırıp tek bir farkın etkisini ölçer. Test başlamadan önce metrik, en küçük saptanacak etki, güç, anlamlılık ve örneklem büyüklüğü yazılır."
+outcomes:
+  - "Bir A/B testinin hipotezini, birincil ve koruyucu metriklerini yazabilirsin."
+  - "Taban oran, MDE, güç ve anlamlılıktan örneklem büyüklüğünü hesaplayabilirsin."
+  - "Anlamlılık düzeyinin ve gücün ne söylediğini sade cümlelerle açıklayabilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Evan Miller — How Not To Run an A/B Test (2010)"
+    url: "https://www.evanmiller.org/how-not-to-run-an-ab-test.html"
+  - label: "Evan Miller — Sample Size Calculator"
+    url: "https://www.evanmiller.org/ab-testing/sample-size.html"
+additions:
+  - "Anlamlılık düzeyi, istatistiksel güç, en küçük saptanabilir etki ve örneklem büyüklüğünün önceden sabitlenmesi (Evan Miller)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import AbSampleSize from "~/components/demos/AbSampleSize.astro";
+
+Mert'in kullanılabilirlik testinde beş kişiden dördü ödeme ekranında hangi kartın seçili olduğunu söyleyemedi. Ayşe seçili kartı vurgulayan yeni bir ekran tasarladı. Elif'in sorusu basitti: "Bu, ödeme tamamlamayı gerçekten artırır mı?"
+
+Yeni ekranı herkese açıp bir önceki haftayla karşılaştırmak yetmezdi; o hafta yağmur da yağabilirdi, bir kampanya da başlayabilirdi. Bu ders, bir değişikliğin etkisini diğer her şeyden ayırarak ölçen deneyin nasıl tasarlandığını anlatır.
+
+## A/B testi neyi ölçer?
+
+Bir **A/B testinde** kullanıcılar rastgele iki gruba ayrılır. A grubu mevcut ürünü (kontrol), B grubu tek bir değişikliği görür. İki grup aynı dönemde, aynı koşullarda yaşadığı için aradaki fark değişikliğe bağlanabilir.
+
+Test başlamadan önce üç şey yazılır:
+
+1. **Hipotez:** "Seçili kartı vurgularsak ödeme tamamlama artar, çünkü kullanıcılar hangi kartın seçili olduğunu göremiyor."
+2. **Birincil metrik:** kararı verecek tek metrik. Demlik'te ödeme tamamlama oranı.
+3. **Koruyucu metrikler** (guardrail): bozulmaması gerekenler. Ortalama sepet, ödeme hatası, iptal.
+
+## Dört girdi
+
+Evan Miller'ın örneklem hesaplayıcısı dört girdi ister:
+
+| Girdi | Anlamı | Sık kullanılan değer |
+|---|---|---|
+| **Taban oran** | Kontrolün bugünkü oranı | Ölçülür |
+| **En küçük saptanabilir etki** (MDE) | Yakalamaya değer en küçük fark | Ürün kararıyla seçilir |
+| **İstatistiksel güç** (1−β) | Etki gerçekten varsa testin onu yakalama olasılığı | %80 |
+| **Anlamlılık düzeyi** (α) | Fark yokken fark bulma olasılığı | %5 |
+
+Miller "istatistiksel olarak anlamlı" ifadesini sade bir soruyla açıklar. A ile B arasında hiç fark yokken, bu kadar büyük bir farkı şans eseri ne sıklıkla görürdük? Bu olasılık düşükse (%5 ya da %1) sonuç anlamlı sayılır.
+
+**Anlamlı ≠ önemli.** Çok büyük bir örneklemde küçücük bir fark da anlamlı çıkar. Farkın ürün için değerli olup olmadığına MDE seçilirken karar verilir.
+
+## Örneklem büyüklüğü
+
+Dört girdiden örneklem büyüklüğü hesaplanır. Miller'ın hesaplayıcısındaki örnekte taban %20, MDE 5 puandır; varyasyon başına 1.030 kişi gerekir.
+
+İlişkinin özü şudur: saptanacak etkiyi yarıya indirirsen gereken örneklem yaklaşık dört katına çıkar. Miller'ın kaba kuralı da bunu söyler: örneklem, etkinin karesiyle ters orantılıdır. Küçük bir farkı yakalamak çok trafik ister.
+
+<AbSampleSize
+  caption="Hesaplayıcı Demlik'in ödeme testiyle açılır: taban oran yüzde 78, en küçük saptanacak etki 3 puan, güç yüzde 80, anlamlılık yüzde 5. Varyasyon başına 2.946, toplam 5.892 kişi gerekir. Ödeme adımına günde yaklaşık 2.300 kişi geldiği için bu sayı 3 günde dolar. Etkiyi 1,5 puana indirirsen örneklem yaklaşık dört katına çıkar."
+  start={{ baseline: 0.78, mde: 0.03, alpha: 0.05, power: 0.8, dailyTraffic: 2300 }}
+/>
+
+Miller'ın en önemli uyarısı bu sayının **önceden sabitlenmesidir**. "Anlamlı bir fark görene kadar çalıştırırız" denirse raporlanan anlamlılık anlamını yitirir. Bunun neden böyle olduğu [Deney tuzakları](/urun-analitigi/deney-tuzaklari/) dersinde.
+
+<Case>
+
+Elif, Ece ve Ayşe testi Araçlar'daki A/B planına yazdı:
+
+1. **Hipotez:** Mert'in bulgusundan geldi.
+2. **Metrikler:** birincil ödeme tamamlama; koruyucular ortalama sepet, ödeme hatası ve iptal.
+3. **Girdiler:** taban %78, MDE 3 puan, güç %80, α %5. Varyasyon başına yaklaşık 2.950 kişi.
+4. **Süre:** sayı 3 günde doluyordu, ama takımın kuralı iki tam haftaydı: sabah siparişleri hafta içi ve hafta sonu çok farklıydı.
+5. **Karar kuralı:** birincil metrik anlamlı artar ve koruyucular bozulmazsa yeni ekran herkese açılır.
+
+İki hafta sonunda kontrol %78,1, yeni ekran %80,9 oldu; fark anlamlıydı, koruyucular değişmedi.
+
+</Case>
+
+<Tool slug="ab-plani" />
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Karar kuralını testten önce yaz.** Sonuç geldikten sonra yazılan kural, istenen sonuca uyar.
+- **MDE'yi bir iş sorusu olarak seç.** "Hangi farkı görmezsek bu işe değmez?"
+- **Trafik yetmiyorsa A/B testi yapma.** Kullanıcı testi ya da aşamalı yayın daha dürüst olabilir.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Tek bir farkı test et.** Üç şeyi birden değiştirirsen hangisinin etkili olduğunu bilemezsin.
+- **Hipotezi bir gözleme dayandır.** "Kullanıcılar seçili kartı göremiyor" bir gözlemdir; "yeşil daha iyi" değildir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Deneyi backlog'da bir iş olarak tut.** Bayrak, izleme, analiz ve temizlik birer iştir.
+- **Testin bitiş tarihini sprint planına koy.** Erken kapatma baskısı çoğu zaman takvimden gelir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Nitel bulguyu hipoteze çevir.** Mert'in testi "neden"i, A/B testi "ne kadar"ı söyler.
+- **Testten sonra konuş.** Anlamlı bir fark çıktıysa, nedenini birkaç kullanıcıyla doğrula.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- A/B testi kullanıcıları rastgele ikiye ayırır ve tek bir değişikliğin etkisini ölçer.
+- Testten önce hipotez, birincil metrik, koruyucu metrikler ve karar kuralı yazılır.
+- Örneklem dört girdiyle hesaplanır: taban oran, MDE, güç ve anlamlılık.
+- MDE'yi yarıya indirmek örneklemi yaklaşık dört katına çıkarır.
+- Örneklem önceden sabitlenir; "anlamlı görünce dur" kuralı sonucu geçersiz kılar.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Anlamlılık düzeyi %5 ne demektir?">
+
+A ile B arasında gerçekte hiç fark yokken, veride bu kadar büyük bir farkı şans eseri görme olasılığının %5 olduğu demektir. Fark yokken fark bulma riskidir.
+
+</SelfCheck>
+
+<SelfCheck question="İstatistiksel güç %80 ne demektir?">
+
+Seçtiğin büyüklükte bir etki gerçekten varsa, testin onu %80 olasılıkla yakalayacağı demektir. Geri kalan %20'de gerçek bir etki gözden kaçar.
+
+</SelfCheck>
+
+<SelfCheck question="Ekip 3 puan yerine 1,5 puanlık farkı yakalamak istiyor. Test süresi ne olur?">
+
+Gereken örneklem yaklaşık dört katına çıkar, çünkü örneklem etkinin karesiyle ters orantılıdır. Trafik aynıysa test de yaklaşık dört kat uzun sürer.
+
+</SelfCheck>
+
+<SelfCheck question="Yeni ekran ödeme tamamlamayı artırdı ama ortalama sepet düştü. Bunu nasıl yakalarsın?">
+
+Ortalama sepeti testten önce koruyucu metrik olarak yazarak. Karar kuralı birincil metriğin artmasını ve koruyucuların bozulmamasını birlikte ister.
+
+</SelfCheck>

@@ -1,0 +1,139 @@
+---
+summary: "Bir gelir tablosu yukarıdan aşağı okunur: satış hacmi, gelir, değişken maliyet, brüt kâr, faaliyet giderleri. Brüt marj ürünün kendi ekonomisini, net yanma ve pist şirketin ne kadar süre dayanabileceğini gösterir."
+outcomes:
+  - "Bir gelir tablosunu satır satır okuyup brüt kâr ile brüt marjı ayırt edebilirsin."
+  - "Brüt ve net yanma ile pisti hesaplayabilirsin."
+  - "Bir ürün kararının gelir tablosunda hangi satırı etkilediğini söyleyebilirsin."
+minutes: 6
+standard: 2
+skipTerms: ["gecikme"]
+sources:
+  - label: "a16z — 16 Startup Metrics (2015)"
+    url: "https://a16z.com/16-startup-metrics/"
+  - label: "Wikipedia — Gross margin"
+    url: "https://en.wikipedia.org/wiki/Gross_margin"
+additions:
+  - "Brüt kâr, GMV ve gelir, net ve brüt yanma (a16z)"
+  - "Brüt marjın tanımı ve dolaylı sabit giderlerin dışarıda kalması (Wikipedia)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Aylık yönetim toplantısında finans tek bir slayt açtı: "Pistimiz 14 ay." Ürün takımından kimse ne sorulacağını bilmiyordu. Mert sonradan Elif'e itiraf etti: "Pistin ne olduğunu bile bilmiyordum."
+
+Bir ürün ekibinin finans uzmanı olması gerekmez. Ama hangi kararın hangi satırı etkilediğini bilmeyen bir ekip, en önemli tartışmaların dışında kalır. Bu ders, bir gelir tablosunu okumak için gereken en az bilgiyi verir.
+
+## Gelir tablosu yukarıdan aşağı
+
+Bir gelir tablosu, satıştan başlayıp aşağı indikçe maliyetleri düşer:
+
+1. **Satış hacmi.** Bir pazar yerinde bu **GMV**'dir: platformdan geçen toplam satış. a16z'nin uyardığı gibi gelir değildir.
+2. **Gelir.** Şirketin aldığı pay: komisyon, abonelik.
+3. **Değişken maliyet.** a16z'nin tanımıyla ürünü üretme, teslim etme ve destekleme maliyetleri; her siparişle büyür.
+4. **Brüt kâr** = gelir − değişken maliyet.
+5. **Faaliyet giderleri.** Maaşlar, pazarlama, ofis. Satış sayısıyla doğrudan büyümez.
+6. **Faaliyet kârı ya da zararı** = brüt kâr − faaliyet giderleri.
+
+**Brüt marj**, Wikipedia'nın tanımıyla (gelir − satılan malın maliyeti) / gelir oranıdır. Ofis, kira ve yönetim gibi dolaylı sabit giderler dahil değildir. Brüt kâr bir tutar, brüt marj bir orandır.
+
+<Layers
+  label="Demlik'in aylık gelir tablosu"
+  caption="Bir ayın tablosu yukarıdan aşağı okunur. Platformdan 20,79 milyon TL'lik sipariş geçer; bu GMV'dir. Demlik'in geliri 1,457 milyon TL: komisyon ve abonelik. Değişken maliyetler, yani ödeme ücreti, altyapı ve destek, 0,554 milyon TL. Brüt kâr 0,903 milyon TL, brüt marj yüzde 62. Faaliyet giderleri 3 milyon TL. Sonuçta ayda yaklaşık 2,1 milyon TL zarar edilir; bu net yanmadır."
+  layers={[
+    { title: "GMV 20,79 milyon TL", sub: "platformdan geçen satış" },
+    { title: "Gelir 1,457 milyon TL", sub: "komisyon 1,247 + abonelik 0,210", tone: "accent" },
+    { title: "Brüt kâr 0,903 milyon TL", sub: "değişken maliyet 0,554 · marj %62", tone: "progress" },
+    { title: "Faaliyet zararı ≈ 2,1 milyon TL", sub: "faaliyet giderleri 3,0 milyon" },
+  ]}
+/>
+
+## Yanma ve pist
+
+Henüz kâr etmeyen bir şirkette en önemli soru, kasanın ne kadar dayanacağıdır. a16z iki yanmayı ayırır:
+
+- **Brüt yanma** (gross burn): yalnız giderler; ayda kasadan çıkan toplam.
+- **Net yanma** (net burn): giderlerden gelirler düşüldükten sonra kalan; kasanın gerçekten azalma hızı. Asıl ölçü budur.
+
+**Pist** (runway), kasadaki paranın net yanmaya bölünmesidir: bu hızla kaç ay dayanılabileceği.
+
+**Gelir artışı ≠ pist uzaması.** Gelir artarken değişken maliyet ve faaliyet giderleri daha hızlı artıyorsa, net yanma büyür ve pist kısalır.
+
+## Ürün kararları hangi satırı etkiler?
+
+| Karar | Etkilediği satır |
+|---|---|
+| Ödeme tamamlamayı artırmak | Gelir (daha çok sipariş, daha çok komisyon) |
+| Daha ucuz bir ödeme kuruluşu | Değişken maliyet → brüt marj |
+| Destek talebini azaltmak | Değişken maliyet |
+| Yeni bir ekip kurmak | Faaliyet giderleri → net yanma → pist |
+| Ücretli reklam bütçesi | Faaliyet giderleri (pazarlama) |
+
+<Case>
+
+Elif, Mert ve Ayşe'ye finansın slaytını satır satır anlattı:
+
+1. **GMV ve gelir:** ayda 20,79 milyon TL'lik kahve geçiyordu, ama Demlik'in geliri 1,457 milyondu.
+2. **Brüt marj %62:** ödeme kuruluşunun ücreti (GMV'nin %2'si, 0,416 milyon) en büyük değişken maliyetti.
+3. **Faaliyet giderleri 3,0 milyon:** maaşlar 2,45, pazarlama 0,40, ofis ve diğer 0,15.
+4. **Net yanma ve pist:** ayda yaklaşık 2,1 milyon zarar; kasada 30 milyon. Pist yaklaşık 14 ay.
+
+Mert'in bir sonraki sorusu yerindeydi: "Ödeme kuruluşu ücreti %2'den %1,8'e inse ne olur?" Değişken maliyet ayda yaklaşık 42.000 TL azalırdı. Elif cevabın küçük göründüğünü ama her ay tekrarladığını hatırlattı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Bir özelliğin hangi satırı etkilediğini söyle.** Gelir mi, değişken maliyet mi, faaliyet gideri mi?
+- **Pisti bil.** Kaç ay kaldığı, hangi işin şimdi ve hangisinin sonra yapılacağını değiştirir.
+- **GMV'yi gelir diye sunma.** Pazar yerinde gelir, GMV'nin küçük bir kesridir.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Proje bütçesinin hangi satıra yazıldığını bil.** Ekip maliyeti faaliyet gideridir ve doğrudan net yanmayı artırır.
+- **Gecikmeyi aylık yanmayla göster.** Bir ay gecikme, bir aylık ekip maliyeti demektir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Gelir tablosu yukarıdan aşağı okunur: satış hacmi, gelir, değişken maliyet, brüt kâr, faaliyet giderleri.
+- Pazar yerinde GMV gelir değildir; gelir platformun aldığı paydır.
+- Brüt kâr tutar, brüt marj orandır; dolaylı sabit giderler brüt marjın dışındadır.
+- Net yanma kasanın gerçekten azalma hızıdır; pist kasa / net yanmadır.
+- Her ürün kararı tabloda bir satırı etkiler.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Brüt kâr ile brüt marj arasındaki fark nedir?">
+
+Brüt kâr bir tutardır: gelir − değişken maliyet; Demlik'te 0,903 milyon TL. Brüt marj bir orandır: brüt kâr / gelir; Demlik'te %62.
+
+</SelfCheck>
+
+<SelfCheck question="Brüt yanma ile net yanma arasındaki fark nedir?">
+
+Brüt yanma yalnız giderlerdir. Net yanma giderlerden gelirler düşüldükten sonra kalandır ve kasanın gerçek azalma hızını gösterir.
+
+</SelfCheck>
+
+<SelfCheck question="Kasada 30 milyon TL var ve şirket iki kişilik yeni bir ekip kuracak; ekip ayda 0,3 milyon TL'ye mal oluyor. Pist ne olur?">
+
+Net yanma 2,1'den 2,4 milyon TL'ye çıkar. Pist 30 / 2,4 = 12,5 ay olur; yaklaşık iki ay kısalır.
+
+</SelfCheck>
+
+<SelfCheck question="Destek talebini azaltan bir özellik gelir tablosunda nereye yazılır?">
+
+Değişken maliyete. Destek maliyeti her siparişle büyüyen bir maliyettir; azalırsa brüt kâr ve brüt marj artar.
+
+</SelfCheck>

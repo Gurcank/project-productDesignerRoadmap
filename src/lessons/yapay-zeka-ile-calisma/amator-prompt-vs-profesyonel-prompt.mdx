@@ -1,10 +1,11 @@
 ---
-summary: "Bölümün merkezi: amatör ile profesyonel prompt arasındaki fark uzunluk değil, kaç kararın belirsiz bırakıldığıdır. Dört örnek (bölüm isteme, hata bildirme, kod değiştirme, karar sorma) ve hepsinde ortak olan beş şey."
+summary: "Amatör ile profesyonel prompt arasındaki fark uzunluk değil, kaç kararın belirsiz bırakıldığıdır. Dört örnekte ortak beş şey var: bağlam, kısıt, kapsam, kabul kriteri ve belirsizlik beyanı."
 outcomes:
   - "Amatör ve profesyonel prompt arasındaki farkın uzunluk olmadığını açıklayabilirsin."
   - "Dört örnekte ortak olan beş unsuru sayabilirsin."
   - "Kendi belirsiz isteklerini profesyonel yapıya çevirebilirsin."
 minutes: 8
+standard: 2
 sources:
   - label: "Anthropic Docs — Prompt engineering genel bakış"
     url: "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview"
@@ -15,9 +16,12 @@ sources:
 skipTerms: ["Validation","Scope","role / aria-label / aria-live","Avatar stack","Eyebrow","validation","doğrulama","scope","kapsam","canlı bölge","avatar stack","eyebrow"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bölümün merkezi bu ders. Her karşılaştırmada fark **ne kadar uzun yazıldığı değil, kaç kararın belirsiz bırakıldığı.**
 
@@ -38,7 +42,7 @@ Bölümün merkezi bu ders. Her karşılaştırmada fark **ne kadar uzun yazıld
 > **İçerik:** Eyebrow, tek satırlık headline, iki satırlık subheadline, tek birincil CTA ("Ücretsiz başla"), sağda ürün ekran görüntüsü için 16:9 alan. CTA'nın altında avatar stack + "340 ekip kullanıyor".
 >
 > **Stack:** Next.js App Router, TypeScript, Tailwind. Yeni bağımlılık ekleme.
->
+
 > **Kısıtlar:** Spacing yalnızca 4/8/16/24/32/48/64'ten. Renkler token'dan (`--color-*`), ham hex yok. Tek accent rengi, yalnızca CTA'da. Mobile-first; 768px altında tek sütun, görsel metnin altına.
 >
 > **Yasaklar:** Sebepsiz gradient başlık yok. Stok illüstrasyon yok. İkinci bir dolu buton yok.
@@ -100,13 +104,84 @@ Bu, Test ve Kalite bölümündeki hata raporunun aynısıdır: adımlar, beklene
 4. Kabul kriteri konmuş.
 5. **Belirsizlik payı beyan edilmesi istenmiş.**
 
-<Callout kind="tasarimci">
+<Layers
+  label="Profesyonel bir isteğin beş katmanı"
+  caption="Dört örneğin hepsinde aynı beş şey vardır. Bağlam işin neyin parçası olduğunu anlatır. Kısıt neye uyulacağını söyler. Kapsam neye dokunulmayacağını sınırlar. Kabul kriteri bitti tanımını verir. Son katman modelden emin olmadığı yerleri söylemesini ister."
+  layers={[
+  {
+    title: "Bağlam",
+    sub: "ne, kimin için",
+    tone: "accent"
+  },
+  {
+    title: "Kısıt",
+    sub: "neye uymalı"
+  },
+  {
+    title: "Kapsam",
+    sub: "neye dokunmasın"
+  },
+  {
+    title: "Kabul kriteri",
+    sub: "bitti ne demek"
+  },
+  {
+    title: "Belirsizlik",
+    sub: "emin olmadığını söyle",
+    tone: "progress"
+  }
+]}
+/>
+
+<Case>
+
+Ozan, Panel'deki yeni iade onayı yetkisi için dükkânlara bir duyuru yazdırdı:
+
+1. **Amatör:** "Yeni özellik için duyuru yaz." Gelen metin üç paragraftı, "devrim niteliğinde" diyordu ve özelliği yanlış anlatıyordu.
+2. **Profesyonel:** "Bağlam: 140 dükkân Panel'i kullanıyor. Yeni özellik: sahip bir çalışana yalnız iade onayı yetkisi verebilir. Kısıt: en çok üç cümle, 'siz' diliyle, abartı sıfatı yok. Kapsam: yalnız bu özellik. Kabul: ne değişti, kim etkileniyor, nereden açılır söyleniyor. Emin olmadığın yeri belirt."
+3. **Sonuç:** model "yetkinin Panel'in hangi ekranından verildiğini bilmiyorum" diye not düştü. Ozan ekranın adını ekledi; duyuru ikinci turda bitti.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Göndermeden önce say:** kaç karar belirsiz kaldı? Her biri modelin tahmin edeceği bir yer.
 - **Karar sorarken seçenek, takas ve belirsizlik iste:** tek bir "cevap" değil.
 - **"Kesin olmadığın yerleri belirt" cümlesini ekle:** uydurma savunmasının birinci katmanıdır.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Karar sorusunda takası iste:** her seçenek ne kazandırır, neyi feda eder, ne zaman yanlış olur?
+
+</Lens>
+<Lens role="product-owner">
+
+- **Story taslağı isterken kapsamı sınırla;** model komşu story'leri de yazmaya başlar.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Durum raporu isterken kitleyi ve uzunluğu ver:** sponsor için tek ekran, ekip için ayrıntı.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Retro özetini yapay zekâya yazdırırken belirsizlik beyanı iste;** yorum ile olguyu ayırsın.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim isterken kabul kriterini ve kapsam dışını aynı istekte ver.**
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Görüşme rehberi isterken araştırma sorusunu ve katılımcı profilini bağlam olarak ver.**
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -127,5 +202,11 @@ Hayır. Fark, kaç kararın belirsiz bırakıldığıdır. Kısa ama kısıtlı 
 <SelfCheck question="Dört örnekte ortak olan beş unsur nedir?">
 
 Bağlam verilmiş, kısıt yazılmış, kapsam sınırlanmış, kabul kriteri konmuş ve belirsizlik payı beyan edilmesi istenmiş.
+
+</SelfCheck>
+
+<SelfCheck question="Kısa ama kısıtlı bir prompt neden uzun ama belirsiz bir prompttan iyidir?">
+
+Fark uzunlukta değil, kaç kararın belirsiz bırakıldığındadır. Uzun ama belirsiz bir istek modele yine birçok kararı bırakır; kısa ama kısıtlı istek o kararları baştan verir.
 
 </SelfCheck>

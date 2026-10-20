@@ -1,10 +1,15 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import GalaxyMap from "~/components/GalaxyMap.astro";
+import RolePicker from "~/components/RolePicker.astro";
 import WaveButton from "~/components/ui/WaveButton.astro";
+import { ROLE_IDS, ROLE_LABEL } from "~/data/role-ids";
 import { getPublishedCategories, topicId, topicHref } from "~/lib/content";
+import { getRoutes } from "~/lib/routes";
 
 const published = await getPublishedCategories();
+const routes = await getRoutes();
+const roleStates = ROLE_IDS.join(" ");
 const publishedSlugs = new Set(published.map((entry) => entry.category.slug));
 const topicIdsByCategory = Object.fromEntries(
   published.map(({ category, topics }) => [category.slug, topics.map((topic) => topicId(topic))]),
@@ -23,7 +28,21 @@ const firstDetail = first?.topics[0] ? `${first.category.title} · ${first.topic
 
 <BaseLayout title="Yol haritası" section="roadmap">
   <div class="home">
-    <h1 class="sr-only">Product Designer yol haritası</h1>
+    <h1 class="sr-only">SeeYourNextStep: rolüne göre öğrenme haritası</h1>
+
+    {/* Shown once, to someone whose role was set for them (head script). */}
+    <div class="role-note glass" data-role-note>
+      <p>
+        Bu cihazda ilerlemen olduğu için yolun <strong>Product Designer</strong> olarak ayarlandı. Başka bir rolün
+        yolunu da seçebilirsin; ilerlemen korunur.
+      </p>
+      <div class="role-note__actions">
+        <button type="button" class="role-note__button" data-role-note-change>Rolü değiştir</button>
+        <button type="button" class="role-note__button" data-role-note-ok>Tamam</button>
+      </div>
+    </div>
+
+    <RolePicker />
 
     {/* Mission card: one gauge, two numbers, one action. */}
     <section class="mission glass" aria-label="İlerlemen">
@@ -45,13 +64,20 @@ const firstDetail = first?.topics[0] ? `${first.category.title} · ${first.topic
       </div>
 
       <div class="mission__stats">
-        <p class="mission__eyebrow">Yolculuğun</p>
+        <p class="mission__eyebrow">
+          <span data-for-role="none all">Yolculuğun</span>
+          {ROLE_IDS.map((id) => <span data-for-role={id}>{ROLE_LABEL[id].name} yolun</span>)}
+        </p>
         <p class="mission__count">
           <strong data-progress-done>0</strong>
-          <span>/ {totalTopics} ders</span>
+          <span>/ <span data-progress-total>{totalTopics}</span> ders</span>
         </p>
-        <p class="mission__meta">
+        <p class="mission__meta" data-for-role="none all">
           Tamamlanan gezegen <strong data-planets-done>0</strong> / {published.length}
+        </p>
+        {/* A role is measured by its core (temel + önerilen); optional steps are counted apart. */}
+        <p class="mission__meta mission__meta--wrap" data-for-role={roleStates}>
+          Temel ve önerilen dersler · isteğe bağlı <strong data-optional-done>0</strong> / <span data-optional-total>0</span>
         </p>
       </div>
 
@@ -69,35 +95,68 @@ const firstDetail = first?.topics[0] ? `${first.category.title} · ${first.topic
 
     <p class="home__hint">Gezegenlere dokun ve aç · basılı tutup sürükle</p>
 
-    <GalaxyMap publishedSlugs={publishedSlugs} topicIdsByCategory={topicIdsByCategory} />
+    <GalaxyMap publishedSlugs={publishedSlugs} topicIdsByCategory={topicIdsByCategory} routes={routes} />
   </div>
 </BaseLayout>
 
 <script>
   import { initProgress, $progress, summarise } from "~/lib/progress";
+  import { $role, confirmAutoRole, initRole } from "~/lib/role";
+  import { decodeRoute, type RolePayload } from "~/lib/role-payload";
+  import { nextStep, routeProgress, type NextKind } from "~/lib/next-step";
 
   initProgress();
+  initRole();
 
   const planets = Array.from(document.querySelectorAll<HTMLElement>("[data-topic-ids]")).map((node) =>
     (node.dataset.topicIds ?? "").split(" ").filter(Boolean),
   );
-  const allIds = planets.flat();
 
   const doneEl = document.querySelector<HTMLElement>("[data-progress-done]");
+  const totalEl = document.querySelector<HTMLElement>("[data-progress-total]");
   const percentEl = document.querySelector<HTMLElement>("[data-progress-percent]");
   const ring = document.querySelector<SVGCircleElement>("[data-progress-ring]");
   const planetsDone = document.querySelector<HTMLElement>("[data-planets-done]");
+  const optionalDone = document.querySelector<HTMLElement>("[data-optional-done]");
+  const optionalTotal = document.querySelector<HTMLElement>("[data-optional-total]");
   const continueLink = document.querySelector<HTMLAnchorElement>("[data-continue]");
   const label = continueLink?.querySelector<HTMLElement>("[data-wave-label]") ?? null;
   const detail = continueLink?.querySelector<HTMLElement>("[data-wave-detail]") ?? null;
 
   const titles: Record<string, string> = JSON.parse(document.getElementById("topic-titles")?.textContent ?? "{}");
+  const payload: RolePayload = JSON.parse(document.getElementById("role-routes")?.textContent ?? "null") ?? {
+    v: 1,
+    ids: [],
+    roles: {},
+  };
 
-  $progress.subscribe((progress) => {
-    const summary = summarise(allIds, progress);
-    if (doneEl) doneEl.textContent = String(summary.done);
-    if (percentEl) percentEl.textContent = String(summary.percent);
-    if (ring) ring.style.strokeDashoffset = String(100 - summary.percent);
+  const LABEL: Record<NextKind, string> = {
+    basla: "Yolculuğa başla",
+    devam: "Devam et",
+    sirada: "Sıradaki adımın",
+    istege: "Sıradaki adımın",
+    bitti: "Yolu tamamladın",
+  };
+
+  const openPicker = () => document.dispatchEvent(new CustomEvent("role-picker:open"));
+
+  const update = () => {
+    const progress = $progress.get();
+    const state = $role.get() ?? "all";
+    const seq = decodeRoute(payload, state);
+    const isDone = (id: string) => progress.topics[id]?.done === true;
+
+    // Keşif counts every lesson; a role counts its core and shows optional apart.
+    const counts = routeProgress(seq, isDone);
+    const done = state === "all" ? counts.coreDone + counts.optionalDone : counts.coreDone;
+    const total = state === "all" ? counts.coreTotal + counts.optionalTotal : counts.coreTotal;
+    const percent = total === 0 ? 0 : Math.round((done / total) * 100);
+    if (doneEl) doneEl.textContent = String(done);
+    if (totalEl) totalEl.textContent = String(total);
+    if (percentEl) percentEl.textContent = String(percent);
+    if (ring) ring.style.strokeDashoffset = String(100 - percent);
+    if (optionalDone) optionalDone.textContent = String(counts.optionalDone);
+    if (optionalTotal) optionalTotal.textContent = String(counts.optionalTotal);
     if (planetsDone) {
       planetsDone.textContent = String(
         planets.filter((ids) => {
@@ -107,14 +166,32 @@ const firstDetail = first?.topics[0] ? `${first.category.title} · ${first.topic
       );
     }
 
-    // First visit: "Yolculuğa başla" into the first lesson. After that: continue
-    // where you were, if that lesson still exists in this build.
-    const last = progress.last?.topic;
-    if (continueLink && label && detail && last && titles[last]) {
-      continueLink.href = `/${last}/`;
-      label.textContent = "Devam et";
-      detail.textContent = titles[last];
+    if (!continueLink || !label || !detail) return;
+    const next = nextStep(seq, isDone, progress.last?.topic);
+    continueLink.dataset.kind = next.kind;
+    label.textContent = LABEL[next.kind];
+    if (next.id && titles[next.id]) {
+      continueLink.href = `/${next.id}/`;
+      detail.textContent = next.kind === "istege" ? `İsteğe bağlı · ${titles[next.id]}` : titles[next.id]!;
+    } else {
+      continueLink.href = "#rol-secimi";
+      detail.textContent = "Başka bir rolün yoluna bakabilirsin";
     }
+  };
+
+  $progress.subscribe(update);
+  $role.subscribe(update);
+
+  continueLink?.addEventListener("click", (event) => {
+    if (continueLink.dataset.kind !== "bitti") return;
+    event.preventDefault();
+    openPicker();
+  });
+
+  document.querySelector("[data-role-note-ok]")?.addEventListener("click", confirmAutoRole);
+  document.querySelector("[data-role-note-change]")?.addEventListener("click", () => {
+    confirmAutoRole();
+    openPicker();
   });
 </script>
 
@@ -123,6 +200,59 @@ const firstDetail = first?.topics[0] ? `${first.category.title} · ${first.topic
     max-width: 76rem;
     margin-inline: auto;
     padding: var(--spacing-8) var(--spacing-4) var(--spacing-16);
+  }
+
+  .home > :global(.role-picker),
+  .role-note {
+    margin-block-end: var(--spacing-4);
+  }
+
+  /* ------------------------------------------------------------ role note */
+  .role-note {
+    display: none;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-3) var(--spacing-4);
+    padding: var(--spacing-4);
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-lg);
+  }
+
+  :global(html[data-role-auto][data-js]) .role-note {
+    display: flex;
+  }
+
+  .role-note p {
+    flex: 1 1 20rem;
+    margin: 0;
+    color: var(--c-text-secondary);
+  }
+
+  .role-note strong {
+    color: var(--c-text);
+  }
+
+  .role-note__actions {
+    display: flex;
+    gap: var(--spacing-2);
+  }
+
+  .role-note__button {
+    min-block-size: 44px;
+    padding-inline: var(--spacing-4);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-full);
+    background-color: transparent;
+    color: var(--c-text);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .role-note__button:hover {
+    border-color: var(--c-action);
+    color: var(--c-action-hover);
   }
 
   /* --------------------------------------------------------------- mission */
@@ -221,6 +351,11 @@ const firstDetail = first?.topics[0] ? `${first.category.title} · ${first.topic
     white-space: nowrap;
     font-size: var(--text-sm);
     color: var(--c-text-muted);
+  }
+
+  /* The role line is longer than "Tamamlanan gezegen x / y"; let it wrap on a phone. */
+  .mission__meta--wrap {
+    white-space: normal;
   }
 
   .mission__meta strong {

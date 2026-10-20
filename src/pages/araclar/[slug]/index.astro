@@ -1,0 +1,320 @@
+---
+import { render } from "astro:content";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { ROLE_LABEL, type RoleId } from "~/data/role-ids";
+import { getPublishedCategories, topicId } from "~/lib/content";
+import { getTemplates, type TemplateInfo } from "~/lib/templates";
+
+export async function getStaticPaths() {
+  return (await getTemplates()).map((template) => ({ params: { slug: template.slug }, props: { template } }));
+}
+
+const { template } = Astro.props as { template: TemplateInfo };
+const { entry, slug, example, blankText, files } = template;
+const data = entry.data;
+const { Content } = await render(entry);
+const Example = example ? (await render(example)).Content : null;
+
+const titles = new Map(
+  (await getPublishedCategories()).flatMap(({ category, topics }) =>
+    topics.map((topic) => [topicId(topic), `${category.title} · ${topic.data.title}`] as const),
+  ),
+);
+const lessons = data.lessons.map((id) => {
+  const title = titles.get(id);
+  if (!title) throw new Error(`src/tools/sablonlar/${slug}: "${id}" diye bir ders yok`);
+  return { id, title };
+});
+const roles = data.roles.map((role) => {
+  if (!(role in ROLE_LABEL) || role === "all") throw new Error(`src/tools/sablonlar/${slug}: bilinmeyen rol "${role}"`);
+  return { id: role, name: ROLE_LABEL[role as RoleId].name };
+});
+---
+
+<BaseLayout title={data.title} description={data.summary} section="araclar">
+  <article class="tool" data-pagefind-body data-pagefind-filter="tur:Şablon" data-pagefind-meta="kategori:Araçlar">
+    {roles.map((role) => <span hidden data-pagefind-filter={`rol:${role.name}`}></span>)}
+    <p class="tool__back"><a href="/araclar/">Araçlar</a></p>
+    <header>
+      <p class="tool__kind">{data.kind === "tablo" ? "Tablo şablonu" : "Belge şablonu"}</p>
+      <h1>{data.title}</h1>
+      <p class="tool__summary">{data.summary}</p>
+      <p class="tool__roles">
+        Çoğunlukla kullanan:
+        {roles.map((role, i) => (
+          <>
+            {i > 0 && ", "}
+            <a href={`/roller/${role.id}/`}>{role.name}</a>
+          </>
+        ))}
+      </p>
+    </header>
+
+    <section class="tool__files" aria-labelledby="indir" data-pagefind-ignore>
+      <h2 id="indir">İndir</h2>
+      <ul>
+        {
+          files.map((file) => (
+            <li>
+              <a href={`/araclar/${slug}/${file.name}`} download={file.name}>
+                {file.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <details class="tool__blank">
+        <summary>Boş şablonu metin olarak gör</summary>
+        <div class="tool__copy">
+          <button type="button" class="tool__copy-button" data-copy-template>Kopyala</button>
+          <span class="tool__copy-status" role="status" data-copy-status></span>
+        </div>
+        <pre data-template-text>{blankText}</pre>
+      </details>
+    </section>
+
+    <div class="prose tool__body">
+      <Content />
+    </div>
+
+    <section class="tool__example" aria-labelledby="ornek">
+      <h2 id="ornek">Doldurulmuş örnek</h2>
+      <p class="tool__hint">
+        Ortak vakamızdan: kahve ön sipariş uygulaması <strong>Demlik</strong> (kurgusal).
+      </p>
+      {
+        data.kind === "tablo" && data.table ? (
+          <div class="table-scroll" tabindex="0" role="region" aria-label={`${data.title} örneği`}>
+            <table class:list={{ "tool__wide": data.table.columns.length > 6 }}>
+              <thead>
+                <tr>
+                  {data.table.columns.map((column) => (
+                    <th scope="col">{column}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {data.table.example.map((row) => (
+                  <tr>
+                    {row.map((cell, i) => (i === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          Example && (
+            <div class="prose tool__document">
+              <Example />
+            </div>
+          )
+        )
+      }
+    </section>
+
+    {
+      lessons.length > 0 && (
+        <section class="tool__lessons" aria-labelledby="dersler">
+          <h2 id="dersler">Bu şablonu anlatan dersler</h2>
+          <ul>
+            {lessons.map((lesson) => (
+              <li>
+                <a href={`/${lesson.id}/`}>{lesson.title}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <aside class="tool__sources" aria-labelledby="kaynaklar">
+      <h2 id="kaynaklar">Kaynaklar</h2>
+      <ul>
+        {
+          data.sources.map((source) => (
+            <li>
+              <a href={source.url} rel="noreferrer">
+                {source.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </aside>
+  </article>
+</BaseLayout>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>("[data-copy-template]");
+  const text = document.querySelector<HTMLElement>("[data-template-text]");
+  const status = document.querySelector<HTMLElement>("[data-copy-status]");
+  button?.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(text?.textContent ?? "");
+      if (status) status.textContent = "Kopyalandı.";
+    } catch {
+      // Clipboard can be refused; the text is selectable right below.
+      if (status) status.textContent = "Kopyalanamadı — metni seçip kopyala.";
+    }
+  });
+</script>
+
+<style>
+  .tool {
+    max-width: 52rem;
+    margin-inline: auto;
+    padding: var(--spacing-8) var(--spacing-4) var(--spacing-24);
+  }
+
+  .tool__back a {
+    display: inline-flex;
+    gap: var(--spacing-1);
+    min-height: 24px;
+    align-items: center;
+    color: var(--c-action);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .tool__back a::before {
+    content: "←";
+  }
+
+  .tool__kind {
+    margin-block-start: var(--spacing-6);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-action);
+  }
+
+  .tool h1 {
+    margin-block-start: var(--spacing-2);
+    font-size: var(--text-4xl);
+    letter-spacing: -0.03em;
+  }
+
+  .tool__summary {
+    margin-block-start: var(--spacing-3);
+    font-size: var(--text-lg);
+    color: var(--c-text-secondary);
+  }
+
+  .tool__roles {
+    margin-block-start: var(--spacing-3);
+    font-size: var(--text-sm);
+    color: var(--c-text-muted);
+  }
+
+  .tool__roles a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .tool__files,
+  .tool__example,
+  .tool__lessons,
+  .tool__sources {
+    margin-block-start: var(--spacing-12);
+  }
+
+  .tool h2 {
+    font-size: var(--text-xl);
+  }
+
+  .tool__files ul,
+  .tool__lessons ul,
+  .tool__sources ul {
+    display: grid;
+    gap: var(--spacing-2);
+    margin-block-start: var(--spacing-3);
+    padding-inline-start: var(--spacing-6);
+    list-style: disc;
+  }
+
+  .tool__files a {
+    display: inline-flex;
+    min-height: 24px;
+    align-items: center;
+    font-weight: 600;
+  }
+
+  .tool__blank {
+    margin-block-start: var(--spacing-4);
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-lg);
+  }
+
+  .tool__blank summary {
+    display: flex;
+    align-items: center;
+    min-block-size: 44px;
+    padding-inline: var(--spacing-4);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .tool__copy {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: 0 var(--spacing-4);
+  }
+
+  .tool__copy-button {
+    min-block-size: 44px;
+    padding-inline: var(--spacing-4);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-full);
+    background: transparent;
+    color: var(--c-text);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .tool__copy-status {
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .tool__blank pre {
+    margin: var(--spacing-3) var(--spacing-4) var(--spacing-4);
+    padding: var(--spacing-4);
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-sunken);
+    color: var(--c-text-secondary);
+    font-size: var(--text-sm);
+    white-space: pre;
+  }
+
+  .tool__body {
+    margin-block-start: var(--spacing-12);
+  }
+
+  .tool__hint {
+    margin-block: var(--spacing-2) var(--spacing-4);
+    color: var(--c-text-secondary);
+  }
+
+  /* Many columns: keep each one readable and let the table scroll sideways,
+     rather than wrapping a sentence one word per line. */
+  .tool__wide {
+    min-inline-size: 64rem;
+  }
+
+  .tool__document {
+    padding: var(--spacing-6);
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-lg);
+    background-color: var(--c-surface-reading);
+  }
+
+  .tool__sources ul {
+    font-size: var(--text-sm);
+  }
+</style>

@@ -1,10 +1,11 @@
 ---
-summary: "GitHub'da iş takibi: issue, label, milestone, şablonlar ve proje panosu. Issue ve PR şablonları doğrudan senin işine yarar: Definition of Done'ı mekanikleştirirler."
+summary: "GitHub'da iş takibi: issue, label, milestone, şablonlar ve proje panosu. Issue ve PR şablonları Definition of Done'ı mekanikleştirir."
 outcomes:
   - "Issue, label, milestone ve assignee'nin ne olduğunu söyleyebilirsin."
-  - "PR şablonunun tasarımcı için bir kalite aracı olduğunu açıklayabilirsin."
+  - "PR şablonunun bir kalite aracı olduğunu açıklayabilirsin."
   - "Project board'un Kanban ile ilişkisini bilirsin."
-minutes: 5
+minutes: 3
+standard: 2
 sources:
   - label: "GitHub Docs — Issue'lar hakkında"
     url: "https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues"
@@ -15,9 +16,12 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Küçük bir ekipte iş takibi için ayrı bir araca gerek var mı? GitHub'ın kendi iş takibi çoğu zaman yeter: iş kaydı, tartışma ve kod aynı yerde durur.
 
@@ -27,19 +31,77 @@ Küçük bir ekipte iş takibi için ayrı bir araca gerek var mı? GitHub'ın k
 
 ## Issue ve PR şablonları
 
-**Issue template** ve **pull request template**, yeni bir issue ya da PR açıldığında otomatik gelen, doldurulması beklenen alanlardır. **Doğrudan senin işine yarayan bir araç:** bir hata raporunun hangi bilgileri içermesi gerektiğini şablona yazarsan eksik raporlar azalır. Aynı şekilde bir PR şablonuna "tasarım kontrol edildi mi?", "responsive test edildi mi?", "erişilebilirlik kontrolü yapıldı mı?" maddelerini koymak **Definition of Done'ı mekanikleştirir.** "PR şablonuna erişilebilirlik kontrol listesi ekleyelim; sona kalmasın."
+**Issue template** ve **pull request template**, yeni bir issue ya da PR açıldığında otomatik gelen, doldurulması beklenen alanlardır. **Kod yazmayanların da doğrudan kullandığı bir araç:** bir hata raporunun hangi bilgileri içermesi gerektiğini şablona yazarsan eksik raporlar azalır. Aynı şekilde bir PR şablonuna "tasarım kontrol edildi mi?", "responsive test edildi mi?", "erişilebilirlik kontrolü yapıldı mı?" maddelerini koymak **Definition of Done'ı mekanikleştirir.** "PR şablonuna erişilebilirlik kontrol listesi ekleyelim; sona kalmasın."
 
 ## Project board
 
+<StepFlow
+  label="Panel takımının panosu"
+  caption="Panel takımının panosu beş sütundan oluşur. Dükkânlardan gelen istek ve hatalar Gelen sütununa düşer. Analiz sütununda en çok iki, Geliştirme sütununda en çok üç, Test sütununda en çok iki iş olabilir. Biten iş Yayında sütununa geçer. Her kart bir issue'dur ve bağlı pull request kartın üstünde görünür."
+  steps={[
+  {
+    title: "Gelen",
+    tone: "accent"
+  },
+  {
+    title: "Analiz",
+    sub: "WIP 2"
+  },
+  {
+    title: "Geliştirme",
+    sub: "WIP 3"
+  },
+  {
+    title: "Test",
+    sub: "WIP 2"
+  },
+  {
+    title: "Yayında",
+    tone: "progress"
+  }
+]}
+/>
+
 **Project board (proje panosu)**, issue ve PR'ların sütunlar hâlinde takip edildiği panodur; Kanban panosunun GitHub'daki hâli. Avantajı, kod ile iş takibinin aynı yerde olması. "Jira yerine GitHub Projects kullanalım; iki araç arasında gidip gelmeyelim."
 
-<Callout kind="tasarimci">
+<Case>
+
+Panel takımı işini GitHub'ın kendi panosunda takip ediyor:
+
+1. **Pano:** Gelen → Analiz → Geliştirme → Test → Yayında; sütunlarda WIP sınırları yazılı.
+2. **Hata şablonu:** dükkânlardan gelen hata kayıtları için zorunlu alanlar: dükkân, cihaz, saat, ne bekleniyordu, ne oldu, ekran görüntüsü. Eksik raporlar belirgin azaldı.
+3. **PR şablonu:** "Tasarım karşılaştırıldı mı?", "Tablette denendi mi?", "Klavye turu yapıldı mı?". Ozan bir PR'ı onaylamadan önce bu kutulara bakıyor.
+4. **Etiketler:** `dukkan-istegi`, `hata`, `erisilebilirlik`, `kampus`. Leyla kampüs etiketiyle projenin açık işlerini tek görünümde izliyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarım eksikleri için bir issue şablonu tasarla:** ekran görüntüsü, beklenen davranış, cihaz, bağlantı.
 - **PR şablonuna tasarım kontrol listesi ekle:** durumlar, responsive, erişilebilirlik, token kullanımı.
 - **Issue etiketlerini (design, a11y, copy) ekiple kararlaştır.**
 
-</Callout>
+</Lens>
+<Lens role="product-owner">
+
+- **Definition of Done'ı PR şablonuna çevir.** Kontrol listesi her PR'da kendiliğinden gelsin.
+- **Hata raporu şablonunu kabul sürecinin parçası yap.** Eksik rapor, eksik çözüm demektir.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Proje işlerini etiketle tek görünümde izle.** Kod ve iş takibi aynı yerdeyse durum raporu kolaylaşır.
+- **Kilometre taşlarını milestone olarak kur.**
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Panodaki WIP sınırlarını görünür tut.** Sütunda yazılı sınır, konuşmayı başlatır.
+- **İş takibi araç sayısını azalt.** İki araç arasında gidip gelmek bilgi kaybettirir.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -51,8 +113,20 @@ Küçük bir ekipte iş takibi için ayrı bir araca gerek var mı? GitHub'ın k
 
 ## Kendini yokla
 
-<SelfCheck question="PR şablonu tasarımcı için nasıl bir araç olabilir?">
+<SelfCheck question="PR şablonu nasıl bir kalite aracı olabilir?">
 
 Definition of Done'ı mekanikleştirmenin aracıdır: şablona "tasarım kontrol edildi mi?", "responsive test edildi mi?", "erişilebilirlik kontrolü yapıldı mı?" maddelerini koyarsan bu kontroller insan hafızasına değil sürece bağlanır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir hata raporu şablonu hangi alanları içermelidir?">
+
+Nerede ve hangi cihazda olduğu, ne zaman olduğu, ne beklendiği, ne olduğu ve bir ekran görüntüsü ya da kaydı. Zorunlu alanlar eksik raporları azaltır.
+
+</SelfCheck>
+
+<SelfCheck question="Issue ile milestone arasındaki fark nedir?">
+
+Issue tek bir iş, hata ya da fikrin kaydıdır. Milestone birden çok issue'yu ortak bir hedef ya da tarih altında gruplar; örneğin bir sürüm ya da bir kilometre taşı.
 
 </SelfCheck>

@@ -6,6 +6,7 @@ outcomes:
   - "Tasarım kalite kontrolünü neden staging'de yapacağını ve hız ölçümünü neden production'da yapacağını söyleyebilirsin."
   - "Staging ile preview'un farkını bilirsin."
 minutes: 7
+standard: 2
 sources:
   - label: "Vercel — Ortamlar (Environments)"
     url: "https://vercel.com/docs/deployments/environments"
@@ -14,10 +15,12 @@ sources:
 flags: []
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Staging'e attım, bakabilir misin?" cümlesi, bir tasarımcının duyacağı en sık cümlelerden biri olacak. Bu cümleyi duyduğunda ne yapman gerektiğini, nereye bakacağını ve neyi kontrol edeceğini bilmen gerekiyor.
 
@@ -49,7 +52,7 @@ Bu yüzden canlıdan **yavaştır**. Önemli sonuç: **dev ortamındaki hız öl
 
 **Staging environment** (prova ortamı), canlının **birebir kopyası olan ama gerçek kullanıcıya açık olmayan** ortamdır. Son kontrolün yapıldığı yerdir. Bir tasarım incelemesi ya da müşteri onayı burada alınır; hata bulunursa gerçek kullanıcı etkilenmemiş olur.
 
-**Tasarımcı olarak asıl çalıştığın ortam budur.** Figma'daki tasarım ile gerçek ekranı karşılaştırdığın yer staging'dir: "Staging'de boşluklar Figma ile uyuşmuyor; canlıya çıkmadan düzeltelim." Tasarım kalite kontrolünü burada yaparsın.
+**Tasarım kalite kontrolünün asıl ortamı budur.** Figma'daki tasarım ile gerçek ekranı karşılaştırdığın yer staging'dir: "Staging'de boşluklar Figma ile uyuşmuyor; canlıya çıkmadan düzeltelim." Tasarım kalite kontrolünü burada yaparsın.
 
 Staging ile **preview** ortamı aynı değildir: preview genelde her değişiklik için **otomatik üretilen geçici** bir adrestir; staging ise **kalıcı ve tek** bir ortamdır. Bir geliştirici "PR'ın preview linkini attım" derse, geçici bir kopyadan bahsediyordur.
 
@@ -65,13 +68,64 @@ Staging ile **preview** ortamı aynı değildir: preview genelde her değişikli
 | Staging | Ekip (dışarıya kapalı) | Canlıya benzer, gerçek değil | Son kontrol, tasarım onayı |
 | Production | Herkes | Gerçek veri | Gerçek kullanım |
 
-<Callout kind="tasarimci">
+<Case>
+
+"Son siparişini tekrarla" düğmesi canlıya çıkmadan önce üç ortamdan geçti:
+
+1. **Local:** Ece düğmeyi kendi bilgisayarında yazdı; her şey çalışıyordu.
+2. **Staging:** `staging.demlik.com.tr` üzerinde Selin tasarımı Figma ile karşılaştırdı; düğmenin altındaki boşluk 8 yerine 16 pikseldi. Zeynep test senaryolarını burada koştu; ödeme, ödeme kuruluşunun test modundaydı.
+3. **Bulgu:** Can, düğmenin kapalı dükkânlarda da göründüğünü buldu. Local'deki test verisinde kapalı dükkân yoktu.
+4. **Production:** önce bir hafta ekip içinde, sonra kullanıcıların %10'una açıldı.
+
+Takımın kuralı: cuma 15.00'ten sonra canlıya çıkış yok.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarım incelemesini staging'de yap.** Geliştiricinin bilgisayarında ("local'de bak") ya da canlıda yapılan kontrol, ikisi de geç ya da riskli.
 - **Hız ve animasyon akıcılığını production'a benzeyen ortamda değerlendir.** Dev ortamında her şey daha yavaş görünür.
 - Staging'de bulduğun her farkı not al: boşluk, renk, font, durumlar. Canlıya çıktıktan sonra düzeltmek hem pahalı hem görünür.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Onayı staging'de ver.** Canlıda bulunan sorun, gerçek bir kullanıcıda bulunmuş sorundur.
+- **Canlıya çıkış zamanını risk olarak düşün.** Cuma akşamı yayın, hafta sonu müdahalesi demektir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kabulü staging'de yap.** Story ancak canlının kopyasında çalıştığında bitmiş sayılır.
+- **Test verisini uç durumlarla iste.** Kapalı dükkân, süresi dolmuş kart, boş menü.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Takvime staging süresi koy.** Son kontrol ve düzeltme kendi zamanını ister.
+- **"Bende çalışıyor"u bir risk sinyali say.** Local'den canlıya geçiş, en sık sürpriz çıkan yerdir.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Definition of Done'a staging kontrolünü ekle.** "Staging'de test edildi" bir bitti kriteridir.
+- **Yayın kuralını çalışma sözleşmesine yaz.** Takımın kendi koyduğu kural daha çok uyulur.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **UAT'yi staging'de planla.** Kullanıcı kabul testi gerçek veriye değil, gerçeğe benzeyen veriye ihtiyaç duyar.
+- **Test verisini gereksinimden üret.** Her iş kuralının bir test kaydı olsun.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Prototip yerine staging'i test etmeyi düşün.** Gerçek akış, prototipin göstermediği gecikmeleri gösterir.
+- **Testte gerçek kişisel veri kullanma.** Staging'de sahte bir karakterle çalış.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -94,5 +148,11 @@ Local: geliştiricinin kendi bilgisayarı, yalnızca ona açık, deneme yeri. St
 <SelfCheck question={"Bir geliştirici \"bende çalışıyor\" diyor, ama canlıda bozuk. Neden olabilir?"}>
 
 Local ile production arasında farklar olabilir: eksik bir ortam değişkeni, farklı veri, farklı yapılandırma. Local'de çalışması, canlıda çalışacağı anlamına gelmez; bu yüzden staging gibi canlıya benzer bir ortamda son kontrol yapılır.
+
+</SelfCheck>
+
+<SelfCheck question={"Bir animasyon geliştiricinin bilgisayarında takılıyor. Hemen \"animasyonu kaldıralım\" mı dersin?"}>
+
+Hayır. Geliştirme ortamı hata ayıklama için ayarlıdır ve canlıdan yavaştır. Akıcılığı production build'de ya da staging'de değerlendirmek gerekir.
 
 </SelfCheck>

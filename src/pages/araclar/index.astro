@@ -1,0 +1,154 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { ROLE_LABEL, type RoleId } from "~/data/role-ids";
+import { getTemplates } from "~/lib/templates";
+
+const templates = await getTemplates();
+---
+
+<BaseLayout title="Araçlar" description="Doldurulmuş örnekleriyle şablonlar: PRD, RACI, risk kaydı ve daha fazlası." section="araclar">
+  <div class="tools" data-pagefind-body data-pagefind-filter="tur:Şablon" data-pagefind-meta="kategori:Araçlar">
+    <header>
+      <h1>Araçlar</h1>
+      <p class="tools__lead">
+        Derslerde anlatılan belgelerin kullanıma hazır hâli. Her şablonun yanında ortak vakadan doldurulmuş bir örnek var;
+        boşunu indirip kendi işinde kullanabilirsin.
+      </p>
+    </header>
+
+    <section aria-labelledby="sablonlar" class="tools__section">
+      <h2 id="sablonlar">Şablonlar</h2>
+      <ul class="tools__grid">
+        {
+          templates.map(({ entry, slug }) => (
+            <li class="tool-card glass">
+              <p class="tool-card__kind">{entry.data.kind === "tablo" ? "Tablo · CSV" : "Belge · Markdown"}</p>
+              <h3 class="tool-card__title">
+                <a href={`/araclar/${slug}/`}>{entry.data.title}</a>
+              </h3>
+              <p class="tool-card__summary">{entry.data.summary}</p>
+              <p class="tool-card__roles">{entry.data.roles.map((role) => ROLE_LABEL[role as RoleId]?.name).join(" · ")}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section aria-labelledby="materyalden" class="tools__section">
+      <h2 id="materyalden">Materyalden araçlar</h2>
+      <ul class="tools__grid">
+        <li class="tool-card glass">
+          <p class="tool-card__kind">Bölüm 21 · İşaretlenebilir</p>
+          <h3 class="tool-card__title"><a href="/araclar/kontrol-listeleri/">Kontrol listeleri</a></h3>
+          <p class="tool-card__summary">Bir sitede olması gerekenler: dokuz liste ve küçük projeler için 15 maddelik hızlı sürüm. Tiklerin ilerlemenle birlikte saklanır.</p>
+        </li>
+        <li class="tool-card glass">
+          <p class="tool-card__kind">Bölüm 20 · Rollere göre</p>
+          <h3 class="tool-card__title"><a href="/araclar/akis-haritasi/">Proje akış haritası</a></h3>
+          <p class="tool-card__summary">Fikirden ölçülen yayına on bir faz: amaç, çıktı, kim ne yapar, kritik kararlar ve atlanırsa ne olur.</p>
+        </li>
+        <li class="tool-card glass">
+          <p class="tool-card__kind">Ek A · Rolüne göre</p>
+          <h3 class="tool-card__title"><a href="/araclar/calisma-takvimi/">Çalışma takvimi</a></h3>
+          <p class="tool-card__summary">Materyalin altı aylık takvimi ve kendi yolundan çıkarılmış haftalık plan.</p>
+        </li>
+      </ul>
+      <p class="tools__glossary">Terimler için: <a href="/sozluk/">Sözlük</a></p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .tools {
+    max-width: 68rem;
+    margin-inline: auto;
+    padding: var(--spacing-12) var(--spacing-4) var(--spacing-24);
+  }
+
+  .tools h1 {
+    font-size: var(--text-4xl);
+    letter-spacing: -0.03em;
+  }
+
+  .tools__lead {
+    max-inline-size: var(--measure);
+    margin-block-start: var(--spacing-3);
+    font-size: var(--text-lg);
+    color: var(--c-text-secondary);
+  }
+
+  .tools__section {
+    margin-block-start: var(--spacing-12);
+  }
+
+  .tools__section h2 {
+    font-size: var(--text-2xl);
+  }
+
+  .tools__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: var(--spacing-4);
+    margin: var(--spacing-4) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tool-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    padding: var(--spacing-6);
+    border-radius: 1.25rem;
+  }
+
+  .tool-card:has(a:focus-visible) {
+    outline: 2px solid var(--c-focus);
+    outline-offset: 2px;
+  }
+
+  .tool-card__kind {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-action);
+  }
+
+  .tool-card__title {
+    font-size: var(--text-lg);
+  }
+
+  .tool-card__title a {
+    color: var(--c-text);
+    text-decoration: none;
+  }
+
+  .tool-card__title a:focus-visible {
+    outline: none;
+  }
+
+  .tool-card__title a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .tool-card__summary {
+    color: var(--c-text-secondary);
+  }
+
+  .tool-card__roles {
+    margin-block-start: auto;
+    font-size: var(--text-sm);
+    color: var(--c-text-muted);
+  }
+
+
+  .tools__glossary {
+    margin-block-start: var(--spacing-6);
+  }
+</style>

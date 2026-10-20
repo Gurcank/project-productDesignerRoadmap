@@ -5,8 +5,10 @@
  * (`[data-body]`), surface patterns in planets.css (`[data-pattern]`).
  *
  * Order follows the route: Earth first (the ground you stand on), the inner
- * planets for product and team, the giants for design, moons for engineering,
- * the small far bodies for systems and operations, and the Sun at the end.
+ * planets and Mars' moon for product and team, Uranus' moons for strategy, the
+ * far dwarf planets for delivery, the giants (and Iapetus) for design, moons for
+ * engineering, the small far bodies for systems and operations, and the Sun at
+ * the end.
  */
 export type PlanetPattern = "earth" | "craters" | "bands" | "swirl" | "veins" | "spots" | "sun";
 
@@ -24,8 +26,18 @@ export const PLANET_BY_SLUG: Record<string, Planet> = {
   "urun-gelistirme": { body: "mars", name: "Mars", pattern: "craters" },
   "calisma-bicimi": { body: "venus", name: "Venüs", pattern: "swirl" },
   "sirket-sozlugu": { body: "mercury", name: "Merkür", pattern: "craters" },
+  "iletisim-ve-paydaslar": { body: "deimos", name: "Deimos", pattern: "craters" },
+
+  "urun-yonetimi": { body: "titania", name: "Titania", pattern: "craters" },
+  "urun-analitigi": { body: "miranda", name: "Miranda", pattern: "veins" },
+  "is-ve-strateji": { body: "oberon", name: "Oberon", pattern: "craters" },
+
+  "proje-yonetimi": { body: "haumea", name: "Haumea", pattern: "spots" },
+  "cevik-pratikler": { body: "makemake", name: "Makemake", pattern: "spots" },
+  "is-analizi": { body: "sedna", name: "Sedna", pattern: "swirl" },
 
   "ux-ui-ilkeleri": { body: "jupiter", name: "Jüpiter", pattern: "bands" },
+  "kullanici-arastirmasi": { body: "iapetus", name: "İapetus", pattern: "veins" },
   "tasarim-sistemi": { body: "saturn", name: "Satürn", pattern: "bands", ring: true },
   erisilebilirlik: { body: "uranus", name: "Uranüs", pattern: "swirl", ring: true },
   "arayuz-anatomisi": { body: "neptune", name: "Neptün", pattern: "swirl" },

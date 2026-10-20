@@ -1,0 +1,185 @@
+---
+summary: "Proje başı ve sonu olan geçici bir çabadır; ürün değer ürettikçe yaşar, operasyon her gün tekrar eder. Farkı bilmek, işe doğru yöntemi seçtirir."
+outcomes:
+  - "Bir işin proje, ürün ya da operasyon olduğunu ayırabilirsin."
+  - "Bir projenin neden başı ve sonu olduğunu, bunun yönetimi nasıl değiştirdiğini anlatabilirsin."
+  - "Bir ürün ekibinde projelerin nerede durduğunu söyleyebilirsin."
+  - "Proje yöneticisinin başlıca sorumluluklarını sayabilirsin."
+minutes: 9
+standard: 2
+sources:
+  - label: "Project Management: From Simple to Complex — 1.2 Project Defined"
+    url: "https://saylordotorg.github.io/text_project-management-from-simple-to-complex-v1.1/s03-02-project-defined.html"
+  - label: "PMI — What Is Project Management?"
+    url: "https://www.pmi.org/about/what-is-project-management"
+  - label: "PMI — What is a Project Manager?"
+    url: "https://www.pmi.org/about/what-is-a-project-manager"
+  - label: "Martin Fowler — Products Over Projects (Sriram Narayan)"
+    url: "https://martinfowler.com/articles/products-over-projects.html"
+additions:
+  - "Projenin tanımı (geçici, benzersiz sonuç; başı ve sonu belli) ve operasyonla farkı"
+  - "Proje yöneticisinin sorumlulukları (PMI)"
+  - "Ürün ekipleri ile proje ekipleri karşıtlığı (Products Over Projects)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Timeline from "~/components/diagrams/primitives/Timeline.astro";
+import Illustration from "~/components/Illustration.astro";
+
+Operasyon direktörü Hakan toplantıya bir hedefle geliyor: "Dönem başında 12 kampüs kafesinde Demlik'le sipariş alınabilsin." Bunun için 14 hafta ve 2,4 milyon TL var. Bir tedarikçi kasa entegrasyonunu yapacak. Üniversitelerle protokol imzalanacak.
+
+Bu iş Demlik'in her günkü işine benzemiyor. Bir başlangıcı ve bir bitiş tarihi var. Bittiğinde ortada yeni bir şey olacak. Bu tür işlere **proje** denir ve yönetilme biçimi farklıdır.
+
+<Illustration name="proje-firlatma" />
+
+## Proje nedir?
+
+**Proje** (project), benzersiz bir ürün, hizmet ya da sonuç üretmek için yürütülen **geçici** bir çabadır. İki kelime önemli.
+
+**Geçici:** her projenin belli bir başı ve sonu vardır. Proje hedefine ulaşınca biter. Hedefin artık gerekmediği anlaşılırsa da biter.
+
+**Benzersiz:** sonuç daha önce tam olarak aynı biçimde üretilmemiştir. Demlik daha önce kampüs kafeleriyle, öğrenci kartı indirimiyle ve bu tedarikçiyle çalışmadı. Benzer işler yapılmış olabilir, ama bu sonuç yenidir.
+
+Bu iki özellik yönetimi değiştirir. Belirsizlik yüksektir, çünkü iş daha önce yapılmamıştır. Zaman sınırlıdır, çünkü bir bitiş vardır. Proje yönetiminin araçları bu ikisi için vardır: plan, tahmin, risk kaydı, paydaş iletişimi.
+
+## Proje, ürün ve operasyon
+
+Bir şirkette işler üç biçimde yaşar. Farkı en iyi bir zaman çizgisi gösterir.
+
+<Timeline
+  label="Demlik'te ürün, proje ve operasyon yan yana"
+  caption="Ürün, yani Demlik uygulaması, değer ürettiği sürece yaşar; bir bitiş tarihi yoktur. Operasyon, her gün alınan siparişler gibi, aynı işin sürekli tekrarıdır. Kampüs lansmanı ise ikisinin arasında, başı ve sonu belli bir projedir: 14 haftada biter, pilot kafe ve lansman kilometre taşlarıdır. Proje bittiğinde sonucu ürüne ve operasyona katılır."
+  unit="hafta"
+  span={20}
+  every={2}
+  rows={[
+    { label: "Ürün: Demlik", start: 0, end: 20 },
+    { label: "Operasyon: siparişler", start: 0, end: 20, tone: "progress" },
+    { label: "Proje: kampüs lansmanı", start: 2, end: 16, tone: "accent" },
+    { label: "Pilot kafe", start: 12, kind: "milestone" },
+    { label: "Lansman", start: 16, kind: "milestone" },
+  ]}
+/>
+
+| | Proje | Ürün | Operasyon |
+|---|---|---|---|
+| Süresi | Başı ve sonu belli | Değer ürettiği sürece | Süreklidir |
+| Amacı | Yeni bir sonuç üretmek | Bir problemi sürekli çözmek | Var olan işi her gün yapmak |
+| Başarı ölçütü | Söz verilen sonuç, zamanında ve bütçesinde | Kullanıcı ve iş sonucu | Verimlilik, kalite, kesintisizlik |
+| Demlik'te örnek | Kampüs lansmanı | Demlik uygulaması | Günlük siparişler, destek |
+
+**Operasyon** (operations), var olan bir işin her gün yeniden yapılmasıdır. Siparişleri karşılamak, destek taleplerini cevaplamak operasyondur. Operasyon yöneticisi, var olan süreçleri uzun bir zaman boyunca sürekli iyileştirir.
+
+**Proje ≠ operasyon.** Operasyon "her gün aynı işi daha iyi yap" der. Proje "bir kez, yeni bir şey yap ve bitir" der.
+
+## Ürün ekibinde proje
+
+Ürün ekipleri projeden farklı düşünür. Martin Fowler'ın sitesinde yayımlanan "Products Over Projects" yazısı farkı şöyle koyar. Ürün ekibi uzun ömürlüdür ve bir sonucu iyileştirmeye odaklanır. Proje modeli ise belirli bir kapsamı belirli bir tarihte teslim etmeye odaklanır. Yazara göre proje biter bitmez ekibi dağıtmak, ekip tam uyum yakalamışken onu bozabilir.
+
+Gerçek hayatta ikisi bir arada yaşar. Demlik'in sipariş takımı uzun ömürlü bir ürün ekibidir. Ama kampüs lansmanı gibi bir tarihi, bir bütçesi ve dış paydaşları olan işler proje olarak yönetilir. Proje bitince sonucu ürüne katılır ve ekip ürün üzerinde çalışmaya devam eder.
+
+## Proje yöneticisi ne yapar?
+
+**Project Manager** (proje yöneticisi), projenin hedefine, zamanında ve bütçesinde ulaşmasını yönetir. PMI, proje yöneticisinin sorumluluklarını şöyle sıralar:
+
+- projenin hedefini ve kapsamını belirlemek,
+- işleri planlamak ve yazıya geçirmek,
+- teslimatların zamanında yapılmasını sağlamak,
+- projenin kaynaklarını yönetmek,
+- paydaşlarla etkili iletişim kurmak,
+- engelleri ve olası riskleri ortadan kaldırmak,
+- sonucun kaliteli olmasını sağlamak.
+
+Bu bölümün sonraki dersleri bu işleri tek tek anlatır.
+
+<Case>
+
+Leyla, kampüs lansmanının proje yöneticisi oldu. İlk haftası şöyle geçti:
+
+1. **Hedefi yazdı:** "Dönem başında 12 kampüs kafesinde Demlik'le sipariş alınabilsin."
+2. **Sınırları yazdı:** 14 hafta, 2,4 milyon TL, öğrenci kartı indirimi dahil.
+3. **Sponsoru netleştirdi:** son kararı Hakan verecek.
+4. **Paydaşları listeledi:** kafeler, öğrenci işleri, kasa tedarikçisi, ödeme kuruluşu.
+5. **Riskleri yazmaya başladı:** en büyüğü tedarikçinin gecikmesi.
+
+Sipariş takımı ise kendi ürün işine devam etti. Leyla, takımdan yalnız öğrenci kartı indirimi için zaman istedi ve bunu Deniz'le backlog'a işledi.
+
+</Case>
+
+<Tool slug="risk-kaydi" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **İlk iş, işin gerçekten proje olduğunu teyit etmek.** Bitiş tarihi ve benzersiz bir sonucu yoksa, yöneteceğin şey bir süreçtir.
+- **Hedefi tek cümleyle yaz.** Kapsam, takvim ve bütçe tartışmaları hep bu cümleye geri döner.
+- **Ürün ekibinin ritmine saygı göster.** Takımdan istediğin zamanı PO ile backlog üzerinden iste.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Hangi işin proje olduğunu ayır.** Lansman, entegrasyon, taşıma gibi tarihli işler proje olarak yönetilirse ürün işi bölünmez.
+- **Projenin ürün hedefine bağını kur.** Proje bittiğinde hangi ürün sonucunu değiştirecek?
+- **Proje yöneticisiyle sınırı konuş.** Kapsam kararı kimde, tarih kararı kimde?
+
+</Lens>
+<Lens role="product-owner">
+
+- **Projeden gelen işi backlog'a sen al.** Takıma yan kapıdan iş gelirse öncelik kaynağı ikiye bölünür.
+- **Proje tarihini sıraya yansıt.** Tarihi olan iş, puanı düşük olsa da öne alınabilir; gerekçesini yaz.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Takımı iki efendiye bölme.** Proje ve ürün işleri aynı sprintte yarışıyorsa bunu görünür kıl.
+- **Kapasiteyi gerçekçi tut.** Projeye ayrılan zaman sprint kapasitesinden düşülmelidir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Projenin kapsamı senin gereksinimlerinle netleşir.** "Öğrenci kartı indirimi" bir cümle değil, kurallar listesidir.
+- **Operasyona geçişi unutma.** Proje bittiğinde kafeyi kim destekleyecek? Geçiş gereksinimleri de kapsamın parçasıdır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Proje, benzersiz bir sonuç için yürütülen geçici bir çabadır; başı ve sonu bellidir.
+- Ürün değer ürettiği sürece yaşar; operasyon var olan işi her gün tekrarlar.
+- Proje belirsizlik ve zaman sınırıyla yaşar; plan, tahmin ve risk araçları bunun içindir.
+- Ürün ekipleri uzun ömürlüdür; tarihli ve bütçeli işler onların içinde proje olarak yönetilir.
+- Proje yöneticisi kapsamı, planı, kaynakları, riski ve paydaş iletişimini yönetir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir projeyi operasyondan ayıran iki özellik nedir?">
+
+Proje geçicidir: başı ve sonu bellidir. Ve benzersiz bir sonuç üretir. Operasyon ise var olan işi süreklice, her gün yeniden yapar.
+
+</SelfCheck>
+
+<SelfCheck question="Demlik'in mobil uygulaması bir proje midir?">
+
+Hayır, bir üründür. Değer ürettiği sürece yaşar ve bir bitiş tarihi yoktur. Ama uygulamaya yeni bir ödeme yöntemi eklemek gibi tarihli, sınırlı bir iş proje olarak yönetilebilir.
+
+</SelfCheck>
+
+<SelfCheck question="Yönetici 'müşteri destek ekibinin her gün gelen talepleri cevaplamasını proje olarak yönetelim' diyor. Ne dersin?">
+
+Bu bir operasyondur: sürekli tekrar eden, bitişi olmayan bir iş. Proje araçları (kapanış tarihi, kapsam, tek seferlik bütçe) buna uymaz. Ama "destek sistemini yeni bir araca taşımak" gibi başı ve sonu belli bir iyileştirme, proje olarak yönetilebilir.
+
+</SelfCheck>
+
+<SelfCheck question="Kampüs lansmanı bitti. Takım dağıtılmalı mı?">
+
+Ürün yaklaşımı genelde hayır der: takım uzun ömürlüdür ve ürün üzerinde çalışmaya devam eder. Projenin sonucu ürüne ve operasyona katılır. Projeye özel kurulan geçici roller ise kapanır; kapanışta öğrenilenler yazılır.
+
+</SelfCheck>

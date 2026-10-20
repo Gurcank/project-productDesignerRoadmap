@@ -1,0 +1,163 @@
+---
+summary: "Farklı yerlerde ve saat dilimlerinde çalışan ekip, bilgiyi yazılı ve herkese açık tutarak çalışır. Ortak saatler kısıtlı bir kaynaktır; karar ve tartışmaya ayrılır, geri kalan iş eş zamansız yürür."
+outcomes:
+  - "Saat dilimi farkını hesaplayıp ortak saatleri bulabilirsin."
+  - "Bir iletişimin eş zamanlı mı eş zamansız mı yapılacağını seçebilirsin."
+  - "Dağıtık bir ekipte bilginin yazılı kalması için kurallar önerebilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "GitLab Handbook — GitLab's Guide to All-Remote"
+    url: "https://handbook.gitlab.com/handbook/company/culture/all-remote/guide/"
+  - label: "Watt — Project Management, Ch. 15 Communications Planning"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-15-communications-planning-project-management/"
+additions:
+  - "Uzaktan çalışma manifestosu ve 'all-remote' tanımı (GitLab)"
+  - "Senkron ve asenkron iletişim, sanal ekipler, saat dilimi hesabı ve 24 saatlik gösterim (Watt)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+
+Can bu yıl Berlin'den çalışmaya başladı. İlk haftasında iki şeyi kaçırdı: Daily Scrum'da alınan bir kararı ve bir koridor konuşmasında değişen bir öncelik. İkisi de bir yere yazılmamıştı.
+
+Sorun Can'da değildi; bilginin nerede yaşadığındaydı. Bu ders, farklı yerlerde ve saat dilimlerinde çalışan ekiplerin iletişimini anlatır. Ekip içi ritim ve odak zamanı [Sync, async ve toplantı düzeni](/calisma-bicimi/sync-async-ve-toplanti-duzeni/) dersinde.
+
+## Eş zamanlı ve eş zamansız
+
+Watt'ın kitabı iletişimi iki türe ayırır:
+
+- **Senkron (eş zamanlı):** herkes aynı anda katılır. Toplantı, telefon, görüntülü görüşme.
+- **Asenkron (eş zamansız):** taraflar aynı anda orada olmak zorunda değildir. E-posta, belge, proje sitesi.
+
+Watt, ağırlıkla elektronik iletişimle çalışan ekipleri **sanal ekip** olarak adlandırır. Bu ekipler için güvenilir ve zamanında iletişim planının özellikle önemli olduğunu yazar; yanlış anlama güveni zedeler.
+
+<Spectrum
+  label="Demlik'in iletişim kanalları, senkrondan asenkrona"
+  caption="Sol uçta herkesin aynı anda orada olması gereken iletişim durur: Daily Scrum ve haftalık koordinasyon toplantısı. Ortada hızlı ama beklemeye izin veren mesaj grubu vardır. Sağ uçta, okuyanın kendi saatinde okuduğu iletişim durur: haftalık durum e-postası ve yazılı karar kaydı. Dağıtık bir ekipte bilgi sağa doğru kayar."
+  left={{ title: "Senkron", sub: "herkes aynı anda" }}
+  right={{ title: "Asenkron", sub: "herkes kendi saatinde" }}
+  marks={[
+    { label: "Daily Scrum", at: 0.06 },
+    { label: "Haftalık toplantı", at: 0.26 },
+    { label: "Mesaj grubu", at: 0.55 },
+    { label: "Durum e-postası", at: 0.76 },
+    { label: "Karar kaydı", at: 0.95 },
+  ]}
+/>
+
+## Saat dilimleri
+
+Watt saat dilimini hesaplamanın basit bir yolunu verir: her yeri UTC'ye göre yaz ve 24 saatlik gösterimi kullan. Kitaptaki örnekte Toronto UTC−5, Paris UTC+1'dir; arada altı saat vardır. Toronto'da öğleden sonra 13.00'te yapılan bir arama, Paris'te akşam 19.00'a denk gelir.
+
+Watt saat farkının bir avantajı da olabileceğini not eder: bir ekip uyurken diğeri işi ilerletebilir. Ama bu, işin yazılı olarak devredilmesini gerektirir.
+
+**Ortak saat ≠ çalışma saati.** Herkesin aynı anda çevrimiçi olduğu saatler azdır. Bu saatler karar ve tartışmaya ayrılır; durum bilgisi yazılı gider.
+
+## Yazılı bilgi, açık bilgi
+
+GitLab, 65'ten fazla ülkede çalışanı olan, tamamen uzaktan çalışan bir şirkettir. El kitabındaki uzaktan çalışma manifestosu bazı tercihleri yan yana koyar. Bunlardan dördü:
+
+- **Bilgiyi yazmak ve kaydetmek,** sözlü açıklamaya tercih edilir.
+- **Bilgiyi açıkça paylaşmak,** "bilmesi gereken bilir" yaklaşımına tercih edilir.
+- **Eş zamansız iletişim,** eş zamanlıya tercih edilir.
+- **Harcanan emek yerine ortaya çıkan etki** öne alınır.
+
+GitLab'ın el kitabı bir uyarı da yapar: tamamen uzaktan çalışmak herkes için değildir; dezavantajları vardır. Demlik gibi karma bir ekip için asıl ders, ofisteki herkesin de uyması gereken bir kuraldır: konuşulan karar yazılır.
+
+<Case>
+
+Kaan, Can'ın ilk haftasından sonra takımla üç kural koydu:
+
+1. **Saatler:** İstanbul UTC+3, Berlin UTC+1. Çalışma sözleşmesindeki ortak saatler 10.00–16.00, Can için 08.00–14.00. Kararlar bu aralıkta konuşulur.
+2. **Daily Scrum:** Can'ın katılamadığı günlerde, sözleşmedeki kural geçerli. Can notunu önceki akşam panoya yazar.
+3. **Karar kaydı:** koridorda ya da Daily Scrum'da verilen her karar aynı gün takım kanalındaki karar başlığına bir cümleyle yazılır.
+
+Üçüncü kural Can için konmuştu. En çok sahadan gelen Mert'in işine yaradı.
+
+</Case>
+
+<Lenses>
+<Lens role="scrum-master">
+
+- **Çalışma sözleşmesine saat dilimini ekle.** Ortak saatler ve Daily Scrum'a katılamayanın yolu yazılı olsun.
+- **Ofistekiler için de aynı kural.** Koridor kararı yazılmazsa uzaktaki kişi dışarıda kalır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Kararı yazılı kaydet.** Bir kararın tek kaydı bir toplantıysa, toplantıda olmayan için hiç verilmemiştir.
+- **Ortak saatleri karara ayır.** Durum güncellemesi yazılı gider.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Backlog'u tek doğruluk kaynağı yap.** Öncelik değişikliği konuşmada değil, backlog'da görünür.
+- **Refinement için önceden okuma ver.** Uzaktaki geliştirici story'yi toplantıdan önce okuyabilmeli.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Saatleri UTC ve 24 saatle yaz.** Tedarikçi ve kafe takvimlerinde karışıklığı önler.
+- **İletişim planına sanal ekibi ekle.** Watt'ın vurgusuyla güvenilir ve zamanında iletişim, güveni korur.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim görüşmelerini kaydet ve paylaş.** Uzaktaki geliştirici, kuralın neden öyle olduğunu kayıttan okur.
+- **Kararların gerekçesini yaz.** Gerekçesiz bir kural, dağıtık ekipte en çok soru alan kuraldır.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Tasarım kararlarını dosyanın içinde açıkla.** Uzaktaki geliştirici "neden böyle?" sorusunu yazılı cevaptan okur.
+- **Kayıtlı bir anlatım ekle.** Kısa bir ekran kaydı, uzun bir toplantının yerini tutabilir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Bulguları herkesin erişebildiği bir yerde tut.** Bilmesi gereken kişi listesine değil, açık bir arşive.
+- **Saha notunu aynı gün paylaş.** Kampüsteki bir gözlem, ofisteki kararı o gün etkileyebilir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Senkron iletişim herkesin aynı anda katılmasını, asenkron iletişim kendi saatinde katılmayı sağlar.
+- Saat dilimleri UTC'ye göre ve 24 saatle yazılır; ortak saatler azdır.
+- Ortak saatler karar ve tartışmaya, durum bilgisi yazılı iletişime ayrılır.
+- Dağıtık ekipte bilgi yazılı ve açık tutulur; konuşulan karar yazılır.
+- Tamamen uzaktan çalışma herkes için değildir; kurallar karma ekipte herkese uygulanır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="İstanbul UTC+3, Berlin UTC+1. İstanbul'da 15.00 olduğunda Berlin'de saat kaç?">
+
+13.00. İki saat fark vardır; Berlin İstanbul'un iki saat gerisindedir.
+
+</SelfCheck>
+
+<SelfCheck question="Watt'a göre senkron ve asenkron iletişim arasındaki fark nedir?">
+
+Senkron iletişimde herkes aynı anda katılır: toplantı, telefon. Asenkron iletişimde taraflar aynı anda orada olmak zorunda değildir: e-posta, belge, proje sitesi.
+
+</SelfCheck>
+
+<SelfCheck question="Bir karar koridorda verildi ve uzaktaki bir geliştirici iki gün sonra öğrendi. Hangi kural bunu önlerdi?">
+
+Konuşulan kararın aynı gün yazılı bir kayda geçmesi. Karar herkesin erişebildiği bir yerde değilse, orada olmayanlar için verilmemiş sayılır.
+
+</SelfCheck>
+
+<SelfCheck question="Ortak çalışma saatleri günde dört saat. Bu saatleri neye ayırırsın?">
+
+Karar ve tartışma gerektiren işlere. Durum bilgisi, duyurular ve okunacak belgeler eş zamansız kanallardan gider.
+
+</SelfCheck>

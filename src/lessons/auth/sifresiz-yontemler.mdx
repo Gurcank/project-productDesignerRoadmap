@@ -5,7 +5,9 @@ outcomes:
   - "OTP giriş ekranının bilinen tuzaklarını sayabilirsin."
   - "Passkey'in neden kimlik avına dayanıklı olduğunu ve kurtarma akışının neden zor olduğunu açıklayabilirsin."
   - "SMS kodunun neden zayıf kabul edildiğini bilirsin."
-minutes: 9
+minutes: 6
+standard: 2
+skipTerms: ["Doğrulama", "doğrulama"]
 sources:
   - label: "NIST SP 800-63B Revizyon 4"
     url: "https://pages.nist.gov/800-63-4/sp800-63b.html"
@@ -20,11 +22,14 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Şifre unutulur, çalınır, tekrar kullanılır. Bu yüzden sektör şifreyi tamamen ortadan kaldıran ya da ikinci plana atan yöntemlere gidiyor. Üçünü bil.
 
@@ -49,6 +54,30 @@ Kod giriş ekranının bilinen tuzakları:
 
 ## Passkey
 
+<Tree
+  label="Şifresiz yöntemler ve zor yanları"
+  caption="Üç şifresiz yöntemin her birinin tasarımda zor bir yanı vardır. Magic link'te kullanıcı e-postasına gider ve bağlamı kaybedebilir; bekleme ekranı ve tekrar gönderme gerekir. OTP'de kullanıcı aynı ekranda kalır ama kod alanı otomatik doldurma, yapıştırma ve geri sayım ister. Passkey en güçlü yöntemdir ama cihaz kaybında kurtarma akışı en zor kısımdır."
+  root={{
+  title: "Şifresiz giriş",
+  tone: "accent",
+  children: [
+    {
+      title: "Magic link",
+      sub: "bağlam kopar"
+    },
+    {
+      title: "OTP",
+      sub: "aynı ekranda kalır"
+    },
+    {
+      title: "Passkey",
+      sub: "kurtarma zor",
+      tone: "progress"
+    }
+  ]
+}}
+/>
+
 **Passkey (geçiş anahtarı, WebAuthn/FIDO2)**, şifre yerine cihazda saklanan bir kriptografik anahtar çiftiyle giriş yapma yöntemidir. Kullanıcı parmak izi, yüz tanıma ya da cihaz PIN'i ile anahtarı kullanmaya izin verir.
 
 <Compare>
@@ -72,14 +101,47 @@ Kod giriş ekranının bilinen tuzakları:
 
 **Tasarım tarafında en zor kısmı kurtarma akışıdır.** Passkey'i tek yöntem yapmak riskli olabilir; genelde bir yedek yöntem (e-posta OTP, yedek kod) birlikte sunulur. Arayüz metni "passkey" kavramını açıklamalıdır.
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in müşterileri telefon numarası ve SMS koduyla giriş yapıyor. Bu ders SMS'i zayıf sayıyor; Demlik'te karar şöyle verildi:
+
+1. **Risk:** müşteri hesabında kart bilgisi yok, kart ödeme kuruluşunda. Hesabı ele geçiren biri kayıtlı kartla ödeme yapamıyor; ödeme ekranında bankanın doğrulaması çıkıyor.
+2. **Sürtünme:** sabah müşterisi için şifre en büyük engeldi; SMS kodu otomatik doldurmayla tek dokunuş.
+3. **Passkey:** ikinci yöntem olarak eklendi. Uygulamayı açarken yüz tanımayla giriş; SMS yedek yol olarak duruyor.
+4. **Kod ekranı:** altı hane, otomatik doldurma, yapıştırma serbest, 60 saniyelik "tekrar gönder" sayacı; yanlış kodda alan temizleniyor ve odak başa dönüyor.
+
+Panel'de ise SMS kullanılmıyor; dükkân sahiplerinin ikinci faktörü kimlik doğrulayıcı uygulama.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Magic link için** bekleme ekranı, tekrar gönder, gönderim sayacı ve "e-posta gelmediyse" yardımı tasarla.
 - **OTP ekranında** yapıştırma, otomatik doldurma, geri sayım ve hata davranışını yaz.
 - **SMS yerine mümkünse TOTP/passkey öner.**
 - **Passkey eklerken kurtarma yolunu aynı akışın parçası yap;** kavramı kısa bir cümleyle açıkla.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Şifresiz yöntemi risk profiline göre seç.** Hesapta ne korunuyor, ele geçirilirse ne olur?
+- **Passkey'i yedek yolsuz tek yöntem yapma.**
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kod ekranının bilinen tuzaklarını kabul kriterine yaz.** Otomatik doldurma, yapıştırma, sayaç, hata sonrası odak.
+- **Kurtarma akışını ayrı bir story say.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Kimlik doğrulama yöntemini veri hassasiyetiyle eşle.** Kart, kişisel veri, finansal işlem var mı?
+- **Kurtarma sürecinin adımlarını yazılı tanımla.**
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -101,5 +163,11 @@ Magic link'te kullanıcı sekmeyi terk edip e-postasına gider ve dönerken bağ
 <SelfCheck question="Passkey neden kimlik avına dayanıklıdır? Tasarımdaki en zor kısmı nedir?">
 
 Anahtar sitenin alan adına kriptografik olarak bağlıdır; sahte bir giriş sayfasında otomatik olarak çalışmaz, ayrıca özel anahtar cihazdan hiç çıkmaz ve sunucuda çalınabilecek bir şifre yoktur. En zor kısım kurtarma akışıdır: kullanıcı cihazını kaybederse ne olacak?
+
+</SelfCheck>
+
+<SelfCheck question="Magic link'te kullanıcı neden bağlamı kaybedebilir, tasarımda ne gerekir?">
+
+Kullanıcı sekmeyi bırakıp e-postasına gider; geri döndüğünde nerede olduğunu bilmeyebilir, e-posta gecikebilir ya da spam'e düşebilir. Bekleme ekranı, "tekrar gönder" seçeneği ve gönderim sayacı gerekir.
 
 </SelfCheck>

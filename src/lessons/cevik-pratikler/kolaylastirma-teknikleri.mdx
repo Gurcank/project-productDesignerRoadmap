@@ -1,0 +1,172 @@
+---
+summary: "Kolaylaştırma, bir toplantıda herkesin sesinin duyulmasını ve konuşmanın bir sonuca varmasını sağlar. Açık bir davet, sıkı bir zaman kutusu ve birkaç basit yapı çoğu toplantıyı kurtarır."
+outcomes:
+  - "Bir toplantı için yapılandırılmış bir davet ve zaman kutusu yazabilirsin."
+  - "1-2-4-All ve Lean Coffee'yi adım adım yürütebilirsin."
+  - "Hangi durumda hangi yapıyı seçeceğine karar verebilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Liberating Structures — 1-2-4-All"
+    url: "https://www.liberatingstructures.com/1-2-4-all"
+  - label: "Lean Coffee"
+    url: "https://leancoffee.org/"
+  - label: "Retromat — Dot Voting: Start, Stop, Continue (#12)"
+    url: "https://retromat.org/en/?id=12"
+  - label: "Scrum Guide (Kasım 2020)"
+    url: "https://scrumguides.org/scrum-guide.html"
+additions:
+  - "1-2-4-All'ın adımları ve süreleri (Liberating Structures)"
+  - "Lean Coffee'nin akışı (leancoffee.org)"
+  - "Nokta oylaması (Retromat)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Refinement'ın ilk yirmi dakikasında hep aynı iki kişi konuştu: Burak ve Elif. Can bir şey söyleyecek gibi oldu, sonra vazgeçti. Zeynep hiç konuşmadı. Toplantının sonunda bir karar çıktı, ama kararı yalnız iki kişi vermişti.
+
+Ertesi gün Zeynep, Kaan'a yazdı: "Favori siparişte bir test riski görmüştüm, söyleyecek yer bulamadım." Bu ders, o yeri açan basit yapıları anlatır.
+
+## Kolaylaştırma nedir?
+
+**Kolaylaştırma** (facilitation), bir grubun konuşmasını yönetmeden yönlendirmektir. Kolaylaştırıcı içerikle ilgili karar vermez. Konuşmanın nasıl akacağına karar verir: kim, ne zaman, ne kadar süre, hangi soruyla.
+
+Scrum Rehberi Scrum Master'dan iki şey ister: olayların olumlu, verimli ve zaman kutusunun içinde geçmesini sağlamak ve gerektiğinde paydaş iş birliğini kolaylaştırmak. Ama kolaylaştırma yalnız SM'nin işi değildir. Bir toplantıyı kim çağırıyorsa, onun nasıl akacağından da o sorumludur.
+
+İyi kolaylaştırmanın üç temeli vardır:
+
+1. **Açık bir davet:** toplantı bir soruyla başlar. "Favori siparişi konuşalım" değil: "Favori siparişin ilk sürümünde hangi riskleri görüyoruz?"
+2. **Zaman kutusu** (timebox): her bölümün süresi önceden bellidir ve tutulur.
+3. **Bir yapı:** konuşmanın sırasını kişilik değil, bir kural belirler.
+
+## 1-2-4-All: herkesin sesi
+
+**1-2-4-All**, Liberating Structures adlı bir kolaylaştırma ailesinin en bilinen yapısıdır. Amacı, grup ne kadar büyük olursa olsun herkesi aynı anda konuşturmak ve güç farklarını azaltmaktır. Yaklaşık 15 dakika sürer.
+
+<Layers
+  label="1-2-4-All'ın adımları"
+  caption="Her katman, düşünen grubun büyüdüğü bir adımdır. Önce herkes bir dakika tek başına, sessizce düşünür ve yazar. Sonra iki dakika ikili olarak fikirleri paylaşır. Ardından ikililer birleşir ve dörtlü grup beş dakika fikirleri ayrıştırır. En sonda bütün grup yedi dakika boyunca herkesin duyması gereken birkaç fikri dinler. Sessiz başlangıç, en çekingen kişinin de bir fikirle gelmesini sağlar."
+  shape="pyramid"
+  layers={[
+    { title: "1 · tek başına", sub: "1 dk, sessiz" },
+    { title: "2 · ikili", sub: "2 dk, fikirleri paylaş" },
+    { title: "4 · dörtlü", sub: "5 dk, fikirleri ayrıştır" },
+    { title: "Hepsi", sub: "7 dk, herkesin duyması gereken", tone: "progress" },
+  ]}
+/>
+
+En az dört kişi gerekir. Uzaktan çalışan gruplarda ikililer atlanabilir: tek başına düşündükten sonra üçlü gruplara geçilir. Kolaylaştırıcı süreleri sıkı tutar, sessiz düşünmeyi korur ve grupların konuşmasına fazla karışmaz.
+
+1-2-4-All işi önceliklendirmek, bir sunumdan sonra geri bildirim toplamak ya da tıkanan bir tartışmayı açmak için kullanılabilir.
+
+## Lean Coffee: gündemi grup yazar
+
+**Lean Coffee**, yapılandırılmış ama gündemsiz bir toplantıdır. Gündemi katılımcılar toplantının başında birlikte yazar. 2009'da Seattle'da Jim Benson ve Jeremy Lightsmith tarafından başlatıldı.
+
+1. **Bir pano kur:** "Konuşulacak", "Konuşuluyor", "Konuşuldu".
+2. **Konuları topla:** herkes konularını yapışkan notlara yazar ve her konuyu bir iki cümleyle tanıtır.
+3. **Oyla:** herkesin iki oyu vardır. İkisini aynı konuya da verebilir.
+4. **Konuş:** en çok oy alandan başlanır.
+
+Lean Coffee, haftalık takım toplantılarında ya da gündemi önceden belli olmayan paydaş görüşmelerinde işe yarar.
+
+## Nokta oylaması: karar için daralt
+
+**Nokta oylaması** (dot voting), çok sayıda fikri az sayıya indirmenin hızlı yoludur. Herkes sınırlı sayıda nokta alır ve en önemli bulduğu fikirlere dağıtır. Retromat'taki "Başla, Bırak, Sürdür" etkinliği bunun tipik bir örneğidir.
+
+**Nokta oylaması ≠ karar.** Oylama dikkati toplar. Karar ise o konunun sahibinde kalır: backlog sırasında PO'da, teknik bir seçimde Geliştiricilerde.
+
+<Case>
+
+Kaan bir sonraki refinement'ı yeniden kurdu:
+
+1. **Davet:** "Favori siparişin ilk sürümünde hangi riskleri görüyoruz?" Toplantı daveti bu soruyla gitti.
+2. **1-2-4-All:** bir dakika sessiz yazma, iki dakika ikililer, beş dakika dörtlüler. Zeynep'in test riski ikili turda Can'ın bir fikriyle birleşti.
+3. **Bütün grup:** yedi dakikada beş risk paylaşıldı. Zeynep'inki ilk sıradaydı: kayıtlı kart silinmişse tekrar sipariş ne yapacaktı?
+4. **Nokta oylaması:** herkes üç noktayla en büyük riski seçti. Kart sorunu ve stoğu biten ürün öne çıktı.
+5. **Karar:** Deniz, iki riski kabul kriteri olarak story'ye ekledi.
+
+Toplantı 30 dakika sürdü. Herkes en az bir kez konuştu.
+
+</Case>
+
+<Lenses>
+<Lens role="scrum-master">
+
+- **Her olayı bir soruyla başlat.** Rehber olayların verimli geçmesini senden ister; soru, verimin ilk adımıdır.
+- **Süreyi tut, içeriği bırak.** Kolaylaştırıcı içerik hakkında karar vermez.
+- **Kolaylaştırmayı takıma öğret.** Daily'yi ve retroyu sırayla farklı kişiler kolaylaştırsın.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Paydaş toplantısında 1-2-4-All kullan.** En yüksek sesli paydaşın sıralamayı belirlemesini önler.
+- **Oylamayı karar sanma.** Oylama önceliği görünür kılar; sıralama kararı sende.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Keşif oturumlarını yapılandır.** Ürün fikri toplarken sessiz yazma turu, en kıdemli kişinin fikrine yaslanmayı engeller.
+- **Davet sorusunu ürün hedefinden türet.** "Tekrar eden siparişi ne engelliyor?" iyi bir davettir.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Risk atölyesini 1-2-4-All ile yap.** Riski en iyi görenler en az konuşanlar olabilir.
+- **Uzun durum toplantısı yerine Lean Coffee dene.** Gündemi katılımcılar yazınca yalnız önemli konular konuşulur.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim atölyesinde sessiz turu atlama.** İş birimlerinden gelen kişiler ilk dakikada kendi ihtiyacını yazarsa, toplantı tek bir sese kaymaz.
+- **Çıkanları görünür tut.** Pano ve yapışkan notlar, kimin neyi söylediğini değil neyin söylendiğini kaydeder.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Tasarım eleştirisinde 1-2-4-All kullan.** Önce herkes sessizce not alırsa, ilk konuşanın görüşü herkesinkine dönüşmez.
+- **Atölyeyi bir soruyla aç.** "Ne düşünüyorsunuz?" yerine "Bu akışta kullanıcı nerede durur?" diye sor.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Kolaylaştırma, içeriğe karar vermeden konuşmanın nasıl akacağına karar vermektir.
+- Üç temel: açık bir davet sorusu, sıkı bir zaman kutusu ve konuşmanın sırasını belirleyen bir yapı.
+- 1-2-4-All herkesi sırayla tek başına, ikili, dörtlü ve bütün grupta düşündürür; yaklaşık 15 dakika sürer.
+- Lean Coffee'de gündemi katılımcılar yazar ve oylar; en çok oy alan konudan başlanır.
+- Nokta oylaması dikkati toplar, kararın yerini almaz.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="1-2-4-All'ın dört adımı ve yaklaşık süreleri nedir?">
+
+Tek başına sessiz düşünme (1 dk), ikililer (2 dk), dörtlü gruplar (5 dk) ve bütün grup (7 dk). Toplam yaklaşık 15 dakika.
+
+</SelfCheck>
+
+<SelfCheck question="Lean Coffee'de gündem nasıl oluşur?">
+
+Katılımcılar konularını yapışkan notlara yazar ve her birini kısaca tanıtır. Herkesin iki oyu vardır. Konular oy sırasına göre konuşulur.
+
+</SelfCheck>
+
+<SelfCheck question="Bir toplantıda hep aynı iki kişi konuşuyor. Kolaylaştırıcı olarak ne yaparsın?">
+
+Konuşmayı kişilere değil bir yapıya bağlarsın. Örneğin 1-2-4-All ile önce herkesin sessizce yazmasını, sonra küçük gruplarda paylaşmasını sağlarsın. Böylece çekingen kişilerin fikirleri büyük gruba ulaşmadan önce bir dinleyici bulur.
+
+</SelfCheck>
+
+<SelfCheck question="Takım nokta oylamasıyla bir özelliği ilk sıraya koydu. Bu, backlog sırası anlamına mı gelir?">
+
+Hayır. Oylama takımın neyi önemli bulduğunu gösterir. Backlog'un sırasından Product Owner hesap verir; oylama onun kararına bir girdidir.
+
+</SelfCheck>

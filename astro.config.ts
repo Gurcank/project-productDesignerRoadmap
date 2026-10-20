@@ -11,7 +11,7 @@ import { devPagefind } from "./src/plugins/dev-pagefind";
 
 // Static output: the site is content-only and is served from a static host (ADR-001).
 export default defineConfig({
-  site: "https://product-designer-roadmap.pages.dev",
+  site: "https://seeyournextstep.pages.dev",
   output: "static",
   /*
    * The harness assigns a port via PORT when it starts the dev server; without

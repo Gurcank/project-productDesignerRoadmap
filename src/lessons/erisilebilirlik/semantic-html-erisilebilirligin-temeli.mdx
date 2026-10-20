@@ -5,7 +5,8 @@ outcomes:
   - "Bir etkileşimin link mi buton mu olması gerektiğine karar verip teslimde yazabilirsin."
   - "Başlık seviyelerini görünüme göre değil yapıya göre belirleyebilirsin."
   - "Landmark'ların ekran okuyucu kullanıcısına ne sağladığını bilirsin."
-minutes: 10
+minutes: 7
+standard: 2
 sources:
   - label: "MDN — HTML: Erişilebilirliğin temeli"
     url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibility/HTML"
@@ -19,6 +20,9 @@ import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import KeyboardDemo from "~/components/lesson/KeyboardDemo.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Aşağıda iki "buton" var. Gözle bakınca aynılar. Birine Tab tuşuyla ulaşabilirsin, ötekine ulaşamazsın; birine Enter ile basabilirsin, ötekine basamazsın. Dene.
 
@@ -41,7 +45,7 @@ Gerçek bir `<button>`:
 
 Aynı görünümdeki bir `<div>`'de bunların hepsini elle yazman gerekir ve genelde **eksik** yazılır. Kod incelemelerinde ve erişilebilirlik denetimlerinde en sık çıkan sorun kategorisidir. "Bu tıklanabilir kart `div`; klavyeyle ulaşılamıyor. Buton veya link olmalı."
 
-Tasarımcı olarak bu seni neden ilgilendirir? Çünkü tasarımda "bu tıklanabilir" dediğin her şeyin **hangi eleman** olacağına sen de karar verirsin ve teslimde yazarsın.
+Bu neden tasarımı ilgilendirir? Çünkü tasarımda "bu tıklanabilir" denen her şeyin **hangi eleman** olacağı da tasarımda kararlaştırılır ve teslimde yazılır.
 
 ## Link ve buton
 
@@ -102,7 +106,21 @@ Bu sitedeki her sayfada tek bir `h1` var, bölgeler (`header`, `nav`, `main`, `a
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in dükkân sayfası ekran okuyucuyla açıldığında tek bir başlık ve yüzlerce "tıklanabilir" öğe okunuyordu.
+
+1. **Başlık hiyerarşisi:** dükkân adı `h1`, menü kategorileri `h2`, ürünler liste öğesi oldu. Ekran okuyucu kullanıcısı artık kategoriler arasında başlıkla atlıyor.
+2. **Landmark:** üst menü `nav`, ürün listesi `main`, sepet özeti `aside`.
+3. **Link ve buton:** "Sepete ekle" bir `div`'di; `button` oldu. Ürün adı ise ürünün kendi adresine giden bir link.
+4. **Bedava gelenler:** düğme klavyeyle çalışmaya, Enter ve boşluk tuşuna yanıt vermeye ve "düğme" diye duyurulmaya başladı; ek kod yazılmadı.
+
+Değişiklik ekranda hiçbir şeyi görsel olarak değiştirmedi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Teslimde eleman türünü yaz:** link mi buton mu, hangi başlık seviyesi.
 - **Tıklanabilir her şeyin hangi eleman olacağını belirle.** Kart tıklanıyorsa link ya da buton olmalı.
@@ -110,7 +128,32 @@ Bu sitedeki her sayfada tek bir `h1` var, bölgeler (`header`, `nav`, `main`, `a
 - **Sayfa iskeletinde bölgeleri adlandır:** ana içerik, gezinti, yan bilgi, altbilgi.
 - **Tasarımı klavyeyle ve ekran okuyucuyla "okunur" düşün:** Tab sırası ve başlık listesi mantıklı mı?
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **"Görünüşte aynı" işin değerini bil.** Semantik düzeltme ekranda görünmez ama ürünü kullanılabilir yapar.
+- **Arama motoru görünürlüğünü de hesaba kat.** Doğru başlık yapısı aranabilirliği de iyileştirir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kabul kriterine eleman türünü yaz.** "Sepete ekle bir düğmedir; ürün adı bir linktir."
+- **Başlık yapısını görünüme göre değil, içeriğe göre iste.** Seviye, yapıyı anlatır.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Sayfanın bölgelerini içerik modeline ekle.** Hangi içerik ana bölüm, hangisi yan bilgi?
+- **Eylem ile gezinmeyi gereksinimde ayır.** Bir şey yapan düğme, bir yere giden linktir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Ekran okuyucu kullanıcısının sayfada nasıl gezindiğini gözle.** Başlıkla mı, bölgeyle mi atlıyor?
+- **Bulguyu eleman düzeyinde raporla.** "Düğme olarak duyurulmuyor" geliştiriciye net bir iş verir.
+
+</Lens>
+</Lenses>
 
 <Summary>
 

@@ -1,0 +1,135 @@
+---
+summary: "Ortalama, farklı kullanıcı gruplarını tek bir sayıda eritir. Segmentasyon kullanıcıları davranışa, edinme kanalına ya da değere göre ayırarak ortalamanın gizlediğini gösterir ve kararı doğru gruba yöneltir."
+outcomes:
+  - "Davranışsal, kanal ve değer segmentlerini ayırt edebilirsin."
+  - "Bir ortalamanın segment karışımı değişince nasıl yanılttığını açıklayabilirsin."
+  - "Bir metriği segmentlere ayırıp hangi grubun farkı yarattığını bulabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "a16z — 16 Startup Metrics (2015)"
+    url: "https://a16z.com/16-startup-metrics/"
+  - label: "Amplitude — Understanding retention analytics"
+    url: "https://amplitude.com/guides/retention-analytics"
+  - label: "Wikipedia — Business model canvas (customer segments)"
+    url: "https://en.wikipedia.org/wiki/Business_Model_Canvas"
+additions:
+  - "Kanala göre CAC kırılımı (a16z); davranışsal kohort (Amplitude); müşteri segmenti türleri (Business Model Generation, Wikipedia aracılığıyla)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Matrix2x2 from "~/components/diagrams/primitives/Matrix2x2.astro";
+
+Bir ay boyunca 30 günde ikinci sipariş oranı %41'den %38'e düştü. Toplantıda herkes ürünü suçladı: yeni bir hata mı vardı, bir değişiklik mi ters gitmişti?
+
+Ece oranı edinme kanalına göre ayırdı. Hiçbir kanalda oran düşmemişti. Değişen şey karışımdı: o ay Instagram reklamı çok daha fazla yeni müşteri getirmişti ve Instagram'dan gelenler zaten daha az dönüyordu. Bu ders, ortalamanın neyi gizleyebileceğini ve kullanıcıları gruplara ayırmayı anlatır.
+
+## Ortalama neyi gizler?
+
+Bir ortalama, birbirinden çok farklı grupları tek bir sayıda eritir. Grupların oranı değişince, gruplardan hiçbiri değişmese bile ortalama oynar. Aynı tuzağın uç biçimi Simpson paradoksudur; [Korelasyon ve nedensellik](/urun-analitigi/korelasyon-ve-nedensellik/) dersinde.
+
+**Segmentasyon**, kullanıcıları ortak bir özelliğe göre gruplara ayırmaktır. Amaç, kararı doğru grup için vermektir.
+
+## Üç tür segment
+
+| Tür | Neye göre? | Demlik örneği |
+|---|---|---|
+| **Davranışsal** | Ne yaptıklarına | Haftada 3+ sipariş veren sabah müşterisi |
+| **Kanal** | Nereden geldiklerine | QR kartı, arkadaş daveti, Instagram |
+| **Değer** | Ne kadar değer ürettiklerine | Yüksek sepetli, sık sipariş veren |
+
+Amplitude **davranışsal kohortu**, kullanıcıları üründe yaptıkları ya da yapmadıkları eylemlere göre gruplamak diye tanımlar. Kanal kırılımını a16z'nin rehberi de ister: ücretli bir kanaldan gelen müşterinin kaça mal olduğu ancak kanal kanal görülürse karar verilebilir.
+
+İş modeli tarafında da segment düşüncesi vardır. *Business Model Generation*'a dayanan tanımlarda müşteri segmentleri kitle pazarı, niş, çeşitlenmiş ve çok taraflı platform gibi türlere ayrılır. Demlik çok taraflı bir platformdur: müşteriler ve dükkânlar birbirine bağlı iki segmenttir.
+
+<Matrix2x2
+  label="Demlik'in müşteri segmentleri: sıklık ve sepet"
+  caption="Üç segment sipariş sıklığı ve ortalama sepete göre yerleşti. Sabah müşterileri haftada üç ya da daha çok sipariş verir, ortalama sepetleri yaklaşık 170 TL; aktif müşterilerin yüzde 25'i ama siparişlerin yüzde 60'ı. Öğrenciler sık sipariş verir ama sepetleri küçüktür, ortalama 120 TL. Ara sıra gelenler ayda bir sipariş verir ama sepetleri büyüktür, yaklaşık 190 TL, çünkü çoğu zaman birkaç kişi için sipariş verirler; aktiflerin yüzde 40'ı."
+  x={{ title: "Sipariş sıklığı", low: "seyrek", high: "sık" }}
+  y={{ title: "Ortalama sepet", low: "küçük", high: "büyük" }}
+  quadrants={[
+    { title: "Seyrek, büyük sepet", sub: "ara sıra gelen" },
+    { title: "Çekirdek", sub: "sık ve iyi sepet", tone: "progress" },
+    { title: "Seyrek, küçük sepet", sub: "kazanılacak grup" },
+    { title: "Sık, küçük sepet", sub: "öğrenci" },
+  ]}
+  points={[
+    { label: "Sabah", x: 0.85, y: 0.62 },
+    { label: "Ara sıra", x: 0.15, y: 0.6 },
+    { label: "Öğrenci", x: 0.62, y: 0.15 },
+  ]}
+/>
+
+## Segmentasyon bir karar aracıdır
+
+İyi bir segment bir karar değiştirir. Üç soru sorulur:
+
+1. **Grup yeterince büyük mü?** Çok küçük bir grup için ayrı bir ürün kararı nadiren değer.
+2. **Grup farklı davranıyor mu?** Davranış aynıysa ayırmak gürültü ekler.
+3. **Gruba ulaşabiliyor muyuz?** Bir ekranda, bir kanalda ya da bir mesajla.
+
+<Case>
+
+Ece'nin kanal kırılımı tartışmayı bitirdi:
+
+1. **Kanallara göre 30 günde ikinci sipariş:** QR %52, arkadaş daveti %47, Instagram %28. Hiçbiri o ay düşmemişti.
+2. **Karışım değişmişti:** Instagram'ın yeni müşterilerdeki payı yükselmişti; ortalama bu yüzden %38'e indi.
+3. **Karar:** pazarlama Instagram bütçesinin bir kısmını kasadaki QR kartlarına kaydırdı. Elif, panoda ikinci sipariş oranının yanına kanal kırılımını ekletti.
+4. **Davranışsal segment:** sabah müşterileri aktiflerin %25'iydi ama siparişlerin %60'ını veriyordu. "Son siparişini tekrarla" onlar için tasarlanmıştı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Bir ortalama oynadığında önce karışıma bak.** Gruplardan hiçbiri değişmeden ortalama değişebilir.
+- **Ürün kararını bir segment için ver.** "Bütün kullanıcılar" çoğu zaman kimse için değildir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Segmenti davranışla tanımla.** Görüşme katılımcılarını yaş yerine davranışa göre seç: sabah müşterisi, ara sıra gelen.
+- **Segmentin nedenini araştır.** Instagram'dan gelenler neden daha az dönüyor? Bu bir araştırma sorusudur.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Ortalama farklı grupları tek sayıda eritir; grupların oranı değişince ortalama yanıltır.
+- Segmentasyon kullanıcıları ortak bir özelliğe göre gruplar: davranış, kanal, değer.
+- Kanal kırılımı, hangi edinme kanalının iyi müşteri getirdiğini gösterir.
+- Demlik iki taraflı bir platformdur: müşteriler ve dükkânlar birbirine bağlı iki segmenttir.
+- İyi bir segment büyük, farklı davranan ve ulaşılabilir bir gruptur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir metrik düştü ama hiçbir segmentte düşmedi. Bu nasıl olabilir?">
+
+Segmentlerin karışımı değişmiştir. Düşük oranlı bir grubun payı artınca, gruplardan hiçbiri değişmese bile ortalama düşer.
+
+</SelfCheck>
+
+<SelfCheck question="Davranışsal segment ile kanal segmenti arasındaki fark nedir?">
+
+Davranışsal segment kullanıcının üründe ne yaptığına göre ayırır (haftada 3+ sipariş). Kanal segmenti kullanıcının nereden geldiğine göre ayırır (QR, davet, reklam).
+
+</SelfCheck>
+
+<SelfCheck question="Bir segment aktiflerin yalnız %2'si ve diğerleriyle aynı davranıyor. Ona özel bir özellik yapar mısın?">
+
+Muhtemelen hayır. İyi bir segment yeterince büyük olmalı, farklı davranmalı ve ulaşılabilir olmalı. Küçük ve farklı davranmayan bir grup için ayrı karar çoğu zaman değer üretmez.
+
+</SelfCheck>
+
+<SelfCheck question="Sabah müşterileri aktiflerin %25'i ama siparişlerin %60'ı. Bu bilgi ürün kararını nasıl etkiler?">
+
+Siparişlerin çoğunu küçük bir grup veriyor. Onların deneyimini iyileştirmek North Star'ı en çok etkileyen yollardan biridir; "Son siparişini tekrarla" tam bu grup için tasarlandı.
+
+</SelfCheck>

@@ -1,0 +1,48 @@
+---
+title: "Proje takvimi"
+summary: "İş paketlerini süreleri, bağımlılıkları ve tarihleriyle sıralar; kritik yolu ve bollukları gösterir. Excel'de açılır."
+kind: "tablo"
+roles: ["project-manager", "product-manager", "product-owner"]
+lessons: ["proje-yonetimi/bagimliliklar-ve-kritik-yol", "proje-yonetimi/gantt-ve-kilometre-taslari", "proje-yonetimi/tahmin"]
+sources:
+  - label: "Watt, Project Management (2. baskı) — 10. Project Schedule Planning"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-10-project-schedule-planning-project-management/"
+table:
+  columns: ["Kod", "İş", "Süre (hafta)", "Önce bitmesi gereken", "En erken başlangıç", "En erken bitiş", "Bolluk", "Kritik mi?", "Sahip"]
+  example:
+    - ["A", "Kasa şartnamesi", "2", "—", "0", "2", "0", "Evet", "Ayşe"]
+    - ["B", "Entegrasyon geliştirme", "4", "A", "2", "6", "0", "Evet", "Tedarikçi"]
+    - ["C", "Entegrasyon testi", "2", "B", "6", "8", "0", "Evet", "Zeynep"]
+    - ["P", "Öğrenci işleri protokolü", "3", "—", "0", "3", "1", "Hayır", "Hakan"]
+    - ["D", "Öğrenci kartı indirimi", "4", "P", "3", "7", "1", "Hayır", "Deniz"]
+    - ["S", "Kafe sözleşmeleri", "3", "—", "0", "3", "2", "Hayır", "Hakan"]
+    - ["K", "Kurulum ve eğitim", "3", "S", "3", "6", "2", "Hayır", "Ozan"]
+    - ["T", "Pilot kafe", "2", "C, D, K", "8", "10", "0", "Evet", "Leyla"]
+    - ["Y", "12 kafeye açılış", "3", "T", "10", "13", "0", "Evet", "Ozan"]
+    - ["◆", "Lansman (kilometre taşı)", "0", "Y", "13", "13", "1 (tampon)", "—", "Hakan"]
+  blankRows: 10
+---
+
+## Ne zaman kullanılır?
+
+İş kırılım yapısı hazır olduğunda. Her iş paketi bir satır olur. Takvim, "hangi iş hangisini bekliyor?" sorusunun cevabıdır.
+
+## Sütunlar
+
+- **Süre:** iş paketinin sahibinden gelen tahmin. Belirsizse üç nokta tahmininin beklenen değerini yaz.
+- **Önce bitmesi gereken:** bitiş-başlangıç bağımlılığı. Bir işin başlaması için hangi işlerin bitmesi gerekiyor?
+- **En erken başlangıç ve bitiş:** ileri geçişle bulunur. Bir iş, ondan önce gelen işlerin en geç biteni bitince başlar.
+- **Bolluk:** bir işin projeyi geciktirmeden ne kadar kayabileceği. Sıfırsa iş kritik yoldadır.
+- **Kritik mi?:** bolluğu sıfır olan işler. Bunlardan birinde kaybedilen bir hafta, projeden kaybedilen bir haftadır.
+
+Haftalar projenin başından sayılır. Takvime gerçek tarih yazmak istersen ayrı bir sütun ekle; ama önce haftalarla düşünmek bağımlılıkları görmeyi kolaylaştırır.
+
+## Excel'de
+
+CSV dosyası noktalı virgülle ayrılmıştır ve Türkçe karakterler için UTF-8 olarak kaydedilir; Türkçe Excel'de çift tıklayınca doğru açılır. Gantt görünümü istersen "En erken başlangıç" ve "Süre" sütunlarından yığılmış bir çubuk grafiği çiz: ilk seriyi görünmez yap.
+
+## Sık hatalar
+
+- **Bağımlılığı boş bırakmak.** Bağımlılıksız bir takvim, her şeyin aynı gün başlayabileceğini varsayar.
+- **Tamponu her işe dağıtmak.** Tampon projenin sonunda tek parça durursa görünür kalır ve korunur.
+- **Takvimi bir kez yazıp bırakmak.** Her hafta gerçekleşen tarihleri işle; kritik yol değişebilir.

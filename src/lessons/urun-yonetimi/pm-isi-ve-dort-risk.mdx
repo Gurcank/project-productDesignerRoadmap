@@ -1,0 +1,158 @@
+---
+summary: "Bir ürün değerli, kullanılabilir, yapılabilir ve iş için uygun olmalıdır. Product Manager değer ve iş uygunluğu risklerinden ve ürünün sonuçlarından hesap verir; dört risk erken ve birlikte ele alınır."
+outcomes:
+  - "Dört büyük riski ve her birinin cevapladığı soruyu sayabilirsin."
+  - "Hangi riskten kimin sorumlu olduğunu ve PM'in neyden hesap verdiğini anlatabilirsin."
+  - "Bir fikrin dört riskini, inşa etmeden önce nasıl sınayacağını söyleyebilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "SVPG — Marty Cagan, The Four Big Risks (2017)"
+    url: "https://www.svpg.com/four-big-risks/"
+additions:
+  - "Değer, kullanılabilirlik, yapılabilirlik ve iş uygunluğu riskleri; kimin sorumlu olduğu (Cagan)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Çeyrek planlamasında Elif "Son siparişini tekrarla" fikrini anlattı. Burak hemen cevap verdi: "Kolay. İki sprintte biter." Selin ekledi: "Tasarımı da basit, ana ekranda bir düğme."
+
+Elif teşekkür etti ama karar vermedi. "Kolay olması iyi haber," dedi, "ama yalnız bir soruya cevap veriyor: yapabilir miyiz? Müşteri bunu kullanır mı, bulabilir mi, dükkânlar için iyi mi, henüz bilmiyoruz." Bu ders, bir fikrin dört büyük riskini ve Product Manager'ın asıl işini anlatır.
+
+## PM neyden hesap verir?
+
+Marty Cagan, SVPG'deki 2017 tarihli yazısında başarılı ürünlerin dört şeyi birden sağladığını söyler. Bunların her biri, ters gidebilecek bir risktir:
+
+| Risk | Cevapladığı soru | Sorumlu |
+|---|---|---|
+| **Değer riski** | Müşteriler bunu satın alır mı, kullanıcılar kullanmayı seçer mi? | Product Manager |
+| **Kullanılabilirlik riski** | Kullanıcılar onu nasıl kullanacaklarını çözebilir mi? | Product Designer |
+| **Yapılabilirlik riski** | Mühendisler eldeki zaman, beceri ve teknolojiyle onu yapabilir mi? | Baş mühendis |
+| **İş uygunluğu riski** | Bu çözüm işin farklı yönleri için de işe yarar mı? | Product Manager |
+
+Cagan'a göre Product Manager değer ve iş uygunluğu risklerinden sorumludur ve ürünün **sonuçlarından** hesap verir. Tasarımcı deneyimden, baş mühendis teslimattan hesap verir.
+
+**Çıktı ≠ sonuç.** Yayına alınan özellik bir çıktıdır. Müşterinin davranışında ve işin sayılarında görülen değişiklik bir sonuçtur. PM'in işi özellik çıkarmak değil, sonucu hareket ettirmektir. Rollerin ayrımı [Ekipteki roller](/urun-gelistirme/ekipteki-roller/) dersinde.
+
+<Tree
+  label="Bir fikrin dört riski"
+  caption="'Son siparişini tekrarla' fikrinin dört riski vardır. Değer riski, müşterinin onu kullanmayı seçip seçmeyeceğidir; PM'in sorumluluğundadır. Kullanılabilirlik riski, müşterinin düğmeyi bulup kullanabilmesidir; tasarımcının sorumluluğundadır. Yapılabilirlik riski, son siparişin ürünlerinin hâlâ menüde olup olmadığı gibi teknik sorulardır; baş mühendisindir. İş uygunluğu riski, tekrar siparişin sepeti küçültüp dükkânların gelirini düşürüp düşürmeyeceğidir; yine PM'indir."
+  root={{
+    title: "Son siparişini tekrarla",
+    tone: "accent",
+    children: [
+      { title: "Değer", sub: "kullanmayı seçer mi? · PM", tone: "progress" },
+      { title: "Kullanılabilirlik", sub: "düğmeyi bulur mu? · tasarım" },
+      { title: "Yapılabilirlik", sub: "ürünler hâlâ menüde mi? · mühendis" },
+      { title: "İş uygunluğu", sub: "sepet küçülür mü? · PM", tone: "progress" },
+    ],
+  }}
+/>
+
+## İş uygunluğu: en çok gözden kaçan risk
+
+Cagan, kitabının ilk baskısında yalnız üç özellik saymıştı: değerli, kullanılabilir, yapılabilir. "Değerli"yi hem müşteri hem iş için değerli diye tanımlamıştı. Yıllar içinde bunun PM'lerin müşteri değerine odaklanıp iş değerini gözden kaçırmasını kolaylaştırdığına karar verdi ve iş uygunluğunu ayrı bir risk yaptı.
+
+İş uygunluğu riskinin örnekleri geniştir:
+
+- Ürün, satış ya da pazara çıkış kanalına uyuyor mu?
+- İş ortaklarıyla sözleşmelerin ve yasal yükümlülüklerin içinde kalıyor mu?
+- Müşteriyi kârlı bir maliyetle kazanabiliyor muyuz, ürünü paraya çevirebiliyor muyuz?
+- Markanın verdiği sözle tutarlı mı?
+
+Demlik'te bu sorular dükkânlara da uzanır. Bir özellik müşteriyi memnun edip baristanın iş akışını bozuyorsa, Demlik'in ürün ilkelerinden biriyle çelişir.
+
+## Riskleri erken ele almak
+
+Cagan'a göre en zor risk genellikle değer riskidir. Güçlü ürün takımları üç şeyi farklı yapar:
+
+1. **Büyük riskleri erken ele alır**, özellikle değer ve iş uygunluğu risklerini. İnşa etmeden önce.
+2. **Çözümü birlikte bulur:** PM, tasarımcı ve mühendis yan yana çalışır.
+3. **Problem çözmeye odaklanır:** Cagan'ın deyişiyle iş, özellik ya da yol haritası değil, sonuç üretmektir.
+
+**Kolay ≠ değerli.** Burak'ın "iki sprintte biter" cevabı yalnız yapılabilirlik riskini konuşur. Kolay yapılan ama kimsenin kullanmadığı bir özellik, en pahalı özelliktir: hem geliştirme zamanını hem de ürünün sadeliğini harcar. Riskleri ucuz testlerle sınamayı [Varsayım haritalama ve ürün deneyleri](/urun-yonetimi/varsayim-haritalama-ve-urun-deneyleri/) dersi anlatıyor.
+
+<Case>
+
+Elif, one-pager'ına dört risk için birer soru ve birer sınama yolu yazdı:
+
+1. **Değer:** sabah müşterileri tek dokunuşla tekrar etmek ister mi? Veri: aktiflerin %54'ü son beş siparişinde hep aynı ürünü almış.
+2. **Kullanılabilirlik:** müşteri düğmeyi ana ekranda fark eder mi? Selin ve Mert sekiz kişiyle prototip testi yapacak.
+3. **Yapılabilirlik:** son siparişin ürünleri hâlâ menüde mi? Ece siparişlere bakacak.
+4. **İş uygunluğu:** tekrar sipariş, insanlar ek ürün almadığı için sepeti küçültür mü? Sepet küçülürse dükkânın cirosu düşer; Demlik'in dükkânlara verdiği değer de.
+
+Dördüncü soru masada kimsenin aklına gelmemişti. Elif onu "inşa etmeden önce cevaplanmalı" diye işaretledi.
+
+</Case>
+
+<Tool slug="one-pager" />
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Sonuçtan hesap ver, çıktıdan değil.** "Özelliği çıkardık" bir rapor değildir; "ikinci sipariş oranı ne oldu?" bir rapordur.
+- **İş uygunluğunu masaya sen getir.** Gelir, kanal, sözleşme ve marka sorularını kimse senden önce sormaz.
+- **Dört riski inşa etmeden önce yaz.** Her biri için bir soru ve bir ucuz test.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Backlog'a girmeden riskleri sor.** Değer riski cevaplanmamış bir öğe, sprintin en pahalı öğesi olabilir.
+- **Kabul kriterine iş kurallarını koy.** İş uygunluğu kararları çoğu zaman bir kurala dönüşür.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Kullanılabilirlik riski senin.** Bir prototip testi, inşa etmeden önce bu riski en ucuz yoldan sınar.
+- **Değer konuşmasına katıl.** Kullanıcıyı en çok gören kişi olarak değer riskine dair kanıtın vardır.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Riskleri araştırma sorularına çevir.** "Kullanır mı?" sorusunu davranışı gözleyen bir teste dönüştür.
+- **Hangi riskin hangi yöntemle sınanacağını öner.** Değer için veri ve görüşme, kullanılabilirlik için prototip testi.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Dört büyük risk: değer, kullanılabilirlik, yapılabilirlik ve iş uygunluğu.
+- PM değer ve iş uygunluğu risklerinden sorumludur ve ürünün sonuçlarından hesap verir.
+- İş uygunluğu kanal, sözleşme, yasa, müşteri edinme maliyeti, gelir ve marka sorularını kapsar.
+- En zor risk genellikle değer riskidir; güçlü takımlar riskleri inşa etmeden önce ele alır.
+- Kolay yapılan bir özellik, değerli olduğu anlamına gelmez.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Dört büyük risk nedir ve her biri hangi soruyu sorar?">
+
+Değer riski: müşteri satın alır ya da kullanmayı seçer mi? Kullanılabilirlik riski: kullanıcı nasıl kullanacağını çözebilir mi? Yapılabilirlik riski: eldeki zaman, beceri ve teknolojiyle yapılabilir mi? İş uygunluğu riski: çözüm işin farklı yönleri için de işe yarar mı?
+
+</SelfCheck>
+
+<SelfCheck question="Bir mühendis 'bu iki günlük iş, hemen yapalım' diyor. PM olarak ne sorarsın?">
+
+Bu cevap yalnız yapılabilirlik riskini konuşur. Müşterinin bunu kullanmayı seçip seçmeyeceğini, bulup kullanabileceğini ve iş için uygun olup olmadığını sorarım. Kimsenin kullanmadığı kolay bir özellik de zaman ve sadelik harcar.
+
+</SelfCheck>
+
+<SelfCheck question="Cagan neden 'değerli' yerine iki ayrı risk saymaya başladı?">
+
+"Değerli" hem müşteri hem iş değerini kapsıyordu. Bu, PM'lerin müşteri değerine odaklanıp iş değerini gözden kaçırmasını kolaylaştırıyordu. İş uygunluğunu ayrı bir risk yapınca o sorular açıkça sorulmak zorunda kalır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir özellik müşterileri memnun ediyor ama baristaların siparişleri hazırlamasını yavaşlatıyor. Hangi risk?">
+
+İş uygunluğu riski. Çözüm müşteri için değerli olsa da işin bir parçası olan dükkânlar için işe yaramıyor. Demlik'in ürün ilkelerinden biri tam bu riski koruyor: dükkânın düzenini bozmamak.
+
+</SelfCheck>

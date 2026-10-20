@@ -1,0 +1,182 @@
+---
+summary: "Kanban Rehberi dört akış metriği ister: WIP, throughput, iş öğesi yaşı ve cycle time. Little Yasası bunları birbirine bağlar; kümülatif akış diyagramı üçünü tek bakışta gösterir."
+outcomes:
+  - "Kanban'ın üç pratiğini ve bir iş akışı tanımının öğelerini sayabilirsin."
+  - "Dört akış metriğini ve hizmet seviyesi beklentisini kendi takımın için hesaplayabilirsin."
+  - "Little Yasası'yla WIP, throughput ve cycle time arasındaki ilişkiyi açıklayabilirsin."
+  - "Bir kümülatif akış diyagramında birikmeyi ve dengesizliği okuyabilirsin."
+minutes: 9
+standard: 2
+sources:
+  - label: "The Kanban Guide (Mayıs 2025)"
+    url: "https://kanbanguides.org/the-kanban-guide/2025.5/"
+  - label: "InfoQ — Amr Noaman, How Kanban Works (Little's Law)"
+    url: "https://www.infoq.com/articles/how-kanban-works/"
+  - label: "ActionableAgile — Cumulative Flow Diagram"
+    url: "https://55degrees.atlassian.net/wiki/spaces/AAS/pages/2543550465/Cumulative+Flow+Diagram"
+additions:
+  - "Kanban Rehberi 2025: üç pratik, iş akışı tanımı, SLE ve dört zorunlu akış metriği"
+  - "Little Yasası (InfoQ)"
+  - "Kümülatif akış diyagramını okumak (ActionableAgile)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Chart from "~/components/diagrams/primitives/Chart.astro";
+
+Panel takımının panosunda "Test" sütunu bir haftadır doluyordu. Ozan bunu fark ettiğinde dükkânlardan şikâyetler gelmeye başlamıştı: "İstediğimiz rapor ne zaman çıkacak?" Ozan'ın cevabı yoktu. Takım çok çalışıyordu, ama işler bitmiyordu.
+
+Pano, işin nerede olduğunu gösterir. Ama işin ne kadar hızlı aktığını ve nerede biriktiğini görmek için birkaç sayıya ihtiyaç vardır. Bu ders o sayıları anlatır.
+
+## Kanban: akışı en iyilemek
+
+Mayıs 2025 tarihli Kanban Rehberi'ne göre **Kanban**, bir süreçten geçen değerin akışını en iyilemek için bir stratejidir. Birlikte çalışan üç pratikten oluşur:
+
+1. İş akışını tanımlamak ve görselleştirmek.
+2. İş akışındaki öğeleri aktif olarak yönetmek.
+3. İş akışını iyileştirmek.
+
+Panonun, WIP limitinin ve darboğazın temelini [Kanban](/calisma-bicimi/kanban/) dersi anlatıyor. Bu ders rehberin en son sürümünü ve ölçümlerini anlatır.
+
+### İş akışı tanımı
+
+Rehberin temel kavramı **iş akışı tanımıdır** (DoW, Definition of Workflow). En azından şunları içerir:
+
+- Akan iş öğelerinin tanımı.
+- Bir öğenin ne zaman başlamış, ne zaman bitmiş sayılacağı.
+- Öğelerin başlangıçtan bitişe geçtiği aşamalar.
+- WIP'in nasıl kontrol edileceği.
+- Her aşama için açık kurallar.
+- Bir **hizmet seviyesi beklentisi** (SLE, service level expectation).
+
+SLE, bir öğenin baştan sona ne kadar sürmesi gerektiğine dair bir öngörüdür. İki parçası vardır: bir süre ve bir olasılık. Panel takımının SLE'si şudur: "İşlerin %85'i 8 gün ya da daha kısa sürede biter." SLE geçmiş cycle time verisinden hesaplanır; veri yoksa en iyi tahminle başlanır.
+
+### Aktif yönetim
+
+Öğeleri aktif yönetmek üç şey demektir: WIP'i kontrol etmek, öğelerin SLE'ye bakarak gereksiz yere yaşlanmamasını sağlamak ve tıkanan işi açmak.
+
+WIP'i kontrol etmek bir **çekme sistemi** yaratır: yeni bir işe ancak kapasite olduğuna dair açık bir işaret varsa başlanır.
+
+## Dört akış metriği
+
+Rehber dört metriği zorunlu tutar:
+
+| Metrik | Tanım | Panel takımında |
+|---|---|---|
+| **WIP** | Başlamış ama bitmemiş öğe sayısı | Ortalama 5 |
+| **Throughput** | Birim zamanda biten öğe sayısı | İş günü başına 1 |
+| **İş öğesi yaşı** (work item age) | Başlangıçtan bugüne geçen süre | Her kart için ayrı |
+| **Cycle time** | Başlangıçtan bitişe geçen süre | Ortalama 5 iş günü |
+
+İş öğesi yaşının farkı, **iş bitmeden önce** görülebilmesidir. Yaşı 7 güne ulaşmış bir kart, 8 günlük SLE'yi kaçırmak üzeredir. Takım ona şimdi yardım edebilir.
+
+## Little Yasası
+
+Kanban'ın dayandığı fikirlerden biri **Little Yasası**dır (John Little'ın adıyla). Yazılım için şöyle ifade edilir:
+
+**WIP = throughput × cycle time**
+
+Buradan **cycle time = WIP ÷ throughput** çıkar. Panel takımında ortalama 5 iş, günde 1 iş bitiyor: bir iş ortalama 5 günde biter.
+
+Bunun bir sonucu var: throughput aynı kalırken WIP artarsa, cycle time da uzar. Aynı anda daha çok işe başlamak, her işi daha geç bitirir. WIP limitinin varlık nedeni budur.
+
+## Kümülatif akış diyagramı
+
+**Kümülatif akış diyagramı** (CFD, cumulative flow diagram) her gün, her aşamaya o güne kadar kaç öğenin girdiğini gösterir. Yatay eksen günler, dikey eksen birikimli öğe sayısıdır. Little Yasası'nın üç metriğini aynı anda gösteren tek grafiktir.
+
+- İki çizgi arasındaki **dikey mesafe**, o gün o aşamalardaki **WIP**'tir.
+- İki çizgi arasındaki **yatay mesafe**, o tarihte biten işlerin yaklaşık ortalama **cycle time**'ıdır.
+- Çizgilerin **eğimi**, giriş ve çıkış hızıdır.
+
+<Chart
+  label="Panel takımının on günlük kümülatif akışı"
+  caption="Üç çizgi, o güne kadar başlayan, teste giren ve yayına çıkan iş sayısını gösterir. İlk yedi gün çizgiler paraleldir: her gün bir iş başlıyor, bir iş bitiyor, WIP 5'te sabit. Sekizinci günden sonra yayına çıkan çizgisi düzleşir, teste giren çizgisi ise yükselmeye devam eder. Aradaki bant genişler: işler testte birikiyor. Onuncu günde sistemdeki WIP 7'ye çıkmıştır."
+  x={{ title: "İş günü", labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"] }}
+  y={{ title: "Birikimli öğe", max: 15 }}
+  series={[
+    { name: "Başlayan", values: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15], tone: "plain", dashed: true },
+    { name: "Teste giren", values: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12], tone: "accent" },
+    { name: "Yayında", values: [1, 2, 3, 4, 5, 6, 7, 7, 7, 8], tone: "progress" },
+  ]}
+/>
+
+CFD'yi okumanın üç kuralı:
+
+- **Paralel çizgiler:** başlanan kadar iş bitiyor; sistem talebe yetişiyor.
+- **Açılan çizgiler:** başlanandan az iş bitiyor; iş birikiyor.
+- **Bir bandın şişmesi:** iş o aşamaya giriyor ama aynı hızla çıkmıyor. Sorulacak soru: "Burada işi ne biriktiriyor?"
+
+<Case>
+
+Ozan, Kaan'la panel takımının son on gününe baktı:
+
+1. **CFD'yi çizdiler:** sekizinci günden sonra "Yayında" çizgisi düzleşmişti; test bandı şişiyordu.
+2. **Nedenini sordular:** Zeynep o hafta kampüs projesinin entegrasyon testine ayrılmıştı. Panel takımının testi tek kişiye bağlıydı.
+3. **Yaşa baktılar:** testte bekleyen iki kartın yaşı 7 gündü; SLE'yi kaçırmak üzereydiler.
+4. **Çekmeyi durdurdular:** Test sütununun WIP limiti 2'ydi ve aşılmıştı. Takım yeni işe başlamayı bıraktı; Emre ve Defne testte Zeynep'e yardım etti.
+5. **Kural yazdılar:** "Test sütunu dolunca analiz yeni iş çekmez; geliştiriciler teste yardım eder." Bu kural iş akışı tanımına eklendi.
+
+İki gün sonra çizgiler yeniden paralel olmaya başladı.
+
+</Case>
+
+<Lenses>
+<Lens role="scrum-master">
+
+- **Yaşı her gün göster.** İş öğesi yaşı, sorunu iş bitmeden gösteren tek metriktir.
+- **CFD'yi retroya getir.** Şişen bir bant, retronun en iyi verisidir.
+- **WIP limitini kural olarak koru.** Limit aşıldığında yeni iş çekilmez; bu, takımın kendi kararıdır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **SLE'yi paydaşın diline çevir.** "İşlerin %85'i 8 günde biter" cümlesi, "ne zaman?" sorusuna dürüst bir cevaptır.
+- **Daha çok işe başlatma.** Little Yasası'na göre WIP arttıkça her iş daha geç biter.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Takımın SLE'sini takvimine taşı.** Tek tek tahmin yerine geçmiş cycle time dağılımına dayan.
+- **Paylaşılan kişileri CFD'de ara.** Bir bandın şişmesi çoğu zaman bir kişinin başka bir işe çekilmesidir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Kanban, değerin akışını en iyilemek için bir stratejidir: iş akışını tanımla ve görselleştir, öğeleri aktif yönet, iş akışını iyileştir.
+- İş akışı tanımı, öğeleri, başlangıç ve bitişi, aşamaları, WIP kontrolünü, kuralları ve bir SLE'yi içerir.
+- Dört zorunlu metrik: WIP, throughput, iş öğesi yaşı ve cycle time; yaş sorunu iş bitmeden gösterir.
+- Little Yasası: cycle time = WIP ÷ throughput; throughput aynıyken WIP artarsa her iş daha geç biter.
+- CFD'de dikey mesafe WIP'i, yatay mesafe cycle time'ı gösterir; şişen bant birikmeyi gösterir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Kanban Rehberi'nin zorunlu tuttuğu dört akış metriği nedir?">
+
+WIP, başlamış ama bitmemiş öğe sayısıdır. Throughput, birim zamanda biten öğe sayısıdır. İş öğesi yaşı, başlangıçtan bugüne geçen süredir. Cycle time, başlangıçtan bitişe geçen süredir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir takımda ortalama WIP 12, haftalık throughput 4. Ortalama cycle time nedir?">
+
+Little Yasası'na göre cycle time = WIP ÷ throughput = 12 ÷ 4 = 3 hafta.
+
+</SelfCheck>
+
+<SelfCheck question="CFD'de 'Geliştirme' bandı her gün biraz daha genişliyor. Ne anlama gelir, ne yaparsın?">
+
+İşler geliştirmeye giriyor ama aynı hızla çıkmıyor: birikme var. Önce nedenini sorarsın: bir tıkanma mı, bir kişi mi eksik, işler mi büyük? Yeni iş çekmeyi durdurup geliştirmedeki işleri bitirmeye odaklanmak, WIP limitinin işlevidir.
+
+</SelfCheck>
+
+<SelfCheck question="Neden iş öğesi yaşı cycle time'dan daha erken bir uyarı verir?">
+
+Cycle time ancak iş bittiğinde ölçülür; o zaman müdahale için geç olabilir. Yaş ise her gün, iş sürerken görülür. SLE'ye yaklaşan bir yaş, ekibe işe şimdi yardım etmesini söyler.
+
+</SelfCheck>

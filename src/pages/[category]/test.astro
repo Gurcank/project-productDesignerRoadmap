@@ -1,19 +1,21 @@
 ---
-import { getCollection } from "astro:content";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import { requireCategory } from "~/lib/content";
 import { renderInlineMarkdown } from "~/lib/inline-markdown";
+import { getQuizzes } from "~/lib/quizzes";
 
+// The written quiz when there is one, else the imported one (src/lib/quizzes.ts).
 export async function getStaticPaths() {
-  const quizzes = await getCollection("quizzes");
-  return quizzes.map((quiz) => ({
-    params: { category: quiz.data.category },
+  return [...(await getQuizzes()).values()].map((quiz) => ({
+    params: { category: quiz.category },
     props: { quiz },
   }));
 }
 
 const { quiz } = Astro.props;
-const category = requireCategory(quiz.data.category);
+const category = requireCategory(quiz.category);
+// A role-specific question shows to its roles and in Keşif / no-role mode.
+const forRoles = (roles?: string[]) => (roles ? [...roles, "all", "none"].join(" ") : undefined);
 ---
 
 <BaseLayout title={`${category.title} — Kendini test et`} section="roadmap">
@@ -30,8 +32,8 @@ const category = requireCategory(quiz.data.category);
 
     <ol class="quiz__list">
       {
-        quiz.data.items.map((item) => (
-          <li class="question">
+        quiz.items.map((item) => (
+          <li class="question" data-for-role={forRoles(item.roles)}>
             <p class="question__text">
               <span class="question__number" aria-hidden="true">
                 {item.n}
@@ -48,6 +50,23 @@ const category = requireCategory(quiz.data.category);
         ))
       }
     </ol>
+
+    {
+      quiz.sources.length > 0 && (
+        <aside class="quiz__sources" aria-labelledby="quiz-kaynaklar">
+          <h2 id="quiz-kaynaklar">Kaynaklar</h2>
+          <ul>
+            {quiz.sources.map((source) => (
+              <li>
+                <a href={source.url} rel="noreferrer">
+                  {source.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )
+    }
 
     <p class="quiz__back">
       <a href={`/${category.slug}/`}>← {category.title} adımlarına dön</a>
@@ -170,5 +189,29 @@ const category = requireCategory(quiz.data.category);
   .quiz__back {
     margin-block-start: var(--spacing-12);
     font-size: var(--text-sm);
+  }
+
+  .quiz__sources {
+    margin-block-start: var(--spacing-12);
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .quiz__sources h2 {
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-text-muted);
+  }
+
+  .quiz__sources ul {
+    margin-block-start: var(--spacing-2);
+    padding-inline-start: var(--spacing-4);
+  }
+
+  .quiz__sources li + li {
+    margin-block-start: var(--spacing-2);
   }
 </style>

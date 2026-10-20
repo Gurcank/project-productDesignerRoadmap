@@ -1,0 +1,154 @@
+---
+summary: "Kapanışta sonuç resmen kabul edilir, sözleşmeler kapatılır, belgeler arşivlenir, ekip serbest bırakılır ve öğrenilen dersler suçlamadan yazılır. Kapanış, yaşam döngüsünün en çok ihmal edilen evresidir."
+outcomes:
+  - "Bir projeyi kapatmanın adımlarını sırayla sayabilirsin."
+  - "Suçlamasız bir öğrenilen dersler toplantısı yürütebilirsin."
+  - "Bir dersi, bir sonraki projede uygulanabilecek somut bir değişikliğe çevirebilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Watt, Project Management (2. baskı) — 18. Project Completion"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-18-project-completion-project-management/"
+  - label: "Watt, Project Management (2. baskı) — 3. The Project Life Cycle (Phases)"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-3-the-project-life-cycle-phases-project-management/"
+additions:
+  - "Kapanış evresinin işleri, sözleşme kapanışı, ekibin serbest bırakılması, arşiv (Watt, bölüm 18)"
+  - "Öğrenilen dersler değerlendirmesi (Watt, bölüm 18)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Cycle from "~/components/diagrams/primitives/Cycle.astro";
+
+Lansman 14. haftada yapıldı. 12 kafe sipariş alıyordu, öğrenciler indirimi kullanıyordu. Hakan ekibe teşekkür e-postası attı. Ertesi pazartesi herkes başka bir işe dağılmıştı.
+
+İki hafta sonra muhasebe sordu: "Tedarikçiye son ödemeyi yapalım mı? Teslim kabul edildi mi?" Kimse bilmiyordu. Fişi küçük basan yazıcıların düzeltilip düzeltilmediğini de kimse bilmiyordu. Proje bitmişti, ama kapanmamıştı.
+
+## Kapanış neden ihmal edilir?
+
+Kapanış, proje yaşam döngüsünün en çok ihmal edilen evresidir. Proje bitince her şeyi toplamak, dosyaları bir çekmeceye atmak ve bir sonraki projeye geçmek kolaydır.
+
+Ama bitmek ile kapanmak farklıdır. Proje, söz verilen yapıldığında, bütün paydaşlar memnun olduğunda ve kabul kriterleri karşılandığında biter. Kapanmak için ise bunun kayda geçmesi, açık uçların bağlanması ve öğrenilenlerin yazılması gerekir.
+
+## Kapanışın adımları
+
+<Cycle
+  label="Bir projeyi kapatmanın adımları"
+  caption="Kapanış resmî kabulle başlar: paydaş sonucu kabul kriterlerine göre yazılı olarak onaylar. Ardından tedarikçi sözleşmeleri kapatılır ve son ödemeler yapılır. Sonuç, onu işletecek ekibe devredilir ve belgeler arşivlenir. Ekip dağılmadan önce öğrenilen dersler çıkarılır. En sonda ekip serbest bırakılır. Öğrenilenler bir sonraki projeye taşınır; döngüyü kapatan budur."
+  steps={[
+    { title: "Resmî kabul", sub: "kriterlere göre, yazılı" },
+    { title: "Sözleşmeleri kapat", sub: "eksik iş listesi, son ödeme" },
+    { title: "Devret ve arşivle", sub: "kayıtları güncelle, sakla" },
+    { title: "Öğrenilen dersler", sub: "ekip dağılmadan önce", tone: "accent" },
+    { title: "Ekibi serbest bırak", sub: "yöneticilerine önceden haber ver", tone: "progress" },
+  ]}
+  back="bir sonraki projeye"
+/>
+
+**Resmî kabul.** Kayıtlar toplanır ve güncellenir. Uygulanan değişiklik talepleri son ürünü değiştirmiş olabilir; belgeler son hâli göstermelidir. Sonra paydaştan sonucun resmî kabulü istenir.
+
+**Sözleşmeleri kapat.** Her tedarikçi sözleşmesinin şartları tamamlanır. Kalan küçük işler bir **eksik iş listesine** (punch list) yazılır ve kapanmadan önce bitirilir. Son ödeme, kalan işin oranından biraz büyük tutulur. Çünkü son işler çoğu zaman en zor ve en pahalı sorunlardır; tedarikçinin onları öncelikli yapması için bir neden olmalıdır.
+
+**Devret ve arşivle.** Sonucu kim işletecek? Belgeler güvenli ve bulunabilir bir yerde saklanır. İmzalı sözleşmeler gibi vergi incelemesinde ya da bir anlaşmazlıkta gerekecek belgeler, kurumun saklama kurallarına göre arşivlenir.
+
+**Ekibi serbest bırak.** Ekip üyeleri kendi yöneticilerine ya da yeni projelere döner. O yöneticilere birkaç ay önceden haber verilir; böylece insanların dönüşünü planlayabilirler.
+
+## Öğrenilen dersler
+
+Ekip dağılıp bir sonraki projeye odaklanmadan önce bir değerlendirme yapılır. Buna **öğrenilen dersler** (lessons learned) toplantısı ya da belgesi denir.
+
+Ekip iki şeye bakar:
+
+- **İyi gidenler:** ne iyi gitti ve neden? Bu süreç başka projelere taşınabilir mi?
+- **İyi gitmeyenler:** ne iyi gitmedi ve insanlar bu deneyimden ne öğrendi?
+
+Amaç suçlu bulmak değil, öğrenmektir. İnsanlar suçlanacağını düşünürse ne olduğunu anlatmaz ve ders çıkmaz.
+
+**Ders ≠ dilek.** "Daha iyi iletişim kurmalıyız" bir ders değildir. Bir ders, bir sonraki projede yapılacak somut bir değişikliktir ve bir sahibi vardır: "Tedarikçi sözleşmesinde test ortamı ayrı bir teslimat olarak yazılacak. Sahibi: Leyla."
+
+RAID kaydı bu toplantının ham malzemesidir. Hangi riskler gerçekleşti? Yanıtlar neden yetmedi? Hangi varsayımlar yanlış çıktı?
+
+<Case>
+
+Muhasebenin sorusundan sonra Leyla projeyi gerçekten kapattı:
+
+1. **Kabul:** pilot raporu ve 12 kafenin açılış listesi Hakan'a gitti; Hakan 15. haftada imzaladı.
+2. **Sözleşmeler:** kasa tedarikçisinin eksik iş listesinde iki madde vardı. Biri yazıcıydı. İkisi kapanınca son ödeme yapıldı.
+3. **Devir:** kafe desteği müşteri hizmetlerine, uygulama sipariş takımının backlog'una devredildi.
+4. **Öğrenilen dersler:** bir saatlik toplantıda ekip, RAID kaydını satır satır geçti.
+   - İyi giden: kesin söz şartnameden sonra verildi.
+   - İyi giden: pilot, iki sorunu 12 kafeye yayılmadan yakaladı.
+   - İyi gitmeyen: tedarikçinin test ortamı için sözleşmede bir tarih yoktu.
+5. **Kapanış raporu:** plan ile gerçekleşen yan yana yazıldı. Proje 2.520.000 TL'ye, %5 aşımla kapandı.
+
+</Case>
+
+<Tool slug="kapanis-raporu" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Kapanışı takvime koy.** Lansmandan sonraki bir iki hafta, kapanış için ayrılmazsa kimse bunu yapmaz.
+- **Ekibin yöneticilerine önceden haber ver.** İnsanların dönüş tarihini aylar önce bilmeleri, sana da onlara da iyilik.
+- **Her derse bir sahip ver.** Sahipsiz ders bir sonraki projeye taşınmaz.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Proje kapanışı ürün işinin başlangıcıdır.** Lansman bitti; şimdi asıl ürün sonucunu ölçmeye başlarsın.
+- **Devralınan işi backlog'a al.** Açık işler ve kullanıcı geri bildirimleri ürün ekibine sahipli gelmeli.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Devri kabul etmeden önce oku.** Proje ekibinin bıraktığı açık işler senin backlog'una girecek.
+- **Projeden gelen bilgiyi takıma aktar.** Kafe personelinin geri bildirimi, sonraki sprintlerin girdisidir.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Öğrenilen dersler toplantısını kolaylaştır.** Bir retronun kurallarını kullan: suçlama yok, gerçekler önce.
+- **Dersi somutlaştır.** "İletişim kötüydü" diyen ekibe "neyi farklı yapacağız, kim?" diye sor.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Kapanış yaşam döngüsünün en çok ihmal edilen evresidir; bitmek ile kapanmak farklıdır.
+- Adımlar: resmî kabul, sözleşme kapanışı, devir ve arşiv, öğrenilen dersler, ekibin serbest bırakılması.
+- Eksik iş listesi kapanmadan sözleşme kapanmaz; son ödeme tedarikçiyi motive edecek kadar büyük tutulur.
+- Öğrenilen dersler ekip dağılmadan, suçlamadan çıkarılır: iyi gidenler ve iyi gitmeyenler.
+- Ders somut bir değişikliktir ve bir sahibi vardır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Kapanışta yapılan beş iş nedir?">
+
+Sonucun resmî kabulü, tedarikçi sözleşmelerinin kapatılması, sonucun devri ve belgelerin arşivlenmesi, öğrenilen derslerin çıkarılması ve ekibin serbest bırakılması.
+
+</SelfCheck>
+
+<SelfCheck question="Öğrenilen dersler toplantısı neden ekip dağılmadan yapılır?">
+
+Çünkü ekip dağılınca insanlar yeni işlerine odaklanır ve ayrıntıları unutur. Kimin ne bildiği de dağılır. Toplantı, deneyim hâlâ tazeyken ve herkes bir aradayken yapılır.
+
+</SelfCheck>
+
+<SelfCheck question="Toplantıda biri 'Gecikmenin sebebi Zeynep'in testi geç bitirmesiydi' diyor. Toplantıyı nasıl yönlendirirsin?">
+
+Kişiden sürece dönersin: testin geç bitmesinin nedeni neydi? Bu projede neden test ortamının hazır olmamasıydı. Amaç suçlu bulmak değil, bir dahaki projede neyin farklı yapılacağını bulmaktır.
+
+</SelfCheck>
+
+<SelfCheck question="Kapanış raporunda 'Daha iyi planlama yapmalıyız' yazıyor. Bunu nasıl bir derse çevirirsin?">
+
+Neyin farklı planlanacağını, kimin yapacağını ve nasıl anlaşılacağını yazarsın. Örneğin: "Tedarikçi sözleşmelerinde test ortamı ayrı bir teslimat ve tarih olarak yazılacak. Sahibi: proje yöneticisi. Bir sonraki sözleşmede kontrol edilecek."
+
+</SelfCheck>

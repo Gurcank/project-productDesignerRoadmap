@@ -1,10 +1,11 @@
 ---
-summary: "Bölümün senin için en önemli kısmı: bir hatanın çözülme süresini en çok belirleyen şey raporun kalitesidir. İyi bir hata raporunun dokuz bileşeni, severity ile priority farkı ve keşifsel testte tasarımcının avantajı."
+summary: "Bir hatanın çözülme süresini en çok raporun kalitesi belirler. İyi raporun dokuz alanı var; en sık ortam, sıklık ve veri durumu atlanır. Severity teknik etki, priority iş kararıdır."
 outcomes:
   - "İyi bir hata raporunun bileşenlerini ve en sık atlanan üç alanı söyleyebilirsin."
   - "Bir hata raporunun geçmesi gereken tek cümlelik testi (başkasının ekranında görülebilme) bilirsin."
   - "Severity ile priority farkını örnekle açıklayabilirsin."
-minutes: 8
+minutes: 5
+standard: 2
 sources:
   - label: "Atlassian — Önem (severity) seviyeleri"
     url: "https://www.atlassian.com/incident-management/kpis/severity-levels"
@@ -12,22 +13,25 @@ sources:
     url: "https://martinfowler.com/bliki/ExploratoryTesting.html"
   - label: "GitHub Docs — Issue ve PR şablonları"
     url: "https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/about-issue-and-pull-request-templates"
-skipTerms: ["Validation","validation"]
+skipTerms: ["Validation","validation","Sınıflandırma"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Matrix2x2 from "~/components/diagrams/primitives/Matrix2x2.astro";
+import Case from "~/components/lesson/Case.astro";
 
-"Sayfa bozuk." Bu bir hata raporu mu? Değil. Ve geliştiricinin saatlerini alacak. Bu ders, **bölümün senin için en önemli kısmı.**
+"Sayfa bozuk." Bu bir hata raporu mu? Değil. Ve geliştiricinin saatlerini alacak. Bu ders bölümün en çok kullanılacak kısmı: ekipte herkes hata raporlar.
 
 ## QA süreci
 
 **Test case**, belirli bir durumu adım adım kontrol eden senaryodur. **Exploratory testing (keşifsel test)** ise senaryosuz, keşfederek ve kırmaya çalışarak yapılan testtir. Senaryolu test bilinen davranışları doğrular; keşifsel test **kimsenin düşünmediği durumları** bulur. İkisi farklı şeyler bulur ve ikisi de gerekir. "Senaryoları geçtik; şimdi yarım saat keşifsel test yapalım."
 
-**Tasarımcının keşifsel testte avantajı vardır:** uç durumları zaten düşünmüş olduğun için nereyi kurcalayacağını bilirsin: çok uzun isim, boş liste, yavaş bağlantı, geri tuşu, iki kez tıklama.
+**Uç durumları tasarlayan kişinin keşifsel testte avantajı vardır:** nereyi kurcalayacağını bilir: çok uzun isim, boş liste, yavaş bağlantı, geri tuşu, iki kez tıklama.
 
 ## Hata raporu
 
@@ -68,18 +72,118 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 İkisi bağımsızdır ve karıştırılır. **Düşük severity + yüksek priority** mümkündür: ana sayfadaki logonun yanlış olması sistemi bozmaz ama herkes görür ve hemen düzeltilir. **Yüksek severity + düşük priority** de mümkündür: nadir bir tarayıcıda veri kaybı, kullanıcı sayısı çok azsa sıraya girebilir. "Severity düşük ama priority yüksek; marka sayfasında ve herkes görüyor."
 
-<Callout kind="tasarimci">
+<Matrix2x2
+  label="Severity ve priority"
+  caption="Yatay eksen priority, yani ne zaman düzeltileceği; dikey eksen severity, yani hatanın ne kadar kötü olduğu. Sağ üstte hemen düzeltilecekler durur: kayıtlı kartla ödemenin kilitlenmesi. Sağ altta etkisi küçük ama herkesin gördüğü hatalar vardır: kampüs sayfasındaki yanlış logo. Sol üstte ağır ama nadir hatalar sıraya girer: kullanıcısı çok az olan eski bir tarayıcıda form verisinin kaybolması. Sol altta bekleyebilecekler durur."
+  x={{
+  title: "Priority",
+  low: "düşük",
+  high: "yüksek"
+}}
+  y={{
+  title: "Severity",
+  low: "düşük",
+  high: "yüksek"
+}}
+  quadrants={[
+  {
+    title: "Sıraya girer",
+    sub: "ağır ama nadir"
+  },
+  {
+    title: "Hemen düzelt",
+    sub: "ağır ve yaygın",
+    tone: "progress"
+  },
+  {
+    title: "Bekleyebilir",
+    sub: "hafif ve nadir"
+  },
+  {
+    title: "Hızlı düzelt",
+    sub: "hafif ama görünür"
+  }
+]}
+  points={[
+  {
+    label: "Öde kilitleniyor",
+    x: 0.82,
+    y: 0.68
+  },
+  {
+    label: "Eski tarayıcı, veri kaybı",
+    x: 0.2,
+    y: 0.62
+  },
+  {
+    label: "Kampüs logosu",
+    x: 0.8,
+    y: 0.15
+  },
+  {
+    label: "Panel ipucu hizası",
+    x: 0.2,
+    y: 0.12
+  }
+]}
+/>
+
+<Case>
+
+Zeynep'in Demlik'teki bir hata raporu:
+
+1. **Başlık:** "Kartının süresi dolmuş kullanıcıda ödeme ekranında Öde düğmesi pasif kalıyor."
+2. **Ortam ve veri:** production, Android uygulaması 3.8.1; tek kayıtlı kartı süresi dolmuş, giriş yapılmış müşteri.
+3. **Adımlar:** 1. Sepete ürün ekle 2. Ödemeye geç 3. Kayıtlı kartı seç. **Beklenen:** kartı güncelleme uyarısı. **Gerçekleşen:** düğme pasif, mesaj yok.
+4. **Kanıt, sıklık, etki:** ekran kaydı; her seferinde; bu durumdaki müşteriler ödemeyi bitiremiyor.
+5. **Sınıflandırma:** severity yüksek, priority yüksek. Rapor ilk okumada yeniden üretildi; düzeltme ertesi gün çıktı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Her hata raporunda dokuz alanı doldur;** özellikle ortam, sıklık ve veri durumunu.
 - **Bir hata raporu şablonu hazırla** ve issue şablonuna koy.
 - **Keşifsel testte uç durum listeni kullan:** uzun isim, boş liste, yavaş bağlantı, geri tuşu, çift tıklama.
 - **Severity ve priority'yi ayrı alanlara yaz.**
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Priority kararını iş etkisiyle ver;** severity'yi teknik ekip söyler, sırayı sen koyarsın.
+- **Hata raporundaki etki alanını oku:** kaç kullanıcı, hangi akış, ne kadar gelir?
+
+</Lens>
+<Lens role="product-owner">
+
+- **Priority'yi backlog'da sen belirlersin;** severity ile karıştırma.
+- **Raporu eksik hatayı sıraya alma:** önce ortam, adımlar ve veri durumu tamamlansın.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Açık yüksek severity hatalarını yayın kararına bağla.** Hangi hata varken yayına çıkılmaz, önceden yaz.
+- **Hata eğilimini durum raporuna koy.**
+
+</Lens>
+<Lens role="scrum-master">
+
+- **İyi hata raporu şablonunu ekip standardı yap.** Kötü rapor iki gün kaybettirir.
+- **Keşifsel testi sprint'e zaman kutusuyla koy;** senaryolar bulamadığını o bulur.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Beklenen sonucu iş kuralına bağla:** "kural T-K3'e göre şu olmalıydı."
+- **Kabul testinde bulunan hatayı izlenebilirlik matrisine işle.**
+
+</Lens>
+</Lenses>
 
 <Summary>
 
-- Senaryolu test bilinen davranışı, keşifsel test kimsenin düşünmediğini bulur; tasarımcı uç durumları bildiği için keşifsel testte güçlüdür.
+- Senaryolu test bilinen davranışı, keşifsel test kimsenin düşünmediğini bulur; uç durumları bilen kişi keşifsel testte güçlüdür.
 - Hata raporu dokuz alandan oluşur; ortam, sıklık ve veri durumu en sık atlananlardır.
 - Test: rapor, başkasının kendi ekranında hatayı görmesini sağlamalıdır.
 - Severity teknik etkidir, priority iş kararıdır; ikisi bağımsızdır.
@@ -97,5 +201,11 @@ Ortam bilgisi, sıklık ve kullanıcı/veri durumu. Bir hata yalnızca belirli b
 <SelfCheck question="Severity ile priority arasındaki fark nedir? 'Düşük severity + yüksek priority' örneği ver.">
 
 Severity hatanın ne kadar kötü olduğudur (teknik etki); priority ne zaman düzeltileceğidir (iş kararı). Örnek: ana sayfadaki logonun yanlış olması sistemi bozmaz ama herkes görür, hemen düzeltilir.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Sayfa bozuk\" diye bir rapor geldi. Raporu tamamlatmak için hangi soruları sorarsın?"}>
+
+Hangi ortam, tarayıcı ve cihazda? Hangi kullanıcı ve veri durumunda? Hangi adımlarla oluyor? Ne bekleniyordu, ne oldu? Her seferinde mi? Ekran görüntüsü ya da kaydı var mı? Kaç kullanıcıyı etkiliyor?
 
 </SelfCheck>

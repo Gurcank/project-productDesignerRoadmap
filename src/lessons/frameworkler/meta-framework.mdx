@@ -1,10 +1,11 @@
 ---
-summary: "Projenin iskeletini kuran katman: Next.js, Astro, React Router v7, SvelteKit/Nuxt, TanStack Start. Bu kararın tasarım tarafında doğrudan karşılığı var: hangi rendering stratejisi mümkün, sayfalar ne kadar hızlı açılır, SEO ne kadar kolay."
+summary: "Projenin iskeletini kuran katman: Next.js, Astro, React Router v7, SvelteKit, Nuxt, TanStack Start. Bu karar rendering stratejisini, sayfaların hızını ve SEO kolaylığını belirler."
 outcomes:
   - "Next.js ile Astro'yu ne zaman seçeceğini söyleyebilirsin."
   - "'Remix' kelimesini duyduğunda neden hangisinden bahsedildiğini sormak gerektiğini açıklayabilirsin."
   - "Bir meta-framework'ün olgunluğunu (1.0 öncesi, kurucu şirket, kilitlenme) değerlendirebilirsin."
 minutes: 8
+standard: 2
 sources:
   - label: "Next.js — Dokümantasyon"
     url: "https://nextjs.org/docs"
@@ -19,12 +20,15 @@ sources:
   - label: "TanStack Start"
     url: "https://tanstack.com/start/latest"
 flags: ["degisken"]
-skipTerms: ["beta","i̇stemci","istemci"]
+skipTerms: ["beta", "i̇stemci", "istemci", "bağımlılık"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Meta-framework, projenin iskeletini kuran katmandır. **Bu kararın tasarım tarafında doğrudan karşılığı vardır:** hangi rendering stratejisinin mümkün olduğunu, sayfaların ne kadar hızlı açılacağını ve SEO'nun ne kadar kolay olacağını burası belirler. Aşağıdaki "güncel durum" notları materyalin Eylül 2026 tarihli doğrulamasına dayanır ve hızla eskir; kullanmadan önce doğrula.
 
@@ -48,15 +52,43 @@ Varsayılan olarak **sıfır JavaScript** gönderen, içerik odaklı meta-framew
 
 **SvelteKit** ve **Nuxt**, Svelte ve Vue'nun resmî meta-framework'leridir; Next.js'in React için yaptığını kendi ekosistemlerinde yaparlar. Ekip zaten Svelte ya da Vue biliyorsa doğal seçimdir. "Vue ekibiyiz; Nuxt doğal seçim, React'e geçmek için sebep yok."
 
+<Spectrum
+  label="Meta-framework'ler, içerikten uygulamaya"
+  caption="React tabanlı meta-framework'ler en çok hangi işe uygun olduklarına göre sıralanabilir. Sol uçta Astro durur: varsayılan olarak sıfır JavaScript gönderir, içerik siteleri içindir. Ortada Next.js vardır: statik sayfadan kişiye özel panele kadar bütün rendering stratejilerini aynı projede sunar. Sağa doğru React Router v7 ve en sağda istemci öncelikli TanStack Start gelir; ikisi de uygulama ağırlıklı projeler içindir."
+  left={{ title: "İçerik sitesi", sub: "az JavaScript" }}
+  right={{ title: "Uygulama", sub: "yoğun etkileşim" }}
+  marks={[
+    { label: "Astro", at: 0.08 },
+    { label: "Next.js", at: 0.5 },
+    { label: "React Router v7", at: 0.72 },
+    { label: "TanStack Start", at: 0.92 },
+  ]}
+/>
+
 **TanStack Start**, TanStack Router üzerine kurulu, tip güvenliğini merkeze alan yeni bir React meta-framework'üdür. İstemci öncelikli bir varsayılan ve güçlü tip güvenliği sunar. Materyalde 2026 ortası itibarıyla release candidate aşamasında olduğu ve sürümün 1.0 olmadığı anılıyor. **Ticari bir proje için bu bir risktir.**
 
-<Callout kind="tasarimci">
+<Case>
+
+Kampüs lansmanı için `demlik.com.tr/kampus` sayfası hazırlanırken Ece Astro'yu önerdi: tek sayfalık, içerik ağırlıklı bir landing page için ideal görünüyordu.
+
+1. **Artı:** sıfır JavaScript, hızlı ilk açılış.
+2. **Takas:** müşteri sitesi zaten Next.js'teydi. İkinci bir meta-framework, ikinci bir build, ikinci bir yayın akışı ve ikinci bir bakım demekti.
+3. **Karar:** sayfa Next.js içinde statik olarak üretildi; Next.js bu sayfa için de statik HTML veriyor.
+4. **Sonuç:** lansman günü trafik on katına çıktığında sayfa yavaşlamadı.
+
+Astro yanlış bir öneri değildi; Demlik'in bağlamında ek bir araç, kazandırdığından fazlasını götürecekti.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Sayfa türlerini yaz:** hangisi statik, hangisi kişiye özel? Bu, meta-framework ve rendering seçimini yönlendirir.
 - **Olgunluğu sor:** 1.0 mı, kim sahibi, satın alma/yön değişikliği riski var mı?
 - **İsim karışıklığında netleş:** "Remix" gibi adlar farklı projelere işaret edebilir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -78,5 +110,11 @@ Varsayılan olarak sıfır JavaScript gönderir ve islands mimarisini merkeze al
 <SelfCheck question="'Remix' kelimesini duyduğunda neden hangisinden bahsedildiğini sormalısın?">
 
 Üç farklı şeye işaret edebilir: eski Remix v2 (destek dışı kaldığı raporlanıyor), Remix'in devamı olan React Router v7 ve sıfırdan yeniden yazılan, beta aşamasındaki Remix 3.
+
+</SelfCheck>
+
+<SelfCheck question="Bir ekip yalnız blog ve dokümantasyondan oluşan yeni bir site kuruyor. Hangi meta-framework'ü önerirsin, neden?">
+
+Astro gibi içerik odaklı bir meta-framework. Varsayılan olarak çok az JavaScript gönderir, sayfalar hızlı açılır ve SEO kolaydır. Yoğun etkileşim gerekmediği için Next.js'in getirdiği karmaşıklığa ihtiyaç yoktur; ama ekip zaten başka bir framework kullanıyorsa bakım maliyeti de tartılmalıdır.
 
 </SelfCheck>

@@ -1,0 +1,208 @@
+[
+  {
+    "term": "İş modeli kanvası",
+    "english": "Business Model Canvas",
+    "definition": "Bir iş modelini dokuz blokta tek sayfaya koyan şablon: kime, ne, nasıl ulaştırılır, neye mal olur, ne kazandırır (Osterwalder).",
+    "topic": "is-modeli-kanvasi-ve-lean-canvas",
+    "aliases": [
+      "Business Model Canvas",
+      "BMC"
+    ]
+  },
+  {
+    "term": "Lean Canvas",
+    "english": "Lean Canvas",
+    "definition": "İş modeli kanvasının yeni girişimler için uyarlaması: problem, çözüm, kilit metrikler ve haksız avantaj ekler; riske ve öğrenmeye odaklanır (Ash Maurya).",
+    "topic": "is-modeli-kanvasi-ve-lean-canvas"
+  },
+  {
+    "term": "Haksız avantaj",
+    "english": "Unfair advantage",
+    "definition": "Kolayca kopyalanamayan ya da satın alınamayan avantaj. Lean Canvas'ta bir kutudur ve ilk gün çoğu zaman boştur.",
+    "topic": "is-modeli-kanvasi-ve-lean-canvas"
+  },
+  {
+    "term": "Gelir akışı",
+    "english": "Revenue stream",
+    "definition": "Bir müşteri segmentinin hangi değer için ne ödediği: satış, kullanım ücreti, abonelik, kiralama, lisans, aracılık ya da reklam.",
+    "topic": "gelir-modelleri",
+    "aliases": [
+      "Gelir akışları"
+    ]
+  },
+  {
+    "term": "Freemium",
+    "english": "Freemium",
+    "definition": "Temel ürünün ücretsiz, ek özelliklerin ücretli sunulduğu model; ücretsiz sürüm özellik, kapasite ya da süreyle sınırlanır.",
+    "topic": "gelir-modelleri"
+  },
+  {
+    "term": "GMV",
+    "english": "Gross merchandise value",
+    "definition": "Bir pazar yerinden geçen toplam satış tutarı. Gelir değildir; gelir platformun bu satıştan aldığı paydır.",
+    "topic": "gelir-modelleri"
+  },
+  {
+    "term": "Tekrar eden gelir",
+    "english": "Recurring revenue",
+    "definition": "Her dönem tekrar eden gelir, örneğin abonelik; tek seferlik ücretler ve hizmet bedelleri dışarıda kalır. Aylık hâli MRR, yıllık hâli ARR.",
+    "topic": "gelir-modelleri",
+    "aliases": [
+      "MRR",
+      "ARR"
+    ]
+  },
+  {
+    "term": "Birim ekonomisi",
+    "english": "Unit economics",
+    "definition": "Tek bir birimin, bir müşterinin ya da siparişin, gelir ve maliyetine bakarak kâr bırakıp bırakmadığını soran analiz.",
+    "topic": "birim-ekonomisi-cac-ltv"
+  },
+  {
+    "term": "Katkı marjı",
+    "english": "Contribution margin",
+    "definition": "Bir birimin getirdiği gelirden o birime hizmet etmenin değişken maliyetleri düşülünce kalan; sabit giderler dahil değildir.",
+    "topic": "birim-ekonomisi-cac-ltv"
+  },
+  {
+    "term": "LTV",
+    "english": "Lifetime value",
+    "definition": "Bir müşterinin ürünle ilişkisi boyunca bıraktığı katkı. Gelir üzerinden değil katkı üzerinden hesaplanır: aylık katkı × ortalama ömür.",
+    "topic": "birim-ekonomisi-cac-ltv",
+    "aliases": [
+      "Müşteri yaşam boyu değeri"
+    ]
+  },
+  {
+    "term": "CAC",
+    "english": "Customer acquisition cost",
+    "definition": "Bir müşteri kazanmanın tam maliyeti. Karma CAC bütün kanalları, ücretli CAC yalnız ücretli kanalı ölçer.",
+    "topic": "birim-ekonomisi-cac-ltv",
+    "aliases": [
+      "Müşteri edinme maliyeti"
+    ]
+  },
+  {
+    "term": "Pazar büyüklüğü",
+    "english": "Market sizing",
+    "definition": "TAM bütün pazar, SAM hizmet verilebilecek kısım, SOM belirli bir sürede kazanılabilecek kısım. Aşağıdan yukarı ya da yukarıdan aşağı hesaplanır.",
+    "topic": "tam-sam-som"
+  },
+  {
+    "term": "Beş güç",
+    "english": "Porter's five forces",
+    "definition": "Bir sektörün çekiciliğini açıklayan beş güç: yeni girenler, ikameler, mevcut rakipler, tedarikçilerin ve alıcıların pazarlık gücü (Porter, 1979).",
+    "topic": "rekabet-ve-hendekler",
+    "aliases": [
+      "Porter'ın beş gücü"
+    ]
+  },
+  {
+    "term": "İkame",
+    "english": "Substitute",
+    "definition": "Aynı ihtiyacı farklı bir yoldan karşılayan ürün ya da davranış. Coca-Cola'nın ikamesi Pepsi değil, musluk suyudur.",
+    "topic": "rekabet-ve-hendekler"
+  },
+  {
+    "term": "Giriş engeli",
+    "english": "Barrier to entry",
+    "definition": "Bir sektöre yeni girmeyi zorlaştıran etken: ölçek ekonomisi, ağ etkisi, geçiş maliyeti, sermaye, marka, kanal erişimi, düzenleme.",
+    "topic": "rekabet-ve-hendekler",
+    "aliases": [
+      "Giriş engelleri"
+    ]
+  },
+  {
+    "term": "Değere dayalı fiyatlama",
+    "english": "Value-based pricing",
+    "definition": "Fiyatın üretim maliyetine değil, müşterinin algıladığı değere, yani ödeme isteğine göre belirlenmesi.",
+    "topic": "fiyatlandirma"
+  },
+  {
+    "term": "Fiyat farklılaştırma",
+    "english": "Price discrimination",
+    "definition": "Aynı ya da çok benzer ürünün aynı satıcı tarafından farklı segmentlere farklı fiyatla satılması.",
+    "topic": "fiyatlandirma"
+  },
+  {
+    "term": "ROI",
+    "english": "Return on investment",
+    "definition": "Net getirinin yatırıma oranı: (getiri − yatırım) / yatırım. Zamanı hesaba katmaz.",
+    "topic": "roi-ve-npv"
+  },
+  {
+    "term": "NPV",
+    "english": "Net present value",
+    "definition": "Gelecekteki nakit akışlarının iskonto oranıyla bugünkü değere indirgenip toplanması; pozitifse yatırım beklenen getiriyi karşılar.",
+    "topic": "roi-ve-npv",
+    "aliases": [
+      "Net bugünkü değer"
+    ]
+  },
+  {
+    "term": "İskonto oranı",
+    "english": "Discount rate",
+    "definition": "Gelecekteki parayı bugünkü değerine çevirmek için kullanılan oran; yatırımdan beklenen en düşük getiri.",
+    "topic": "roi-ve-npv"
+  },
+  {
+    "term": "Geri ödeme süresi",
+    "english": "Payback period",
+    "definition": "Bir yatırımın kendini geri kazandığı, yani başa baş noktasına ulaştığı süre.",
+    "topic": "roi-ve-npv"
+  },
+  {
+    "term": "Brüt marj",
+    "english": "Gross margin",
+    "definition": "(Gelir − değişken maliyet) / gelir oranı. Dolaylı sabit giderler dahil değildir; brüt kâr tutar, brüt marj orandır.",
+    "topic": "finansal-okuryazarlik"
+  },
+  {
+    "term": "Net yanma",
+    "english": "Net burn",
+    "definition": "Giderlerden gelirler düşüldükten sonra kasanın her ay gerçekten azalma hızı. Brüt yanma yalnız giderlerdir.",
+    "topic": "finansal-okuryazarlik",
+    "aliases": [
+      "Net burn"
+    ]
+  },
+  {
+    "term": "Pist",
+    "english": "Runway",
+    "definition": "Kasadaki paranın net yanmaya bölünmesi: bu hızla kaç ay dayanılabileceği.",
+    "topic": "finansal-okuryazarlik",
+    "aliases": [
+      "Runway"
+    ]
+  },
+  {
+    "term": "SWOT analizi",
+    "english": "SWOT analysis",
+    "definition": "Güçlü ve zayıf yanları (iç) fırsat ve tehditlerle (dış) yan yana koyan analiz; bir karar değil, bir başlangıçtır.",
+    "topic": "swot-pestle-ansoff",
+    "aliases": [
+      "SWOT"
+    ]
+  },
+  {
+    "term": "PESTLE",
+    "english": "PESTLE",
+    "definition": "Dış makro çevreyi altı başlıkta tarama: politik, ekonomik, sosyal, teknolojik, hukuki, çevresel.",
+    "topic": "swot-pestle-ansoff",
+    "aliases": [
+      "PEST"
+    ]
+  },
+  {
+    "term": "Ansoff matrisi",
+    "english": "Ansoff matrix",
+    "definition": "Ürün ve pazarın mevcut ya da yeni oluşuna göre dört büyüme seçeneği: pazara nüfuz, pazar geliştirme, ürün geliştirme, çeşitlendirme.",
+    "topic": "swot-pestle-ansoff"
+  },
+  {
+    "term": "Öğrenme OKR'ı",
+    "english": "Learning OKR",
+    "definition": "Bir sonucu değil bir soruyu hedefleyen OKR: önümüzdeki 90 günde öğrenmemiz gereken en önemli şey ne?",
+    "topic": "stratejiden-okra"
+  }
+]

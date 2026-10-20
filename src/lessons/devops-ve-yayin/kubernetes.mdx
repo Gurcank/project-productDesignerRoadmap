@@ -1,9 +1,10 @@
 ---
-summary: "Kubernetes çok sayıda konteyneri otomatik dağıtan, ölçekleyen ve yeniden başlatan sistemdir. Çoğu proje için gereksiz karmaşıklıktır: bir tercih değil, bir maliyettir; 'Kubernetes kullanıyoruz' bir ölçek göstergesi olmalı, üstünlük göstergesi değil."
+summary: "Kubernetes çok sayıda konteyneri otomatik dağıtır, ölçekler ve yeniden başlatır. Çoğu proje için gereksiz karmaşıklıktır; \"Kubernetes kullanıyoruz\" bir üstünlük değil, ölçek göstergesi olmalıdır."
 outcomes:
   - "Kubernetes'in ne işe yaradığını söyleyebilirsin."
   - "Neden çoğu proje için gereksiz olduğunu ve ne tür bir maliyet getirdiğini açıklayabilirsin."
-minutes: 4
+minutes: 3
+standard: 2
 sources:
   - label: "Kubernetes — Genel bakış"
     url: "https://kubernetes.io/docs/concepts/overview/"
@@ -12,11 +13,18 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
-**Kubernetes (K8s)**, çok sayıda konteynerin otomatik olarak dağıtılmasını, ölçeklenmesini, izlenmesini ve çöktüğünde yeniden başlatılmasını yöneten sistemdir (orkestrasyon). Onlarca servis ve yüzlerce konteyner varsa bunları elle yönetmek imkânsızdır; Kubernetes bu işi otomatikleştirir: bir konteyner çökerse yerine yenisini açar, trafik artınca kopya sayısını artırır. Büyük ölçekli ve mikroservis mimarilerinde karşına çıkar. **Seviye 3** terimdir.
+Bir toplantıda soru geldi: "Kubernetes'e geçmemiz gerekmiyor mu?" Cevap, kaç parçayı yönettiğine ve onları kimin yöneteceğine bağlı.
+
+## Orkestrasyon
+
+**Kubernetes (K8s)**, çok sayıda konteynerin otomatik olarak dağıtılmasını, ölçeklenmesini, izlenmesini ve çöktüğünde yeniden başlatılmasını yöneten sistemdir (orkestrasyon). Onlarca servis ve yüzlerce konteyner varsa bunları elle yönetmek imkânsızdır; Kubernetes bu işi otomatikleştirir: bir konteyner çökerse yerine yenisini açar, trafik artınca kopya sayısını artırır. Büyük ölçekli ve mikroservis mimarilerinde karşına çıkar.
 
 ## Çoğu proje için gereksiz
 
@@ -24,12 +32,52 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 Kubernetes bir tercih değil, bir **maliyettir:** bir uzmanlık, bir ekip yükü ve bir öğrenme eğrisi getirir. "Kubernetes kullanıyoruz" cümlesi bir üstünlük göstergesi değil, bir **ölçek** göstergesi olmalıdır.
 
-<Callout kind="tasarimci">
+<Spectrum
+  label="Kubernetes ne zaman anlamlı?"
+  caption="Kubernetes'in değeri yönetilen parça sayısıyla artar. Sol uçta birkaç servisi olan ürünler durur; bir hosting platformunun ölçeklemesi yeter. Ortada servis sayısı artar ve platformun sınırları hissedilmeye başlar. Sağ uçta onlarca servis ve yüzlerce konteyner vardır; orada elle yönetim imkânsızdır ve Kubernetes'in bakım yükü karşılığını verir."
+  left={{
+  title: "Birkaç servis",
+  sub: "platform yeter"
+}}
+  right={{
+  title: "Onlarca servis",
+  sub: "orkestrasyon gerekir"
+}}
+  marks={[
+  {
+    label: "Demlik: üç parça",
+    at: 0.08
+  },
+  {
+    label: "Platform zorlanıyor",
+    at: 0.5
+  },
+  {
+    label: "Yüzlerce konteyner",
+    at: 0.92
+  }
+]}
+/>
+
+<Case>
+
+Demlik'te Kubernetes önerisi bir kez konuşuldu:
+
+1. **Öneri:** sabah trafiğinde kopya sayısını elle artırmak yerine Kubernetes'e geçmek.
+2. **Sayım:** arka yüz bir modüler monolith, bir bildirim işçisi ve bir haftalık rapor betiği. Konteyner platformu kopyaları zaten 2'den 4'e çıkarıyor; her sabah 07.15'te 3'e önceden çıkıyor.
+3. **Bedel:** ayrı bir altyapı rolü yok. Kümenin bakımı Burak'ın ya da Can'ın haftasından çıkacaktı.
+4. **Karar:** geçilmedi. Yeniden bakma koşulu yazıldı: servis sayısı ona yaklaşırsa ya da platformun ölçekleme sınırına gelinirse.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **"Kubernetes'e geçelim" önerisinde** kaç servis, kaç ekip, neden platform yetmiyor sorularını sor.
 - **Kubernetes'in tasarım kararlarına doğrudan etkisi yoktur;** ürün hızına etkisi vardır: ekip zamanını nereye harcıyor?
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -44,5 +92,17 @@ Kubernetes bir tercih değil, bir **maliyettir:** bir uzmanlık, bir ekip yükü
 <SelfCheck question="Kubernetes ne zaman gereksiz karmaşıklıktır? 'Kubernetes kullanıyoruz' ne göstergesi olmalıdır?">
 
 Onlarca servis ve gerçek bir ölçek yoksa gereksizdir; Kubernetes'in kendisi bakım gerektirir ve küçük bir ekibin ürün geliştirme zamanını yer. "Kubernetes kullanıyoruz" bir üstünlük göstergesi değil, bir ölçek göstergesi olmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Kubernetes çöken bir konteyner ve artan trafik karşısında ne yapar?">
+
+Çöken konteynerin yerine yenisini açar; trafik artınca kopya sayısını artırır. Bu işe orkestrasyon denir.
+
+</SelfCheck>
+
+<SelfCheck question="Üç servisi olan küçük bir ekip Kubernetes'e geçmek istiyor. Hangi soruları sorarsın?">
+
+Kaç servis ve kaç konteyner yönetiyoruz? Mevcut platform neden yetmiyor? Kümenin bakımını kim yapacak ve bu zaman hangi ürün işinden çıkacak? Ne zaman yeniden bakacağız?
 
 </SelfCheck>

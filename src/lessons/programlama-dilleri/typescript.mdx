@@ -1,9 +1,11 @@
 ---
-summary: "JavaScript'in üstüne yazılan tip katmanı: hataları kullanıcı görmeden yakalar. Bir tasarımcı için en pratik sonucu, boş olabilen alanların açıkça işaretlenmesidir."
+summary: "JavaScript'in üstüne yazılan tip katmanı: hataları kullanıcı görmeden yakalar. Tasarım için en pratik sonucu, boş olabilen alanların açıkça işaretlenmesidir."
 outcomes:
   - "TypeScript'in ne işe yaradığını ve çalışma zamanında neden garanti vermediğini söyleyebilirsin."
   - "'Bu alan boş olabilir mi?' sorusunun neden doğrudan koda yansıdığını açıklayabilirsin."
 minutes: 5
+standard: 2
+skipTerms: ["varsayım"]
 sources:
   - label: "TypeScript — Resmî site"
     url: "https://www.typescriptlang.org/"
@@ -17,10 +19,25 @@ flags: ["degisken"]
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 TypeScript, ayrı bir dil değil; JavaScript'in üstüne yazılan bir **tip katmanıdır.** Derlenince geriye sade JavaScript kalır. Kavramsal tarafı Front-end bölümünde gördün; burada dil profili var.
 
 ## Ne işe yarar
+
+<StepFlow
+  label="TypeScript'in koruduğu ve korumadığı an"
+  caption="TypeScript kodu yazılırken ve derlenirken tipleri denetler; hatalar bu adımda yakalanır. Derleme bitince tipler silinir ve geriye sade JavaScript kalır. Kod çalışırken dışarıdan gelen veri, örneğin bir API yanıtı ya da bir form, tiplerle korunmaz; çalışma anında ayrıca doğrulanmalıdır."
+  steps={[
+    { title: "Yazarken", sub: "tip hatası görünür", tone: "accent" },
+    { title: "Derleme", sub: "tipler denetlenir, sonra silinir" },
+    { title: "JavaScript çalışır", sub: "tip yok" },
+    { title: "Dış veri", sub: "ayrıca doğrulanır", tone: "progress" },
+  ]}
+/>
 
 Bir değerin ne olduğunu **önceden** söyler: "bu alan metin", "bu alan boş olabilir", "bu fonksiyon şu şekli bekliyor". Sonuç: bir alanın adını yanlış yazmak ya da olmayan bir veriyi kullanmak kod yazılırken hata verir, kullanıcı görmeden. Yeni web projelerinin çoğunda varsayılandır. Ekip büyüdükçe ve kod yaşlandıkça faydası artar; iki günlük bir prototipte gereksiz yük olabilir.
 
@@ -44,18 +61,32 @@ Bu site TypeScript ile yazıldı ve içerik şeması çalışma anında da doğr
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'te TypeScript bir hatayı yayından önce, bir başkasını ancak yayından sonra yakaladı:
+
+1. **Yakalanan:** Burak sipariş yanıtındaki `hazirOlma` alanını `hazirOlmaDakika` olarak yeniden adlandırdı. Bu alanı kullanan yedi dosya derlemede hata verdi; hepsi aynı gün düzeltildi.
+2. **Kaçan:** kasa tedarikçisinden gelen veride bir gün `acikMi` alanı hiç gelmedi. Tip tanımı bunu durdurmadı; dükkân kapalı göründü.
+3. **Düzeltme:** dışarıdan gelen veri artık çalışma anında bir şemayla doğrulanıyor; alan eksikse Panel "Kasa bağlantısı kontrol ediliyor" diyor.
+
+Selin için en görünür sonuç: tipte `?` ile işaretli her alanın bir boş hâli çizildi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **"Bu alan boş olabilir mi?" sorusunu netleştir:** tipli bir projede boş olabilen her alan açıkça işaretlenir; belirtmezsen geliştirici bir varsayım yapar ve boş durum tasarımın eksik kalır.
 - **API alanını yeniden adlandırmak ucuz değildir,** ama TypeScript'li bir projede en azından görünürdür: hangi ekranların etkilendiği listelenebilir.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
 - TypeScript, JavaScript'e tip bilgisi ekler ve hataları yazarken yakalar; derlenince tipler silinir.
 - Dışarıdan gelen veri yine çalışma anında doğrulanmalıdır.
-- Tasarımcı için pratik sonuç: opsiyonel alanlar açıkça işaretlenir, boş durumlar tasarlanmalıdır.
+- Tasarım için pratik sonuç: opsiyonel alanlar açıkça işaretlenir, boş durumlar tasarlanmalıdır.
 
 </Summary>
 
@@ -64,5 +95,17 @@ Bu site TypeScript ile yazıldı ve içerik şeması çalışma anında da doğr
 <SelfCheck question="Tipli olmak neden verinin doğru geleceğini garanti etmez?">
 
 Tipler derlemede silinir. Sunucudan ya da dışarıdan gelen veri çalışma anında beklenenden farklı olabilir; bunun için ayrıca doğrulama gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir API alanının adı değiştiğinde TypeScript'li bir proje ne kazanır?">
+
+O alanı kullanan her yer derlemede hata verir; etkilenen ekranlar ve dosyalar anında listelenir. Tipsiz bir projede bu hatalar ancak kullanıcı o ekranı açtığında ortaya çıkar.
+
+</SelfCheck>
+
+<SelfCheck question="İki günlük bir prototip için TypeScript gerekli mi?">
+
+Genelde değil. TypeScript'in faydası ekip büyüdükçe ve kod yaşlandıkça artar; kısa ömürlü bir prototipte tip yazmak ek yük olabilir.
 
 </SelfCheck>

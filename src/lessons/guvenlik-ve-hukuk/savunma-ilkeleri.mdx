@@ -5,6 +5,8 @@ outcomes:
   - "Katmanlı savunmayı client + server + veritabanı örneğiyle açıklayabilirsin."
   - "'Fail securely'nin ne demek olduğunu ve yetki servisi çöktüğünde ne yapılacağını bilirsin."
 minutes: 5
+standard: 2
+skipTerms: ["Doğrulama", "doğrulama"]
 sources:
   - label: "OWASP — Authorization Cheat Sheet (least privilege, deny by default)"
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html"
@@ -12,9 +14,12 @@ sources:
     url: "https://top10.owasp.org/2025/0x00_2025-Introduction"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Üç ilke, güvenlik kararlarının çoğunun arkasındaki düşünce biçimi.
 
@@ -24,19 +29,87 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 ## Katmanlı savunma
 
+<Layers
+  label="Öğrenci indiriminin savunma katmanları"
+  caption="Öğrenci kartı indirimi dört bağımsız katmanla korunur. Arayüzde kart numarasının biçimi denetlenir; bu yalnız deneyim içindir. Sunucuda kart numarası haftalık listeyle karşılaştırılır. Yetki kontrolü kartın o müşteriye ve o güne ait sınırını uygular. En altta veritabanı kısıtı indirim tutarının sipariş tutarını aşmasını engeller. Bir katman atlanırsa diğerleri devrede kalır."
+  layers={[
+  {
+    title: "Arayüz doğrulaması",
+    sub: "deneyim için",
+    tone: "accent"
+  },
+  {
+    title: "Sunucu doğrulaması",
+    sub: "haftalık liste"
+  },
+  {
+    title: "İş kuralı",
+    sub: "günde en çok iki"
+  },
+  {
+    title: "Veritabanı kısıtı",
+    sub: "indirim ≤ tutar",
+    tone: "progress"
+  }
+]}
+/>
+
 **Defense in depth**: tek bir korumaya güvenmek yerine birden fazla bağımsız katman kurmak. Her koruma bir gün başarısız olabilir. Client-side doğrulama + server-side doğrulama + veritabanı kısıtı üçlüsü tipik örnektir: biri atlanırsa diğerleri devrede kalır. "Yetki kontrolü hem middleware'de hem sorgu seviyesinde olsun; tek katmana güvenmeyelim."
 
 ## Güvenli başarısız olma
 
 **Fail securely (fail closed)**: bir kontrol hata verdiğinde sistemin **erişimi reddedecek** biçimde davranması. Yetki servisi çöktüğünde herkesi içeri almak yerine kimseyi almamak gerekir. OWASP 2025'teki "beklenmedik durumların kötü yönetilmesi" kategorisi bu tür sorunları kapsar. "Yetki servisi yanıt vermezse erişimi kapatalım ve kullanıcıya açıklayıcı bir hata gösterelim."
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'te üç ilke birer karara dönüştü:
+
+1. **En az ayrıcalık:** Panel'e davet edilen kişi varsayılan olarak "çalışan" başlıyor. "Dükkân sahibi" yapmak için mevcut sahibin ayrıca seçmesi ve şifresiyle onaylaması gerekiyor.
+2. **Katmanlı savunma:** öğrenci indirimi arayüzde, sunucuda, iş kuralında ve veritabanında ayrı ayrı korunuyor.
+3. **Güvenli başarısız olma:** kart listesi servisi bir sabah yanıt vermedi. İndirim uygulanmadı; sipariş normal fiyatla alındı ve ekranda "Öğrenci indirimi şu an doğrulanamıyor" yazdı.
+4. **Bedel:** o sabah birkaç öğrenci indirimsiz ödedi. Leyla bunu kabul edilebilir buldu; tersi, herkese indirim demekti.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Davet ve rol atama akışında varsayılanı en dar yetki yap;** yükseltme bilinçli bir adım olsun.
 - **Güvenlik kontrolünün başarısız olduğu durum için bir hata ekranı tasarla** (erişim reddedildi + ne yapılabilir).
 - **Her kritik eylemde birden fazla katmanın (arayüz, sunucu, veri) koruma sağladığını sor.**
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Güvenli başarısız olmanın kullanıcıya bedelini karar olarak sahiplen.** Kapalı başarısızlık bazen meşru kullanıcıyı da durdurur.
+- **Varsayılan rolü bir ürün kararı say.**
+
+</Lens>
+<Lens role="product-owner">
+
+- **Hata anındaki davranışı kabul kriterine yaz.** "Doğrulama servisi yanıt vermezse indirim uygulanmaz, mesaj gösterilir."
+- **Yetki yükseltmeyi ayrı bir story say.**
+
+</Lens>
+<Lens role="project-manager">
+
+- **Bağımlı servislerin kesintisini risk kaydına ekle.** Her kesintide ne olacağı önceden yazılı olsun.
+- **Güvenli başarısızlığın operasyonel etkisini paydaşlarla konuş.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Her kural için en az ayrıcalığı gereksinimde belirt.** Kim, neye, hangi koşulda erişir?
+- **Hata durumu iş kuralını yaz.** Kontrol yapılamazsa işlem ne olur?
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Güvenli başarısızlık mesajlarını test et.** Kullanıcı neden reddedildiğini anlıyor mu?
+- **Yetki eksikliğiyle karşılaşan kullanıcının ne yaptığını gözle.**
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -57,5 +130,17 @@ Varsayılan rolün ne olacağı bir güvenlik kararıdır. Davet edilen kullanı
 <SelfCheck question="'Fail securely' ne demek? Yetki servisi çökerse ne yapılmalı?">
 
 Bir kontrol hata verdiğinde sistemin erişimi reddedecek biçimde davranması. Yetki servisi çökerse herkesi içeri almak yerine erişim kapatılmalı ve kullanıcıya açıklayıcı bir hata gösterilmelidir.
+
+</SelfCheck>
+
+<SelfCheck question="Yetki servisi çöktüğünde sistem herkesi içeri almalı mı?">
+
+Hayır. Güvenli başarısız olma ilkesine göre kontrol yapılamıyorsa erişim reddedilir ve kullanıcıya açıklayıcı bir mesaj gösterilir. Bedeli, meşru kullanıcının da geçici olarak durmasıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Yeni davet edilen kullanıcının varsayılan rolü neden en dar yetki olmalıdır?">
+
+En az ayrıcalık ilkesine göre her hesap yalnız işini yapacak kadar yetki alır. Hesap ele geçirilirse ya da yanlış kişi davet edilirse zarar sınırlı kalır; geniş yetki bilinçli bir seçim gerektirir.
 
 </SelfCheck>

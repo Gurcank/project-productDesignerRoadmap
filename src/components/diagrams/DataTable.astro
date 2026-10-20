@@ -1,0 +1,35 @@
+---
+/**
+ * "Tablo olarak göster": the numbers behind a diagram as a real table, folded
+ * under the figure. A drawing that carries data must also exist as text a
+ * screen reader can walk cell by cell (SC 1.1.1); no script needed.
+ */
+interface Props {
+  caption: string;
+  head: string[];
+  rows: (string | number)[][];
+}
+
+const { caption, head, rows } = Astro.props;
+---
+
+<details class="diagram__data" data-pagefind-ignore>
+  <summary>Tablo olarak göster</summary>
+  <div class="table-scroll" tabindex="0" role="region" aria-label={caption}>
+    <table>
+      <caption class="sr-only">{caption}</caption>
+      <thead>
+        <tr>{head.map((cell) => <th scope="col">{cell}</th>)}</tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((row) => (
+            <tr>
+              {row.map((cell, i) => (i === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>))}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</details>

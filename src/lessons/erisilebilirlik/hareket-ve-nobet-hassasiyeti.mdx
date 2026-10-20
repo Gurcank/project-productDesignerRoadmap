@@ -5,6 +5,7 @@ outcomes:
   - "Otomatik dönen carousel ya da kayan şerit için durdurma ihtiyacını gerekçelendirebilirsin."
   - "prefers-reduced-motion için doğru tepkiyi (opaklık geçişi) hatırlayabilirsin."
 minutes: 6
+standard: 2
 sources:
   - label: "W3C — Understanding SC 2.3.1 Three Flashes or Below Threshold"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/three-flashes-or-below-threshold.html"
@@ -19,6 +20,10 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir oyunlaştırma efekti: kullanıcı bir hedefe ulaşıyor ve ekran hızlıca yanıp sönüyor, konfeti patlıyor. Çoğu kullanıcı için eğlenceli. Ama ışığa duyarlı epilepsisi olan biri için bu **nöbet** demek olabilir. Bu derste hareketin fiziksel sonuçları var; bu yüzden kısa ama önemli.
 
@@ -31,6 +36,19 @@ Detayı hareket dersinde gördün. Özet: kullanıcı işletim sisteminde "harek
 **Three flashes threshold** (SC 2.3.1, yanıp sönme eşiği): içerik, **saniyede üçten fazla** yanıp sönmemelidir. Işığa duyarlı epilepsisi olan kişilerde **nöbet tetikleyebilir.** Bu, kaynaktaki **en ciddi sonuçlu** erişilebilirlik kuralıdır.
 
 Video içeriklerinde, dikkat çekme amaçlı animasyonlarda, oyunlaştırma efektlerinde karşına çıkar. "Bu kutlama animasyonu hızlı yanıp sönüyor; frekansı düşürelim."
+
+<Spectrum
+  label="Hareketin riski"
+  caption="Hareketler risklerine göre sıralanır. Sol uçta güvenli opaklık geçişi durur; azaltılmış hareket tercihinde bile kullanılabilir. Ortada kullanıcının durdurabilmesi gereken otomatik içerik gelir: beş saniyeden uzun süren carousel ya da kayan şerit. Daha sağda paralaks ve büyük yakınlaştırmalar vardır; azaltılmış hareket tercihi açıksa kaldırılır. Sağ uçta saniyede üçten fazla yanıp sönme durur: nöbet tetikleyebileceği için hiç kullanılmaz."
+  left={{ title: "Güvenli", sub: "her zaman" }}
+  right={{ title: "Zarar verebilir", sub: "hiç kullanılmaz" }}
+  marks={[
+    { label: "Opaklık geçişi", at: 0.06 },
+    { label: "Otomatik carousel", at: 0.38 },
+    { label: "Paralaks, zoom", at: 0.64 },
+    { label: "Hızlı yanıp sönme", at: 0.94 },
+  ]}
+/>
 
 <Callout kind="dikkat" title="Neden bu kadar ciddi?">
 
@@ -61,13 +79,52 @@ Diğer erişilebilirlik ihlalleri kullanıcıyı **dışarıda bırakır.** Yan�
 </Pane>
 </Compare>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in kampüs lansmanı için bir kutlama animasyonu hazırlandı: ilk siparişte ekran konfetiyle doluyor ve fincan ikonu yanıp sönüyordu.
+
+1. **Yanıp sönme:** Selin ikonun saniyede dört kez yanıp söndüğünü fark etti. Yanıp sönme kaldırıldı; ikon bir kez büyüyüp küçülüyor.
+2. **Azaltılmış hareket:** bu tercih açıksa konfeti yok; yerine "İlk siparişin alındı" kartı opaklıkla beliriyor.
+3. **Carousel:** kampüs açılış sayfasındaki dönen afişlere duraklat düğmesi eklendi; odaklanınca dönme duruyor.
+4. **Süre:** animasyon iki saniyeyi geçmiyor ve dokununca kapanıyor.
+
+Kutlama hissi kaldı; risk gitti.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Yanıp sönen şeyi saniyede üçten aşağıda tut,** ya da hiç kullanma.
 - **Otomatik dönen içeriğe duraklat düğmesi ekle.** Ya da hiç otomatik döndürme.
 - **Azaltılmış hareket için alternatif tasarla.** Hangi hareketin yerine hangi sade tepki gelir?
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Dikkat çekme isteğini riskle tart.** Yanıp sönen kampanya, kullanıcıya zarar verebilir.
+- **Otomatik dönen afiş isteğinde duraklatmayı şart koş.** Kapsamın parçasıdır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Azaltılmış hareket davranışını kabul kriterine yaz.** Tercih açıkken ne görünür?
+- **Yanıp sönme kontrolünü yayın öncesi listeye koy.** Bu kural ertelenmez.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Hareketli içerik için durdurma gereksinimini yaz.** Beş saniyeden uzun hareket durdurulabilmeli.
+- **Kampanya içeriği tedarikçiden geliyorsa kuralı sözleşmeye ekle.** Video ve animasyon dahil.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Hareket hassasiyeti olan katılımcıya önceden haber ver.** Bilgi notunda hareketli içerik belirtilmeli.
+- **Azaltılmış hareket ayarı açık katılımcıları ayrıca gözle.** Arayüz bilgi kaybediyor mu?
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -88,5 +145,11 @@ Işığa duyarlı epilepsisi olan kişilerde nöbet tetikleyebilir. Bu, erişile
 <SelfCheck question="Otomatik dönen bir carousel için erişilebilirlik açısından ne gerekir?">
 
 Beş saniyeden uzun süren otomatik hareketi kullanıcı durdurabilmelidir: bir duraklat düğmesi (ve idealde odaklanınca ya da üzerine gelince durması). Aksi hâlde dikkat kısıtı ya da okuma güçlüğü olanlar için engeldir.
+
+</SelfCheck>
+
+<SelfCheck question="Azaltılmış hareket tercihi açık bir kullanıcıya bir onay animasyonu nasıl gösterilir?">
+
+Büyük yer değiştirme, paralaks ve zoom kaldırılır; bilgi kaybolmadan kısa bir opaklık geçişi bırakılır. Onay mesajı yine görünür ve duyurulur.
 
 </SelfCheck>

@@ -1,10 +1,11 @@
 ---
-summary: "Unit, integration, E2E, smoke ve regression testleri: her biri farklı bir hata türünü yakalar. E2E tasarımcıyı en çok ilgilendirenidir ve yalnızca kritik akışlar için yazılır; regression testi her hata düzeltmesinin yanına eklenen test disiplininden doğar."
+summary: "Unit, integration, E2E, smoke ve regression testleri farklı hataları yakalar. E2E yalnız kritik akışlar için yazılır ve erişilebilir adlara bağlanır; regression testi her düzeltmenin yanına eklenir."
 outcomes:
   - "Beş test türünü ve yakaladıkları hataları söyleyebilirsin."
   - "E2E testlerin neden kırılgan olduğunu ve nasıl sağlamlaştırıldığını (erişilebilir ad ve roller) açıklayabilirsin."
   - "Regression testin hangi disiplinden doğduğunu bilirsin."
-minutes: 8
+minutes: 5
+standard: 2
 sources:
   - label: "Martin Fowler — Pratik Test Piramidi"
     url: "https://martinfowler.com/articles/practical-test-pyramid.html"
@@ -15,9 +16,12 @@ sources:
 skipTerms: ["Domain name","Validation","domain name","alan adı","validation","doğrulama"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Test dendiğinde tek bir şey akla gelir; ama farklı testler farklı hataları yakalar.
 
@@ -31,7 +35,7 @@ Test dendiğinde tek bir şey akla gelir; ama farklı testler farklı hataları 
 
 ## E2E test
 
-**E2E (End-to-End, uçtan uca) test**: gerçek bir tarayıcıda, gerçek bir kullanıcının yapacağı adımların baştan sona otomatik yürütülmesi. Kullanıcının deneyimine en yakın testtir. **Tasarımcıyı en çok ilgilendiren tür budur:** bir kullanıcı akışının gerçekten çalıştığını doğrular. Ama yavaş ve kırılgandır; bu yüzden yalnızca **kritik akışlar** için yazılır: kayıt, giriş, ödeme, ana iş akışı. "E2E testleri para kazandıran akışlara ayıralım. Her butonu test etmeyelim."
+**E2E (End-to-End, uçtan uca) test**: gerçek bir tarayıcıda, gerçek bir kullanıcının yapacağı adımların baştan sona otomatik yürütülmesi. Kullanıcının deneyimine en yakın testtir. **Ürün ekibini en çok ilgilendiren tür budur:** bir kullanıcı akışının gerçekten çalıştığını doğrular. Ama yavaş ve kırılgandır; bu yüzden yalnızca **kritik akışlar** için yazılır: kayıt, giriş, ödeme, ana iş akışı. "E2E testleri para kazandıran akışlara ayıralım. Her butonu test etmeyelim."
 
 E2E testlerin kırılganlığı gerçek bir sorundur; tasarım değişince testler kırılır. Bu yüzden testler görsel detaylara değil, **erişilebilir adlara ve rollere** bağlanır. Bu, semantic HTML'in bir yan faydasıdır.
 
@@ -39,13 +43,87 @@ E2E testlerin kırılganlığı gerçek bir sorundur; tasarım değişince testl
 
 **Smoke test (duman testi)**: yayından hemen sonra "en temel şeyler çalışıyor mu?" kontrolü; bozuk bir yayını dakikalar içinde yakalar. **Regression test (gerileme testi)**: daha önce düzeltilmiş bir hatanın geri gelmediğini doğrulayan test. **Her hata düzeltmesinin yanına bir test eklenmesi** disiplininden doğar: aynı hata bir daha sessizce dönemez. "Bu hatayı düzelttik; yanına bir regression testi ekleyelim ki tekrar etmesin."
 
-<Callout kind="tasarimci">
+<Spectrum
+  label="Hız mı, gerçekçilik mi?"
+  caption="Test türleri hız ile gerçekçilik arasında sıralanır. Sol uçta unit test durur: milisaniyeler içinde çalışır, tek parçayı yalıtır ve hatanın yerini tam söyler. Entegrasyon testi parçaların arasındaki hataları yakalar. Smoke test yayından sonra canlıda temel akışları kısaca dener. Sağ uçta E2E durur: gerçek tarayıcıda gerçek kullanıcının adımlarını yürütür, ama yavaştır ve kırılgandır."
+  left={{
+  title: "Hızlı, yalıtılmış",
+  sub: "hatanın yeri net"
+}}
+  right={{
+  title: "Gerçekçi, yavaş",
+  sub: "kullanıcıya en yakın"
+}}
+  marks={[
+  {
+    label: "Unit",
+    at: 0.06
+  },
+  {
+    label: "Entegrasyon",
+    at: 0.38
+  },
+  {
+    label: "Smoke",
+    at: 0.68
+  },
+  {
+    label: "E2E",
+    at: 0.94
+  }
+]}
+/>
+
+<Case>
+
+Demlik'te dört test türü dört farklı hatayı yakaladı:
+
+1. **Unit:** öğrenci kartı indirimi kuralı, kart başına günde en çok iki indirimli sipariş. Üçüncü siparişte indirimin uygulanmadığını bir unit test sınıyor.
+2. **Entegrasyon:** kasa verisinde `acikMi` alanı bir gün gelmedi. Unit testler geçiyordu; şemayla doğrulayan entegrasyon testi sonradan eklendi.
+3. **E2E:** ödeme testi "Öde" düğmesini rolü ve adıyla buluyor. Selin düğmenin rengini değiştirdiğinde test kırılmadı.
+4. **Regression:** indirim bir kez gece yarısı sıfırlanmamıştı. Düzeltmenin yanına "gece yarısından sonraki ilk sipariş" testi eklendi; hata bir daha dönmedi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **E2E kapsamına alınacak kritik akışları sen öner:** kayıt, giriş, ödeme, arama.
 - **Arayüzü erişilebilir adlarla ve rollerle tasarla;** hem erişilebilirlik hem test kararlılığı kazanır.
 - **Bir hata düzeltildiğinde "regression testi var mı?" diye sor.**
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Hangi akışın E2E ile korunduğunu bil.** Lansmanı korunmayan bir akışa bağlama.
+- **Regression testi olmayan tekrar eden hatayı bir sinyal say.**
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kabul ölçütünü test türüne çevir:** iş kuralı unit, akış E2E ile sınanır.
+- **Her hata düzeltmesinde regression testi iste.**
+
+</Lens>
+<Lens role="project-manager">
+
+- **Kritik akış listesini yayın kontrol listesine bağla.** Smoke test bu listeden çıkar.
+- **Tedarikçi entegrasyonu için entegrasyon testinin ne zaman yapılacağını takvime yaz.**
+
+</Lens>
+<Lens role="scrum-master">
+
+- **E2E kırılganlığını ekip sorunu olarak gör;** sık kırılan test güveni aşındırır.
+- **Hata düzeltmesine test eklemeyi çalışma sözleşmesine koy.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **İş kurallarını sınır değerleriyle yaz:** ikinci sipariş indirimli, üçüncüsü değil. Unit test bu sınırları sınar.
+- **Kabul senaryolarını kritik akışlarla eşle;** E2E kapsamı oradan çıkar.
+
+</Lens>
+</Lenses>
 
 <Summary>
 

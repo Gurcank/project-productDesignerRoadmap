@@ -1,10 +1,11 @@
 ---
-summary: "Bir sitede bulunması beklenen hukuki içerikler: gizlilik/aydınlatma, çerez politikası, kullanım şartları, mesafeli satış ve iade, iletişim ve kimlik bilgileri, erişilebilirlik beyanı. Hukuk metinleri tasarımın en ihmal edilen kısmıdır; katmanlı sunum işe yarar."
+summary: "Bir sitede beklenen hukuki içerikler: gizlilik ve aydınlatma, çerez politikası, kullanım şartları, mesafeli satış ve iade, kimlik bilgileri, erişilebilirlik beyanı. Katmanlı sunum işe yarar."
 outcomes:
   - "Altı yasal sayfanın ne için olduğunu söyleyebilirsin."
   - "Yasal sayfaların yalnızca footer'da olmasının neden yetmeyebileceğini açıklayabilirsin."
   - "Katmanlı sunum yaklaşımını bilirsin."
 minutes: 5
+standard: 2
 sources:
   - label: "GDPR Madde 12 — Şeffaf bilgilendirme"
     url: "https://gdpr-info.eu/art-12-gdpr/"
@@ -13,13 +14,18 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 > Bu ders genel bilgilendirmedir, hukuki tavsiye değildir. Hangi sayfaların zorunlu olduğu ülkeye, sektöre ve iş modeline göre değişir; avukat görüşü al.
 
 Bir sitenin altında "Gizlilik", "Kullanım şartları", "İade politikası" bağlantıları sıralanır. Bunlar tasarımın en ihmal edilen sayfalarıdır, ama hukuki olarak en kritik olanlarıdır.
+
+## Hangi sayfalar
 
 | Sayfa | Ne için |
 |---|---|
@@ -30,20 +36,108 @@ Bir sitenin altında "Gizlilik", "Kullanım şartları", "İade politikası" ba�
 | **İletişim ve kimlik bilgileri** | Ticari unvan, adres, vergi bilgileri (e-ticarette yasal zorunluluk) |
 | **Erişilebilirlik beyanı** | Erişilebilirlik durumu ve geri bildirim yolu |
 
-## Tasarımcı için notlar
+## Tasarım için notlar
+
+<Tree
+  label="Yasal sayfalar ve göründükleri an"
+  caption="Yasal sayfalar footer'da durur ama ilgili oldukları anda da görünmelidir. Veri toplanırken: gizlilik ve aydınlatma metni ile çerez politikası. Satın alırken: kullanım şartları, mesafeli satış ve iade koşulları. Her zaman: iletişim ve kimlik bilgileri ile erişilebilirlik beyanı."
+  root={{
+  title: "Yasal sayfalar",
+  tone: "accent",
+  children: [
+    {
+      title: "Veri toplanırken",
+      children: [
+        {
+          title: "Gizlilik, aydınlatma"
+        },
+        {
+          title: "Çerez politikası"
+        }
+      ]
+    },
+    {
+      title: "Satın alırken",
+      children: [
+        {
+          title: "Kullanım şartları"
+        },
+        {
+          title: "Satış ve iade"
+        }
+      ]
+    },
+    {
+      title: "Her zaman",
+      children: [
+        {
+          title: "Kimlik, iletişim"
+        },
+        {
+          title: "Erişilebilirlik beyanı",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
 
 - Bu sayfalar footer'da bulunur ama **yalnızca footer'da bulunmaları yeterli olmayabilir:** ilgili oldukları anda (form gönderimi, satın alma) da erişilebilir olmalıdırlar.
 - Hukuk metinleri genelde tasarımın en ihmal edilen kısmıdır. Okunabilir bir tipografi, makul satır uzunluğu ve iyi bir başlık yapısı bu sayfalarda da gereklidir.
 - **Katmanlı sunum** yaklaşımı işe yarar: özet bir üst katman ve detaya inen bir alt katman. Uzun bir hukuk metnini olduğu gibi dökmek şeffaflık ilkesine hizmet etmez.
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in yasal sayfaları footer'da duruyordu; iade kuralları analizinden sonra ikisi ödeme akışına taşındı:
+
+1. **İade koşulları:** ödeme ekranında "Öde" düğmesinin hemen altında tek satır: "Sipariş hazırlanmadan iptal edersen ücret iade edilir · Koşullar". Kural Ayşe'nin karar tablosundan geliyor; uygulama, site ve destek aynı metni gösteriyor.
+2. **Satıcı:** sipariş özeti satıcının dükkân olduğunu gösteriyor: "Satıcı: Moda Kahve". Demlik aracı platform.
+3. **Katmanlı gizlilik:** gizlilik sayfasının başında beş maddelik bir özet; her madde ayrıntılı bölüme bağlanıyor.
+4. **Erişilebilirlik beyanı:** footer'da; hedef, bilinen sorunlar ve geri bildirim adresi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Yasal sayfa listesini projenin türüne göre çıkar** (ürün sitesi mi, e-ticaret mi?) ve hukukla birlikte onayla.
 - **Her yasal sayfa için okunabilir bir şablon tasarla:** başlıklar, özet kutusu, bağlantılı içindekiler.
 - **Form ve satın alma anında ilgili sayfaya doğrudan bağlantı koy.**
 - **Erişilebilirlik beyanı sayfasını unutma;** geri bildirim yolu içermelidir.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Yasal metinleri ürünün parçası say.** Satın alma anındaki tek satır, destek talebini önleyebilir.
+- **Satıcı ile platformun rolünü netleştir.** Kim sorumlu, müşteri kime başvurur?
+
+</Lens>
+<Lens role="product-owner">
+
+- **Yasal bağlantıların hangi ekranda görüneceğini kabul kriterine yaz.**
+- **Metin değişikliklerinin hukuk onayını Definition of Done'a ekle.**
+
+</Lens>
+<Lens role="project-manager">
+
+- **Yasal sayfaları lansman kontrol listesine koy.** Eksik sayfa yayını durdurabilir.
+- **Hukuk ekibinin inceleme süresini takvime ekle.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Kuralın tek kaynağını kur.** İade koşulu uygulamada, sitede ve destekte aynı metin olmalı.
+- **Hangi sayfaların zorunlu olduğunu iş modeline göre hukukla netleştir.**
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Katmanlı özetin anlaşılırlığını test et.** Kullanıcı ilk katmanda ne öğreniyor?
+- **Kullanıcının koşulları ne zaman aradığını gözle.** Genellikle bir sorun yaşadığında.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -58,5 +152,17 @@ Bir sitenin altında "Gizlilik", "Kullanım şartları", "İade politikası" ba�
 <SelfCheck question="Yasal sayfaların yalnızca footer'da bulunması neden yetmeyebilir?">
 
 Veri toplama ya da satın alma gibi ilgili oldukları anda da erişilebilir olmaları gerekir; footer'daki bağlantıyı çoğu kullanıcı o anda görmez.
+
+</SelfCheck>
+
+<SelfCheck question="Yasal sayfaların yalnız footer'da bulunması neden yetmeyebilir?">
+
+Kullanıcı onlara ilgili oldukları anda ihtiyaç duyar: veri toplanırken gizlilik, satın alırken iade koşulları. O anda erişilebilir olmaları hem şeffaflık hem hukuk açısından gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Katmanlı sunum nedir?">
+
+Uzun bir hukuk metninin üstüne kısa bir özet katmanı koymak; her özet maddesi ayrıntılı bölüme bağlanır. Kullanıcı önce özünü okur, isterse ayrıntıya iner.
 
 </SelfCheck>

@@ -1,9 +1,10 @@
 ---
-summary: "TypeScript hataları yazarken yakalar. Tasarımcı için asıl değeri, tip tanımının bir verinin hangi alanlardan oluştuğunun ve hangisinin boş olabileceğinin listesi olması."
+summary: "TypeScript hataları yazarken yakalar. Tasarım için asıl değeri, tip tanımının bir verinin hangi alanlardan oluştuğunun ve hangisinin boş olabileceğinin listesi olması."
 outcomes:
   - "TypeScript'in ne yaptığını ve ne yapmadığını söyleyebilirsin."
   - "Bir tip tanımına bakıp hangi alanların opsiyonel olduğunu ve neyi tasarlaman gerektiğini çıkarabilirsin."
-minutes: 5
+minutes: 3
+standard: 2
 sources:
   - label: "TypeScript Handbook — Temel tipler"
     url: "https://www.typescriptlang.org/docs/handbook/2/basic-types.html"
@@ -13,9 +14,12 @@ flags: ["degisken"]
 skipTerms: ["alan adı"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Tasarladığın kartta bir açıklama satırı var. Canlıda bir ürünün açıklaması yok ve kart bozuk görünüyor. Bu bilgi, geliştiricilerin kullandığı bir dosyada baştan yazıyordu: açıklama alanı opsiyonel. TypeScript'i bu yüzden bilmen yararlı.
 
@@ -28,28 +32,67 @@ Tasarladığın kartta bir açıklama satırı var. Canlıda bir ürünün açı
 - TypeScript tarayıcıda çalışmaz; derlenerek JavaScript'e çevrilir.
 - Tip güvenliği **çalışma zamanında** garanti değildir: sunucudan beklenmedik veri gelirse tip tanımı onu durdurmaz. Bunun için ayrıca veri doğrulaması (örneğin Zod) gerekir.
 
-## Tip tanımı tasarımcıya ne söyler
+## Tip tanımı tasarıma ne söyler
 
-**Type / interface**, bir verinin hangi alanlardan oluştuğunu tanımlar. Tasarımcı için değeri şudur: bir nesnenin **hangi bilgilere sahip olduğunun listesidir**. Bir kart tasarlarken "bu alanda ne var, boş olabilir mi?" sorusunun cevabı tip tanımında yazar. "Tipe baktım: `description` opsiyonel. Boş olduğunda kartın nasıl görüneceğini de tasarlayalım."
+**Type / interface**, bir verinin hangi alanlardan oluştuğunu tanımlar. Tasarım için değeri şudur: bir nesnenin **hangi bilgilere sahip olduğunun listesidir**. Bir kart tasarlarken "bu alanda ne var, boş olabilir mi?" sorusunun cevabı tip tanımında yazar. "Tipe baktım: `description` opsiyonel. Boş olduğunda kartın nasıl görüneceğini de tasarlayalım."
 
-<Callout kind="tasarimci">
+<Tree
+  label="Bir dükkân tipinin alanları"
+  caption="Demlik'te bir dükkânın tip tanımı beş alan içerir. Ad, adres ve açık olup olmadığı zorunludur; her dükkânda vardır. Logo ve hazırlık süresi opsiyoneldir; boş gelebilir. Her opsiyonel alan, tasarımda bir boş hâl demektir: logo yoksa baş harfli bir yedek, hazırlık süresi yoksa Hazır olunca bildireceğiz metni."
+  root={{
+    title: "Dukkan",
+    tone: "accent",
+    children: [
+      { title: "Zorunlu", children: [{ title: "ad" }, { title: "adres" }, { title: "acikMi" }] },
+      { title: "Opsiyonel", sub: "boş hâl gerekir", children: [{ title: "logo?" }, { title: "hazirlikDakika?", tone: "progress" }] },
+    ],
+  }}
+/>
+
+<Case>
+
+Demlik'in dükkân listesi tasarlanırken Selin, Ece'den `Dukkan` tipinin tanımını istedi:
+
+1. **Zorunlu alanlar:** ad, adres, açık olup olmadığı. Her kartta görünüyor.
+2. **Opsiyonel alanlar:** logo ve hazırlık süresi. Logosu olmayan dükkân için baş harfli bir yedek çizildi; hazırlık süresi boşsa satır gizleniyor.
+3. **Çalışma zamanı:** kasa tedarikçisinden gelen veride bir gün `acikMi` alanı hiç gelmedi. Tip tanımı bunu durdurmadı; Burak gelen veriyi ayrıca doğrulayan bir kontrol ekledi.
+4. **Teslim:** Selin'in tasarım dosyasında her kartın yanında "logo yok" ve "süre yok" hâlleri duruyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Tasarlamadan önce tip tanımına (ya da API yanıtına) bak.** Hangi alan zorunlu, hangisi opsiyonel?
 - **Her opsiyonel alan için "boşken" hâlini çiz.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
 - TypeScript tipleri baştan tanımlayıp hataları yazarken yakalar; çalışma zamanında garanti vermez.
 - Tip tanımı, bir verinin alanlarının ve hangisinin boş olabileceğinin listesidir; boş hâller bundan çıkar.
+- Sunucudan gelen veri çalışma zamanında ayrıca doğrulanır; tip tanımı onu durdurmaz.
 
 </Summary>
 
 ## Kendini yokla
 
-<SelfCheck question="TypeScript tip tanımının tasarımcı için pratik değeri nedir?">
+<SelfCheck question="TypeScript tip tanımının tasarım için pratik değeri nedir?">
 
 Bir nesnenin hangi alanlara sahip olduğunun listesidir. "Bu alanda ne var, boş olabilir mi?" sorusunun cevabı orada yazar; böylece opsiyonel alanların boş hâlini de tasarlarsın.
+
+</SelfCheck>
+
+<SelfCheck question="Kodda TypeScript kullanılıyor; yine de sunucudan beklenmedik veri gelince ekran bozuldu. Neden?">
+
+TypeScript tipleri derleme sırasında denetler; tarayıcıda çalışan JavaScript'e dönüşünce tipler ortadan kalkar. Çalışma zamanında gelen veriyi doğrulamak için ayrıca bir kontrol (örneğin bir şema doğrulama kütüphanesi) gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="TypeScript tarayıcıda nasıl çalışır?">
+
+Doğrudan çalışmaz. Derleme sırasında JavaScript'e çevrilir; tarayıcı bu JavaScript'i çalıştırır.
 
 </SelfCheck>

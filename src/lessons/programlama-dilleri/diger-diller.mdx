@@ -4,7 +4,8 @@ outcomes:
   - "Dört dilin ne için kullanıldığını bir cümleyle söyleyebilirsin."
   - "iOS ve Android'in ayrı tasarım dilleri olduğunu ve neden tek tasarımın ikisinde de yabancı hissettirebileceğini açıklayabilirsin."
   - "'Tek kod, iki platform' yaklaşımının bir ödünleşim olduğunu bilirsin."
-minutes: 6
+minutes: 3
+standard: 2
 sources:
   - label: "Ruby on Rails"
     url: "https://rubyonrails.org/"
@@ -23,15 +24,46 @@ additions:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Bu dördü bir Product Designer'ın günlük işinde nadiren karar konusu olur; ama adı geçtiğinde ne anlama geldiğini bilmek gerekir. Seviye: **kulak aşinalığı.**
+Bu dördü ürün ekibinin günlük işinde nadiren karar konusu olur; ama adı geçtiğinde ne anlama geldiğini bilmek gerekir. Seviye: **kulak aşinalığı.**
+
+<Tree
+  label="Dört dil ve konuları"
+  caption="Bu dört dilin her biri bir konuyu işaret eder. Ruby, Rails ile hızlı web ürünlerini. Swift, iOS ve Apple platformlarını. Kotlin, Android'i ve Java ekosistemini. Rust, performans ve bellek güvenliğini."
+  root={{
+  title: "Diğer diller",
+  tone: "accent",
+  children: [
+    {
+      title: "Ruby",
+      sub: "Rails · hızlı ürün"
+    },
+    {
+      title: "Swift",
+      sub: "iOS, macOS"
+    },
+    {
+      title: "Kotlin",
+      sub: "Android"
+    },
+    {
+      title: "Rust",
+      sub: "performans, güvenlik",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 ## Ruby
 
-Geliştirici mutluluğunu öne alan, **Ruby on Rails** ile ünlenen dildir. Bir fikri çok hızlı çalışır hâle getirmekte güçlüdür; birçok bilinen ürün Rails ile başladı. Erken aşama ürünlerde ve devralınan Rails sistemlerinde karşına çıkar. Yeni proje başlangıçlarında payı azaldı ve işe alım havuzu daralıyor. Tasarımcı için: Rails'li bir üründe prototipten yayına giden yol kısadır; hızlı denemeye açık bir zemindir.
+Geliştirici mutluluğunu öne alan, **Ruby on Rails** ile ünlenen dildir. Bir fikri çok hızlı çalışır hâle getirmekte güçlüdür; birçok bilinen ürün Rails ile başladı. Erken aşama ürünlerde ve devralınan Rails sistemlerinde karşına çıkar. Yeni proje başlangıçlarında payı azaldı ve işe alım havuzu daralıyor. Tasarım için: Rails'li bir üründe prototipten yayına giden yol kısadır; hızlı denemeye açık bir zemindir.
 
 ## Swift
 
@@ -45,12 +77,25 @@ Apple'ın dilidir: **iOS, iPadOS, macOS** uygulamaları burada yazılır. Native
 
 Bellek güvenliğini derleme anında garanti etmeyi hedefleyen, çok hızlı bir sistem dilidir. Performansın kritik olduğu altyapıda, tarayıcı motorlarında ve WebAssembly'de görülür. Öğrenmesi zor, yazması yavaştır; sıradan bir web servisi için fazladır. Adı geçtiğinde konu genelde **performans ya da güvenliktir,** özellik değil.
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in iOS uygulaması Swift, Android uygulaması Kotlin ile yazılıyor. Selin ilk yıl iki platforma aynı tasarımı verdi:
+
+1. **Sorun:** Android kullanıcıları alt gezinmede iOS'a özgü görünümü yabancı buldu; geri hareketi de beklendiği gibi çalışmıyordu.
+2. **Karar:** ortak olan Demlik'in renkleri, tipografisi ve akışı. Gezinme, geri davranışı ve sistem bileşenleri her platformun kendi kurallarına uyuyor.
+3. **Teslim:** tasarım dosyasında iki platformun farklı olduğu ekranlar ayrı çiziliyor; aynı olanlar tek.
+4. **Maliyet:** iki ayrı native uygulama, iki ayrı geliştirme demek. Ekip çapraz platform bir araca geçmeyi bir kez tartıştı; mevcut kod ve ekip bilgisi yüzünden kalındı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Native mobil, webin ölçeklendirilmiş hâli değildir.** Ayrı platform kuralları, ayrı bileşenler, ayrı yayın süreci vardır; mağaza onayı günler alabilir.
 - **"Tek kod, iki platform" (React Native, Flutter) bir ödünleşimdir:** ortak kod ucuzlar, platforma özgü his zayıflar. Hangisinin daha önemli olduğu bir ürün kararıdır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -65,5 +110,17 @@ Bellek güvenliğini derleme anında garanti etmeyi hedefleyen, çok hızlı bir
 <SelfCheck question="'Web'deki gibi olsun' isteği iOS uygulamasında neden sorun çıkarabilir?">
 
 iOS'un kendi arayüz kuralları ve hazır bileşenleri vardır (Human Interface Guidelines). Web davranışını birebir taşımak platformun doğal hissini bozar.
+
+</SelfCheck>
+
+<SelfCheck question="Bir uygulama iOS ve Android'de birebir aynı görünmeli mi?">
+
+Genelde hayır. Marka, renk ve akış ortak kalabilir; ama gezinme, geri davranışı ve sistem bileşenleri her platformun kendi kurallarına (HIG ve Material) uymalıdır. Aksi hâlde iki platformda da yabancı hissettirir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir toplantıda Rust'ın adı geçiyor. Konu büyük olasılıkla nedir?">
+
+Performans ya da güvenlik. Rust, performansın kritik olduğu altyapıda ve bellek güvenliği gereken yerlerde kullanılır; sıradan bir özellik için seçilmez.
 
 </SelfCheck>

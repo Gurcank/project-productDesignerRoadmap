@@ -1,0 +1,160 @@
+---
+summary: "Kötü haber erken verilince yönetilebilir bir bilgidir, geç verilince bir güven sorunudur. Eskalasyon suçlama değil, kararı doğru masaya taşımaktır; eşiği önceden yazılır ve haber seçeneklerle birlikte verilir."
+outcomes:
+  - "Kötü haberi sorun, etki ve seçeneklerle birlikte verebilirsin."
+  - "Bir eskalasyon eşiğini önceden tanımlayabilirsin."
+  - "Olumlu bilgi kültürünün işaretlerini tanıyabilirsin."
+minutes: 6
+standard: 2
+skipTerms: ["gecikme"]
+sources:
+  - label: "Google SRE Book — Managing Incidents"
+    url: "https://sre.google/sre-book/managing-incidents/"
+  - label: "Watt — Project Management, Ch. 5 Stakeholder Management"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-5-project-stakeholders-project-management/"
+additions:
+  - "Olayı erken ilan etme, ilan koşulları, iletişim rolü ve düzenli güncellemeler (Google SRE Book)"
+  - "Mumbai örneği: olumlu bilgi verme beklentisi ve kültür (Watt)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Timeline from "~/components/diagrams/primitives/Timeline.astro";
+
+Tedarikçinin dördüncü ve beşinci hafta raporları yeşildi. Altıncı haftanın perşembesi Emre test ortamına bağlanmayı denedi; ortam yoktu. Koordinatör telefonda "birkaç gün" dedi. Leyla'nın önünde bir seçim vardı: pazartesi raporuna kadar beklemek mi, Hakan'ı şimdi aramak mı?
+
+Kötü haberin içeriği değişmeyecekti; değişecek olan, Hakan'ın onu ne zaman ve kimden duyacağıydı. Bu ders, kötü haberi vermeyi ve bir sorunu yukarı taşımayı anlatır. Haftalık rapor tarafı [Durum raporu](/proje-yonetimi/durum-raporu/) dersinde.
+
+## Erken haber, yönetilebilir haber
+
+Materyal bunu [Şirket Sözlüğü](/sirket-sozlugu/yazili-formatlar/) bölümünde açıkça yazar: kötü haberi geciktirmek en yaygın hatadır. Erken bildirilen gecikme yönetilebilir bir bilgidir; son anda bildirilen gecikme bir güven sorunudur.
+
+Google'ın SRE kitabı aynı ilkeyi olaylar için söyler. Bir olayı erken ilan edip basit bir düzeltmeyle kapatmak, olay büyüdükten saatler sonra müdahale çerçevesini kurmaya çalışmaktan iyidir. Kitap, olayın ne zaman ilan edileceğini önceden belirlemeyi önerir. Ekiplerinden birinin koşulları şunlardır:
+
+- Sorunu çözmek için ikinci bir ekip gerekiyor mu?
+- Sorun müşteriler tarafından görülüyor mu?
+- Bir saatlik yoğun incelemeden sonra hâlâ çözülmedi mi?
+
+Bunlardan biri doğruysa, olay ilan edilir.
+
+## Eskalasyon bir karar aracıdır
+
+**Eskalasyon** (escalation), bir sorunu çözme yetkisi olan bir üst kademeye taşımaktır. Bir suçlama ya da yenilgi itirafı değildir; kararın doğru masaya gitmesidir. SRE kitabındaki olay rollerinden biri de bunu yansıtır: **iletişim rolü**, müdahale ekibinin dış yüzüdür ve ekibe ve paydaşlara düzenli güncelleme gönderir.
+
+İyi bir eskalasyon üç şeyi birlikte taşır:
+
+1. **Sorun:** ne oldu, ne zaman öğrenildi?
+2. **Etki:** neyi etkiliyor? Kritik yol, tarih, bütçe.
+3. **Seçenekler:** ne yapılabilir ve önerin hangisi? Karar kimden bekleniyor?
+
+**Eskalasyon ≠ sorunu devretmek.** Sorunu yukarı taşıyan, seçenekleri de taşır. Yalnız sorunu bırakan, kararı da başkasına bırakmış olur.
+
+## Olumlu bilgi kültürü
+
+Watt'ın kitabında bir uyarı örneği vardır. Mumbai'deki bir projede ekip liderleri toplantılarda tasarımın takvimde olduğunu söylüyordu. Bireysel konuşmalar ise kritik işlerin geride olduğunu gösterdi. Bilgi, yalnız olumlu haber verme beklentisinden süzülerek yukarı çıkıyordu. Proje sonunda iptal edildi.
+
+Yeşil raporların ardından gelen ani kırmızı, çoğu zaman böyle bir kültürün işaretidir.
+
+<Timeline
+  label="Altıncı haftanın kötü haberi"
+  caption="Tedarikçinin raporları 4. ve 5. haftada yeşildi. Altıncı haftanın perşembesi test ortamının hazır olmadığı öğrenildi ve Leyla Hakan'ı aynı gün aradı. Yedinci haftanın durum raporu sarıydı. Test ortamı yedinci haftanın sonunda hazırdı. Pilot bir hafta gecikmeyle 9. ve 11. haftalar arasında yapıldı ve lansman 14. haftada tutuldu."
+  unit="hafta"
+  span={14}
+  every={2}
+  marker={{ at: 6, label: "haber" }}
+  rows={[
+    { label: "Tedarikçi: yeşil rapor", start: 4, end: 6 },
+    { label: "Gecikme öğrenildi", start: 6, kind: "milestone", tone: "accent" },
+    { label: "Hakan arandı", start: 6, kind: "milestone", tone: "accent" },
+    { label: "Durum raporu: sarı", start: 7, kind: "milestone" },
+    { label: "Test ortamı hazır", start: 8, kind: "milestone" },
+    { label: "Pilot (1 hafta geç)", start: 9, end: 11 },
+    { label: "Lansman", start: 14, kind: "milestone", tone: "progress" },
+  ]}
+/>
+
+<Case>
+
+Leyla pazartesiyi beklemedi. İletişim planındaki eşik açıktı: kritik yoldaki bir iş bir haftadan fazla kayarsa Hakan aynı gün haber alır.
+
+1. **Sorun:** "Entegrasyon testi bu hafta başlamalıydı; test ortamı hazır değil. Bugün öğrendim."
+2. **Etki:** "Kritik yolda. Bir haftalık tamponumuz var; pilot bir hafta kayarsa lansman yine 14. haftada."
+3. **Seçenekler:** "Tedarikçiden ek mühendis istemek ya da kafelere ayrı tablet. Önerim birincisi. Cuma'ya kadar tedarikçiyle konuşup sana yazacağım."
+4. **Kültür:** Leyla tedarikçinin yeşil raporlarını da konuştu. Bundan sonra tedarikçinin her raporuna test ortamının fiilî durumu eklendi.
+
+Hakan'ın ilk cümlesi şuydu: "Bugün söylediğin iyi oldu." Yedinci hafta raporu sarı geldiğinde kimse şaşırmadı.
+
+</Case>
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Eşiği iletişim planına yaz.** "Ne zaman ararım?" sorusu kriz anında değil, baştan cevaplanır.
+- **Haberi seçeneklerle ver.** Sorun, etki, seçenek ve önerin; kararı bekleyeceğin tarih.
+- **Yeşil raporları sına.** Bir tedarikçinin raporunu fiilî bir kontrolle doğrula.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Hedefin tutmayacağını ilk fark ettiğinde söyle.** Çeyreğin sonunda söylenen, artık bir karar değil bir açıklamadır.
+- **Kötü haberi verenin işini kolaylaştır.** Kızarsan, bir dahaki haber geç gelir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Sprint hedefinin tehlikede olduğunu erken söyle.** Paydaş, Review'da değil, haberi alır almaz bilmeli.
+- **Kapsamı daraltmayı seçenek olarak sun.** Tarih mi, kapsam mı? Kararı paydaşla birlikte ver.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Takımın engelini bekletme.** Takımın çözemediği bir engel, yetkisi olan kişiye aynı gün taşınır.
+- **Suçlamayan bir ortam kur.** Kötü haber cezalandırılırsa takım haberi saklar.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinimdeki bir boşluğu erken bildir.** Analiz sırasında bulunan çelişki, geliştirme sırasında bulunandan ucuzdur.
+- **Varsayımın çöktüğünü kayda geçir.** Tüzükteki bir varsayım yanlış çıkınca bu bir eskalasyon konusudur.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Erken verilen kötü haber yönetilebilir bir bilgidir; geç verilen bir güven sorunudur.
+- Eskalasyon eşiğini önceden yaz; eşik aşılınca düzenli raporu bekleme.
+- Eskalasyon suçlama değil, kararı doğru masaya taşımaktır.
+- Haberi sorun, etki ve seçeneklerle birlikte ver.
+- Yeşil raporların ardından gelen ani kırmızı, olumlu bilgi kültürünün işareti olabilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Google'ın SRE kitabındaki bir ekibe göre bir sorun hangi koşullarda olay olarak ilan edilir?">
+
+İkinci bir ekip gerekiyorsa, sorun müşteriler tarafından görülüyorsa ya da bir saatlik yoğun incelemeye rağmen çözülmediyse. Kitap, erken ilan edip basitçe kapatmanın daha iyi olduğunu söyler.
+
+</SelfCheck>
+
+<SelfCheck question="İyi bir eskalasyon hangi üç şeyi birlikte taşır?">
+
+Sorunu, etkisini ve seçenekleri. Ayrıca önerini ve kararın kimden, ne zamana kadar beklendiğini.
+
+</SelfCheck>
+
+<SelfCheck question="Tedarikçinin raporları üç hafta boyunca yeşil, sonra bir anda kırmızı. Bu neyin işareti olabilir?">
+
+Bilginin yukarı çıkarken olumluya doğru süzüldüğü bir kültürün. Watt'ın Mumbai örneğindeki gibi, toplantıdaki rapor ile sahadaki durum ayrışmış olabilir. Raporlar fiilî bir kontrolle sınanmalı.
+
+</SelfCheck>
+
+<SelfCheck question="Bir geliştirici 'bunu yöneticiye söylersem ispiyon gibi olur' diyor. Ne dersin?">
+
+Eskalasyon kişiyi değil sorunu yukarı taşır; amaç kararı yetkisi olan kişiye götürmektir. Sorunu, etkisini ve seçenekleri birlikte anlatmak, onu suçlamaktan ayırır.
+
+</SelfCheck>

@@ -1,0 +1,146 @@
+---
+summary: "Araştırma yöntemleri üç boyutta ayrışır: insanların ne dediği mi ne yaptığı mı, nitel mi nicel mi, ürünün nasıl kullanıldığı. Ürünün evresi de seçimi belirler: üretken, biçimlendirici ya da özetleyici yöntem."
+outcomes:
+  - "Bir yöntemi tutumsal–davranışsal ve nitel–nicel eksenlerinde yerleştirebilirsin."
+  - "Bir araştırma sorusu için 'neden' mi 'ne kadar' mı sorduğunu ayırt edebilirsin."
+  - "Ürünün evresine göre üretken, biçimlendirici ya da özetleyici yöntem seçebilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "NN/g — Christian Rohrer, When to Use Which User-Experience Research Methods (2022)"
+    url: "https://www.nngroup.com/articles/which-ux-research-methods/"
+additions:
+  - "Yöntemlerin üç boyutu, kullanım bağlamı, üretken/biçimlendirici/özetleyici yöntemler ve yöntem tanımları (Christian Rohrer, NN/g)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Matrix2x2 from "~/components/diagrams/primitives/Matrix2x2.astro";
+
+Ozan'ın sorusu netti: dükkânlar Panel'de menü ayarlarını neden bulamıyor? Ekipte üç öneri çıktı. Selin bir anket göndermek istedi, Emre tıklama verisine bakmayı önerdi, Ayşe birkaç dükkânı ziyaret etmek istedi. Üçü de bir şey öğretirdi, ama aynı şeyi değil.
+
+Her yöntem farklı bir soruya cevap verir. Bu ders, bir soruyu doğru yöntemle eşleştirmeyi anlatır. Yöntemlerin kısa tanımları [Değerlendirme yöntemleri](/ux-ui-ilkeleri/degerlendirme-yontemleri/) dersinde.
+
+## İki ana boyut
+
+NN/g'den Christian Rohrer yirmi yaygın yöntemi üç boyutta yerleştirir. İlk ikisi şunlardır:
+
+**Tutumsal ve davranışsal.** Rohrer bunu "insanların söyledikleri" ve "yaptıkları" diye özetler ve ekler: çoğu zaman ikisi çok farklıdır. Tutumsal araştırma, insanların farkında oldukları ve söylemeye istekli oldukları şeyle sınırlıdır.
+
+**Nitel ve nicel.** Nitel çalışmalar davranışı ya da tutumu doğrudan gözleyerek ya da dinleyerek veri üretir; araştırmacı soru sorabilir, araştırmayı yolda değiştirebilir. Nicel çalışmalar veriyi bir ölçüm aracıyla dolaylı toplar: anket, analitik. Rohrer'e göre nitel yöntemler "neden" ve "nasıl düzeltiriz" sorularına, nicel yöntemler "kaç" ve "ne kadar" sorularına daha iyi cevap verir.
+
+<Matrix2x2
+  label="Yöntemler iki eksende"
+  caption="Dikey eksen insanların ne yaptığını mı yoksa ne dediğini mi ölçtüğümüzü, yatay eksen nitel mi nicel mi çalıştığımızı gösterir. Sol üstte ne yaptıklarını izleyip nedenini anlayan yöntemler durur: kullanılabilirlik testi ve saha çalışması. Sağ üstte ne yaptıklarını sayan yöntemler vardır: analitik ve A/B testi. Sol altta ne dediklerini dinleyen görüşme, sağ altta ne dediklerini sayan anket durur."
+  x={{ title: "Veri", low: "nitel", high: "nicel" }}
+  y={{ title: "Ne ölçülüyor?", low: "ne dediği", high: "ne yaptığı" }}
+  quadrants={[
+    { title: "İzle ve anla", sub: "davranış, neden" },
+    { title: "Davranışı say", sub: "davranış, ne kadar" },
+    { title: "Dinle ve anla", sub: "tutum, neden" },
+    { title: "Tutumu say", sub: "tutum, ne kadar" },
+  ]}
+  points={[
+    { label: "Kullanılabilirlik testi", x: 0.16, y: 0.7 },
+    { label: "Saha çalışması", x: 0.34, y: 0.6 },
+    { label: "Analitik", x: 0.66, y: 0.6 },
+    { label: "A/B testi", x: 0.84, y: 0.7 },
+    { label: "Görüşme", x: 0.2, y: 0.15 },
+    { label: "Anket", x: 0.8, y: 0.15 },
+  ]}
+/>
+
+Rohrer'e göre en çok kullanılan iki yöntem, kullanılabilirlik çalışmaları ve saha çalışmalarıdır; ikisi de hem söyleneni hem yapılanı toplar ama davranışa yaslanmaları önerilir.
+
+**Söylenen ≠ yapılan.** "Ayarları hep kullanırım" diyen bir dükkân sahibi, ekranda o ayarı bulamayabilir.
+
+## Bağlam ve evre
+
+Üçüncü boyut **kullanım bağlamıdır**. Ürün doğal biçimde kullanılabilir: saha çalışması, analitik. Bir senaryoyla kullanılabilir: kullanılabilirlik testi. Sınırlı bir biçimde kullanılabilir: kart sıralama, ağaç testi, konsept testi. Ya da hiç kullanılmaz: marka çalışması.
+
+Rohrer bir de zaman boyutu ekler: ürünün hangi evresindeyiz?
+
+| Evre | Amaç | Yöntem türü | Örnekler |
+|---|---|---|---|
+| Strateji | Yeni yön ve fırsat bulmak | Üretken | Saha çalışması, günlük çalışması, görüşme, anket, konsept testi |
+| Tasarım | Tasarımın kullanılabilirliğini iyileştirmek | Biçimlendirici | Kart sıralama, ağaç testi, kullanılabilirlik testi, uzaktan test |
+| Lansman ve değerlendirme | Ürünü kendisiyle ya da rakiple ölçmek | Özetleyici | Kıyaslama, moderatörsüz test, A/B testi, analitik, anket |
+
+Rohrer'in hatırlattığı gibi bu sınıflar katı değildir; bir kılavuzdur. Çoğu projede birden çok yöntemi birleştirmek, tek bir yönteme yaslanmaktan iyidir.
+
+<Case>
+
+Mert, Ozan'ın sorusunu iki parçaya ayırdı:
+
+1. **"Kaç dükkân bulamıyor?"** Bir "ne kadar" sorusu. Emre'nin önerdiği analitik cevap verdi: menü ayarları sayfasına gelenlerin çoğu önce "Stok" bölümüne giriyordu.
+2. **"Neden bulamıyorlar?"** Bir "neden" sorusu. Selin'in anketi dükkân sahiplerine nerede aradıklarını sorardı, ama söyledikleri ile yaptıkları farklı olabilirdi.
+3. **Seçim:** Panel'in yapısı tasarlanırken biçimlendirici yöntemler: önce kart sıralama ile dükkânların menüyü nasıl grupladığını gör, sonra ağaç testiyle yeni yapıyı ölç.
+4. **Ayşe'nin ziyareti:** bir sonraki tura kaldı; kart sıralamadan çıkan soruları sahada sınamak için.
+
+</Case>
+
+<Lenses>
+<Lens role="ux-researcher">
+
+- **Soruyu önce "neden" ve "ne kadar" diye ayır.** Yöntem seçimi buradan başlar.
+- **Davranışa yaslan.** Söylenen ile yapılan ayrıştığında, yapılan kazanır.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Tasarım evresinde biçimlendirici yöntem iste.** Kullanılabilirlik testi ve ağaç testi, tasarımı değiştirir.
+- **Anketi tasarım kararının tek kanıtı yapma.** Kullanıcının tercihi, kullanımıyla aynı değildir.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Sayıyı ve nedeni birlikte iste.** Analitik nerede kaybettiğini, görüşme neden kaybettiğini söyler.
+- **Evreye uygun yöntemi kabul et.** Strateji evresinde A/B testi, yanlış soruya kesin bir cevap verir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim çıkarmada da söyleneni gözlemle sına.** Görüşmede söylenmeyen kural, gözlemde ortaya çıkar.
+- **Nicel veriyi as-is analizine ekle.** Sorunun büyüklüğü, önceliği belirler.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Yöntemler üç boyutta ayrışır: tutumsal–davranışsal, nitel–nicel ve kullanım bağlamı.
+- İnsanların söyledikleri ile yaptıkları çoğu zaman farklıdır; davranışa yaslanmak önerilir.
+- Nitel yöntemler "neden"e, nicel yöntemler "ne kadar"a daha iyi cevap verir.
+- Strateji evresinde üretken, tasarım evresinde biçimlendirici, lansmandan sonra özetleyici yöntemler kullanılır.
+- Sınıflar katı değildir; çoğu projede birden çok yöntem birleştirilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Tutumsal ve davranışsal araştırma arasındaki fark nedir?">
+
+Tutumsal araştırma insanların ne söylediğini, davranışsal araştırma ne yaptığını ölçer. Tutumsal veri, insanların farkında oldukları ve söylemeye istekli oldukları şeyle sınırlıdır.
+
+</SelfCheck>
+
+<SelfCheck question="'Kaç kullanıcı ödeme ekranında ayrılıyor?' sorusuna hangi tür yöntem uygundur?">
+
+Nicel ve davranışsal bir yöntem: analitik. "Ne kadar" sorusudur. Nedenini öğrenmek içinse nitel bir yöntem, örneğin kullanılabilirlik testi gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Üretken, biçimlendirici ve özetleyici yöntemler arasındaki fark nedir?">
+
+Üretken yöntemler strateji evresinde yeni yön ve fırsat bulur. Biçimlendirici yöntemler tasarım evresinde tasarımı iyileştirir. Özetleyici yöntemler lansmandan sonra ürünü kendisiyle ya da rakiple ölçer.
+
+</SelfCheck>
+
+<SelfCheck question="Ekip yalnız anketle bir tasarım kararı vermek istiyor. Ne dersin?">
+
+Anket insanların ne dediğini ölçer; ne yaptıklarını değil. Kararı bir davranışsal yöntemle, örneğin kullanılabilirlik testiyle desteklemeyi öneririm.
+
+</SelfCheck>

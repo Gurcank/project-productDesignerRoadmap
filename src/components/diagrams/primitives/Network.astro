@@ -1,0 +1,86 @@
+---
+/**
+ * An activity network with its critical path, computed at build time
+ * (src/lib/demos/critical-path.ts). Each box says what the work is, how long
+ * it takes and how much it may slip; the critical path is drawn in the
+ * progress tone *and* marked "kritik" in words. Columns follow dependency
+ * depth, so the drawing reads left to right like the plan.
+ */
+import DiagramFigure from "../DiagramFigure.astro";
+import DataTable from "../DataTable.astro";
+import { wrap } from "./util";
+import { criticalPath, type Activity } from "~/lib/demos/critical-path";
+
+interface Props {
+  label: string;
+  caption: string;
+  activities: Activity[];
+  unit?: string;
+}
+
+const { label, caption, activities, unit = "gün" } = Astro.props;
+const { items, duration } = criticalPath(activities);
+
+const COL_W = 156;
+const BOX_W = 128;
+const BOX_H = 66;
+const ROW_GAP = 18;
+const columns = new Map<number, typeof items>();
+for (const item of items) columns.set(item.depth, [...(columns.get(item.depth) ?? []), item]);
+const maxRows = Math.max(...[...columns.values()].map((col) => col.length));
+const width = Math.max(360, columns.size * COL_W + 8);
+const height = maxRows * (BOX_H + ROW_GAP) + 34;
+
+const pos = new Map<string, { x: number; y: number }>();
+for (const [depth, col] of columns) {
+  const offset = ((maxRows - col.length) * (BOX_H + ROW_GAP)) / 2;
+  col.forEach((item, row) => pos.set(item.id, { x: 8 + depth * COL_W, y: 8 + offset + row * (BOX_H + ROW_GAP) }));
+}
+const boxes = items.map((item) => ({ ...item, ...pos.get(item.id)!, title: wrap(`${item.id} · ${item.label}`, BOX_W - 16, "label", 1)[0]! }));
+const edges = items.flatMap((item) => (item.after ?? []).map((from) => ({ from: pos.get(from)!, to: pos.get(item.id)!, critical: item.critical && items.find((i) => i.id === from)!.critical && items.find((i) => i.id === from)!.ef === item.es })));
+const path = boxes.filter((box) => box.critical).sort((a, b) => a.es - b.es).map((box) => box.id).join(" → ");
+---
+
+<DiagramFigure label={label} caption={caption}>
+  <svg viewBox={`0 0 ${width} ${height}`} style={`--dg-min: ${width}px`} role="img" aria-label={`${label}. Kritik yol: ${path}, toplam ${duration} ${unit}.`} class:list={{ "dg-narrow": width <= 360 }}>
+    <title>{label}</title>
+    {
+      edges.map((edge) => {
+        const x1 = edge.from.x + BOX_W;
+        const y1 = edge.from.y + BOX_H / 2;
+        const x2 = edge.to.x - 4;
+        const y2 = edge.to.y + BOX_H / 2;
+        const mid = (x1 + x2) / 2;
+        return (
+          <>
+            <path class:list={["dg-line", { "dg-line--progress": edge.critical }]} d={`M${x1} ${y1} C${mid} ${y1} ${mid} ${y2} ${x2} ${y2}`} />
+            <path class:list={["dg-line", { "dg-line--progress": edge.critical }]} d={`M${x2 - 6} ${y2 - 5} l6 5 -6 5`} stroke-linejoin="round" />
+          </>
+        );
+      })
+    }
+    {
+      boxes.map((box) => (
+        <>
+          <rect class:list={["dg-box", { "dg-box--progress": box.critical }]} x={box.x} y={box.y} width={BOX_W} height={BOX_H} rx="8" />
+          <text class="dg-label" x={box.x + 10} y={box.y + 20}>
+            {box.title}
+          </text>
+          <text class="dg-sub" x={box.x + 10} y={box.y + 38}>
+            {box.duration} {unit} · {box.es}→{box.ef}
+          </text>
+          <text class:list={["dg-sub", { "dg-progress": box.critical }]} x={box.x + 10} y={box.y + 55}>
+            {box.critical ? "kritik · bolluk 0" : `bolluk ${box.slack} ${unit}`}
+          </text>
+        </>
+      ))
+    }
+    <text class="dg-sub" x="8" y={height - 6}>Kritik yol: {path} · toplam {duration} {unit}</text>
+  </svg>
+  <DataTable
+    slot="data"
+    caption={label}
+    head={["İş", "Süre", "Önce bitmesi gereken", "En erken başlangıç", "En geç başlangıç", "Bolluk"]}
+    rows={items.map((item) => [`${item.id} · ${item.label}`, `${item.duration} ${unit}`, (item.after ?? []).join(", ") || "—", item.es, item.ls, item.critical ? "0 (kritik)" : item.slack])}
+  />
+</DiagramFigure>

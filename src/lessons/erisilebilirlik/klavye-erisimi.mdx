@@ -5,7 +5,8 @@ outcomes:
   - "Görsel sıra ile kod sırasının neden uyumlu olması gerektiğini açıklayabilirsin."
   - "Modal açıldığında odağın nasıl davranması gerektiğini (üç adım) bilirsin."
   - "SPA geçişlerinde odağın neden yönetilmesi gerektiğini anlatabilirsin."
-minutes: 12
+minutes: 8
+standard: 2
 sources:
   - label: "MDN — :focus-visible"
     url: "https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible"
@@ -21,6 +22,9 @@ import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Farenizi bırakın. Yalnızca **Tab, Enter, Space ve ok tuşlarıyla** kendi sitenizi kullanmayı deneyin. Sorunların çoğu ilk beş dakikada ortaya çıkar: odak nerede? Menü açılıyor ama kapatılamıyor, modal açılınca odak arkaya kaçıyor, butonlara ulaşılamıyor.
 
@@ -103,7 +107,21 @@ Bu sitede hiçbir yerde odak halkası kaldırılmadı: iki piksel kalınlığın
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik Panel'i bazı dükkân çalışanları tabletle değil, kasadaki bilgisayarın klavyesiyle kullanıyordu. Emre bir sabah klavye turu yaptı:
+
+1. **Odak göstergesi:** odak halkası "tasarımı bozuyor" diye kaldırılmıştı; çalışan nerede olduğunu göremiyordu. Selin markaya uygun, kalın bir odak halkası çizdi.
+2. **Sekme sırası:** sipariş listesinde Tab önce ekranın sağındaki filtrelere gidiyordu. Sıra görsel sırayla eşlendi.
+3. **Odak hapsi:** "Siparişi iptal et" penceresi açıldığında odak pencerenin içinde tutuluyor; Esc pencereyi kapatıp odağı düğmeye geri veriyor.
+4. **Kısayol:** sabah yoğunluğu için "sıradaki siparişi hazır işaretle" kısayolu eklendi; ekranda görünür bir ipucuyla.
+
+Klavye turu o günden sonra Panel'in her yayın öncesi kontrol listesinde.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Odak durumunu her bileşen için tasarla.** Hover ile aynı değil.
 - **Odak halkası tokenını tanımla.** Kalınlık, renk, boşluk; en az 3:1 kontrast.
@@ -111,7 +129,32 @@ Bu sitede hiçbir yerde odak halkası kaldırılmadı: iki piksel kalınlığın
 - **Modal için üç davranışı yaz:** açılışta odak, açıkken tuzak, kapanışta geri dönüş.
 - **Kendi tasarımını klavyeyle gez.** Eksik odak, ulaşılamayan buton, kaybolan odak ilk dakikalarda görünür.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Klavye erişimini güç kullanıcısı özelliği olarak da gör.** Hızlı çalışan herkes klavyeyi sever.
+- **Odak halkasını kaldırma isteğine hayır de.** Görünür odak bir zorunluluktur.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Klavye turunu Definition of Done'a ekle.** Beş dakika sürer.
+- **Modal ve menü story'lerine odak davranışını yaz.** Açılınca, kapanınca odak nereye gider?
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Klavye kısayollarını gereksinim olarak listele.** Yoğun iş akışında hız kazandırır.
+- **Erişim yollarını süreç modelinde göster.** Dokunmatik, fare, klavye.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Klavye kullanan katılımcıyı gözle.** Odağın kaybolduğu an bir bulgudur.
+- **Yoğun saatte gerçek iş akışını izle.** Kısayol ihtiyacı orada ortaya çıkar.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -140,5 +183,11 @@ Kaldırmak yerine markaya uygun, yeterince görünür ve kontrast eşiğini (3:1
 <SelfCheck question="SPA'da sayfa geçişinde ekran okuyucu kullanıcısı neden değişimi fark etmeyebilir?">
 
 Sayfa gerçekten yenilenmez; odak eski yerinde kalır ve tarayıcı yeni bir belge yüklemediği için ekran okuyucu bir değişim duyurmaz. Çözüm: geçişte odağı yeni sayfanın başlığına taşımak ve değişimi duyurmak (odak yönetimi).
+
+</SelfCheck>
+
+<SelfCheck question="Sekme sırası görsel sırayla eşleşmiyorsa kullanıcı ne yaşar?">
+
+Odak ekranda beklenmedik yerlere atlar; klavye kullanıcısı nerede olduğunu ve sırada ne olduğunu kestiremez. Sekme sırası okuma ve görsel sırayla eşleşmelidir.
 
 </SelfCheck>

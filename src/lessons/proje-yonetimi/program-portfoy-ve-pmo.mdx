@@ -1,0 +1,135 @@
+---
+summary: "Birbirine bağlı projeler ortak bir fayda için bir program olarak, bir kurumun bütün değişim işleri stratejiye göre bir portföy olarak yönetilir. PMO, bu işlerin karar ve yönetişimini destekleyen ofistir."
+outcomes:
+  - "Proje, program ve portföy arasındaki farkı anlatabilirsin."
+  - "Bir programın neden tek bir projeden fazlası olduğunu fayda üzerinden açıklayabilirsin."
+  - "PMO'nun bir kurumda ne işe yaradığını söyleyebilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "PeopleCert — PRINCE2 programme, portfolio and office management"
+    url: "https://www.peoplecert.org/browse-certifications/project-programme-and-portfolio-management"
+  - label: "UK DDaT — Programme delivery manager"
+    url: "https://understand-digital-data-roles-skills.service.gov.uk/role/programme-delivery-manager/"
+  - label: "UK DDaT — Digital portfolio manager"
+    url: "https://understand-digital-data-roles-skills.service.gov.uk/role/digital-portfolio-manager/"
+  - label: "PMI — PMBOK Guide (8. baskı tanıtım sayfası)"
+    url: "https://www.pmi.org/standards/pmbok"
+additions:
+  - "Program yönetimi ve fayda gerçekleştirme (PeopleCert, MSP)"
+  - "Portföy yönetimi ve stratejiyle hizalama (PeopleCert, MoP)"
+  - "Proje, program ve portföy ofisleri (PeopleCert, P3O)"
+  - "Program teslimat yöneticisi ve dijital portföy yöneticisi rolleri (UK DDaT)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+
+Kampüs lansmanı bitti. Hakan'ın masasında şimdi üç yeni iş var: ikinci üniversitenin üç kafesi, gelecek yıl iki şehirde daha kampüs açılışı ve kampüslerde sadakat puanı. Bir de ödeme altyapısını yenileme projesi.
+
+Leyla hepsini ayrı ayrı yönetebilirdi. Ama bunlar birbirini etkiliyordu: aynı tedarikçi, aynı ekip, aynı bütçe. Ve hepsinin arkasında aynı soru vardı: kampüsler Demlik için neden önemli? Bu ders, tek projenin üstündeki iki yönetim katmanını anlatır.
+
+## Proje, program, portföy
+
+**Proje**, tek bir benzersiz sonuç için yürütülen, başı ve sonu belli bir çabadır. Bu bölümün dersleri onu anlattı.
+
+**Program**, birbirine bağlı ve birlikte yönetildiğinde daha fazla fayda sağlayan projelerden oluşur. Programın odağı tek tek teslimatlar değil, onların birlikte ürettiği **faydadır**. Programlar için PRINCE2 ailesinde MSP vardır. MSP liderliğe, kurumun hedeflerine ve **fayda gerçekleştirmeye** (benefits realization) odaklanır.
+
+**Portföy**, bir kurumun bütün projelerinin ve programlarının toplamıdır. Portföy yönetimi bu değişim işlerini kurumun stratejisiyle hizalar ve faydayı ve değeri en üst düzeye çıkarmaya çalışır. PRINCE2 ailesinde bunun için MoP vardır.
+
+<Layers
+  label="Proje, program ve portföy"
+  caption="En geniş katman portföydür: bir kurumun bütün değişim işleri, stratejiye göre seçilir ve sıralanır. Ortada program durur: ortak bir faydaya hizmet eden, birbirine bağlı projeler. En dar katman projedir: tek bir sonuç, başı ve sonu belli. Genişlik kapsamı gösterir; aşağı indikçe iş daha somut, yukarı çıktıkça karar daha stratejik olur."
+  shape="funnel"
+  layers={[
+    { title: "Portföy", sub: "bütün değişim işleri, stratejiye göre", tone: "accent" },
+    { title: "Program", sub: "ortak fayda için bağlı projeler" },
+    { title: "Proje", sub: "tek sonuç, geçici", tone: "progress" },
+  ]}
+/>
+
+**Program ≠ büyük proje.** Büyük bir proje hâlâ tek bir sonuç üretir. Bir program ise birden fazla sonuçtan bir fayda üretir. Kampüs lansmanı bir projedir. "Kampüs genişlemesi" bir programdır: üç kampüs projesi ve sadakat puanı birlikte, kampüslerden gelen günlük siparişi artırmaya hizmet eder.
+
+## Program ve portföy rolleri
+
+İngiltere hükümetinin dijital meslek çerçevesi iki rolü şöyle tanımlar:
+
+- **Program teslimat yöneticisi** (programme delivery manager): karmaşık ürün ve hizmetlerin teslimatından hesap verir. Bu işler birden çok ekip tarafından yapılır ya da teknik veya politik riski yüksektir. Değişen karmaşıklıktaki bağımlılıkları yönetir. Öncelikler değiştikçe insanları ve kaynakları yeniden dağıtır.
+- **Dijital portföy yöneticisi** (digital portfolio manager): bir grup dijital projeyi, yani bir portföyü koordine eder ve yönetir. Bu portföy için yönetişim süreçlerinin tanımlanmasına yardım eder.
+
+Program yöneticisi "bu projeler birlikte faydayı üretecek mi?" diye sorar. Portföy yöneticisi "doğru projeleri mi yapıyoruz?" diye sorar.
+
+## PMO
+
+**PMO** (project management office), projelerin, programların ya da portföyün karar alma, yönetişim ve teslimat işlerini destekleyen ofistir. PRINCE2 ailesindeki P3O, portföy, program ve proje ofislerinin nasıl kurulup yönetileceğini anlatır. PMBOK'un 8. baskısı da PMO konusunu genişletti.
+
+Bu desteğin biçimi kurumdan kuruma değişir. Bir kurumda yeni bir projeye başlarken, PMO'nun hangi şablonları, raporları ve kararları beklediğini öğrenmek iyi bir ilk adımdır.
+
+**PMO ≠ proje yöneticisinin patronu.** PMO'nun görevi kararları kolaylaştırmak ve yönetişimi desteklemektir. Bir projenin hedefinden yine sponsor ve proje yöneticisi hesap verir.
+
+<Case>
+
+Hakan, kampüs işlerini bir programa çevirdi:
+
+1. **Fayda:** "Bir yıl içinde kampüslerden günde 2.000 sipariş." Bu, tek bir projenin değil, programın hedefiydi.
+2. **Projeler:** ikinci dalga (3 kafe), iki şehirde yeni kampüsler, kampüs sadakat puanı. Her birinin kendi tüzüğü, kendi proje yöneticisi oldu.
+3. **Program yöneticisi:** Leyla. Projeler arasındaki ortak bağımlılıkları yönetti: aynı kasa tedarikçisi, aynı öğrenci işleri protokol şablonu.
+4. **Portföy kararı:** ödeme altyapısı projesi programın dışında kaldı. Demlik'in yönetim ekibi, portföyü gözden geçirirken onu kampüs programından önce sıraya koydu, çünkü bütün siparişleri etkiliyordu.
+
+</Case>
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Projenin bir programın parçası olup olmadığını sor.** Öyleyse başarın, programın faydasına katkınla da ölçülür.
+- **Ortak bağımlılıkları program düzeyine taşı.** Aynı tedarikçiyi iki proje kullanıyorsa, sorun tek projede çözülmez.
+- **Program teslimat yöneticisinin işini oku.** Çok ekipli ve yüksek riskli teslimatlar, bu bölümde öğrendiklerinin daha büyük ölçeğidir.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Portföy kararı bir ürün stratejisi kararıdır.** Hangi projelerin yapılacağı, ürünün yönünü belirler; masada ol.
+- **Program faydasını ürün metriğine bağla.** "Kampüslerden günde 2.000 sipariş" senin ürün hedeflerinden hangisini besliyor?
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Proje tek bir sonuç üretir; program birbirine bağlı projelerden ortak bir fayda üretir.
+- Portföy, bir kurumun bütün değişim işleridir ve stratejiyle hizalanarak yönetilir.
+- Program yöneticisi faydanın gerçekleşmesine, portföy yöneticisi doğru işlerin seçilmesine bakar.
+- PMO, projelerin ve programların karar, yönetişim ve teslimat işlerini destekleyen ofistir.
+- PRINCE2 ailesinde programlar için MSP, portföyler için MoP, ofisler için P3O vardır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Program ile büyük bir proje arasındaki fark nedir?">
+
+Büyük bir proje de tek bir sonuç üretir. Program ise birbirine bağlı birden çok projeden oluşur ve odağı tek tek teslimatlar değil, onların birlikte ürettiği faydadır.
+
+</SelfCheck>
+
+<SelfCheck question="Portföy yöneticisi hangi soruyu sorar?">
+
+"Doğru projeleri mi yapıyoruz?" Portföy yönetimi, kurumun bütün değişim işlerini stratejiyle hizalar ve hangilerinin yapılacağını, hangi sırayla yapılacağını belirler.
+
+</SelfCheck>
+
+<SelfCheck question="İki proje aynı kasa tedarikçisini kullanıyor ve tedarikçi ikisine de aynı hafta teslim sözü vermiş. Bu sorunu kim çözmeli?">
+
+Projeler bir programın parçasıysa program yöneticisi; değilse portföy düzeyinde, örneğin PMO aracılığıyla. Tek bir projenin içinde çözülemez, çünkü sorun iki projenin arasındadır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir arkadaşın 'PMO kurulursa proje yöneticileri yetkisini kaybeder' diyor. Ne cevap verirsin?">
+
+PMO'nun görevi karar almayı, yönetişimi ve teslimatı desteklemektir. Projenin hedefinden yine sponsor ve proje yöneticisi hesap verir.
+
+</SelfCheck>

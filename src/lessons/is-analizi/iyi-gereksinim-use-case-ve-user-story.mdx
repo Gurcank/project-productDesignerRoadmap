@@ -1,0 +1,179 @@
+---
+summary: "İyi bir gereksinim tek bir şeyi, doğrulanabilir biçimde söyler; nasılı değil neyi anlatır. Use case bir aktörün hedefine giden yolları senaryolarla, user story bir ihtiyacı konuşmaya açık bir kartla anlatır."
+outcomes:
+  - "Kötü yazılmış bir gereksinimi NASA'nın ölçütleriyle düzeltebilirsin."
+  - "Bir use case'in alanlarını, ana senaryosunu ve uzantılarını yazabilirsin."
+  - "Use case ile user story'nin ne zaman ve birlikte nasıl kullanıldığını açıklayabilirsin."
+minutes: 10
+standard: 2
+sources:
+  - label: "NASA SE Handbook — Appendix C: How to Write a Good Requirement"
+    url: "https://www.nasa.gov/reference/appendix-c-how-to-write-a-good-requirement/"
+  - label: "Alistair Cockburn — Basic Use Case Template (1998)"
+    url: "https://cs.otago.ac.nz/coursework/cosc461/uctempla.htm"
+  - label: "BABOK Guide — Ek A: Sözlük (IIBA)"
+    url: "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"
+additions:
+  - "İyi gereksinim ölçütleri ve doğrulanamayan kelimeler (NASA SE Handbook, Ek C)"
+  - "Use case şablonu, seviyeler ve uzantılar (Cockburn)"
+  - "Use case ve aktör tanımları (BABOK sözlüğü)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Swimlane from "~/components/diagrams/primitives/Swimlane.astro";
+
+Ozan, BRD'nin ilk taslağına bir cümle eklemişti: "Sistem iade işlemlerini hızlı ve uygun şekilde, kullanıcı dostu bir arayüzle yönetmeli vs."
+
+Ayşe cümleyi Zeynep'e, QA'e gösterdi. "Bunu nasıl test ederim?" dedi Zeynep. "Hızlı ne kadar? Uygun kime göre? 'vs.' ne demek?" Cümlede tek bir test edilebilir şey yoktu. Bu ders iyi bir gereksinimi yazmayı ve iki yaygın biçimi, use case ile user story'yi anlatır.
+
+## İyi bir gereksinimin özellikleri
+
+NASA'nın sistem mühendisliği el kitabı iyi bir gereksinim için uzun bir kontrol listesi verir. En çok işe yarayanlar şunlardır:
+
+- **Etkin ve olumlu cümle.** "Sistem iade tutarını hesaplar." Kim ne yapıyor, belli.
+- **Ne, nasıl değil.** El kitabı neyin gerektiğini yazmayı, nasıl yapılacağını yazmamayı ister. "Neden bu gereksinime ihtiyacın var?" diye sor; cevap çoğu zaman asıl gereksinimi gösterir.
+- **Bir cümle, bir fikir.** "Ve/veya", "vs.", "uygun şekilde", "gibi ama bunlarla sınırlı olmayan" yasak.
+- **Doğrulanabilir.** Test, gösterim, inceleme ya da analizle doğrulanabilmeli. El kitabı şu kelimeleri doğrulanamaz sayar: kolay, yeterli, uygun, kullanıcı dostu, hızlı, esnek, sağlam, en üst düzeye çıkar, en aza indir.
+- **Gerekli.** "Bu gereksinim olmasaydı olabilecek en kötü şey ne?" Cevap "hiçbir şey"se, gereksinim gereksizdir.
+- **İzlenebilir.** Tekil bir kimliği ve geldiği bir kaynağı vardır.
+
+El kitabı bir belirsizliği "TBD" (henüz belli değil) diye boş bırakmamayı da önerir. En iyi tahmini yaz ve "TBR" (gözden geçirilecek) diye işaretle. Yanına gerekçesini ve kimin ne zamana kadar netleştireceğini ekle.
+
+| Kötü | Sorun | İyi |
+|---|---|---|
+| Sistem iadeleri hızlı yönetmeli. | Doğrulanamaz | İade kararı iptalden sonra en geç 5 saniye içinde müşterinin ekranında görünür. |
+| Müşteri ve dükkân bilgilendirilir vs. | İki fikir, "vs." | FG-4: Dükkân iptal ettiğinde müşteriye sebebiyle birlikte bildirim gider. |
+| Panel'e kırmızı bir iade düğmesi eklenir. | Nasılı anlatıyor | PG-1: Dükkân çalışanı iptal etmeden önce iade tutarını görür. |
+
+## Use case: hedefe giden bütün yollar
+
+BABOK **use case**'i, bir aktörün belirli bir hedefe ulaşmak için sistemi kullanırken onunla arasında geçen gözlenebilir etkileşimin tanımı olarak verir. **Aktör** bu etkileşimde belirli bir rolü oynayan bir insan, cihaz ya da sistemdir.
+
+Alistair Cockburn'ün 1998 tarihli temel şablonu bugün de en çok kullanılan biçimdir. Başlıca alanları:
+
+- **Ad:** hedefin kendisi, kısa ve etkin bir fiille. "Siparişi dükkân olarak iptal et."
+- **Kapsam ve seviye:** hangi sistem; özet, ana görev ya da alt işlev.
+- **Birincil aktör ve tetikleyici.**
+- **Ön koşul ve sonuçta garanti edilen.** Cockburn'ün kitabı, başarısızlıkta bile korunan şeye **asgari garanti** (minimal guarantee) der.
+- **Ana başarı senaryosu:** tetikleyiciden hedefe numaralı adımlar.
+- **Uzantılar:** "5a. Ödeme kuruluşu yanıt vermez: …" Hangi adımda neyin ters gidebileceği.
+
+<Swimlane
+  label="Use case: siparişi dükkân olarak iptal et"
+  caption="Use case üç kulvarda çizildi: dükkân çalışanı, Demlik ve ödeme kuruluşu. Çalışan iptal sebebini seçer. Demlik iade tutarını gösterir. Çalışan iptali onaylar. Demlik ödeme kuruluşunun yanıt verip vermediğine bakar. Yanıt varsa ödeme kuruluşu iadeyi karta yansıtır. Yanıt yoksa, bu 5a uzantısıdır: Demlik iadeyi başarısız olarak kaydeder ve destek ekibini uyarır. İki yolun sonunda Demlik müşteriye bildirim gönderir."
+  lanes={["Dükkân çalışanı", "Demlik", "Ödeme kuruluşu"]}
+  steps={[
+    { id: "a", lane: 0, col: 0, title: "İptal sebebini seç" },
+    { id: "b", lane: 1, col: 1, title: "İade tutarını göster" },
+    { id: "c", lane: 0, col: 2, title: "İptali onayla" },
+    { id: "d", lane: 1, col: 3, title: "Ödeme kuruluşu yanıt verdi mi?", kind: "decision" },
+    { id: "e", lane: 2, col: 4, title: "İadeyi karta yansıt", tone: "progress" },
+    { id: "f", lane: 1, col: 4, title: "5a: Başarısız kaydet, desteği uyar" },
+    { id: "g", lane: 1, col: 5, title: "Müşteriye bildir", tone: "accent" },
+  ]}
+  flows={[
+    { from: "a", to: "b" },
+    { from: "b", to: "c" },
+    { from: "c", to: "d" },
+    { from: "d", to: "e", label: "evet" },
+    { from: "d", to: "f", label: "hayır" },
+    { from: "e", to: "g" },
+    { from: "f", to: "g" },
+  ]}
+/>
+
+Gereksinimlerin çoğu uzantılardan çıkar. Ana senaryo işin kolay kısmıdır; "ya ödeme kuruluşu yanıt vermezse?", "ya aynı siparişe iki iptal gelirse?" soruları sistemin gerçek davranışını tanımlar.
+
+Cockburn şablonu bir kerede doldurmayı önermez. Önce ad, hedef, kapsam, seviye ve aktör; sonra tetikleyici ve ana senaryo; en son uzantılar yazılır. Böylece erken aşamada bütün use case'lerin listesi görülür, ayrıntı sonra gelir.
+
+## Use case ≠ user story
+
+User story kısa bir karttır: "Dükkân çalışanı olarak, iptal etmeden önce iade tutarını görmek istiyorum, çünkü müşteriye doğru bilgi vermeliyim." Amacı bir ihtiyacı konuşmaya açmaktır. Yazımı [Gereksinimler: epic, user story, acceptance criteria](/urun-gelistirme/gereksinimler-epic-user-story-acceptance-criteria/) dersinde.
+
+İkisi rakip değildir:
+
+| | User story | Use case |
+|---|---|---|
+| Amaç | Konuşmayı başlatmak, backlog'u sıralamak | Bir etkileşimin bütün yollarını tek yerde toplamak |
+| Boyut | Bir sprintte biter | Birçok story'ye bölünebilir |
+| Güçlü yanı | Değeri ve kimin için olduğunu söyler | Uzantıları, hata yollarını gösterir |
+| İyi olduğu yer | Basit, bağımsız ihtiyaçlar | İptal, ödeme, iade gibi çok yollu akışlar |
+
+Çok yollu bir akışta use case önce yazılır; uzantıların her biri bir story'ye ya da bir story'nin kabul kriterine dönüşür.
+
+<Case>
+
+Ayşe, Ozan'ın cümlesini üç gereksinime ayırdı: FG-2 (otomatik iade), FG-4 (bildirim) ve İOG-1 (5 saniye). "Kullanıcı dostu" kelimesini sildi; Ozan'a ne demek istediğini sordu. Cevap "çalışan tutarı iptalden önce görsün" oldu, bu da PG-1'e dönüştü.
+
+Sonra "Siparişi dükkân olarak iptal et" use case'ini üç turda yazdı:
+
+1. **Birinci tur:** ad, hedef, kapsam, seviye (ana görev), birincil aktör.
+2. **İkinci tur:** tetikleyici ve altı adımlık ana senaryo.
+3. **Üçüncü tur:** dört uzantı. İkisi, 5a (ödeme kuruluşu yanıt vermez) ve 5b (aynı siparişe ikinci iptal), kimsenin aklına gelmemişti. İkisi de ayrı story oldu.
+
+</Case>
+
+<Tool slug="use-case" />
+
+<Lenses>
+<Lens role="business-analyst">
+
+- **Her gereksinimi QA'in gözüyle oku.** "Bunu nasıl test ederim?" sorusunun cevabı yoksa, gereksinim bitmemiştir.
+- **Uzantıları sistematik ara.** Ana senaryonun her adımında "burada ne ters gidebilir?" diye sor.
+- **Doğrulanamayan kelimeleri ara ve sil.** Hızlı, kolay, uygun, vs.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Use case'i story'lere böl.** Uzantıların her biri ayrı bir story ya da kabul kriteri olabilir; sıralamayı sen yaparsın.
+- **"Neden?" diye sorulmasına izin ver.** Bir gereksinimin gerekçesi yazılı değilse, onu ilk değişiklikte kimse savunamaz.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Nasılı ekibe bırak.** Gereksinimde düğmenin rengi değil, ihtiyacın kendisi yazar; çözüm tasarım ve geliştirmenin işidir.
+- **Uzantılara değer gözüyle bak.** Bazı hata yolları nadirdir; onları hangi sürüme koyacağın bir ürün kararıdır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- İyi gereksinim etkin, olumlu, tek fikirli, doğrulanabilir, gerekli ve izlenebilirdir; nasılı değil neyi anlatır.
+- Kolay, hızlı, uygun, kullanıcı dostu, "vs." gibi kelimeler doğrulanamaz.
+- Use case, bir aktörün hedefine giden etkileşimi ana senaryo ve uzantılarla anlatır.
+- Use case'i birkaç turda doldur; gereksinimlerin çoğu uzantılardan çıkar.
+- User story konuşmayı açar; use case çok yollu bir akışın bütün yollarını toplar. İkisi birlikte kullanılır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="'Panel kolay kullanılır ve hızlı açılır olmalıdır' gereksinimindeki üç sorunu say.">
+
+İki fikir bir cümlede. "Kolay" ve "hızlı" doğrulanamaz. Kimin için ve hangi koşulda olduğu yazmıyor. İki ayrı, ölçülebilir gereksinime bölünmeli.
+
+</SelfCheck>
+
+<SelfCheck question="Use case'in 'uzantılar' bölümü neden önemlidir?">
+
+Ana senaryo işin kolay ve beklenen yoludur. Gerçek davranışın çoğu, bir adımın ters gittiği durumlarda tanımlanır: ödeme kuruluşu yanıt vermez, aynı siparişe iki iptal gelir. Gereksinimlerin çoğu buradan çıkar.
+
+</SelfCheck>
+
+<SelfCheck question="Bir takım 'artık user story kullanıyoruz, use case'e gerek yok' diyor. Ne dersin?">
+
+İkisi farklı işler görür. Basit ihtiyaçlarda story yeter. Ama iptal ve iade gibi çok yollu akışlarda use case bütün yolları bir arada gösterir; story'ler onun uzantılarından ve adımlarından üretilebilir.
+
+</SelfCheck>
+
+<SelfCheck question="NASA'nın 'olmasaydı olabilecek en kötü şey ne?' sorusu neyi sınar?">
+
+Gereksinimin gerekli olup olmadığını. Cevap "hiçbir şey" ise gereksinim kapsamı gereksiz yere büyütüyordur ve çıkarılabilir.
+
+</SelfCheck>

@@ -4,7 +4,8 @@ outcomes:
   - "Sözlüğün neden anahtarla erişimde anlık olduğunu söyleyebilirsin."
   - "Sıra numarasının anahtar olarak kullanılmasının neden bir hata olduğunu ve belirtisini (filtreleyince yanlış satır seçili) bilirsin."
   - "Sıralama ve aralık sorgularının neden sözlüğün işi olmadığını açıklayabilirsin."
-minutes: 7
+minutes: 4
+standard: 2
 sources:
   - label: "MDN — Map"
     url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map"
@@ -14,9 +15,12 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "3. öğe" diye değil, "`kullanici_42` diye kaydı getir" diye erişmek: **sözlük** (hash map, dictionary; JavaScript'te `Map` ve nesne) veriyi sırayla değil **anahtarla** tutar. Gerçek sözlükle benzerlik isabetlidir: kelimeyi baştan aramazsın, harfinden doğrudan sayfaya gidersin.
 
@@ -38,20 +42,70 @@ Sözlük, anahtarı bir hesaba sokup **verinin nerede durduğunu doğrudan bulur
 
 ## Arayüzde nerede
 
+<Tree
+  label="Arayüzdeki sözlükler"
+  caption="Arayüzde sözlük üç yerde karşına çıkar. Seçim durumunda anahtar satırın kimliği, değer seçili olup olmadığıdır. Form durumunda anahtar alanın adı, değer hata mesajıdır. Çeviri sözlüğünde anahtar metnin kodu, değer arayüzde görünen metindir. Üçünde de belirli bir kayda erişmek anlıktır."
+  root={{
+  title: "Sözlük",
+  sub: "anahtar → değer",
+  tone: "accent",
+  children: [
+    {
+      title: "Seçim",
+      children: [
+        {
+          title: "sipariş id → seçili"
+        }
+      ]
+    },
+    {
+      title: "Form",
+      children: [
+        {
+          title: "alan → hata mesajı"
+        }
+      ]
+    },
+    {
+      title: "Çeviri",
+      children: [
+        {
+          title: "metin kodu → metin",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
 **Seçim durumu:** "hangi satırlar seçili?" sözlükle tutulursa bir satıra tıklamak anlıktır. Dizi ile tutulursa her tıkta tüm seçim taranır ve 500 satırlık tabloda "tümünü seç" yavaşlar. **Form durumu:** alan adı anahtar, hata mesajı değerdir; bir alanın hatasını göstermek/gizlemek anlıktır. **Çeviri sözlükleri:** arayüz metinleri anahtar-değer tutulur; "bu metni değiştir" isteği bu yüzden ucuzdur.
 
 ## Tuzak: anahtar çakışması
 
 Sözlükte aynı anahtar iki kez olamaz; ikinci yazma birincinin üstüne yazar ve hata vermez, **sessizce.** Arayüzdeki karşılığı: bir listede öğeleri ayırt etmek için kullanılan anahtar gerçekten tekil değilse öğeler kaybolur ya da karışır. En sık hâli, liste öğelerine anahtar olarak **sıra numarası** verilmesidir; liste sıralanınca ya da filtrelenince yanlış satır güncellenir. Tasarımda fark edebilirsin: **filtreledikten sonra yanlış satırın seçili görünmesi** neredeyse her zaman bu hatadır.
 
-<Callout kind="tasarimci">
+<Case>
+
+Panel'de çalışanlar birkaç siparişi seçip "hazır" işaretleyebiliyor. Bir sabah Zeynep tuhaf bir hata buldu:
+
+1. **Belirti:** listeyi "Bekleyen" diye filtreleyince seçili görünen sipariş değişiyordu; çalışan yanlış siparişi hazır işaretleyebiliyordu.
+2. **Neden:** seçim, satırların sıra numarasıyla tutuluyordu. Filtre sırayı değiştirince "3. satır" başka bir sipariş oldu.
+3. **Düzeltme:** seçim artık sipariş kimliğiyle bir sözlükte tutuluyor. Filtre ya da sıralama değişse de seçili sipariş aynı.
+4. **Hız:** otuz siparişlik listede bir satıra tıklamak, seçimi baştan taramadan anında güncelleniyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Her liste öğesinin kalıcı bir kimliği olduğundan emin ol:** "Bu satırı neyle ayırt ediyoruz?" Cevap "sırasıyla" ise hata kapıda.
 - **"Şu kaydı aç" hiç yavaş olmamalı;** yavaşsa sebep veri yapısı değil ağ ya da sorgudur.
 - **"Fiyata göre sırala" ile "şu ürünü aç" iki farklı yapı ister;** ikisini aynı anda ucuza isteyemezsin.
 - **Çok dilli arayüz planlıyorsan metinleri baştan anahtarla.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -66,5 +120,17 @@ Sözlükte aynı anahtar iki kez olamaz; ikinci yazma birincinin üstüne yazar 
 <SelfCheck question="Filtreledikten sonra yanlış satırın seçili görünmesi hangi hatanın işaretidir?">
 
 Liste öğelerini sıra numarasıyla ayırt etmek: anahtar gerçekten tekil ve kalıcı olmadığı için, liste sıralanınca ya da filtrelenince yanlış satır güncellenir.
+
+</SelfCheck>
+
+<SelfCheck question="Filtreledikten sonra yanlış satırın seçili görünmesi neye işaret eder?">
+
+Öğelerin sıra numarasıyla tanımlandığına. Filtre ya da sıralama sırayı değiştirince aynı numara başka bir öğeyi gösterir. Her öğe kalıcı bir kimlikle tanımlanmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question={"Sözlük \"fiyatı 100 ile 200 arasındaki ürünler\" sorusuna neden iyi cevap vermez?"}>
+
+Sözlük verileri sıraya göre değil anahtara göre tutar; aralık sorgusu için sıralı bir yapı ya da indeks gerekir.
 
 </SelfCheck>

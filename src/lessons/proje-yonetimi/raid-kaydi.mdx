@@ -1,0 +1,153 @@
+---
+summary: "RAID kaydı riskleri, varsayımları, sorunları ve bağımlılıkları tek bir tabloda tutar. Dördü birbirine dönüşür: yanlış çıkan varsayım bir risk, gerçekleşen risk bir sorun olur."
+outcomes:
+  - "RAID'in dört harfini ve harf varyantlarını açıklayabilirsin."
+  - "Risk ile sorunu ayırıp her birine doğru yanıtı verebilirsin."
+  - "Bir RAID kaydını haftalık olarak canlı tutabilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Asana — RAID log: Track risks, assumptions, issues & decisions"
+    url: "https://asana.com/resources/raid-log"
+  - label: "Watt, Project Management (2. baskı) — 16. Risk Management Planning"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-16-risk-management-planning-project-management/"
+additions:
+  - "RAID kaydı: risk, varsayım, sorun, bağımlılık; eylem ve karar varyantları (Asana)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Cycle from "~/components/diagrams/primitives/Cycle.astro";
+
+Projenin 3. haftasında Ayşe kötü bir haberle geldi. Öğrenci işleri, kart numaralarını doğrulayan bir arayüz vermeyecekti. Bunun yerine her hafta bir liste dosyası gönderecekti.
+
+Leyla risk kaydına baktı: bu risk orada yoktu. Çünkü bir risk değil, bir varsayım olarak başlamıştı. Tüzükte "kart numaraları bir arayüzle doğrulanabilir" yazıyordu ve kimse bunu bir daha kontrol etmemişti. Risk kaydı yalnız riskleri tutar. Ama projeyi sarsan şeyler her zaman risk kılığında gelmez.
+
+## RAID'in dört harfi
+
+**RAID kaydı** (RAID log), bir projeyi etkileyebilecek dört tür şeyi tek bir tabloda tutar:
+
+- **R, risk:** henüz olmamış, olursa projeyi etkileyecek bir olay. Risk kaydının yaptığı işi yapar.
+- **A, varsayım** (assumption): doğru kabul edip plana koyduğun, ama henüz kanıtlanmamış bilgi.
+- **I, sorun** (issue): beklenmedik biçimde gerçekleşmiş ve hemen çözülmesi gereken bir problem.
+- **D, bağımlılık** (dependency): projenin, başka bir işin ya da başkasının tesliminin bitmesine bağlı olması.
+
+Kayıt planlamada açılır ve proje boyunca güncellenir. Kapanışta da öğrenilen dersler için ham malzeme olur.
+
+Harfler her ekipte aynı anlama gelmez. Bazı ekipler A'yı **eylem** (action), D'yi **karar** (decision) olarak kullanır. Çok parçalı, çok görevli projelerde eylemler; uzun ve öngörü gerektiren projelerde varsayımlar daha işe yarar. Karar kaydı tutuluyorsa her karar için ne, kim ve neden yazılır. Hangisini seçtiğini kaydın başına yaz.
+
+## Risk ≠ sorun
+
+En sık yapılan karışıklık budur.
+
+| | Risk | Sorun |
+|---|---|---|
+| Ne zaman? | Gelecekte olabilir | Şu an oldu |
+| Ne zaman fark edilir? | Planlamada ya da öncesinde | Uygulamada, beklenmedik anda |
+| Yanıt | Azaltma, önlem, B planı | Hemen çözüm |
+
+Bir risk gerçekleşirse sorun olur. O zaman kayıtta yeni bir sorun satırı açılır ve hangi riskten geldiği not edilir. Böylece kapanışta hangi risklerin gerçekleştiğini, hangi yanıtların işe yaramadığını görebilirsin.
+
+## Dördü birbirine dönüşür
+
+RAID'i tek tabloda tutmanın asıl nedeni, dört türün birbirine dönüşmesidir.
+
+<Cycle
+  label="RAID kaydında bir maddenin yolculuğu"
+  caption="Plan, varsayımlara ve bağımlılıklara dayanır. Bir varsayım yanlış çıkarsa ya da bir bağımlılık zamanında gelmezse, bu bir risk olur. Risk gerçekleşirse sorun olur. Sorun bir eylemle ve bir kararla kapanır. Bu karar çoğu zaman yeni bir varsayım ya da bağımlılık doğurur ve döngü yeniden başlar."
+  steps={[
+    { title: "Varsayım ve bağımlılık", sub: "planın dayandığı, kanıtlanmamış ya da başkasına bağlı" },
+    { title: "Risk", sub: "varsayım yanlışsa ya da teslim gecikirse" },
+    { title: "Sorun", sub: "risk gerçekleşti; şimdi çöz", tone: "accent" },
+    { title: "Eylem ve karar", sub: "sorunu kapatan adım, sahibi ve gerekçesiyle", tone: "progress" },
+  ]}
+  back="yeni varsayımlar"
+/>
+
+Varsayımlar en sessiz maddelerdir. Plana yazılır ve unutulur. Bu yüzden her varsayımın bir doğrulama tarihi olmalıdır: "Bunu en geç ne zaman kanıtlamış olmalıyız?"
+
+Bağımlılıkların da karşı tarafı vardır. Kayıtta yazan bir bağımlılığı karşı taraf bilmiyorsa, o bir bağımlılık değil, bir dilektir.
+
+<Case>
+
+Ayşe'nin haberinden sonra Leyla kaydı dört harfiyle yeniden kurdu:
+
+1. **A1 yanlış çıktı:** "Kart numaraları bir arayüzle doğrulanabilir." Durumu "yanlış" olarak işaretledi; silmedi.
+2. **Yeni risk, R6:** "Haftalık liste geç gelirse yeni kayıtlı öğrenciler indirimi alamaz." Sahibi Ayşe.
+3. **Yeni bağımlılık, D2:** "Öğrenci işlerinden her pazartesi güncel kart listesi." Öğrenci işlerine bu bağımlılığı yazıyla bildirdi.
+4. **Karar:** indirim, listeye göre çalışacak; listede olmayan öğrenci kartını kafede gösterirse personel elle onaylayacak. Kim karar verdi, neden: Elif, öğrenciyi kapıda bekletmemek için.
+5. **6. hafta:** R1 gerçekleşti. Tedarikçinin test ortamı hazır değildi. I1 açıldı: "R1'den."
+
+Kaydın yeni bir kuralı da oldu: her varsayımın bir doğrulama tarihi.
+
+</Case>
+
+<Tool slug="raid" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Varsayımları doğrulama tarihiyle yaz.** Tüzükteki varsayımlar, doğrulanmadıkça birer saatli bombadır.
+- **Gerçekleşen riski silme.** Sorun satırı aç ve hangi riskten geldiğini yaz; kapanışta bu iz gerekecek.
+- **Harflerin anlamını kaydın başına yaz.** Yarı ekip "eylem", yarısı "varsayım" okursa kayıt işe yaramaz.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Sorunları backlog'la eşleştir.** Bir sorunun çözümü takımın işiyse, backlog'da bir maddesi olmalı.
+- **Ürün kararlarını D satırına yaz.** "Listede olmayan öğrenciye elle onay" bir karardır; neden alındığı unutulmasın.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Takımlar arası bağımlılıkları kayda taşı.** Sprint panosunda görünen blocker, RAID'de bir bağımlılık olarak yaşamalı.
+- **Kaydı bir ritme bağla.** Haftalık bir toplantıda satır satır geçilmezse kayıt bayatlar.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Varsayımların çoğu senin alanından gelir.** Bir kuralın, bir arayüzün, bir verinin var olduğu varsayımını ilk sen fark edersin.
+- **Varsayımı test edilebilir yaz.** "Kart doğrulanabilir" değil: "Öğrenci işleri kart numarasını sorgulayan bir arayüz sağlar."
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- RAID kaydı riskleri, varsayımları, sorunları ve bağımlılıkları tek tabloda tutar.
+- Bazı ekipler A'yı eylem, D'yi karar olarak kullanır; hangisini seçtiğini kaydın başına yaz.
+- Risk gelecekte olabilir, sorun şu an olmuştur; gerçekleşen risk bir sorun satırı açar.
+- Yanlış çıkan varsayım ya da geciken bağımlılık bir risk olur; dördü birbirine dönüşür.
+- Her varsayımın bir doğrulama tarihi, her satırın bir sahibi olur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Risk ile sorun arasındaki fark nedir?">
+
+Risk henüz olmamış, olabilecek bir olaydır ve önceden planlanır. Sorun beklenmedik biçimde gerçekleşmiş bir problemdir ve hemen çözülmesi gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Varsayımlar neden ayrı bir sütun olarak tutulur, risk kaydına yazılmaz?">
+
+Çünkü varsayım bir olay değil, planın dayandığı bir bilgidir. Plana yazılır ve unutulur. Ayrı tutulunca doğrulama tarihi verilir ve kontrol edilir. Yanlış çıkarsa bir risk ya da sorun doğurur.
+
+</SelfCheck>
+
+<SelfCheck question="Kayıtta 'D3: Ödeme kuruluşunun mağaza kodları' yazıyor, ama ödeme kuruluşu bundan haberdar değil. Sorun ne?">
+
+Bu bir bağımlılık değil, bir dilek. Karşı taraf bilmiyorsa teslim tarihini de bilmez. Bağımlılık, karşı tarafa yazıyla bildirilir ve bir tarih üzerinde anlaşılır.
+
+</SelfCheck>
+
+<SelfCheck question="Tedarikçi gecikmesi risk kaydındaydı ve gerçekleşti. Proje yöneticisi risk satırını 'gerçekleşti' diye kapattı. Eksik olan ne?">
+
+Bir sorun satırı. Gerçekleşen risk artık çözülmesi gereken bir sorundur: sahibi, eylemi ve tarihi olmalıdır. Sorun satırına hangi riskten geldiği de yazılır; kapanışta yanıtların neden yetmediği buradan anlaşılır.
+
+</SelfCheck>

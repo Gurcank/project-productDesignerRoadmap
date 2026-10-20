@@ -6,17 +6,20 @@ outcomes:
   - "Landing page ile ana sayfa (homepage) farkını ayırt edersin."
   - "Yeni bir projede \"statik olabilir mi?\" sorusunu sormayı alışkanlık edinirsin."
 minutes: 8
+standard: 2
 sources:
   - label: "MDN — Sunucu tarafı web programlamaya giriş"
     url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Introduction"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Yeni bir projenin ilk toplantısında biri soruyor: "Bu bir site mi, yoksa bir uygulama mı?" Cevap, projenin maliyetini, hızını, ekip ihtiyacını ve mimarisini belirleyen ilk karardır. Çoğu zaman da projenin ilk gününde verilir.
 
@@ -103,7 +106,21 @@ Pazarlama ekibiyle yapılan her konuşmada karşına çıkar. Ölçütü ziyaret
 
 Landing page ile ana sayfayı karıştırma. **Ana sayfa** (homepage) sitenin kapısıdır; **landing page** belirli bir kampanya için üretilmiş, genelde menüsüz, tek amaçlı sayfadır. "Bu landing page'de navigasyon menüsü olmasın; kullanıcının tek yolu birincil buton olsun" cümlesi buradan gelir.
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in web varlıkları üç türün üçünü de kapsar:
+
+1. **Statik:** `demlik.com.tr` üzerindeki tanıtım sayfaları, sıkça sorulanlar, kullanım koşulları. Herkese aynı; neredeyse bedava barındırılır.
+2. **Dinamik:** dükkân sayfaları. Menü, fiyat ve "şu an açık" bilgisi her istekte güncel veriden üretilir.
+3. **Web uygulaması:** Demlik Panel. Dükkân çalışanı giriş yapar, sipariş kabul eder, stok kapatır; sistem bir iş yaptırır.
+4. **Landing page:** kampüs lansmanı için `demlik.com.tr/kampus`. Tek hedefi vardı: uygulamayı indirmek. Menü, blog ya da dükkân listesi yoktu.
+
+Kampüs sayfası statik yayınlandı; lansman günü trafik on katına çıktığında yavaşlamadı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 Projenin başında bu üç soruyu sor:
 
@@ -113,7 +130,44 @@ Projenin başında bu üç soruyu sor:
 
 Üçüncüye "evet" dediğin an, işin kapsamı büyür; bunu ekibe baştan söylemek sürprizleri önler.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Önce "statik olabilir mi?" diye sor.** Statik site daha hızlı, ucuz ve güvenlidir.
+- **Landing page'i tek bir ölçüyle değerlendir.** Dönüşüm oranı; ana sayfa ölçütleriyle değil.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Web uygulamasında durumları backlog'a koy.** Boş, hata, yükleme ve yetki ekranları ayrı iştir.
+- **Landing page'in tek hedefini kabul kriterine yaz.** Ek bağlantılar hedefi dağıtır.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Site türünü bütçe kararı olarak gör.** Dinamik site sunucu, bakım ve güvenlik maliyeti getirir.
+- **Lansman trafiğini planla.** Statik sayfa ani trafiği kolay karşılar.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Web uygulaması işlerinin büyüklüğünü takıma tartıştır.** Görünüşte basit bir ekran, birçok durum taşır.
+- **Landing page işini hızlı döngüde yürüt.** Ölç, değiştir, yeniden ölç.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Kişiye göre değişen içeriği gereksinim olarak yaz.** Neyin dinamik olduğunu bu belirler.
+- **Web uygulamasında rolleri ve yetkileri listele.** Kim neyi görür, kim neyi değiştirir?
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Landing page'i beş saniye testine sok.** Ziyaretçi sayfanın ne istediğini anlıyor mu?
+- **Web uygulamasında görev testi yap.** Okuma değil, iş yaptırma ölçülür.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -136,5 +190,11 @@ Statik sitede herkese aynı, önceden hazırlanmış dosyalar servis edilir; din
 <SelfCheck question="Bir sitenin animasyonu ve videosu var. Bu onu dinamik yapar mı?">
 
 Hayır. Statik ≠ hareketsiz. Bir sayfanın animasyonlu olması onu dinamik yapmaz; dinamiklik, sayfanın sunucuda istek anında kişiye veya duruma göre üretilmesi demektir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir kampanya için tek sayfalık bir site isteniyor: bir başlık, üç fayda, bir indirme düğmesi. Hangi tür site önerirsin?">
+
+Statik bir landing page. İçerik herkese aynıdır, kişiye göre değişmez; statik sayfa hızlıdır, ucuzdur ve ani trafiği kolay karşılar. Tek hedefi indirme olduğu için gereksiz bağlantılar konmaz.
 
 </SelfCheck>

@@ -1,10 +1,11 @@
 ---
-summary: "Asıl beceri prompt yazmak değil, bağlamı tasarlamak: modelin ne göreceğine karar vermek. Bağlam kaynakları, 'bağlam boşluğu' ve kalıcı talimat dosyası (CLAUDE.md / AGENTS.md) bu dersin konusu."
+summary: "Asıl beceri prompt yazmak değil, bağlamı tasarlamaktır: modelin ne göreceğine karar vermek. Yazılı olmayan kural model için yoktur; kalıcı kurallar talimat dosyasında durur."
 outcomes:
   - "Context engineering'in ne olduğunu ve prompt engineering'den farkını söyleyebilirsin."
   - "Yedi bağlam kaynağını ve hangisinin ne zaman işe yaradığını sayabilirsin."
   - "Bağlam boşluğunun neden görünmez olduğunu ve kalıcı talimat dosyasının yapısını bilirsin."
 minutes: 8
+standard: 2
 sources:
   - label: "Anthropic Engineering — Effective context engineering for AI agents"
     url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
@@ -18,6 +19,10 @@ flags: ["degisken", "emin-degil"]
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Materyal, 2026'da yaygın görüşe göre **asıl becerinin prompt yazmak değil, bağlamı tasarlamak** olduğunu aktarıyor: yani modelin ne göreceğine karar vermek. Sorunların çoğu kötü prompt'tan değil, eksik bağlamdan doğuyor.
 
@@ -61,7 +66,38 @@ Materyal, `AGENTS.md` adının bu iş için fiilî bir ortak standart hâline ge
 6. **Komutlar:** build, test, lint nasıl çalıştırılır.
 7. **Kaçınılacak kalıplar (anti-patterns):** **en sona ve açıkça.**
 
-Yedinci madde senin için en önemlisi: **tasarım yasaklarını buraya yazarsan** her promptta tekrar etmen gerekmez.
+<Layers
+  label="Talimat dosyasının yapısı"
+  caption="Kalıcı talimat dosyası yukarıdan aşağıya genelden özele ilerler. En üstte proje özeti ve stack durur. Ardından mimari ilkeler, kurallar ve kalıplar, tasarım sistemi, test stratejisi ve komutlar gelir. Kaçınılacak kalıplar en sona ve açıkça yazılır."
+  layers={[
+  {
+    title: "Proje özeti, stack",
+    tone: "accent"
+  },
+  {
+    title: "Mimari ilkeler"
+  },
+  {
+    title: "Kurallar, kalıplar"
+  },
+  {
+    title: "Tasarım sistemi"
+  },
+  {
+    title: "Test stratejisi"
+  },
+  {
+    title: "Komutlar"
+  },
+  {
+    title: "Kaçınılacaklar",
+    sub: "en sonda, açık",
+    tone: "progress"
+  }
+]}
+/>
+
+Yedinci madde en çok atlanandır: **yasakları buraya yazarsan** her promptta tekrar etmen gerekmez.
 
 <Callout kind="ornek" title="Bu sitede nasıl?">
 
@@ -69,14 +105,57 @@ Bu projenin kökündeki `CLAUDE.md` tam olarak böyle bir dosya: dokunulmaz kura
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik deposunda bir `AGENTS.md` var; Emre'nin bir deneyimi yüzünden yazıldı:
+
+1. **Önce:** Emre yapay zekâdan Panel için bir iade listesi ekranı istedi. Model kendi renklerini ve boşluklarını uydurdu; ekran Panel'e hiç benzemedi.
+2. **Bağlam boşluğu:** "Panel'de durum yalnız renkle gösterilmez" kuralı hiçbir yerde yazılı değildi. Model iade durumlarını yalnız renkle ayırdı.
+3. **Dosya:** stack, klasör yapısı, `kahve-*` token'ları, boşluk ölçeği, test komutları ve en sonda yasaklar. Yasaklardan biri: "yeni bağımlılık ekleme".
+4. **Sonra:** aynı istek token'ları kullanan ve durumları metinle de gösteren bir ekranla geldi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Token dosyanı, tip tanımını, kabul kriterlerini ve hata çıktısını model görsün.**
 - **"Biz hep şöyle yaparız" bilgilerini yaz;** yazılı olmayan kural yoktur.
 - **Yasak listeni talimat dosyasının sonuna koy.**
 - **Dosya adı ve konumu için aracın güncel dokümantasyonuna bak.**
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Strateji ve hedef kitle belgesini bağlam olarak ver.** Model ürünü senin kadar bilmez.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kabul kriterlerini ve sözlüğü her isteğe bağlam olarak ekle.**
+
+</Lens>
+<Lens role="project-manager">
+
+- **Proje tüzüğünü ve kısıtları bağlam olarak ver;** model kapsamı tahmin etmesin.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Ekibin "biz hep böyle yaparız" bilgisini yazılı hâle getir.** Yazılı olmayan kural model için yoktur.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Süreç akışını ve iş kurallarını bağlama koy;** yoksa model kendi kuralını yazar.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Ham notu değil, anonimleştirilmiş özeti bağlam olarak ver.**
+
+</Lens>
+</Lenses>
 
 <Summary>
 

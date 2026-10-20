@@ -5,7 +5,8 @@ outcomes:
   - "Double Diamond'ın dört fazını ve iki elmasın neyi temsil ettiğini anlatabilirsin."
   - "Design thinking ile Double Diamond'ı, design sprint ile Scrum sprint'ini karıştırmazsın."
   - "İyi bir tasarım eleştirisinin yapısını kurabilirsin."
-minutes: 12
+minutes: 7
+standard: 2
 sources:
   - label: "Design Council — The Double Diamond"
     url: "https://www.designcouncil.org.uk/resources/the-double-diamond/"
@@ -16,12 +17,14 @@ sources:
 flags: ["emin-degil"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir beyin fırtınası toplantısı. İlk fikir ortaya atılıyor, hemen biri "ama bu çalışmaz çünkü..." diyor. Bir sonraki fikir ortaya çıkmıyor. On dakika sonra masada tek bir fikir var ve o da yarım. Ne oldu? İki farklı düşünme biçimi aynı anda yarıştı.
 
@@ -105,14 +108,53 @@ Yeni ürün fikirlerinde ve tıkanmış tartışmalarda kullanılır. "Üç ayd�
 
 **Critique ≠ design review.** Critique süreç içi, ekip içi ve iyileştirme amaçlıdır; design review ise uygulanan işin tasarıma uygunluk kontrolüdür.
 
-<Callout kind="tasarimci">
+<Case>
+
+Kampüs için "öğrenciler sabah sipariş verir mi?" sorusu, ekibi iki elmastan geçirdi:
+
+1. **Keşfet:** Mert sekiz öğrenciyle görüştü. Altısı dersten 10–15 dakika önce, yürürken sipariş veriyordu.
+2. **Tanımla:** problem daraldı: "Öğrenciler kahvenin ne zaman hazır olacağını bilmediklerinde sipariş vermiyor."
+3. **Geliştir:** Selin, Elif ve Deniz'le bir fikir oturumu yaptı; önce eleştirisiz yirmi fikir, sonra seçim. Üç fikir prototiplendi.
+4. **Teslim et:** hazırlık süresini sipariş ekranında göstermek seçildi ve test edildi.
+
+Selin'in ilk fikri "öğrenci kartıyla hızlı giriş"ti; ilk elmas olmadan o yapılacaktı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Toplantı başında modu söyle:** "Şu an divergent mod" ya da "şu an karar modundayız." Bu cümle toplantının yarısını kurtarır.
 - **İlk elmasta çözüm konuşulursa nazikçe geri çevir.** "Önce problemi netleştirelim" demek gecikmek değil, hata maliyetini düşürmektir.
 - **Crit'e hedefle gel.** İlk slayta tek cümle yaz: bu ekranın amacı ne, hangi geri bildirimi istiyorum?
 - **En az üç yön çıkar.** İlk fikir genelde ortalamadır.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Problemi tanımlamadan çözüme bütçe verme.** İlk elmas, yanlış şeyi iyi yapmayı önler.
+- **Tasarım eleştirisinde hedefe göre konuş.** "Beğenmedim" değil, "bu hedefe hizmet etmiyor çünkü…".
+
+</Lens>
+<Lens role="product-owner">
+
+- **Keşif işini backlog'da görünür kıl.** Araştırma ve prototip, teslimat kadar gerçek iştir.
+- **İkinci elmasın çıktısını story'ye çevir.** Seçilen çözüm, test bulgularıyla birlikte gelir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Problem tanımını iş ihtiyacıyla eşle.** İlk elmasın sonu, iş analizinin başlangıcıdır.
+- **Fikir oturumuna kuralları ve kısıtları getir.** Fikirler gerçek kısıtla daha hızlı elenir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **İlk elmasın kanıtını sen getir.** Problem tanımı araştırma bulgusuna dayanmalıdır.
+- **İkinci elmasta prototipi test et.** Seçim, testle doğrulanmadan bitmez.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -135,5 +177,11 @@ Yeni ürün fikirlerinde ve tıkanmış tartışmalarda kullanılır. "Üç ayd�
 <SelfCheck question="Bir beyin fırtınasında fikirleri aynı anda eleştirmek neden sorun yaratır?">
 
 Divergent (çoğaltma) ve convergent (eleme) modları karışır; eleştiri henüz çıkmamış fikirleri öldürür. Üretim ve eleme ayrı fazlarda yapılmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Ekip ilk toplantıda bir çözüme karar vermek istiyor. Double Diamond açısından ne risk var?">
+
+İlk elmas atlanıyor: problem keşfedilip tanımlanmadan çözüme geçiliyor. Yanlış problemi iyi çözme riski var. Önce problemi genişletip daraltmayı öneririm.
 
 </SelfCheck>

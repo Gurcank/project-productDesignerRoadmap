@@ -1,0 +1,53 @@
+{
+  "category": "urun-yonetimi",
+  "sources": [
+    { "label": "SVPG — Marty Cagan, The Four Big Risks", "url": "https://www.svpg.com/four-big-risks/" },
+    { "label": "Product Talk — Teresa Torres, Opportunity Solution Trees", "url": "https://www.producttalk.org/opportunity-solution-trees/" },
+    { "label": "Product Talk — Teresa Torres, Assumption Testing", "url": "https://www.producttalk.org/assumption-testing/" },
+    { "label": "April Dunford — A Quickstart Guide to Positioning", "url": "https://www.aprildunford.com/post/a-quickstart-guide-to-positioning" },
+    { "label": "Black Swan Farming — Cost of Delay", "url": "https://blackswanfarming.com/cost-of-delay/" },
+    { "label": "Intercom — Des Traynor, Product strategy means saying no", "url": "https://www.intercom.com/blog/product-strategy-means-saying-no/" }
+  ],
+  "items": [
+    {
+      "question": "Bir mühendis 'bu iki günlük iş, hemen yapalım' diyor. Cagan'ın dört riski açısından ne sorarsın?",
+      "answer": "Bu cevap yalnız yapılabilirlik riskini konuşur. Müşterinin onu kullanmayı seçip seçmeyeceğini (değer), bulup kullanabileceğini (kullanılabilirlik) ve iş için uygun olup olmadığını (iş uygunluğu) sorarım. Kimsenin kullanmadığı kolay bir özellik de zaman ve sadelik harcar."
+    },
+    {
+      "question": "Şirketin 'geliri ikiye katla' hedefi ve on iki özellikli bir yol haritası var. Eksik olan ne?",
+      "answer": "Strateji. Hedef ile taktikler arasında hangi problemlerin çözüleceğini ve neyin yapılmayacağını seçen katman yok. Odak, içgörü, eylem ve yönetim olmadan takımlar özellik çıkarır ama hedefe yaklaşmaz."
+    },
+    {
+      "question": "Bir yatırımcı ürününüzü yanlış kategoriye koyup sahip olmadığınız özellikleri soruyor. Konumlandırmada nereden başlarsın?",
+      "answer": "Rakip alternatiflerden: ürün olmasa müşteri ne yapardı? Sonra alternatiflerde olmayan farklılaştırıcıları, onların değerini, bu değeri en çok önemseyen müşteriyi ve en son, değerin apaçık görüneceği pazar kategorisini seçerim."
+    },
+    {
+      "question": "Takım fırsat-çözüm ağacına 'favori listesi istiyorum' diye bir fırsat yazdı. Ne dersin?",
+      "answer": "Bu bir çözümdür; karşılamanın tek yolu vardır. 'Neden?' diye sorup altındaki fırsatı bulurum: 'her sabah aynı şeyi baştan seçiyorum'. Bu fırsatın birden çok çözümü olabilir: son siparişi tekrarla, favori listesi, zamanlanmış sipariş."
+    },
+    {
+      "question": "Prototip testinde sekiz kişiden beşi düğmeyi buldu. Takım 'fena değil' diyor. Ne eksik?",
+      "answer": "Testten önce yazılmış bir başarı ölçütü. Çizgi önceden çekilseydi, örneğin 'sekizden en az altısı on saniyede bulur', sonuç tartışmasız olurdu. Sonuçtan sonra her sonuç kabul edilebilir görünür."
+    },
+    {
+      "question": "İki iş aynı değerde. Biri bir haftada, diğeri dört haftada biter; biri de dönem başına yetişmezse fırsat kaçacak. WSJF ile nasıl düşünürsün?",
+      "answer": "WSJF gecikme maliyetini süreye böler. Zaman kritikliği yüksek olan işin gecikme maliyeti artar; süresi kısa olan işin puanı da yükselir. Kısa ve acil iş önce gelir; değerli ama beklemeye dayanabilen iş sonra."
+    },
+    {
+      "question": "Bir yönetici yol haritasındaki her satıra tarih istiyor. Ne yaparsın?",
+      "answer": "Gerçek bir son tarihi olan satırlara, örneğin dönem başına bağlı bir lansmana, tarihi yazarım. Diğerleri için ufkunu (Now, Next, Later) ve kesinlik düzeyini söylerim. Kesin olmayan bir işe tarih yazmak, tutulması zor bir söz vermektir."
+    },
+    {
+      "question": "Kullanım ölçümü eklemek normalde küçük bir iş. Ama şirket ciddi bir müşteri kaybını ancak bu ölçümle çözebilecek. Lansmanı hangi katmana koyarsın?",
+      "answer": "Birinci katmana. Katmanı geliştirme eforu değil, beklenen pazar ve iş etkisi belirler. Aynı iş farklı bir iş sonucuna hizmet ettiğinde farklı bir katmanda olabilir."
+    },
+    {
+      "question": "Bir özellik müşterilerin %3'ü tarafından kullanılıyor ve takım onu kaldırmak istiyor. İlk ne sorarsın?",
+      "answer": "Bu müşterilerin gelirin ne kadarını getirdiğini, kullanımı artırmak için ne denendiğini ve kullanmayanların neden kullanmadığını. Az kullanıcı, gelirin büyük bir kısmını taşıyor olabilir. Karar verilirse yeni kullanıcılara kapatır, deneyenlerden gizler ve gerçek kullanıcılara tarih ve alternatifle duyururum."
+    },
+    {
+      "question": "En büyük müşteriniz 'bu özelliği yapmazsanız ayrılırız' diyor. Nasıl cevap verirsin?",
+      "answer": "Talebin altındaki ihtiyacı anlamaya çalışırım. Traynor buna özellik şantajı der: tek müşteriye özel değer çoğundan alınır. Fikri ciddiye aldığımı söyler, gerekçemi yazılı stratejiye bağlar ve onun yerine ihtiyacı karşılayacak yaptığımız şeyi anlatırım."
+    }
+  ]
+}

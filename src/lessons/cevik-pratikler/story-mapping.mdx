@@ -1,0 +1,158 @@
+---
+summary: "Story map, düz bir backlog yerine kullanıcının yolculuğunu soldan sağa dizer. Üstte omurga, altında story'ler durur; en üst sıra, uçtan uca çalışan en küçük sürümü, yani yürüyen iskeleti gösterir."
+outcomes:
+  - "Düz bir backlog'un neyi anlatamadığını söyleyebilirsin."
+  - "Bir story map'in omurgasını ve kaburgalarını kurabilirsin."
+  - "Haritayı yatay şeritlerle sürümlere bölüp yürüyen iskeleti bulabilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Jeff Patton — The New User Story Backlog is a Map (2008)"
+    url: "https://jpattonassociates.com/the-new-backlog/"
+additions:
+  - "Story mapping: omurga, kaburgalar, yürüyen iskelet ve sürüm şeritleri (Jeff Patton)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Swimlane from "~/components/diagrams/primitives/Swimlane.astro";
+
+Elif, Hakan'a favori sipariş özelliğini anlatmaya çalışıyordu. Elinde backlog'un çıktısı vardı: otuz satır, en değerliden en az değerliye. Hakan dördüncü satırda durdu: "Peki müşteri bunu baştan sona nasıl yaşayacak?" Listede bunun cevabı yoktu.
+
+Liste her şeyi içeriyordu. Ama bir hikâye anlatmıyordu. Bu ders, aynı backlog'u bir hikâye gibi okunur hâle getiren yöntemi anlatır.
+
+## Düz backlog neyi anlatamaz?
+
+Jeff Patton'a göre düz bir backlog, işleri yapılacakları sıraya, yani en değerliden en aza dizer. Bu, neyle başlanacağını bulmak için işe yarar. Ama birine "bu sistem ne yapıyor?" diye sorulduğunda cevap veremez. Tek tek story'lere bakarken ürünün bütününü kaybedersin.
+
+**Story map** (story mapping) bu sorunu iki eksenle çözer. Patton bu pratiği ilk kez 2005'te "How You Slice It" adlı yazısında anlattı.
+
+## Haritanın iki ekseni
+
+**Yatay eksen, kullanıcının yolculuğudur.** Kullanıcının genellikle önce yaptığı şey solda, sonra yaptığı sağda durur. Büyük adımlara **faaliyet**, onların içindeki küçük adımlara **görev** denir.
+
+**Dikey eksen, önceliktir.** Her faaliyetin altına story'ler asılır. Yukarıda duran story daha gerekli, aşağıda duran daha az gereklidir.
+
+Patton haritanın üst kısmını bir omurgaya benzetir. Üstteki büyük adımlar **omurga**dır (backbone): sistemin olmazsa olmaz yetenekleri. Altına sarkan story'ler **kaburgalar**dır.
+
+**Omurga sıralanmaz.** Patton'ın örneğiyle: bir araba için motor, şanzıman ve frenleri birbirine karşı sıralamak anlamsızdır. "Bu sürümde fren olmadan çıkalım mı?" diye sorulmaz. Sıralanan, kaburgalardır.
+
+## Yürüyen iskelet ve sürüm şeritleri
+
+Haritada en üste yerleştirilen story'ler, uçtan uca çalışan **en küçük sistemi** anlatır. Alistair Cockburn buna **yürüyen iskelet** (walking skeleton) der. Patton onu her zaman ilk inşa etmeye çalışır.
+
+Patton haritayı yatay olarak bantlarla böler: her bant bir sürümdür. Story'ler yukarı aşağı hareket ettirilerek şeritlere yerleştirilir.
+
+<Swimlane
+  label="Favori sipariş için story map"
+  caption="En üst şerit omurgadır: müşterinin yolculuğu dört faaliyetten oluşur: uygulamayı açmak, siparişi seçmek, ödemek ve teslim almak. Altındaki ilk şerit yürüyen iskelettir: ana ekranda son sipariş, tek dokunuşla tekrar, kayıtlı kartla ödeme ve hazır bildirimi. Bu dört story birlikte uçtan uca çalışan en küçük sürümü verir. İkinci şerit sonraki sürümdür: favori listesi, tekrar etmeden önce düzenleme, kart yoksa kart seçimi. En alttaki şerit sonraya kalan fikirlerdir."
+  lanes={["Omurga", "Sürüm 1: iskelet", "Sürüm 2", "Sonra"]}
+  steps={[
+    { id: "a1", lane: 0, col: 0, title: "Uygulamayı aç", tone: "accent" },
+    { id: "a2", lane: 0, col: 1, title: "Siparişi seç", tone: "accent" },
+    { id: "a3", lane: 0, col: 2, title: "Öde", tone: "accent" },
+    { id: "a4", lane: 0, col: 3, title: "Teslim al", tone: "accent" },
+    { id: "s1", lane: 1, col: 0, title: "Ana ekranda son sipariş", tone: "progress" },
+    { id: "s2", lane: 1, col: 1, title: "Tek dokunuşla tekrarla", tone: "progress" },
+    { id: "s3", lane: 1, col: 2, title: "Kayıtlı kartla öde", tone: "progress" },
+    { id: "s4", lane: 1, col: 3, title: "Hazır bildirimi", tone: "progress" },
+    { id: "r1", lane: 2, col: 0, title: "Favorilerim sekmesi" },
+    { id: "r2", lane: 2, col: 1, title: "Tekrar etmeden düzenle" },
+    { id: "r3", lane: 2, col: 2, title: "Kart yoksa kart seç" },
+    { id: "l1", lane: 3, col: 1, title: "Zamanlanmış sipariş" },
+    { id: "l2", lane: 3, col: 3, title: "Hazır olunca yol tarifi" },
+  ]}
+  flows={[
+    { from: "a1", to: "a2" },
+    { from: "a2", to: "a3" },
+    { from: "a3", to: "a4" },
+  ]}
+/>
+
+**Story map ≠ yol haritası.** Story map bir ürünün ya da özelliğin içini, kullanıcının yolculuğuyla anlatır. Yol haritası ise ürün hedeflerini zamana yayar; [Roadmap ve planlama](/urun-gelistirme/roadmap-ve-planlama/) dersi onu anlatıyor. Story map'in sürüm şeritleri yol haritasına girdi olabilir.
+
+Patton haritanın asılı kalmasını önerir: ilk anlayışı kurmanın yanında, büyük resmi herkese göstermeye devam eder.
+
+<Case>
+
+Elif, Hakan'la bir sonraki görüşmesine boş bir duvar ve yapışkan notlarla geldi:
+
+1. **Yolculuğu yazdılar:** müşteri sabah uygulamayı açar, siparişini seçer, öder, teslim alır. Dört faaliyet omurga oldu.
+2. **Story'leri astılar:** backlog'daki otuz satırı faaliyetlerin altına yerleştirdiler. Altı satır hiçbir faaliyete uymadı; Elif onları sorgulamak için ayırdı.
+3. **İskeleti buldular:** her sütundan en gerekli tek story'yi en üste çıkardılar. Dört story uçtan uca çalışan bir sürüm verdi.
+4. **Şerit çektiler:** iskeletin altına bir bant çektiler. Üstü Sprint 14'ün hedefi oldu, altı sonraki sürüme kaldı.
+5. **Hakan'ın sorusu cevaplandı:** "Müşteri bunu baştan sona nasıl yaşayacak?" Cevap artık duvardaydı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-owner">
+
+- **Backlog'u haritadan üret.** Haritanın üst şeridi sprint hedefine, kaburgalar backlog'un sırasına dönüşür.
+- **Omurgayı sıralatma.** Paydaş "önce ödeme mi, önce seçim mi?" diye sorarsa, yürüyen iskeleti göster.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Ürünü anlatırken listeyi değil haritayı göster.** Yönetim "bu ne yapıyor?" diye sorduğunda cevap omurgadadır.
+- **Hiçbir faaliyete uymayan story'yi sorgula.** Yolculukta yeri olmayan bir fikrin değeri de belirsizdir.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Omurga, kullanıcı yolculuğu haritanın kardeşidir.** Araştırmadan gelen yolculuğu omurgaya taşı.
+- **İskeletin her adımını tasarla.** Uçtan uca çalışan en küçük sürüm, tasarımın da uçtan uca olmasını ister.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Haritayı gereksinim keşfi için kullan.** Bir faaliyetin altı boşsa, orada henüz konuşulmamış bir ihtiyaç vardır.
+- **Kuralları doğru sütuna as.** "Kart yoksa ne olur?" kuralı ödeme sütununa aittir; yerini bilmek kapsamı netleştirir.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Story mapping atölyesini kolaylaştır.** Bütün takımı duvarın önüne getir; harita tek kişinin değil, takımın anlayışıdır.
+- **Haritayı asılı tut.** Patton'a göre harita büyük resmi göstermeye devam etmelidir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Düz backlog işleri yapım sırasına dizer, ama sistemin ne yaptığını anlatamaz.
+- Story map'in yatay ekseni kullanıcının yolculuğu, dikey ekseni önceliktir.
+- Üstteki faaliyetler omurgadır ve sıralanmaz; altındaki story'ler kaburgadır ve sıralanır.
+- En üstteki story'ler uçtan uca çalışan en küçük sistemi, yani yürüyen iskeleti verir; ilk o inşa edilir.
+- Yatay şeritler haritayı sürümlere böler; harita büyük resmi göstermek için asılı kalır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Story map'te omurga nedir ve neden sıralanmaz?">
+
+Omurga, üstteki büyük adımlardır: sistemin olmazsa olmaz yetenekleri. Hepsi gerekli olduğu için birbirine karşı sıralanmaz; bir arabanın motorunu frenine karşı sıralamak gibi anlamsızdır.
+
+</SelfCheck>
+
+<SelfCheck question="Yürüyen iskelet nedir?">
+
+Haritada en üste yerleştirilen story'lerin oluşturduğu, uçtan uca çalışan en küçük sistemdir. Her faaliyetten en gerekli parçayı içerir ve ilk o inşa edilir.
+
+</SelfCheck>
+
+<SelfCheck question="Takım ilk sürümde yalnız 'Siparişi seç' faaliyetinin bütün story'lerini yapmak istiyor; ödeme ve teslim sonraya kalacak. Ne dersin?">
+
+Bu, haritayı dikey değil, sütun sütun kesmektir. Sürüm sonunda müşteri siparişi seçebilir ama ödeyemez; uçtan uca çalışan bir şey yoktur. Önce her sütundan en gerekli story'yi alıp yürüyen iskeleti kurmayı önerirsin.
+
+</SelfCheck>
+
+<SelfCheck question="Backlog'daki bazı story'ler hiçbir faaliyetin altına yerleşmiyor. Bu ne anlama gelebilir?">
+
+Ya yolculukta henüz yazılmamış bir faaliyet vardır ya da o story kullanıcının yolculuğuna hizmet etmiyordur. İkisi de sorgulanmalıdır: ya omurgaya yeni bir faaliyet eklenir ya da story'nin değeri tartışılır.
+
+</SelfCheck>

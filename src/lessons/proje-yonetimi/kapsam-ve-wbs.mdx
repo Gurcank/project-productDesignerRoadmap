@@ -1,0 +1,166 @@
+---
+summary: "İş kırılım yapısı (WBS), projenin bütün işini teslimatlara ve iş paketlerine bölen bir ağaçtır. Yüzde yüz kuralı hiçbir işin dışarıda kalmamasını sağlar."
+outcomes:
+  - "Teslimat odaklı bir iş kırılım yapısı çıkarabilirsin."
+  - "Yüzde yüz kuralıyla eksik ya da fazla işi bulabilirsin."
+  - "Ayrıştırmayı nerede durduracağına karar verebilirsin."
+minutes: 8
+standard: 2
+sources:
+  - label: "Watt, Project Management (2. baskı) — 9. Scope Planning"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-9-scope-planning-project-management/"
+additions:
+  - "İş kırılım yapısı, iş paketi ve yüzde yüz kuralı (Watt, bölüm 9)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Tüzük imzalandı. Hakan bir hafta sonra sordu: "Ne zaman biter, kaça mal olur?" Leyla'nın elinde yalnız bir hedef cümlesi vardı. Bir cümlenin süresi tahmin edilemez.
+
+Önce projenin bütün işini görmek gerekiyordu. Leyla, Elif, Ayşe ve tedarikçiyle bir duvarın önünde toplandı. Elinde bir deste yapışkan not vardı. Bir saat sonra duvarda bir ağaç duruyordu.
+
+## Kapsam: neyin içinde, neyin dışında
+
+**Kapsam** (scope), projenin teslim edeceği her şeydir. Tüzük kapsamı genel çizgileriyle çizer. Planlamada bu çizgi ayrıntılanır: hangi teslimatlar var, her biri neyi içeriyor?
+
+Kapsamın sınırını, kapsam kaymasını ve kesim çizgisini [Kapsam, MVP, POC ve scope creep](/urun-gelistirme/kapsam-mvp-poc-scope-creep/) dersi anlatıyor. Bu ders kapsamı, planlanabilir parçalara bölmeyi anlatır.
+
+## İş kırılım yapısı
+
+**İş kırılım yapısı** (WBS, work breakdown structure), projenin işini teslimat odaklı ve hiyerarşik biçimde parçalara ayırmaktır. En üstte projenin kendisi durur. Bir alt seviyede ana teslimatlar, onların altında daha küçük teslimatlar gelir.
+
+En alttaki parçaya **iş paketi** (work package) denir. Süre, maliyet ve kaynak tahminleri bu seviyede yapılır. Bir iş paketi o kadar küçüktür ki ne kadar süreceği ve kimin yapacağı söylenebilir.
+
+<Tree
+  label="Kampüs projesinin iş kırılım yapısı"
+  caption="Kampüs projesinin bütün işi beş ana teslimata ayrılıyor: proje yönetimi, kasa entegrasyonu, uygulama değişiklikleri, kafe hazırlığı, kampüs ve lansman. Her teslimat da iş paketlerine bölünüyor; örneğin kasa entegrasyonu şartname, geliştirme ve test olarak üçe ayrılıyor. Ağacın her dalı bir şey üretir; dallar fiil değil isimdir. Süre ve maliyet en alttaki iş paketlerinde tahmin edilir."
+  root={{
+    title: "Kampüs lansmanı",
+    tone: "accent",
+    children: [
+      { title: "1 Proje yönetimi" },
+      {
+        title: "2 Kasa entegrasyonu",
+        children: [{ title: "2.1 Arayüz şartnamesi" }, { title: "2.2 Entegrasyon geliştirme" }, { title: "2.3 Entegrasyon testi" }],
+      },
+      {
+        title: "3 Uygulama değişiklikleri",
+        children: [{ title: "3.1 Öğrenci kartı indirimi" }, { title: "3.2 Kampüs menüleri" }],
+      },
+      {
+        title: "4 Kafe hazırlığı",
+        children: [{ title: "4.1 Kafe sözleşmeleri" }, { title: "4.2 Kurulum ve eğitim", tone: "progress" }],
+      },
+      {
+        title: "5 Kampüs ve lansman",
+        children: [{ title: "5.1 Öğrenci işleri protokolü" }, { title: "5.2 Pilot kafe" }, { title: "5.3 12 kafeye açılış" }],
+      },
+    ],
+  }}
+/>
+
+**WBS ≠ yapılacaklar listesi.** Bir yapılacaklar listesi eylemleri sıralar: "toplantı yap, e-posta at". WBS ise sonuçları sıralar: "kafe sözleşmeleri", "entegrasyon testi". Eylemler, takvim çıkarılırken iş paketlerinin içinden çıkar.
+
+**WBS ≠ takvim.** Ağaçta sıra ya da süre yoktur. Hangi işin önce yapılacağı, iş paketleri arasındaki bağımlılıklarla takvimde kurulur.
+
+## Yüzde yüz kuralı
+
+WBS'nin en önemli kuralı **yüzde yüz kuralıdır** (100 percent rule). Her alt seviye, bir üst seviyenin işinin tamamını, yani yüzde yüzünü temsil eder. Ne eksik ne fazla.
+
+Kural iki yönlü çalışır:
+
+- **Eksik iş:** bir teslimatın altındaki parçalar toplandığında üst teslimatı tam vermiyorsa, bir iş unutulmuştur.
+- **Fazla iş:** bir parça hiçbir üst teslimata ait değilse, ya kapsam dışıdır ya da tüzükte eksik bir teslimat vardır.
+
+Kural, kimsenin sahiplenmediği işleri yakalar. Proje yönetiminin kendisi de bir iştir; bu yüzden ağaçta ayrı bir dal olarak durur.
+
+## Ayrıştırmayı nerede durdurursun?
+
+Ayrıştırma sonsuza kadar sürebilir. Ölçüt basittir: **ihtiyacın olan doğrulukta tahmin edebildiğin yerde dur.**
+
+"Kasa entegrasyonu" için kimse güvenilir bir süre veremez. "Arayüz şartnamesi" için tedarikçi "iki hafta" diyebilir. O hâlde şartname bir iş paketidir. Daha da bölmek, tahmini iyileştirmez, yalnız takibi zorlaştırır.
+
+<Case>
+
+Duvardaki ağaç ilk hâlinde 14 notluk bir ağaçtı. Leyla yüzde yüz kuralını dal dal sordu:
+
+1. **"Kafe hazırlığının altındakiler toplanınca kafe hazır olur mu?"** Ayşe hayır dedi: sözleşme ve tablet kurulumu vardı ama personel eğitimi yoktu. "Kurulum ve eğitim" diye birleştirildi.
+2. **"Sadakat puanı hangi teslimatın altında?"** Hiçbirinin. Tüzükte kapsam dışı yazıyordu; not duvardan indi.
+3. **"Bu ağacı kim yönetecek?"** Proje yönetimi ayrı bir dal oldu: raporlar, toplantılar, risk kaydı.
+4. **"Hangi parçaya süre veremiyoruz?"** "Kasa entegrasyonu" çok büyüktü; şartname, geliştirme ve test olarak üçe bölündü.
+
+Sonuç beş teslimat ve 11 iş paketiydi. Hakan'ın sorusu artık cevaplanabilirdi.
+
+</Case>
+
+<Tool slug="wbs" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **WBS'yi tek başına yazma.** İşi yapacak kişiler duvarın önünde olmazsa unutulan işi kimse fark etmez.
+- **Her iş paketinin bir sahibi olsun.** Sahipsiz paket, takvimde boş kalan haftadır.
+- **Dalları isimle yaz.** "Testi yap" değil, "entegrasyon testi"; sonuç ölçülür, eylem ölçülmez.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Ürün kapsamını WBS'de ara.** Ürün hedefine katkı vermeyen bir dal varsa sorgula.
+- **Kapsam dışı listesini sen savunursun.** Ağaçtan indirilen her not, bir paydaşın isteğiydi.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Uygulama dalını backlog'a çevir.** "Öğrenci kartı indirimi" iş paketi, takımın için birkaç epic ve story demektir.
+- **İş paketinin bitti tanımını netleştir.** Proje "bitti" derken takımın Definition of Done'ı ile aynı şeyi kastetmeli.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Yüzde yüz kuralı senin en iyi aracın.** Bir teslimatın gereksinimleri alt parçalara tam dağılmıyorsa bir gereksinim sahipsiz kalmıştır.
+- **Her iş paketini gereksinimlere bağla.** Hangi gereksinim hangi pakette karşılanıyor? Bu bağ, kabulde işini kolaylaştırır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Kapsam projenin teslim edeceği her şeydir; WBS onu planlanabilir parçalara böler.
+- WBS teslimat odaklıdır: dallar eylem değil, sonuçtur.
+- En alt seviye iş paketidir; süre, maliyet ve kaynak tahmini orada yapılır.
+- Yüzde yüz kuralı: her alt seviye üst seviyenin işinin tamamını temsil eder.
+- İhtiyacın olan doğrulukta tahmin edebildiğin yerde ayrıştırmayı durdurursun.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="İş paketi nedir?">
+
+WBS'nin en alt seviyesidir. Süre, maliyet ve kaynak tahmini bu seviyede yapılır. Kimin yapacağı ve ne kadar süreceği söylenebilecek kadar küçüktür.
+
+</SelfCheck>
+
+<SelfCheck question="'Toplantı yap', 'e-posta at' gibi maddelerden oluşan bir ağaç neden iyi bir WBS değildir?">
+
+Çünkü WBS sonuçları, yani teslimatları listeler. Eylemler takvim çıkarılırken iş paketlerinin içinden çıkar. Eylem listesi, neyin teslim edileceğini ve neyin eksik olduğunu göstermez.
+
+</SelfCheck>
+
+<SelfCheck question="Ekip 'Lansman' dalının altına yalnız 'pilot kafe' ve '12 kafeye açılış' yazdı. Öğrenci işleriyle protokol hiçbir yerde yok. Hangi kural bunu yakalar?">
+
+Yüzde yüz kuralı. Alt parçalar toplandığında lansman tamamlanmıyor, çünkü öğrenci kartı indirimi protokolsüz çalışmaz. Eksik iş paketi eklenir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir arkadaşın her iş paketini yarım günlük görevlere kadar bölmek istiyor. Ne dersin?">
+
+Ayrıştırma, ihtiyaç duyulan doğrulukta tahmin yapılabildiği yerde durur. Daha fazla bölmek tahmini iyileştirmez, yalnız takibi zorlaştırır. Yarım günlük görevler ekibin kendi planlamasında yaşar; WBS'de değil.
+
+</SelfCheck>

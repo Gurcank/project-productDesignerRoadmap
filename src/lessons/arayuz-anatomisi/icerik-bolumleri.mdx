@@ -6,6 +6,7 @@ outcomes:
   - "Accordion, tabs ve carousel'in kısıtlarını sayabilirsin."
   - "Hareketli bölümlerin (carousel, marquee, scrollytelling) hangi erişilebilirlik ölçütüne tabi olduğunu söyleyebilirsin."
 minutes: 11
+standard: 2
 sources:
   - label: "NN/g — Designing Effective Carousels"
     url: "https://www.nngroup.com/articles/designing-effective-carousels/"
@@ -22,11 +23,14 @@ includeTerms: ["tabs", "accordion", "timeline", "callout", "marquee", "gallery",
 skipTerms: ["process","yol haritası"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Hero'dan sonra sayfa ürünü anlatmaya başlar. Burada sayfanın çoğu **içerik bölümleri** kalıplarından oluşur. Bu kalıpların adlarını bilmek sayfa kurgusunu hızlıca konuşabilmek demektir; ama her kalıbın bir bedeli ve bir jenerikleşme tehlikesi de vardır.
 
@@ -85,9 +89,38 @@ Numaralandırma (01/02/03) yalnızca **gerçekten sıralı** içerikte anlamlıd
 
 **FAQ**, sık sorulan soruların listesidir; satın alma öncesi tereddütleri karşılar ve destek yükünü azaltır. En etkili FAQ, **gerçek destek taleplerinden** türetilendir: "FAQ'yu destek ekibinin en sık aldığı 8 soruyla dolduralım, tahminle değil." Bir sorunun FAQ'ya girmesi çoğu zaman akışta bir eksiklik olduğunun işaretidir; mümkünse cevabı akışın içine yerleştir.
 
-**Callout (vurgu kutusu)**, metin akışı içinde dikkat çekmek için ayrılmış kutudur: ipucu, uyarı, not. Bu sitedeki "Tasarımcı olarak sen" kutuları buna örnektir. Türleri (info, warning, danger) semantik renklerle ayrılır ama yalnızca renkle değil, ikonla da.
+**Callout (vurgu kutusu)**, metin akışı içinde dikkat çekmek için ayrılmış kutudur: ipucu, uyarı, not. Bu sitedeki "Dikkat" ve "Örnek" kutuları buna örnektir. Türleri (info, warning, danger) semantik renklerle ayrılır ama yalnızca renkle değil, ikonla da.
 
-<Callout kind="tasarimci">
+<Tree
+  label="İçerik bölümü kalıpları"
+  caption="İçerik bölümleri dört aileye ayrılır. Özellikleri anlatanlar: özellik ızgarası, bento ve sırayla yön değiştiren bölümler. Sıra anlatanlar: zaman çizelgesi ve adımlar. Açılır ya da değişen içerik: akordeon, sekmeler ve SSS. Hareketli bölümler: carousel ve kayan şerit; bunlar durdurulabilir olmalıdır."
+  root={{
+    title: "İçerik bölümleri",
+    tone: "accent",
+    children: [
+      { title: "Özellikler", children: [{ title: "Feature grid" }, { title: "Bento" }, { title: "Alternating" }] },
+      { title: "Sıra", children: [{ title: "Timeline" }, { title: "Adımlar" }] },
+      { title: "Açılır", children: [{ title: "Akordeon" }, { title: "Sekmeler" }, { title: "SSS" }] },
+      { title: "Hareketli", children: [{ title: "Carousel" }, { title: "Marquee", tone: "progress" }] },
+    ],
+  }}
+/>
+
+<Case>
+
+"Dükkânlar için" sayfası ilk taslakta altı kartlık bir özellik ızgarasıydı: her kartta bir ikon ve iki kelime.
+
+1. **Sorun:** dükkân sahipleri "Bu bana ne kazandırır?" sorusunun cevabını bulamıyordu; kartlar jenerikti.
+2. **Alternating:** üç ana fayda, birer Panel ekran görüntüsüyle sırayla sağda ve solda: siparişler kasaya düşer, menüyü telefondan güncelle, gün sonu raporu.
+3. **Adımlar:** "Nasıl başlarım?" üç adımlık bir sıra oldu: başvur, menünü ekle, kasadaki QR kartını koy.
+4. **SSS:** komisyon, sözleşme süresi ve kasa uyumu; akordeon olarak, tümü varsayılan kapalı.
+
+Dönen müşteri yorumları carousel'i kaldırıldı; yerine üç sabit alıntı kondu.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Feature grid'i varsayılan seçme.** Önce içeriğin hiyerarşisini sor: biri baskınsa bento ya da alternating düşün.
 - **Numarayı yalnızca gerçek sıra için kullan.**
@@ -95,7 +128,14 @@ Numaralandırma (01/02/03) yalnızca **gerçekten sıralı** içerikte anlamlıd
 - **Kritik mesajı accordion, tab ya da carousel içine koyma.**
 - **FAQ'yu gerçek sorulardan yaz;** tekrar eden soru bir akış sorununu işaret eder.
 
-</Callout>
+</Lens>
+<Lens role="ux-researcher">
+
+- **Kalıbı içerikten sonra seç; testte içeriği sına.** Ziyaretçi aradığı cevabı hangi bölümde buluyor?
+- **Akordeon ve sekmede gizlenen içeriğin açılıp açılmadığını gözle.**
+
+</Lens>
+</Lenses>
 
 <Summary>
 

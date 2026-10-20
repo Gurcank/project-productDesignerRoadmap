@@ -11,21 +11,77 @@
  * little lower), so without JavaScript the page is still the full, ordered list
  * of links; scripting only adds the drag offset, the lines and the progress ring.
  *
- * Replaces RoadmapRoute (phones) and RoadmapPath (desktop): one layout that
- * reflows by column count instead of two schemes swapped by breakpoint.
+ * Roles (plan §4.3): planets never move between belts — the chosen role only
+ * changes which planets the line joins and in what order, the stop badge on
+ * each, and how off-route planets look. Reordering the DOM or using CSS
+ * `order` would make the focus order disagree with what is seen; the route as
+ * an ordered list lives on the role's own page. Each planet carries every
+ * route it is on (`data-route="state:position:tier …"`), and `data-off` lists
+ * the routes it is not on, which role-css.ts turns into a smaller, desaturated
+ * planet before first paint.
  */
-import { AREAS, categoriesOfArea, ROUTE_POSITION } from "~/data/categories";
+import { AREAS, categoriesOfArea } from "~/data/categories";
 import { planetOf } from "~/data/planets";
+import { TIER_LABEL, type Tier } from "~/data/roles";
+import type { RoleState } from "~/data/role-ids";
+import type { RolePath } from "~/lib/role-path";
+import { encodeRolePayload } from "~/lib/role-payload";
 
 interface Props {
   publishedSlugs: Set<string>;
   topicIdsByCategory: Record<string, string[]>;
+  /** Every compiled route, Keşif included (src/lib/routes.ts). */
+  routes: RolePath[];
 }
 
-const { publishedSlugs, topicIdsByCategory } = Astro.props;
+const { publishedSlugs, topicIdsByCategory, routes } = Astro.props;
+
+interface Stop {
+  state: RoleState;
+  position: number;
+  tier: Tier;
+}
+
+const stopsBySlug = new Map<string, Stop[]>();
+const offBySlug = new Map<string, RoleState[]>();
+for (const route of routes) {
+  for (const stop of route.stops) {
+    const list = stopsBySlug.get(stop.category) ?? [];
+    list.push({ state: route.state, position: stop.position, tier: stop.tier });
+    stopsBySlug.set(stop.category, list);
+  }
+  for (const slug of route.offPath) offBySlug.set(slug, [...(offBySlug.get(slug) ?? []), route.state]);
+}
+
+/** One badge per distinct "position · tier", shared by every role that has it. */
+const badgesOf = (slug: string) => {
+  const groups = new Map<string, { position: number; tier: Tier; states: RoleState[] }>();
+  for (const stop of stopsBySlug.get(slug) ?? []) {
+    if (stop.state === "all") continue;
+    const key = `${stop.position}:${stop.tier}`;
+    const group = groups.get(key) ?? { position: stop.position, tier: stop.tier, states: [] };
+    group.states.push(stop.state);
+    groups.set(key, group);
+  }
+  return [...groups.values()];
+};
+
+const routeAttr = (slug: string) =>
+  (stopsBySlug.get(slug) ?? []).map((stop) => `${stop.state}:${stop.position}:${TIER_LABEL[stop.tier].code}`).join(" ");
+
+const payload = encodeRolePayload(routes);
 ---
 
 <div class="galaxy" data-galaxy>
+  <script type="application/json" id="role-routes" set:html={JSON.stringify(payload)} />
+
+  <dl class="galaxy__legend" data-for-role="product-designer product-manager product-owner project-manager scrum-master business-analyst ux-researcher">
+    <div><dt><span class="legend-pill legend-pill--t">Temel</span></dt><dd>bu rol onsuz işini yapamaz</dd></div>
+    <div><dt><span class="legend-pill legend-pill--o">Önerilen</span></dt><dd>işini belirgin biçimde iyileştirir</dd></div>
+    <div><dt><span class="legend-pill legend-pill--i">İsteğe bağlı</span></dt><dd>gerektiğinde dön</dd></div>
+    <div><dt><span class="legend-off" aria-hidden="true"></span><span class="sr-only">Küçük, soluk gezegen</span></dt><dd>yolun dışında, yine de açık</dd></div>
+  </dl>
+
   <svg class="galaxy__links" aria-hidden="true" data-galaxy-links></svg>
 
   {
@@ -55,10 +111,21 @@ const { publishedSlugs, topicIdsByCategory } = Astro.props;
                     href={live ? `/${category.slug}/` : undefined}
                     draggable={live ? "false" : undefined}
                     data-node={category.slug}
-                    data-route={ROUTE_POSITION.get(category.slug)}
+                    data-route={routeAttr(category.slug)}
+                    data-off={offBySlug.get(category.slug)?.join(" ")}
                     data-topic-ids={ids.join(" ")}
                     title={planet.name}
                   >
+                    {badgesOf(category.slug).map((badge) => (
+                      <span
+                        class="planet__stop"
+                        data-for-role={badge.states.join(" ")}
+                        data-tier={TIER_LABEL[badge.tier].code}
+                        aria-hidden="true"
+                      >
+                        {badge.position} · {TIER_LABEL[badge.tier].label}
+                      </span>
+                    ))}
                     <span class:list={["planet__body", { "planet-rings": planet.ring }]} data-body={planet.body}>
                       {live && (
                         <svg class="planet__ring" viewBox="0 0 100 100" aria-hidden="true">
@@ -99,26 +166,42 @@ const { publishedSlugs, topicIdsByCategory } = Astro.props;
 </div>
 
 <script>
-  import { initProgress, $progress, summarise } from "~/lib/progress";
+  import { initProgress, $progress, summarise, type Progress } from "~/lib/progress";
+  import { $role, initRole } from "~/lib/role";
   import { initGalaxyDrag } from "~/lib/galaxy-drag";
+  import { decodeRoute, type RolePayload } from "~/lib/role-payload";
+  import { ROLE_LABEL, type RoleState } from "~/data/role-ids";
 
   initProgress();
+  initRole();
+
+  const TIER_NAME: Record<string, string> = { t: "temel", o: "önerilen", i: "isteğe bağlı" };
 
   const root = document.querySelector<HTMLElement>("[data-galaxy]");
   if (root) {
     const links = root.querySelector<SVGSVGElement>("[data-galaxy-links]")!;
-    const nodes = Array.from(root.querySelectorAll<HTMLElement>("[data-node]")).sort(
-      (a, b) => Number(a.dataset.route) - Number(b.dataset.route),
-    );
+    const nodes = Array.from(root.querySelectorAll<HTMLElement>("[data-node]"));
+    const payload: RolePayload = JSON.parse(root.querySelector("#role-routes")?.textContent ?? "null") ?? {
+      v: 1,
+      ids: [],
+      roles: {},
+    };
     const ns = "http://www.w3.org/2000/svg";
 
-    // One path per leg of the route; a leg glows green once its start is done.
-    const paths = nodes.slice(1).map(() => {
-      const path = document.createElementNS(ns, "path");
-      path.setAttribute("class", "galaxy__link");
-      links.appendChild(path);
-      return path;
-    });
+    /** This planet's stop on a route, if it is on it. */
+    const stopOf = (node: HTMLElement, state: RoleState) => {
+      for (const part of (node.dataset.route ?? "").split(" ")) {
+        const [owner, position, tier] = part.split(":");
+        if (owner === state) return { position: Number(position), tier: tier ?? "t" };
+      }
+      return null;
+    };
+
+    let state: RoleState = "all";
+    let route: HTMLElement[] = [];
+    let paths: SVGPathElement[] = [];
+    /** Category → the step ids this route asks for there (tiers dropped, "atla" gone). */
+    let scope = new Map<string, string[]>();
 
     const centre = (node: HTMLElement, origin: DOMRect) => {
       const body = node.querySelector(".planet-disc")!.getBoundingClientRect();
@@ -129,8 +212,8 @@ const { publishedSlugs, topicIdsByCategory } = Astro.props;
       const origin = root.getBoundingClientRect();
       links.setAttribute("viewBox", `0 0 ${origin.width} ${origin.height}`);
       for (let index = 0; index < paths.length; index++) {
-        const a = centre(nodes[index]!, origin);
-        const b = centre(nodes[index + 1]!, origin);
+        const a = centre(route[index]!, origin);
+        const b = centre(route[index + 1]!, origin);
         // An S-curve: leaves and arrives horizontally-ish, bends in the middle.
         const mid = (a.x + b.x) / 2;
         const bend = Math.abs(b.y - a.y) * 0.35;
@@ -141,24 +224,64 @@ const { publishedSlugs, topicIdsByCategory } = Astro.props;
       }
     };
 
-    initGalaxyDrag(root, draw);
-    document.fonts?.ready.then(draw);
-    draw();
-
-    $progress.subscribe((progress) => {
-      nodes.forEach((node, index) => {
-        const ids = (node.dataset.topicIds ?? "").split(" ").filter(Boolean);
+    const paint = (progress: Progress) => {
+      for (const node of nodes) {
+        const stop = stopOf(node, state);
+        const all = (node.dataset.topicIds ?? "").split(" ").filter(Boolean);
+        // On the route the ring counts the route's steps; off it, the whole category.
+        const ids = stop ? (scope.get(node.dataset.node!) ?? []) : all;
         const summary = summarise(ids, progress);
         const ring = node.querySelector<SVGCircleElement>("[data-ring]");
         if (ring) ring.style.strokeDashoffset = String(100 - summary.percent);
         const complete = summary.total > 0 && summary.done === summary.total;
         node.classList.toggle("is-complete", complete);
         node.classList.toggle("is-started", summary.done > 0);
+
         const sr = node.querySelector<HTMLElement>("[data-node-sr]");
-        if (sr && summary.total > 0) sr.textContent = `, ${summary.total} dersten ${summary.done} tamamlandı`;
-        paths[index]?.classList.toggle("is-done", complete);
+        if (!sr) continue;
+        const counts = all.length > 0 ? `${summary.total} dersten ${summary.done} tamamlandı` : "hazırlanıyor";
+        if (state === "all") sr.textContent = `, ${counts}`;
+        else if (stop) {
+          sr.textContent = `, ${ROLE_LABEL[state].name} yolunda ${stop.position}. durak, ${TIER_NAME[stop.tier]}, ${counts}`;
+        } else sr.textContent = `, ${ROLE_LABEL[state].name} yolunun dışında, ${counts}`;
+      }
+      // A leg glows green once the stop it leaves from is done.
+      paths.forEach((path, index) => path.classList.toggle("is-done", route[index]!.classList.contains("is-complete")));
+    };
+
+    const follow = (chosen: RoleState | null) => {
+      // Not chosen yet is drawn as Keşif: the whole map, in area order.
+      state = chosen ?? "all";
+      route = nodes
+        .map((node) => ({ node, stop: stopOf(node, state) }))
+        .filter((item) => item.stop !== null)
+        .sort((a, b) => a.stop!.position - b.stop!.position)
+        .map((item) => item.node);
+
+      // One path per leg of the route.
+      paths = route.slice(1).map(() => {
+        const path = document.createElementNS(ns, "path");
+        path.setAttribute("class", "galaxy__link");
+        return path;
       });
-    });
+      links.replaceChildren(...paths);
+
+      scope = new Map();
+      for (const step of decodeRoute(payload, state)) {
+        const category = step.id.slice(0, step.id.indexOf("/"));
+        scope.set(category, [...(scope.get(category) ?? []), step.id]);
+      }
+
+      // The planets just changed size (off-route ones shrink); measure after layout.
+      requestAnimationFrame(draw);
+      paint($progress.get());
+    };
+
+    initGalaxyDrag(root, () => draw());
+    document.fonts?.ready.then(() => draw());
+
+    $role.subscribe(follow);
+    $progress.subscribe(paint);
   }
 </script>
 
@@ -288,11 +411,14 @@ const { publishedSlugs, topicIdsByCategory } = Astro.props;
   }
 
   /* ---------------------------------------------------------------- planet */
+  /* --off-* come from role-css.ts, set before first paint on planets that are
+     not on the chosen route. Off-route is told by size, a dashed orbit and a
+     desaturated disc together — and the name label keeps its full contrast. */
   .planet {
     position: relative;
     z-index: 1;
     display: block;
-    inline-size: var(--size);
+    inline-size: calc(var(--size) * var(--off-scale, 1));
     border-radius: 50%;
     color: var(--c-text);
     text-decoration: none;
@@ -306,6 +432,112 @@ const { publishedSlugs, topicIdsByCategory } = Astro.props;
 
   .planet:focus-visible {
     outline: none;
+  }
+
+  /* On the body, not the link: the link box is taller than the disc, and the
+     orbit has to stay a circle. */
+  .planet__body::before {
+    content: "";
+    position: absolute;
+    inset: -9%;
+    border: var(--off-orbit, none);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .planet-disc {
+    filter: var(--off-filter, none);
+  }
+
+  /* ------------------------------------------------------------- stop badge */
+  /* "3 · Temel": the stop's number on the chosen route and its tier, in words.
+     The tier is also told by the pill's fill — solid, outline, dashed — never by
+     colour alone. Screen readers get the same facts from data-node-sr. */
+  .planet__stop {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    z-index: 3;
+    translate: -50% -70%;
+    padding: var(--spacing-px) var(--spacing-2);
+    border: 1px solid var(--c-text-secondary);
+    border-radius: var(--radius-full);
+    background-color: var(--c-glass-strong);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: nowrap;
+    color: var(--c-text);
+    pointer-events: none;
+  }
+
+  .planet__stop[data-tier="t"] {
+    border-color: var(--c-text);
+    background-color: var(--c-text);
+    color: var(--c-surface);
+  }
+
+  .planet__stop[data-tier="i"] {
+    border-style: dashed;
+    color: var(--c-text-secondary);
+  }
+
+  /* ----------------------------------------------------------------- legend */
+  .galaxy__legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-2) var(--spacing-6);
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .galaxy__legend div {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+  }
+
+  .galaxy__legend dt,
+  .galaxy__legend dd {
+    margin: 0;
+  }
+
+  .galaxy__legend dt {
+    display: flex;
+  }
+
+  .legend-pill {
+    padding: var(--spacing-px) var(--spacing-2);
+    border: 1px solid var(--c-text-secondary);
+    border-radius: var(--radius-full);
+    background-color: var(--c-glass-strong);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--c-text);
+  }
+
+  .legend-pill--t {
+    border-color: var(--c-text);
+    background-color: var(--c-text);
+    color: var(--c-surface);
+  }
+
+  .legend-pill--i {
+    border-style: dashed;
+    color: var(--c-text-secondary);
+  }
+
+  .legend-off {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    border: 1px dashed var(--c-route-line);
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--c-text-muted) 0 38%, transparent 40%);
   }
 
   .planet__body {

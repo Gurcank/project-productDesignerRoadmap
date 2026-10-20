@@ -1,10 +1,11 @@
 ---
-summary: "Kod yazmayacaksın ama clean code ilkeleri bir PR'ı değerlendirirken ve kendi alanındaki (tasarım sistemi) düzeni kurarken işe yarar: aynı ilkeler orada da geçerli. İsimlendirme, tek sorumluluk, DRY, magic number ve yorumlar."
+summary: "İsimlendirme, tek sorumluluk, DRY, magic number ve yorumlar: kodu okunur ve değiştirilebilir tutan ilkeler. Aynı ilkeler token ve bileşen adlarında, tasarım sisteminin düzeninde de geçerlidir."
 outcomes:
   - "Clean code ilkelerinin tasarım sistemindeki üç karşılığını söyleyebilirsin."
   - "DRY'ın nasıl aşırıya kaçırılabileceğini açıklayabilirsin."
   - "İyi bir yorumun 'ne' değil 'neden' anlattığını bilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "Martin Fowler — Refactoring"
     url: "https://refactoring.com/"
@@ -14,11 +15,14 @@ sources:
     url: "https://google.github.io/eng-practices/review/reviewer/looking-for.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Kod yazmayacaksın; ama bu ilkeler bir PR'ı değerlendirirken ve kendi alanındaki düzeni kurarken işe yarar, çünkü **aynı ilkeler orada da geçerli.**
+Kod yazmasan da bu ilkeler bir PR'ı değerlendirirken ve kendi alanındaki düzeni kurarken işe yarar, çünkü **aynı ilkeler orada da geçerli.** Bir token'a `color-4` adı vermek, bir değişkene `x` adı vermekle aynı hatadır.
 
 ## Anlamlı isimlendirme
 
@@ -33,20 +37,61 @@ Değişken, fonksiyon ve bileşen adları ne yaptıklarını açıkça söylemel
 
 Hepsi aynı hedefe hizmet eder: kodun okunabilir ve değiştirilebilir kalması. **Tasarım sistemine birebir çevrilirler:** tek sorumluluk = bir bileşen tek işi yapar; DRY = aynı boşluk değeri 40 yerde tekrarlanmaz, token'dan gelir; magic number = `margin: 22px` yerine ölçekten bir değer. "Bu 22px sihirli sayı; spacing ölçeğinden bir değer kullanalım."
 
+<Tree
+  label="Aynı ilke, tasarım sisteminde"
+  caption="Clean code ilkelerinin tasarım sisteminde birebir karşılığı vardır. Anlamlı isim, token adının ne işe yaradığını söylemesidir: color-4 yerine color-text-danger. DRY, aynı değerin kırk yerde tekrarlanmayıp token'dan gelmesidir. Magic number, 22 piksel gibi ölçek dışı bir değerdir. Tek sorumluluk, bir bileşenin tek bir iş yapmasıdır."
+  root={{
+  title: "Clean code",
+  tone: "accent",
+  children: [
+    {
+      title: "Anlamlı isim",
+      sub: "color-text-danger"
+    },
+    {
+      title: "DRY",
+      sub: "değer token'dan"
+    },
+    {
+      title: "Magic number",
+      sub: "22 px değil, 24"
+    },
+    {
+      title: "Tek sorumluluk",
+      sub: "bileşen tek iş",
+      tone: "progress"
+    }
+  ]
+}}
+/>
+
 **DRY aşırıya kaçırılabilir.** İki şey bugün aynı görünüyor diye birleştirmek, yarın farklılaştıklarında ikisini de bozan bir soyutlama üretir. "Erken soyutlama, kopyalamadan pahalıdır" yaygın bir karşı-ilkedir.
 
 ## Yorumlar
 
 **İyi yorum "ne yaptığını" değil "neden öyle yaptığını" açıklar.** Ne yaptığı zaten kodda yazıyor; "neden" ise kodda görünmez: hangi kısıt yüzünden, hangi hatayı önlemek için, hangi kararın sonucu olarak. Aynı ilke commit mesajları ve ADR'ler için de geçerlidir. "Yorum 'diziyi döndürüyor' diyor; bunu zaten görüyoruz. Neden bu sırayla döndüğünü yazsın."
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'te iki isim ve bir sayı düzeltildi:
+
+1. **İsim:** üründeki `hazirOlma` alanı dakika mı saniye mi belli değildi; `hazirOlmaDakika` oldu. Yeniden adlandırma yedi dosyada derleme hatası verdi ve hepsi aynı PR'da düzeltildi.
+2. **Magic number:** Panel'in sipariş listesindeki `15` sayısı `SIPARIS_TAZELEME_SN` adlı bir sabite taşındı; ne olduğu artık okunuyor.
+3. **Token:** renkler `kahve-100` … `kahve-900` rampasına, kullanımlar semantic token'lara bağlandı.
+4. **Yorum:** kasa çağrısındaki 10 saniyelik zaman aşımının yanında "neden" yazıyor: kasa tarafının sabah yoğunluğundaki yanıt süresi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Token ve bileşen adlarını anlamlı kıl:** `color-text-danger`, `button-primary`.
 - **PR'da sihirli sayıları (ölçek dışı boşluk, renk) işaretle:** token'dan gelsin.
 - **Bileşen tanımlarında tek sorumluluğu ara:** bir bileşen birden fazla işi mi yapıyor?
 - **Soyutlamayı erken yapma:** iki bileşen benzer görünüyorsa ayrı kalmaya hakları olup olmadığını düşün.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -68,5 +113,11 @@ Tek sorumluluk = bir bileşen tek işi yapar. DRY = aynı boşluk değeri 40 yer
 <SelfCheck question="DRY ilkesi nasıl aşırıya kaçırılır?">
 
 İki şey bugün aynı göründüğü için birleştirilerek. Yarın farklılaştıklarında o soyutlama ikisini birden bozar; "erken soyutlama, kopyalamadan pahalıdır".
+
+</SelfCheck>
+
+<SelfCheck question="İyi bir kod yorumu neyi anlatır?">
+
+Kodun ne yaptığını değil, neden öyle yaptığını anlatır: hangi kısıt, hangi hata ya da hangi karar yüzünden. Ne yaptığı zaten kodda görünür; neden ise görünmez.
 
 </SelfCheck>

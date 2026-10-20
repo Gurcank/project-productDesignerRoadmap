@@ -1,11 +1,12 @@
 ---
-summary: "Latency, throughput, yüzdelik dilimler, availability ve SLA/SLO/SLI: ortalama yalan söyler, her dokuz izin verilen kesintiyi onda birine indirir ve maliyeti katlar. Error budget hız ile güvenilirlik tartışmasını sayıya bağlar."
+summary: "Latency, throughput, yüzdelik dilimler, availability ve SLA/SLO/SLI: ortalama yanıltır, her ek dokuz izin verilen kesintiyi onda birine indirir. Error budget hız ile güvenilirlik tartışmasını sayıya bağlar."
 outcomes:
   - "Latency ile throughput'u ve kullanıcının hangisini hissettiğini söyleyebilirsin."
   - "Ortalamanın neden yetersiz olduğunu ve p95/p99'un anlamını açıklayabilirsin."
   - "%99,9 ve %99,99 hedeflerinin kesinti bütçesini tablodan okuyabilirsin."
   - "SLI, SLO, SLA ve error budget'ı ayırabilirsin."
-minutes: 9
+minutes: 5
+standard: 2
 sources:
   - label: "Google SRE Kitabı — Service Level Objectives"
     url: "https://sre.google/sre-book/service-level-objectives/"
@@ -15,9 +16,12 @@ sources:
     url: "https://web.dev/articles/vitals"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Chart from "~/components/diagrams/primitives/Chart.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Sistemimiz hızlı" demek bir şey söylemez. Hızlı ne demek? Kime göre? Bu ders, mimari tartışmalarda geçen ölçülerin dilini verir.
 
@@ -44,6 +48,15 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 ## SLI, SLO, SLA, error budget
 
+<Chart
+  kind="bar"
+  label="Aylık izin verilen kesinti"
+  caption="Erişilebilirlik hedefine her eklenen dokuz, izin verilen kesintiyi yaklaşık onda birine indirir. Yüzde 99 hedefi ayda yaklaşık 432 dakika, yani 7,2 saat kesintiye izin verir. Yüzde 99,9 hedefi yaklaşık 43 dakikaya, yüzde 99,99 hedefi yaklaşık 4,3 dakikaya izin verir. Demlik'in sipariş servisi için iç hedef yüzde 99,9'dur."
+  x={{ title: "Hedef", labels: ["%99", "%99,9", "%99,99"] }}
+  y={{ title: "Dakika / ay", max: 480 }}
+  series={[{ name: "İzin verilen kesinti", values: [432, 43, 4.3], tone: "accent" }]}
+/>
+
 - **SLI:** ölçülen şey (başarılı istek oranı).
 - **SLO:** iç hedef (%99,9).
 - **SLA:** müşteriye verilen sözleşmesel taahhüt; ihlal edilirse yaptırımı vardır.
@@ -52,13 +65,33 @@ SLO genelde SLA'dan **daha sıkı** tutulur ki söz ihlal edilmeden önce uyarı
 
 **Error budget** buradan çıkar: %99,9 hedef, yılda ~8,8 saatlik bir "hata bütçesi" demektir. Bütçe tükenmediyse ekip risk alıp hızlı yayın yapabilir; tükendiyse istikrara odaklanır. Hız ile güvenilirlik arasındaki tartışmayı sayıya bağlar.
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in sipariş servisi için ölçüler yazılı:
+
+1. **SLI:** başarıyla tamamlanan sipariş isteklerinin oranı ve sipariş onayının süresi.
+2. **SLO:** ayda %99,9 başarı; sipariş onayı p95'te 2 saniyenin altında. Ortalama 600 milisaniyeydi ama p95 3 saniyeyi geçiyordu; kampüsteki zayıf bağlantıda bekleyenler oradaydı.
+3. **SLA:** dükkânlara verilen sözleşmesel taahhüt %99,5; iç hedef daha sıkı.
+4. **Error budget:** kampüs lansmanından önceki ay SMS kesintisi ve bir hatalı yayın bütçenin çoğunu tüketti. Lansman haftası yeni özellik yayını durduruldu; yalnız düzeltmeler çıktı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **"Hızlı" yerine bir ölçü iste:** "p95 yükleme 2 saniye altı" gibi.
 - **Hedefin maliyetini sor:** her ek dokuz maliyeti katlar; ürün için gerçekten gerekli mi?
 - **Planlı bakım pencerelerini kesinti bütçesinin parçası olarak gör** ve kullanıcıya duyurusunu tasarla.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Hedefleri ortalamayla değil yüzdelik dilimle konuş.** Kötü deneyim p95 ve p99'da saklıdır.
+- **Error budget'ı yol haritası kararına bağla.** Bütçe tükenince yeni özellik değil istikrar öncelik olur.
+- **Müşteriye verilen SLA'yı iç hedeften gevşek tut.**
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -86,5 +119,11 @@ Ortalama yalan söyler: ortalaması 200ms olan bir sistemde kullanıcıların %5
 <SelfCheck question="Error budget nedir ve neyi çözer?">
 
 SLO hedefinden artakalan kesinti payıdır (%99,9 → yılda ~8,8 saat). Hız ile güvenilirlik tartışmasını sayıya bağlar: bütçe tükenmediyse ekip risk alıp hızlı yayın yapabilir, tükendiyse istikrara odaklanır.
+
+</SelfCheck>
+
+<SelfCheck question="Neden ortalama gecikme yerine p95'e bakılır?">
+
+Ortalama, yavaş deneyim yaşayan azınlığı gizler. Ortalama 600 ms olan bir sistemde kullanıcıların yüzde beşi 3 saniyeden fazla bekliyor olabilir; p95 bu kuyruğu gösterir.
 
 </SelfCheck>

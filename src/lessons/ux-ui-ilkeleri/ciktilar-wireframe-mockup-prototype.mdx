@@ -5,7 +5,8 @@ outcomes:
   - "Erken aşamada neden bilinçli olarak düşük detay göstereceğini açıklayabilirsin."
   - "Prototipin neden atılmak üzere yapıldığını bilirsin."
   - "Görsel yön tartışması için moodboard ya da style tile'ı ne zaman kullanacağını bilirsin."
-minutes: 9
+minutes: 6
+standard: 2
 sources:
   - label: "NN/g — Using Prototypes: Low vs. High Fidelity"
     url: "https://www.nngroup.com/articles/ux-prototype-hi-lo-fidelity/"
@@ -13,12 +14,14 @@ sources:
     url: "https://www.nngroup.com/articles/usability-testing-101/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Müşteriye bir ekran gösteriyorsun. Sen yapıyı konuşmak istiyorsun: bölümler doğru sırada mı, hangi bilgi önde? Müşteri ise yirmi dakika boyunca "bu mavi biraz koyu olsun" diyor. Yanlış çıktıyı yanlış zamanda gösterdin.
 
@@ -88,14 +91,53 @@ Kelime ayrıca "ürün görselini bir cihaz çerçevesine yerleştirilmiş hâld
 
 Proje başında, müşteriyle yön belirlerken kullanılır. "İki moodboard hazırladım; önce yönü seçelim, sonra ekranlara geçeyim."
 
-<Callout kind="tasarimci">
+<Case>
+
+Selin "Son siparişini tekrarla" için üç çıktıyı sırayla kullandı:
+
+1. **Wireframe:** gri kutularla üç yerleşim seçeneği. Elif ile Deniz düğmenin ana ekranda mı, sipariş geçmişinde mi duracağını tartıştı; renk konuşulmadı.
+2. **Mockup:** seçilen yerleşim Demlik'in renkleri ve fontuyla. Geri bildirim artık görsel ağırlık üzerineydi.
+3. **Prototip:** tıklanabilir akış; öğrencilerle test edildi. Bir katılımcı düğmeyi "kampanya" sandı.
+4. **Düzeltme:** Selin düğmeyi sipariş içeriğiyle gösterdi: "Orta boy filtre kahve · Moda".
+
+Yerleşim kararı wireframe'de bir günde verildi; prototipe kadar beklense bir hafta sürerdi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Göstereceğin çıktıyı, almak istediğin geri bildirime göre seç.** Yapı konuşacaksan lo-fi, görsel konuşacaksan mockup, akış konuşacaksan prototype.
 - **Toplantıya çıktının amacını söyleyerek gir.** "Bu bir wireframe, renklere bakmayın; yapıya bakın."
 - **Wireframe adımını atlama.** Yapı hataları hi-fi aşamasında bulunursa tüm görsel emek boşa gidebilir.
 - **Prototipi ürüne çevirme.** Geliştirici için ayrı bir teslim (handoff) hazırla.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Gösterilen çıktıya uygun geri bildirim ver.** Wireframe'de renk konuşmak, yerleşim kararını geciktirir.
+- **Prototipi karar aracı olarak kullan.** Paydaş, tıklanabilir akışı slayttan daha kolay anlar.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Hangi çıktının "geliştirmeye hazır" olduğunu netleştir.** Wireframe bir tartışma, mockup bir teslimdir.
+- **Prototipteki etkileşimleri kabul kriterine çevir.** Geçişler ve durumlar statik ekranda görünmez.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Wireframe'i gereksinim doğrulamada kullan.** Kullanıcı ekranı görünce eksik alanı fark eder.
+- **Mockup'taki veriyi gerçek veriyle sına.** Uzun ürün adı, sıfır sonuç, eksik fotoğraf.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Test sorusuna uygun detay seç.** Akış sorusu için düşük, algı sorusu için yüksek detay.
+- **Prototipte gerçekçi içerik kullan.** "Lorem ipsum" ile test edilen etiket test edilmemiştir.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -118,5 +160,11 @@ Detay seviyesi geri bildirimin türünü belirler. Gerçekçi bir ekran gösteri
 <SelfCheck question="Wireframe, mockup ve prototype hangi üç farklı soruyu cevaplar?">
 
 Wireframe: ne nerede duracak, hiyerarşi ne? Mockup: nasıl görünecek? Prototype: akış çalışıyor mu, kullanıcı yolunu bulabiliyor mu?
+
+</SelfCheck>
+
+<SelfCheck question="Bir paydaş ilk toplantıda renk paletini eleştiriyor, oysa amaç yerleşimi konuşmaktı. Ne yapılabilirdi?">
+
+Yerleşim konuşulacaksa düşük detaylı bir wireframe gösterilmeliydi. Yüksek detay, geri bildirimi görsel ayrıntıya çeker; çıktının detay seviyesi, alınacak geri bildirimi belirler.
 
 </SelfCheck>

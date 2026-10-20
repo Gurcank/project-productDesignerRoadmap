@@ -6,6 +6,7 @@ outcomes:
   - "\"Bu ekranın kendi adresi olsun mu?\" sorusunun neden senin kararın olduğunu bilirsin."
   - "Yayın gününde \"site açılmıyor\" şikâyetinin en olası nedenini tahmin edebilirsin."
 minutes: 10
+standard: 2
 sources:
   - label: "MDN — What is a URL?"
     url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL"
@@ -16,11 +17,13 @@ sources:
 flags: ["degisken", "emin-degil"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
 import UrlAnatomy from "~/components/lesson/UrlAnatomy.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir arkadaşına ürün sayfasını WhatsApp'tan gönderiyorsun. Gönderdiğin şey bir adres: karşı taraf ona dokunuyor ve aynı sayfa açılıyor. Şimdi aynı ürünü, sayfanın içinde açılan bir pencerede (modal) görüyor olsaydın ve pencerenin adresi olmasaydı? Gönderecek bir şey bulamazdın.
 
@@ -58,14 +61,6 @@ Parçalara tek tek bakalım:
 Query string tasarımcıyı ilgilendirir. Filtre ya da sıralama seçimlerini adrese yazarsan, kullanıcı filtrelenmiş listeyi bir link olarak gönderebilir. Yazmazsan filtre sayfa yenilenince sıfırlanır ve paylaşılamaz.
 
 Küçük bir ayrım: **URL ≠ domain**. Domain, URL'in yalnızca bir parçasıdır. Teknik literatürde URL'in daha geniş bir üst kategorisi olan URI de geçer, ama günlük konuşmada herkes URL der.
-
-<Callout kind="tasarimci" title="Tasarımcı olarak sen: adres bir tasarım malzemesidir">
-
-- Her "gerçek" ekranın (ürün, makale, profil, filtrelenmiş liste) kendi adresi olmalı mı? Çoğu zaman evet.
-- Adresin kendisi de kullanıcıya konuşur: `/yazilar/web-nedir`, `/post?id=8471`'den hem daha güven verici hem daha okunaklı.
-- Sekme geçişleri, filtreler, sayfa numarası gibi durumların adrese yansıyıp yansımayacağını geliştiriciyle sen konuş.
-
-</Callout>
 
 ### Slug: adresin okunabilir sonu
 
@@ -141,6 +136,65 @@ Statik bir site için hosting maliyeti neredeyse sıfırdır; yalnızca trafik �
 | IP adresi | Makinenin sayısal adresi | Telefon numarası |
 | Hosting | Dosyaların durduğu sunucu | Telefonun kendisi |
 
+<Case>
+
+Demlik'in dükkân sayfasında ürün ayrıntısı bir pencerede (modal) açılıyordu ve kendi adresi yoktu.
+
+1. **Sorun:** Moda'daki dükkân, yeni filtre kahvesini Instagram'da paylaşmak istedi; paylaşacak bir link yoktu. Link dükkânın ana sayfasını açıyordu.
+2. **Karar:** her ürün bir adres aldı: `demlik.com.tr/dukkan/moda/filtre-kahve`. Pencere aynı kaldı ama adres çubuğu değişti; geri tuşu pencereyi kapatıyor.
+3. **Kampüs:** lansman için `demlik.com.tr/kampus` adresi duyuruldu; öğrenciler ilk kez kampüs menüsünü bu adresten gördü.
+4. **Yayın sabahı:** Panel yeni bir hostinge taşınırken DNS kaydı bir akşam önce değiştirildi. Sabah iki dükkân hâlâ eski sürümü görüyordu; kayıt yayılınca düzeldi.
+
+Taşıma tarihi bundan sonra hafta sonuna değil, sakin bir salı akşamına konuldu.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer" title="Tasarımcı olarak sen: adres bir tasarım malzemesidir">
+
+- Her "gerçek" ekranın (ürün, makale, profil, filtrelenmiş liste) kendi adresi olmalı mı? Çoğu zaman evet.
+- Adresin kendisi de kullanıcıya konuşur: `/yazilar/web-nedir`, `/post?id=8471`'den hem daha güven verici hem daha okunaklı.
+- Sekme geçişleri, filtreler, sayfa numarası gibi durumların adrese yansıyıp yansımayacağını geliştiriciyle sen konuş.
+
+</Lens>
+<Lens role="product-manager">
+
+- **"Bu ekranın adresi olsun mu?" sorusunu ürün kararı say.** Adres paylaşılabilirlik, geri dönüş ve aranabilirlik demektir.
+- **Domain ve hostingin yıllık yenilemesini sahiplen.** Süresi dolan domain başkasına gidebilir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Paylaşılabilir ekranları kabul kriterine yaz.** "Filtrelenmiş liste adresiyle paylaşılabilir."
+- **Slug kuralını belirle.** Türkçe karakterlerin nasıl dönüşeceği bir kez kararlaştırılır.
+
+</Lens>
+<Lens role="project-manager">
+
+- **DNS değişikliğini takvime yayılma süresiyle koy.** Kayıt değişikliği anında herkese ulaşmaz.
+- **Domain, DNS ve hosting kalemlerini ayrı izle.** Üçü ayrı hizmettir, ayrı faturası ve sahibi vardır.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Yayın gününün kontrol listesine DNS'i ekle.** "Site açılmıyor" şikâyetinin en sık nedeni budur.
+- **Riskli yayınları sakin bir saate taşımayı öner.** Hafta sonu müdahale edecek kimse yoktur.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Adres yapısını bilgi mimarisinin parçası olarak yaz.** Path, sitenin içerik hiyerarşisini yansıtır.
+- **Query string'e hangi durumun yazılacağını gereksinim yap.** Filtre, sıralama, sayfa numarası.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Paylaşım davranışını sor.** İnsanlar bir ekranı kime, nasıl gönderiyor?
+- **Okunaklı adresin güvene etkisini gözle.** `/post?id=8471` ile `/yazilar/web-nedir` aynı hissi vermez.
+
+</Lens>
+</Lenses>
+
 <Summary>
 
 - Bir sitenin yeri üç katmandır: ad (domain), sayı (IP), ikisini eşleştiren defter (DNS). Dosyaların durduğu yer ise hostingdir.
@@ -162,5 +216,11 @@ Domain sitenin kayıtlı adı; DNS o adı sunucunun IP adresine çeviren sistem;
 <SelfCheck question="`https://ornek.com/urunler/kirmizi-ceket?beden=m#yorumlar` adresinde `kirmizi-ceket`, `?beden=m` ve `#yorumlar` parçalarının adları nedir?">
 
 `kirmizi-ceket` slug'dır (path'in son parçası). `?beden=m` query string'dir; `beden` bir query parameter'dır. `#yorumlar` fragment'tır (anchor, hash).
+
+</SelfCheck>
+
+<SelfCheck question="Yeni bir domaine geçtiniz ve sabah bazı kullanıcılar hâlâ eski siteyi görüyor. En olası neden nedir, ne yaparsın?">
+
+DNS kaydının henüz her yere yayılmamış olması (propagation). Değişiklik zaman alır; bu sürede bazı kullanıcılar eski sunucuya gider. Bekler, kaydı kontrol eder ve bir sonraki taşımayı yayılma süresini hesaba katarak sakin bir saate planlarım.
 
 </SelfCheck>

@@ -4,7 +4,8 @@ outcomes:
   - "2xx, 3xx, 4xx ve 5xx'in anlamını ve sorumlusunu söyleyebilirsin."
   - "401 ile 403'ün neden farklı tasarım gerektirdiğini açıklayabilirsin."
   - "429 için neden bekleme süresi gösterilmesi gerektiğini bilirsin."
-minutes: 8
+minutes: 5
+standard: 2
 sources:
   - label: "MDN — HTTP yanıt durum kodları"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status"
@@ -18,11 +19,14 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Retry-After"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Bu endpoint 429 dönüyor." Bu cümleyi duyduğunda ne olduğunu ve ekranda ne göstermen gerektiğini bilmelisin. Status kodu, sunucunun "ne oldu?" cevabıdır. Üç haneli sayının **ilk hanesi** kategoriyi verir; onu bilmek çoğu durumda yeter.
 
@@ -54,6 +58,53 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 ## 401 ve 403
 
+<Tree
+  label="Durum kodu aileleri"
+  caption="Durum kodunun ilk hanesi aileyi söyler. 2xx başarıdır: 200 ve yeni kayıt için 201. 3xx yönlendirmedir: kalıcı yönlendirme için 301. 4xx istemci hatasıdır: kimlik yok 401, yetki yok 403, bulunamadı 404, çok fazla istek 429. 5xx sunucu hatasıdır: beklenmedik hata 500, servis kullanılamıyor 503."
+  root={{
+  title: "Durum kodu",
+  tone: "accent",
+  children: [
+    {
+      title: "2xx başarı",
+      children: [
+        {
+          title: "200 · 201"
+        }
+      ]
+    },
+    {
+      title: "3xx yönlendirme",
+      children: [
+        {
+          title: "301"
+        }
+      ]
+    },
+    {
+      title: "4xx istemci",
+      children: [
+        {
+          title: "401 · 403"
+        },
+        {
+          title: "404 · 429"
+        }
+      ]
+    },
+    {
+      title: "5xx sunucu",
+      children: [
+        {
+          title: "500 · 503",
+          tone: "progress"
+        }
+      ]
+    }
+  ]
+}}
+/>
+
 <Compare>
 <Pane title="401: kimlik doğrulanmadı">
 
@@ -75,14 +126,45 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 
 **429 Too Many Requests**, istemcinin kısa sürede çok fazla istek attığı ve geçici olarak sınırlandığı durumdur. Hız sınırlamanın kullanıcıya yansıyan yüzüdür. **Tasarlanması gereken bir durumdur** ama neredeyse hep atlanır: kullanıcı ne kadar beklemesi gerektiğini bilmelidir. Sunucu genelde bir `Retry-After` bilgisi döner ve bu, arayüzde geri sayım olarak gösterilebilir. "429'da 'çok fazla deneme, 30 saniye sonra tekrar deneyin' diyelim; yalnızca 'hata oluştu' yazmayalım."
 
-<Callout kind="tasarimci">
+<Case>
+
+Panel'de üç durum kodu üç ayrı ekrana dönüştü:
+
+1. **403:** dükkânlarda iki rol var: dükkân sahibi ve çalışan. Ciro raporunu yalnız sahip görebiliyor. Çalışan rapor sayfasını açınca ilk sürüm onu giriş ekranına atıyordu; çalışan tekrar giriş yapıyor, yine atılıyordu. Artık "Bu raporu yalnız dükkân sahibi görebilir" ekranı var.
+2. **401:** oturum süresi dolunca giriş ekranı; giriş yapınca çalışan kaldığı sayfaya dönüyor.
+3. **429:** giriş beş kez hatalı denenince "Çok fazla deneme. 60 saniye sonra tekrar dene." ve bir geri sayım.
+4. **409:** yeni çalışan eklerken aynı telefon numarası zaten kayıtlıysa, alanın altında "Bu numara başka bir çalışana ait."
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Her kod ailesi için bir ekran ya da mesaj tanımla:** 400/422 form hatası, 401 giriş, 403 yetki yok, 404 bulunamadı, 429 bekleme, 5xx genel hata.
 - **403 için ayrı ekran tasarla;** giriş sayfasına yönlendirme.
 - **429'da bekleme süresini göster.**
 - **5xx'te kullanıcıyı suçlamayan, tekrar dene ve çıkış yolu sunan bir hata tasarla.**
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Hata ekranlarını kapsamın parçası say.** Her durum kodu bir ekran ya da mesaj demektir.
+- **429 ve 403'ü ürün kararı olarak ele al.** Kim neyi görebilir, kaç deneme hakkı var?
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kabul kriterine her kod için davranışı yaz.** "403'te giriş ekranına yönlendirilmez."
+- **Sonsuz döngü riskini test senaryosuna ekle.**
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Yetki kurallarını rol bazında tablo olarak yaz.** 401 ile 403 arasındaki fark bu tablodan çıkar.
+- **Çakışma kurallarını tanımla.** Hangi alan tekil olmalı, çakışınca ne olur?
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -104,5 +186,11 @@ import SelfCheck from "~/components/lesson/SelfCheck.astro";
 <SelfCheck question="429 ne demektir ve tasarımda ne yapılmalıdır?">
 
 Çok fazla istek atıldığı için geçici sınırlandın. Kullanıcıya ne kadar beklemesi gerektiği söylenmelidir (sunucu genelde bir bekleme süresi döner, geri sayım olarak gösterilebilir); "bir hata oluştu" yetersizdir.
+
+</SelfCheck>
+
+<SelfCheck question="Giriş yapmış bir kullanıcı yetkisi olmayan bir sayfayı açıyor. Hangi kod döner, ne gösterilir?">
+
+403 Forbidden. Kullanıcı zaten tanınıyor; giriş ekranına yönlendirmek sonsuz döngü yaratır. "Bu sayfaya erişimin yok" ekranı ve gerekiyorsa yetki talep etme yolu gösterilir.
 
 </SelfCheck>

@@ -1,0 +1,44 @@
+---
+title: "Karar tablosu"
+summary: "Bir kararı etkileyen girdileri, çıkan sonuçları ve her birleşim için kuralı tek tabloda toplar; eksik ve çakışan kuralları görünür kılar."
+kind: "tablo"
+roles: ["business-analyst", "product-owner"]
+lessons: ["is-analizi/is-kurallari-ve-karar-tablolari"]
+sources:
+  - label: "OMG — Decision Model and Notation (DMN)"
+    url: "https://www.omg.org/spec/DMN/"
+  - label: "Camunda — DMN Hit Policy"
+    url: "https://docs.camunda.io/docs/components/modeler/dmn/decision-table-hit-policy/"
+table:
+  columns: ["Kural", "Girdi 1", "Girdi 2", "Girdi 3", "Çıktı 1", "Çıktı 2", "Not"]
+  example:
+    - ["Başlık", "Sipariş durumu", "İptal eden", "Stok sorunu", "İade", "%20 kupon", "Hit policy: UNIQUE"]
+    - ["1", "Alındı", "Müşteri", "–", "Tam", "Hayır", ""]
+    - ["2", "Alındı", "Dükkân", "Hayır", "Tam", "Hayır", ""]
+    - ["3", "Alındı", "Dükkân", "Evet", "Eksik ürün kadar", "Hayır", "Sipariş kalan ürünlerle sürer"]
+    - ["4", "Hazırlanıyor", "Müşteri", "–", "Yok", "Hayır", ""]
+    - ["5", "Hazırlanıyor", "Dükkân", "Hayır", "Tam", "Evet", "Müşteri boşuna bekledi"]
+    - ["6", "Hazırlanıyor", "Dükkân", "Evet", "Eksik ürün kadar", "Hayır", ""]
+    - ["7", "Hazır", "Müşteri", "–", "Yok", "Hayır", ""]
+    - ["8", "Hazır", "Dükkân", "–", "Tam", "Evet", ""]
+  blankRows: 10
+---
+
+## Ne zaman kullanılır?
+
+Bir sonuç birkaç koşulun birleşimine bağlıysa ve kurallar düzyazıda birbirine karışmaya başladıysa. "Eğer… ama… değilse…" diye uzayan her paragraf bir karar tablosu adayıdır.
+
+## Nasıl doldurulur?
+
+1. **Başlık satırına girdilerin ve çıktıların adını yaz.** İlk satır sütunların ne olduğunu söyler; şablon girdi ve çıktı sayısını sabitlemez, gerekirse sütun ekle ya da sil.
+2. **Her girdinin olası değerlerini say.** Üç durum × iki iptal eden × iki stok değeri = 12 birleşim.
+3. **Her satıra bir kural yaz.** "–", o girdinin bu kural için önemsiz olduğunu söyler.
+4. **Eksiksizliği kontrol et:** her birleşim bir kurala düşüyor mu?
+5. **Çakışmayı kontrol et:** bir birleşim iki kurala düşüyorsa, tablo UNIQUE değildir.
+6. **Hit policy'yi yaz.** UNIQUE: her durumda en çok bir kural. FIRST: ilk uyan kural. COLLECT: uyanların hepsi.
+
+## Sık hatalar
+
+- **Aralıkların üst üste binmesi.** "20'den büyük" ve "22'den küçük" iki kural 21'de çakışır.
+- **"Diğer her şey" satırını düşünmeden eklemek.** Unutulan bir durumu sessizce yutar; önce birleşimleri say.
+- **Kuralı tablonun dışında da yazmak.** Tablo tek kaynak olmalı; yardım metinleri tablodan üretilir ya da ona bağlanır.

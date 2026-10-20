@@ -4,7 +4,8 @@ outcomes:
   - "Üç katmanlı mimariyi ve katmanların yalnızca komşularıyla konuşmasının faydasını söyleyebilirsin."
   - "Coupling ile cohesion'ı ve 'düşük bağlılık, yüksek uyumluluk' ilkesini açıklayabilirsin."
   - "Bounded context'in neden iş alanına göre çizildiğini bilirsin."
-minutes: 6
+minutes: 3
+standard: 2
 sources:
   - label: "Microsoft — Azure mimari stilleri"
     url: "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/"
@@ -12,9 +13,12 @@ sources:
     url: "https://martinfowler.com/bliki/BoundedContext.html"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir mimari diyagramında genelde üç yatay dilim görürsün: üstte arayüz, ortada iş mantığı, altta veri. Bu en klasik yapının adı katmanlı mimari. Ve arkasındaki ilke, tasarım sistemlerinde de geçerli.
 
@@ -24,19 +28,59 @@ Bir mimari diyagramında genelde üç yatay dilim görürsün: üstte arayüz, o
 
 ## Coupling ve cohesion
 
+<Layers
+  label="Demlik arka yüzünün üç katmanı"
+  caption="Demlik'in arka yüzü üç katmandır. Sunum katmanı istekleri karşılar: mobil, web ve Panel'den gelen çağrılar. İş mantığı katmanı kuralları uygular: öğrenci indirimi, iade kuralı, stok düşme. Veri katmanı PostgreSQL ile konuşur. Her katman yalnız komşusuyla konuşur; iş kuralı bu yüzden mobil, web ve kasa entegrasyonu için tek yerde durur."
+  layers={[
+  {
+    title: "Sunum",
+    sub: "mobil, web, Panel çağrıları",
+    tone: "accent"
+  },
+  {
+    title: "İş mantığı",
+    sub: "indirim, iade, stok"
+  },
+  {
+    title: "Veri",
+    sub: "PostgreSQL",
+    tone: "progress"
+  }
+]}
+/>
+
 **Coupling (bağlılık)**, parçaların birbirine ne kadar bağlı olduğudur; **cohesion (uyumluluk)** bir parçanın içindeki şeylerin ne kadar birbirine ait olduğudur. İyi mimarinin tek cümlelik özeti: **düşük bağlılık, yüksek uyumluluk.** Yani parçalar içeride sıkı, dışarıya karşı gevşek olmalı.
 
 **Bounded context**, bir modülün sorumluluk sınırını tanımlayan kavramdır ve bu sınır genelde iş alanına göre çizilir (sipariş, ödeme, envanter), teknik katmana göre değil. "Bu iki modül birbirinin veritabanına doğrudan yazıyor; bağlılık çok yüksek, arayüz üzerinden konuşsunlar."
 
 **Tasarımla akrabalığı var:** bir bileşen kütüphanesindeki iyi bileşen tanımı da aynıdır: kendi içinde bütün, dışarıya net bir arayüz sunan. Aynı ilke, farklı ölçekte.
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'te bir bağlılık sorunu iade modülünde çıktı:
+
+1. **Sorun:** iade modülü, iptal edilen siparişin durumunu güncellemek için sipariş tablosuna doğrudan yazıyordu. Sipariş modülünde durum adları değişince iadeler bozuldu.
+2. **Teşhis:** iki modül birbirinin verisine dokunuyordu; bağlılık yüksekti.
+3. **Düzeltme:** iade modülü artık sipariş modülünün "siparişi iptal et" arayüzünü çağırıyor; sipariş tablosuna yalnız sipariş modülü yazıyor.
+4. **Sınır:** modüller iş alanına göre çizildi: sipariş, ödeme, menü ve stok, iade. Ayşe'nin iade analizindeki kavramlar iade modülünün sınırıyla örtüşüyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **İş kuralını sunum katmanında değil ortak yerde tut** diye iste; web ve mobil aynı kuralı kullansın.
 - **Bileşen ve modül sınırlarını iş alanına göre çiz:** sipariş, ödeme, envanter; "butonlar", "formlar" gibi teknik gruplar değil.
 - **Bir modülün başka bir modülün verisine doğrudan dokunduğunu fark edersen** bunu bağlılık sorunu olarak işaretle.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Modül sınırlarını iş alanlarıyla eşle.** Sipariş, ödeme, iade gibi sınırlar ürün kararlarını da kolaylaştırır.
+- **Bağlılık sorunlarını teknik borç olarak yol haritasında görünür kıl.**
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -51,5 +95,17 @@ Bir mimari diyagramında genelde üç yatay dilim görürsün: üstte arayüz, o
 <SelfCheck question="'Düşük bağlılık, yüksek uyumluluk' ne demek? Tasarımdaki karşılığı nedir?">
 
 Parçalar içeride sıkı (bir modülün içindeki şeyler birbirine ait), dışarıya karşı gevşek (modüller arası bağ zayıf) olmalıdır. Tasarımdaki karşılığı iyi bileşen tanımıdır: kendi içinde bütün, dışarıya net bir arayüz sunan.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Düşük bağlılık, yüksek uyumluluk\" ne demektir?"}>
+
+Bir parçanın içindeki şeyler birbirine sıkı bağlıdır ve aynı işe hizmet eder (yüksek uyumluluk); parça başka parçalara yalnız tanımlı bir arayüzden dokunur (düşük bağlılık). Böylece bir parçayı değiştirmek diğerlerini kırmaz.
+
+</SelfCheck>
+
+<SelfCheck question="Bir modülün başka bir modülün veritabanı tablosuna doğrudan yazması neden sorunludur?">
+
+İki modül birbirinin iç yapısına bağlanır; birindeki değişiklik diğerini sessizce bozabilir. Modüller birbirine tanımlı arayüzlerden dokunmalıdır.
 
 </SelfCheck>

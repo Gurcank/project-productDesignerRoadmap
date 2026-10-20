@@ -1,0 +1,155 @@
+---
+summary: "Gantt şeması takvimi zaman ekseninde çubuklarla gösterir; kilometre taşları projenin önemli kontrol noktalarıdır. İkisi birlikte, planın tek bakışta okunmasını sağlar."
+outcomes:
+  - "Bir Gantt şemasını okuyup hangi işin ne zaman yapıldığını ve neyin geride kaldığını söyleyebilirsin."
+  - "İş ile kilometre taşını ayırabilir, iyi bir kilometre taşı yazabilirsin."
+  - "Onaylı plan ile gerçekleşeni karşılaştırarak sapmayı gösterebilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Watt, Project Management (2. baskı) — 10. Project Schedule Planning"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-10-project-schedule-planning-project-management/"
+  - label: "Watt, Project Management (2. baskı) — 3. The Project Life Cycle (Phases)"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-3-the-project-life-cycle-phases-project-management/"
+additions:
+  - "Gantt şeması ve kilometre taşları (Watt, bölüm 10)"
+  - "Sapmanın onaylı plana göre ölçülmesi (Watt, bölüm 3)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Timeline from "~/components/diagrams/primitives/Timeline.astro";
+
+Leyla'nın ağ diyagramı doğruydu ama Hakan onu okuyamadı. "Bana sadece söyle: hangi hafta ne oluyor, şu an neredeyiz?" dedi.
+
+Ağ diyagramı bağımlılıkları gösterir. Zamanı göstermez. Hakan'ın sorusu ise zamanla ilgiliydi. Bunun için en yaygın kullanılan şema Gantt şemasıdır.
+
+## Gantt şeması
+
+**Gantt şeması** (Gantt chart), proje takvimini gösteren bir çubuk grafiğidir. Henry Gantt tarafından geliştirilmiştir. Okuması kolaydır ve takvimi göstermenin en yaygın yoludur.
+
+Şemada her satır bir iştir. Yatay eksen zamandır. Her işin çubuğu, başladığı yerden bittiği yere uzanır. İşler iş kırılım yapısındaki iş paketleridir.
+
+<Timeline
+  label="Kampüs projesinin Gantt şeması, 7. haftada"
+  caption="Her çubuk bir iştir ve en erken başladığı haftadan bittiği haftaya uzanır. Kritik yoldaki işler (şartname, geliştirme, test, pilot, açılış) vurgulu çizilir. Elmaslar kilometre taşlarıdır: şartname onayı 2., entegrasyon hazır 8., pilot başarılı 10., lansman 14. hafta. Dikey çizgi bugünü, yani 7. haftayı gösterir: entegrasyon testi 6. haftada başlamış olmalıydı, ama tedarikçinin test ortamı hazır değildi."
+  unit="hafta"
+  span={14}
+  marker={{ at: 7, label: "bugün" }}
+  rows={[
+    { label: "Kasa şartnamesi", start: 0, end: 2, tone: "accent" },
+    { label: "Entegrasyon geliştirme", start: 2, end: 6, tone: "accent" },
+    { label: "Entegrasyon testi", start: 6, end: 8, tone: "accent" },
+    { label: "Öğrenci işleri protokolü", start: 0, end: 3 },
+    { label: "Öğrenci kartı indirimi", start: 3, end: 7 },
+    { label: "Kafe sözleşmeleri", start: 0, end: 3 },
+    { label: "Kurulum ve eğitim", start: 3, end: 6 },
+    { label: "Pilot kafe", start: 8, end: 10, tone: "accent" },
+    { label: "12 kafeye açılış", start: 10, end: 13, tone: "accent" },
+    { label: "Şartname onayı", start: 2, kind: "milestone" },
+    { label: "Entegrasyon hazır", start: 8, kind: "milestone" },
+    { label: "Pilot başarılı", start: 10, kind: "milestone" },
+    { label: "Lansman", start: 14, kind: "milestone" },
+  ]}
+/>
+
+Gantt şemasına başka bilgiler de eklenebilir. Bolluk, çubuğun ucundan en geç bitiş noktasına uzanan ince bir çizgiyle gösterilebilir. Kilometre taşları bir simgeyle, genellikle bir elmasla işaretlenir.
+
+**Gantt ≠ ağ diyagramı.** Ağ diyagramı "hangi iş hangisini bekliyor?" sorusunu cevaplar. Gantt şeması "hangi iş ne zaman yapılıyor?" sorusunu cevaplar. Birincisi planı kurmak, ikincisi planı anlatmak içindir. İyi bir araç ikisini aynı veriden çizer.
+
+## Kilometre taşı
+
+**Kilometre taşı** (milestone), projenin önemli bir kontrol noktasıdır. Bir işten farklı olarak süresi yoktur: bir an, bir olaydır. "Entegrasyon geliştirme" bir iştir, dört hafta sürer. "Entegrasyon hazır" ise bir kilometre taşıdır, bir hafta sonunda ya olmuştur ya olmamıştır.
+
+Bazı kilometre taşları sözleşmede yazılıdır ve başarının şartıdır. Bazıları yalnız izlemek istediğin önemli noktalardır. Kilometre taşı listesi, hangisinin zorunlu olduğunu herkese söylemelidir.
+
+İyi bir kilometre taşı üç özellik taşır:
+
+1. **Doğrulanabilir:** olup olmadığı tartışılmaz. "Pilot başarılı" yerine kabul kriteri yazılırsa daha iyi: "Pilot kafede iki hafta boyunca siparişlerin %98'i kasaya hatasız düştü."
+2. **Az:** her işin sonu bir kilometre taşı değildir. Bir sponsorun izlemek isteyeceği birkaç nokta yeter.
+3. **Bir karara bağlı:** kilometre taşında bir karar verilir. Pilot başarılıysa 12 kafeye açılır; değilse açılış ertelenir.
+
+Ürün yol haritasındaki kilometre taşlarını [Roadmap ve planlama](/urun-gelistirme/roadmap-ve-planlama/) dersi anlatıyor. Proje kilometre taşı daha dar ve daha kesindir: tek bir projenin kontrol noktasıdır.
+
+## Onaylı plan ve sapma
+
+Plan onaylandığı gün dondurulur. Bu donmuş hâle **onaylı plan** ya da **temel çizgi** (baseline) denir. Uygulama boyunca ilerleme bu plana göre ölçülür. Planla gerçekleşen arasındaki fark **sapma** (variance) olarak kayda geçer.
+
+Onaylı plan sessizce değiştirilmez. Takvim gerçekten değişmek zorundaysa bu bir değişiklik kararıdır ve yazıyla verilir. Yoksa her hafta "plana göre gidiyoruz" denir, çünkü plan her hafta gerçekleşene göre yeniden çizilmiştir.
+
+<Case>
+
+Leyla, Hakan'a 7. haftada Gantt şemasını gösterdi:
+
+1. **Bugün çizgisi:** 7. hafta. "Entegrasyon testi 6. haftada başlamalıydı. Başlamadı; tedarikçinin test ortamı hazır değildi."
+2. **Kritik yolu gösterdi:** "Bu çubuk kritik yolda. Bir haftalık kayma, pilotu 11. haftaya iter."
+3. **Kilometre taşına bağladı:** "Entegrasyon hazır kilometre taşı 8. haftadan 9. haftaya kayıyor. Lansman hâlâ 14. hafta, ama tampon kalmıyor."
+4. **Onaylı planı değiştirmedi:** gecikmeyi sapma olarak işaretledi ve durum raporuna yazdı.
+
+Hakan ilk kez planı tek bakışta okudu.
+
+</Case>
+
+<Tool slug="takvim" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Ağı kur, Gantt'ı göster.** Sponsor ağ diyagramı değil, zaman ekseni okur.
+- **Kilometre taşını karara bağla.** Her kilometre taşında "olmazsa ne yapıyoruz?" sorusunun cevabı hazır olsun.
+- **Onaylı planı koru.** Sapma raporlanır; plan sessizce yeniden çizilmez.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Proje Gantt'ını ürün yol haritasıyla karıştırma.** Yol haritası yön verir; Gantt tek bir projenin haftalarını gösterir.
+- **Lansman kilometre taşına kendi kriterini ekle.** "Açıldı" ile "işe yarıyor" aynı şey değildir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kilometre taşlarını sprint takvimine yerleştir.** "Entegrasyon hazır" hangi sprintin sonuna denk geliyor?
+- **Takımın işini Gantt çubuğuna bağla.** İndirim çubuğu birkaç sprintten oluşur; ilerlemesini sen raporlarsın.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Gantt şeması, takvimi zaman ekseninde çubuklarla gösteren bir grafiktir; Henry Gantt geliştirmiştir.
+- Ağ diyagramı bağımlılığı, Gantt şeması zamanı gösterir; iyi bir araç ikisini aynı veriden çizer.
+- Kilometre taşı süresi olmayan, önemli bir kontrol noktasıdır; bazıları sözleşmede zorunludur.
+- İyi kilometre taşı doğrulanabilir, az sayıdadır ve bir karara bağlıdır.
+- Onaylı plan dondurulur; ilerleme ona göre ölçülür ve fark sapma olarak kaydedilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir iş ile bir kilometre taşı arasındaki fark nedir?">
+
+İşin süresi vardır; başlar ve biter. Kilometre taşının süresi yoktur; belli bir anda olmuş ya da olmamış bir olaydır. "Entegrasyon geliştirme" bir iş, "entegrasyon hazır" bir kilometre taşıdır.
+
+</SelfCheck>
+
+<SelfCheck question="'Tasarım güzel olsun' neden iyi bir kilometre taşı değildir?">
+
+Doğrulanabilir değil: olup olmadığı tartışılır. Bir tarihi ve bir karara bağlantısı da yok. "Tasarım, kabul kriterleriyle birlikte sponsor tarafından onaylandı" doğrulanabilir bir kilometre taşıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir proje yöneticisi her hafta Gantt şemasını gerçekleşen tarihlere göre yeniden çiziyor ve 'plana göre gidiyoruz' diyor. Sorun ne?">
+
+Onaylı plan korunmuyor. Plan her hafta gerçekleşene göre değiştiği için sapma hiç görünmez. Doğrusu, onaylı planı dondurmak, gerçekleşeni onun yanına koymak ve farkı sapma olarak raporlamaktır. Plan gerçekten değişmeliyse bu bir değişiklik kararıyla yapılır.
+
+</SelfCheck>
+
+<SelfCheck question="Gantt şemasında kritik yoldaki işler neden vurgulu çizilir?">
+
+Çünkü onlarda kaybedilen her gün, projeden kaybedilen bir gündür. Vurgu, sponsorun ve ekibin dikkatini gecikmenin gerçekten önemli olduğu yere çeker.
+
+</SelfCheck>

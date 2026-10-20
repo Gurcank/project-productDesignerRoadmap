@@ -1,10 +1,11 @@
 ---
-summary: "DNS kayıtları alan adının nereye işaret ettiğini söyler: A, AAAA, CNAME, TXT, MX, nameserver. Yayın gününün en sık takıldığı yer burası; nameserver'ı değiştirip e-posta kayıtlarını taşımazsan şirketin e-postası durur. Propagation 'bende açılmıyor'un en yaygın sebebidir."
+summary: "DNS kayıtları alan adının nereye işaret ettiğini söyler: A, CNAME, TXT, MX, nameserver. Nameserver değişirken e-posta kayıtları taşınmalıdır. DNS değişikliği anında yayılmaz."
 outcomes:
   - "Beş DNS kayıt türünü ve işini söyleyebilirsin."
   - "Nameserver değiştirirken e-posta kayıtlarına neden dikkat edilmesi gerektiğini açıklayabilirsin."
   - "DNS propagation'ın 'bende açılmıyor' şikâyetlerindeki rolünü bilirsin."
-minutes: 6
+minutes: 3
+standard: 2
 sources:
   - label: "MDN — DNS (sözlük)"
     url: "https://developer.mozilla.org/en-US/docs/Glossary/DNS"
@@ -16,15 +17,43 @@ sources:
     url: "https://dmarc.org/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Yayın günü. Site hazır, alan adı satın alındı. Peki alan adı siteye nasıl bağlanıyor? DNS kayıtlarıyla. Kavramlar Web Temelleri bölümündeydi; burada pratik tarafı var.
 
 ## DNS kayıt türleri
 
 Alan adının nereye işaret ettiğini tanımlayan kayıtlar:
+
+<Tree
+  label="Bir alan adı, birçok kayıt"
+  caption="Nameserver kayıtları alan adının DNS'ini kimin yönettiğini söyler. Onun altında her kayıt ayrı bir işe bakar. A ya da CNAME kaydı siteyi barındıran sunucuya işaret eder. MX kaydı e-postanın gideceği sunucuyu belirler. TXT kayıtları sahiplik doğrulaması ile SPF, DKIM ve DMARC gibi e-posta güvenliği bilgilerini taşır."
+  root={{
+  title: "demlik.com.tr",
+  sub: "nameserver: kim yönetiyor",
+  tone: "accent",
+  children: [
+    {
+      title: "A / CNAME",
+      sub: "site nerede"
+    },
+    {
+      title: "MX",
+      sub: "e-posta nereye"
+    },
+    {
+      title: "TXT",
+      sub: "doğrulama, SPF",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 - **A:** bir IPv4 adresine işaret eder (**AAAA**, IPv6 karşılığı).
 - **CNAME:** başka bir alan adına işaret eder; hosting platformları genelde bunu ister.
@@ -40,13 +69,26 @@ Yayın gününün en sık takıldığı yer burasıdır. Kayıtları eklemek, se
 
 **DNS propagation (yayılma süresi)**, bir DNS değişikliğinin dünya genelinde geçerli hâle gelmesi için geçen süredir. Değişiklik anında olmaz; bazı kullanıcılar bir süre eski adresi görür. Bu, **yayın gününde "bende açılmıyor" şikâyetlerinin en yaygın sebebidir** ve genelde bir hata değildir. "Geçiş öncesi TTL'i düşürelim; değişiklik daha hızlı yayılsın."
 
-<Callout kind="tasarimci">
+<Case>
+
+Panel yeni hostinge taşınırken Demlik'te DNS iki ders verdi:
+
+1. **Ne oldu:** `panel.demlik.com.tr` kaydı bir akşam önce değiştirildi. TTL düşürülmemişti; sabah iki dükkân Panel'in eski sürümünü gördü.
+2. **Hata değildi:** kayıt doğruydu, yalnız henüz her yere yayılmamıştı. Destek ekibine "Telefonu yeniden başlatın" demek yetmedi; birkaç saat beklemek gerekti.
+3. **Yeni kural:** geçişten bir gün önce TTL beş dakikaya düşürülüyor; geçiş sabah değil, öğleden sonra yapılıyor ve cuma 15.00 kuralı DNS için de geçerli.
+4. **E-posta:** nameserver değişmedi; MX ve TXT kayıtlarına dokunulmadı. Şirket e-postası hiç kesilmedi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Yayın günü kontrol listesine DNS adımlarını ekle:** CNAME/A kayıtları, e-posta kayıtlarının taşınması, TTL.
 - **"Bende açılmıyor" şikâyetinde önce propagation'ı düşün.**
 - **Alan adı e-posta kayıtlarını (MX, SPF, DKIM, DMARC) yayın öncesi kaydet.**
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -67,5 +109,11 @@ E-posta kayıtları (MX, TXT). Nameserver değiştirip eski kayıtları taşıma
 <SelfCheck question="Yayın gününde 'bende açılmıyor' şikâyetlerinin en yaygın sebebi nedir?">
 
 DNS propagation: değişiklik anında geçerli olmaz, bazı kullanıcılar bir süre eski adresi görür. Genelde bir hata değildir; geçiş öncesi TTL düşürülerek süre kısaltılabilir.
+
+</SelfCheck>
+
+<SelfCheck question="TTL'i geçişten önce düşürmek neden işe yarar?">
+
+TTL, bir DNS kaydının ne kadar süre önbellekte tutulacağını söyler. Geçişten önce düşürülürse eski kayıt önbelleklerde kısa süre kalır ve yeni adres daha hızlı yayılır.
 
 </SelfCheck>

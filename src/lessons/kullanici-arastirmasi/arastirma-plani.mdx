@@ -1,0 +1,154 @@
+---
+summary: "Araştırma planı ekibin neyi öğrenmesi gerektiğini sorulara çevirir, soruları önceliklendirir ve her soruyu bir kullanıcı grubu ve bir yöntemle küçük turlara böler. Plan her fazın başında yazılır, öğrendikçe değişir."
+outcomes:
+  - "Ekiple bir araştırma soruları atölyesi yürütebilirsin."
+  - "Araştırma sorusunu kullanıcıya sorulacak sorudan ayırabilirsin."
+  - "Öncelikli soruları katılımcı sayısı ve yöntemiyle turlara bölebilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "GOV.UK Service Manual — Plan user research for your service"
+    url: "https://www.gov.uk/service-manual/user-research/plan-user-research-for-your-service"
+  - label: "GOV.UK Service Manual — Capturing research questions"
+    url: "https://www.gov.uk/service-manual/user-research/capturing-research-questions"
+  - label: "GOV.UK Service Manual — Plan a round of user research"
+    url: "https://www.gov.uk/service-manual/user-research/plan-round-of-user-research"
+additions:
+  - "Araştırma soruları atölyesi, araştırma turları, tur başına katılımcı sayısı, oturum ve analiz süreleri (GOV.UK Service Manual)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Kampüs dönemi başlamadan önce Mert'e üç ayrı istek geldi. Elif öğrencilerin ödeme ekranında neden durduğunu, Ozan dükkânların Panel'de neden menü ayarlarını bulamadığını, Leyla kafe personelinin yoğun dakikalarda nasıl çalıştığını öğrenmek istiyordu. Üçü de "acil"di ve Mert tek kişiydi.
+
+Sorun araştırma yapmak değil, hangi araştırmanın önce yapılacağıydı. Bu ders, bir ekibin merakını bir plana çevirmeyi anlatır.
+
+## Önce sorular
+
+GOV.UK'nin hizmet rehberine göre araştırma her geliştirme fazının başında planlanır ve öğrendikçe güncellenir. Plan bir atölyeyle başlar: bütün ekip **araştırma sorularını** yazar. Rehber atölyeyi şöyle anlatır:
+
+- Ürün ya da hizmet sahibi, ekibin ulaşmaya çalıştığı sonuçları hatırlatır.
+- Herkes 5–10 dakika içinde yapışkan notlara sorularını yazar.
+- Sorular gruplanır, benzerleri birleştirilir, her grup için bir özet soru yazılır.
+- Herkes en önce cevaplanması gereken beş soruya bir nokta koyar.
+
+Rehber iki uyarı yapar. Geniş, açık sorular ("kim", "ne", "ne zaman", "nerede", "neden") dar sorulardan ("yapar mı", "var mı") daha yararlıdır. Ve bunlar **öğrenmek istediklerimizdir, kullanıcıya soracağımız sorular değil.**
+
+Atölyenin bir işi daha vardır: temelsiz varsayımları ve görüşleri araştırma sorusuna çevirmek. "Öğrenciler zaten erken sipariş verir" bir görüştür; "Öğrenciler ne kadar önceden sipariş veriyor?" bir sorudur.
+
+**Araştırma sorusu ≠ görüşme sorusu.** "Öğrenciler neden ödemeyi bırakıyor?" ekibin sorusudur. Bir öğrenciye bunu doğrudan sormak, tahminini öğrenmekten öteye gitmez; görüşme soruları ayrıca yazılır.
+
+## Sorulardan turlara
+
+<StepFlow
+  label="Araştırma planının beş adımı"
+  caption="Araştırma planı beş adımda kurulur. Önce ekip bir atölyede araştırma sorularını yazar. Sorular gruplanır ve oylamayla önceliklendirilir. Her soru için kiminle araştırılacağı, yani kullanıcı grubu seçilir. Sonra en az emekle güçlü kanıt verecek yöntem seçilir. En son sorular iki haftada bir yapılan, dört ile sekiz katılımcılı küçük turlara bölünür."
+  steps={[
+    { title: "Soruları yaz", sub: "bütün ekip, atölye", tone: "accent" },
+    { title: "Önceliklendir", sub: "grupla, beş noktayla oyla" },
+    { title: "Kullanıcı grubunu seç", sub: "kiminle araştıracağız?" },
+    { title: "Yöntemi seç", sub: "en az emekle güçlü kanıt" },
+    { title: "Turlara böl", sub: "iki haftada bir, 4–8 kişi", tone: "progress" },
+  ]}
+/>
+
+GOV.UK planın geri kalanını şöyle kurar:
+
+- **Kullanıcı grupları:** kimden öğrenmek gerekiyor? Yeni bir hizmette olası kullanıcıların kim olduğu, önce araştırılacak konudur.
+- **Yöntem:** en az zaman, emek ve maliyetle güçlü kanıt ve güvenilir cevap veren yöntem seçilir.
+- **Turlar:** her tur belirli sorulara belirli kullanıcı gruplarıyla cevap verir. Rehber en az iki haftada bir tur önerir ve yalnız en öncelikli sorular için tur hazırlamayı öğütler.
+- **Katılımcı sayısı:** görüşme, bağlamsal araştırma ya da kullanılabilirlik testi turu için genelde 4–8 kişi. Daha fazlası gerekiyorsa büyük tek bir tur yerine daha çok tur yapılır. Anket ve A/B testi gibi yöntemler yüzlerce kişi ister.
+
+Bir turun da kendi hedefleri olur: hangi problem, hangi varsayım, bir sonraki karar için şimdi ne bilmek gerekiyor? Rehber pratik süreleri de verir: katılımcı aramaya en az bir hafta önce başla, her 2 saatlik araştırma için 1 saat analiz ayır.
+
+**Plan ≠ takvim.** Rehberin uyarısıyla ekibin karşılık veremeyeceği kadar araştırma yapmak da bir hatadır. Plan, yol haritasıyla aynı hızda yürür.
+
+<Case>
+
+Mert üç isteği bir atölyeye çevirdi:
+
+1. **Atölye:** Elif, Ozan, Leyla, Selin, Ayşe ve Deniz bir saatte 31 soru yazdı. Gruplanınca 9 özet soru kaldı.
+2. **Öncelik:** noktalı oylamada üç soru öne çıktı. Öğrenciler sabah ne kadar önceden ve nerede sipariş veriyor? Kafe personeli yoğun dakikalarda siparişi nasıl yönetiyor? Dükkânlar Panel'de menü ayarlarını neden bulamıyor?
+3. **Gruplar ve yöntemler:** öğrenciler için görüşme ve günlük çalışması; kafe personeli için bağlamsal gözlem; dükkânlar için kart sıralama ve ağaç testi.
+4. **Turlar:** iki haftada bir; her turda en az bir yardımcı teknoloji kullanan katılımcı.
+
+Kart güncelleme sorusu dördüncüydü. Mert, Elif'e mutluluk anketinin ilk ipucunu zaten verdiğini gösterdi; o soru bir sonraki tura kaldı.
+
+</Case>
+
+<Tool slug="arastirma-plani" />
+
+<Lenses>
+<Lens role="ux-researcher">
+
+- **Planı ekiple yaz.** Atölye, araştırmanın ekibin sorusu olmasını sağlar; rapor okunmasa bile soru sahiplenilmiştir.
+- **Görüşleri soruya çevir.** "Herkes bilir ki…" diye başlayan cümle, sınanacak bir varsayımdır.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Tasarım kararının arkasındaki soruyu yaz.** Bir ekranı neden değiştirdiğini bilmiyorsan, test ne arayacağını bilemez.
+- **Atölyeye katıl.** Önceliğe giren sorular, tasarlayacağın işi belirler.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Öncelik oylamasında hedefi hatırlat.** Hangi soru bir sonraki kararı değiştirecek?
+- **Araştırmayı yol haritasıyla senkron tut.** Karşılık veremeyeceğin araştırmayı isteme.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Turları sprint ritmine bağla.** İki haftalık tur, iki haftalık sprintle aynı nefeste yürür.
+- **Bulguların backlog'a gireceği yeri baştan ayır.** Araştırma, sıralamayı değiştirebilmeli.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim belirsizliğini araştırma sorusuna çevir.** Kuralı bilmediğin yer, araştırmanın yeridir.
+- **Kullanıcı gruplarını paydaş analiziyle eşleştir.** Unutulan grup, eksik gereksinimdir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Araştırma her fazın başında planlanır ve öğrendikçe güncellenir.
+- Plan bir atölyeyle başlar: ekip araştırma sorularını yazar, gruplar ve önceliklendirir.
+- Araştırma sorusu ekibin öğrenmek istediğidir; kullanıcıya sorulacak soru değildir.
+- Her soru bir kullanıcı grubu ve en az emekle güçlü kanıt veren bir yöntemle eşleşir.
+- Sorular iki haftada bir, 4–8 katılımcılı küçük turlara bölünür; her 2 saat araştırma için 1 saat analiz.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Araştırma sorusu ile görüşme sorusu arasındaki fark nedir?">
+
+Araştırma sorusu ekibin öğrenmek istediğidir: "Öğrenciler neden ödemeyi bırakıyor?" Görüşme sorusu katılımcıya sorulan, onun deneyimini anlatmasını sağlayan sorudur: "En son kahve siparişini nasıl verdiğini anlatır mısın?"
+
+</SelfCheck>
+
+<SelfCheck question="Neden geniş, açık araştırma soruları dar sorulardan daha yararlıdır?">
+
+"Kim, ne, nerede, neden" diye başlayan sorular öğrenmeye alan açar. "Yapar mı, var mı" soruları evet ya da hayırla kapanır ve çoğu zaman bir varsayımı onaylamaya çalışır.
+
+</SelfCheck>
+
+<SelfCheck question="Ekip 20 kullanıcıyla tek bir büyük görüşme turu yapmak istiyor. Ne önerirsin?">
+
+4–8 kişilik birkaç tur. GOV.UK'ye göre daha çok katılımcı gerekiyorsa büyük tek tur yerine daha çok tur yapılır; her turdan sonra soru ve yöntem ayarlanabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Araştırma planında 'öğrenciler zaten erken sipariş verir' yazıyor. Ne yaparsın?">
+
+Bunu bir araştırma sorusuna çeviririm: "Öğrenciler ne kadar önceden ve nerede sipariş veriyor?" Temelsiz bir görüş, plana bir soru olarak girer ve sınanır.
+
+</SelfCheck>

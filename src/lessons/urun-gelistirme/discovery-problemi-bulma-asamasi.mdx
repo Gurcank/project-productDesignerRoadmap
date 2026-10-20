@@ -1,11 +1,13 @@
 ---
-summary: "Çözüme geçmeden önce doğru problemi bulma aşaması. Problem tanımı yazmayı, hipotezle varsayımı ayırmayı ve fikri üretmeden doğrulamayı öğren."
+summary: "Çözüme geçmeden önce doğru problemi bulma aşaması: çözümü askıya alan bir problem tanımı, sınanabilir bir hipotez ve fikri üretmeden doğrulamak."
 outcomes:
   - "Çözüm diliyle yazılmış bir cümleyi gerçek bir problem tanımına çevirebilirsin."
   - "İyi bir hipotezi (\"şunu yaparsak şu olacak, çünkü şu\") yazabilirsin."
   - "Jobs To Be Done bakışının rekabeti nasıl yeniden tanımladığını anlatabilirsin."
   - "Büyük bir yatırımdan önce düşük maliyetli bir doğrulama yöntemi önerebilirsin."
-minutes: 11
+minutes: 10
+standard: 2
+skipTerms: ["yorumlar"]
 sources:
   - label: "Silicon Valley Product Group — Product Discovery"
     url: "https://www.svpg.com/product-discovery/"
@@ -16,26 +18,26 @@ sources:
 flags: ["emin-degil"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
-Bir yönetici sana geliyor: "Ürün listesine bir filtre ekleyelim." Kulağa makul geliyor, tasarlamaya başlayabilirsin. Ama durup sormak gerekiyor: filtre gerçekten kullanıcının çözmek istediği şey mi, yoksa yöneticinin aklına gelen bir çözüm mü?
+Hakan, operasyon direktörü, bir sabah Elif'e yazdı: "Menüye bir filtre ekleyelim. Müşteriler aradıklarını bulamıyor." Kulağa makul geliyordu; Selin hemen bir filtre çizebilirdi.
 
-Bu soruyu sorma işine **discovery** (keşif) denir. Bu ders, çözüme geçmeden önce *doğru problemi bulmanın* dilini öğretiyor. Bu, ürün sürecinin en sık atlanan fazı ve en pahalı hataların kaynağı: **yanlış problemi mükemmel çözmek, doğru problemi kötü çözmekten daha maliyetlidir.**
+Ama durup sormak gerekiyordu: filtre gerçekten müşterinin çözmek istediği şey miydi, yoksa Hakan'ın aklına gelen bir çözüm mü? Bu soruyu sorma işine **keşif** (discovery) denir. Bu ders, çözüme geçmeden önce doğru problemi bulmanın dilini anlatır. Yanlış problemi mükemmel çözmek, doğru problemi kötü çözmekten daha pahalıdır.
 
-## Discovery: ne yapacağına karar vermeden önce
+## Keşif: ne yapacağına karar vermeden önce
 
-**Discovery**, ne yapılacağına karar vermeden önce problemi, kullanıcıyı ve alternatifleri araştırma çalışmasıdır. Yanlış şeyi üretmenin maliyetini düşürür: bir haftalık araştırma, üç aylık yanlış geliştirmeyi engelleyebilir. Yeni bir özellik ya da ürün gündeme geldiğinde ilk fazdır; **"Discovery yaptık mı?"** sorusu bir kalite kapısıdır.
+**Keşif**, ne yapılacağına karar vermeden önce problemi, kullanıcıyı ve alternatifleri araştırma çalışmasıdır. Yanlış şeyi üretmenin maliyetini düşürür: bir haftalık araştırma, üç aylık yanlış geliştirmeyi engelleyebilir. Yeni bir özellik ya da ürün gündeme geldiğinde ilk fazdır; "Keşif yaptık mı?" sorusu bir kalite kapısıdır.
 
-"Discovery'de altı kullanıcıyla konuştuk; hiçbiri bu problemi bizim varsaydığımız gibi tarif etmedi" cümlesi, discovery'nin işe yaradığının işaretidir.
-
-Ayrım: **discovery ≠ research.** Research bir *yöntemdir*; discovery ise o yöntemleri de içeren bir *fazdır.*
+**Keşif ≠ araştırma.** Araştırma bir yöntemdir; keşif ise o yöntemleri de içeren bir fazdır.
 
 <StepFlow
-  label="Discovery'nin ana akışı"
-  caption="Önce problem yazılır, sonra tahmin edilir, sonra sınanır. Sınama sonucu ya devam, ya vazgeçme, ya da yeni bir problem tanımı verir."
+  label="Keşfin ana akışı"
+  caption="Önce problem yazılır, sonra bir hipotez kurulur, sonra üretmeden sınanır. Sınamanın sonucu bir karardır: devam etmek, değiştirmek ya da vazgeçmek."
   steps={[
     { title: "Problem tanımı", sub: "Çözümü anmadan problemi yaz", tone: "accent" },
     { title: "Hipotez", sub: "Şunu yaparsak şu olur, çünkü şu" },
@@ -44,11 +46,9 @@ Ayrım: **discovery ≠ research.** Research bir *yöntemdir*; discovery ise o y
   ]}
 />
 
-## Problem statement: çözümü askıya alan cümle
+## Problem tanımı: çözümü askıya alan cümle
 
-**Problem statement** (problem tanımı), çözülmek istenen problemi **çözümden bahsetmeden** yazan kısa metindir. İnsanlar problemi çözüm diliyle anlatma eğilimindedir ("bize bir filtre lazım"). Bu, alternatifleri daha başta öldürür. Problem tanımı çözümü askıya alır ve ekibin birden fazla yol düşünmesini sağlar.
-
-Her spec ve PRD'nin ilk bölümüdür; kickoff'ta üzerinde uzlaşılması gereken ilk şeydir.
+**Problem tanımı** (problem statement), çözülmek istenen problemi çözümden bahsetmeden yazan kısa metindir. İnsanlar problemi çözüm diliyle anlatma eğilimindedir: "bize bir filtre lazım". Bu, alternatifleri daha başta öldürür. Problem tanımı çözümü askıya alır ve ekibin birden çok yol düşünmesini sağlar. Her spec ve PRD'nin ilk bölümüdür.
 
 | Çözüm diliyle (kötü) | Problem diliyle (iyi) |
 |---|---|
@@ -56,76 +56,129 @@ Her spec ve PRD'nin ilk bölümüdür; kickoff'ta üzerinde uzlaşılması gerek
 | "Mobilde hamburger menü olsun." | "Mobil kullanıcılar ikinci seviyedeki sayfalara ulaşamıyor." |
 | "Bildirim ayarı eksik." | "Kullanıcılar istemedikleri bildirimler yüzünden uygulamayı siliyor." |
 
-Basit bir test: cümleyi okuyan biri **en az iki farklı çözüm** düşünebiliyorsa iyi yazılmıştır. "Filtre yok" tek bir çözüme (filtre eklemek) işaret eder; "ürünü bulamıyor" ise filtreye, sıralamaya, aramaya, kategori değişikliğine kapı açar.
+Basit bir test: cümleyi okuyan biri **en az iki farklı çözüm** düşünebiliyorsa iyi yazılmıştır. "Filtre yok" tek bir çözüme işaret eder; "ürünü bulamıyor" ise filtreye, sıralamaya, aramaya, kategori değişikliğine kapı açar. Aynı testin daha genel hâli, fırsat ile çözümü ayırmaktır; [Sürekli keşif ve fırsat-çözüm ağacı](/urun-yonetimi/surekli-kesif-ve-firsat-cozum-agaci/) dersinde.
 
 ## Hipotez: sınanabilir tahmin
 
-**Hypothesis** (hipotez), "şunu yaparsak şu olacak, çünkü şu" biçiminde yazılan, **test edilebilir** bir tahmindir. Bir kararı fikirden çıkarıp sınanabilir hâle getirir. Hipotez yazılmazsa, iş bittikten sonra herkes sonucu kendi lehine yorumlar.
+**Hipotez** (hypothesis), "şunu yaparsak şu olacak, çünkü şu" biçiminde yazılan, test edilebilir bir tahmindir. Bir kararı fikirden çıkarıp sınanabilir hâle getirir. Hipotez yazılmazsa, iş bittikten sonra herkes sonucu kendi lehine yorumlar.
 
 Örnek: *"Kayıt formunu üç alandan bire indirirsek tamamlama oranı artar, çünkü terk edilme en çok ikinci alanda oluyor."*
 
-Bu cümlede üç parça var: yapılacak değişiklik, beklenen sonuç ve gerekçe. Gerekçe önemli: sonuç gelmediğinde *neden* gelmediğini sorgulamanı sağlar.
+Bu cümlede üç parça vardır: yapılacak değişiklik, beklenen sonuç ve gerekçe. Gerekçe önemlidir: sonuç gelmediğinde neden gelmediğini sorgulamanı sağlar.
 
-**Hipotez ≠ varsayım.** Hipotez sınanmak üzere yazılır ve bir ölçütü vardır. Varsayım ise çoğu zaman farkında bile olunmadan taşınır. (Varsayımı bir sonraki derste göreceksin.) A/B testi ve başarı ölçütü gibi kavramlar, hipotezi sınamanın araçlarıdır.
+**Hipotez ≠ varsayım.** Hipotez sınanmak üzere yazılır ve bir ölçütü vardır. Varsayım ise çoğu zaman farkında bile olunmadan taşınır. Varsayımı [Araştırma ve kullanıcı bilgisi](/urun-gelistirme/arastirma-ve-kullanici-bilgisi/) dersi, varsayımları sistemli test etmeyi [Varsayım haritalama ve ürün deneyleri](/urun-yonetimi/varsayim-haritalama-ve-urun-deneyleri/) dersi anlatıyor.
 
 ## Jobs To Be Done: kullanıcı neyi "işe alıyor"?
 
-**Jobs To Be Done** (JTBD), kullanıcının bir ürünü satın almasını, ürünün özelliklerine değil, o kişinin hayatında **halletmeye çalıştığı işe** bağlayan bakış açısıdır. Kullanıcıyı demografik özellikleriyle (yaş, meslek) değil, **içinde bulunduğu durumla** tarif eder.
+**Jobs To Be Done** (JTBD), kullanıcının bir ürünü seçmesini ürünün özelliklerine değil, o kişinin hayatında **halletmeye çalıştığı işe** bağlayan bakış açısıdır. Kullanıcıyı demografik özellikleriyle değil, içinde bulunduğu durumla tarif eder.
 
-Rekabeti yeniden tanımlar: bir not uygulamasının rakibi başka bir not uygulaması olmayabilir; kâğıt ve kalem olabilir. "JTBD açısından bakalım: kullanıcı bu ekranı 'rapor almak' için değil, 'toplantıda haklı çıkmak' için açıyor."
+Rekabeti yeniden tanımlar: bir not uygulamasının rakibi başka bir not uygulaması olmayabilir; kâğıt ve kalem olabilir.
 
-Ayrım: **JTBD ≠ use case.** Use case sistemle etkileşimi tarif eder; JTBD ise kullanıcının hayatındaki amacı tarif eder ve ürünü hiç anmayabilir. Discovery ve konumlandırma tartışmalarında karşına çıkar; persona yaklaşımına alternatif ya da tamamlayıcı olarak kullanılır.
+**JTBD ≠ use case.** Use case sistemle etkileşimi tarif eder; JTBD kullanıcının hayatındaki amacı tarif eder ve ürünü hiç anmayabilir.
 
-**Not:** Yaklaşım Clayton Christensen ve Tony Ulwick'in çalışmalarıyla ilişkilendirilir. **İki farklı JTBD okulu vardır** ve aralarında yöntem farkı bulunur; tek bir kanonik tanım olduğunu varsayma.
+**Not:** Yaklaşım Clayton Christensen ve Tony Ulwick'in çalışmalarıyla ilişkilendirilir. İki farklı JTBD okulu vardır ve aralarında yöntem farkı bulunur; tek bir kanonik tanım olduğunu varsayma.
 
-## Validation: üretmeden sınamak
+## Doğrulama ve ürün-pazar uyumu
 
-**Validation** (doğrulama), bir varsayımın ya da çözümün gerçekten işe yarayıp yaramadığını **üretime girmeden önce** sınamaktır. Ekibin kendine olan güvenini veriyle değiştirir. Düşük maliyetli yöntemlerle yapılır:
+**Doğrulama** (validation), bir varsayımın ya da çözümün gerçekten işe yarayıp yaramadığını **üretime girmeden önce** sınamaktır. Ekibin kendine olan güvenini veriyle değiştirir. Düşük maliyetli yöntemlerle yapılır:
 
-- **Kullanıcı testi:** Bir prototip üzerinde birkaç kişiyle denemek.
-- **Sahte buton denemesi:** Henüz var olmayan özellik için bir buton koyup tıklanma sayısına bakmak.
-- **Ön kayıt sayfası:** Ürünü yapmadan önce talebi ölçmek.
+- **Kullanıcı testi:** bir prototip üzerinde birkaç kişiyle denemek.
+- **Sahte düğme denemesi:** henüz var olmayan özellik için bir düğme koyup tıklanma sayısına bakmak.
+- **Ön kayıt sayfası:** ürünü yapmadan önce talebi ölçmek.
 
-"Özelliği yapmadan önce landing page ile talebi valide edelim; ilgi yoksa üç haftalık iş boşa gitmemiş olur." Büyük yatırım gerektiren kararların öncesinde sorulan **"Bunu valide ettik mi?"** sorusu bir kapı görevi görür.
+**Ürün-pazar uyumu** (product-market fit, PMF), ürünün gerçekten bir talebi karşıladığı ve kullanıcıların kendiliğinden gelip kaldığı noktadır. PMF öncesinde ölçeklenmeye, reklama ya da ekibi büyütmeye yatırım yapmak, delik bir kovaya su doldurmaya benzer. Kesin bir ölçütü yoktur; elde tutma oranı en sık kullanılan göstergedir.
 
-## Product-market fit: kendiliğinden gelen kullanıcı
+<Case>
 
-**Product-market fit** (PMF, ürün-pazar uyumu), ürünün gerçekten bir talebi karşıladığı ve kullanıcıların **kendiliğinden geldiği ve kaldığı** noktadır. Bir startup'ın en kritik eşiğidir. PMF öncesinde ölçeklendirmeye, reklam harcamasına veya ekip büyütmeye yatırım yapmak, delik bir kovaya su doldurmaya benzer.
+Elif, Hakan'ın filtresini bir keşif turuna çevirdi:
 
-Kesin bir ölçütü yoktur; **elde tutma** (retention) oranı en sık kullanılan göstergedir. "PMF'e ulaşmadan pazarlama bütçesi artırmak riskli; önce elde tutmayı düzeltelim."
+1. **Problem tanımı:** "Müşteri aradığı ürünü menüde bulamıyor ve siparişi bırakıyor." Hakan onayladı; bu cümle filtre dışında yollar da açıyordu.
+2. **Veri:** menüde arama yapanların çoğu, son siparişlerinde zaten aldıkları ürünü arıyordu.
+3. **Hipotez:** "Ana ekranda son siparişi gösterirsek menüde arama azalır ve sipariş tamamlama artar, çünkü müşterilerin çoğu aynı ürünü arıyor."
+4. **Doğrulama:** Selin bir prototip yaptı; Mert sekiz kişiyle denedi.
 
-<Callout kind="tasarimci">
+Filtre unutulmadı ama sıranın arkasına geçti. Hakan'ın "bulamıyor" gözlemi doğruydu; çözümü farklı çıktı.
 
-Sana gelen bir talepte şu üç refleksi geliştir:
+</Case>
 
-1. **Çözümü problem diline çevir.** "Bir filtre lazım" duyduğunda "kullanıcı ne yapmaya çalışıyor?" diye sor.
-2. **Hipotezi yaz.** Tasarımın neyi değiştirmesini bekliyorsun, nasıl ölçeceksin, neden değişeceğini düşünüyorsun?
-3. **Ucuz yoldan sına.** Bir prototip, beş görüşme ya da bir deneme sayfası, haftalarca sürecek bir geliştirmeden önce çoğu zaman yeter.
+<Lenses>
+<Lens role="product-designer">
 
-Bu üç refleks, tasarımcıyı "ekran çizen" kişiden "doğru ekranı seçmeye yardım eden" kişiye dönüştürür.
+- **Çözümü problem diline çevir.** "Bir filtre lazım" duyduğunda "kullanıcı ne yapmaya çalışıyor?" diye sor.
+- **Tasarımın hipotezini yaz.** Neyi değiştirmesini bekliyorsun, nasıl ölçeceksin, neden?
+- **Ucuz yoldan sına.** Bir prototip ve beş görüşme, haftalarca sürecek bir geliştirmeden önce çoğu zaman yeter.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **"Keşif yaptık mı?" sorusunu kapı yap.** Büyük bir yatırımdan önce bu sorunun cevabı yazılı olmalı.
+- **Talebi getireni dışlama, problemine ortak et.** Hakan'ın gözlemi doğruydu; çözümü birlikte bulundu.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Backlog'a problem diliyle yazılmış öğe al.** "Filtre ekle" değil, "müşteri aradığını bulamıyor".
+- **Hipotezi kabul kriterinin yanına koy.** Story bittiğinde hangi ölçünün değişmesini beklediğini bil.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Keşfi planda bir aşama olarak göster.** Keşfe ayrılan bir hafta, kapsam değişikliği olarak sonradan gelecek üç ayı önleyebilir.
+- **Doğrulama sonucunu bir kilometre taşı yap.** "Devam" kararı verilmeden geliştirme bütçesi açılmasın.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Takımın çözüme atladığını fark et.** Refinement'ta "bu hangi problemi çözüyor?" sorusunu takıma hatırlat.
+- **Keşif işlerini görünür kıl.** Prototip ve görüşmeler de takımın işidir; panoda yer almalı.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Problem tanımı senin ilk ürünün.** Gereksinim yazmadan önce çözümden arındırılmış bir problem cümlesi kur.
+- **Beyan edilen çözümü not et ama gereksinim yapma.** "Filtre" bir seçenektir, gereksinim değil.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Doğrulama yöntemini sen öner.** Hangi soru prototiple, hangisi veriyle, hangisi görüşmeyle cevaplanır?
+- **JTBD görüşmelerinde durumu sor.** "Ne zaman, nerede, neden?" soruları işi ortaya çıkarır.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
-- Discovery, çözüme karar vermeden önce problemi, kullanıcıyı ve alternatifleri araştırma fazıdır; yanlış problemi çözmek en pahalı hatadır.
+- Keşif, çözüme karar vermeden önce problemi, kullanıcıyı ve alternatifleri araştırma fazıdır; yanlış problemi çözmek en pahalı hatadır.
 - Problem tanımı çözümden bahsetmez; test: en az iki farklı çözüm düşündürüyor mu?
 - Hipotez "şunu yaparsak şu olacak, çünkü şu" biçimindedir ve sınanabilir olmalıdır.
 - JTBD kullanıcıyı durumuyla ve halletmeye çalıştığı işle tarif eder; rekabeti yeniden tanımlar.
-- Validation üretmeden önce ucuz yöntemlerle sınamaktır; PMF öncesi ölçeklendirmek delik kovaya su doldurmaktır.
+- Doğrulama üretmeden önce ucuz yöntemlerle sınamaktır; PMF öncesi ölçeklenmek delik kovaya su doldurmaktır.
 
 </Summary>
 
 ## Kendini yokla
 
-<SelfCheck question="Bir stakeholder &quot;kullanıcılar filtre istiyor&quot; diyor. Bunu problem statement olarak nasıl yeniden yazarsın ve neden?">
+<SelfCheck question="Bir paydaş 'kullanıcılar filtre istiyor' diyor. Bunu problem tanımı olarak nasıl yeniden yazarsın ve neden?">
 
-"Filtre" bir çözümdür, problem değil. Çözümden arındırılmış hâli: "Kullanıcı aradığı ürünü uzun listede bulamıyor ve aramayı terk ediyor." Böylece filtre dışında sıralama, arama iyileştirmesi ya da kategori değişikliği gibi alternatifler de masada kalır.
+"Filtre" bir çözümdür, problem değil. Çözümden arındırılmış hâli: "Kullanıcı aradığı ürünü uzun listede bulamıyor ve aramayı bırakıyor." Böylece filtre dışında sıralama, arama iyileştirmesi ya da kategori değişikliği gibi alternatifler de masada kalır.
 
 </SelfCheck>
 
 <SelfCheck question="Hipotez ile varsayım arasındaki fark nedir?">
 
 Hipotez sınanmak üzere yazılır ve bir ölçütü vardır ("şunu yaparsak şu olacak, çünkü şu"). Varsayım ise doğru kabul edilen ama kanıtlanmamış, çoğu zaman farkında bile olunmadan taşınan inançtır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir not uygulamasının rakibi kimdir? JTBD bu soruya nasıl cevap verir?">
+
+JTBD'ye göre rakip, kullanıcının aynı işi halletmek için kullandığı her şeydir: başka bir not uygulaması kadar kâğıt ve kalem de. Rekabet özelliklere göre değil, halledilmek istenen işe göre tanımlanır.
+
+</SelfCheck>
+
+<SelfCheck question="Takım üç aylık bir özelliğe başlamak istiyor ama talep belirsiz. Ne önerirsin?">
+
+Önce ucuz bir doğrulama: bir prototiple birkaç kullanıcı testi, sahte bir düğme ya da bir ön kayıt sayfası. Talep yoksa üç aylık iş boşa gitmemiş olur.
 
 </SelfCheck>

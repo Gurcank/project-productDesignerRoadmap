@@ -4,6 +4,7 @@ outcomes:
   - "Middleware'in ne iş yaptığını ve neden her endpoint'te tekrar yazılmadığını söyleyebilirsin."
   - "Controller, service ve repository'nin sorumluluklarını ayırabilirsin."
 minutes: 4
+standard: 2
 sources:
   - label: "Next.js — Middleware"
     url: "https://nextjs.org/docs/app/building-your-application/routing/middleware"
@@ -11,11 +12,14 @@ sources:
     url: "https://expressjs.com/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Arka yüz kodu nasıl organize edilir? Bu **seviye 2** terimlerdir: duyduğunda anlaman yeter. Ama bir kuralın nerede yaşadığı, onu kimlerin kullanabileceğini belirler.
+Arka yüz kodu nasıl organize edilir? Bu terimleri duyduğunda anlaman yeter. Ama bir kuralın nerede yaşadığı, onu kimlerin kullanabileceğini belirler.
 
 ## Middleware
 
@@ -25,18 +29,59 @@ Arka yüz kodu nasıl organize edilir? Bu **seviye 2** terimlerdir: duyduğunda 
 
 Arka yüz kodu sorumluluklara göre bölünür:
 
+<Layers
+  label="Bir isteğin geçtiği katmanlar"
+  caption="Bir istek arka yüzde yukarıdan aşağı katmanlardan geçer. Önce middleware: kimlik kontrolü, hız sınırı, günlük kaydı. Sonra controller isteği karşılar. Service iş kurallarını uygular; örneğin öğrenci kartı indirimi burada hesaplanır. Repository veritabanıyla konuşur. En altta veritabanı durur."
+  layers={[
+  {
+    title: "Middleware",
+    sub: "kimlik, hız sınırı, kayıt",
+    tone: "accent"
+  },
+  {
+    title: "Controller",
+    sub: "isteği karşılar"
+  },
+  {
+    title: "Service",
+    sub: "iş kuralları · indirim"
+  },
+  {
+    title: "Repository",
+    sub: "veritabanıyla konuşur"
+  },
+  {
+    title: "Veritabanı",
+    tone: "progress"
+  }
+]}
+/>
+
 - **Controller (denetleyici):** isteği karşılar ve yanıtı döner.
 - **Service (servis):** iş kurallarını içerir.
 - **Repository (depo):** veritabanıyla konuşur.
 
 Katmanlı ayrım, bir kuralın nerede yaşadığını netleştirir ve test edilebilirliği artırır. "İndirim kuralını nereye yazacağız?" sorusunun cevabı: service katmanına; böylece hem web hem mobil hem arka plan işi aynı kuralı kullanır. "Bu hesaplama controller'da; service'e taşıyalım ki başka yerden de çağrılabilsin."
 
-<Callout kind="tasarimci">
+<Case>
+
+Öğrenci kartı indirimi Demlik'te üç yerden çağrılıyor: müşteri uygulaması, web sitesi ve kasa entegrasyonu.
+
+1. **İlk sürüm:** indirim hesabı uygulamanın sipariş controller'ındaydı. Kasa entegrasyonu aynı kuralı ayrıca yazmıştı; iki hesap bir kez farklı sonuç verdi.
+2. **Taşıma:** hesap service katmanına alındı. Üç yol aynı işlevi çağırıyor.
+3. **Middleware:** Panel'e gelen her istek önce bir middleware'den geçiyor: oturum ve dükkân rolü kontrol ediliyor. Controller'lar artık bunu tek tek yapmıyor.
+4. **Test:** indirim kuralı tek yerde olduğu için Zeynep'in 50 test siparişlik pilot kriteri tek bir test setiyle doğrulandı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **İş kuralını (indirim, kargo ücreti) tasarım notunda adlandır;** geliştirici onu tek yere yazsın.
 - **"Her ekranda aynı mı hesaplanıyor?" sorusunu sor:** tutarsız fiyat gösterimlerinin sık sebebi kuralın birden fazla yerde yazılmasıdır.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -51,5 +96,17 @@ Katmanlı ayrım, bir kuralın nerede yaşadığını netleştirir ve test edile
 <SelfCheck question="'İndirim kuralını nereye yazacağız?' sorusunun cevabı nedir ve neden?">
 
 Service katmanına; böylece hem web hem mobil hem arka plan işi aynı kuralı kullanır ve tutarsızlık olmaz.
+
+</SelfCheck>
+
+<SelfCheck question="Bir iş kuralı controller'da yazılmış. Neden service katmanına taşınması önerilir?">
+
+Controller yalnız bir isteği karşılar. Kural service katmanında olursa web, mobil ve arka plan işleri gibi farklı yollar aynı kuralı kullanır; kural tek yerde test edilir ve iki farklı hesap çıkmaz.
+
+</SelfCheck>
+
+<SelfCheck question="Middleware'e hangi tür işler konur?">
+
+Her istekte tekrarlanması gereken işler: kimlik ve yetki kontrolü, hız sınırı, günlük kaydı, dil tespiti. Böylece her endpoint bunları ayrı ayrı yapmaz.
 
 </SelfCheck>

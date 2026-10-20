@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+  <!-- A team around one star map: different roles, one shared picture. Figures are abstract crew in helmets. -->
+  <g class="il-star">
+    <circle class="twinkle" cx="20" cy="30" r="1.3"/>
+    <circle cx="300" cy="24" r="1.5"/>
+    <circle class="twinkle" cx="76" cy="12" r="1.1"/>
+    <circle cx="250" cy="10" r="1.2"/>
+  </g>
+  <!-- The shared map: a constellation above the table -->
+  <path class="il-none il-glow il-thin" d="M126 46 L150 30 L178 40 L194 24 M150 30 L160 58"/>
+  <g class="il-fill-glow">
+    <circle cx="126" cy="46" r="3"/>
+    <circle cx="150" cy="30" r="3"/>
+    <circle cx="178" cy="40" r="3"/>
+    <circle cx="194" cy="24" r="3"/>
+    <circle cx="160" cy="58" r="3"/>
+  </g>
+  <path class="il-none il-line il-dash il-thin" d="M118 92 L132 64 M202 92 L188 64"/>
+  <!-- Table -->
+  <ellipse class="il-surface il-line" cx="160" cy="100" rx="56" ry="12"/>
+  <path class="il-none il-line" d="M160 112 V146 M142 146 H178"/>
+  <!-- Crew: helmet, visor, suit. Five, at different places around the table. -->
+  <g>
+    <path class="il-surface il-ink" d="M32 160 C32 136 70 136 70 160 Z"/>
+    <circle class="il-surface il-ink" cx="51" cy="120" r="14"/>
+    <path class="il-fill-glow" d="M43 116 H59 V122 C59 126 43 126 43 122 Z"/>
+  </g>
+  <g>
+    <path class="il-surface il-ink" d="M82 152 C82 130 116 130 116 152 Z"/>
+    <circle class="il-surface il-ink" cx="99" cy="116" r="12"/>
+    <path class="il-fill-warm" d="M92 112 H106 V117 C106 121 92 121 92 117 Z"/>
+  </g>
+  <g>
+    <path class="il-surface il-ink" d="M140 172 C140 150 180 150 180 172 Z"/>
+    <circle class="il-surface il-ink" cx="160" cy="138" r="13"/>
+    <path class="il-fill-green" d="M152 134 H168 V140 C168 144 152 144 152 140 Z"/>
+  </g>
+  <g>
+    <path class="il-surface il-ink" d="M204 152 C204 130 238 130 238 152 Z"/>
+    <circle class="il-surface il-ink" cx="221" cy="116" r="12"/>
+    <path class="il-fill-glow" d="M214 112 H228 V117 C228 121 214 121 214 117 Z"/>
+  </g>
+  <g>
+    <path class="il-surface il-ink" d="M250 160 C250 136 288 136 288 160 Z"/>
+    <circle class="il-surface il-ink" cx="269" cy="120" r="14"/>
+    <path class="il-fill-warm" d="M261 116 H277 V122 C277 126 261 126 261 122 Z"/>
+  </g>
+</svg>

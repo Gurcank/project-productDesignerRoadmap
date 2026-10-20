@@ -1,0 +1,17 @@
+---
+/**
+ * "Uygulamada": the lesson's idea worked through on the shared case, Demlik
+ * (docs/icerik/vaka.md). Every lesson's example lives in the same company, so
+ * a reader meets the same people and numbers from every role's side.
+ */
+interface Props {
+  title?: string;
+}
+
+const { title = "Uygulamada" } = Astro.props;
+---
+
+<aside class="callout callout--case">
+  <p class="callout__label">{title} <span class="callout__case">· Demlik (kurgusal vaka)</span></p>
+  <div class="callout__body"><slot /></div>
+</aside>

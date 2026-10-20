@@ -1,10 +1,11 @@
 ---
-summary: "Tasarım kararlarının doğrudan bulut maliyeti karşılığı var: optimize edilmemiş görseller egress'i, ağır sunucu işlevleri hesaplamayı büyütür; statik üretim neredeyse bedavadır. Ücretsiz katmanlar kalıcı değildir; ticari kullanıma kapalı olabilir."
+summary: "Tasarım kararlarının bulut faturasında karşılığı var: büyük görseller veri transferini, ağır sunucu işleri hesaplamayı büyütür; statik sayfa neredeyse bedavadır. Ücretsiz katmanlar kalıcı değildir."
 outcomes:
   - "Hosting faturasının bileşenlerini sayabilirsin."
   - "Tasarım kararlarının maliyet etkisine iki örnek verebilirsin."
   - "Ücretsiz katman uyarısını ve doğru soruyu ('çıkmak ne kadar zor?') söyleyebilirsin."
 minutes: 4
+standard: 2
 sources:
   - label: "Vercel — Fiyatlandırma ve limitler"
     url: "https://vercel.com/docs/pricing"
@@ -15,15 +16,44 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Fatura geldi: tahminin dört katı. Neden? Çünkü tasarım kararlarının bir fiyat etiketi var.
 
 ## Bulut maliyeti
 
 Hosting faturasının bileşenleri: hesaplama süresi, veri transferi (özellikle **egress**, yani dışarı çıkan veri), depolama, derleme dakikaları ve koltuk başına ücretler. **Tasarım kararlarının doğrudan maliyet karşılığı var:**
+
+<Tree
+  label="Fatura nereden büyür?"
+  caption="Bir hosting faturası birkaç kalemden oluşur. Hesaplama, sunucu işlevlerinin çalıştığı süreye göre büyür; her sayfada çalışan ağır bir işlev bu kalemi artırır. Egress, dışarı çıkan veridir; optimize edilmemiş görseller bu kalemi büyütür. Depolama ve koltuk ya da derleme ücretleri daha yavaş büyür ama ekip ve proje sayısıyla artar."
+  root={{
+  title: "Aylık fatura",
+  tone: "accent",
+  children: [
+    {
+      title: "Hesaplama",
+      sub: "sunucu işlevleri"
+    },
+    {
+      title: "Egress",
+      sub: "görseller, dosyalar"
+    },
+    {
+      title: "Depolama"
+    },
+    {
+      title: "Koltuk, derleme",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 - **Optimize edilmemiş görseller** egress faturasını büyütür; görsel optimizasyonu hem hız hem maliyet kararıdır.
 - **Her sayfada çalışan ağır bir sunucu işlevi** hesaplama maliyeti üretir.
@@ -37,13 +67,49 @@ Veritabanı bölümündeki PlanetScale dersi burada da geçerli: **ücretsiz kat
 
 **Doğru soru:** "bugün bedava mı?" değil, **"ödemeli plana geçtiğimizde maliyeti ne olur ve çıkmak ne kadar zor?"**
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in faturasında iki kalem tasarım kararından çıktı:
+
+1. **Egress:** dükkân fotoğrafları optimize edilmeden yükleniyordu. Fotoğraflar WebP'ye ve 4:3 sabit boyuta geçince veri transferi kalemi yarıya indi; sayfa da hızlandı.
+2. **Hesaplama:** dükkân sayfası "şu an açık" bilgisi yüzünden her istekte sunucuda üretiliyor; bu bilinçli bir maliyet. Kampüs sayfası ise statik, neredeyse bedava.
+3. **Ücretsiz katman:** kampüs bekleme listesi ilk hafta ücretsiz bir form aracındaydı. Ücretsiz planın ticari kullanıma kapalı olduğu görülünce liste Demlik'in kendi sitesine alındı.
+4. **Doğru soru:** konteyner platformu seçilirken "bugün kaça?" değil, "kopya sayısı 4'ten 8'e çıkarsa kaça?" soruldu.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Görsel boyutu ve sayısını maliyet kararı olarak da değerlendir.**
 - **Statik olabilecek sayfaları (pazarlama, blog) dinamik yapmamayı öner.**
 - **Müşteri projelerinde ücretsiz katmanın ticari kullanım koşulunu kontrol et.**
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Özellik kararlarının maliyetini iş gerekçesine kat.** Her istekte üretilen sayfa, statik sayfadan pahalıdır.
+- **"Bugün bedava mı?" yerine "ölçekte kaça?" sor.**
+
+</Lens>
+<Lens role="product-owner">
+
+- **Ağır görsel ve video isteyen story'lerde maliyeti konuş.** Gerekirse kabul ölçütüne boyut sınırı koy.
+- **Ücretsiz araçların ticari kullanım koşulunu kontrol ettir.**
+
+</Lens>
+<Lens role="project-manager">
+
+- **Kullanıma dayalı faturayı bütçede ayrı satır yap;** tahmini ve uyarı eşiğini yaz.
+- **Ücretsiz katman değişikliğini risk kaydına ekle.**
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Maliyet verisini ekibe görünür kıl.** Görmediği faturayı kimse optimize etmez.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -58,5 +124,17 @@ Veritabanı bölümündeki PlanetScale dersi burada da geçerli: **ücretsiz kat
 <SelfCheck question="Tasarım kararlarının bulut maliyetiyle bağlantısına iki örnek ver.">
 
 Optimize edilmemiş görseller egress faturasını büyütür; görsel optimizasyonu hem hız hem maliyet kararıdır. Her sayfada çalışan ağır bir sunucu işlevi hesaplama maliyeti üretirken statik üretim neredeyse bedavadır; rendering stratejisi bir maliyet kararıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Ücretsiz katman neden bir müşteri projesi için risklidir?">
+
+Ücretsiz katmanlar kalıcı değildir; platformlar daraltabilir ya da fiyat modelini değiştirebilir. Ayrıca bazıları ticari kullanıma kapalıdır; müşteri projesini oraya koymak sözleşme ihlali olabilir.
+
+</SelfCheck>
+
+<SelfCheck question={"Platform seçerken \"bugün bedava mı?\" sorusu neden yetmez?"}>
+
+Asıl maliyet ödemeli plana geçildiğinde ve kullanım arttığında ortaya çıkar. Doğru soru, ödemeli planda maliyetin ne olacağı ve platformdan çıkmanın ne kadar zor olduğudur.
 
 </SelfCheck>

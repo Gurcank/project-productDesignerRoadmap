@@ -1,10 +1,20 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import OfflineDownload from "~/components/OfflineDownload.astro";
+import RolePicker from "~/components/RolePicker.astro";
 import { getPublishedCategories } from "~/lib/content";
+import { getRoutes } from "~/lib/routes";
 
 const published = await getPublishedCategories();
 const totalTopics = published.reduce((sum, entry) => sum + entry.topics.length, 0);
+
+// "Yolunu indir": the published Temel and Önerilen stops of each role. Optional
+// stops would bring a role's path close to the whole site.
+const rolePaths = Object.fromEntries(
+  (await getRoutes())
+    .filter((route) => route.state !== "all")
+    .map((route) => [route.state, route.stops.filter((stop) => stop.published && stop.tier !== "istege-bagli").map((stop) => stop.category)]),
+);
 
 const SIZES = [
   { id: "sm", label: "Küçük" },
@@ -64,7 +74,7 @@ const SIZES = [
         </div>
 
         <div class="actions">
-          <a class="button button--primary" download="pdr-ilerleme.json" data-download>
+          <a class="button button--primary" download="seeyournextstep-ilerleme.json" data-download>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" /></svg>
             Yedeği indir
           </a>
@@ -89,6 +99,12 @@ const SIZES = [
             <button type="button" class="button" data-import>Bu metni içe aktar</button>
           </div>
         </details>
+      </section>
+
+      {/* ----------------------------------------------------------- role */}
+      <section class="card card--wide glass" aria-labelledby="rol">
+        <h2 id="rol" class="card__title">Rolün</h2>
+        <RolePicker variant="settings" />
       </section>
 
       {/* ----------------------------------------------------- appearance */}
@@ -120,8 +136,12 @@ const SIZES = [
       {/* -------------------------------------------------------- offline */}
       <section class="card glass" aria-labelledby="cevrimdisi">
         <h2 id="cevrimdisi" class="card__title">Çevrimdışı</h2>
-        <p class="setting__hint">Tüm dersleri, sözlüğü ve aramayı indir; internet olmadan açılır.</p>
+        <p class="setting__hint">
+          Yolunun temel ve önerilen bölümlerini ya da bütün siteyi indir; Roller, Araçlar, sözlük ve arama ikisinde de gelir.
+          İnternet olmadan açılır.
+        </p>
         <div class="offline">
+          <OfflineDownload scope="path" label="Yolunu indir" paths={rolePaths} />
           <OfflineDownload scope="all" label="Tüm siteyi indir" />
         </div>
       </section>
@@ -140,7 +160,9 @@ const SIZES = [
 </BaseLayout>
 
 <script>
-  import { initProgress, $progress, $storageError, exportJson, importJson, reset } from "~/lib/progress";
+  import { initProgress, $progress, $storageError, reset } from "~/lib/progress";
+  import { exportBackup, importBackup } from "~/lib/backup";
+  import { $role } from "~/lib/role";
 
   initProgress();
 
@@ -160,8 +182,9 @@ const SIZES = [
 
   let objectUrl: string | null = null;
 
-  $progress.subscribe((progress) => {
-    const json = exportJson();
+  // The backup carries the role too, so it is rebuilt when either changes.
+  const refreshBackup = () => {
+    const json = exportBackup();
     if (exportArea) exportArea.value = json;
 
     if (download) {
@@ -170,9 +193,15 @@ const SIZES = [
       objectUrl = URL.createObjectURL(new Blob([json], { type: "application/json" }));
       download.href = objectUrl;
     }
+  };
+  $role.subscribe(refreshBackup);
+
+  $progress.subscribe((progress) => {
+    refreshBackup();
 
     const done = Object.values(progress.topics).filter((topic) => topic.done).length;
-    const checked = Object.values(progress.checklists).filter(Boolean).length;
+    // "<id>~na" marks an item as not applicable (kontrol-listeleri); it is not a tick.
+    const checked = Object.entries(progress.checklists).filter(([id, on]) => on && !id.endsWith("~na")).length;
     const percent = total > 0 ? Math.min(100, Math.round((done / total) * 100)) : 0;
 
     set("done", String(done));
@@ -205,7 +234,7 @@ const SIZES = [
       if (status) status.textContent = "İptal edildi.";
       return;
     }
-    const error = importJson(text);
+    const error = importBackup(text);
     if (status) status.textContent = error ?? `${source} geri yüklendi.`;
   };
 
@@ -603,6 +632,8 @@ const SIZES = [
   }
 
   .offline {
+    display: grid;
+    gap: var(--spacing-5);
     margin-block-start: auto;
   }
 

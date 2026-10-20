@@ -4,7 +4,8 @@ outcomes:
   - "Bir veri için state yönetimi kütüphanesine gerçekten ihtiyaç olup olmadığını sorabilirsin."
   - "Context'in sık değişen veriler için neden verimsiz olduğunu açıklayabilirsin."
   - "Zustand, Jotai ve Redux Toolkit'i bir cümleyle ayırt edebilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "React — Reducer ve Context ile ölçeklemek"
     url: "https://react.dev/learn/scaling-up-with-reducer-and-context"
@@ -18,11 +19,27 @@ flags: ["degisken"]
 skipTerms: ["state","local","url"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Menü açık mı, hangi sekme seçili, sepette ne var? Bu verilerin nerede tutulduğu, uygulamanın nasıl yazıldığını belirler. **Önemli bir çerçeve:** state ikiye ayrılır: sunucudan gelen veri (server state, sonraki ders) ve arayüzün kendi verisi (client state). İkisi farklı araçlar ister ve karıştırmak yaygın bir hatadır.
+
+<Tree
+  label="State'in iki türü"
+  caption="Bir uygulamanın verisi iki türdür. Client state arayüzün kendi verisidir: bir bileşenin içinde local state olarak, ağaç boyunca context ile ya da Zustand, Jotai veya Redux gibi bir kütüphanede tutulur. Server state ise sunucudaki verinin kopyasıdır; TanStack Query ya da SWR gibi araçlarla yönetilir ve bir sonraki dersin konusudur."
+  root={{
+    title: "State",
+    tone: "accent",
+    children: [
+      { title: "Client state", sub: "arayüzün verisi", children: [{ title: "Local state" }, { title: "Context" }, { title: "Zustand, Jotai, Redux" }] },
+      { title: "Server state", sub: "sunucunun kopyası", children: [{ title: "TanStack Query, SWR", tone: "progress" }] },
+    ],
+  }}
+/>
 
 ## Local state ve Context
 
@@ -38,13 +55,28 @@ Context sık değişen veriler için verimsizdir: her değişimde onu tüketen t
 
 **Redux**, en eski ve en yaygın state yönetimi kütüphanesidir; **Redux Toolkit (RTK)** onun resmî ve sadeleştirilmiş kullanım biçimidir. Karmaşık ve çok kişili projelerde katı bir yapı dayatır: veri nasıl, kim tarafından, ne zaman değişir hepsi izlenebilirdir; geliştirici araçları (zaman yolculuğuyla hata ayıklama) güçlüdür. Büyük ve eski React projelerinde çok yaygındır. "Proje zaten Redux kullanıyor; yeni bir kütüphane eklemeyelim." Küçük projeler için ağırdır; sunucudan gelen veriyi Redux'ta tutmak da TanStack Query gibi araçların çıkmasıyla büyük ölçüde gereksizleşti.
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'in müşteri uygulamasında client state üç yerde tutuluyor:
+
+1. **Local state:** ödeme ekranındaki seçili kart; yalnız o ekranı ilgilendiriyor.
+2. **Context:** tema (açık ya da koyu) ve dil; nadiren değişiyor, her yerde okunuyor.
+3. **Zustand:** sepet. Menüden, dükkân sayfasından ve ödeme ekranından erişiliyor; birkaç satırla kuruldu.
+4. **Server state değil:** sipariş geçmişi ilk sürümde sepetle aynı depodaydı; tazelenmiyor, eski kalıyordu. Ayrı bir araca taşındı (bir sonraki ders).
+
+Selin, sepetin uygulama kapanıp açıldığında korunmasını istedi; sepet cihazda saklanmaya başladı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Arayüz durumlarını (açık/kapalı, seçili sekme, geçici filtre) listele;** hangilerinin sayfalar arası korunması gerektiğini işaretle.
 - **"Global olsun" isteğini sorgula:** gerçekten uygulamanın her yerinde mi lazım?
 - **State'in kalıcı olup olmayacağını yaz:** yenilemede korunsun mu, URL'e yazılsın mı?
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -59,5 +91,17 @@ Context sık değişen veriler için verimsizdir: her değişimde onu tüketen t
 <SelfCheck question="Bir state yönetimi kütüphanesi eklemeden önce hangi soruyu sormalısın?">
 
 Bu veri gerçekten global mi, yoksa yalnızca iki bileşen arasında mı paylaşılıyor? Çoğu durumda local state ve context yeterlidir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir ekip tema bilgisi için büyük bir state yönetimi kütüphanesi eklemek istiyor. Ne önerirsin?">
+
+Tema nadiren değişen ve her yerde okunan bir veridir; React'in context'i yeter. Kütüphane eklemeden önce verinin gerçekten global ve sık değişen bir veri olup olmadığı sorulur.
+
+</SelfCheck>
+
+<SelfCheck question="Context sık değişen veriler için neden verimsizdir?">
+
+Context'in değeri her değiştiğinde onu kullanan bütün bileşenler yeniden çizilir. Sık değişen veride bu, gereksiz yeniden çizim ve takılma demektir.
 
 </SelfCheck>

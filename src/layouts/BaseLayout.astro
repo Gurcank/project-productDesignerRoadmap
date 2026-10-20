@@ -4,6 +4,8 @@ import MobileNav from "~/components/MobileNav.astro";
 import SiteNav from "~/components/SiteNav.astro";
 import Starfield from "~/components/Starfield.astro";
 import { NAV, type NavId } from "~/data/nav";
+import { ROLE_AUTO_KEY, ROLE_KEY, ROLE_STATES } from "~/data/role-ids";
+import { roleCss } from "~/lib/role-css";
 
 interface Props {
   title: string;
@@ -12,8 +14,13 @@ interface Props {
   section?: NavId;
 }
 
-const { title, description = "Product Designer yol haritası — kişisel öğrenme sitesi.", section } = Astro.props;
-const fullTitle = title === "Yol haritası" ? "Product Designer Yol Haritası" : `${title} · PD Yol Haritası`;
+const {
+  title,
+  description = "SeeYourNextStep — ürün ekibindeki roller için Türkçe öğrenme haritası: sıradaki adımını gör.",
+  section,
+} = Astro.props;
+const SITE_NAME = "SeeYourNextStep";
+const fullTitle = title === "Yol haritası" ? `${SITE_NAME} — sıradaki adımını gör` : `${title} · ${SITE_NAME}`;
 
 // Astro.site comes from astro.config; falls back so a preview build still works.
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href;
@@ -70,25 +77,48 @@ const SERVICE_WORKER_SCRIPT = import.meta.env.PROD
     {/* Launch checklist 21.9: the link preview is what people actually see when
         the URL is pasted into a chat, and it is invisible until it is wrong. */}
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Product Designer Yol Haritası" />
+    <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:locale" content="tr_TR" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary" />
 
-    {/* Reading size and star motion, applied before first paint so neither flashes. */}
-    <script is:inline>
-      (function () {
-        try {
-          var size = localStorage.getItem("pdr.text-size");
-          if (size === "sm" || size === "lg" || size === "xl") document.documentElement.dataset.text = size;
-          if (localStorage.getItem("pdr.stars") === "off") document.documentElement.dataset.stars = "off";
-        } catch (error) {
-          /* Private mode: defaults apply. */
+    {/* Reading size, star motion and the chosen role, applied before first paint
+        so none of them flashes. Must stay inline and synchronous (ADR-007): a
+        deferred copy would paint the Keşif map first and then jump. */}
+    <script is:inline define:vars={{ roleStates: ROLE_STATES, roleKey: ROLE_KEY, autoKey: ROLE_AUTO_KEY }}>
+      var root = document.documentElement;
+      root.dataset.js = "";
+      // A shared link may carry a role; it wins even when storage is blocked.
+      var role = new URLSearchParams(location.search).get("rol");
+      if (roleStates.indexOf(role) < 0) role = null;
+      try {
+        var size = localStorage.getItem("pdr.text-size");
+        if (size === "sm" || size === "lg" || size === "xl") root.dataset.text = size;
+        if (localStorage.getItem("pdr.stars") === "off") root.dataset.stars = "off";
+
+        if (role) {
+          localStorage.setItem(roleKey, role);
+          localStorage.removeItem(autoKey);
+        } else {
+          role = localStorage.getItem(roleKey);
+          if (roleStates.indexOf(role) < 0) role = null;
+          // Someone who was already learning here came for the designer route;
+          // keep their map as it was and tell them (home page note).
+          if (!role && localStorage.getItem("pdr.progress.v1")) {
+            role = "product-designer";
+            localStorage.setItem(roleKey, role);
+            localStorage.setItem(autoKey, "1");
+          }
         }
-      })();
+        if (localStorage.getItem(autoKey)) root.dataset.roleAuto = "";
+      } catch (error) {
+        /* Private mode: defaults apply. */
+      }
+      if (role) root.dataset.role = role;
     </script>
+    <style is:inline set:html={roleCss()}></style>
   </head>
 
   <body>

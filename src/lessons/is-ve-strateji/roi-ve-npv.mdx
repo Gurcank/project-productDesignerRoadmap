@@ -1,0 +1,133 @@
+---
+summary: "ROI getiriyi maliyete oranlar ama zamanı hesaba katmaz. Geri ödeme süresi paranın ne zaman döndüğünü söyler. NPV gelecekteki nakit akışlarını bugüne indirger; pozitifse yatırım beklentiyi karşılar."
+outcomes:
+  - "Bir yatırım için basit ROI ve geri ödeme süresini hesaplayabilirsin."
+  - "Paranın zaman değerini ve iskonto oranını sade bir dille açıklayabilirsin."
+  - "NPV'nin işaretini yorumlayıp ROI ile birlikte okuyabilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Wikipedia — Net present value"
+    url: "https://en.wikipedia.org/wiki/Net_present_value"
+  - label: "Wikipedia — Return on investment"
+    url: "https://en.wikipedia.org/wiki/Return_on_investment"
+  - label: "Wikipedia — Payback period"
+    url: "https://en.wikipedia.org/wiki/Payback_period"
+additions:
+  - "ROI'nin tanımı ve zamanı hesaba katmaması; geri ödeme süresi örneği; NPV'nin tanımı, paranın zaman değeri ve pozitif NPV'nin anlamı (Wikipedia giriş bölümleri)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Chart from "~/components/diagrams/primitives/Chart.astro";
+
+Kampüs projesi bitmiş, 2,52 milyon TL harcanmıştı. Yönetim kurulu toplantısında bir üye sordu: "İkinci dalgaya, beş kampüse daha girelim mi?" Hakan'ın elinde tek bir sayı vardı: "Üç yılda %67 getiri."
+
+Kurul üyesinin ikinci sorusu onu düşündürdü: "Aynı parayı bankaya koysak ne olurdu?" Bu ders, bir yatırımın değerini ölçen üç sayıyı ve neden üçüne birlikte bakıldığını anlatır.
+
+## ROI ve geri ödeme
+
+**ROI** (return on investment), Wikipedia'nın tanımıyla net kârın yatırıma oranıdır:
+
+ROI = (getiri − yatırım) / yatırım
+
+ROI sade ve karşılaştırılabilirdir. Ama Wikipedia'nın da vurguladığı gibi zamanı hesaba katmaz: üç yılda gelen getiri ile on yılda gelen aynı getiri, aynı ROI'yi verir.
+
+**Geri ödeme süresi** (payback period), yatırımın geri kazanıldığı, yani başa baş noktasına ulaşılan süredir. Wikipedia'nın örneğinde 1.000 dolarlık bir yatırım birinci ve ikinci yılın sonunda 500'er dolar getirirse geri ödeme süresi iki yıldır. Geri ödeme, paranın ne zaman döndüğünü söyler; sonra ne kadar kazanıldığını söylemez.
+
+## Paranın zaman değeri
+
+Bugünkü bir lira, gelecekteki bir liradan değerlidir. Wikipedia'nın NPV maddesi üç neden sayar: faiz, enflasyon ve fırsat maliyeti. Maddedeki örnekte bir borç veren, bir ay sonra alacağı bir dolar için bugün 99 sent verebilir. Yirmi yıl sonra alacağı bir dolar için çok daha azını verir.
+
+Gelecekteki parayı bugünkü değerine çevirmek için bir **iskonto oranı** kullanılır. Oran, yatırımdan beklenen en düşük getiridir: paranın başka bir yerde kazanabileceği.
+
+**NPV** (net present value), her dönemin nakit akışının bugünkü değere indirgenip toplanmasıdır. Yatırımın kendisi de bu toplamın içinde eksi bir akış olarak yer alır. **Pozitif NPV**, beklenen faydaların bugünkü değerinin maliyeti aştığı anlamına gelir.
+
+<Chart
+  kind="bar"
+  label="Kampüs projesinin yıllık getirisi: nominal ve bugünkü değer"
+  caption="Kampüs projesi her yıl yaklaşık 1,404 milyon TL katkı getirir. Yüzde 30 iskonto oranıyla bunun bugünkü değeri birinci yıl 1,08, ikinci yıl 0,83, üçüncü yıl 0,64 milyon TL'dir. Üç yılın bugünkü değeri toplam yaklaşık 2,55 milyon TL; 2,52 milyon TL'lik yatırım düşülünce NPV yaklaşık 0,03 milyon TL kalır: zar zor pozitif."
+  x={{ title: "Yıl", labels: ["1. yıl", "2. yıl", "3. yıl"] }}
+  y={{ title: "Milyon TL", max: 2 }}
+  series={[
+    { name: "Nominal getiri", values: [1.404, 1.404, 1.404], tone: "plain" },
+    { name: "Bugünkü değer", values: [1.08, 0.83, 0.64], tone: "accent" },
+  ]}
+/>
+
+**ROI ≠ NPV.** ROI zamanı yok sayar; NPV her yılın parasını bugünün parasıyla ölçer. Aynı proje yüksek bir ROI ve sıfıra yakın bir NPV gösterebilir.
+
+Wikipedia, sermayesi kısıtlı bir şirketin projeler arasında seçim yaparken en yüksek NPV'li projeleri tercih etmesi gerektiğini de not eder.
+
+<Case>
+
+Hakan ve finans kampüs projesini üç sayıyla yeniden okudu:
+
+1. **Yıllık getiri:** günde 600 sipariş × 30 gün × 5,50 TL katkı = 99.000 TL; 12 kafenin aboneliği 18.000 TL. Ayda 117.000 TL, yılda yaklaşık 1,404 milyon TL.
+2. **Basit ROI:** üç yılda 4,21 milyon TL getiri, 2,52 milyon TL yatırım. ROI ≈ %67.
+3. **Geri ödeme:** 2,52 / 1,404 ≈ 1,8 yıl.
+4. **NPV:** yüksek enflasyon ve şirketin riski yüzünden finans iskonto oranını %30 aldı. Üç yılın bugünkü değeri yaklaşık 2,55 milyon TL; NPV yaklaşık +0,03 milyon TL.
+
+Kurul üyesinin sorusunun cevabı buydu: proje, beklenen getiriyi zar zor karşılıyordu. Hakan'ın kararı bir koşula bağlandı: ikinci dalga ancak kampüste 30 günde ikinci sipariş oranı %41'in üstüne çıkarsa.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Getiri varsayımını metrik ağacına bağla.** "Günde 600 sipariş" hangi girdilere dayanıyor? Varsayım tutmazsa NPV ne olur?
+- **Kararı bir ürün metriğine bağla.** Hakan'ın koşulu gibi: yatırımın ikinci adımı, ilk adımın verisine bağlı olsun.
+
+</Lens>
+<Lens role="project-manager">
+
+- **İş gerekçesine üç sayıyı birlikte koy.** ROI, geri ödeme ve NPV; biri tek başına yanıltabilir.
+- **Gecikmenin maliyetini NPV ile göster.** Getirinin bir yıl kayması, bugünkü değerini belirgin biçimde düşürür.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Varsayım tablosunu ayrı tut.** Sipariş sayısı, katkı, iskonto oranı: her birinin kaynağı ve tarihi yazılsın.
+- **Duyarlılık sor.** Hangi varsayım %10 kayarsa NPV negatife döner?
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- ROI net getirinin yatırıma oranıdır; zamanı hesaba katmaz.
+- Geri ödeme süresi yatırımın ne zaman geri döndüğünü söyler, sonrasını söylemez.
+- Bugünkü bir lira gelecekteki bir liradan değerlidir: faiz, enflasyon, fırsat maliyeti.
+- NPV, nakit akışlarını iskonto oranıyla bugüne indirger; pozitifse yatırım beklenen getiriyi karşılar.
+- Üç sayı birlikte okunur; varsayımlar ve iskonto oranı yanında yazılır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="ROI'nin en önemli eksiği nedir?">
+
+Zamanı hesaba katmaz. Üç yılda gelen getiri ile on yılda gelen aynı getiri aynı ROI'yi verir, ama bugünkü değerleri çok farklıdır.
+
+</SelfCheck>
+
+<SelfCheck question="NPV pozitif ne demektir?">
+
+Beklenen nakit akışlarının bugünkü değeri, yatırımın maliyetini aşıyor demektir. Yatırım, iskonto oranıyla ifade edilen beklenen getiriyi karşılar.
+
+</SelfCheck>
+
+<SelfCheck question="İskonto oranı %30'dan %20'ye inerse kampüs projesinin NPV'si nasıl değişir?">
+
+Artar. Gelecekteki her yılın getirisi daha az indirgenir. Üç yılın bugünkü değeri yaklaşık 2,96 milyon TL olur; NPV yaklaşık +0,44 milyon TL'ye çıkar.
+
+</SelfCheck>
+
+<SelfCheck question="İki projenin geri ödeme süresi aynı. Hangisini seçeceğini nasıl anlarsın?">
+
+Geri ödemeden sonrasına bakarım. Geri ödeme yalnız paranın ne zaman döndüğünü söyler. Sonrasındaki getiriyi ve zamanlamasını NPV gösterir; sermaye kısıtlıysa NPV'si yüksek olan seçilir.
+
+</SelfCheck>

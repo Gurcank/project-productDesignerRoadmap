@@ -5,7 +5,8 @@ outcomes:
   - "Select, combobox ve radio arasında seçenek sayısına göre karar verebilirsin."
   - "Date picker, slider ve file upload'ın erişilebilirlik tuzaklarını sayabilirsin."
   - "Client-side ve server-side doğrulamanın neden ikisinin de gerektiğini açıklayabilirsin."
-minutes: 12
+minutes: 7
+standard: 2
 sources:
   - label: "W3C WAI-ARIA APG — Switch Pattern"
     url: "https://www.w3.org/WAI/ARIA/apg/patterns/switch/"
@@ -29,6 +30,9 @@ import Callout from "~/components/lesson/Callout.astro";
 import ControlsDemo from "~/components/lesson/ControlsDemo.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Formlar, dönüşümün ve erişilebilirliğin aynı anda kritik olduğu yerdir. Parçaların adlarını bilmek, hangi kontrolün hangi işe uygun olduğunu tartışabilmek demektir. Yanlış kontrol seçmek bir **beklenti hatası** üretir: kullanıcı bir şey bekler, başka bir şey olur.
 
@@ -76,7 +80,22 @@ Ayarlar sayfasındaki metin boyutu seçimi (Küçük / Normal / Büyük / Çok b
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik Panel'in "ürün ekle" formu her kontrol için bir karar istedi:
+
+1. **Ad:** tek satır metin girişi, en çok 40 karakter; uzun adlar fişte taşıyordu.
+2. **Kategori:** on iki seçenek vardı; açılır liste yerine aranabilir bir combobox.
+3. **Boyutlar:** küçük, orta, büyük; birden fazlası seçilebildiği için checkbox.
+4. **Satışta mı:** anında etkili bir ayar; switch. Değişince "Ürün bugünlük satışta değil" bildirimi çıkıyor.
+5. **Fiyat:** sayı klavyesi açan metin alanı; "12,50" virgülle yazılabiliyor.
+
+Ayşe her alanın doğrulama kuralını ve hata metnini tabloya yazdı; Emre aynı tablodan kodladı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Kontrolü işe göre seç:** çoklu seçim checkbox, tek seçim radio, anında ayar switch.
 - **Seçenek sayısına bak:** 2-4 radio, 7-10'a kadar select, fazlası combobox.
@@ -86,7 +105,20 @@ Ayarlar sayfasındaki metin boyutu seçimi (Küçük / Normal / Büyük / Çok b
 - **Dosya formatı ve boyut sınırını baştan yaz.**
 - **Gönder'i pasif yapma;** eksikleri işaretle.
 
-</Callout>
+</Lens>
+<Lens role="business-analyst">
+
+- **Her alanın veri türünü, sınırını ve zorunluluğunu yaz.** Kontrol seçimi bu tablodan çıkar.
+- **Doğrulama kuralının hata metnini birlikte yaz.** Kural ve mesaj ayrı yerlerde yaşamasın.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Formu gerçek veriyle doldurt.** Uzun ürün adları, ondalıklı fiyatlar, eksik bilgi.
+- **Tereddüt edilen alanı not et.** Duraksama, etiketin ya da kontrolün yanlış seçildiğini gösterir.
+
+</Lens>
+</Lenses>
 
 <Summary>
 

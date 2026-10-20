@@ -5,7 +5,8 @@ outcomes:
   - "Boşluk ölçeğinin neden 'yapay zekâyla üretilmiş' hissine karşı en iyi panzehir olduğunu açıklayabilirsin."
   - "8pt grid'in asıl faydasının matematik değil karar sayısını azaltmak olduğunu bilirsin."
   - "Başlık üstü boşluğunun neden başlık altından büyük olması gerektiğini Gestalt ile açıklayabilirsin."
-minutes: 10
+minutes: 6
+standard: 2
 sources:
   - label: "Spec — 8-Point Grid"
     url: "https://spec.fm/specifics/8-pt-grid"
@@ -21,6 +22,9 @@ import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import SpacingDemo from "~/components/lesson/SpacingDemo.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
 İki tasarıma bakıyorsun. İkisinde de aynı renkler, aynı font var. Biri "düzenli", öteki "dağınık" hissettiriyor. Fark nerede? Çoğu zaman **boşlukta ve hizada:** biri tutarlı bir sisteme uyuyor, öteki 13px, 17px, 22px gibi rastgele değerlerle dolu.
 
@@ -93,7 +97,21 @@ Bu sitedeki her boşluk 4 tabanlı bir ölçekten geliyor (0,25 rem ile 6 rem ar
 
 </Callout>
 
-<Callout kind="tasarimci">
+<Case>
+
+Panel'in sipariş ekranında boşluklar 5, 7, 10, 13, 18 piksel gibi rastgele değerlerdi. Selin ekranı bir ölçeğe oturttu:
+
+1. **Ölçek:** 4, 8, 12, 16, 24, 32 piksel; başka değer yok.
+2. **Gruplama:** bir siparişin satırları arasında 8, iki sipariş arasında 24 piksel. Yakınlık, hangi satırın hangi siparişe ait olduğunu gösteriyor.
+3. **Yoğunluk:** Panel tezgâhta, uzaktan okunuyor. Satır yüksekliği artırıldı; ekrana daha az ama daha okunaklı sipariş sığıyor.
+4. **Izgara:** tablette 12 sütun; sipariş listesi 8, ayrıntı paneli 4 sütun.
+
+Geliştiriciler için kural tek cümle oldu: "Ölçekte olmayan boşluk değeri kullanılmaz."
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Ölçek dışı değer görürsen yuvarla.** 18px yerine 16 ya da 24.
 - **Boşluğu token olarak teslim et.** Geliştirici `margin: 18px` yerine `--spacing-4` yazsın.
@@ -101,7 +119,8 @@ Bu sitedeki her boşluk 4 tabanlı bir ölçekten geliyor (0,25 rem ile 6 rem ar
 - **Başlık altını üstünden küçük tut.**
 - **Yoğunluğu hedef kitleye göre seç.** Uzman paneli compact, tanıtım sayfası ferah.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -124,5 +143,11 @@ Hayır. Ekran boyutlarının 8'e bölünebilmesi ikincil bir faydadır; asıl fa
 <SelfCheck question="Başlık üstündeki boşluk neden başlık altındakinden büyük olmalı? Hangi ilkeyle açıklanır?">
 
 Gestalt yakınlık (proximity) ilkesi gereği. Başlık altındaki metne ait olarak okunmalıdır; üst boşluk alt boşluktan küçük olursa başlık bir önceki bloğa aitmiş gibi görünür.
+
+</SelfCheck>
+
+<SelfCheck question="Bir yoğun veri tablosu ile bir pazarlama sayfası aynı boşluk değerlerini mi kullanmalı?">
+
+Aynı ölçeği kullanmalı ama farklı basamaklarını. Yoğun ekranda küçük basamaklar, ferah sayfada büyük basamaklar seçilir. Ölçek tutarlılığı sağlar; yoğunluk bağlama göre ayarlanır.
 
 </SelfCheck>

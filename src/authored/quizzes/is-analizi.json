@@ -1,0 +1,52 @@
+{
+  "category": "is-analizi",
+  "sources": [
+    { "label": "BABOK Guide — Ek A: Sözlük (IIBA)", "url": "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/" },
+    { "label": "NASA SE Handbook — Appendix C: How to Write a Good Requirement", "url": "https://www.nasa.gov/reference/appendix-c-how-to-write-a-good-requirement/" },
+    { "label": "Jakob Nielsen — Interviewing Users (NN/g)", "url": "https://www.nngroup.com/articles/interviewing-users/" },
+    { "label": "Camunda — DMN Hit Policy", "url": "https://docs.camunda.io/docs/components/modeler/dmn/decision-table-hit-policy/" },
+    { "label": "ISTQB Glossary — user acceptance testing", "url": "https://glossary.istqb.org/en_US/term/user-acceptance-testing" }
+  ],
+  "items": [
+    {
+      "question": "Takımında 'iş analisti' unvanlı kimse yok. Bir PO kabul kriterlerini yazıyor, bir araştırmacı ihtiyaçları netleştiriyor. Bu takımda iş analizi yapılıyor mu?",
+      "answer": "Evet. BABOK'a göre iş analisti, unvanı ne olursa olsun iş analizi yapan herkestir. Önemli olan işin altı bilgi alanından hangisinin kimde olduğunu ve hiçbirinin atlanmadığını bilmektir."
+    },
+    {
+      "question": "Bir paydaş 'Panel'e bir tam iade düğmesi koyun' diyor. Analist olarak ilk ne yaparsın?",
+      "answer": "Talebi bir çözüm önerisi olarak not eder ve altındaki ihtiyacı ararım: hangi sorunu çözmeye çalışıyoruz? Veriye ve kök nedene bakmadan düğmeyi gereksinim olarak yazmam. Demlik'te kök neden düğme eksikliği değil, kuralın tek bir sahibi olmamasıydı."
+    },
+    {
+      "question": "Görüşmelerde herkes 'ürün bitince siparişi iptal ederiz' dedi. Gözlemde çalışanların müşteriyi telefonla aradığını gördün. Ne yaparsın?",
+      "answer": "Gözlemi bir bulgu olarak kaydeder ve çalışanlarla konuşurum. İnsanların söylediğiyle yaptığı ayrışır; görüşme gerekçeyi, gözlem gerçek işi gösterir. Belgelenmemiş bu adım hem mevcut durum çizimine hem de gereksinimlere girmelidir."
+    },
+    {
+      "question": "Bir gereksinim şöyle: 'Sistem iadeleri hızlı ve kullanıcı dostu biçimde yönetmeli vs.' Nasıl düzeltirsin?",
+      "answer": "Cümleyi tek fikirli, doğrulanabilir gereksinimlere bölerim. 'Hızlı' bir sayıya döner: iade kararı iptalden sonra en geç 5 saniyede görünür. 'Kullanıcı dostu' için paydaşa ne demek istediğini sorarım: örneğin çalışan iade tutarını iptalden önce görür. 'Vs.' silinir."
+    },
+    {
+      "question": "Yeni sistem yayına girdi ama yardım sayfasında eski iade kuralı hâlâ duruyor. Hangi gereksinim türü atlanmış?",
+      "answer": "Geçiş gereksinimi. Eski metinlerin kaldırılması, eğitim ve veri taşıma gibi işler değişim sırasında gereklidir ve sonra gerekmez. Unutulduğunda yeni kural ile eski kural yan yana yaşar."
+    },
+    {
+      "question": "Bir karar tablosunun üç girdisi var: üç, iki ve iki değerli. Tabloda yedi kural var. Ne kontrol edersin?",
+      "answer": "Eksiksizliği ve çakışmayı. 3 × 2 × 2 = 12 birleşimin her biri tam bir kurala düşmeli. Yedi kural '–' işaretleriyle 12'yi kapsayabilir; ama bir birleşim hiçbir kurala düşmüyorsa eksik, ikiye düşüyorsa UNIQUE tablo geçersizdir."
+    },
+    {
+      "question": "Bir analist çakışan kuralları düzeltmek yerine tabloyu FIRST yapmayı öneriyor. Ne dersin?",
+      "answer": "FIRST çakışmayı çözmez, gizler. Satırların sırası değişince karar sessizce değişir ve tabloyu okuyan biri tek bir satıra bakıp sonucu anlayamaz. Kuralları birbirini dışlayacak biçimde yeniden yazmak daha güvenlidir."
+    },
+    {
+      "question": "Atölyede müşterinin bankasına yaptığı ödeme itirazları konuşuldu ama işin parçası değil. Bunu nereye yazarsın?",
+      "answer": "Kapsam dışı listesine, açıkça. Bağlam diyagramına girmeyen ama konuşulan her şey yazılı olarak dışarıda bırakılmazsa, bazı paydaşlar onu kapsamın içinde sanmaya devam eder."
+    },
+    {
+      "question": "Sprint ortasında kupon oranının %20'den %15'e inmesi istendi. İzlenebilirlik matrisiyle ne yaparsın?",
+      "answer": "Kuponla ilgili gereksinimin satırından ileri giderek etkilenen story'leri, otomatik testleri, kabul senaryolarını ve metinleri listelerim. Geri giderek kuralın kaynağını ve onaylayanı bulurum. Karar veren kişi bu listeyle değişikliğin bedelini görür."
+    },
+    {
+      "question": "Bütün otomatik testler geçti; UAT'de bir dükkân çalışanı 'Kısmi iade' ifadesini anlamadı. Yayına çıkar mısın?",
+      "answer": "Önce düzeltirim. Otomatik testler doğrulamadır: sistem şartnameyi karşılıyor. Kullanıcının anlamaması bir geçerleme bulgusudur: çözüm amaçlanan kullanıma uygun değil. Metin değişir, birkaç kullanıcıyla yeniden denenir."
+    }
+  ]
+}

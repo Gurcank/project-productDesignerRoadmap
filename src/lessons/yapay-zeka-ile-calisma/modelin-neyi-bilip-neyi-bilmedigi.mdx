@@ -1,10 +1,11 @@
 ---
-summary: "Prompt yazmanın ön koşulu modelin sınırlarını bilmek: bağlam penceresi tükenen bir kaynaktır, bilgi kesim tarihi senin alanında doğrudan risktir, uydurma makul göründüğü için zor fark edilir ve sapma tutarlı görünen yanlıştır."
+summary: "Prompt yazmanın ön koşulu modelin sınırlarını bilmektir: bağlam penceresi tükenir, bilgi kesim tarihi eski bilgi getirir, uydurma makul görünür, sapma tutarlı görünen yanlıştır."
 outcomes:
   - "Bağlam penceresinin neden 'tükenen kaynak' olduğunu ve büyük pencerenin neden 'her şeyi at' demek olmadığını açıklayabilirsin."
   - "Bilgi kesim tarihinin front-end alanında neden özel bir risk olduğunu söyleyebilirsin."
   - "Uydurmanın iki katmanlı savunmasını ve sapmanın (drift) ne olduğunu bilirsin."
 minutes: 7
+standard: 2
 sources:
   - label: "Anthropic Docs — Context windows"
     url: "https://docs.claude.com/en/docs/build-with-claude/context-windows"
@@ -13,14 +14,18 @@ sources:
   - label: "Anthropic Engineering — Effective context engineering for AI agents"
     url: "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
 flags: ["degisken"]
-skipTerms: ["Bottleneck","bottleneck","darboğaz"]
+skipTerms: ["Bottleneck","bottleneck","darboğaz","Validation","validation","doğrulama","hizalama"]
 ---
 
 import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Bu bölüm senin orijinal hedeflerinden biriydi: yapay zekâya profesyonel seviyede prompt yazabilmek. Bölümün tezi tek cümle: **iyi bir prompt bir spec'tir.** Bağlam, kısıt, kabul kriteri ve format; dördü de önceki bölümlerde zaten var. Yani prompt yazmayı öğrenmek ayrı bir beceri değil, **önceki bölümlerde öğrendiğin dili kullanmak.**
+Bu bölümün hedefi yapay zekâya profesyonel seviyede talimat verebilmek. Bölümün tezi tek cümle: **iyi bir prompt bir spec'tir.** Bağlam, kısıt, kabul kriteri ve format; dördü de önceki bölümlerde zaten var. Yani prompt yazmayı öğrenmek ayrı bir beceri değil, **önceki bölümlerde öğrendiğin dili kullanmak.**
 
 "Modern ve şık olsun" bir talimat değildir; içinde doğrulanabilir tek bir kısıt yok. "8px tabanlı spacing ölçeği, tek accent rengi, kartlar arası gap 24, boş durum ve hata durumu dahil" bir talimattır.
 
@@ -38,9 +43,9 @@ Materyalin bu bölümünü yazan da bir yapay zekâ. Sistemlerin nasıl çalış
 
 Büyük bir pencere "her şeyi at içine" demek değildir: **alakasız bağlam, alakalı bağlamı seyreltir.** Doğru yaklaşım pencereyi doldurmak değil, ne göstereceğini seçmektir (sonraki derste). "Oturum çok uzadı ve kararlar tutarsızlaşmaya başladı; özetleyip yeni bir oturum açalım."
 
-## Knowledge cutoff: senin alanında doğrudan risk
+## Knowledge cutoff: değişen bilgide risk
 
-**Knowledge cutoff (bilgi kesim tarihi)**, modelin eğitim verisinin bittiği tarihtir; o tarihten sonrasını kendiliğinden bilmez. **Senin alanında bu doğrudan bir risktir:** kütüphane manzarası hızlı değişir. Model bakım moduna geçmiş bir kütüphaneyi veya adı değişmiş bir paketi hâlâ eski hâliyle önerebilir.
+**Knowledge cutoff (bilgi kesim tarihi)**, modelin eğitim verisinin bittiği tarihtir; o tarihten sonrasını kendiliğinden bilmez. **Hızlı değişen alanlarda bu doğrudan bir risktir:** kütüphane manzarası, fiyatlar ve mevzuat sık değişir. Model bakım moduna geçmiş bir kütüphaneyi veya adı değişmiş bir paketi hâlâ eski hâliyle önerebilir.
 
 Model, bilmediği bir şeyin bilmediğini her zaman fark etmez; eski bilgiyi güvenle sunar. **Değişken bilgi türlerini (sürüm, fiyat, API davranışı) her zaman doğrulat.** "Bu kütüphanenin güncel durumunu doğrula; bilgi kesim tarihinden sonra değişmiş olabilir."
 
@@ -59,14 +64,91 @@ Model, bilmediği bir şeyin bilmediğini her zaman fark etmez; eski bilgiyi gü
 
 **Drift (sapma)**, üretilen çıktının istenen şeyden yavaş yavaş uzaklaşması ve bunu yaparken tutarlı ve inandırıcı görünmesidir. Materyal, 2026 itibarıyla yapay zekâ destekli geliştirmenin ana sorununun üretim hızı değil sapma olduğunu aktarıyor: hızlı üretilmiş, kendinden emin ama **yanlış problemi çözen** çıktı. Panzehir, üretimden önce net bir tanım (spec) koymaktır. Uzun oturumlarda ve belirsiz taleplerde karşına çıkar. "Çıktı güzel ama biz bunu istememiştik; sapma var. Tanıma geri dönelim."
 
-<Callout kind="tasarimci">
+<Tree
+  label="Modelin dört sınırı"
+  caption="Bir modelle çalışırken dört sınır bilinmelidir. Bağlam penceresi sınırlıdır ve uzun oturumda dolar; başta verilen talimatlar unutulabilir. Bilgi kesim tarihinden sonrasını model kendiliğinden bilmez. Uydurma, doğru olmayan bilgiyi kendinden emin ve makul biçimde üretmektir. Sapma, çıktının istenenden yavaşça uzaklaşması ve bunu tutarlı görünerek yapmasıdır."
+  root={{
+  title: "Modelin sınırları",
+  tone: "accent",
+  children: [
+    {
+      title: "Bağlam penceresi",
+      sub: "dolar, unutur"
+    },
+    {
+      title: "Bilgi kesimi",
+      sub: "sonrasını bilmez"
+    },
+    {
+      title: "Uydurma",
+      sub: "makul görünür"
+    },
+    {
+      title: "Sapma",
+      sub: "tutarlı ama yanlış",
+      tone: "progress"
+    }
+  ]
+}}
+/>
+
+<Case>
+
+Demlik'te dört sınırın dördü de bir kez görüldü:
+
+1. **Bağlam penceresi:** Selin Panel'in boş durum metinleri için uzun bir oturum açtı. İki saat sonra model, başta verilen "dükkânlara siz diye hitap et" kuralını bırakmıştı.
+2. **Bilgi kesimi:** model Panel'deki sipariş listesi için kütüphanenin eski bir sürümüne ait bir kullanım önerdi. Ekip güncel sürümü kullanıyor; Emre dokümana bakıp düzeltti.
+3. **Uydurma:** Burak iade için ödeme kuruluşunun API'sinde bir "iade nedeni kodu" parametresi istedi. Model kendinden emin bir parametre adı verdi; resmî dokümanda böyle bir parametre yoktu.
+4. **Sapma:** Ece sipariş kartındaki bir hizalama sorununu sordu. Oturumun sonunda model bütün listeyi yeniden tasarlamıştı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Sürüm, fiyat ve API davranışını doğrulamadan kullanma;** paketin kendi sayfasına bak.
 - **Uzayan oturumu özetleyip yenile;** pencereyi doldurmaya çalışma.
 - **Çıktı güzel görünüyor diye doğru sayma:** sapma tam da böyle görünür.
 - **Önce tanım yaz, sonra üret.**
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Pazar ve rakip iddialarını doğrulat.** Model eski ya da uydurma bir rakamı güvenle verebilir.
+- **Strateji belgesinde yapay zekâ çıktısını kaynak sayma;** kaynağı aç.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Story taslağını yapay zekâya yazdırabilirsin, ama iş kuralını sen doğrularsın.**
+- **Uzun backlog oturumlarında sapmayı izle;** başta verdiğin kapsam kuralı unutulabilir.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Takvim ve maliyet tahminlerini modelden alırken varsayımları yazdır.** Model belirsizliği gizler.
+- **Sözleşme ve mevzuat iddialarını birincil kaynaktan kontrol et.**
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Ekibin yapay zekâ kullanımında doğrulama adımını çalışma sözleşmesine koy.**
+- **"Model öyle dedi" cümlesini retroda yakala;** kaynak sorulsun.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim ve iş kuralı taslaklarında uydurma kurala dikkat et.** Model makul ama yanlış bir kural ekleyebilir.
+- **Mevzuat ve standart atıflarını kaynağından doğrula.**
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Araştırma sentezinde modelin alıntı uydurabileceğini bil.** Her alıntıyı ham notla eşleştir.
+- **Katılımcı verisini modele vermeden önce anonimleştir.**
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -99,5 +181,11 @@ Rastgele değil, makul görünen biçimde olur: var olmayan ama var olabilecek b
 <SelfCheck question="Drift nedir ve neden ana sorun olarak anılır?">
 
 Çıktının istenen şeyden yavaşça uzaklaşması ama tutarlı ve inandırıcı görünmesi. Üretim hızı artık darboğaz olmadığı için sorun, kendinden emin ama yanlış problemi çözen çıktının yarattığı inceleme ve düzeltme döngüsüdür.
+
+</SelfCheck>
+
+<SelfCheck question="Uzun bir oturumda model başta verdiğin kuralı uygulamamaya başladı. Neden olabilir, ne yaparsın?">
+
+Bağlam penceresi dolmuş olabilir; başlangıçtaki talimatlar unutulmaya başlar. Şimdiye kadar alınan kararları özetleyip yeni bir oturum açarım ve kuralı yeniden veririm.
 
 </SelfCheck>

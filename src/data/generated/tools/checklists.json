@@ -1,0 +1,1387 @@
+{
+  "source": "21-kontrol-listesi.md",
+  "intro": [
+    {
+      "kind": "para",
+      "text": "Bu bölüm okunmak için değil, **kullanılmak için** yazıldı. Kopyala, projene yapıştır, kutucukları işaretle."
+    },
+    {
+      "kind": "para",
+      "text": "**Nasıl kullanılır:**"
+    },
+    {
+      "kind": "list",
+      "ordered": false,
+      "items": [
+        "**Her madde her projede geçerli değildir.** Tek sayfalık bir tanıtım sitesi ile üyelikli bir ürün aynı listeye tabi olamaz. Geçerli olmayan maddeyi silme — **\"geçerli değil\" diye işaretle.** Sebebi şu: silinen madde unutulur, işaretlenen madde bilinçli bir karar olur.",
+        "**Maddelerin yanındaki numaralar** ilgili bölüme referanstır. Bir maddeyi anlamıyorsan oraya bak.",
+        "**🔴 ile işaretli maddeler bloke edicidir** — tamamlanmadan yayına çıkılmaz. Diğerleri önemlidir ama pazarlık edilebilir.",
+        "Listeyi **Faz 8'de** (20.9) bir kez, **Faz 9'da** (20.10) bir kez daha geçmek işe yarar."
+      ]
+    },
+    {
+      "kind": "quote",
+      "text": "**Hukuki uyarı:** 21.7'deki maddeler genel bilgilendirmedir, hukuki tavsiye değildir. Projenin gerçek yükümlülükleri sektöre, iş modeline ve hedef pazara göre değişir; avukat görüşü al."
+    }
+  ],
+  "lists": [
+    {
+      "number": "21.1",
+      "slug": "teknik",
+      "title": "Teknik kontrol listesi",
+      "intro": [],
+      "groups": [
+        {
+          "title": "Temel işleyiş",
+          "items": [
+            {
+              "id": "21.1/site-tum-hedef-tarayicilarda-aciliyor-nfrde-tanimlanmis",
+              "text": "Site tüm hedef tarayıcılarda açılıyor (NFR'de tanımlanmış olmalı, 2.6)",
+              "blocker": true
+            },
+            {
+              "id": "21.1/tum-ic-baglantilar-calisiyor-kirik-link-yok",
+              "text": "Tüm iç bağlantılar çalışıyor, kırık link yok",
+              "blocker": true
+            },
+            {
+              "id": "21.1/tum-formlar-gonderiliyor-ve-veriler-dogru-yere-ulasiyor",
+              "text": "Tüm formlar gönderiliyor ve veriler doğru yere ulaşıyor",
+              "blocker": true
+            },
+            {
+              "id": "21.1/www-ve-www-olmayan-surumler-arasinda-tek-yone-yonlendirm",
+              "text": "`www` ve `www` olmayan sürümler arasında tek yöne yönlendirme var (8.9, 8.13)",
+              "blocker": false
+            },
+            {
+              "id": "21.1/eski-urller-icin-kalici-yonlendirme-kurulmus-8-9-site-ye",
+              "text": "Eski URL'ler için kalıcı yönlendirme kurulmuş (8.9) — site yenilemesi yapıldıysa",
+              "blocker": false
+            },
+            {
+              "id": "21.1/404-sayfasi-tasarlanmis-ve-cikis-yolu-sunuyor-7-9",
+              "text": "404 sayfası tasarlanmış ve çıkış yolu sunuyor (7.9)",
+              "blocker": true
+            },
+            {
+              "id": "21.1/500-hata-sayfasi-tasarlanmis-7-9",
+              "text": "500 / hata sayfası tasarlanmış (7.9)",
+              "blocker": false
+            },
+            {
+              "id": "21.1/ortam-degiskenleri-production-icin-dogru-ayarlanmis-16-3",
+              "text": "Ortam değişkenleri production için doğru ayarlanmış (16.3)",
+              "blocker": false
+            },
+            {
+              "id": "21.1/test-ornek-veriler-temizlenmis-canlida-lorem-ipsum-veya",
+              "text": "Test/örnek veriler temizlenmiş; canlıda lorem ipsum veya \"test kullanıcı\" yok",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Kod ve depo",
+          "items": [
+            {
+              "id": "21.1/gitignore-dogru-yapilandirilmis-env-depoda-degil-13-6-15",
+              "text": "`.gitignore` doğru yapılandırılmış; `.env` depoda değil (13.6, 15.10)",
+              "blocker": false
+            },
+            {
+              "id": "21.1/ana-dal-korumali-branch-protection-15-5",
+              "text": "Ana dal korumalı (branch protection, 15.5)",
+              "blocker": false
+            },
+            {
+              "id": "21.1/ci-hatti-calisiyor-ve-prlarda-zorunlu-16-2-17-7",
+              "text": "CI hattı çalışıyor ve PR'larda zorunlu (16.2, 17.7)",
+              "blocker": false
+            },
+            {
+              "id": "21.1/linter-formatter-ve-tip-kontrolu-kurulu-17-7",
+              "text": "Linter, formatter ve tip kontrolü kurulu (17.7)",
+              "blocker": false
+            },
+            {
+              "id": "21.1/readme-veya-kurulum-talimati-var-yeni-biri-projeyi-ayaga",
+              "text": "README veya kurulum talimatı var — yeni biri projeyi ayağa kaldırabilir",
+              "blocker": false
+            },
+            {
+              "id": "21.1/yapay-zeka-talimat-dosyasi-guncel-19-3",
+              "text": "Yapay zekâ talimat dosyası güncel (19.3)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Veri",
+          "items": [
+            {
+              "id": "21.1/veri-modeli-ve-migrationlar-productionda-uygulanmis-11-1",
+              "text": "Veri modeli ve migration'lar production'da uygulanmış (11.10)",
+              "blocker": true
+            },
+            {
+              "id": "21.1/indeksler-kritik-sorgular-icin-mevcut-11-5-11-9",
+              "text": "İndeksler kritik sorgular için mevcut (11.5, 11.9)",
+              "blocker": false
+            },
+            {
+              "id": "21.1/baglanti-havuzu-yapilandirilmis-serverless-kullaniliyors",
+              "text": "Bağlantı havuzu yapılandırılmış — serverless kullanılıyorsa (11.9)",
+              "blocker": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": "21.2",
+      "slug": "tasarim-ve-ux",
+      "title": "Tasarım ve UX kontrol listesi",
+      "intro": [],
+      "groups": [
+        {
+          "title": "Durum ekranları — en sık atlanan grup",
+          "items": [
+            {
+              "id": "21.2/veri-gosteren-her-ekranin-yukleniyor-durumu-var-7-9",
+              "text": "Veri gösteren her ekranın **yükleniyor** durumu var (7.9)",
+              "blocker": true
+            },
+            {
+              "id": "21.2/veri-gosteren-her-ekranin-bos-durumu-var-ve-cikis-yolu-s",
+              "text": "Veri gösteren her ekranın **boş** durumu var ve çıkış yolu sunuyor (7.9)",
+              "blocker": true
+            },
+            {
+              "id": "21.2/veri-gosteren-her-ekranin-hata-durumu-var-ve-simdi-ne-ya",
+              "text": "Veri gösteren her ekranın **hata** durumu var ve \"şimdi ne yapmalıyım\" diyor (7.9, 4.9)",
+              "blocker": true
+            },
+            {
+              "id": "21.2/arama-filtre-sonucu-bossa-oneri-veya-filtre-temizleme-su",
+              "text": "Arama/filtre sonucu boşsa öneri veya filtre temizleme sunuluyor (7.9, 7.10)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/ilk-kullanim-bos-durumu-bir-onboarding-firsati-olarak-ku",
+              "text": "İlk kullanım boş durumu bir onboarding fırsatı olarak kullanılmış (7.9, 7.12)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/basari-durumu-sonraki-adimi-gosteriyor-7-9",
+              "text": "Başarı durumu sonraki adımı gösteriyor (7.9)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Bileşen durumları",
+          "items": [
+            {
+              "id": "21.2/her-etkilesimli-ogede-default-hover-focus-active-disable",
+              "text": "Her etkileşimli öğede default, hover, **focus**, active, disabled durumları tanımlı (6.5)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/yukleme-sirasinda-butonlar-devre-disi-ve-durum-gosteriyo",
+              "text": "Yükleme sırasında butonlar devre dışı ve durum gösteriyor (7.9, 10.2)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/yikici-islemler-geri-alinabilir-veya-onay-istiyor-4-6-7",
+              "text": "Yıkıcı işlemler geri alınabilir veya onay istiyor (4.6, 7.8)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Hiyerarşi ve tutarlılık",
+          "items": [
+            {
+              "id": "21.2/her-ekranda-tek-birincil-cta-var-7-3-4-8",
+              "text": "Her ekranda **tek** birincil CTA var (7.3, 4.8)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/bosluklar-spacing-olceginden-olcek-disi-deger-yok-5-5",
+              "text": "Boşluklar spacing ölçeğinden; ölçek dışı değer yok (5.5)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/renkler-tokendan-ham-hex-yok-5-2",
+              "text": "Renkler token'dan; ham hex yok (5.2)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/tipografi-olcekten-ara-boyut-kullanilmamis-5-3",
+              "text": "Tipografi ölçekten; ara boyut kullanılmamış (5.3)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/tek-ikon-seti-kullanilmis-5-7",
+              "text": "Tek ikon seti kullanılmış (5.7)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/aktif-menu-ogesi-isaretli-ve-sadece-renkle-degil-7-2-6-6",
+              "text": "Aktif menü öğesi işaretli ve sadece renkle değil (7.2, 6.6)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Responsive",
+          "items": [
+            {
+              "id": "21.2/375px-genislikte-tasma-yok",
+              "text": "375px genişlikte taşma yok",
+              "blocker": true
+            },
+            {
+              "id": "21.2/768px-ve-1440pxte-duzen-bozulmuyor",
+              "text": "768px ve 1440px'te düzen bozulmuyor",
+              "blocker": true
+            },
+            {
+              "id": "21.2/cok-genis-ekranda-icerik-yayilmiyor-container-max-width",
+              "text": "Çok geniş ekranda içerik yayılmıyor (container/max-width var, 5.5)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/tablolar-mobilde-bir-stratejiye-sahip-kaydirma-kart-gizl",
+              "text": "Tablolar mobilde bir stratejiye sahip (kaydırma / kart / gizleme, 7.10)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/mobilde-birincil-eylem-hamburgerin-disinda-7-2",
+              "text": "Mobilde birincil eylem hamburger'in dışında (7.2)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Uç durumlar",
+          "items": [
+            {
+              "id": "21.2/cok-uzun-metinlerde-60-karakter-baslik-duzen-bozulmuyor",
+              "text": "Çok uzun metinlerde (60+ karakter başlık) düzen bozulmuyor (4.4)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/cok-kisa-bos-icerikte-duzen-bozulmuyor-4-4",
+              "text": "Çok kısa/boş içerikte düzen bozulmuyor (4.4)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/gorsel-yuklenmediginde-makul-bir-yedek-var-5-7-7-13",
+              "text": "Görsel yüklenmediğinde makul bir yedek var (5.7, 7.13)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/uzun-listelerde-sayfalama-veya-sanallastirma-var-7-10",
+              "text": "Uzun listelerde sayfalama veya sanallaştırma var (7.10)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Metin",
+          "items": [
+            {
+              "id": "21.2/buton-etiketleri-eylemi-soyluyor-gonder-degil-rezervasyo",
+              "text": "Buton etiketleri eylemi söylüyor (\"Gönder\" değil, \"Rezervasyonu tamamla\", 4.9)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/hata-mesajlari-ne-oldugunu-neden-oldugunu-ve-ne-yapilaca",
+              "text": "Hata mesajları ne olduğunu, neden olduğunu ve ne yapılacağını söylüyor (4.9)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/placeholder-label-yerine-kullanilmamis-4-9",
+              "text": "Placeholder, label yerine kullanılmamış (4.9)",
+              "blocker": false
+            },
+            {
+              "id": "21.2/ton-duruma-uygun-hata-ekraninda-saka-yok-4-9",
+              "text": "Ton, duruma uygun — hata ekranında şaka yok (4.9)",
+              "blocker": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": "21.3",
+      "slug": "erisilebilirlik",
+      "title": "Erişilebilirlik kontrol listesi",
+      "intro": [
+        {
+          "kind": "para",
+          "text": "Hedef: **WCAG 2.2 Level AA** (6.2). Detaylı rehber Bölüm 6'da."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Manuel dört kontrol — bunlar araçla yapılamaz",
+          "items": [
+            {
+              "id": "21.3/klavye-turu-fareyi-birakip-tab-enter-space-ok-tuslariyla",
+              "text": "**Klavye turu:** Fareyi bırakıp Tab/Enter/Space/ok tuşlarıyla ana akış tamamlanabiliyor (6.5, 6.9)",
+              "blocker": true
+            },
+            {
+              "id": "21.3/odak-gorunurlugu-odaklanilan-her-ogede-gorunur-bir-goste",
+              "text": "**Odak görünürlüğü:** Odaklanılan her öğede görünür bir gösterge var (6.5)",
+              "blocker": true
+            },
+            {
+              "id": "21.3/200-zoom-icerik-kirpilmiyor-ust-uste-binmiyor-6-6",
+              "text": "**%200 zoom:** İçerik kırpılmıyor, üst üste binmiyor (6.6)",
+              "blocker": false
+            },
+            {
+              "id": "21.3/gri-tonlama-renkten-bagimsiz-olarak-her-sey-anlasiliyor",
+              "text": "**Gri tonlama:** Renkten bağımsız olarak her şey anlaşılıyor (6.6)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Yapı",
+          "items": [
+            {
+              "id": "21.3/tiklanabilir-her-oge-gercek-button-veya-a-div-degil-6-3",
+              "text": "Tıklanabilir her öğe gerçek `button` veya `a`; `div` değil (6.3)",
+              "blocker": true
+            },
+            {
+              "id": "21.3/baslik-hiyerarsisi-yapiyi-yansitiyor-seviye-atlanmamis-6",
+              "text": "Başlık hiyerarşisi yapıyı yansıtıyor, seviye atlanmamış (6.3)",
+              "blocker": false
+            },
+            {
+              "id": "21.3/sayfada-tek-h1-var-6-3",
+              "text": "Sayfada tek `h1` var (6.3)",
+              "blocker": false
+            },
+            {
+              "id": "21.3/landmarklar-tanimli-header-nav-main-footer-6-3",
+              "text": "Landmark'lar tanımlı: header, nav, main, footer (6.3)",
+              "blocker": false
+            },
+            {
+              "id": "21.3/skip-link-mevcut-ve-calisiyor-6-5",
+              "text": "Skip link mevcut ve çalışıyor (6.5)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Görsel",
+          "items": [
+            {
+              "id": "21.3/metin-kontrasti-en-az-4-5-1-buyuk-metin-3-1-5-4-6-6",
+              "text": "Metin kontrastı en az 4.5:1 (büyük metin 3:1) (5.4, 6.6)",
+              "blocker": true
+            },
+            {
+              "id": "21.3/arayuz-bilesenleri-ve-odak-gostergeleri-en-az-3-1-6-6",
+              "text": "Arayüz bileşenleri ve odak göstergeleri en az 3:1 (6.6)",
+              "blocker": false
+            },
+            {
+              "id": "21.3/anlam-sadece-renkle-tasinmiyor-ikon-veya-metin-de-var-6",
+              "text": "Anlam sadece renkle taşınmıyor — ikon veya metin de var (6.6)",
+              "blocker": false
+            },
+            {
+              "id": "21.3/dokunma-hedefleri-en-az-24-24-css-pikseli-6-6",
+              "text": "Dokunma hedefleri en az 24×24 CSS pikseli (6.6)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "İçerik",
+          "items": [
+            {
+              "id": "21.3/anlamli-gorsellerin-alt-metni-var-dekoratifler-bos-birak",
+              "text": "Anlamlı görsellerin alt metni var; dekoratifler boş bırakılmış (6.4)",
+              "blocker": false
+            },
+            {
+              "id": "21.3/ikon-butonlarin-erisilebilir-adi-var-6-4",
+              "text": "İkon butonların erişilebilir adı var (6.4)",
+              "blocker": false
+            },
+            {
+              "id": "21.3/form-alanlari-etiketleriyle-iliskilendirilmis-6-7",
+              "text": "Form alanları etiketleriyle ilişkilendirilmiş (6.7)",
+              "blocker": false
+            },
+            {
+              "id": "21.3/hata-mesajlari-alanla-iliskilendirilmis-ve-duyuruluyor-6",
+              "text": "Hata mesajları alanla ilişkilendirilmiş ve duyuruluyor (6.4, 6.7)",
+              "blocker": false
+            },
+            {
+              "id": "21.3/dinamik-degisimler-toast-sonuc-sayisi-canli-bolge-olarak",
+              "text": "Dinamik değişimler (toast, sonuç sayısı) canlı bölge olarak duyuruluyor (6.4)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Modal ve hareket",
+          "items": [
+            {
+              "id": "21.3/modal-acilinca-odak-iceri-tasiniyor-iceride-kaliyor-kapa",
+              "text": "Modal açılınca odak içeri taşınıyor, içeride kalıyor, kapanınca geri dönüyor (6.5, 7.8)",
+              "blocker": false
+            },
+            {
+              "id": "21.3/esc-ile-kapaniyor-7-8",
+              "text": "Esc ile kapanıyor (7.8)",
+              "blocker": false
+            },
+            {
+              "id": "21.3/prefers-reduced-motion-destekleniyor-5-9-6-8",
+              "text": "`prefers-reduced-motion` destekleniyor (5.9, 6.8)",
+              "blocker": false
+            },
+            {
+              "id": "21.3/otomatik-hareket-eden-icerik-durdurulabiliyor-6-8-7-5",
+              "text": "Otomatik hareket eden içerik durdurulabiliyor (6.8, 7.5)",
+              "blocker": false
+            },
+            {
+              "id": "21.3/saniyede-ucten-fazla-yanip-sonen-icerik-yok-6-8",
+              "text": "Saniyede üçten fazla yanıp sönen içerik yok (6.8)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Denetim",
+          "items": [
+            {
+              "id": "21.3/otomatik-tarama-lighthouse-axe-calistirilmis-ve-kritik-b",
+              "text": "Otomatik tarama (Lighthouse/axe) çalıştırılmış ve kritik bulgular kapatılmış (6.9)",
+              "blocker": false
+            },
+            {
+              "id": "21.3/ekran-okuyucuyla-en-az-ana-akis-denenmis-6-9",
+              "text": "Ekran okuyucuyla en az ana akış denenmiş (6.9)",
+              "blocker": false
+            },
+            {
+              "id": "21.3/erisilebilirlik-beyani-sayfasi-var-6-2-13-11",
+              "text": "Erişilebilirlik beyanı sayfası var (6.2, 13.11)",
+              "blocker": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": "21.4",
+      "slug": "icerik-ve-seo",
+      "title": "İçerik ve SEO kontrol listesi",
+      "intro": [],
+      "groups": [
+        {
+          "title": "İçerik",
+          "items": [
+            {
+              "id": "21.4/lorem-ipsum-veya-yer-tutucu-metin-kalmamis",
+              "text": "Lorem ipsum veya yer tutucu metin kalmamış",
+              "blocker": true
+            },
+            {
+              "id": "21.4/gercek-icerikle-tasarim-kontrol-edilmis-20-8",
+              "text": "Gerçek içerikle tasarım kontrol edilmiş (20.8)",
+              "blocker": false
+            },
+            {
+              "id": "21.4/yazim-ve-dil-kontrolu-yapilmis",
+              "text": "Yazım ve dil kontrolü yapılmış",
+              "blocker": false
+            },
+            {
+              "id": "21.4/iletisim-bilgileri-dogru-ve-guncel",
+              "text": "İletişim bilgileri doğru ve güncel",
+              "blocker": false
+            },
+            {
+              "id": "21.4/tarihler-fiyatlar-ve-sayilar-guncel",
+              "text": "Tarihler, fiyatlar ve sayılar güncel",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Temel SEO",
+          "items": [
+            {
+              "id": "21.4/her-sayfanin-benzersiz-title-etiketi-var-8-13",
+              "text": "Her sayfanın benzersiz `title` etiketi var (8.13)",
+              "blocker": true
+            },
+            {
+              "id": "21.4/her-sayfanin-meta-aciklamasi-var-8-13",
+              "text": "Her sayfanın meta açıklaması var (8.13)",
+              "blocker": false
+            },
+            {
+              "id": "21.4/robots-txt-production-icin-dogru-stagingdeki-engelle-aya",
+              "text": "`robots.txt` production için doğru — **staging'deki \"engelle\" ayarı taşınmamış** (8.13)",
+              "blocker": true
+            },
+            {
+              "id": "21.4/sitemap-xml-uretiliyor-ve-guncel-8-13",
+              "text": "`sitemap.xml` üretiliyor ve güncel (8.13)",
+              "blocker": false
+            },
+            {
+              "id": "21.4/canonical-etiketleri-dogru-filtreli-sayfalar-kopya-sayil",
+              "text": "Canonical etiketleri doğru; filtreli sayfalar kopya sayılmıyor (8.13)",
+              "blocker": false
+            },
+            {
+              "id": "21.4/baslik-hiyerarsisi-anlamli-6-3-8-13",
+              "text": "Başlık hiyerarşisi anlamlı (6.3, 8.13)",
+              "blocker": false
+            },
+            {
+              "id": "21.4/gorsellerde-aciklayici-alt-metin-var-6-4-8-13",
+              "text": "Görsellerde açıklayıcı alt metin var (6.4, 8.13)",
+              "blocker": false
+            },
+            {
+              "id": "21.4/urller-okunabilir-id-yerine-slug-kullaniliyor-1-2",
+              "text": "URL'ler okunabilir; ID yerine slug kullanılıyor (1.2)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Paylaşım",
+          "items": [
+            {
+              "id": "21.4/open-graph-etiketleri-var-baslik-aciklama-gorsel-8-13",
+              "text": "Open Graph etiketleri var: başlık, açıklama, görsel (8.13)",
+              "blocker": true
+            },
+            {
+              "id": "21.4/og-gorseli-tasarlanmis-ve-dogru-oranda-8-13-5-7",
+              "text": "OG görseli tasarlanmış ve doğru oranda (8.13, 5.7)",
+              "blocker": false
+            },
+            {
+              "id": "21.4/paylasim-onizlemesi-gercekten-test-edilmis-bir-mesajlasm",
+              "text": "Paylaşım önizlemesi gerçekten test edilmiş — bir mesajlaşma uygulamasına link atarak",
+              "blocker": false
+            },
+            {
+              "id": "21.4/favicon-mevcut-ve-kucuk-boyutta-okunuyor-8-13",
+              "text": "Favicon mevcut ve küçük boyutta okunuyor (8.13)",
+              "blocker": false
+            },
+            {
+              "id": "21.4/web-app-manifest-varsa-dogru-yapilandirilmis-1-7",
+              "text": "Web app manifest varsa doğru yapılandırılmış (1.7)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Yapılandırılmış veri",
+          "items": [
+            {
+              "id": "21.4/uygunsa-structured-data-eklenmis-urun-sss-breadcrumb-etk",
+              "text": "Uygunsa structured data eklenmiş (ürün, SSS, breadcrumb, etkinlik) (8.13)",
+              "blocker": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": "21.5",
+      "slug": "performans",
+      "title": "Performans kontrol listesi",
+      "intro": [
+        {
+          "kind": "para",
+          "text": "Hedefler ve eşikler Bölüm 8.12'de."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Ölçüm",
+          "items": [
+            {
+              "id": "21.5/lcp-2-5-saniye-8-12",
+              "text": "LCP ≤ 2,5 saniye (8.12)",
+              "blocker": true
+            },
+            {
+              "id": "21.5/inp-200-ms-8-12",
+              "text": "INP ≤ 200 ms (8.12)",
+              "blocker": false
+            },
+            {
+              "id": "21.5/cls-0-1-8-12",
+              "text": "CLS ≤ 0,1 (8.12)",
+              "blocker": true
+            },
+            {
+              "id": "21.5/olcum-gercekci-kosullarda-yapilmis-mobil-kisitli-ag-prod",
+              "text": "Ölçüm gerçekçi koşullarda yapılmış — mobil, kısıtlı ağ, production build (1.8, 8.12)",
+              "blocker": false
+            },
+            {
+              "id": "21.5/saha-verisi-izlemeye-alinmis-8-12-16-11",
+              "text": "Saha verisi izlemeye alınmış (8.12, 16.11)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Görseller",
+          "items": [
+            {
+              "id": "21.5/gorseller-modern-formatta-webp-avif-5-7-8-12",
+              "text": "Görseller modern formatta (WebP/AVIF) (5.7, 8.12)",
+              "blocker": true
+            },
+            {
+              "id": "21.5/gorseller-cihaza-uygun-boyutlarda-servis-ediliyor-8-12",
+              "text": "Görseller cihaza uygun boyutlarda servis ediliyor (8.12)",
+              "blocker": false
+            },
+            {
+              "id": "21.5/ekran-disindaki-gorseller-lazy-load-ediliyor-8-12",
+              "text": "Ekran dışındaki görseller lazy load ediliyor (8.12)",
+              "blocker": false
+            },
+            {
+              "id": "21.5/hero-gorseli-lazy-load-edilmiyor-oncelikli-yukleniyor-8",
+              "text": "Hero görseli lazy load **edilmiyor**, öncelikli yükleniyor (8.12)",
+              "blocker": true
+            },
+            {
+              "id": "21.5/gorsellerin-en-boy-orani-tanimli-yuklenince-kayma-yok-5",
+              "text": "Görsellerin en-boy oranı tanımlı; yüklenince kayma yok (5.7, 8.12)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Font ve kod",
+          "items": [
+            {
+              "id": "21.5/kullanilmayan-font-agirliklari-kaldirilmis-5-3-8-12",
+              "text": "Kullanılmayan font ağırlıkları kaldırılmış (5.3, 8.12)",
+              "blocker": false
+            },
+            {
+              "id": "21.5/font-yukleme-davranisi-ayarlanmis-metin-gorunmez-kalmiyo",
+              "text": "Font yükleme davranışı ayarlanmış; metin görünmez kalmıyor (8.12)",
+              "blocker": false
+            },
+            {
+              "id": "21.5/kullanilmayan-bagimliliklar-temizlenmis-8-11",
+              "text": "Kullanılmayan bağımlılıklar temizlenmiş (8.11)",
+              "blocker": false
+            },
+            {
+              "id": "21.5/agir-bilesenler-harita-grafik-3b-lazy-load-ediliyor-8-11",
+              "text": "Ağır bileşenler (harita, grafik, 3B) lazy load ediliyor (8.11, 9.6)",
+              "blocker": false
+            },
+            {
+              "id": "21.5/performans-butcesi-tanimlanmis-ve-cida-kontrol-ediliyor",
+              "text": "Performans bütçesi tanımlanmış ve CI'da kontrol ediliyor (17.6)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Altyapı",
+          "items": [
+            {
+              "id": "21.5/statik-varliklar-cdnden-servis-ediliyor-10-11",
+              "text": "Statik varlıklar CDN'den servis ediliyor (10.11)",
+              "blocker": false
+            },
+            {
+              "id": "21.5/onbellek-basliklari-dogru-yapilandirilmis-10-11",
+              "text": "Önbellek başlıkları doğru yapılandırılmış (10.11)",
+              "blocker": false
+            },
+            {
+              "id": "21.5/sunucu-bolgesi-hedef-kitleye-uygun-10-8",
+              "text": "Sunucu bölgesi hedef kitleye uygun (10.8)",
+              "blocker": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": "21.6",
+      "slug": "guvenlik",
+      "title": "Güvenlik kontrol listesi",
+      "intro": [
+        {
+          "kind": "para",
+          "text": "Detaylar Bölüm 13'te."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Temel",
+          "items": [
+            {
+              "id": "21.6/https-zorunlu-httpden-yonlendirme-var-1-3-13-5",
+              "text": "HTTPS zorunlu; HTTP'den yönlendirme var (1.3, 13.5)",
+              "blocker": true
+            },
+            {
+              "id": "21.6/ssl-sertifikasi-gecerli-ve-otomatik-yenileniyor-13-5",
+              "text": "SSL sertifikası geçerli ve otomatik yenileniyor (13.5)",
+              "blocker": true
+            },
+            {
+              "id": "21.6/karisik-icerik-mixed-content-uyarisi-yok-13-5",
+              "text": "Karışık içerik (mixed content) uyarısı yok (13.5)",
+              "blocker": false
+            },
+            {
+              "id": "21.6/guvenlik-basliklari-yapilandirilmis-csp-clickjacking-kor",
+              "text": "Güvenlik başlıkları yapılandırılmış (CSP, clickjacking koruması) (13.3, 13.4)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Sırlar",
+          "items": [
+            {
+              "id": "21.6/hicbir-api-anahtari-veya-sir-depoda-yok-13-6-15-10",
+              "text": "Hiçbir API anahtarı veya sır depoda yok (13.6, 15.10)",
+              "blocker": true
+            },
+            {
+              "id": "21.6/gizli-anahtarlar-on-yuz-paketine-gomulmemis-13-6",
+              "text": "Gizli anahtarlar ön yüz paketine gömülmemiş (13.6)",
+              "blocker": true
+            },
+            {
+              "id": "21.6/gecmiste-depoya-sir-girdiyse-iptal-edilip-yenilenmis-13",
+              "text": "Geçmişte depoya sır girdiyse **iptal edilip yenilenmiş** (13.6)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Erişim",
+          "items": [
+            {
+              "id": "21.6/her-korumali-istekte-sunucu-tarafinda-yetki-kontrolu-var",
+              "text": "Her korumalı istekte sunucu tarafında yetki kontrolü var (13.6, 12.9)",
+              "blocker": true
+            },
+            {
+              "id": "21.6/idor-testi-yapilmis-baskasinin-kayit-idsiyle-erisim-dene",
+              "text": "IDOR testi yapılmış — başkasının kayıt ID'siyle erişim denenmiş (13.3)",
+              "blocker": false
+            },
+            {
+              "id": "21.6/baas-kullaniliyorsa-rls-politikalari-yazilmis-ve-test-ed",
+              "text": "BaaS kullanılıyorsa RLS politikaları yazılmış ve test edilmiş (11.12)",
+              "blocker": false
+            },
+            {
+              "id": "21.6/cok-kiracili-yapida-veri-yalitimi-dogrulanmis-12-9",
+              "text": "Çok kiracılı yapıda veri yalıtımı doğrulanmış (12.9)",
+              "blocker": false
+            },
+            {
+              "id": "21.6/varsayilan-roller-en-dar-yetkiyle-basliyor-13-8",
+              "text": "Varsayılan roller en dar yetkiyle başlıyor (13.8)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Girdi ve kötüye kullanım",
+          "items": [
+            {
+              "id": "21.6/sunucu-tarafinda-girdi-dogrulamasi-var-13-7",
+              "text": "Sunucu tarafında girdi doğrulaması var (13.7)",
+              "blocker": true
+            },
+            {
+              "id": "21.6/kullanici-icerigi-guvenli-bicimde-gosteriliyor-13-7",
+              "text": "Kullanıcı içeriği güvenli biçimde gösteriliyor (13.7)",
+              "blocker": false
+            },
+            {
+              "id": "21.6/hiz-siniri-uygulanmis-ozellikle-giris-ve-formlarda-10-10",
+              "text": "Hız sınırı uygulanmış — özellikle giriş ve formlarda (10.10)",
+              "blocker": false
+            },
+            {
+              "id": "21.6/formlarda-spam-korumasi-var-13-9",
+              "text": "Formlarda spam koruması var (13.9)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Auth",
+          "items": [
+            {
+              "id": "21.6/oturum-cerezi-httponly-secure-ve-samesite-12-3",
+              "text": "Oturum çerezi httpOnly, Secure ve SameSite (12.3)",
+              "blocker": false
+            },
+            {
+              "id": "21.6/sifre-sifirlama-sonrasi-tum-oturumlar-sonlandiriliyor-12",
+              "text": "Şifre sıfırlama sonrası tüm oturumlar sonlandırılıyor (12.8)",
+              "blocker": false
+            },
+            {
+              "id": "21.6/kullanici-sayimi-sizintisi-yok-hata-mesajlari-hesap-varl",
+              "text": "Kullanıcı sayımı sızıntısı yok — hata mesajları hesap varlığını açık etmiyor (12.8)",
+              "blocker": false
+            },
+            {
+              "id": "21.6/sifre-politikasi-guncel-rehberlige-uygun-yapistirma-enge",
+              "text": "Şifre politikası güncel rehberliğe uygun; yapıştırma engellenmemiş (12.8)",
+              "blocker": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": "21.7",
+      "slug": "hukuki",
+      "title": "Hukuki kontrol listesi",
+      "intro": [
+        {
+          "kind": "quote",
+          "text": "Genel bilgilendirmedir, hukuki tavsiye değildir. Yükümlülükler sektöre, iş modeline ve hedef pazara göre değişir."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Sayfalar",
+          "items": [
+            {
+              "id": "21.7/gizlilik-politikasi-aydinlatma-metni-var-ve-erisilebilir",
+              "text": "Gizlilik politikası / aydınlatma metni var ve erişilebilir (13.10, 13.11)",
+              "blocker": true
+            },
+            {
+              "id": "21.7/cerez-politikasi-var-13-11",
+              "text": "Çerez politikası var (13.11)",
+              "blocker": false
+            },
+            {
+              "id": "21.7/kullanim-sartlari-var-13-11",
+              "text": "Kullanım şartları var (13.11)",
+              "blocker": false
+            },
+            {
+              "id": "21.7/e-ticaret-ise-mesafeli-satis-sozlesmesi-iade-ve-cayma-ha",
+              "text": "E-ticaret ise: mesafeli satış sözleşmesi, iade ve cayma hakkı bilgisi (13.11)",
+              "blocker": false
+            },
+            {
+              "id": "21.7/e-ticaret-ise-ticari-unvan-adres-ve-iletisim-bilgileri-y",
+              "text": "E-ticaret ise: ticari unvan, adres ve iletişim bilgileri yayınlanmış (13.11)",
+              "blocker": false
+            },
+            {
+              "id": "21.7/erisilebilirlik-beyani-var-6-2",
+              "text": "Erişilebilirlik beyanı var (6.2)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Onay ve rıza",
+          "items": [
+            {
+              "id": "21.7/cerez-bildirimi-var-ve-reddetmek-kabul-etmek-kadar-kolay",
+              "text": "Çerez bildirimi var ve **reddetmek kabul etmek kadar kolay** (7.7, 13.10)",
+              "blocker": true
+            },
+            {
+              "id": "21.7/zorunlu-olmayan-cerezler-onay-alinmadan-calismiyor-13-10",
+              "text": "Zorunlu olmayan çerezler onay alınmadan çalışmıyor (13.10)",
+              "blocker": false
+            },
+            {
+              "id": "21.7/aydinlatma-metni-ile-acik-riza-ayri-ayri-sunuluyor-13-10",
+              "text": "Aydınlatma metni ile açık rıza **ayrı ayrı** sunuluyor (13.10)",
+              "blocker": true
+            },
+            {
+              "id": "21.7/onceden-isaretli-onay-kutusu-yok-7-7-13-10",
+              "text": "Önceden işaretli onay kutusu yok (7.7, 13.10)",
+              "blocker": false
+            },
+            {
+              "id": "21.7/pazarlama-izni-ayri-ve-istege-bagli-13-10",
+              "text": "Pazarlama izni ayrı ve isteğe bağlı (13.10)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Veri",
+          "items": [
+            {
+              "id": "21.7/toplanan-her-kisisel-veri-alaninin-bir-gerekcesi-var-11",
+              "text": "Toplanan her kişisel veri alanının bir gerekçesi var (11.11, 13.10)",
+              "blocker": false
+            },
+            {
+              "id": "21.7/saklama-suresi-belirlenmis-11-11",
+              "text": "Saklama süresi belirlenmiş (11.11)",
+              "blocker": false
+            },
+            {
+              "id": "21.7/kullanicinin-verisine-erisme-ve-silme-talebi-icin-bir-yo",
+              "text": "Kullanıcının verisine erişme ve silme talebi için bir yol var (13.10)",
+              "blocker": false
+            },
+            {
+              "id": "21.7/yurt-disina-veri-aktarimi-varsa-hukuki-dayanagi-degerlen",
+              "text": "Yurt dışına veri aktarımı varsa hukuki dayanağı değerlendirilmiş (13.10)",
+              "blocker": false
+            },
+            {
+              "id": "21.7/ucuncu-parti-servislerin-veri-isleme-durumu-gozden-gecir",
+              "text": "Üçüncü parti servislerin veri işleme durumu gözden geçirilmiş (10.9, 13.10)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "İçerik",
+          "items": [
+            {
+              "id": "21.7/kullanilan-gorsel-font-ve-ikonlarin-lisanslari-uygun-5-7",
+              "text": "Kullanılan görsel, font ve ikonların lisansları uygun (5.7)",
+              "blocker": false
+            },
+            {
+              "id": "21.7/ucuncu-parti-kutuphanelerin-lisanslari-ticari-kullanima",
+              "text": "Üçüncü parti kütüphanelerin lisansları ticari kullanıma uygun (9.12)",
+              "blocker": false
+            },
+            {
+              "id": "21.7/hosting-planinin-ticari-kullanima-izin-verdigi-dogrulanm",
+              "text": "Hosting planının ticari kullanıma izin verdiği doğrulanmış (16.6, 16.12)",
+              "blocker": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": "21.8",
+      "slug": "operasyonel",
+      "title": "Operasyonel kontrol listesi",
+      "intro": [],
+      "groups": [
+        {
+          "title": "İzleme",
+          "items": [
+            {
+              "id": "21.8/hata-izleme-kurulmus-ve-bildirim-gidiyor-16-11",
+              "text": "Hata izleme kurulmuş ve bildirim gidiyor (16.11)",
+              "blocker": true
+            },
+            {
+              "id": "21.8/source-mapler-yuklenmis-hata-raporlari-okunabilir-8-11-1",
+              "text": "Source map'ler yüklenmiş — hata raporları okunabilir (8.11, 16.11)",
+              "blocker": false
+            },
+            {
+              "id": "21.8/uptime-izleme-kurulmus-16-10",
+              "text": "Uptime izleme kurulmuş (16.10)",
+              "blocker": false
+            },
+            {
+              "id": "21.8/kritik-akislar-icin-synthetic-izleme-var-16-10",
+              "text": "Kritik akışlar için synthetic izleme var (16.10)",
+              "blocker": false
+            },
+            {
+              "id": "21.8/uyarilar-eyleme-gecilebilir-gurultu-yok-16-10",
+              "text": "Uyarılar eyleme geçilebilir; gürültü yok (16.10)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Ölçüm",
+          "items": [
+            {
+              "id": "21.8/analitik-kurulmus-ve-calistigi-dogrulanmis-16-11",
+              "text": "Analitik kurulmuş ve çalıştığı doğrulanmış (16.11)",
+              "blocker": false
+            },
+            {
+              "id": "21.8/basari-olcutunu-olcen-olaylar-tanimlanmis-3-7-16-11",
+              "text": "Başarı ölçütünü ölçen olaylar tanımlanmış (3.7, 16.11)",
+              "blocker": false
+            },
+            {
+              "id": "21.8/funnel-takibi-kurulmus-4-10",
+              "text": "Funnel takibi kurulmuş (4.10)",
+              "blocker": false
+            },
+            {
+              "id": "21.8/analitik-kvkk-cerez-onayina-bagli-calisiyor-13-10",
+              "text": "Analitik KVKK/çerez onayına bağlı çalışıyor (13.10)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Dayanıklılık",
+          "items": [
+            {
+              "id": "21.8/veritabani-yedegi-otomatik-aliniyor-11-11",
+              "text": "Veritabanı yedeği otomatik alınıyor (11.11)",
+              "blocker": true
+            },
+            {
+              "id": "21.8/geri-yukleme-en-az-bir-kez-denenmis-11-11",
+              "text": "**Geri yükleme en az bir kez denenmiş** (11.11)",
+              "blocker": true
+            },
+            {
+              "id": "21.8/geri-alma-rollback-yolu-belli-ve-denenmis-16-9",
+              "text": "Geri alma (rollback) yolu belli ve denenmiş (16.9)",
+              "blocker": false
+            },
+            {
+              "id": "21.8/harcama-siniri-ve-fatura-uyarisi-kurulmus-16-12",
+              "text": "Harcama sınırı ve fatura uyarısı kurulmuş (16.12)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Sahiplik ve belge",
+          "items": [
+            {
+              "id": "21.8/alan-adi-hosting-ve-servis-hesaplarinin-sahibi-belli-kis",
+              "text": "Alan adı, hosting ve servis hesaplarının sahibi belli — kişisel hesapta değil",
+              "blocker": false
+            },
+            {
+              "id": "21.8/alan-adi-yenileme-tarihi-takvimde",
+              "text": "Alan adı yenileme tarihi takvimde",
+              "blocker": false
+            },
+            {
+              "id": "21.8/erisim-bilgileri-guvenli-bicimde-paylasilmis-13-6",
+              "text": "Erişim bilgileri güvenli biçimde paylaşılmış (13.6)",
+              "blocker": false
+            },
+            {
+              "id": "21.8/kurulum-ve-calistirma-talimati-yazili",
+              "text": "Kurulum ve çalıştırma talimatı yazılı",
+              "blocker": false
+            },
+            {
+              "id": "21.8/bilinen-sorunlar-ve-teknik-borc-kayitli-17-9",
+              "text": "Bilinen sorunlar ve teknik borç kayıtlı (17.9)",
+              "blocker": false
+            },
+            {
+              "id": "21.8/bir-sorun-cikarsa-kime-ulasilacagi-belli-16-9",
+              "text": "Bir sorun çıkarsa kime ulaşılacağı belli (16.9)",
+              "blocker": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": "21.9",
+      "slug": "launch-gunu",
+      "title": "Launch günü kontrol listesi",
+      "intro": [
+        {
+          "kind": "para",
+          "text": "Yayın gününde sırayla geçilecek liste."
+        }
+      ],
+      "groups": [
+        {
+          "title": "Yayından önce (T-1 gün)",
+          "items": [
+            {
+              "id": "21.9/21-1-21-8-arasi-listeler-bir-kez-gecilmis",
+              "text": "21.1–21.8 arası listeler bir kez geçilmiş",
+              "blocker": false
+            },
+            {
+              "id": "21.9/stagingde-son-surum-onaylanmis-1-8-2-10",
+              "text": "Staging'de son sürüm onaylanmış (1.8, 2.10)",
+              "blocker": false
+            },
+            {
+              "id": "21.9/dns-kayitlari-hazirlanmis-ttl-dusurulmus-16-7",
+              "text": "DNS kayıtları hazırlanmış; TTL düşürülmüş (16.7)",
+              "blocker": false
+            },
+            {
+              "id": "21.9/e-posta-kayitlari-mx-txt-korunmus-nameserver-degisecekse",
+              "text": "**E-posta kayıtları (MX, TXT) korunmuş** — nameserver değişecekse (16.7)",
+              "blocker": true
+            },
+            {
+              "id": "21.9/production-ortam-degiskenleri-kontrol-edilmis-16-3",
+              "text": "Production ortam değişkenleri kontrol edilmiş (16.3)",
+              "blocker": false
+            },
+            {
+              "id": "21.9/geri-alma-plani-yazili-16-9",
+              "text": "Geri alma planı yazılı (16.9)",
+              "blocker": false
+            },
+            {
+              "id": "21.9/yayin-saatinde-kimin-musait-olacagi-belli-cuma-aksami-de",
+              "text": "Yayın saatinde kimin müsait olacağı belli — **cuma akşamı değil** (16.9)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Yayın anında",
+          "items": [
+            {
+              "id": "21.9/deploy-tamamlandi-ve-build-basarili-16-2",
+              "text": "Deploy tamamlandı ve build başarılı (16.2)",
+              "blocker": false
+            },
+            {
+              "id": "21.9/smoke-test-ana-sayfa-giris-kritik-akis-calisiyor-17-2",
+              "text": "Smoke test: ana sayfa, giriş, kritik akış çalışıyor (17.2)",
+              "blocker": false
+            },
+            {
+              "id": "21.9/https-calisiyor-sertifika-gecerli-13-5",
+              "text": "HTTPS çalışıyor; sertifika geçerli (13.5)",
+              "blocker": true
+            },
+            {
+              "id": "21.9/404-ve-hata-sayfalari-dogru-donuyor-7-9",
+              "text": "404 ve hata sayfaları doğru dönüyor (7.9)",
+              "blocker": false
+            },
+            {
+              "id": "21.9/robots-txt-production-icin-dogru-8-13",
+              "text": "`robots.txt` production için doğru (8.13)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "Yayından hemen sonra (ilk saat)",
+          "items": [
+            {
+              "id": "21.9/gercek-bir-cihazda-mobil-kontrol-yapildi",
+              "text": "Gerçek bir cihazda mobil kontrol yapıldı",
+              "blocker": false
+            },
+            {
+              "id": "21.9/og-onizlemesi-bir-mesajlasma-uygulamasinda-test-edildi-8",
+              "text": "OG önizlemesi bir mesajlaşma uygulamasında test edildi (8.13)",
+              "blocker": false
+            },
+            {
+              "id": "21.9/bir-form-gercekten-gonderildi-ve-ulastigi-dogrulandi",
+              "text": "Bir form gerçekten gönderildi ve ulaştığı doğrulandı",
+              "blocker": false
+            },
+            {
+              "id": "21.9/odeme-varsa-gercek-bir-test-islemi-yapildi-10-15",
+              "text": "Ödeme varsa gerçek bir test işlemi yapıldı (10.15)",
+              "blocker": false
+            },
+            {
+              "id": "21.9/hata-izleme-panelinde-yeni-hata-akisi-izleniyor-16-11",
+              "text": "Hata izleme panelinde yeni hata akışı izleniyor (16.11)",
+              "blocker": false
+            },
+            {
+              "id": "21.9/analitik-veri-almaya-basladi-16-11",
+              "text": "Analitik veri almaya başladı (16.11)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "İlk 48 saat",
+          "items": [
+            {
+              "id": "21.9/hata-orani-izleniyor-16-11",
+              "text": "Hata oranı izleniyor (16.11)",
+              "blocker": false
+            },
+            {
+              "id": "21.9/core-web-vitals-saha-verisi-toplanmaya-basladi-8-12",
+              "text": "Core Web Vitals saha verisi toplanmaya başladı (8.12)",
+              "blocker": false
+            },
+            {
+              "id": "21.9/kullanici-geri-bildirim-kanali-acik-ve-izleniyor",
+              "text": "Kullanıcı geri bildirim kanalı açık ve izleniyor",
+              "blocker": false
+            },
+            {
+              "id": "21.9/sunucu-maliyeti-ve-trafik-beklendigi-gibi-16-12",
+              "text": "Sunucu maliyeti ve trafik beklendiği gibi (16.12)",
+              "blocker": false
+            },
+            {
+              "id": "21.9/arama-motoruna-gonderim-yapildi-indeksleme-izleniyor-8-1",
+              "text": "Arama motoruna gönderim yapıldı; indeksleme izleniyor (8.13)",
+              "blocker": false
+            }
+          ]
+        },
+        {
+          "title": "İlk hafta",
+          "items": [
+            {
+              "id": "21.9/basari-olcutu-olculmeye-baslandi-3-7-20-11",
+              "text": "Başarı ölçütü ölçülmeye başlandı (3.7, 20.11)",
+              "blocker": false
+            },
+            {
+              "id": "21.9/bulunan-hatalar-onceliklendirildi-17-5",
+              "text": "Bulunan hatalar önceliklendirildi (17.5)",
+              "blocker": false
+            },
+            {
+              "id": "21.9/retrospective-yapildi-3-2",
+              "text": "Retrospective yapıldı (3.2)",
+              "blocker": false
+            },
+            {
+              "id": "21.9/bilinen-sorunlar-ve-sonraki-adimlar-kayit-altina-alindi",
+              "text": "Bilinen sorunlar ve sonraki adımlar kayıt altına alındı",
+              "blocker": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "quick": {
+    "title": "Hızlı sürüm — küçük projeler için",
+    "intro": [
+      {
+        "kind": "para",
+        "text": "Tek sayfalık bir tanıtım sitesi veya küçük bir proje için, **atlanamayacak 15 madde:**"
+      }
+    ],
+    "items": [
+      {
+        "id": "21.hizli/mobilde-375px-tasma-yok",
+        "text": "Mobilde (375px) taşma yok",
+        "blocker": true
+      },
+      {
+        "id": "21.hizli/klavyeyle-gezilebiliyor-ve-odak-gostergesi-gorunur",
+        "text": "Klavyeyle gezilebiliyor ve odak göstergesi görünür",
+        "blocker": true
+      },
+      {
+        "id": "21.hizli/metin-kontrasti-4-5-1-uzerinde",
+        "text": "Metin kontrastı 4.5:1 üzerinde",
+        "blocker": true
+      },
+      {
+        "id": "21.hizli/tum-formlar-calisiyor-ve-verisi-ulasiyor",
+        "text": "Tüm formlar çalışıyor ve verisi ulaşıyor",
+        "blocker": true
+      },
+      {
+        "id": "21.hizli/404-sayfasi-var-ve-cikis-yolu-sunuyor",
+        "text": "404 sayfası var ve çıkış yolu sunuyor",
+        "blocker": true
+      },
+      {
+        "id": "21.hizli/https-calisiyor",
+        "text": "HTTPS çalışıyor",
+        "blocker": true
+      },
+      {
+        "id": "21.hizli/depoda-sir-yok",
+        "text": "Depoda sır yok",
+        "blocker": true
+      },
+      {
+        "id": "21.hizli/robots-txt-staging-ayarini-tasimiyor",
+        "text": "`robots.txt` staging ayarını taşımıyor",
+        "blocker": true
+      },
+      {
+        "id": "21.hizli/her-sayfanin-benzersiz-titlei-var",
+        "text": "Her sayfanın benzersiz `title`'ı var",
+        "blocker": true
+      },
+      {
+        "id": "21.hizli/og-etiketleri-ve-gorseli-var-test-edilmis",
+        "text": "OG etiketleri ve görseli var, test edilmiş",
+        "blocker": true
+      },
+      {
+        "id": "21.hizli/gorseller-modern-formatta-ve-boyutlandirilmis",
+        "text": "Görseller modern formatta ve boyutlandırılmış",
+        "blocker": true
+      },
+      {
+        "id": "21.hizli/hero-gorseli-oncelikli-yukleniyor",
+        "text": "Hero görseli öncelikli yükleniyor",
+        "blocker": true
+      },
+      {
+        "id": "21.hizli/gizlilik-politikasi-ve-cerez-bildirimi-var",
+        "text": "Gizlilik politikası ve çerez bildirimi var",
+        "blocker": true
+      },
+      {
+        "id": "21.hizli/lorem-ipsum-kalmamis",
+        "text": "Lorem ipsum kalmamış",
+        "blocker": true
+      },
+      {
+        "id": "21.hizli/hata-izleme-ve-analitik-kurulu",
+        "text": "Hata izleme ve analitik kurulu",
+        "blocker": true
+      }
+    ]
+  }
+}

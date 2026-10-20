@@ -1,0 +1,161 @@
+---
+summary: "Doğrulama 'doğru yazdık mı?', geçerleme 'doğru şeyi mi yapıyoruz?' diye sorar. Kullanıcı kabul testi çözümü kullanacak kişilerin gözünden sınar; yayından sonra çözümün değeri ölçülür."
+outcomes:
+  - "Doğrulama ile geçerlemeyi ayırt edebilirsin."
+  - "Kabul kriterlerine bağlı bir kullanıcı kabul testi planlayıp yürütebilirsin."
+  - "Yayından sonra çözümün değerini ölçüp sınırlamalarını değerlendirebilirsin."
+minutes: 7
+standard: 2
+skipTerms: ["doğrulama","validation"]
+sources:
+  - label: "BABOK Guide — Ek A: Sözlük (IIBA)"
+    url: "https://www.iiba.org/career-resources/a-business-analysis-professionals-foundation-for-success/babok/glossary/"
+  - label: "ISTQB Glossary — user acceptance testing"
+    url: "https://glossary.istqb.org/en_US/term/user-acceptance-testing"
+  - label: "IIBA — Business Analysis Standard: bilgi alanları ve görevler"
+    url: "https://www.iiba.org/knowledgehub/the-business-analysis-standard/5-applying-business-analysis-tasks/5-3-business-analysis-knowledge-areas/"
+additions:
+  - "Doğrulama, geçerleme, kabul kriterleri ve UAT (BABOK sözlüğü, ISTQB sözlüğü)"
+  - "Çözüm değerlendirmenin beş görevi (IIBA Business Analysis Standard)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Cycle from "~/components/diagrams/primitives/Cycle.astro";
+
+Bütün otomatik testler yeşildi. Sekiz kural, sekiz test; Zeynep'in sistem testi de geçmişti. Emre yayın için tarih sordu.
+
+Ayşe bir hafta istedi. Moda şubesinden bir çalışanı yeni iptal ekranının başına oturttu ve "bir ürün bitti, siparişi iptal et" dedi. Çalışan ekrandaki "Kısmi iade" yazısına baktı, durdu ve sordu: "Bu, müşteriye para mı gidiyor, gitmiyor mu?" Sistem doğru çalışıyordu. Ama kullanıcı onu anlamıyordu. Bu ders, çözümü kullanıcının gözünden sınamayı ve yayından sonra değerini ölçmeyi anlatır.
+
+## Doğrulama ve geçerleme
+
+İki kelime sık karıştırılır:
+
+- **Doğrulama** (verification): BABOK'a göre gereksinimlerin doğru tanımlandığını, standartlara uyduğunu ve yeterli ayrıntıda olduğunu kontrol etmektir. ISTQB'nin sözlüğü bir iş ürününün şartnamesini karşıladığını teyit etmek diye tanımlar. Soru: **doğru yazdık mı, yazdığımızı yaptık mı?**
+- **Geçerleme** (validation): BABOK'a göre bir çıktının amaçlanan kullanıma uygun olduğunu kontrol etmektir. ISTQB'ye göre bir iş ürününün paydaşın ihtiyaçlarına uyduğunu inceleyerek teyit etmektir. Soru: **doğru şeyi mi yapıyoruz?**
+
+Otomatik testler doğrulamaydı: sistem karar tablosunu doğru uyguluyordu. Çalışanın sorusu bir geçerleme bulgusuydu: doğru uygulanan kural, kullanıcının işini görmüyordu.
+
+## Kabul kriterleri ve UAT
+
+BABOK **kabul kriterlerini** paydaşın kabulü için karşılanması gereken ölçütler olarak tanımlar. ISTQB'nin tanımı da benzerdir: bir iş ürününün paydaşlarca kabul edilmesi için karşılaması gereken ölçütler.
+
+**Kullanıcı kabul testi** (UAT), teslim edilen çözümün onu kullanacak paydaş grubunun ihtiyaçlarını karşılayıp karşılamadığını değerlendirir; BABOK'a göre belirlenen kabul kriterlerine karşı yapılır. ISTQB onu hedeflenen kullanıcıların sistemi kabul edip etmediğini belirlemek için yapılan bir kabul testi türü olarak tanımlar.
+
+İyi bir UAT'nin dört özelliği vardır:
+
+1. **Test edenler gerçek kullanıcılardır.** Geliştirici, analist ya da QA değil.
+2. **Senaryolar gerçek işten gelir.** Karar tablosunun kuralları ve uç durumlar.
+3. **Beklenen sonuç önceden yazılır.** Test eden yorumlamaz, karşılaştırır.
+4. **Anlaşılmayan şey de bir bulgudur.** Sistem doğru çalışsa bile.
+
+Proje tarafında kabul ve kalitenin yönetimi [Kalite ve kabul](/proje-yonetimi/kalite-ve-kabul/) dersinde.
+
+**UAT ≠ demo.** Bir demoda takım gösterir, kullanıcı izler. UAT'de kullanıcı kendisi kullanır, takım izler.
+
+## Yayından sonra: çözüm değerlendirme
+
+İş yayınla bitmez. IIBA'nın standardında **çözüm değerlendirme** beş görevdir. Çözümün performansını ölç, performans ölçülerini analiz et, çözümün sınırlamalarını değerlendir, kurumun sınırlamalarını değerlendir, çözümün değerini artıracak eylemler öner.
+
+**Çözümün sınırlaması** çözümün kendisinden gelir: bir özellik eksiktir ya da bir metin anlaşılmaz. **Kurumun sınırlaması** çözümün çevresinden gelir: bir ekip yeni süreci uygulamaz, bir eğitim eksik kalır, bir politika çözümle çelişir.
+
+<Cycle
+  label="Doğrulamadan değere"
+  caption="Değerlendirme bir döngüdür. Önce doğrulama: gereksinimleri doğru yazdık mı? Sonra geçerleme: doğru şeyi mi yapıyoruz? Ardından kullanıcı kabul testi: kullanıcılar çözümü kabul ediyor mu? Çözüm yayınlanır ve performansı ölçülür: amaç tuttu mu? Son adımda sınırlamalar değerlendirilip değeri artıracak eylemler önerilir. Öğrenilenler bir sonraki değişimin gereksinimlerine geri döner."
+  steps={[
+    { title: "Doğrula", sub: "doğru yazdık mı?" },
+    { title: "Geçerle", sub: "doğru şey mi?" },
+    { title: "UAT", sub: "kullanıcı kabul ediyor mu?", tone: "progress" },
+    { title: "Yayınla" },
+    { title: "Ölç", sub: "amaç tuttu mu?", tone: "accent" },
+    { title: "Eylem öner", sub: "değeri artır" },
+  ]}
+  back="öğrenilen"
+/>
+
+<Case>
+
+UAT bir hafta sürdü. Üç pilot dükkânın çalışanları ve iki destek uzmanı 15 senaryo çalıştırdı. Senaryoların 12'si karar tablosunun birleşimleriydi. Üçü uç durumdu: ödeme kuruluşu yanıt vermez, aynı siparişe iki iptal, gece yarısı iptal.
+
+1. **14 senaryo geçti, biri kaldı.** 8. kuralda kupon müşterinin hesabına ekleniyordu ama bildirimde yazmıyordu. Düzeltildi, yeniden test edildi.
+2. **Bir geçerleme bulgusu:** "Kısmi iade" anlaşılmadı. Metin "Eksik ürünlerin tutarı iade edilir" oldu.
+3. **Yayından üç ay sonra ölçüm:** iadeyle ilgili destek talepleri ayda 140'a indi. Amaç, 150'nin altı, tuttu.
+4. **Bir kurum sınırlaması:** iki dükkân, stok bitince hâlâ müşteriyi telefonla arıyordu. Çözüm bir sorun değildi; alışkanlık sürüyordu ve müşteri bundan memnundu. Ayşe'nin önerisi: telefonla ürün önerisini sisteme taşımak (B7) bir sonraki çeyreğin adayı olsun.
+
+</Case>
+
+<Tool slug="uat" />
+
+<Lenses>
+<Lens role="business-analyst">
+
+- **Kabul kriterlerini UAT'den önce yaz.** Sonradan yazılan kriter, olanı onaylamaya döner.
+- **Geçerleme bulgusunu ayrıca kaydet.** "Sistem doğru, kullanıcı anlamıyor" bir hata değil, bir gereksinim değişikliğidir.
+- **Amaç ölçümünü takvime koy.** Yayından üç ay sonra kimin neye bakacağını şimdi yaz.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Kabul kararını sen verirsin.** UAT bulguları önüne gelir; hangisinin yayını durduracağına sen karar verirsin.
+- **Amacı yayından sonra da izle.** Story'ler bitti diye iş gereksinimi karşılanmış olmaz.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Ölçüm planı ürün planının parçasıdır.** Amacın başlangıç değeri yayından önce kaydedilmezse sonra kıyaslanamaz.
+- **Kurum sınırlamalarını görmezden gelme.** Çözüm çalışırken alışkanlık değişmiyorsa, sonraki adım bir ürün değişikliği olmayabilir.
+
+</Lens>
+<Lens role="project-manager">
+
+- **UAT'ye takvimde yer aç.** Kullanıcıların zamanı ayrılmazsa UAT bir demoya küçülür.
+- **"Kaldı" sonucu için tampon bırak.** Bir düzeltme ve yeniden test, yayını birkaç gün öteleyebilir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **UAT'de gözlem yap.** Kullanıcının durakladığı yer, anket cevabından daha çok şey söyler.
+- **Anlaşılmayan metni test et.** Yeni metni yayından önce birkaç kullanıcıyla dene.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Doğrulama "doğru yazdık ve yaptık mı?", geçerleme "doğru şeyi mi yapıyoruz?" diye sorar.
+- Kabul kriterleri önceden yazılır; UAT çözümü gerçek kullanıcıların işiyle bu kriterlere karşı sınar.
+- Sistem doğru çalışsa bile kullanıcının anlamadığı şey bir bulgudur.
+- Çözüm değerlendirme yayından sonra performansı ölçer, sınırlamaları değerlendirir ve eylem önerir.
+- Sınırlamalar çözümden ya da kurumdan gelebilir; ikincisi bir ürün değişikliğiyle çözülmeyebilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bütün otomatik testler geçti. Bu, çözümün geçerlendiği anlamına gelir mi?">
+
+Hayır. Otomatik testler doğrulamadır: sistemin şartnameyi karşıladığını gösterir. Geçerleme, çözümün paydaşın ihtiyacına ve kullanımına uyduğunu sorar; bunun için gerçek kullanıcıların çözümü kullanması gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="UAT'de bir kullanıcı ekrandaki bir ifadeyi anlamadı ama sistem doğru çalıştı. Bu bir bulgu mu?">
+
+Evet, bir geçerleme bulgusudur. Kullanıcı işini yapamıyorsa çözüm amaçlanan kullanıma uygun değildir. Metin ya da tasarım değişir ve yeniden sınanır.
+
+</SelfCheck>
+
+<SelfCheck question="UAT ile bir sprint review demosu arasındaki fark nedir?">
+
+Demoda takım gösterir, paydaşlar izler ve geri bildirim verir. UAT'de çözümü kullanacak kişiler önceden yazılmış senaryoları kendileri çalıştırır ve sonucu kabul kriterleriyle karşılaştırır.
+
+</SelfCheck>
+
+<SelfCheck question="Yayından sonra iki dükkân yeni süreci kullanmıyor; çalışanlar hâlâ telefonla arıyor. Bu çözümün mü, kurumun mu sınırlaması?">
+
+Kurumun sınırlamasıdır: çözüm çalışıyor ama alışkanlık değişmemiş. Önce nedenini anlamak gerekir; Demlik'te müşteri bundan memnundu, bu yüzden öneri telefonla yapılan işi sisteme taşımak oldu.
+
+</SelfCheck>

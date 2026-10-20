@@ -1,0 +1,177 @@
+---
+summary: "Risk, projeyi etkileyebilecek belirsiz bir olaydır. Riskler olasılık ve etkiye göre sıralanır; her birine kaçınma, azaltma, aktarma ya da kabul etme yanıtı seçilir ve gerekirse bir acil durum planı hazırlanır."
+outcomes:
+  - "Bir riski 'şu olursa şu etkilenir' biçiminde yazabilirsin."
+  - "Riskleri olasılık ve etkiye göre sıralayabilirsin."
+  - "Dört risk yanıtını ayırıp her riske uygun olanı seçebilirsin."
+minutes: 9
+standard: 2
+sources:
+  - label: "Watt, Project Management (2. baskı) — 16. Risk Management Planning"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-16-risk-management-planning-project-management/"
+additions:
+  - "Riskin tanımı, fırsat, olasılık ve etki değerlendirmesi (Watt, bölüm 16)"
+  - "Dört risk yanıtı: kaçın, azalt, aktar, kabul et; acil durum planı ve ihtiyat"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Matrix2x2 from "~/components/diagrams/primitives/Matrix2x2.astro";
+
+Proje başlarken Leyla ekibe bir soru sordu: "Bu proje başarısız olursa, sizce neden olmuş olur?" On dakikada tahtada on iki madde birikti. Tedarikçi gecikir. Protokol yetişmez. Kafe personeli sistemi kullanmaz. Kampüs Wi-Fi'si sabah çöker.
+
+Hakan listeye baktı: "Bunların hepsiyle uğraşamayız." Haklıydı. Risk yönetimi, hepsiyle uğraşmak değil, hangileriyle ve nasıl uğraşacağına karar vermektir.
+
+## Risk nedir?
+
+**Risk**, projeyi etkileyebilecek belirsiz bir olay ya da durumdur. "Belirsiz" kelimesi önemlidir: risk henüz olmamıştır ve olmayabilir de.
+
+Her risk kötü değildir. Bazı olaylar projeye yardım eder: bir işi daha kolay yapmanın yolunu bulmak ya da malzeme fiyatlarının düşmesi gibi. Buna **fırsat** (opportunity) denir. Fırsat da bir risk gibi yönetilir. Kampüs projesinde üniversitenin kendi duyurusunda Demlik'i tanıtması bir fırsattır.
+
+İyi yazılmış bir risk iki parçalıdır: **olay** ve **etki**. "Gecikme olabilir" bir risk değildir. "POS tedarikçisi entegrasyonu geç teslim ederse pilot ve lansman kayar" bir risktir.
+
+Ekip içinde risk ve olay konuşma dilini [Risk ve olay dili](/sirket-sozlugu/risk-ve-olay-dili/) dersi anlatıyor. Bu ders, riskleri bir proje boyunca yönetmeyi anlatır.
+
+## Değerlendirme: olasılık ve etki
+
+Riskler eşit değildir. Bazıları daha olasıdır, bazılarının bedeli daha büyüktür. Bu yüzden her risk iki soruyla değerlendirilir:
+
+- **Olasılık:** bu olayın gerçekleşme ihtimali ne?
+- **Etki:** gerçekleşirse projeye maliyeti ne olur?
+
+İkisi de en basit hâliyle yüksek, orta ve düşük diye derecelendirilir. Önce her ikisinde de yüksek olan risklerle uğraşılır. Bazı ekipler 1–5 arası puan verir ve olasılıkla etkiyi çarpar; Araçlar'daki risk kaydı bu biçimi kullanır.
+
+<Matrix2x2
+  label="Kampüs projesinin riskleri, olasılık ve etkiye göre"
+  caption="Yatay eksen etkiyi, dikey eksen olasılığı gösterir. Sağ üstte hem olası hem pahalı olan tedarikçi gecikmesi var: önce onunla uğraşılır. Protokolün gecikmesi orta olasılıklı ama etkisi büyük. Ödeme kuruluşunun ek onay istemesi düşük olasılıklı ama gerçekleşirse ödemeyi durdurur: bunun için bir acil durum planı hazırlanır. Kafe personelinin sistemi benimsememesi ortada durur: eğitim ve pilotla azaltılır. Tablet arızası nadirdir ama bir kafeyi durdurur: değişim garantisiyle satıcıya aktarılır. Sol alt köşeye düşen küçük riskler kabul edilir ve izlenir."
+  x={{ title: "Etki", low: "düşük", high: "yüksek" }}
+  y={{ title: "Olasılık", low: "düşük", high: "yüksek" }}
+  quadrants={[
+    { title: "Sık ama küçük", sub: "süreçle azalt" },
+    { title: "Önce bunlar", sub: "kaçın ya da azalt", tone: "accent" },
+    { title: "Kabul et", sub: "izle" },
+    { title: "Nadir ama büyük", sub: "aktar ya da B planı" },
+  ]}
+  points={[
+    { label: "Tedarikçi entegrasyonu gecikir", x: 0.88, y: 0.7 },
+    { label: "Öğrenci işleri protokolü yetişmez", x: 0.8, y: 0.56 },
+    { label: "Kafe personeli sistemi benimsemez", x: 0.45, y: 0.55 },
+    { label: "Ödeme kuruluşu ek onay ister", x: 0.85, y: 0.18 },
+    { label: "Tablet ya da yazıcı arızalanır", x: 0.6, y: 0.18 },
+  ]}
+/>
+
+## Dört yanıt
+
+Bir riskle başa çıkmanın dört temel yolu vardır.
+
+1. **Kaçın** (avoid): riskin olmasını imkânsız kıl. En iyi yanıttır, ama her zaman mümkün değildir. İki kafe çok eski bir kasa sürümü kullanıyorsa, onlara entegrasyon yerine ayrı tablet vermek o riski ortadan kaldırır.
+2. **Azalt** (mitigate): kaçınamıyorsan, riskin olasılığını ya da etkisini küçült. Tedarikçiden her hafta çalışan bir demo istemek, gecikmeyi erken görmeyi sağlar.
+3. **Aktar** (transfer): riski başkasına, bedelini ödeyerek devret. En yaygın yolu sigortadır. Tabletlerin garanti ve değişim sözleşmesi, arıza riskini satıcıya aktarır.
+4. **Kabul et** (accept): yapılacak bir şey yoksa ya da yapmak pahalıysa, riski kabul et. Kabul etmek görmezden gelmek değildir: seçenekleri inceledin ve gerçekleşirse ne olacağını biliyorsun.
+
+**Risk yanıtı ≠ dilek.** "Dikkatli olacağız" bir yanıt değildir. Yanıt bir eylem, bir sahip ve bir tarihtir.
+
+### Acil durum planı ve ihtiyat
+
+Bazı riskler için önceden bir **acil durum planı** (contingency plan) hazırlanır. Bu plan, risk gerçekleşirse hedefe ulaşmanın alternatif yoludur. Protokol yetişmezse, kafeler indirimsiz açılır ve indirim protokol imzalanınca ayrı yayınlanır.
+
+Bazı riskler parayla karşılanır. Bunun için bütçede **ihtiyat** ayrılır. Risk profili yüksek projelerde ihtiyat da büyüktür.
+
+### Bir kez değil, sürekli
+
+Risk gerçekleştiğinde onunla ilgili bir şey yapmak için artık geç olabilir. Bu yüzden risk planlaması projenin başında yapılır ve proje boyunca tekrar edilir. Yeni riskler eklenir, kapananlar işaretlenir, derecelendirmeler güncellenir. Hangi riskin nasıl değerlendirileceği ve kimin sorumlu olduğu bir **risk yönetim planında** yazılır.
+
+<Case>
+
+Leyla tahtadaki on iki maddeyi bir risk kaydına çevirdi:
+
+1. **Yazdı:** her maddeyi "şu olursa şu etkilenir" biçimine soktu. Üç madde aynı riskin farklı adlarıydı; birleştirdi.
+2. **Derecelendirdi:** ekiple her riske olasılık ve etki verdi. Tedarikçi gecikmesi ikisinde de yüksekti.
+3. **Yanıt seçti:**
+   - Tedarikçi gecikmesi için **azalt**: her hafta çalışan demo ve sözleşmede ara teslimler.
+   - Eski kasalı iki kafe için **kaçın**: ayrı tablet.
+   - Tablet arızası için **aktar**: değişim garantisi.
+   - Küçük riskler için **kabul et**: kayıtta, izlemede.
+4. **B planlarını yazdı:** protokol yetişmezse indirimsiz açılış.
+5. **Sahip ve tarih verdi:** her riskin tek bir sahibi ve bir sonraki kontrol günü oldu.
+
+Hakan'ın listesi on iki maddeden beş öncelikli riske indi.
+
+</Case>
+
+<Tool slug="risk-kaydi" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Riski olay ve etkiyle yaz.** "Gecikme olabilir" ile hiçbir şey yapılamaz; "şu olursa şu kayar" ile yapılabilir.
+- **Her riske bir sahip ver.** Sahibi olmayan risk izlenmez.
+- **Kaydı her hafta aç.** Bir kez doldurulup bırakılan kayıt, gerçekleşen riskin "kimse söylemedi"sine döner.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Ürün risklerini kayda sen taşı.** "Öğrenciler indirimi bulamaz" da bir risktir ve lansmanı başarısız kılabilir.
+- **Kaçınma yanıtı çoğu zaman bir kapsam kararıdır.** Riskli bir özelliği çıkarmak en ucuz yanıt olabilir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Azaltma eylemlerini backlog'a koy.** Riski azaltan bir iş, backlog'da yoksa yapılmaz.
+- **Riskli işi öne al.** Belirsiz bir story'yi sprintin başına koymak, sorunu erken görmeni sağlar.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Takımın gördüğü riskleri yukarı taşı.** Riski en iyi işi yapanlar görür; söylemeleri kolay olmalı.
+- **Retroda gerçekleşen riskleri konuştur.** Kayıtta olan ama yine de gerçekleşen bir risk, yanıtın yetmediğini gösterir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Varsayımlar risktir.** "Kart numaraları doğrulanabilir" yanlışsa ne olur? Her varsayımı bir risk olarak da düşün.
+- **Belirsiz gereksinimleri risk olarak kaydet.** Yazılamayan bir kural, projenin en sessiz riskidir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Risk projeyi etkileyebilecek belirsiz bir olaydır; olumlu olanına fırsat denir ve o da yönetilir.
+- Risk olay ve etkiyle yazılır: "şu olursa şu etkilenir".
+- Riskler olasılık ve etkiye göre değerlendirilir; önce ikisinde de yüksek olanlarla uğraşılır.
+- Dört yanıt vardır: kaçın, azalt, aktar, kabul et. Bazı riskler için acil durum planı ve ihtiyat da gerekir.
+- Risk yönetimi projenin başında başlar ve proje boyunca tekrarlanır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Dört risk yanıtı nedir?">
+
+Kaçınmak: riskin olmasını imkânsız kılmak. Azaltmak: olasılığını ya da etkisini küçültmek. Aktarmak: bedelini ödeyerek başkasına devretmek, örneğin sigortayla. Kabul etmek: seçenekleri inceleyip gerçekleşirse ne olacağını bilerek kabullenmek.
+
+</SelfCheck>
+
+<SelfCheck question="Bir risk düşük olasılıklı ama etkisi çok büyük. Neden 'olasılığı düşük, boş ver' denmez?">
+
+Gerçekleşirse projeyi durdurabilir. Bu tür riskler için genellikle bir acil durum planı hazırlanır ya da risk aktarılır. Olasılığın düşük olması, hazırlığın ucuz kalmasını sağlar.
+
+</SelfCheck>
+
+<SelfCheck question="Ekip 'Riskleri kabul ediyoruz' diyerek kaydı boş bıraktı. Bu neden kabul etme yanıtı değildir?">
+
+Kabul etmek, seçenekleri inceledikten ve gerçekleşirse ne olacağını bildikten sonra verilen bir karardır. Riskler yazılmadan ve değerlendirilmeden kabul edilemez; bu yalnız görmezden gelmektir.
+
+</SelfCheck>
+
+<SelfCheck question="Üniversite, dönem açılışında Demlik'i kendi duyurusunda tanıtmayı teklif etti. Bunu risk kaydına yazar mısın?">
+
+Evet, bir fırsat olarak. Fırsatlar da riskler gibi yönetilir: olasılığı ve etkisi değerlendirilir, bir sahip ve bir eylem verilir. Örneğin ortak bir duyuru planı yapılır ve lansman kampanyası buna göre ayarlanır.
+
+</SelfCheck>

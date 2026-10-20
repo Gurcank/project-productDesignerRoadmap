@@ -4,7 +4,8 @@ outcomes:
   - "REST'in over-fetching ve under-fetching sorunlarını ve GraphQL'in bunları nasıl çözüp ne bedel ödettiğini söyleyebilirsin."
   - "tRPC'nin ne zaman uygun olmadığını bilirsin."
   - "Polling, SSE ve WebSocket farkını ve 'anında gelsin' isteğinin maliyetini açıklayabilirsin."
-minutes: 10
+minutes: 6
+standard: 2
 sources:
   - label: "Fielding — REST mimari stili (doktora tezi)"
     url: "https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm"
@@ -21,11 +22,14 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 "Dışarıya açacağımız API REST olsun, ama mobil için GraphQL düşünelim." Bu cümlede bir mimari karar var ve tasarımı etkiliyor. Aynı işi yapmanın farklı yollarını ve bedellerini bil.
 
@@ -74,17 +78,79 @@ Sunucudan istemciye **anlık** veri göndermenin üç yolu var:
 
 Tasarımdaki karşılığı: bir özelliğin "gerçek zamanlı" olması bedava değildir. "Bildirimler anında gelsin" isteği, altyapıda ek bir bağlantı katmanı demektir. Çoğu durumda 30 saniyelik bir tazeleme yeterlidir ve çok daha ucuzdur. "Bildirim için WebSocket'e gerek yok; SSE ya da 30 saniyelik polling yeter."
 
+<Spectrum
+  label="Anlık veri: ne kadar anlık?"
+  caption="Sunucudaki değişikliği istemciye taşımanın yolları maliyet ve tazelik arasında sıralanır. Sol uçta belirli aralıklarla sormak durur: 30 saniyelik polling basit ve ucuzdur ama değişiklik birkaç saniye geç görünür. Ortada SSE vardır: sunucu tek yönlü sürekli veri gönderir. Sağ uçta WebSocket durur: çift yönlü kalıcı bağlantı, en anlık ama en pahalı altyapı."
+  left={{
+  title: "Basit, ucuz",
+  sub: "biraz gecikmeli"
+}}
+  right={{
+  title: "Anlık",
+  sub: "ek altyapı"
+}}
+  marks={[
+  {
+    label: "30 sn polling",
+    at: 0.08
+  },
+  {
+    label: "15 sn polling",
+    at: 0.25
+  },
+  {
+    label: "SSE",
+    at: 0.6
+  },
+  {
+    label: "WebSocket",
+    at: 0.92
+  }
+]}
+/>
+
 ## gRPC
 
-**gRPC**, servislerin birbiriyle yüksek hızda konuşması için tasarlanmış, ikili (binary) protokol kullanan yaklaşımdır. JSON'a göre çok daha hızlı serileştirme sunar. Tarayıcıdan doğrudan kullanımı sınırlıdır; asıl yeri **sunucular arası** iletişimdir (mikroservisler). Büyük ölçekli sistemlerde karşına çıkar. **Seviye 3:** adını duyduğunda kategorisini bilmen yeterli.
+**gRPC**, servislerin birbiriyle yüksek hızda konuşması için tasarlanmış, ikili (binary) protokol kullanan yaklaşımdır. JSON'a göre çok daha hızlı serileştirme sunar. Tarayıcıdan doğrudan kullanımı sınırlıdır; asıl yeri **sunucular arası** iletişimdir (mikroservisler). Büyük ölçekli sistemlerde karşına çıkar. Adını duyduğunda kategorisini bilmen yeterli.
 
-<Callout kind="tasarimci">
+<Case>
+
+Panel'e yeni sipariş geldiğinde ekranın nasıl güncelleneceği tartışıldı.
+
+1. **Öneri:** Emre WebSocket önerdi: sipariş anında ekranda.
+2. **Soru:** Ozan, "anında" ile "15 saniye içinde" arasındaki farkın dükkân için ne demek olduğunu sordu. Yoğun saatte hazırlık süresi 8 dakikaydı.
+3. **Karar:** Panel listeyi 15 saniyede bir tazeliyor. Yeni sipariş en geç 15 saniyede görünüyor; pilotun "5 saniye içinde kafede görünür" kriteri ise kasa yazıcısına giden ayrı bir yoldan sağlanıyor.
+4. **API:** Demlik'in API'si REST; mobil, web ve Panel aynı endpoint'leri kullanıyor. GraphQL bir kez konuşuldu; üç istemcinin ihtiyaçları birbirine yakın olduğu için eklenmedi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Dışarıya açılan API'de REST bekle;** iç uçlarda farklı bir stil olabilir.
 - **"Anında" isteğinin gerçek ihtiyacı sor:** 30 saniye gecikme kabul edilir mi?
 - **Ekranın çok sayıda istek attığını duyarsan** under-fetching'i, çok büyük yanıtlarda over-fetching'i hatırla.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **"Gerçek zamanlı" isteğini sayıyla sor.** Kaç saniye gecikme kabul edilebilir? Cevap, altyapı maliyetini belirler.
+- **API stilini dış ortaklar açısından da düşün.** Dışarıya açılacak API'de REST fiilî standarttır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Tazelik ihtiyacını kabul kriterine yaz.** "Yeni sipariş en geç 15 saniyede listede görünür."
+- **Altyapı işini backlog'da görünür kıl.** Anlık bağlantı ayrı bir iştir.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Veri tazeliği gereksinimini iş süreciyle bağla.** Süreç hangi gecikmeyi tolere ediyor?
+- **Entegrasyon partnerinin desteklediği stili sor.** Webhook mu, polling mi, REST mi?
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -107,5 +173,11 @@ Over-fetching: ihtiyacından fazla veri gelir. Under-fetching: bir ekran için b
 <SelfCheck question="'Bildirimler anında gelsin' isteği neden bedava değildir?">
 
 Kalıcı bağlantı (WebSocket/SSE) ek bir altyapı katmanı ve maliyet demektir. Çoğu bildirim senaryosunda 30 saniyelik tazeleme yeterlidir ve çok daha ucuzdur.
+
+</SelfCheck>
+
+<SelfCheck question={"Bir ekip bildirimlerin \"anında\" gelmesi için WebSocket kurmak istiyor. Ne sorarsın?"}>
+
+Kaç saniyelik gecikmenin kabul edilebilir olduğunu. Çoğu durumda 15–30 saniyelik bir tazeleme ya da tek yönlü SSE yeterlidir ve çok daha ucuzdur; çift yönlü kalıcı bağlantı sohbet ve ortak düzenleme gibi işler içindir.
 
 </SelfCheck>

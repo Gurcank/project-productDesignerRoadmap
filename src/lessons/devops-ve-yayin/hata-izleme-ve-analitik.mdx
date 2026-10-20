@@ -1,10 +1,11 @@
 ---
-summary: "Kullanıcıların çoğu hata bildirmez, terk eder: hata izleme bunu görünür kılar. Web analitiği trafiği, ürün analitiği davranışı ölçer. Olay tasarımı (event/tracking plan) doğrudan senin işin ve çoğu ekipte sahipsiz kalır."
+summary: "Kullanıcıların çoğu hata bildirmez, terk eder; hata izleme bunu görünür kılar. Web analitiği trafiği, ürün analitiği davranışı ölçer. Olay tasarımı ürün ekibinin işidir ve çoğu ekipte sahipsiz kalır."
 outcomes:
   - "Hata izlemenin neden gerekli olduğunu söyleyebilirsin."
   - "Web analitiği ile ürün analitiği farkını açıklayabilirsin."
   - "Bir ölçüm planının (event tasarımı) içermesi gerekenleri sayabilirsin."
-minutes: 8
+minutes: 5
+standard: 2
 sources:
   - label: "Sentry — Dokümantasyon"
     url: "https://docs.sentry.io/"
@@ -15,9 +16,12 @@ sources:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Sentry'de bir hata günde 200 kez tetikleniyor ama tek bir destek talebi yok. Kullanıcılar şikâyet etmiyor; sessizce terk ediyor. Üç ölçüm katmanı bunu görmeni sağlar.
 
@@ -27,15 +31,40 @@ Sentry'de bir hata günde 200 kez tetikleniyor ama tek bir destek talebi yok. Ku
 
 ## Web ve ürün analitiği
 
-**Web analitiği** trafik odaklıdır: kaç ziyaretçi, nereden geldi, hangi sayfaya baktı. **Ürün analitiği** davranış odaklıdır: kullanıcı hangi adımları tamamladı, nerede takıldı, hangi özelliği kullandı. İkisi farklı sorulara cevap verir ve tasarımcı ikincisine ihtiyaç duyar: funnel, elde tutma ve özellik kullanım oranları ürün analitiğinden gelir. "Web analitiği 'trafik var' diyor ama funnel'ın nerede koptuğunu göremiyoruz; ürün analitiği kuralım." Araç adları ve fiyatlar sık değişir.
+**Web analitiği** trafik odaklıdır: kaç ziyaretçi, nereden geldi, hangi sayfaya baktı. **Ürün analitiği** davranış odaklıdır: kullanıcı hangi adımları tamamladı, nerede takıldı, hangi özelliği kullandı. İkisi farklı sorulara cevap verir ve ürün ekibi daha çok ikincisine ihtiyaç duyar: funnel, elde tutma ve özellik kullanım oranları ürün analitiğinden gelir. "Web analitiği 'trafik var' diyor ama funnel'ın nerede koptuğunu göremiyoruz; ürün analitiği kuralım." Araç adları ve fiyatlar sık değişir.
 
 Her iki tür de kişisel veri toplayabilir; KVKK/GDPR uyumu ve çerez onayı gerekir. Ayrıca reklam engelleyiciler bazı araçları bloke eder; ölçümler eksik olabilir.
 
 ## Olay tasarımı
 
-**Event tasarımı (tracking plan)**: hangi kullanıcı davranışlarının kaydedileceğinin ve nasıl adlandırılacağının önceden planlanmasıdır. **Bu doğrudan senin işin ve çoğu ekipte sahipsiz kalır.** Olaylar plansız eklenirse üç ay sonra `button_click`, `btn_clicked` ve `ClickedButton` adlı üç ayrı olay olur ve hiçbiri analiz edilemez.
+**Event tasarımı (tracking plan)**: hangi kullanıcı davranışlarının kaydedileceğinin ve nasıl adlandırılacağının önceden planlanmasıdır. **Bu ürün ekibinin işidir ve çoğu ekipte sahipsiz kalır.** Olaylar plansız eklenirse üç ay sonra `button_click`, `btn_clicked` ve `ClickedButton` adlı üç ayrı olay olur ve hiçbiri analiz edilemez.
 
 İyi bir ölçüm planı şunları içerir:
+
+<StepFlow
+  label="Bir olayın tasarımı"
+  caption="Ölçüm plandaki sorudan başlar. Soru belli olunca olayın adı tutarlı bir kurala göre konur. Sonra olayın tam olarak ne zaman tetiklendiği yazılır. En son olayın taşıyacağı ek bilgiler, yani özellikler seçilir. Soruya cevap vermeyen olay ve özellik eklenmez."
+  steps={[
+  {
+    title: "Soru",
+    sub: "neyi öğrenmek istiyoruz?",
+    tone: "accent"
+  },
+  {
+    title: "Ad",
+    sub: "Nesne + Eylem"
+  },
+  {
+    title: "Tetikleyici",
+    sub: "ne zaman?"
+  },
+  {
+    title: "Özellikler",
+    sub: "yalnız gerekenler",
+    tone: "progress"
+  }
+]}
+/>
 
 1. Olayın **adı** (tutarlı adlandırma kuralı).
 2. **Ne zaman tetiklendiği.**
@@ -44,20 +73,57 @@ Her iki tür de kişisel veri toplayabilir; KVKK/GDPR uyumu ve çerez onayı ger
 
 Başarı ölçütü tanımlanırken onu ölçecek olay da tanımlanmalıdır. "Bu özelliğin başarı ölçütü var ama onu ölçecek olay tanımlı değil; yayına çıkarsak ölçemeyiz." **Her şeyi ölçmek bir strateji değildir:** cevaplanmayacak soru için toplanan veri hem gürültü hem gereksiz bir gizlilik yükümlülüğüdür.
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'te iki ölçüm katmanı iki farklı şey gösterdi:
+
+1. **Hata izleme:** Panel'de eski iPad'lerde bir hata günde 180 kez tetikleniyordu; tek destek talebi yoktu. Çalışanlar sayfayı yenileyip geçiyordu. Source map yüklü olduğu için satır hemen bulundu.
+2. **Olay tasarımı:** "Son siparişini tekrarla" daha yayına çıkmadan `Reorder Tapped` olayı izleme planına yazıldı. Soru: sabah müşterilerinin %25'i düğmeyi ilk ayda en az bir kez kullanıyor mu?
+3. **Kural:** olaylar İngilizce, Nesne + Eylem; özellikler snake_case. Olaylarda ad, telefon ve e-posta yok.
+4. **Ölçülmeyen:** düğmenin üzerinde imleç bekleme süresi önerildi; hiçbir soruya cevap vermediği için eklenmedi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Her özellik tanımına ölçüm planı ekle:** olay adı, tetikleyici, özellikler, cevapladığı soru.
 - **Adlandırma kuralını ekiple belirle** (örneğin `nesne_eylem`).
 - **Her şeyi ölçmeye çalışma;** başarı ölçütünü cevaplayan olaylarla başla.
 - **Hata izleme panelini düzenli kontrol et;** kullanıcı terk ettiği hataları sen görmezsin.
 
-</Callout>
+</Lens>
+<Lens role="product-manager">
+
+- **Başarı ölçütünü yazarken onu ölçecek olayı da yaz.** Ölçülemeyen ölçüt lansmandan sonra tartışma çıkarır.
+- **Olayın sahibini belirle;** izleme planı sahipsiz kalırsa adlar dağılır.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Olay tanımını story'nin kabul ölçütüne koy.** Olay yoksa story bitmemiştir.
+- **Hata izleme panelini sprint incelemesine getir;** bildirilmeyen hatalar backlog'a girsin.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Ölçüm altyapısını lansman kilometre taşına bağla.** Ölçüm hazır değilse lansman başarısı ölçülemez.
+- **KVKK ve çerez onayı işini planın içinde tut.**
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Hata izleme verisini ekibin görünür panosuna taşı.** Sessiz terk, kimse bakmazsa görünmez.
+- **Olay adlandırma kuralını çalışma sözleşmesine ekle.**
+
+</Lens>
+</Lenses>
 
 <Summary>
 
 - Hata izleme, kullanıcının bildirmeden terk ettiği sorunları görünür kılar; source map gerekir.
-- Web analitiği trafiği, ürün analitiği davranışı (funnel, kullanım) ölçer; tasarımcı ikincisine ihtiyaç duyar.
-- Event tasarımı tasarımcının işidir: ad, tetikleyici, özellikler ve hangi soruya cevap verdiği.
+- Web analitiği trafiği, ürün analitiği davranışı (funnel, kullanım) ölçer; ürün ekibi ikincisine ihtiyaç duyar.
+- Event tasarımı ürün ekibinin işidir: ad, tetikleyici, özellikler ve hangi soruya cevap verdiği.
 - Her şeyi ölçmek strateji değildir; gereksiz veri yükümlülük yaratır.
 
 </Summary>
@@ -70,8 +136,14 @@ Kullanıcıların çoğu hata bildirmez, yalnızca terk eder. Hata izleme bildir
 
 </SelfCheck>
 
-<SelfCheck question="Event tasarımı neden senin işin? Plansız olay ekleme nasıl sonuçlanır?">
+<SelfCheck question="Event tasarımı neden ürün ekibinin işi? Plansız olay ekleme nasıl sonuçlanır?">
 
 Hangi davranışın ölçüleceği bir ürün/tasarım kararıdır ve çoğu ekipte sahipsiz kalır. Plansız eklenirse üç ay sonra `button_click`, `btn_clicked` ve `ClickedButton` gibi üç ayrı olay olur ve hiçbiri analiz edilemez. Başarı ölçütü tanımlanırken onu ölçecek olay da tanımlanmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question={"Bir özellik için \"her tıklamayı ölçelim\" önerisi geldi. Ne cevap verirsin?"}>
+
+Her şeyi ölçmek bir strateji değildir. Cevaplanmayacak soru için toplanan veri hem gürültüdür hem gereksiz bir gizlilik yükümlülüğüdür. Önce özelliğin başarı ölçütünü ve cevaplanacak soruyu yazar, yalnız o soruya hizmet eden olayları eklerim.
 
 </SelfCheck>

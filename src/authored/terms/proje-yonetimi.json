@@ -1,0 +1,198 @@
+[
+  {
+    "term": "Proje",
+    "english": "Project",
+    "definition": "Benzersiz bir ürün, hizmet ya da sonuç üretmek için yürütülen geçici çaba; başı ve sonu bellidir.",
+    "topic": "proje-urun-ve-operasyon",
+    "inline": false
+  },
+  {
+    "term": "Operasyon",
+    "english": "Operations",
+    "definition": "Var olan bir işin her gün yeniden yapılması: sipariş karşılamak, destek vermek. Bitişi yoktur; süreç sürekli iyileştirilir.",
+    "topic": "proje-urun-ve-operasyon",
+    "inline": false
+  },
+  {
+    "term": "Proje sponsoru",
+    "english": "Project sponsor",
+    "definition": "Projeyi destekleyen, kaynağını sağlayan ve büyük kararlarda son sözü söyleyen kişi.",
+    "topic": "proje-urun-ve-operasyon",
+    "aliases": ["sponsor"]
+  },
+  {
+    "term": "Proje yaşam döngüsü",
+    "english": "Project life cycle",
+    "definition": "Bir projenin baştan sona geçtiği dört evre: başlatma, planlama, uygulama ve kapanış.",
+    "topic": "yaklasim-secimi"
+  },
+  {
+    "term": "Hibrit yaklaşım",
+    "english": "Hybrid approach",
+    "definition": "Projenin belli parçalarını planla (öngörücü), belirsiz parçalarını kısa döngülerle (uyarlanabilir) yöneten yaklaşım.",
+    "topic": "yaklasim-secimi"
+  },
+  {
+    "term": "PMBOK Rehberi",
+    "english": "PMBOK Guide",
+    "definition": "PMI'ın proje yönetimi standardı. 8. baskısı altı ilke ve yedi performans alanıyla yapılanır.",
+    "topic": "standartlar-ve-sertifikalar",
+    "aliases": ["PMBOK"],
+    "acronym": true
+  },
+  {
+    "term": "İş gerekçesi",
+    "english": "Business case",
+    "definition": "Bir sorunu ya da fırsatı, seçenekleri, fayda ve maliyetlerini yazıp bir çözüm öneren belge; sponsor onaylar.",
+    "topic": "is-gerekcesi-ve-proje-tuzugu"
+  },
+  {
+    "term": "Proje tüzüğü",
+    "english": "Project charter",
+    "definition": "Projeyi resmen başlatan belge: hedefi, kapsamı, kısıtları ve proje yöneticisinin yetkisini yazar; sponsor imzalar.",
+    "topic": "is-gerekcesi-ve-proje-tuzugu",
+    "aliases": ["tüzük"]
+  },
+  {
+    "term": "İş kırılım yapısı",
+    "english": "Work breakdown structure",
+    "definition": "Projenin bütün işini teslimatlara ve iş paketlerine bölen hiyerarşik ağaç. Her alt seviye üstünün işinin tamamını kapsar.",
+    "topic": "kapsam-ve-wbs",
+    "aliases": ["WBS"]
+  },
+  {
+    "term": "İş paketi",
+    "english": "Work package",
+    "definition": "İş kırılım yapısının en alt seviyesi. Süre, maliyet ve kaynak tahmini bu seviyede yapılır.",
+    "topic": "kapsam-ve-wbs"
+  },
+  {
+    "term": "Üç nokta tahmini",
+    "english": "Three-point estimation",
+    "definition": "İyimser (a), en olası (m) ve kötümser (b) tahminden beklenen değeri bulmak: E = (a + 4m + b) ÷ 6.",
+    "topic": "tahmin"
+  },
+  {
+    "term": "Belirsizlik konisi",
+    "english": "Cone of uncertainty",
+    "definition": "Bir tahminin projenin aşamasına göre ne kadar yanılabileceği: ilk fikirde 4 kat, gereksinimler bitince 1,5 kat. Kararlarla daralır.",
+    "topic": "tahmin"
+  },
+  {
+    "term": "Kritik yol",
+    "english": "Critical path",
+    "definition": "İş ağındaki en uzun yol. Projenin en kısa süresini verir; üzerindeki her gecikme projeyi geciktirir.",
+    "topic": "bagimliliklar-ve-kritik-yol"
+  },
+  {
+    "term": "Bolluk",
+    "english": "Slack / float",
+    "definition": "Bir işin projeyi geciktirmeden ne kadar kayabileceği. Kritik yoldaki işlerin bolluğu sıfırdır.",
+    "topic": "bagimliliklar-ve-kritik-yol"
+  },
+  {
+    "term": "Gantt şeması",
+    "english": "Gantt chart",
+    "definition": "Proje takvimini zaman ekseninde çubuklarla gösteren grafik; Henry Gantt geliştirmiştir.",
+    "topic": "gantt-ve-kilometre-taslari"
+  },
+  {
+    "term": "Kaynak dengeleme",
+    "english": "Resource leveling",
+    "definition": "Takvimde aynı kişiye ya da ekipmana aynı anda düşen fazla yükü, işleri yeniden planlayarak çözmek.",
+    "topic": "kaynak-ve-kapasite"
+  },
+  {
+    "term": "İhtiyat",
+    "english": "Contingency reserve",
+    "definition": "Planlanmamış ama beklenen maliyet artışları için bütçenin içinde ayrılan para.",
+    "topic": "butce-ve-kazanilmis-deger"
+  },
+  {
+    "term": "Yönetim rezervi",
+    "english": "Management reserve",
+    "definition": "Kapsamı değiştiren durumlar için bütçenin dışında, yöneticinin takdirinde tutulan para.",
+    "topic": "butce-ve-kazanilmis-deger"
+  },
+  {
+    "term": "Kazanılmış değer",
+    "english": "Earned value (EVM)",
+    "definition": "Yapılan işin bütçedeki karşılığı. Planlanan değer ve gerçekleşen maliyetle karşılaştırılınca takvim ve bütçe durumu ölçülür.",
+    "topic": "butce-ve-kazanilmis-deger",
+    "aliases": ["EVM"]
+  },
+  {
+    "term": "RAID kaydı",
+    "english": "RAID log",
+    "definition": "Riskleri, varsayımları, sorunları ve bağımlılıkları tek tabloda tutan kayıt. Bazı ekipler A'yı eylem, D'yi karar okur.",
+    "topic": "raid-kaydi",
+    "aliases": ["RAID"]
+  },
+  {
+    "term": "Değişiklik talebi",
+    "english": "Change request",
+    "definition": "Plandaki bir değişikliği, nedenini ve kapsam, takvim, bütçe ve riske etkisini kayda geçiren belge.",
+    "topic": "degisiklik-kontrolu"
+  },
+  {
+    "term": "Değişiklik kurulu",
+    "english": "Change control board",
+    "definition": "Değişiklik taleplerini değerlendirip onaylayan, reddeden ya da erteleyen grup.",
+    "topic": "degisiklik-kontrolu"
+  },
+  {
+    "term": "Resmî kabul",
+    "english": "Formal acceptance",
+    "definition": "Paydaşın sonucu kabul kriterlerine göre yazılı olarak onaylaması: kim, ne zaman, neyi kabul etti.",
+    "topic": "kalite-ve-kabul"
+  },
+  {
+    "term": "RAG durumu",
+    "english": "Red, amber, green",
+    "definition": "Teslimata ne kadar güvenildiğini kırmızı, sarı ve yeşil ile gösteren derecelendirme; durum raporlarının ilk satırıdır.",
+    "topic": "durum-raporu",
+    "aliases": ["RAG"],
+    "acronym": true
+  },
+  {
+    "term": "RFP",
+    "english": "Request for proposal",
+    "definition": "Teklif isteği: bir sorunun nasıl ve kaça çözüleceğini sorar; kalite ve takvim şartlarına odaklanır.",
+    "topic": "tedarikci-ve-sozlesme",
+    "acronym": true
+  },
+  {
+    "term": "Sabit fiyatlı sözleşme",
+    "english": "Fixed-price contract",
+    "definition": "İşin anlaşılan bir fiyata yapıldığı sözleşme. Kapsam belliyse maliyeti öngörülebilir kılar; maliyet riski tedarikçidedir.",
+    "topic": "tedarikci-ve-sozlesme",
+    "aliases": ["sabit fiyat"]
+  },
+  {
+    "term": "Öğrenilen dersler",
+    "english": "Lessons learned",
+    "definition": "Projenin sonunda, ekip dağılmadan ve suçlamadan, neyin iyi gittiğini ve bir dahaki sefere neyin değişeceğini yazmak.",
+    "topic": "kapanis-ve-ogrenilen-dersler"
+  },
+  {
+    "term": "Program",
+    "english": "Programme",
+    "definition": "Birlikte yönetildiğinde daha fazla fayda sağlayan, birbirine bağlı projeler. Odağı tek tek teslimatlar değil, faydadır.",
+    "topic": "program-portfoy-ve-pmo",
+    "inline": false
+  },
+  {
+    "term": "Portföy",
+    "english": "Portfolio",
+    "definition": "Bir kurumun bütün projeleri ve programları; stratejiyle hizalanarak seçilir ve sıralanır.",
+    "topic": "program-portfoy-ve-pmo",
+    "inline": false
+  },
+  {
+    "term": "PMO",
+    "english": "Project management office",
+    "definition": "Projelerin, programların ya da portföyün karar, yönetişim ve teslimat işlerini destekleyen ofis.",
+    "topic": "program-portfoy-ve-pmo",
+    "acronym": true
+  }
+]

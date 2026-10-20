@@ -1,0 +1,120 @@
+---
+summary: "ResearchOps, araştırmayı ölçekte yürütmek için insanları, süreçleri ve araçları düzenler. Altı alanı vardır: katılımcılar, yönetişim, bilgi, araçlar, yetkinlik ve savunuculuk."
+outcomes:
+  - "ResearchOps'un altı alanını sayıp örnekleyebilirsin."
+  - "Bir ekipte araştırmanın hangi işlerinin tekrar ettiğini fark edip standartlaştırabilirsin."
+  - "Katılımcı paneli ve içgörü deposunun neden ortak altyapı olduğunu açıklayabilirsin."
+minutes: 5
+standard: 2
+skipTerms: ["Bilgi alanı", "Yönetişim"]
+sources:
+  - label: "NN/g — Kate Kaplan, ResearchOps 101 (2020)"
+    url: "https://www.nngroup.com/articles/research-ops-101/"
+additions:
+  - "ResearchOps tanımı, çabaları, ölçek ekonomisi örneği ve altı alan (Kate Kaplan, NN/g)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Cycle from "~/components/diagrams/primitives/Cycle.astro";
+
+Mert iki takıma ortak çalışıyordu. Bir pazartesi kampüs takımı görüşme için öğrenci arıyordu, Panel takımı ağaç testi için dükkân çalışanı. İki takım aynı onam formunun iki farklı sürümünü kullanıyordu. Ayşe de geçen yıl yapılmış bir dükkân araştırmasını, kimse bulamadığı için yeniden planlıyordu.
+
+Araştırma arttıkça tekrar eden işler de artar. Bu ders, bu işleri bir kez düzenleyip herkesin kullanmasını anlatır.
+
+## ResearchOps nedir?
+
+NN/g'den Kate Kaplan **ResearchOps**'u şöyle tanımlar: araştırmanın değerini ve etkisini ölçekte artırmak için insanların, süreçlerin ve zanaatin düzenlenmesi ve iyileştirilmesi. DesignOps'un araştırmaya odaklanan alanıdır.
+
+Kaplan'ın saydığı tipik çabalar şunlardır:
+
+- Yöntemleri ve belgeleri standartlaştırmak: metinler, şablonlar, onam formları.
+- Katılımcıları çalışmalar arasında yönetmek.
+- Etik ilkeleri korumak.
+- Ortakları ve yönetimi araştırmaya hazırlamak.
+- İçgörüleri yönetip erişilebilir kılmak.
+- Başarı hikâyelerini yaymak.
+
+Kaplan bunu bir ölçek ekonomisi örneğiyle anlatır. Araştırma on kat artarsa maliyet on bir kat değil, tekrar kullanım sayesinde dokuz kat ya da daha az artmalıdır.
+
+**ResearchOps ≠ katılımcı bulmak.** Kaplan'ın vurgusu budur: işe alım ResearchOps'un yalnız bir parçasıdır.
+
+## Altı alan
+
+<Cycle
+  label="ResearchOps'un altı alanı"
+  caption="Kaplan ResearchOps'u birbirini etkileyen altı alanla anlatır. Katılımcılar: bulma, eleme, planlama ve teşvik. Yönetişim: onam, gizlilik, saklama ve imha. Bilgi: içgörüleri toplamak, sentezlemek ve paylaşmak. Araçlar: araştırmayı yürütmeye yarayan yazılım ve donanım. Yetkinlik: başkalarını araştırma yapmaya hazırlamak. Savunuculuk: araştırmanın değerini yaymak. Her alan diğerlerini besler."
+  steps={[
+    { title: "Katılımcılar", sub: "bul, ele, teşvik et", tone: "accent" },
+    { title: "Yönetişim", sub: "onam, gizlilik, saklama" },
+    { title: "Bilgi", sub: "içgörüyü topla, paylaş" },
+    { title: "Araçlar", sub: "yürütmeye yarayanlar" },
+    { title: "Yetkinlik", sub: "başkalarını hazırla", tone: "progress" },
+    { title: "Savunuculuk", sub: "değeri yay" },
+  ]}
+  back="birbirini besler"
+/>
+
+**Bilgi** alanı tekrar eden çalışmaları önler: yapılmış bir araştırma bulunabiliyorsa yeniden yapılmaz. **Yönetişim** alanı, kişisel verinin hangi kurallarla toplanıp ne zaman silineceğini tek bir yerde tutar. **Yetkinlik** alanı, araştırmacı olmayanların da doğru biçimde araştırmaya katılmasını sağlar: tasarımcının yürüttüğü bir test, ortak bir şablonla daha güvenilir olur.
+
+<Case>
+
+Mert bir çeyrekte dört işi ortaklaştırdı:
+
+1. **Katılımcılar:** iki takımın listeleri tek bir panelde birleşti: uygulamadaki "Araştırmalara katıl" kaydı, 1.240 izinli kişi. Dükkân tarafı için Ozan'ın listesi. Teşvik herkes için aynı: 150 TL kahve kredisi, oturumun başında.
+2. **Yönetişim:** tek bir onam formu ve bilgi notu, hukuk kontrolünden geçti. Saklama süresi altı ay.
+3. **Bilgi:** ortak bir içgörü deposu; her bulgu etiketli. Ayşe'nin aradığı dükkân araştırması "Panel" etiketiyle bulundu.
+4. **Yetkinlik:** görüşme rehberi, test senaryosu ve içgörü kartı şablonları; Selin ve Ayşe kendi testlerini bu şablonlarla hazırladı.
+
+Show and tell ise savunuculuğun aracı oldu.
+
+</Case>
+
+<Lenses>
+<Lens role="ux-researcher">
+
+- **Üçüncü kez yaptığın işi standartlaştır.** Onam formu, davet metni, rehber şablonu.
+- **İçgörü deposunu etiketle.** Bulunamayan bulgu, yapılmamış araştırma gibidir.
+- **Başkalarını araştırmaya hazırla.** Şablon ve kısa bir eğitim, tek araştırmacının kapasitesini çoğaltır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- ResearchOps, araştırmanın değerini ölçekte artırmak için insanları, süreçleri ve zanaati düzenler.
+- Altı alanı vardır: katılımcılar, yönetişim, bilgi, araçlar, yetkinlik ve savunuculuk.
+- Amaç ölçek ekonomisidir: araştırma büyürken maliyet daha yavaş büyür.
+- ResearchOps yalnız katılımcı bulmak değildir.
+- Ortak panel, onam formu ve içgörü deposu tekrar eden işi azaltır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="ResearchOps'un altı alanı nelerdir?">
+
+Katılımcılar, yönetişim, bilgi, araçlar, yetkinlik ve savunuculuk.
+
+</SelfCheck>
+
+<SelfCheck question="Kaplan'ın ölçek ekonomisi örneği neyi anlatır?">
+
+Araştırma on kat arttığında maliyetin on kattan fazla değil, tekrar kullanım sayesinde dokuz kat ya da daha az artması gerektiğini. Ortak süreçler ve araçlar her yeni çalışmanın maliyetini düşürür.
+
+</SelfCheck>
+
+<SelfCheck question="Bir takım, geçen yıl yapılmış bir araştırmayı bilmeden yeniden planlıyor. Hangi alan eksik?">
+
+Bilgi alanı. İçgörüler toplanıp etiketlenmiş ve erişilebilir olsaydı, eski araştırma bulunur ve tekrar önlenirdi.
+
+</SelfCheck>
+
+<SelfCheck question="Tasarımcılar kendi kullanılabilirlik testlerini yapmak istiyor. ResearchOps nasıl destek olur?">
+
+Yetkinlik alanıyla: ortak test senaryosu şablonu, onam formu ve kısa bir eğitim. Yönetişim alanı da verinin aynı kurallarla toplanıp silinmesini sağlar.
+
+</SelfCheck>

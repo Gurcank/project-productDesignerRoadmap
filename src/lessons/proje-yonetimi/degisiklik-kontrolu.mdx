@@ -1,0 +1,155 @@
+---
+summary: "Değişiklik kontrolü, plandaki değişikliklerin düzenli yapılmasını sağlar: talep yazılır, etkisi çıkarılır, kurul ya da sponsor karar verir, plan güncellenir. Amaç değişikliği durdurmak değil, görünür kılmaktır."
+outcomes:
+  - "Hangi değişikliğin değişiklik kontrolüne girmesi gerektiğini ayırabilirsin."
+  - "Bir değişiklik talebinin etkisini kapsam, takvim, bütçe ve risk açısından çıkarabilirsin."
+  - "Değişiklik kontrolünü kapsam kaymasından ayırabilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Watt, Project Management (2. baskı) — 17. Project Implementation Overview"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-17-project-implementation-overview-project-management/"
+additions:
+  - "Değişiklik kontrolü, değişiklik talebi ve değişiklik kurulu (Watt, bölüm 17)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Swimlane from "~/components/diagrams/primitives/Swimlane.astro";
+
+Beşinci haftada Hakan, Leyla'yı koridorda durdurdu: "İkinci üniversite de istiyor. Üç kafe daha ekleyelim, ne olacak ki?"
+
+Hakan sponsordu; isteği bir emir gibi duruyordu. Ama "ne olacak ki?" sorusunun bir cevabı vardı ve kimse henüz hesaplamamıştı. Üç kafe; sözleşme, kurulum, eğitim ve menü demekti. Leyla "evet" demedi. "Hayır" da demedi. "Yazalım, etkisine bakalım" dedi.
+
+## Değişiklik kontrolü nedir?
+
+Proje ilerledikçe plan değişir. Bu normaldir. Sorun, değişikliğin kimse etkisini bilmeden yapılmasıdır.
+
+**Değişiklik kontrolü** (change control), plandaki değişikliklerin düzenli bir biçimde yapılmasını sağlayan bir dizi yöntemdir. Her değişiklik yazıya geçer: ne yapılacak, ne zamana kadar ve kim tarafından.
+
+Her değişiklik bu sürece girmez. Bir değişiklik projenin kapsamını, takvimini ya da bütçesini, yani üçlü kısıtı etkilemiyorsa, değişiklik kontrolüne gerek yoktur. Bir rapor şablonunun rengini değiştirmek için talep yazılmaz.
+
+## Süreç
+
+Değişiklik kontrolü bir **değişiklik talebiyle** (change request) başlar. Bu belgeyi değişikliği isteyen kişi ya da proje yöneticisi doldurur.
+
+Talep yazıldıktan sonra bir **değişiklik kuruluna** (change control board) gönderilir. Bu kurul, değişiklikleri değerlendirip onaylayan bir gruptur. Her projede kurul yoktur, ama çoğunda vardır. Kurul yoksa talep sponsora ya da yönetime gider.
+
+<Swimlane
+  label="Bir değişiklik talebinin yolu"
+  caption="Talep eden kişi değişikliği yazar. Proje yöneticisi etkisini kapsam, takvim, bütçe ve risk açısından çıkarır. Değişiklik kurulu karar verir. Onaylanırsa proje yöneticisi planı, bütçeyi ve iş kırılım yapısını günceller, ekip de değişikliği uygular. Reddedilirse talep gerekçesiyle kayıtta kalır; silinmez."
+  lanes={["Talep eden", "Proje yöneticisi", "Değişiklik kurulu", "Ekip"]}
+  steps={[
+    { id: "yaz", lane: 0, col: 0, title: "Talebi yaz" },
+    { id: "etki", lane: 1, col: 1, title: "Etkiyi çıkar" },
+    { id: "karar", lane: 2, col: 2, title: "Onay?", kind: "decision", tone: "accent" },
+    { id: "plan", lane: 1, col: 3, title: "Planı güncelle", tone: "progress" },
+    { id: "ret", lane: 2, col: 3, title: "Gerekçesiyle kaydet" },
+    { id: "uygula", lane: 3, col: 4, title: "Uygula" },
+    { id: "son", lane: 3, col: 5, title: "Bitti", kind: "end" },
+  ]}
+  flows={[
+    { from: "yaz", to: "etki" },
+    { from: "etki", to: "karar" },
+    { from: "karar", to: "plan", label: "evet" },
+    { from: "karar", to: "ret", label: "hayır" },
+    { from: "plan", to: "uygula" },
+    { from: "uygula", to: "son" },
+  ]}
+/>
+
+Etki analizi sürecin kalbidir. Bir değişiklik bütçeye dokunmasa bile takvimi ya da riski değiştirebilir. Bu yüzden her talep aynı beş soruyla incelenir: kapsam, takvim, bütçe, risk ve kalite.
+
+Her değişiklik onaylanmaz. Onaylanan değişiklikler ekibe geri döner ve uygulanır. Reddedilen de bir karardır ve gerekçesiyle kayıtta kalır.
+
+## Değişiklik kontrolü ≠ değişikliğe direnç
+
+Değişiklik kontrolü bir duvar değildir. Amacı değişikliği durdurmak değil, bedelini görünür kılmaktır. Bedeli bilinen bir değişiklik onaylanabilir. Bilinmeyeni ise sessizce projenin içine sızar.
+
+Bu sızmaya **kapsam kayması** (scope creep) denir ve [Kapsam, MVP, POC ve scope creep](/urun-gelistirme/kapsam-mvp-poc-scope-creep/) dersinde anlatılıyor. Değişiklik kontrolü, kapsam kaymasının ilacıdır. Kayma, kontrolden geçmemiş değişikliktir.
+
+Uygulama evresi projenin zamanının ve kaynaklarının çoğunu harcadığı evredir. Maliyetler de takvim üzerindeki çatışmalar da en çok burada yaşanır. Değişiklik kontrolünün en çok işe yaradığı evre budur.
+
+<Case>
+
+Leyla, Hakan'ın isteğini aynı gün bir talebe çevirdi:
+
+1. **Ne isteniyor:** ikinci bir üniversitenin 3 kafesi de lansmana eklensin.
+2. **Etki:** kafe başına 30.000 TL, toplam 90.000 TL; ihtiyattan karşılanabilir. Kurulum ve açılış 1 hafta uzar; projenin tek haftalık tamponu tükenir. Tampon kalmayınca tedarikçinin her gecikmesi lansmanı kaydırır.
+3. **Seçenekler:** kabul et (tampon sıfır), reddet, ya da ikinci dalga: 3 kafe lansmandan sonraki üç haftada.
+4. **Karar:** Hakan, Leyla ve Elif'ten oluşan kurul ikinci dalgayı seçti. Dönem başı riske girmedi, üniversitenin isteği de karşılandı.
+5. **Güncellemeler:** iş kırılım yapısına yeni bir iş paketi, takvime 14.–17. haftalar, risk kaydına yeni bir risk eklendi. Ekibe duyuruldu.
+
+Hakan'ın "ne olacak ki?" sorusunun cevabı bir sayfa tuttu.
+
+</Case>
+
+<Tool slug="degisiklik-talebi" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Koridordaki isteğe "yazalım" de.** Ne "evet" ne "hayır"; önce etki.
+- **Etkiyi beş soruyla çıkar:** kapsam, takvim, bütçe, risk, kalite. Yalnız maliyeti yazmak en sık hatadır.
+- **Her zaman bir üçüncü seçenek ara.** "Kabul" ve "ret" arasında çoğu zaman bir "sonra" ya da "daha küçüğü" vardır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Kurulda ürün sesini sen taşırsın.** Değişiklik ürün hedefine katkı veriyor mu, yoksa yalnız bir paydaşı mı memnun ediyor?
+- **Sonraya bırakmayı bir seçenek olarak öner.** İyi bir fikrin yanlış zamanda gelmesi, ona hayır demeyi gerektirmez.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Onaylanan değişikliği backlog'a sen işlersin.** Takım değişikliği başka bir kanaldan duymasın.
+- **Sprint içindeki değişikliği ayrı tut.** Sprint hedefini bozan bir proje değişikliği, sprint planlamasında konuşulur.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Etki analizinde gereksinimleri izle.** Değişiklik hangi gereksinimleri, hangi kabul kriterlerini etkiliyor?
+- **Talebin gerçek ihtiyacını sor.** "Üç kafe daha" bir çözümdür; arkasındaki ihtiyaç başka bir biçimde de karşılanabilir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Değişiklik kontrolü, plan değişikliklerinin düzenli ve yazılı yapılmasını sağlar.
+- Kapsamı, takvimi ya da bütçeyi etkilemeyen değişiklik bu sürece girmez.
+- Süreç: talep yazılır, etkisi çıkarılır, kurul ya da sponsor karar verir, plan güncellenir.
+- Etki beş açıdan incelenir: kapsam, takvim, bütçe, risk, kalite. Ret de gerekçesiyle kayıtta kalır.
+- Değişiklik kontrolü değişikliği durdurmaz, bedelini görünür kılar; kontrolsüz değişiklik kapsam kaymasıdır.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Değişiklik kurulunun görevi nedir?">
+
+Değişiklik taleplerini değerlendirip onaylamak, reddetmek ya da ertelemek. Kurul yoksa bu kararı sponsor ya da yönetim verir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir geliştirici, bir ekrandaki yazım hatasını düzeltmek için değişiklik talebi yazmalı mı?">
+
+Hayır. Değişiklik kontrolü kapsamı, takvimi ya da bütçeyi etkileyen değişiklikler içindir. Yazım hatası bunların hiçbirini etkilemez; ekip kendi akışında düzeltir.
+
+</SelfCheck>
+
+<SelfCheck question="Sponsor 'Bu küçük bir şey, talep yazmaya gerek yok' diyerek bir özellik ekletiyor. Ne yaparsın?">
+
+Etkiyi kısaca çıkarırsın: küçük görünen bir şey takvimi ya da riski etkileyebilir. Etki gerçekten yoksa talep gerekmez. Varsa, kısa bir talep yazıp sponsorun onayını yazıya geçirirsin. Bu, kapanışta "bunu kim istedi?" sorusunu önler.
+
+</SelfCheck>
+
+<SelfCheck question="Değişiklik kontrolü ile kapsam kayması arasındaki ilişki nedir?">
+
+Kapsam kayması, kontrolden geçmeden projeye giren değişikliklerin birikmesidir. Değişiklik kontrolü bu değişiklikleri yazıya geçirir ve bedelini görünür kılar; böylece kapsam ancak bilerek büyür.
+
+</SelfCheck>

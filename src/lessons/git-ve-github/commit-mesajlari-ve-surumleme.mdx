@@ -4,7 +4,8 @@ outcomes:
   - "İyi bir commit mesajının neyi açıklaması gerektiğini söyleyebilirsin."
   - "SemVer'de MAJOR, MINOR ve PATCH'in anlamını ve 0.x.y sürümlerini açıklayabilirsin."
   - "Changelog'un neden kullanıcı diliyle yazılması gerektiğini bilirsin."
-minutes: 7
+minutes: 4
+standard: 2
 sources:
   - label: "Conventional Commits 1.0.0"
     url: "https://www.conventionalcommits.org/en/v1.0.0/"
@@ -14,9 +15,12 @@ sources:
     url: "https://keepachangelog.com/en/1.1.0/"
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir geçmişi okurken "düzeltmeler" yazan elli commit mi görmek istersin, yoksa "fix(auth): şifre sıfırlama bağlantısı süresi düzeltildi" gibi açık satırlar mı? İkincisi bir alışkanlıktır ve otomasyona bile yol açar.
 
@@ -38,15 +42,52 @@ Bir geçmişi okurken "düzeltmeler" yazan elli commit mi görmek istersin, yoks
 
 ## Changelog
 
+<Tree
+  label="Bir sürüm numarası ne söyler?"
+  caption="SemVer'de sürüm numarasının üç parçası güncellemenin riskini söyler. MAJOR artarsa kırıcı bir değişiklik vardır: Demlik mobil uygulamasının 3.0.0 sürümü yeni giriş akışını getirmişti. MINOR artarsa geriye uyumlu yeni bir özellik gelmiştir: 3.4.0 ile Son siparişini tekrarla. PATCH artarsa yalnız hata düzeltilmiştir: 3.4.1."
+  root={{
+  title: "3.4.1",
+  tone: "accent",
+  children: [
+    {
+      title: "MAJOR 3",
+      sub: "kırıcı değişiklik"
+    },
+    {
+      title: "MINOR 4",
+      sub: "yeni özellik"
+    },
+    {
+      title: "PATCH 1",
+      sub: "hata düzeltmesi",
+      tone: "progress"
+    }
+  ]
+}}
+/>
+
 **Changelog (değişiklik günlüğü, sürüm notları)**, her sürümde neyin değiştiğini insan diliyle anlatan listedir. Kullanıcıya ve ekibe "ne değişti?" sorusunu cevaplar. **Bu aslında bir içerik tasarımı işidir:** commit mesajlarını olduğu gibi dökmek değil, kullanıcının anlayacağı dilde yazmak gerekir. Ürün içi "Yenilikler" bölümü bir özelliğin keşfedilmesini de sağlar. "Changelog'u kullanıcı diliyle yazalım; `refactor(core)` satırlarını kimse anlamıyor."
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'te commit mesajları ve sürüm notları iki ayrı kitleye yazılıyor:
+
+1. **Commit:** Conventional Commits. `feat(siparis): son siparişi tek dokunuşla tekrarla`, `fix(odeme): seçili kart vurgusu`.
+2. **Sürüm:** mobil uygulama SemVer kullanıyor. "Son siparişini tekrarla" 3.4.0 ile geldi; ertesi gün kapalı dükkân düzeltmesi 3.4.1 oldu.
+3. **Mağaza notu:** commit mesajları olduğu gibi dökülmüyor. Selin ile Deniz kısa bir metin yazıyor: "Her sabah aynı kahveyi mi içiyorsun? Artık tek dokunuş yeter."
+4. **Panel:** dükkânlar için ayrı bir "Yenilikler" kutusu; teknik düzeltmeler orada görünmüyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Changelog'u sen yaz ya da düzenle:** kullanıcı faydası odaklı, kısa cümleler.
 - **Ürün içi "yenilikler" yüzeyini tasarla;** her yeni özellik için kısa duyuru ve ilgili yere bağlantı.
 - **Bağımlılık güncellemelerinde MAJOR sürüm ayrımını bil;** tasarım sistemi paketinin MAJOR güncellemesi tüketen uygulamaları etkiler.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -67,5 +108,17 @@ PATCH: hata düzeltmesi, geriye uyumlu. MINOR: yeni özellik, geriye uyumlu. MAJ
 <SelfCheck question="Changelog neden bir içerik tasarımı işidir?">
 
 Commit mesajlarını olduğu gibi dökmek işe yaramaz; kullanıcı `refactor(core)` satırını anlamaz. Changelog kullanıcının anlayacağı dilde yazılmalıdır ve ürün içinde gösterildiğinde bir özelliğin keşfedilmesini de sağlar.
+
+</SelfCheck>
+
+<SelfCheck question="Bir kütüphane 2.1.0'dan 3.0.0'a çıktı. Güncellemeden önce ne yapılır?">
+
+Sürüm notları okunur: MAJOR artış kırıcı bir değişiklik olduğunu söyler. Mevcut kullanımın etkilenip etkilenmediği kontrol edilmeden güncellenmez.
+
+</SelfCheck>
+
+<SelfCheck question="İyi bir commit mesajı neyi anlatmalıdır?">
+
+Ne yapıldığını değil, neden yapıldığını. Ne yapıldığı diff'te zaten görünür; gerekçe ise yalnız mesajda kalır.
 
 </SelfCheck>

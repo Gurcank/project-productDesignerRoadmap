@@ -4,7 +4,8 @@ outcomes:
   - "Yedeğin neden geri yüklemenin denenmesiyle birlikte anlamlı olduğunu söyleyebilirsin."
   - "Soft delete'in sağladığı şeyi ve KVKK/GDPR ile nasıl çelişebileceğini açıklayabilirsin."
   - "Toplanan kişisel verinin neden bir tasarım kararı olduğunu bilirsin."
-minutes: 8
+minutes: 5
+standard: 2
 sources:
   - label: "PostgreSQL — Yedekleme ve geri yükleme"
     url: "https://www.postgresql.org/docs/current/continuous-archiving.html"
@@ -17,10 +18,13 @@ additions:
 flags: ["degisken"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Outside from "~/components/lesson/Outside.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir kullanıcı hesabını sildi. Peki veri gerçekten gitti mi? Yoksa "silindi" işaretiyle duruyor mu? Ve bir gün veritabanı bozulursa yedek çalışacak mı? Verinin yaşam döngüsü bu sorulara cevap verir.
 
@@ -36,6 +40,30 @@ KVKK/GDPR kapsamında kullanıcı **silinme hakkını** kullandığında soft de
 
 ## Audit log
 
+<StepFlow
+  label="Bir müşteri hesabının sonu"
+  caption="Müşteri hesabını sildiğinde hesap önce 30 gün boyunca silinmiş olarak işaretlenir; bu sürede geri alınabilir. Süre dolunca kişisel bilgiler anonimleştirilir: ad ve telefon kaldırılır. Siparişler dükkânın raporlarında silinmiş müşteri olarak kalır. Yedekler de saklama süresi dolunca yenileriyle değiştirilir."
+  steps={[
+  {
+    title: "Silme isteği",
+    tone: "accent"
+  },
+  {
+    title: "30 gün",
+    sub: "silinmiş işaretli · geri alınabilir"
+  },
+  {
+    title: "Anonimleştirme",
+    sub: "ad, telefon kaldırılır"
+  },
+  {
+    title: "Siparişler kalır",
+    sub: "silinmiş müşteri",
+    tone: "progress"
+  }
+]}
+/>
+
 **Audit log (denetim kaydı)**, kim, ne zaman, neyi değiştirdi bilgisinin kalıcı olarak tutulmasıdır. Kurumsal ürünlerde zorunluluktur ve ekip ürünlerinde güven üretir. Arayüzdeki karşılığı activity feed'dir. "Kim hangi ayarı değiştirdi görünsün; audit log'u activity feed olarak gösterelim."
 
 ## Saklama süresi ve kişisel veri
@@ -48,14 +76,36 @@ Birincil metinde saklama süresi sınırı ("storage limitation") şöyle ifade 
 
 </Outside>
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'te verinin yaşam döngüsü dört kuralla yazılı:
+
+1. **Hesap silme:** 30 gün silinmiş olarak bekliyor, sonra kişisel bilgiler anonimleştiriliyor. Siparişler dükkânın raporlarında "silinmiş müşteri" olarak kalıyor.
+2. **Denetim kaydı:** Panel'de kim, ne zaman, hangi ürünün fiyatını değiştirdi görünüyor. Fiyat tartışmaları artık kayda bakılarak kapanıyor.
+3. **Yedek:** her gece alınıyor; her çeyrek bir geri yükleme tatbikatı yapılıyor. İlk tatbikatta geri yükleme beklenenden üç kat uzun sürdü; süre artık biliniyor.
+4. **Saklama:** araştırma kayıtları ve notları altı ay sonra siliniyor; giriş denemesi kayıtları otuz gün.
+
+Kayıt formundan doğum tarihi alanı kaldırıldı: hiçbir yerde kullanılmıyordu.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Silme akışlarını tasarlarken "geri alınabilir mi, kalıcı mı?" sor** ve kullanıcıya hangisini yaptığını söyle.
 - **Çöp kutusu süresini ve kalıcı silme anını ekranda belirt.**
 - **Formda her alan için "bunu neden topluyoruz?" sor;** gereksizi çıkar.
 - **Ekip ürünlerinde etkinlik akışını (kim, ne zaman, ne) denetim kaydına bağla.**
 
-</Callout>
+</Lens>
+<Lens role="business-analyst">
+
+- **Her veri türü için saklama süresini ve silme biçimini yaz.** Soft delete mi, anonimleştirme mi, kalıcı silme mi?
+- **Silinme hakkıyla iş ihtiyacı çeliştiğinde kararı hukukla birlikte ver.**
+- **Denetim kaydını gereksinim say.** Kim, ne zaman, neyi değiştirdi?
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -77,5 +127,11 @@ Hayır. Geri yüklemenin denenmiş olması gerekir. Test edilmemiş yedek, yedek
 <SelfCheck question="Soft delete ne sağlar ve KVKK ile nasıl çelişebilir?">
 
 Kazayla silmeyi geri alınabilir kılar ve ilişkili kayıtların bozulmasını engeller. Kullanıcı silinme hakkını kullandığında ise soft delete yeterli olmayabilir; gerçek silme ya da anonimleştirme gerekebilir. İkisi çelişir ve ürün kararı gerektirir.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Yedeğimiz var\" demek neden yetmez?"}>
+
+Geri yükleme denenmemişse yedeğin çalışıp çalışmadığı ve ne kadar sürdüğü bilinmez; bu ancak gerçek bir olayda anlaşılır. Düzenli geri yükleme tatbikatı gerekir.
 
 </SelfCheck>

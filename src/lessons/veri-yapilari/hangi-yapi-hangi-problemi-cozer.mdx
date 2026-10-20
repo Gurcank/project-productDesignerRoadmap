@@ -5,6 +5,7 @@ outcomes:
   - "Tasarım aşamasında beş soruyu (kaç öğe, en sık işlem, sıra, kimlik, geri alma) sorabilirsin."
   - "'Bu pahalı' cümlesinin üç anlamını ayırt edebilirsin."
 minutes: 6
+standard: 2
 sources:
   - label: "MDN — JavaScript veri yapıları"
     url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures"
@@ -14,9 +15,12 @@ additions:
   - "Bu bölüm materyalde yok; bu site için yazıldı."
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bu bölümün özeti. Amaç ezberlemek değil; bir tasarım kararı verirken **hangi soruyu sorman gerektiğini** bilmek.
 
@@ -38,6 +42,33 @@ Bu bölümün özeti. Amaç ezberlemek değil; bir tasarım kararı verirken **h
 
 Bu beş soru tablonun tamamının yerine geçer. Bir ekran tasarlarken sorarsan doğru yapı kendiliğinden belirlenir.
 
+<Tree
+  label="Tasarım aşamasında beş soru"
+  caption="Bir ekranı tasarlarken sorulacak beş soru doğru veri yapısını kendiliğinden belirler. Kaç öğe olabilir? En sık işlem ne? Sıra anlam taşıyor mu? Öğeyi neyle ayırt ediyoruz? İşlem geri alınabilir mi?"
+  root={{
+  title: "Beş soru",
+  tone: "accent",
+  children: [
+    {
+      title: "Kaç öğe?"
+    },
+    {
+      title: "En sık işlem?"
+    },
+    {
+      title: "Sıra anlamlı mı?"
+    },
+    {
+      title: "Kimlik ne?"
+    },
+    {
+      title: "Geri alınabilir mi?",
+      tone: "progress"
+    }
+  ]
+}}
+/>
+
 1. **Bu listede en fazla kaç öğe olabilir?** "Bilmiyoruz" bir risktir; sayfalama, sanallaştırma, boş durum ve yükleniyor tasarımı buna bağlıdır.
 2. **En sık yapılan işlem ne?** Yapı, en sık işlemi ucuzlatacak şekilde seçilir; diğerleri pahalılaşır.
 3. **Sıra anlam taşıyor mu?** Taşıyorsa kuralını yaz. Taşımıyorsa, kullanıcı yine de bir sıra görecek ve hangisi olduğunu söylemezsen sistem söyler.
@@ -56,14 +87,30 @@ Bu beş soru tablonun tamamının yerine geçer. Bir ekran tasarlarken sorarsan 
 
 > Arayüzde "anında" olan her şey, arkada birinin o işlemi ucuzlatan bir yapı seçmiş olmasıdır; o seçim, senin ne istediğini bilmesine bağlıdır.
 
-Bu yüzden veri yapısı bilgisi bir Product Designer için kod bilgisi değil, **isteğini doğru tarif etme** becerisidir.
+Bu yüzden veri yapısı bilgisi ürün ekibi için kod bilgisi değil, **isteğini doğru tarif etme** becerisidir.
 
-<Callout kind="tasarimci">
+<Case>
+
+"Favori listesi" yol haritasının bir sonraki satırındaydı. Selin tasarıma başlamadan beş soruyu Ece'yle cevapladı:
+
+1. **Kaç öğe:** prototip testinde favori kaydeden katılımcılar birkaç ürün kaydetti; sınır 20 kondu. Sanallaştırma gerekmiyor.
+2. **En sık işlem:** "bu ürün favorimde mi?" ve ekle-çıkar. Arkada bir küme.
+3. **Sıra:** kullanıcının eklediği sıra; en son eklenen üstte. Kümenin yanında bir dizi.
+4. **Kimlik:** aynı ürün iki dükkânda olabiliyor. Kimlik ürün değil, dükkân + ürün.
+5. **Geri alma:** favoriden çıkarınca beş saniyelik "Geri al".
+
+Tasarım toplantısı yarım saat sürdü; "bu pahalı" cümlesi hiç geçmedi.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Beş soruyu bir tasarım kontrol listesine koy** ve her liste/arama/seçim ekranında sor.
 - **"Bu pahalı" cevabını üç türden birine bağla** ve ona göre karşılık ver: isteği değiştir, ölçeği netleştir ya da proje olarak planla.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -78,5 +125,17 @@ Bu yüzden veri yapısı bilgisi bir Product Designer için kod bilgisi değil, 
 <SelfCheck question="'Bu pahalı' dendiğinde kastedilen üç şey nedir?">
 
 Yapı uygun değil (istenen işlem yapının kötü yaptığı işlem), ölçek sorunu (küçük veride ucuz, büyükte pahalı) ya da yeni bir altyapı gerekiyor (arama motoru, kuyruk, geri alma altyapısı).
+
+</SelfCheck>
+
+<SelfCheck question={"Bir geliştirici \"bu pahalı\" dediğinde hangi üç şeyden biri kastediliyor olabilir?"}>
+
+Yapı uygun değildir (istenen işlem seçilen yapının kötü yaptığı iştir), bir ölçek sorunu vardır (küçük veride ucuz, büyükte pahalı) ya da yeni bir altyapı gerekir (arama motoru, kuyruk, geri alma altyapısı).
+
+</SelfCheck>
+
+<SelfCheck question={"\"Bu öğeyi neyle ayırt ediyoruz?\" sorusu neden önemlidir?"}>
+
+Kalıcı bir kimlik yoksa filtre ve sıralama sonrası yanlış öğe güncellenir; bu arayüzlerde en sık görülen sessiz hatalardan biridir.
 
 </SelfCheck>

@@ -4,7 +4,8 @@ outcomes:
   - "Dört CSS yaklaşımını bir cümleyle ayırt edebilirsin."
   - "Tailwind'in tasarım sistemi açısından iki gerçek faydasını söyleyebilirsin."
   - "styled-components'in bugünkü durumunu ve mevcut projede ne yapılacağını açıklayabilirsin."
-minutes: 8
+minutes: 5
+standard: 2
 sources:
   - label: "Tailwind CSS — Utility sınıflarıyla stil"
     url: "https://tailwindcss.com/docs/styling-with-utility-classes"
@@ -22,11 +23,14 @@ flags: ["degisken"]
 skipTerms: ["layout", "specificity"]
 ---
 
-import Callout from "~/components/lesson/Callout.astro";
 import Compare from "~/components/lesson/Compare.astro";
 import Pane from "~/components/lesson/Pane.astro";
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir proje büyüyünce soru gelir: yüzlerce stil kuralını çakışmadan nasıl yönetiriz? Bunun dört yaygın cevabı var. Proje başında seçilir ve sonradan değiştirmesi pahalıdır; bu yüzden isimlerini ve takaslarını bilmek, toplantıda söz sahibi olmanı sağlar.
 
@@ -68,15 +72,43 @@ shadcn/ui gibi kopyala-yapıştır bileşen yaklaşımlarının temelidir. En ya
 
 **CSS-in-JS**'te stiller JavaScript dosyalarının içinde yazılır. **Runtime** sürümleri (styled-components, Emotion) stilleri tarayıcıda çalışırken üretir; **zero-runtime** sürümleri (vanilla-extract, Panda CSS) derleme sırasında üretip statik CSS çıkarır. Stili bileşenle aynı dosyada tutar ve JavaScript değerlerine göre dinamik değiştirmeyi kolaylaştırır.
 
+<Spectrum
+  label="Stil nerede yaşıyor?"
+  caption="Dört yaklaşım, stilin bileşene ne kadar yakın yazıldığına göre sıralanır. Sol uçta ayrı CSS dosyaları ve BEM durur: stil bileşenden ayrıdır, düzeni disiplin sağlar. CSS Modules'te her bileşenin kendi CSS dosyası vardır. Tailwind'de stil sınıflarla doğrudan HTML'in içine yazılır. Sağ uçta CSS-in-JS durur: stil JavaScript dosyasının içindedir."
+  left={{ title: "Ayrı dosyada", sub: "disiplinle" }}
+  right={{ title: "Bileşenin içinde", sub: "JavaScript'te" }}
+  marks={[
+    { label: "Vanilla / BEM", at: 0.08 },
+    { label: "CSS Modules", at: 0.35 },
+    { label: "Tailwind", at: 0.65 },
+    { label: "CSS-in-JS", at: 0.92 },
+  ]}
+/>
+
 Bilmen gereken bir durum değişikliği var: kaynaklara göre **styled-components Mart 2025'te bakım moduna geçti** ve bakımcısı yeni projeler için önermediğini belirtti. Sebepler arasında React Server Components ile uyumsuzluk ve çalışma zamanı stil enjeksiyonunun performans maliyeti anılıyor. Kütüphane hâlâ çalışıyor; yani mevcut kodun tehlikede değil. Ama 2026'da yeni bir proje için varsayılan seçim değil. Önerilen yönler: CSS Modules, Tailwind ya da zero-runtime seçenekler. "Bu proje styled-components kullanıyor; devam edelim ama yeni bileşenleri CSS Modules'a alalım." Bu bilgi hızlı değişir; kullanmadan önce güncel durumu kontrol et.
 
-<Callout kind="tasarimci">
+<Case>
+
+Demlik'te iki yaklaşım yan yana yaşıyor:
+
+1. **Tailwind:** müşteri sitesi ve Panel'in yeni ekranları Tailwind ile yazılıyor. Boşluk ölçeği yapılandırmada tanımlı: 4, 8, 12, 16, 24, 32. Ölçek dışı bir değer yazılamıyor.
+2. **Eski kod:** Panel'in ilk ekranları styled-components ile yazılmıştı.
+3. **Karar:** toptan yeniden yazım yok. Bir ekrana dokunulduğunda o ekran Tailwind'e taşınıyor; yeni ekranlar doğrudan Tailwind.
+4. **Teslim:** Selin'in tasarım dosyasında boşluklar piksel değil ölçek adıyla yazılı; geliştirici doğrudan aynı sınıfı kullanıyor.
+
+Taşıma yedi ayda Panel ekranlarının yarısına ulaştı; kimse ayrı bir "taşıma sprint'i" planlamadı.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
 
 - **Yaklaşımı sor:** ekip hangisini kullanıyor? Teslim biçimin ona uymalı (Tailwind'de ölçek adları, CSS Modules'ta bileşen sınırları).
 - **Ölçeğini kodla eşleştir:** tasarımdaki boşluk ve renk ölçeği, Tailwind yapılandırmasındaki ölçekle aynı olmalı.
 - **Eski bir projede toptan yeniden yazmayı önerme;** kademeli geçiş yeterli.
 
-</Callout>
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -97,5 +129,11 @@ Sınıflar önceden tanımlı bir ölçekten geldiği için tasarım sistemine u
 <SelfCheck question="styled-components'in durumu nedir? Mevcut projede ne yapılmalı?">
 
 Mart 2025'te bakım moduna geçti ve yeni projeler için önerilmiyor; ama çalışmaya devam ediyor. Mevcut projede kademeli geçiş yapılır, yeni bileşenler CSS Modules ya da Tailwind ile yazılır; toptan yeniden yazmak için yeterli sebep değil.
+
+</SelfCheck>
+
+<SelfCheck question="Bir projenin stil yaklaşımı değiştirilecekse neden toptan yeniden yazım yerine kademeli geçiş önerilir?">
+
+Toptan yeniden yazım uzun sürer, yeni özellik geliştirmeyi durdurur ve hata riski taşır. Kademeli geçişte dokunulan ekran taşınır, yeni ekranlar yeni yaklaşımla yazılır; iki yaklaşım bir süre birlikte yaşar.
 
 </SelfCheck>
