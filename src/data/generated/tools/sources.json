@@ -1,0 +1,422 @@
+{
+  "source": "ek-a-ve-ek-b.md",
+  "title": "Ek B — Doğrulama kaynakları",
+  "intro": [
+    {
+      "kind": "para",
+      "text": "Bu dosyadaki bilginin bir kısmı zamanla eskir. Bu ek iki şey söylüyor: **hangi konuda nereye bakılır** ve **bu dosyanın hangi kısımlarının ne kadar dayanıklı olduğu.**"
+    }
+  ],
+  "sections": [
+    {
+      "title": "B.1 Birincil kaynaklar",
+      "blocks": [
+        {
+          "kind": "para",
+          "text": "Bir bilgiyi doğrulaman gerektiğinde, önce buraya bak. Bunlar standart yazan veya ürünü yapan kaynaklar — ikincil bloglar değil."
+        },
+        {
+          "kind": "heading",
+          "text": "Web platformu"
+        },
+        {
+          "kind": "table",
+          "head": [
+            "Konu",
+            "Kaynak"
+          ],
+          "rows": [
+            [
+              "HTML, CSS, JavaScript, tarayıcı API'leri",
+              "**MDN Web Docs** — developer.mozilla.org"
+            ],
+            [
+              "Tarayıcı desteği",
+              "**Can I Use** — caniuse.com · **Baseline** (web.dev üzerinden)"
+            ],
+            [
+              "Performans, Core Web Vitals",
+              "**web.dev** — web.dev"
+            ],
+            [
+              "Web standartları",
+              "**W3C** — w3.org · **WHATWG** — whatwg.org"
+            ]
+          ]
+        },
+        {
+          "kind": "para",
+          "text": "**Bu dosyada kullanıldığı yerler:** Bölüm 1 (DOM, URL, PWA), Bölüm 8 (CSS, rendering, Core Web Vitals eşikleri)."
+        },
+        {
+          "kind": "heading",
+          "text": "Erişilebilirlik"
+        },
+        {
+          "kind": "table",
+          "head": [
+            "Konu",
+            "Kaynak"
+          ],
+          "rows": [
+            [
+              "WCAG standardı ve başarı ölçütleri",
+              "**W3C WAI** — w3.org/WAI"
+            ],
+            [
+              "Pratik rehberler ve teknikler",
+              "**WebAIM** — webaim.org"
+            ],
+            [
+              "AB mevzuatı (EAA, EN 301 549)",
+              "**AccessibleEU** — accessible-eu-centre.ec.europa.eu"
+            ],
+            [
+              "Türkiye — kamu erişilebilirlik rehberi",
+              "**KAMİS** — kamis.gov.tr"
+            ],
+            [
+              "Türkiye — web/mobil erişilebilirlik genelgesi",
+              "**Aile ve Sosyal Hizmetler Bakanlığı** — aile.gov.tr"
+            ]
+          ]
+        },
+        {
+          "kind": "para",
+          "text": "**Bu dosyada kullanıldığı yerler:** Bölüm 6 tamamı, 5.4 (kontrast oranları)."
+        },
+        {
+          "kind": "heading",
+          "text": "Güvenlik"
+        },
+        {
+          "kind": "table",
+          "head": [
+            "Konu",
+            "Kaynak"
+          ],
+          "rows": [
+            [
+              "Uygulama güvenliği riskleri",
+              "**OWASP** — owasp.org"
+            ],
+            [
+              "Kimlik doğrulama ve şifre politikası",
+              "**NIST SP 800-63** — pages.nist.gov/800-63-4"
+            ]
+          ]
+        },
+        {
+          "kind": "para",
+          "text": "**Bu dosyada kullanıldığı yerler:** Bölüm 13 (OWASP Top 10:2025), Bölüm 12.8 (şifre politikası)."
+        },
+        {
+          "kind": "heading",
+          "text": "Hukuk (Türkiye ve AB)"
+        },
+        {
+          "kind": "table",
+          "head": [
+            "Konu",
+            "Kaynak"
+          ],
+          "rows": [
+            [
+              "KVKK — mevzuat, ilke kararları, rehberler",
+              "**kvkk.gov.tr**"
+            ],
+            [
+              "Mevzuat metinleri",
+              "**mevzuat.gov.tr**"
+            ],
+            [
+              "GDPR",
+              "**gdpr.eu** ve AB Komisyonu sayfaları"
+            ]
+          ]
+        },
+        {
+          "kind": "quote",
+          "text": "**Uyarı:** Bu dosyadaki hukuki bilgiler genel bilgilendirmedir. Gerçek bir projede avukat görüşü alınmalıdır."
+        },
+        {
+          "kind": "para",
+          "text": "**Bu dosyada kullanıldığı yerler:** Bölüm 13.10, 13.11, 21.7."
+        },
+        {
+          "kind": "heading",
+          "text": "Süreç ve metodoloji"
+        },
+        {
+          "kind": "table",
+          "head": [
+            "Konu",
+            "Kaynak"
+          ],
+          "rows": [
+            [
+              "Scrum'ın resmî tanımı",
+              "**Scrum Guide** — scrumguides.org"
+            ],
+            [
+              "Agile ilkeleri",
+              "**agilemanifesto.org**"
+            ],
+            [
+              "Tasarım süreci",
+              "**Design Council** — designcouncil.org.uk"
+            ],
+            [
+              "Kullanılabilirlik araştırmaları",
+              "**Nielsen Norman Group** — nngroup.com"
+            ]
+          ]
+        },
+        {
+          "kind": "para",
+          "text": "**Bu dosyada kullanıldığı yerler:** Bölüm 3, Bölüm 4."
+        },
+        {
+          "kind": "heading",
+          "text": "Araçlar ve kütüphaneler"
+        },
+        {
+          "kind": "para",
+          "text": "Her aracın **kendi resmî dokümantasyonu** birincil kaynaktır. Blog yazıları ve karşılaştırma makaleleri ikincildir ve genelde eskimiştir."
+        },
+        {
+          "kind": "para",
+          "text": "**Özellikle kontrol edilmesi gerekenler:** sürüm numarası, bakım durumu (son commit ne zaman), lisans, fiyatlandırma."
+        }
+      ]
+    },
+    {
+      "title": "B.2 Bu dosyanın dayanıklılık haritası",
+      "blocks": [
+        {
+          "kind": "para",
+          "text": "Her bölümün ne kadar hızlı eskiyeceği. `[DEĞİŞKEN BİLGİ]` etiketleri bu haritaya göre konuldu."
+        },
+        {
+          "kind": "heading",
+          "text": "🟢 Eskimeyen — kavramsal temel"
+        },
+        {
+          "kind": "para",
+          "text": "Bu bölümlerdeki bilgi 10 yıl sonra da geçerli olacak."
+        },
+        {
+          "kind": "table",
+          "head": [
+            "Bölüm",
+            "Neden dayanıklı"
+          ],
+          "rows": [
+            [
+              "**1** — Web nasıl çalışır",
+              "HTTP ve client-server modeli 30 yıldır aynı"
+            ],
+            [
+              "**2** — Ürün geliştirme",
+              "Kavramlar 20+ yıllık"
+            ],
+            [
+              "**4** — UI/UX ilkeleri",
+              "İnsan algısı değişmiyor"
+            ],
+            [
+              "**11** — Veritabanı",
+              "İlişkisel model 50 yıllık"
+            ],
+            [
+              "**14** — Sistem mimarisi",
+              "Takas mantığı değişmiyor"
+            ],
+            [
+              "**15** — Git",
+              "Git 20 yıldır aynı"
+            ],
+            [
+              "**18** — Şirket sözlüğü",
+              "Deyimler yavaş değişir"
+            ]
+          ]
+        },
+        {
+          "kind": "heading",
+          "text": "🟡 Yavaş eskiyen — pratik ve standart"
+        },
+        {
+          "kind": "para",
+          "text": "2-3 yılda bir gözden geçirilmeli."
+        },
+        {
+          "kind": "table",
+          "head": [
+            "Bölüm",
+            "Ne değişebilir"
+          ],
+          "rows": [
+            [
+              "**3** — Çalışma biçimi",
+              "Scrum Guide güncellenir; moda çerçeveler değişir"
+            ],
+            [
+              "**5** — Tasarım sistemi",
+              "Figma özellikleri, renk uzayı desteği, araç ekosistemi"
+            ],
+            [
+              "**6** — Erişilebilirlik",
+              "WCAG sürümleri, mevzuat (özellikle Türkiye tarafı)"
+            ],
+            [
+              "**7** — Site anatomisi",
+              "Yeni kalıplar çıkar (bento grid gibi), isimler kayar"
+            ],
+            [
+              "**10** — Back-end ve API",
+              "Kavramlar sabit, araçlar ve servisler değişir"
+            ],
+            [
+              "**13** — Güvenlik ve hukuk",
+              "OWASP listesi, KVKK ilke kararları, AB mevzuatı"
+            ],
+            [
+              "**17** — Test ve kalite",
+              "Araç manzarası (Vitest/Jest, Playwright/Cypress)"
+            ]
+          ]
+        },
+        {
+          "kind": "heading",
+          "text": "🔴 Hızlı eskiyen — ürün ve sürüm bilgisi"
+        },
+        {
+          "kind": "para",
+          "text": "**Kullanmadan önce mutlaka doğrula.** Bu bölümlerde `[DEĞİŞKEN BİLGİ]` etiketi yoğun."
+        },
+        {
+          "kind": "table",
+          "head": [
+            "Bölüm",
+            "Ne eskir"
+          ],
+          "rows": [
+            [
+              "**8.10 – 8.13**",
+              "Rendering stratejilerinin durumu, build araçları, CWV eşikleri"
+            ],
+            [
+              "**9** — Framework haritası",
+              "**En hızlı eskiyen bölüm.** Kütüphane durumları, bakım modu, isim değişiklikleri"
+            ],
+            [
+              "**11.12** — BaaS",
+              "Ücretsiz katmanlar, fiyat, satın almalar"
+            ],
+            [
+              "**12.10** — Auth çözümleri",
+              "Kütüphane manzarası hızlı hareket ediyor"
+            ],
+            [
+              "**16.6, 16.12** — Hosting ve maliyet",
+              "Fiyatlandırma modelleri sürekli değişiyor"
+            ],
+            [
+              "**19** — Yapay zekâ",
+              "Bu alan aylarla ölçülüyor"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "B.3 Doğrulanmış ve doğrulanmamış bilgi",
+      "blocks": [
+        {
+          "kind": "para",
+          "text": "Dosya yazılırken kaynak doğrulaması yapılan başlıca konular:"
+        },
+        {
+          "kind": "para",
+          "text": "**Doğrulandı (birincil veya birden fazla bağımsız kaynak):**"
+        },
+        {
+          "kind": "list",
+          "ordered": false,
+          "items": [
+            "WCAG 2.2 ve yeni başarı ölçütleri (6.2)",
+            "Kontrast oranları AA/AAA (5.4, 6.6)",
+            "Core Web Vitals eşikleri ve INP'nin FID'i değiştirmesi (8.12)",
+            "OWASP Top 10:2025 kategorileri (13.2)",
+            "NIST şifre politikası değişiklikleri (12.8)",
+            "Agile Manifesto ve Scrum Guide 2020 (3.1, 3.2)",
+            "Nielsen heuristics ve \"5 kullanıcı\" kuralının sınırları (4.6, 4.10)",
+            "OKR ve RICE kökenleri (3.7, 2.7)",
+            "styled-components bakım modu, Framer Motion → Motion, GSAP ücretsizleşmesi (8.4, 9.6)",
+            "Radix → Base UI geçişi ve shadcn/ui varsayılanı (9.5)",
+            "Remix → React Router v7 birleşmesi (9.3)",
+            "Prisma 7 değişikliği (11.10)",
+            "PlanetScale ve Neon durumları (11.12)",
+            "KVKK 2026/347 ilke kararı duyurusu (13.10)",
+            "EAA yürürlük tarihi (6.1)"
+          ]
+        },
+        {
+          "kind": "para",
+          "text": "**Doğrulanmadı veya belirsiz bırakıldı (`[EMİN DEĞİLİM]` etiketli):**"
+        },
+        {
+          "kind": "list",
+          "ordered": false,
+          "items": [
+            "Double Diamond'ın kesin yılı (4.2)",
+            "Yanıt süresi eşikleri (4.7)",
+            "Motion'ın yeniden adlandırma tarihi ve GSAP'ın ücretsizleşme tarihi (9.6)",
+            "Animasyon süre aralıkları (5.9)",
+            "Türkiye'deki erişilebilirlik genelgesinin uyum süreleri (6.1)",
+            "Mikroservisten dönüş oranlarına dair dolaşan yüzdeler — **bu rakamlar bilerek yazılmadı** (14.2)",
+            "CAP teoreminin kesin formülasyonu (14.10)",
+            "C4 modelinin detayı (14.13)",
+            "Belge/ilişkisel veritabanı tartışmasındaki değerlendirme (11.2)"
+          ]
+        },
+        {
+          "kind": "para",
+          "text": "**Bilerek yazılmayan bilgi türleri:**"
+        },
+        {
+          "kind": "list",
+          "ordered": false,
+          "items": [
+            "Fiyatlar ve ücretsiz katman limitleri",
+            "Anket yüzdeleri (kaynakları tutarsız veya satıcı kaynaklı olduğunda)",
+            "Paket boyutu rakamları (ölçülmediyse)",
+            "Ceza miktarları ve yasal yaptırım tutarları"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "B.4 Dosyayı güncel tutmak",
+      "blocks": [
+        {
+          "kind": "para",
+          "text": "**Altı ayda bir:** Bölüm 9, 11.12, 12.10, 16.6 — ürün ve fiyat bilgileri."
+        },
+        {
+          "kind": "para",
+          "text": "**Yılda bir:** Bölüm 6 (WCAG ve mevzuat), 13 (OWASP ve KVKK), 8.12 (CWV eşikleri), 17.3 (test araçları)."
+        },
+        {
+          "kind": "para",
+          "text": "**İki yılda bir:** Bölüm 3 (Scrum Guide), 5 (Figma ve tasarım araçları), 15.7 (dallanma pratikleri)."
+        },
+        {
+          "kind": "para",
+          "text": "**Güncellerken kural:** `[DEĞİŞKEN BİLGİ]` etiketli her paragrafı kontrol et. Doğrulanmışsa etiketi kaldırma — o bilgi yine eskiyecek. Sadece içeriği güncelle ve doğrulama tarihini yaz."
+        }
+      ]
+    }
+  ]
+}

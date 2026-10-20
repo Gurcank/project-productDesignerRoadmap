@@ -1,0 +1,134 @@
+---
+/**
+ * Appendix B as a tool: where to verify what, and how fast each chapter ages.
+ * The text is the material's, verbatim (material-tools.ts → sources.json). The
+ * one thing added here is links: the material names its sources by domain
+ * ("developer.mozilla.org"), so in the source tables a bare domain becomes a
+ * link to itself. Nothing else is rewritten.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import MaterialBlocks from "~/components/tools/MaterialBlocks.astro";
+import data from "~/data/generated/tools/sources.json";
+import type { Block, SourcesData } from "~/lib/material-tools";
+import { slugify } from "~/lib/slugify";
+
+const sources = data as unknown as SourcesData;
+
+// A domain, optionally with a path, not already inside a markdown link.
+const DOMAIN = /(?<![\w./[])((?:[a-z0-9-]+\.)+(?:org|com|dev|gov\.tr|gov|eu|uk|org\.uk|europa\.eu)(?:\/[\w\-./]*)?)(?![\w\]])/g;
+// Every linked domain was opened in a browser on 20 Ekim 2026. kamis.gov.tr
+// resolved but never answered, so it stays plain text rather than a dead link.
+const UNREACHABLE = new Set(["kamis.gov.tr"]);
+const linkify = (text: string) =>
+  text.replace(DOMAIN, (domain) =>
+    UNREACHABLE.has(domain) ? domain : `[${domain}](https://${domain.replace(/\/$/, "")})`,
+  );
+const withLinks = (blocks: Block[]): Block[] =>
+  blocks.map((block) => (block.kind === "table" ? { ...block, rows: block.rows.map((row) => row.map(linkify)) } : block));
+
+const sections = sources.sections.map((section) => ({
+  ...section,
+  id: slugify(section.title),
+  blocks: section.title.startsWith("B.1") ? withLinks(section.blocks) : section.blocks,
+}));
+---
+
+<BaseLayout
+  title="Doğrulama kaynakları"
+  description="Hangi bilgi nerede doğrulanır ve materyalin hangi bölümü ne kadar hızlı eskir: birincil kaynaklar ve dayanıklılık haritası."
+  section="araclar"
+>
+  <article class="src" data-pagefind-body data-pagefind-filter="tur:Kaynaklar" data-pagefind-meta="kategori:Araçlar">
+    <p class="src__back"><a href="/araclar/">Araçlar</a></p>
+    <header>
+      <p class="src__kind">Materyalden · Ek B</p>
+      <h1>{sources.title.replace(/^Ek B — /, "")}</h1>
+      <MaterialBlocks blocks={sources.intro} label="Doğrulama kaynakları" />
+      <nav aria-label="Bu sayfada" class="src__toc">
+        <ul>
+          {sections.map((section) => (
+            <li><a href={`#${section.id}`}>{section.title}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </header>
+
+    {
+      sections.map((section) => (
+        <section aria-labelledby={section.id} class="src__section">
+          <h2 id={section.id}>{section.title}</h2>
+          <MaterialBlocks blocks={section.blocks} label={section.title} />
+        </section>
+      ))
+    }
+  </article>
+</BaseLayout>
+
+<style>
+  .src {
+    max-width: 52rem;
+    margin-inline: auto;
+    padding: var(--spacing-8) var(--spacing-4) var(--spacing-24);
+  }
+
+  .src__back a {
+    display: inline-flex;
+    gap: var(--spacing-1);
+    min-height: 24px;
+    align-items: center;
+    color: var(--c-action);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .src__back a::before {
+    content: "←";
+  }
+
+  .src__kind {
+    margin-block-start: var(--spacing-6);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-action);
+  }
+
+  .src h1 {
+    margin-block: var(--spacing-2) var(--spacing-3);
+    font-size: var(--text-4xl);
+    letter-spacing: -0.03em;
+  }
+
+  .src__toc ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2) var(--spacing-5);
+    margin-block-start: var(--spacing-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .src__toc a {
+    display: inline-flex;
+    min-height: 24px;
+    align-items: center;
+    color: var(--c-action);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .src__section {
+    margin-block-start: var(--spacing-10);
+    padding: var(--spacing-6);
+    border-radius: var(--radius-lg);
+    background-color: var(--c-surface-reading);
+  }
+
+  .src__section > h2 {
+    margin-block-end: var(--spacing-4);
+    font-size: var(--text-2xl);
+  }
+</style>

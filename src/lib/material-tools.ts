@@ -275,3 +275,34 @@ export function parseStudyPlan(raw: string): StudyPlanData {
   const body = appendixA.replace(/^#\s+.*$/m, "").replace(/^##\s+/gm, "### ");
   return { title, blocks: parseBlocks(body) };
 }
+
+export interface SourcesSection {
+  title: string;
+  blocks: Block[];
+}
+
+export interface SourcesData {
+  title: string;
+  intro: Block[];
+  sections: SourcesSection[];
+}
+
+/**
+ * Appendix B: where to verify what, and how fast each chapter ages. Split at its
+ * "## " headings so the page can give every part its own landmark; the closing
+ * "Dosya tamamlandı" line belongs to the whole file, not to the appendix.
+ */
+export function parseSources(raw: string): SourcesData {
+  const appendixB = raw.split(/^#\s+Ek B\b/m)[1] ?? "";
+  const text = `# Ek B${appendixB}`.replace(/^\*\*Dosya tamamlandı\.\*\*.*$/m, "");
+  const title = text.match(/^#\s+(.*)$/m)?.[1]?.trim() ?? "";
+  const [head = "", ...parts] = text.replace(/^#\s+.*$/m, "").split(/^##\s+/m);
+  return {
+    title,
+    intro: parseBlocks(head),
+    sections: parts.map((part) => {
+      const newline = part.indexOf("\n");
+      return { title: part.slice(0, newline).trim(), blocks: parseBlocks(part.slice(newline + 1)) };
+    }),
+  };
+}

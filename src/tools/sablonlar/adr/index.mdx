@@ -1,0 +1,31 @@
+---
+title: "Mimari karar kaydı (ADR)"
+summary: "Geri dönüşü pahalı bir kararı bağlamı, seçenekleri, gerekçesi ve sonuçlarıyla tek sayfada kaydeder; altı ay sonra \"neden böyle?\" sorusunun cevabı burada durur."
+kind: "belge"
+roles: ["product-manager", "project-manager", "business-analyst", "product-owner"]
+lessons: ["sistem-mimarisi/adr-mimari-karar-kaydi", "sistem-mimarisi/mimari-nedir-ve-neden-erken-karar-verilir"]
+sources:
+  - label: "Michael Nygard — Documenting Architecture Decisions"
+    url: "https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions"
+  - label: "ADR GitHub Organizasyonu"
+    url: "https://adr.github.io/"
+---
+
+## Ne zaman kullanılır?
+
+Geri dönüşü pahalı her kararda: bir teknoloji seçimi, bir veri modeli, bir entegrasyon yolu, bir ürün kuralının teknik karşılığı. Buton metni gibi kolay geri alınan kararlar için yazılmaz.
+
+## Alanlar
+
+- **Durum:** önerildi, kabul edildi, reddedildi ya da başka bir ADR'nin yerini aldı.
+- **Bağlam:** kararı gerekli kılan durum ve kısıtlar; o gün ne biliniyordu.
+- **Seçenekler:** değerlendirilen her yol ve takası.
+- **Karar:** seçilen yol, tek cümleyle.
+- **Gerekçe ve sonuçlar:** neden bu yol ve neyin bedeli ödeniyor. İyi sonuçlar kadar kötüleri de yazılır.
+- **Yeniden bakma koşulu:** hangi durum değişirse karar yeniden açılır.
+
+## Sık hatalar
+
+- **Kararı değiştirmek için eski ADR'yi düzenlemek.** ADR değişmez; yeni bir ADR yazılır ve eskisi "yerini aldı" olarak işaretlenir. Geçmişin kaydı böyle korunur.
+- **Yalnız kazancı yazmak.** Bedeli yazılmayan karar, ilk sorunda yeniden tartışılır.
+- **Kararı verenleri yazmamak.** Kimin karar verdiği, kimin danışıldığı belli olmalıdır.

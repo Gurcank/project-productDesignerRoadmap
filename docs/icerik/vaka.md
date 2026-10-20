@@ -814,7 +814,8 @@ Panel'de görsel regresyon uyarı olarak duruyor. Sabit adı `SIPARIS_TAZELEME_S
 sonda yasaklar; biri "yeni bağımlılık ekleme"). Emre'nin token'sız ilk denemesi Panel'e benzemedi. Model
 ödeme API'sinde var olmayan bir "iade nedeni kodu" parametresi uydurdu. Elif'in yatırımcı özetinde açılmayan
 linkli istatistik çıkarıldı. Leyla risk kaydı, takvim ve paydaş planını üç ayrı oturumda hazırladı. Defne'nin
-tek alan düzeltmesinde altı dosya değişti.
+tek alan düzeltmesinde altı dosya değişti. Panel'de yetkiler "Ekip" ekranından verilir; dükkânlara yenilikler
+Panel'deki "Yenilikler" kutusunda duyurulur (metin Ozan'ın).
 
 ## Paydaşlar
 

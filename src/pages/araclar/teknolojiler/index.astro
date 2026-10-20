@@ -1,0 +1,157 @@
+---
+/**
+ * Index of the technology profiles, grouped by the chapter 9 section each card
+ * comes from, in the material's order.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { renderInlineMarkdown } from "~/lib/inline-markdown";
+import { getTechProfiles, type TechProfile } from "~/lib/tech-profiles";
+
+const profiles = await getTechProfiles();
+const groups: { section: string; title: string; lessonHref: string; items: TechProfile[] }[] = [];
+for (const profile of profiles) {
+  const last = groups.at(-1);
+  if (last?.section === profile.section) last.items.push(profile);
+  else groups.push({ section: profile.section, title: profile.sectionTitle, lessonHref: profile.lessonHref, items: [profile] });
+}
+const id = (section: string) => `bolum-${section.replace(".", "-")}`;
+---
+
+<BaseLayout
+  title="Teknoloji profilleri"
+  description="Framework ve kütüphanelerin profilleri: ne işe yarar, nerede karşına çıkar, ne zaman kullanılmaz ve resmî belgeleri."
+  section="araclar"
+>
+  <div class="profiles" data-pagefind-body data-pagefind-filter="tur:Teknoloji profili" data-pagefind-meta="kategori:Araçlar">
+    <p class="profiles__back"><a href="/araclar/">Araçlar</a></p>
+    <header>
+      <p class="profiles__kind">Materyalden · Bölüm 9</p>
+      <h1>Teknoloji profilleri</h1>
+      <p class="profiles__lead">
+        Toplantıda adı geçen bir framework ya da kütüphane için tek sayfa: ne işe yarar, nerede karşına çıkar, neyle
+        karıştırılır, ne zaman kullanılmaz. {profiles.length} profil, materyalin sırasıyla. Bölüm 9 en hızlı eskiyen
+        bölüm; her profilde aracın resmî belgeleri var.
+      </p>
+    </header>
+
+    {
+      groups.map((group) => (
+        <section aria-labelledby={id(group.section)} class="profiles__group">
+          <h2 id={id(group.section)}>
+            {group.section} {group.title}
+          </h2>
+          <ul class="profiles__list">
+            {group.items.map((profile) => (
+              <li class="profile-card glass">
+                <h3>
+                  <a href={`/araclar/teknolojiler/${profile.slug}/`}>{profile.card}</a>
+                </h3>
+                <p set:html={renderInlineMarkdown(profile.definition)} />
+              </li>
+            ))}
+          </ul>
+          <p class="profiles__lesson">
+            Ders: <a href={group.lessonHref}>{group.title}</a>
+          </p>
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .profiles {
+    max-width: 68rem;
+    margin-inline: auto;
+    padding: var(--spacing-8) var(--spacing-4) var(--spacing-24);
+  }
+
+  .profiles__back a {
+    display: inline-flex;
+    gap: var(--spacing-1);
+    min-height: 24px;
+    align-items: center;
+    color: var(--c-action);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .profiles__back a::before {
+    content: "←";
+  }
+
+  .profiles__kind {
+    margin-block-start: var(--spacing-6);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-action);
+  }
+
+  .profiles h1 {
+    margin-block-start: var(--spacing-2);
+    font-size: var(--text-4xl);
+    letter-spacing: -0.03em;
+  }
+
+  .profiles__lead {
+    max-inline-size: var(--measure);
+    margin-block-start: var(--spacing-3);
+    font-size: var(--text-lg);
+    color: var(--c-text-secondary);
+  }
+
+  .profiles__group {
+    margin-block-start: var(--spacing-12);
+  }
+
+  .profiles__group h2 {
+    font-size: var(--text-2xl);
+  }
+
+  .profiles__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: var(--spacing-4);
+    margin-block-start: var(--spacing-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .profile-card {
+    padding: var(--spacing-5);
+    border-radius: var(--radius-lg);
+  }
+
+  .profile-card h3 {
+    font-size: var(--text-lg);
+  }
+
+  .profile-card h3 a {
+    display: inline-flex;
+    min-height: 24px;
+    align-items: center;
+    color: var(--c-text);
+  }
+
+  .profile-card p {
+    margin-block-start: var(--spacing-2);
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .profiles__lesson {
+    margin-block-start: var(--spacing-3);
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .profiles__lesson a {
+    display: inline-flex;
+    min-height: 24px;
+    align-items: center;
+  }
+</style>

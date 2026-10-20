@@ -1,6 +1,6 @@
 # SeeYourNextStep
 
-Ürün ekibindeki roller için Türkçe bir öğrenme haritası: **sıradaki adımını gör.** Product Designer, Product Manager, Product Owner, Project Manager, Scrum Master, Business Analyst ve UX Researcher için ayrı yollar, tek bir ortak bilgi tabanı üzerinde. Şu an **31 kategori, 335 ders ve 994 terim** yayında. Araçlar'da 40 şablon, işaretlenebilir kontrol listeleri, proje akış haritası ve rolüne göre çalışma takvimi var. Ana sayfa bir gezegen haritası: her kategori bir gök cismi, rolünün yolu bir takımyıldızı.
+Ürün ekibindeki roller için Türkçe bir öğrenme haritası: **sıradaki adımını gör.** Product Designer, Product Manager, Product Owner, Project Manager, Scrum Master, Business Analyst ve UX Researcher için ayrı yollar, tek bir ortak bilgi tabanı üzerinde. Şu an **31 kategori, 335 ders ve 994 terim** yayında. Araçlar'da 44 şablon, işaretlenebilir kontrol listeleri, proje akış haritası, rolüne göre çalışma takvimi, doğrulama kaynakları ve 28 teknoloji profili var. Ana sayfa bir gezegen haritası: her kategori bir gök cismi, rolünün yolu bir takımyıldızı.
 
 ## Özellikler
 

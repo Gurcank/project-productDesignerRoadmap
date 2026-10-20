@@ -61,13 +61,13 @@ eklenebilir manifest · **çevrimdışı okuma** (ADR-012). Çevrimdışı katma
 derlemesinde etkindir; `astro dev` altında service worker kaydedilmez, kalmış olan sökülür —
 gerekçesi ve bedeli ADR-012'de.
 
-**Var — Araçlar (Faz 3–10).** `/araclar/`: doldurulmuş örnekli 40 şablon (PRD, RACI, risk kaydı;
+**Var — Araçlar (Faz 3–10).** `/araclar/`: doldurulmuş örnekli 44 şablon (PRD, RACI, risk kaydı;
 proje tüzüğü, iş gerekçesi, WBS, takvim, RAID, değişiklik talebi, durum raporu, kapanış raporu;
 sprint hedefi, çalışma sözleşmesi, retro panosu, hazır ve bitti tanımı, Gherkin story; BRD, use case,
 as-is/to-be, karar tablosu, izlenebilirlik matrisi, UAT; one-pager, fırsat-çözüm ağacı, deney kartı,
 Now-Next-Later, lansman planı; izleme planı, metrik kartı, A/B test planı, Lean Canvas; paydaş kaydı,
 iletişim planı, DACI karar kaydı, toplantı ve karar notu; araştırma planı, görüşme rehberi, test
-senaryosu, onam örneği, içgörü kartı),
+senaryosu, onam örneği, içgörü kartı; mimari karar kaydı, hata raporu, postmortem, yapay zekâ isteği),
 Markdown ve Türkçe Excel'de açılan CSV indirmeleri (ADR-021).
 
 **Var — Proje Yönetimi (Faz 4).** Materyal dışı ilk tam kategori: 18 v2 ders (yaşam döngüsü,
@@ -188,7 +188,7 @@ Eskimiş ADR-006, ADR-007 ve ADR-014'e durum notu düşüldü.
    kapatılamadı).
 
 **Henüz yok — planlı, yapılmadı.** EN arayüz (`/en/`, `src/i18n`): kullanıcı ertelemeyi seçti,
-şu an TR tek dil · Araçlar'da Ek B kaynakları ve diğer şablonlar · framework ve kütüphane profil sayfaları · Cloudflare Pages yayını.
+şu an TR tek dil · Cloudflare Pages yayını (depo şu an Vercel'e de bağlı; hangisinde kalınacağı açık).
 
 **Yok — bilinçli olarak.** Hesap/giriş sistemi · sunucu tarafı veri · cihazlar arası senkron
 (mimari hazır, uygulama sonraki faz) · içerik EN çevirisi · yorum/not alma · aralıklı tekrar
@@ -211,7 +211,7 @@ eşlemesi orada; başka hiçbir yerde tekrarlanmaz.
 | Mühendislik | 8 Front-end · **Programlama Dilleri** · 9a Framework'ler · 9b Kütüphaneler · 10 Back-end ve API · 11 Veritabanı · **Veri Yapıları** · **Algoritmalar** |
 | Sistem ve Operasyon | 14 Sistem Mimarisi · 12 Auth · 13 Güvenlik ve Hukuk · 15 Git ve GitHub · 16 DevOps ve Yayın · 17 Test ve Kalite |
 | Yapay Zekâ | 19 AI ile Profesyonel Çalışma |
-| Araçlar (şema dışı) | 22 Sözlük · 20 Proje Akış Haritası · 21 Kontrol Listeleri · Ek A Takvim · **[henüz yok]** Ek B Kaynaklar |
+| Araçlar (şema dışı) | 22 Sözlük · 20 Proje Akış Haritası · 21 Kontrol Listeleri · Ek A Takvim · Ek B Kaynaklar · Bölüm 9 Teknoloji profilleri |
 
 **Kalın** olanlar materyalde yoktu, yazıldı (bkz. §7): Programlama Dilleri 11 adım, Veri Yapıları 9,
 Algoritmalar 9. Framework'ler (5) ve Kütüphaneler (9) materyalin 9. bölümünden yeniden yapılandırıldı.
@@ -231,7 +231,9 @@ Veritabanı'ndan (11) sonra: N+1, index ve sorgu maliyeti orada anlatılıyor.
 /git-ve-github/dallanma-ve-birlestirme/    adım
 /git-ve-github/test/                       bölüm quizi
 /sozluk/  /ara/  /ayarlar/
-/araclar/                                  [henüz yok]
+/araclar/                                  şablonlar ve materyalden araçlar
+/araclar/kaynaklar/                        Ek B
+/araclar/teknolojiler/<araç>/              Bölüm 9 profilleri
 /en/...                                    [henüz yok] aynı yapı, arayüz İngilizce
 ```
 
@@ -272,7 +274,11 @@ kendi sayfasında yaşıyor.
 **Araçlar.** İşaretlenebilir kontrol listeleri (21), faz faz akış haritası (20) ve çalışma takvimi
 (Ek A) yayında. Tikler ilerleme modelindeki `checklists` alanına madde kimliğiyle yazılır; "geçerli
 değil" işareti aynı alanda `<kimlik>~na` anahtarıyla durur, şema `version: 1` kalır. Madde kimlikleri
-`src/data/frozen-checklist-ids.json` ile dondurulur. *[henüz yok]* Kaynaklar (Ek B).
+`src/data/frozen-checklist-ids.json` ile dondurulur. Doğrulama kaynakları (Ek B) `/araclar/kaynaklar/`
+sayfasında; metin materyalden, yalnız tablolardaki alan adları bağlantıya çevrildi (her biri tarayıcıda
+açıldı; kamis.gov.tr yanıt vermediği için düz metin kaldı). Bölüm 9'un 28 araç kartı
+`/araclar/teknolojiler/` altında birer profil sayfası: kart metni olduğu gibi, yanında aracın resmî belgeleri
+(Ek B'nin Bölüm 9 için gösterdiği birincil kaynak; bağlantılar 20 Ekim 2026'da açılıp kontrol edildi).
 
 ## 4. İlerleme modeli
 

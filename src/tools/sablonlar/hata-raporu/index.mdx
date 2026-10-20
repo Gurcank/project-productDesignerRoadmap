@@ -1,0 +1,34 @@
+---
+title: "Hata raporu"
+summary: "Bir hatayı, okuyanın raporu yazanın bilgisayarına ihtiyaç duymadan kendi ekranında görebileceği biçimde kaydeder: dokuz alan, ayrı severity ve priority."
+kind: "belge"
+roles: ["product-owner", "business-analyst", "product-designer", "project-manager", "scrum-master"]
+lessons: ["test-ve-kalite/qa-ve-hata-raporu", "test-ve-kalite/test-turleri"]
+sources:
+  - label: "GitHub Docs — Issue ve PR şablonları"
+    url: "https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/about-issue-and-pull-request-templates"
+  - label: "Atlassian — Önem (severity) seviyeleri"
+    url: "https://www.atlassian.com/incident-management/kpis/severity-levels"
+---
+
+## Ne zaman kullanılır?
+
+Ekipte herkes hata raporlar: kabul testinde, keşifsel testte, bir dükkândan gelen şikâyeti aktarırken. Aynı alanlar issue şablonuna konursa eksik rapor baştan azalır.
+
+## Alanlar
+
+- **Başlık:** tek cümlede ne olduğu.
+- **Ortam:** staging ya da production; tarayıcı veya uygulama sürümü, cihaz, ekran boyutu.
+- **Kullanıcı ve veri durumu:** giriş yapılmış mı, hangi rol, hangi veri.
+- **Yeniden üretme adımları:** numaralı ve tekrarlanabilir.
+- **Beklenen ve gerçekleşen sonuç:** ayrı ayrı.
+- **Kanıt:** ekran görüntüsü, ekran kaydı, konsol hatası.
+- **Sıklık:** her seferinde mi, bazen mi; bazen ise hangi koşulda.
+- **Etki:** kaç kullanıcı, hangi akış, iş etkisi.
+- **Severity ve priority:** severity teknik etkidir, priority iş kararıdır; ikisi ayrı yazılır.
+
+## Sık hatalar
+
+- **Ortamı, sıklığı ve veri durumunu atlamak.** En sık atlanan üç alan bunlardır; yalnız 200 öğeli listede olan bir hata, bu bilgi olmadan hiç görülmez.
+- **Severity ile priority'yi tek alana yazmak.** Logodaki hata hafiftir ama herkes görür; ikisi bağımsızdır.
+- **Çözümü raporun yerine koymak.** Önce ne olduğu, sonra öneri.

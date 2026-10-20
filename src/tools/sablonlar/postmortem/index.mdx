@@ -1,0 +1,31 @@
+---
+title: "Postmortem"
+summary: "Bir olaydan sonra ne olduğunu, neden olduğunu ve tekrarlamaması için ne yapılacağını suçlamadan yazar; her eylem maddesinin bir sahibi ve tarihi vardır."
+kind: "belge"
+roles: ["project-manager", "scrum-master", "product-owner", "product-manager"]
+lessons: ["devops-ve-yayin/olay-yonetimi", "devops-ve-yayin/gozlemlenebilirlik"]
+sources:
+  - label: "Google SRE Kitabı — Postmortem kültürü"
+    url: "https://sre.google/sre-book/postmortem-culture/"
+  - label: "Google SRE Kitabı — Olayları yönetmek"
+    url: "https://sre.google/sre-book/managing-incidents/"
+---
+
+## Ne zaman kullanılır?
+
+Kullanıcıyı etkileyen her ciddi olaydan sonra; olay kapandıktan birkaç gün içinde, hafıza tazeyken. Retrospective düzenli ve süreç odaklıdır; postmortem olaya özeldir.
+
+## Alanlar
+
+- **Özet:** iki üç cümlede ne oldu, ne kadar sürdü, kimi etkiledi.
+- **Etki:** kullanıcı sayısı, süre, hangi akış.
+- **Zaman çizelgesi:** tespit, severity kararı, etkinin durduğu an, kapanış.
+- **Kök neden:** "kim yaptı" değil, "bu nasıl canlıya kadar geldi".
+- **İyi giden ve kötü giden:** ikisi de yazılır.
+- **Eylem maddeleri:** her biri için ne, kim, ne zamana kadar.
+
+## Sık hatalar
+
+- **Suçlu aramak.** Suçlama kültüründe insanlar hataları gizler ve sistem öğrenemez. Postmortem kişiyi değil, sistemdeki zayıflığı arar.
+- **Sahipsiz eylem maddesi.** Önleyici iş yeni özelliklerle yarışır; sahibi ve tarihi yoksa kaybeder.
+- **Yalnız teknik tarafı yazmak.** Kullanıcıya ne gösterildiği ve nasıl haber verildiği de olayın parçasıdır.

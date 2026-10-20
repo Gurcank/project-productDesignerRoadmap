@@ -1,0 +1,33 @@
+---
+title: "Yapay zekâ isteği"
+summary: "Bir modelden iş isterken rol, bağlam, görev, kısıt, format, kabul kriteri ve örneği tek yerde verir; aynı kabul kriteri listesi çıktıyı denetlemenin listesi olur."
+kind: "belge"
+roles: ["product-manager", "product-owner", "project-manager", "scrum-master", "business-analyst", "ux-researcher", "product-designer"]
+lessons: ["yapay-zeka-ile-calisma/iyi-prompt-anatomisi", "yapay-zeka-ile-calisma/kabul-kriteriyle-istemek", "yapay-zeka-ile-calisma/ciktiyi-denetleme"]
+sources:
+  - label: "Anthropic Docs — Prompt engineering genel bakış"
+    url: "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview"
+  - label: "Anthropic Docs — Açık ve doğrudan ol"
+    url: "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/be-clear-and-direct"
+---
+
+## Ne zaman kullanılır?
+
+Birkaç turdan uzun sürecek ya da sonucu başkasına gidecek her istekte: bir story taslağı, bir duyuru, bir risk listesi, bir görüşme rehberi. Kısa bir soru için gerekmez.
+
+## Alanlar
+
+- **Rol:** hangi bakış açısından yaklaşsın.
+- **Bağlam:** bu iş neyin parçası, kim için; gerekirse belge, sözlük, iş kuralı.
+- **Görev:** tam olarak ne yapılacak.
+- **Kısıt:** neye uymalı, neye dokunmamalı (kapsam dışı dahil).
+- **Format:** çıktı hangi biçimde gelsin.
+- **Kabul kriteri:** "bitti" ne demek; evet ya da hayır diye işaretlenebilir maddeler.
+- **Örnek ve "neye benzemesin":** referans ve yasaklar.
+- **Belirsizlik:** modelden emin olmadığı yerleri söylemesini iste.
+
+## Sık hatalar
+
+- **Kabul kriteri yazamadan istemek.** Kriter yazılamıyorsa istek henüz net değildir; sorun modelde değil, istektedir.
+- **Kişisel veriyi bağlam olarak vermek.** Görüşme notu ya da müşteri verisi önce anonimleştirilir.
+- **Çıktıyı denetlemeden kullanmak.** Sayı, kaynak, sürüm ve hukuk iddiaları kaynağından doğrulanır. Üretim hızlanabilir, sorumluluk devredilemez.

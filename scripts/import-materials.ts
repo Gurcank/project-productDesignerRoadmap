@@ -15,7 +15,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { slugify } from "../src/lib/slugify";
-import { parseChecklists, parseFlowMap, parseStudyPlan } from "../src/lib/material-tools";
+import { parseChecklists, parseFlowMap, parseSources, parseStudyPlan } from "../src/lib/material-tools";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const MATERIALS = path.join(ROOT, "ProductDesignerMaterials");
@@ -29,6 +29,7 @@ const TOOL_SOURCES = [
   { file: "21-kontrol-listesi.md", out: "checklists.json", parse: parseChecklists },
   { file: "20-sifirdan-tam-surume-akis-haritasi.md", out: "flow-map.json", parse: parseFlowMap },
   { file: "ek-a-ve-ek-b.md", out: "study-plan.json", parse: parseStudyPlan },
+  { file: "ek-a-ve-ek-b.md", out: "sources.json", parse: parseSources },
 ] as const;
 
 /** Which material file(s) feed which category, and which sections belong there. */

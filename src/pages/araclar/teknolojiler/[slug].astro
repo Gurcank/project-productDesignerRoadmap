@@ -1,0 +1,232 @@
+---
+/**
+ * One technology profile: a chapter 9 tool card, verbatim, with the tool's own
+ * documentation beside it (src/data/tech-profiles.ts). Chapter 9 ages fastest
+ * of the whole material (appendix B), so the page says so before anything else.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { renderInlineMarkdown } from "~/lib/inline-markdown";
+import { getTechProfiles, type TechProfile } from "~/lib/tech-profiles";
+import { LINKS_CHECKED } from "~/data/tech-profiles";
+
+export async function getStaticPaths() {
+  const profiles = await getTechProfiles();
+  return profiles.map((profile, index) => ({
+    params: { slug: profile.slug },
+    props: { profile, prev: profiles[index - 1] ?? null, next: profiles[index + 1] ?? null },
+  }));
+}
+
+interface Props {
+  profile: TechProfile;
+  prev: TechProfile | null;
+  next: TechProfile | null;
+}
+
+const { profile, prev, next } = Astro.props;
+const md = renderInlineMarkdown;
+---
+
+<BaseLayout title={profile.card} description={`${profile.card}: ${profile.definition}`} section="araclar">
+  <article
+    class="tech"
+    data-pagefind-body
+    data-pagefind-filter="tur:Teknoloji profili"
+    data-pagefind-meta="kategori:Araçlar"
+  >
+    <p class="tech__back"><a href="/araclar/teknolojiler/">Teknoloji profilleri</a></p>
+    <header>
+      <p class="tech__kind">Materyalden · {profile.section} {profile.sectionTitle}</p>
+      <h1>{profile.card}</h1>
+      {profile.english && profile.english !== profile.card && <p class="tech__english" lang="en">{profile.english}</p>}
+      <p class="tech__lead" set:html={md(profile.definition)} />
+    </header>
+
+    <p class="tech__notice">
+      <span class="flag">Hızlı eskir</span>
+      Bölüm 9 materyalin en hızlı eskiyen bölümü. Sürüm, bakım durumu, lisans ve fiyatı kullanmadan önce aracın kendi
+      belgelerinden doğrula. Metin materyalden olduğu gibi alındı; Product Designer'a yazılmıştır.
+    </p>
+
+    <dl class="tech__fields">
+      {
+        profile.fields.map((field) => (
+          <div class:list={["tech__field", { "tech__field--flag": field.flag }]}>
+            <dt>{field.flag ? <span class="flag">{field.label}</span> : field.label}</dt>
+            <dd>
+              {field.value && <p set:html={md(field.value)} />}
+              {field.items.length > 0 && (
+                <ul>
+                  {field.items.map((item) => (
+                    <li set:html={md(item)} />
+                  ))}
+                </ul>
+              )}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <section class="tech__more" aria-labelledby="kaynak">
+      <h2 id="kaynak">Resmî belgeler</h2>
+      {
+        profile.links.length > 0 ? (
+          <>
+            <ul>
+              {profile.links.map((link) => (
+                <li>
+                  <a href={link.url} rel="noreferrer">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <p class="tech__checked">
+              <span class="flag flag--new">Materyal dışı</span> Bağlantılar son kontrol: {LINKS_CHECKED}.
+            </p>
+          </>
+        ) : (
+          <p>Bu kart tek bir ürün değil, bir ürün türü; her CMS'in kendi belgeleri birincil kaynaktır.</p>
+        )
+      }
+      <p>
+        Bu bölümün dersi: <a href={profile.lessonHref}>{profile.sectionTitle}</a>
+      </p>
+    </section>
+
+    <nav class="tech__pager" aria-label="Diğer profiller">
+      {prev && <a href={`/araclar/teknolojiler/${prev.slug}/`} rel="prev">← {prev.card}</a>}
+      {next && <a href={`/araclar/teknolojiler/${next.slug}/`} rel="next">{next.card} →</a>}
+    </nav>
+  </article>
+</BaseLayout>
+
+<style>
+  .tech {
+    max-width: 48rem;
+    margin-inline: auto;
+    padding: var(--spacing-8) var(--spacing-4) var(--spacing-24);
+  }
+
+  .tech__back a,
+  .tech__pager a {
+    display: inline-flex;
+    gap: var(--spacing-1);
+    min-height: 24px;
+    align-items: center;
+    color: var(--c-action);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .tech__back a::before {
+    content: "←";
+  }
+
+  .tech__kind {
+    margin-block-start: var(--spacing-6);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-action);
+  }
+
+  .tech h1 {
+    margin-block-start: var(--spacing-2);
+    font-size: var(--text-4xl);
+    letter-spacing: -0.03em;
+  }
+
+  .tech__english {
+    color: var(--c-text-muted);
+  }
+
+  .tech__lead {
+    margin-block-start: var(--spacing-3);
+    font-size: var(--text-lg);
+    color: var(--c-text-secondary);
+  }
+
+  .tech__notice,
+  .tech__checked {
+    margin-block-start: var(--spacing-5);
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  /* The badge that marks what this site added to the material. */
+  .flag--new {
+    border-color: var(--c-progress);
+    color: var(--c-progress-text);
+  }
+
+  .tech__fields {
+    display: grid;
+    gap: var(--spacing-5);
+    margin-block-start: var(--spacing-8);
+    padding: var(--spacing-6);
+    border-radius: var(--radius-lg);
+    background-color: var(--c-surface-reading);
+  }
+
+  .tech__field dt {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--c-text);
+  }
+
+  .tech__field dd {
+    margin: var(--spacing-1) 0 0;
+    color: var(--c-text-secondary);
+  }
+
+  .tech__field dd ul {
+    margin-block-start: var(--spacing-2);
+    padding-inline-start: var(--spacing-5);
+  }
+
+  .tech__field dd li + li {
+    margin-block-start: var(--spacing-2);
+  }
+
+  .tech__more {
+    margin-block-start: var(--spacing-10);
+  }
+
+  .tech__more h2 {
+    font-size: var(--text-2xl);
+  }
+
+  .tech__more ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2) var(--spacing-5);
+    margin-block: var(--spacing-3);
+    padding: 0;
+    list-style: none;
+  }
+
+  .tech__more a {
+    display: inline-flex;
+    min-height: 24px;
+    align-items: center;
+  }
+
+  .tech__more p + p {
+    margin-block-start: var(--spacing-3);
+  }
+
+  .tech__pager {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--spacing-4);
+    margin-block-start: var(--spacing-12);
+    padding-block-start: var(--spacing-6);
+    border-block-start: 1px solid var(--c-border);
+  }
+</style>
