@@ -5,7 +5,8 @@ outcomes:
   - "Bundler ile transpiler'ın işini ayırabilirsin."
   - "Tree-shaking, code splitting ve lazy loading'in ortak hedefini ve tasarımdaki karşılığını açıklayabilirsin."
   - "Source map'in neden hata izleme için gerekli olduğunu bilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "Vite — Neden Vite?"
     url: "https://vite.dev/guide/why.html"
@@ -20,6 +21,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Geliştirici düzenli dosyalarla çalışır; tarayıcı ise küçük, sıkıştırılmış ve optimize edilmiş dosyalar ister. Arada bir **build zinciri** vardır. Bu ders, o zincirin duyduğun adlarını ve tasarıma dokunan sonuçlarını anlatır.
 
@@ -37,6 +40,17 @@ Burada "dependency" dış kütüphane demektir; proje yönetimindeki "bağımlı
 
 Üç teknik aynı hedefe hizmet eder: **kullanıcıya o an gerekmeyen kodu göndermemek.**
 
+<StepFlow
+  label="Koddan tarayıcıya"
+  caption="Geliştiricinin yazdığı kod tarayıcıya ulaşmadan önce dört adımdan geçer. Paket yöneticisi bağımlılıkları lockfile'daki sürümlerle kurar. Transpiler TypeScript'i tarayıcının anlayacağı JavaScript'e çevirir. Bundler dosyaları birleştirir; kullanılmayan kodu atar ve kodu sayfalara böler. Çıkan küçük dosyalar, hataları okunabilir kılan source map'lerle birlikte yayına gider."
+  steps={[
+    { title: "Bağımlılıkları kur", sub: "paket yöneticisi · lockfile", tone: "accent" },
+    { title: "Çevir", sub: "transpiler: TS → JS" },
+    { title: "Birleştir ve küçült", sub: "bundler · tree-shaking · splitting" },
+    { title: "Yayına gönder", sub: "dosyalar + source map", tone: "progress" },
+  ]}
+/>
+
 - **Tree-shaking:** kullanılmayan kodu çıkarır.
 - **Code splitting:** tüm kodu tek dosyada göndermek yerine sayfa bazında böler.
 - **Lazy loading:** bir parçayı ancak gerekli olduğunda yükler.
@@ -46,6 +60,19 @@ Ana sayfaya giren birinin ayarlar ekranının kodunu indirmesi gereksizdir. Tasa
 ## Source map
 
 **Source map**, sıkıştırılmış üretim kodunu okunabilir orijinal koda geri eşleyen dosyadır. Canlıda bir hata oluştuğunda hangi satırdan geldiğini görmeyi sağlar; hata izleme araçları buna dayanır. "Source map'leri Sentry'ye yükleyelim; yoksa hata raporları okunamaz oluyor."
+
+<Case>
+
+Panel'e dükkân konumunu gösteren bir harita eklendi ve ilk açılış yavaşladı.
+
+1. **Teşhis:** harita kütüphanesi Panel'in ana paketine girmişti; siparişlere bakan her çalışan, haritayı hiç açmasa da onu indiriyordu.
+2. **Code splitting ve lazy loading:** harita yalnız "Dükkân bilgileri" ekranı açıldığında yükleniyor; yüklenene kadar bir yer tutucu duruyor.
+3. **Lockfile:** Defne'nin bilgisayarında çalışan bir sürüm sunucuda bozuluyordu; lockfile commit edilmemişti. Edildi.
+4. **Source map:** canlıdaki hatalar artık hata izleme aracında okunabilir satırlarla görünüyor.
+
+Haritanın yer tutucusunu Selin çizdi: gri bir alan ve dükkânın adresi metin olarak.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -76,5 +103,17 @@ Kullanıcıya o an gerekmeyen kodu göndermemek: kullanılmayan kodu çıkarmak,
 <SelfCheck question="Source map ne işe yarar?">
 
 Sıkıştırılmış üretim kodunu okunabilir orijinal koda geri eşler; canlıda bir hata olduğunda hangi satırdan geldiğini görmeyi sağlar ve hata izleme araçları buna dayanır.
+
+</SelfCheck>
+
+<SelfCheck question="Lockfile hangi sorunu çözer?">
+
+Herkesin bilgisayarında ve sunucuda birebir aynı bağımlılık sürümlerinin kurulmasını sağlar. "Bende çalışıyor" sorununun büyük kısmı sürüm farklarından gelir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir ekrana ağır bir grafik bileşeni eklenecek ama çoğu kullanıcı o bölüme inmiyor. Ne önerirsin?">
+
+Bileşeni lazy load etmeyi: yalnız görünür olduğunda ya da o ekran açıldığında yüklensin. Yüklenene kadar yerini koruyan bir yer tutucu ya da skeleton tasarlanır.
 
 </SelfCheck>

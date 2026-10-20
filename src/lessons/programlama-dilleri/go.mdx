@@ -4,6 +4,7 @@ outcomes:
   - "Go'nun nerelerde kullanıldığını söyleyebilirsin."
   - "Go'ya geçişin neden kullanıcı tarafında hiçbir şeyi değiştirmediğini açıklayabilirsin."
 minutes: 4
+standard: 2
 sources:
   - label: "Go — Dokümantasyon"
     url: "https://go.dev/doc/"
@@ -18,10 +19,36 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Go, Google'ın, çok sayıda isteği aynı anda karşılayan sunucular için tasarladığı bir dildir. Kasıtlı olarak küçüktür: az özellik, az yol, az tartışma.
 
 ## Nerede karşına çıkar
+
+<Tree
+  label="Go'nun karşına çıktığı yerler"
+  caption="Go üç yerde karşına çıkar. Yüksek trafikli servislerde ve API'lerde, çünkü binlerce isteği aynı anda karşılamak dilin temel hedefidir. Altyapı yazılımında: Docker ve Kubernetes Go ile yazılmıştır. Komut satırı araçlarında, çünkü tek bir dosya olarak dağıtılabilir."
+  root={{
+  title: "Go",
+  tone: "accent",
+  children: [
+    {
+      title: "Yüksek trafikli servis",
+      sub: "eşzamanlılık"
+    },
+    {
+      title: "Altyapı yazılımı",
+      sub: "Docker, Kubernetes"
+    },
+    {
+      title: "Komut satırı aracı",
+      sub: "tek dosya",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 - **Yüksek trafikli servisler** ve API'ler.
 - **Altyapı yazılımı.** Docker ve Kubernetes'in kendisi Go ile yazılmıştır.
@@ -39,6 +66,17 @@ Go, Google'ın, çok sayıda isteği aynı anda karşılayan sunucular için tas
 **Kötü yaptığı:** az soyutlama sunar (aynı kalıbı tekrar tekrar yazmak gerekir); veri ve yapay zekâ ekosistemi zayıftır (o işler Python'dadır); arayüz tarafında yeri yoktur.
 
 **Alternatifler:** ekip JavaScript biliyorsa benzer eşzamanlılık profiliyle Node.js; daha yüksek performans için (çok daha dik öğrenme eğrisiyle) Rust; kurumsal ekosistem gerekiyorsa Java ya da C#.
+
+<Case>
+
+Sabah 08.00 yoğunluğunda "hazır" bildirimleri birkaç dakika gecikiyordu. Can, bildirim servisini Go ile yeniden yazmayı önerdi.
+
+1. **Ölçüm:** Burak önce servisi ölçtü. Zamanın çoğu dilde değil, her bildirimde tekrarlanan bir veritabanı sorgusunda geçiyordu.
+2. **Düzeltme:** sorgu düzeltildi; gecikme saniyelere indi.
+3. **Takas:** Go'ya geçiş ekibe yeni bir dil, yeni bir derleme ve yeni bir yayın akışı getirecekti; Node.js'teki sorun ise bir günde çözüldü.
+4. **Kayıt:** öneri kapatılmadı. "Günlük sipariş 20.000'i geçerse yeniden bak" notuyla karar kaydına yazıldı.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -62,5 +100,17 @@ Go, Google'ın, çok sayıda isteği aynı anda karşılayan sunucular için tas
 <SelfCheck question="'Bu servisi Go'ya alalım' cümlesinde hangi soruyu sormalısın?">
 
 Hangi sayının (trafik, gecikme, maliyet) bunu tetiklediğini. Go'ya geçiş genelde bir ölçek sorununun cevabıdır ve kullanıcı tarafında bir şeyi değiştirmez.
+
+</SelfCheck>
+
+<SelfCheck question={"Go'nun \"kasıtlı olarak küçük\" olması neyi kazandırır, neyi kaybettirir?"}>
+
+Kazandırdığı: öğrenmesi kısadır, kod okunur ve ekipler arasında tutarlıdır. Kaybettirdiği: az soyutlama sunar; aynı kalıplar tekrar tekrar yazılır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir veri ve yapay zekâ projesi için Go iyi bir seçim midir?">
+
+Genelde değildir. Bu alanın kütüphaneleri Python'da yaşar; Go'nun veri ve yapay zekâ ekosistemi zayıftır.
 
 </SelfCheck>

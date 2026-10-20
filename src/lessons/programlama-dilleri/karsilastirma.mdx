@@ -5,6 +5,7 @@ outcomes:
   - "Bir ihtiyaç için tipik dili ve nedenini tablodan çıkarabilirsin."
   - "Tipli ve tipsiz dil farkının tasarımına etkisini açıklayabilirsin."
 minutes: 5
+standard: 2
 sources:
   - label: "Stack Overflow — Developer Survey"
     url: "https://survey.stackoverflow.co/"
@@ -19,6 +20,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Matrix2x2 from "~/components/diagrams/primitives/Matrix2x2.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Önceki derslerde her dili ayrı ayrı gördün. Şimdi hepsini yan yana koyalım. Amaç hangisinin "iyi" olduğuna karar vermek değil; bir dilin adı geçtiğinde **konunun ne olduğunu** anlamak.
 
@@ -59,6 +62,46 @@ En çok konuşulan ayrım budur:
 
 Bu ayrım kaba bir kısaltmadır: Python ve PHP gibi dillerde de isteğe bağlı tip bilgisi yazılabilir.
 
+<Matrix2x2
+  label="Diller iki eksende"
+  caption="Diller nerede çalıştıklarına ve tipli olup olmadıklarına göre dört gruba ayrılır. Sol üstte istemcide çalışan ve tipsiz JavaScript durur. Sağ üstte istemcide çalışan tipli diller vardır: TypeScript, iOS için Swift, Android için Kotlin. Sol altta sunucuda çalışan tipsiz diller durur: Python ve PHP. Sağ altta sunucuda çalışan tipli diller vardır: Java ve Go. TypeScript ve JavaScript sunucuda da çalışabilir."
+  x={{ title: "Tip", low: "tipsiz", high: "tipli" }}
+  y={{ title: "Nerede çalışır?", low: "sunucu", high: "istemci" }}
+  quadrants={[
+    { title: "İstemci, tipsiz", sub: "esnek, hata geç çıkar" },
+    { title: "İstemci, tipli", sub: "hata yazarken çıkar" },
+    { title: "Sunucu, tipsiz", sub: "hızlı başlangıç" },
+    { title: "Sunucu, tipli", sub: "uzun ömür, büyük ekip" },
+  ]}
+  points={[
+    { label: "JavaScript", x: 0.25, y: 0.65 },
+    { label: "TypeScript", x: 0.62, y: 0.72 },
+    { label: "Swift", x: 0.78, y: 0.58 },
+    { label: "Kotlin", x: 0.92, y: 0.68 },
+    { label: "Python", x: 0.18, y: 0.18 },
+    { label: "PHP", x: 0.36, y: 0.1 },
+    { label: "Java", x: 0.66, y: 0.15 },
+    { label: "Go", x: 0.86, y: 0.2 },
+  ]}
+/>
+
+<Case>
+
+Demlik'in dil haritası bölümün özeti gibidir:
+
+| Yer | Dil | Neden |
+|---|---|---|
+| Müşteri sitesi, Panel | TypeScript | Tarayıcı; seçenek yok |
+| iOS, Android | Swift, Kotlin | Platformun birinci sınıf dili |
+| Sipariş ve ödeme servisleri | TypeScript (Node.js) | Ekip iki tarafa da dokunabiliyor |
+| Haftalık metrik raporu | Python | Veri kütüphaneleri |
+| Kasa entegrasyonu | C# | Tedarikçinin yazılımı .NET |
+| Veritabanı | SQL (PostgreSQL) | Seçenek yok |
+
+İstemci tarafında hiçbir satır bir tercih değil; sunucu tarafında her satır ekibin kararı.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -86,8 +129,14 @@ Tarayıcıda yalnızca JavaScript (ya da ona derlenen TypeScript) çalışır; b
 
 </SelfCheck>
 
-<SelfCheck question="Tipli ve tipsiz diller arasındaki fark tasarımcıyı nasıl ilgilendirir?">
+<SelfCheck question="Tipli ve tipsiz diller arasındaki fark tasarımı nasıl ilgilendirir?">
 
 Tipli dillerde bazı hatalar yazarken yakalandığı için kullanıcıya ulaşan hata hâlleri azalır; tipsizlerde boş ya da hatalı veri hâlleri çalışırken ortaya çıkar, bu yüzden tasarımda daha kritiktir.
+
+</SelfCheck>
+
+<SelfCheck question={"Bir ekip \"tarayıcı tarafını Python ile yazalım\" diyor. Neden olmaz?"}>
+
+Tarayıcıda yalnız JavaScript (ve ona derlenen diller, örneğin TypeScript) çalışır. İstemci tarafında dil bir seçim değil, kısıttır.
 
 </SelfCheck>

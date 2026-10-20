@@ -3,7 +3,8 @@ summary: "Arayüzü çizen temel kütüphaneler: React, Vue, Svelte, Angular, So
 outcomes:
   - "React'in neden 'en iyi' olduğu için değil ekosistemi büyük olduğu için varsayılan olduğunu söyleyebilirsin."
   - "Vue, Svelte, Angular ve Solid'in her birinin hangi takası sunduğunu bir cümleyle anlatabilirsin."
-minutes: 7
+minutes: 5
+standard: 2
 sources:
   - label: "React — Resmî site"
     url: "https://react.dev/"
@@ -22,6 +23,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Arayüzü çizen kütüphaneler arasındaki seçim, **doğru cevabı olmayan** bir karardır. Hepsi çalışır; farklılıklar takas noktalarındadır. Bu ders her birinin hangi takası sunduğunu anlatır.
 
@@ -45,7 +48,33 @@ Google tarafından geliştirilen, her şeyi kutudan çıkaran kapsamlı framewor
 
 ## Solid
 
-React'e benzer yazım biçimi olan ama farklı bir reaktivite modeliyle çalışan kütüphanedir. **İnce taneli reaktivite** kullanır: bir değer değiştiğinde tüm bileşeni değil, yalnızca o değeri kullanan parçayı günceller; gereksiz yeniden çizimleri ortadan kaldırır. Ekosistemi küçüktür ve ticari projelerde risk oluşturabilir. Bu bir **seviye 3** terimdir: adını bilmen yeterli.
+React'e benzer yazım biçimi olan ama farklı bir reaktivite modeliyle çalışan kütüphanedir. **İnce taneli reaktivite** kullanır: bir değer değiştiğinde tüm bileşeni değil, yalnızca o değeri kullanan parçayı günceller; gereksiz yeniden çizimleri ortadan kaldırır. Ekosistemi küçüktür ve ticari projelerde risk oluşturabilir. Adını bilmen yeterli.
+
+<Spectrum
+  label="Kararları kim veriyor?"
+  caption="UI seçenekleri, kararların ne kadarını senin yerine verdiklerine göre sıralanabilir. Sol uçta React ve Solid durur: arayüzü çizerler, yönlendirme ve veri çekme gibi kararları ekibe bırakırlar. Svelte biraz daha sağdadır. Vue resmî yönlendirme ve state araçlarını tek elden verir. Sağ uçta Angular durur: yönlendirme, form, HTTP ve test resmî ve tek biçimlidir."
+  left={{ title: "Ekip karar verir", sub: "esneklik, çok seçim" }}
+  right={{ title: "Framework karar verir", sub: "tutarlılık, az seçim" }}
+  marks={[
+    { label: "React", at: 0.08 },
+    { label: "Solid", at: 0.22 },
+    { label: "Svelte", at: 0.4 },
+    { label: "Vue", at: 0.6 },
+    { label: "Angular", at: 0.92 },
+  ]}
+/>
+
+<Case>
+
+Demlik'te üç UI dünyası bir araya geliyor:
+
+1. **React:** müşteri sitesi ve Panel. Seçim gerekçesi ekosistemdi: ödeme ve harita için hazır bileşenler vardı, İstanbul'da React bilen geliştirici bulmak kolaydı.
+2. **Vue:** Defne Panel takımına katıldığında Vue biliyordu. İlk ayında React öğrendi; ikinci bir UI kütüphanesi eklenmedi.
+3. **Angular:** kasa tedarikçisinin dükkân tarafındaki yönetim ekranı Angular ile yazılmış. Demlik bu ekrana dokunmuyor; yalnız entegrasyon arayüzüyle konuşuyor.
+
+Ekipte "Svelte daha hızlı" önerisi bir retroda konuşuldu; Panel'in yavaşlığının nedeni kütüphane değil, gereksiz yeniden çizimlerdi.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -76,5 +105,11 @@ Ekosistemi en büyük olduğu için: her problem için hazır çözüm, her soru
 <SelfCheck question="Angular neden kurumsal ortamlarda tercih edilir?">
 
 Kararları senin yerine verir: yönlendirme, form, HTTP, test hepsi resmî ve tek biçimlidir. Büyük ekiplerde bu tutarlılık ve ekip devri kolaylığı değerlidir.
+
+</SelfCheck>
+
+<SelfCheck question={"Ekip bir projede React'ten Svelte'e geçmeyi öneriyor çünkü \"daha hızlı\". Hangi soruları sorarsın?"}>
+
+Yavaşlığın kaynağı gerçekten kütüphane mi, yoksa kendi kodumuz mu? İhtiyacımız olan hazır bileşen ve entegrasyonlar Svelte'te var mı? Ekip öğrenme maliyetini karşılayabilir mi? Geçişin takası, kazanılacak hızdan büyük olabilir.
 
 </SelfCheck>

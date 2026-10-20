@@ -5,6 +5,7 @@ outcomes:
   - "Meta-framework'ün React tek başına neyi çözmediğini tamamladığını söyleyebilirsin."
   - "Runtime'ın ne olduğunu ve neden önemli olduğunu bilirsin."
 minutes: 6
+standard: 2
 sources:
   - label: "React — Resmî site"
     url: "https://react.dev/"
@@ -21,6 +22,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Layers from "~/components/diagrams/primitives/Layers.astro";
+import Case from "~/components/lesson/Case.astro";
 
 > **Bu bölüm en hızlı eskiyen bölümdür.** Buradaki bilgilerin çoğu **ürün durumudur:** hangi kütüphane bakımda, hangisi terk edildi, hangisi varsayılan hâle geldi. Bu bilgiler aylar içinde değişir. Her araçta **eskimeyen kısım** (hangi problemi çözer, ne zaman seçilir, alternatifi nedir) ile **eskiyen kısım** (güncel durumu) ayrıldı. Eskimeyen kısmı öğren; eskiyen kısmı her kullanımdan önce doğrula. Materyalin doğrulama tarihi Eylül 2026'dır.
 
@@ -61,6 +64,30 @@ Not: React teknik olarak bir **kütüphanedir,** framework değil. Ama günlük 
 
 **Runtime (çalışma ortamı)**, JavaScript kodunun fiilen çalıştığı ortamdır: tarayıcı, Node.js, Deno, Bun. JavaScript tarayıcı için tasarlanmıştı; Node.js onu sunucuda da çalıştırılabilir hâle getirdi ve ön yüz ile arka yüzün aynı dilde yazılabilmesini sağladı. "Edge runtime'da bazı Node API'leri çalışmıyor; o kodu ayrı bir yere alalım."
 
+<Layers
+  label="Bir web uygulamasının katmanları"
+  caption="Dört terim üst üste duran katmanlardır. En üstte ekibin yazdığı uygulama durur. Onun altında meta-framework vardır: yönlendirme, sunucu tarafı işleme ve build kararlarını verir. Daha altta arayüzü çizen UI kütüphanesi durur. En altta kodun fiilen çalıştığı runtime vardır: tarayıcı ya da Node.js gibi bir sunucu ortamı."
+  layers={[
+    { title: "Uygulaman", sub: "ekibin yazdığı kod", tone: "accent" },
+    { title: "Meta-framework", sub: "Next.js, Astro, Nuxt" },
+    { title: "UI kütüphanesi", sub: "React, Vue, Svelte" },
+    { title: "Runtime", sub: "tarayıcı, Node.js", tone: "progress" },
+  ]}
+/>
+
+<Case>
+
+Elif, Demlik'in teknik yapısını bir sayfada görmek istedi. Ece dört terimle anlattı:
+
+1. **Uygulama:** müşteri sitesi, dükkân sayfaları ve Panel.
+2. **Meta-framework:** müşteri sitesi Next.js ile yazılı; tanıtım sayfaları statik, dükkân sayfaları sunucuda üretiliyor. Panel ise meta-framework kullanmıyor: Vite ile derlenen bir React SPA.
+3. **UI kütüphanesi:** ikisinde de React; bileşenler ortak bir pakette.
+4. **Runtime:** sipariş servisleri sunucuda Node.js üzerinde çalışıyor; Panel ve site tarayıcıda.
+
+"Panel'i neden Next.js'e taşımıyoruz?" sorusunun cevabı da bu tablodan çıktı: Panel giriş yapılmış bir uygulama, arama motoruna görünmesi gerekmiyor.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -90,5 +117,11 @@ Library'de kontrol sendedir: sen onu çağırırsın. Framework'te kontrol tersi
 <SelfCheck question="Meta-framework neyi çözer? React tek başına neden yetmez?">
 
 React yalnızca arayüz çizer; yönlendirme, sunucu tarafı işleme, veri çekme, build ve deploy kararlarını çözmez. Meta-framework bunların hepsini bir arada verir.
+
+</SelfCheck>
+
+<SelfCheck question={"Bir geliştirici \"React seçtik, iş bitti\" diyor. Hangi karar hâlâ açık?"}>
+
+Meta-framework ve rendering kararı. React yalnız arayüzü çizer; yönlendirme, sunucu tarafı işleme, veri çekme ve build için bir meta-framework mü yoksa ayrı kütüphaneler mi kullanılacağı ayrıca seçilmelidir.
 
 </SelfCheck>

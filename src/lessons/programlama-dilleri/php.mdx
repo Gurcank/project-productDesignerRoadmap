@@ -1,10 +1,11 @@
 ---
-summary: "Web için doğmuş ve webin büyük kısmını hâlâ çalıştıran dil. WordPress'in dili; modern PHP (Laravel ile) tarihi itibarından çok farklı. Tasarımcı için tema ve eklenti gerçekleri."
+summary: "Web için doğmuş ve webin büyük kısmını hâlâ çalıştıran dil. WordPress'in dili; modern PHP (Laravel ile) tarihi itibarından çok farklı. Tema ve eklenti gerçekleri."
 outcomes:
   - "PHP'nin nerede karşına çıktığını söyleyebilirsin."
   - "WordPress'li bir projede tasarım özgürlüğünün neden temaya bağlı olduğunu açıklayabilirsin."
   - "Headless CMS seçeneğinin neyi çözdüğünü bilirsin."
-minutes: 5
+minutes: 3
+standard: 2
 sources:
   - label: "W3Techs — WordPress kullanım istatistikleri"
     url: "https://w3techs.com/technologies/details/cm-wordpress"
@@ -19,10 +20,36 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 PHP, web için doğmuş ve webin büyük kısmını hâlâ çalıştıran bir dildir. İtibarı geçmişteki kötü kod yüzünden zedelenmiştir; modern PHP (özellikle Laravel ile) bambaşka bir deneyimdir.
 
 ## Nerede karşına çıkar
+
+<Tree
+  label="PHP'nin karşına çıktığı yerler"
+  caption="PHP üç yerde karşına çıkar. WordPress ile içerik sitelerinde ve bloglarda. WooCommerce ve Magento ile e-ticarette. Ajans ve küçük işletme projelerinde; modern uygulamalarda ise Laravel framework'üyle."
+  root={{
+  title: "PHP",
+  tone: "accent",
+  children: [
+    {
+      title: "WordPress",
+      sub: "içerik, blog"
+    },
+    {
+      title: "E-ticaret",
+      sub: "WooCommerce, Magento"
+    },
+    {
+      title: "Laravel",
+      sub: "modern uygulama",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 - **WordPress.** Webin çok büyük bir kısmını oluşturur; içerik siteleri ve blogların varsayılanıdır.
 - **E-ticaret.** WooCommerce, Magento.
@@ -39,6 +66,17 @@ PHP, web için doğmuş ve webin büyük kısmını hâlâ çalıştıran bir di
 - **İşe alımda algı sorunu vardır.** Bazı geliştiriciler PHP projesine sıcak bakmaz.
 
 **Alternatifler:** özel bir uygulama yazılacaksa Node.js ya da Python; **headless CMS**, yani içerik PHP tarafında kalır, arayüz modern bir framework'te yazılır.
+
+<Case>
+
+Demlik'e anlaşmalı dükkânların bir kısmının kendi web sitesi var ve çoğu WordPress.
+
+1. **İstek:** dükkânlar kendi sitelerinde "Demlik'le sipariş ver" düğmesi istedi.
+2. **Çözüm:** Demlik bir eklenti yazmadı. Her dükkân için hazır bir bağlantı ve bir düğme görseli verdi; dükkân bunu kendi sitesine kopyalıyor.
+3. **Gerekçe:** her WordPress sitesinin teması ve eklentileri farklı; bir eklentinin hepsinde çalışmasını garanti etmek ve güncel tutmak ayrı bir ürün olurdu.
+4. **Tasarım:** düğme görseli iki renk ve iki boyutta hazırlandı; dükkânın teması açık ya da koyu olsa da okunuyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -63,5 +101,17 @@ PHP, web için doğmuş ve webin büyük kısmını hâlâ çalıştıran bir di
 <SelfCheck question="WordPress'li projede neden 'bu bölüm böyle olsun' isteği pahalı olabilir?">
 
 Tasarım özgürlüğü hazır temanın yapısına bağlıdır; tema yapısına uymayan bir bölüm özel geliştirme gerektirir.
+
+</SelfCheck>
+
+<SelfCheck question="İçerik ekibi WordPress'te kalmak, ürün ekibi modern bir arayüz istiyor. Hangi yaklaşım ikisini birleştirir?">
+
+Headless CMS yaklaşımı: içerik WordPress'te yönetilir, arayüz modern bir framework'te yazılır ve içeriği veri olarak çeker.
+
+</SelfCheck>
+
+<SelfCheck question="PHP'nin zayıf olduğu bir iş nedir?">
+
+Gerçek zamanlı işler: canlı bildirim ve sohbet gibi ihtiyaçlar ek altyapı ister.
 
 </SelfCheck>

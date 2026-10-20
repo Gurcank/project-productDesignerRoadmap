@@ -5,7 +5,8 @@ outcomes:
   - "Children/composition'ın neden esneklik verdiğini açıklayabilirsin."
   - "Prop drilling'in neden bir sorun işareti olduğunu bilirsin."
   - "Kontrollü ve kontrolsüz form alanı ayrımını tanıyabilirsin."
-minutes: 9
+minutes: 4
+standard: 2
 sources:
   - label: "React — İlk bileşenin"
     url: "https://react.dev/learn/your-first-component"
@@ -15,7 +16,7 @@ sources:
     url: "https://react.dev/learn/state-a-components-memory"
   - label: "React — Context ile veriyi derine geçirmek"
     url: "https://react.dev/learn/passing-data-deeply-with-context"
-skipTerms: ["state"]
+skipTerms: ["state", "doğrulama"]
 ---
 
 import Compare from "~/components/lesson/Compare.astro";
@@ -24,6 +25,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Tasarım sistemini Figma'da component, variant ve property'lerle kurdun. Geliştirici aynı sistemi kodda component, props ve state ile kuruyor. İki taraf **aynı fikrin iki dili**ni konuşuyor ve iyi ekiplerde adlar ve sınırlar eşleşiyor. Bu ders o eşleşmeyi gösterir.
 
@@ -54,11 +57,25 @@ Tasarım sistemini Figma'da component, variant ve property'lerle kurdun. Gelişt
 </Pane>
 </Compare>
 
-Tasarımcı olarak her state'in görsel karşılığını tanımlaman gerekir: "Butonun üç state'i var: normal, loading, disabled. Üçünü de teslimde verdim." Karıştırma: bileşenin *state*'i, durum ekranlarındaki "yükleniyor/boş/hata" ile ilişkilidir ama aynı şey değildir; state değiştiğinde farklı bir ekran gösterilir.
+Tasarımda her state'in görsel karşılığı tanımlanmalıdır: "Butonun üç state'i var: normal, loading, disabled. Üçünü de teslimde verdim." Karıştırma: bileşenin *state*'i, durum ekranlarındaki "yükleniyor/boş/hata" ile ilişkilidir ama aynı şey değildir; state değiştiğinde farklı bir ekran gösterilir.
 
 ## Children ve composition
 
 **Children / composition**, bir bileşenin içine başka bileşenlerin yerleştirilebilmesidir. Esneklik üretir: bir kart bileşeni içine ne konacağını bilmek zorunda kalmaz, dışarıdan verilir. Bu, her varyasyon için ayrı bileşen yazmayı önler. "Modal bileşeni sadece çerçeveyi versin, içeriği children olarak gelsin."
+
+<Tree
+  label="Sipariş kartı bileşeni"
+  caption="Demlik'in sipariş kartı bileşeni üç şeyden oluşur. Dışarıdan gelen props: siparişin kendisi ve kartın nerede kullanıldığını söyleyen varyant. Kendi içinde değişen state: kartın açık mı kapalı mı olduğu ve bir işlemin sürüp sürmediği. İçine dışarıdan konan children: müşteri uygulamasında Tekrarla düğmesi, Panel'de Hazır düğmesi."
+  root={{
+    title: "SiparisKarti",
+    tone: "accent",
+    children: [
+      { title: "Props", sub: "dışarıdan", children: [{ title: "siparis" }, { title: "variant: gecmis | panel" }] },
+      { title: "State", sub: "içeride", children: [{ title: "acik" }, { title: "gonderiliyor" }] },
+      { title: "Children", sub: "içine konan", children: [{ title: "Tekrarla · Hazır", tone: "progress" }] },
+    ],
+  }}
+/>
 
 ## Prop drilling
 
@@ -67,6 +84,19 @@ Tasarımcı olarak her state'in görsel karşılığını tanımlaman gerekir: "
 ## Kontrollü ve kontrolsüz
 
 Bir form alanının değerini kimin tuttuğuyla ilgili ayrım: kod tutuyorsa **kontrollü**, tarayıcı kendisi tutuyorsa **kontrolsüz** bileşendir. Kontrollü bileşen her tuşta değeri kodda gördüğü için anlık doğrulama ve dinamik davranış sağlar ama daha çok yeniden çizim üretir. Kontrolsüz olan daha basit ve hızlıdır. "Form uzun; kontrolsüz yaklaşımla yazalım, her tuşta tüm form yeniden çizilmesin."
+
+<Case>
+
+Sipariş kartı Demlik'te iki yerde kullanılıyordu ve iki ayrı kodla yazılmıştı: müşterinin sipariş geçmişinde ve Panel'de.
+
+1. **Tek bileşen:** Ece ve Emre ortak bir `SiparisKarti` yazdı; fark `variant` prop'uyla geliyor.
+2. **Adlar:** Figma'daki property adları kodla aynı: `variant`, `state`. Selin Figma'da Türkçe "tür" yazmıştı; ikisi eşlendi.
+3. **Children:** eylem düğmesi dışarıdan veriliyor. Müşteri tarafında "Tekrarla", Panel'de "Hazır".
+4. **State listesi:** varsayılan, açık, gönderiliyor, hata. Dördü de teslim dosyasında çizildi.
+
+Bir hata düzeltmesi artık iki yerde değil, bir yerde yapılıyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -98,5 +128,11 @@ Props dışarıdan gelir ve bileşen onu değiştirmez; state bileşenin içinde
 <SelfCheck question="Prop drilling neden bir sorun işaretidir?">
 
 Aradaki bileşenler o veriyle ilgilenmedikleri hâlde taşımak zorunda kalır; kod kırılganlaşır ve her değişiklik zincirin tamamına dokunmayı gerektirir. Çözüm genelde context ya da bir state yönetimi kütüphanesidir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir modal bileşeni her içerik türü için ayrı yazılmış. Composition bunu nasıl çözer?">
+
+Modal yalnız çerçeveyi (başlık, kapatma, odak yönetimi) verir; içeriği children olarak dışarıdan alır. Böylece tek bir modal bileşeni her içerikle kullanılır.
 
 </SelfCheck>

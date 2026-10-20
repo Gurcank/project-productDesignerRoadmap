@@ -4,7 +4,8 @@ outcomes:
   - "Server state ile client state farkını açıklayabilirsin."
   - "Sunucu verisini Zustand ya da Redux'ta tutmanın neden yaygın bir hata olduğunu söyleyebilirsin."
   - "TanStack Query'nin tasarımcıyı ilgilendiren yanını (hazır durumlar) bilirsin."
-minutes: 5
+minutes: 3
+standard: 2
 sources:
   - label: "TanStack Query"
     url: "https://tanstack.com/query/latest"
@@ -17,6 +18,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Sunucudan gelen verinin yönetimi, bu bölümde bilmenin seni teknik konuşmalarda ayırdığı ayrımlardan biridir.
 
@@ -26,9 +29,33 @@ Sunucudan gelen veri **senin verin değildir:** sunucudaki verinin bir **kopyas�
 
 **En yaygın mimari hata, sunucu verisini Redux ya da Zustand gibi client state araçlarında tutmaktır.** O araçlar önbellek geçersizleştirme, tazeleme ve yeniden deneme gibi işleri bilmez; ekip bunları elle yazmak zorunda kalır.
 
-## Tasarımcıyı ilgilendiren yanı
+## Tasarımı ilgilendiren yanı
 
-Bu araçlar yükleme, hata, boş ve **"eski veri gösterilirken tazeleniyor"** durumlarını hazır olarak yönetir. Yani **senin tasarlaman gereken durumları ortaya çıkarırlar.** Optimistic UI desteği de hazır gelir. Dördüncü bir durumun varlığını (eski veri + tazeleme) bilmek, durum ekranlarını tasarlarken ekstra bir hâli akla getirir.
+Bu araçlar yükleme, hata, boş ve **"eski veri gösterilirken tazeleniyor"** durumlarını hazır olarak yönetir. Yani **tasarlanması gereken durumları ortaya çıkarırlar.** Optimistic UI desteği de hazır gelir. Dördüncü bir durumun varlığını (eski veri + tazeleme) bilmek, durum ekranlarını tasarlarken ekstra bir hâli akla getirir.
+
+<StepFlow
+  label="Sunucu verisinin hâlleri"
+  caption="Sunucudan gelen bir listenin dört hâli vardır. İlk açılışta veri yoktur; ekran yükleniyor hâlindedir. Veri gelir ve önbelleğe alınır. Bir süre sonra veri eskiyebilir; eski veri gösterilirken arka planda tazelenir. Tazeleme sonucunda ya güncel veri gelir ya da hata hâli gösterilir; eski veri ekranda kalabilir."
+  steps={[
+    { title: "Yükleniyor", sub: "henüz veri yok", tone: "accent" },
+    { title: "Veri", sub: "önbellekte" },
+    { title: "Eski + tazeleniyor", sub: "arka planda" },
+    { title: "Güncel ya da hata", tone: "progress" },
+  ]}
+/>
+
+<Case>
+
+Panel'in sipariş listesi sunucu verisidir ve TanStack Query ile yönetiliyor:
+
+1. **Tazeleme:** liste 15 saniyede bir arka planda tazeleniyor; yeni sipariş gelince ekran zaten güncel.
+2. **Eski veri:** tazeleme sürerken liste ekranda kalıyor; üstte ince bir ilerleme çizgisi var. Ekran hiç boşalmıyor.
+3. **Optimistic UI:** çalışan "Hazır"a bastığında kart hemen "Hazır" görünüyor. Sunucu hata dönerse kart eski hâline dönüyor ve "İşaretlenemedi, tekrar dene" yazıyor.
+4. **Ayrım:** hangi sekmenin seçili olduğu client state; Zustand'da değil, bileşenin kendi içinde.
+
+Wi-Fi koptuğunda "Bağlantı yok" bandı da bu araçtan gelen hata durumuna bağlı.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -57,8 +84,14 @@ Client state arayüzün kendi verisidir (menü açık mı, hangi sekme seçili).
 
 </SelfCheck>
 
-<SelfCheck question="TanStack Query'nin tasarımcıyı ilgilendiren yanı nedir?">
+<SelfCheck question="TanStack Query'nin tasarımı ilgilendiren yanı nedir?">
 
 Yükleme, hata, boş ve "eski veri gösterilirken tazeleniyor" durumlarını hazır yönetir; yani tasarlaman gereken durumları ortaya çıkarır. Ayrıca optimistic UI desteği hazır gelir.
+
+</SelfCheck>
+
+<SelfCheck question="Optimistic UI nedir ve tasarımda neyi gerektirir?">
+
+Kullanıcının eyleminin sonucunu, sunucudan cevap gelmeden ekranda göstermektir. Hızlı hissettirir; ama sunucu işlemi reddederse ekranın geri dönmesi ve kullanıcıya ne olduğunun söylenmesi gerekir. Bu geri dönüş hâli de tasarlanır.
 
 </SelfCheck>

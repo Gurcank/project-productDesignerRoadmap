@@ -4,6 +4,7 @@ outcomes:
   - "Yedi araç kategorisini ve her birinin işini söyleyebilirsin."
   - "Bu araçların neden isim değil kategori düzeyinde öğrenilmesi gerektiğini açıklayabilirsin."
 minutes: 3
+standard: 2
 sources:
   - label: "TanStack Table"
     url: "https://tanstack.com/table/latest"
@@ -27,8 +28,14 @@ skipTerms: ["grid"]
 
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
-Bunlar **seviye 3** terimlerdir: adını duyduğunda kategorisini bilmen yeterli. Tablodaki isimlerin hepsi ürün adıdır ve değişir; **kategoriyi öğren, ismi doğrula.**
+Bu araçların adını duyduğunda kategorisini bilmen yeterli. Tablodaki isimlerin hepsi ürün adıdır ve değişir; **kategoriyi öğren, ismi doğrula.**
+
+## Yedi kategori
 
 | Kategori | Yaygın adlar | Ne işe yarar |
 |---|---|---|
@@ -40,7 +47,51 @@ Bunlar **seviye 3** terimlerdir: adını duyduğunda kategorisini bilmen yeterli
 | **Bildirim** | Sonner, react-hot-toast | Toast bileşenleri |
 | **Sanallaştırma** | TanStack Virtual | Uzun listelerde yalnızca görünen satırları çizme; INP'yi korur |
 
-Bu tabloyu tasarımla ilişkilendirmek için: **i18n** metin uzunluğu ve yazı yönü kararlarını, **tarih** biçim ve saat dilimi kararlarını, **tablo** ve **sanallaştırma** veri yoğun ekranların yoğunluk ve performans kararlarını, **bildirim** kütüphaneleri ise toast davranışını (süre, konum, geri al) doğrudan etkiler.
+## Tasarıma dokunduğu yer
+
+Her kategori bir tasarım kararına dokunur:
+
+<Tree
+  label="Yedi kategori, üç tür karar"
+  caption="Yedi araç kategorisi üç tür tasarım kararına dokunur. Metin kararları: çok dillilik metin uzunluğunu ve yazı yönünü, tarih kütüphaneleri biçimi ve saat dilimini etkiler. Veri kararları: grafik, tablo ve sanallaştırma veri yoğun ekranların yoğunluğunu ve hızını belirler. Arayüz parçaları: ikon setleri ve bildirim kütüphaneleri."
+  root={{
+    title: "Sık duyulan araçlar",
+    tone: "accent",
+    children: [
+      { title: "Metin", children: [{ title: "i18n" }, { title: "Tarih" }] },
+      { title: "Veri", children: [{ title: "Grafik" }, { title: "Tablo" }, { title: "Sanallaştırma" }] },
+      { title: "Arayüz parçası", children: [{ title: "İkon" }, { title: "Bildirim", tone: "progress" }] },
+    ],
+  }}
+/>
+
+- **i18n:** metin uzunluğu ve yazı yönü.
+- **Tarih:** biçim ve saat dilimi.
+- **Tablo ve sanallaştırma:** veri yoğun ekranların yoğunluğu ve performansı.
+- **Bildirim:** toast davranışı; süre, konum, geri al.
+
+<Case>
+
+Demlik'te bu kategorilerin dördü bir karara dönüştü:
+
+1. **Tarih:** "hazır olma saati" dükkânın saat dilimine göre gösteriliyor. Berlin'den çalışan Can'ın test cihazında saatlerin iki saat kaydığı bu sayede yakalandı.
+2. **Bildirim:** "Ürün bugünlük kapatıldı" toast'ı beş saniye kalıyor ve "Geri al" içeriyor.
+3. **Sanallaştırma:** Panel'in sipariş geçmişi bir ayda binlerce satıra çıkıyordu; yalnız görünen satırlar çiziliyor.
+4. **Grafik:** gün sonu raporundaki tek grafik bir kütüphane yerine elle yazıldı; ikinci grafikte karar yeniden açılacak.
+
+Uygulama yalnız Türkçe olduğu için i18n kütüphanesi eklenmedi; tarih ve para biçimi yine de `tr-TR` ile yazılıyor.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
+
+- **Uzun metin ve sağdan sola dil olasılığını erken sor.** Çok dillilik sonradan eklenirse düzen bozulur.
+- **Tarih ve saatin hangi saat diliminde gösterileceğini yaz.** Kullanıcının mı, dükkânın mı?
+- **Toast'ın süresini, konumunu ve geri al eylemini teslimde belirt.**
+
+</Lens>
+</Lenses>
 
 <Summary>
 
@@ -55,5 +106,17 @@ Bu tabloyu tasarımla ilişkilendirmek için: **i18n** metin uzunluğu ve yazı 
 <SelfCheck question="Sanallaştırma (virtualization) kütüphanesi ne işe yarar ve hangi metriği korur?">
 
 Uzun listelerde yalnızca görünen satırları çizer; gereksiz yeniden çizimi azaltarak INP'yi korur.
+
+</SelfCheck>
+
+<SelfCheck question="Bir uygulamaya ileride Arapça eklenmesi planlanıyor. Tasarımda neyi baştan düşünmek gerekir?">
+
+Yazı yönünü: Arapça sağdan sola yazılır, düzenin aynalanması gerekir. Ayrıca farklı dillerde metin uzunluğu değişir; düğmeler ve etiketler esnek tasarlanmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir tarih kütüphanesi hangi tasarım kararına dokunur?">
+
+Tarihin hangi biçimde ve hangi saat diliminde gösterileceğine. Aynı an, farklı saat dilimlerindeki kullanıcılara farklı saat olarak görünür; hangisinin gösterileceği bir tasarım kararıdır.
 
 </SelfCheck>

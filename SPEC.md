@@ -131,6 +131,13 @@ yazılmış bir quiz geçti. Kaynaklar GOV.UK Service Manual (kullanıcı araşt
 (Rohrer, Farrell, Flaherty, Tankala ve Sherwin, Laubheimer, Kaplan) ve KVKK. Kapsam haritası
 `docs/icerik/kapsam-kullanici-arastirmasi.md`.
 
+**Var — Mühendislik, ilk yarı v2 (Faz 11a).** Front-end (13), Programlama Dilleri (11), Framework'ler (4)
+ve Kütüphaneler'in (8) 36 dersi v2'ye taşındı: her birine vakadan bir örnek ("Mühendislik işleri"),
+en az üç kendini yokla sorusu ve görseli olmayan her derse bir diyagram eklendi; çok kısa dersler
+derinleştirildi, ana metindeki tasarımcıya özgü cümleler rol-nötr yazıldı. "Dil seçimi" dersine PM, PO,
+PjM ve BA, "SQL" dersine BA mercekleri eklendi. Programlama Dilleri'ne ilk kez bir quiz yazıldı; Front-end,
+Framework'ler ve Kütüphaneler'in içe aktarılmış quizlerinin yerini rol-nötr kopyaları aldı.
+
 **Henüz yok — planlı, yapılmadı.** EN arayüz (`/en/`, `src/i18n`): kullanıcı ertelemeyi seçti,
 şu an TR tek dil · Araçlar'da Ek B kaynakları ve diğer şablonlar · framework ve kütüphane profil sayfaları · Cloudflare Pages yayını.
 

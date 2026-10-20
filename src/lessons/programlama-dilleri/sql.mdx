@@ -1,10 +1,11 @@
 ---
-summary: "Ne yapılacağını değil, ne istendiğini söylediğin dil. Bir tasarımcı için en yüksek getirili teknik yatırımlardan biri: ürün metriklerini kendin çıkarabilmek."
+summary: "Ne yapılacağını değil, ne istendiğini söylediğin dil. Ürün ekibi için en yüksek getirili teknik yatırımlardan biri: ürün metriklerini kendin çıkarabilmek."
 outcomes:
   - "SQL'in bildirimsel olmasının ne demek olduğunu söyleyebilirsin."
   - "Her filtre ve sıralamanın bir sorgu olduğunu ve maliyetinin olduğunu açıklayabilirsin."
   - "'Toplam sonuç sayısı'nın neden pahalı olabileceğini bilirsin."
-minutes: 6
+minutes: 4
+standard: 2
 sources:
   - label: "PostgreSQL — SQL'e giriş"
     url: "https://www.postgresql.org/docs/current/tutorial-sql.html"
@@ -18,10 +19,24 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
 SQL, diğerlerinden farklı bir dildir: **ne yapılacağını** değil, **ne istendiğini** söylersin. "Şu koşula uyan kayıtları, şu sıraya göre getir" dersin; nasıl bulacağına veritabanı karar verir. Veritabanı kategorisi bu konunun ayrıntısını kapsar; burada SQL'i bir dil olarak konumlandırıyoruz.
 
 ## Nerede karşına çıkar
+
+<StepFlow
+  label="Bir SQL sorgusu hangi sırayla çalışır?"
+  caption="Bir SQL sorgusu yazıldığı sırayla değil, mantıksal bir sırayla işlenir. Önce FROM ile hangi tablodan okunacağı belirlenir: siparişler. WHERE koşula uyan kayıtları süzer: geçen ay iptal edilenler. GROUP BY kayıtları gruplar: iptal sebebine göre. SELECT her grup için ne gösterileceğini seçer: sebep ve sayı. ORDER BY sonucu sıralar: en sık sebep üstte."
+  steps={[
+    { title: "FROM", sub: "siparişler", tone: "accent" },
+    { title: "WHERE", sub: "geçen ay, iptal" },
+    { title: "GROUP BY", sub: "iptal sebebi" },
+    { title: "SELECT", sub: "sebep, sayı" },
+    { title: "ORDER BY", sub: "en sık üstte", tone: "progress" },
+  ]}
+/>
 
 Her yerde. Arkada ilişkisel bir veritabanı varsa (çoğu üründe vardır) veri oradan SQL ile çıkar. Geliştirici doğrudan yazmasa bile (ORM kullanıyorsa) üretilen şey SQL'dir.
 
@@ -39,6 +54,19 @@ Senin açından en görünür olduğu yer **analizdir:** ürün metriklerini ken
 
 **Alternatifler:** SQL'i dilin nesneleriyle yazma katmanı olan **ORM** (kolaylaştırır ama ne ürettiğini gizlediği için tuzaklara yol açabilir); SQL'in yerine değil, önüne geçen API katmanı **GraphQL**.
 
+<Case>
+
+Ayşe iade kuralları analizinde bir soruyu kimseye sormadan cevapladı: "Geçen ay iptal edilen siparişler hangi sebeple iptal edildi?"
+
+1. **Sorgu:** siparişler tablosundan, geçen ay iptal edilenleri, iptal sebebine göre gruplayıp saydı.
+2. **Okuma kopyası:** sorguyu canlı veritabanında değil, analiz için ayrılmış okuma kopyasında çalıştırdı.
+3. **Bulgu:** en sık sebep "dükkân hazırlamadan iptal etti"ydi; ikinci sırada "ürün stokta kalmadı".
+4. **Sayım maliyeti:** Panel'deki sipariş geçmişinde "toplam 12.483 sipariş" yazısı her açılışta yavaş hesaplanıyordu; "10.000+" oldu.
+
+Ayşe'nin sorgusu karar tablosundaki kuralların sırasını belirledi.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -47,12 +75,19 @@ Senin açından en görünür olduğu yer **analizdir:** ürün metriklerini ken
 - **"Toplam sonuç sayısı" pahalı olabilir.** "10.000+" göstermek, tam sayı vermekten çok daha ucuza gelebilir.
 
 </Lens>
+<Lens role="business-analyst">
+
+- **As-is analizinde soruyu veriyle cevapla.** Bir SQL sorgusu, on görüşmenin tahminini doğrular ya da çürütür.
+- **Sorguyu canlı sistemde değil, okuma kopyasında çalıştır.** Ağır sorgu canlı sistemi yavaşlatabilir.
+- **Veri sözlüğüne bak.** Sütunun adı anlamını her zaman söylemez.
+
+</Lens>
 </Lenses>
 
 <Summary>
 
 - SQL bildirimseldir: ne istediğini söylersin, nasıl alınacağına veritabanı karar verir.
-- Analiz için güçlüdür; tasarımcının kendi metriklerini çıkarması için değerli bir yatırımdır.
+- Analiz için güçlüdür; ürün ekibinin kendi metriklerini çıkarması için değerli bir yatırımdır.
 - Her filtre ve sıralama bir sorgudur ve maliyeti vardır; tam sayım pahalı olabilir.
 
 </Summary>
@@ -68,5 +103,11 @@ Her filtre ve sıralama bir veritabanı sorgusudur; sorgunun maliyeti ve veritab
 <SelfCheck question="'Toplam sonuç sayısı'nı göstermenin ucuz bir alternatifi nedir?">
 
 Tam sayı yerine "10.000+" gibi bir üst sınır göstermek; tam sayım çok daha pahalıya gelebilir.
+
+</SelfCheck>
+
+<SelfCheck question={"Bir listede \"toplam 12.483 sonuç\" göstermek neden pahalı olabilir, alternatifi nedir?"}>
+
+Tam sayım için veritabanı her seferinde koşula uyan tüm kayıtları saymak zorunda kalır; büyük tablolarda bu yavaştır. "10.000+" gibi yaklaşık bir gösterim ya da yalnız sonraki sayfanın var olup olmadığını söylemek çok daha ucuzdur.
 
 </SelfCheck>

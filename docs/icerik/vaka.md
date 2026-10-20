@@ -680,6 +680,40 @@ geri getirildi; sipariş durumları yalnız renkle ayrılıyordu, metin ve ikon 
 animasyonundaki ikon saniyede dört kez yanıp sönüyordu; kaldırıldı. Panel'de sezgisel
 değerlendirmeyi Selin ve Ayşe yaptı; geri alma bildirimi beş saniye.
 
+## Mühendislik işleri (Ece, Burak, Emre)
+
+Mühendislik dersleri bu olguları kullanır. Müşteri tarafında Ece (front-end), Burak (back-end) ve Can
+(full-stack); Panel tarafında Emre ve Defne.
+
+**Yığın:** müşteri sitesi Next.js (React, TypeScript); tanıtım sayfaları ve kampüs sayfası statik (SSG),
+dükkân sayfaları her istekte sunucuda üretilir (SSR, "şu an açık" bilgisi yüzünden). Panel, Vite ile
+derlenen bir React SPA (CSR), kafe tabletlerinde PWA. iOS uygulaması Swift, Android uygulaması Kotlin.
+Sipariş ve ödeme servisleri TypeScript ile Node.js üzerinde; veri PostgreSQL'de, analiz sorguları bir
+okuma kopyasında. Haftalık metrik raporu bir Python betiği (Burak). Kasa tedarikçisinin entegrasyon
+katmanı C#/.NET; arada bir arayüz şartnamesi var. Ödeme kuruluşu entegrasyon arayüzünü yılda birkaç
+planlı sürümle değiştirir.
+
+**Kütüphaneler:** stil Tailwind (boşluk ölçeği yapılandırmada); Panel'in ilk ekranları styled-components,
+dokunuldukça taşınıyor; Defne'nin Panda CSS önerisi "şimdilik hayır" diye kayıtlı. Dialog, menü ve
+combobox headless primitiflerle; buton ve dialog shadcn/ui yaklaşımıyla projeye kopyalandı. Destek
+ekibinin iade izleme aracı styled bir kütüphaneyle iki haftada yazıldı. Sepet Zustand'da, seçili kart
+local state, tema context; Panel'in sipariş listesi TanStack Query ile 15 saniyede bir tazelenir,
+"Hazır" optimistic. Formlar React Hook Form + Zod; mesajlar şemada. Yardım merkezi headless CMS'te
+(başlık en çok 70 karakter). Animasyon Motion ve Lottie; Lenis ve 3B önerileri eklenmedi.
+
+**Olaylar:** sipariş kartı müşteri tarafında ve Panel'de iki ayrı kodla yazılmıştı; tek `SiparisKarti`
+bileşeni oldu. Panel'de her yeni sipariş otuz kartın hepsini yeniden çizdiriyordu ve açılışta liste
+isteği iki kez gidiyordu; düzeltildi, mantık `useYeniSiparis` hook'unda toplandı. Harita kütüphanesi
+Panel'in ana paketine girmişti; lazy load edildi. Lockfile commit edilmemişti; edildi. Dükkân sayfasında
+LCP 4,2 → 2,1 saniye (kapak fotoğrafı WebP ve öncelikli, fontlar 3 → 2). Ürün adı
+`hazirOlma` → `hazirOlmaDakika` yeniden adlandırması yedi dosyada derleme hatası verdi. Kasa verisinde
+bir gün `acikMi` alanı gelmedi; dış veri artık şemayla doğrulanıyor. Sabah bildirim gecikmesi için
+Go'ya taşıma önerildi; neden tekrarlanan bir sorguydu ("günlük sipariş 20.000'i geçerse yeniden bak").
+Gün sonu raporundaki grafik elle yazıldı. Ciro bilgisi ilk sürümde tarayıcıya gönderilip gizleniyordu;
+artık sunucudan yalnız yetkisi olana geliyor. Panel'de "Menü ayarları" adresi "Menü ve stok"a kalıcı
+yönlendirildi. Dükkân sayfalarının başlığı "Moda Kahve · Demlik" biçiminde, şablon OG görseli var.
+Bazı dükkânların WordPress siteleri için eklenti yerine hazır bağlantı ve düğme görseli verildi.
+
 ## Paydaşlar
 
 | Paydaş | İlgi | Etki |

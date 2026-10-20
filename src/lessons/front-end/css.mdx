@@ -1,11 +1,12 @@
 ---
-summary: "Görünümün tanımlandığı katman: selector, cascade ve specificity, kutu modeli, display, position, overflow ve CSS değişkenleri. Tasarımcının en çok temas ettiği teknik alan."
+summary: "Görünümün tanımlandığı katman: selector, cascade ve specificity, kutu modeli, display, position, overflow ve CSS değişkenleri. Tasarımın en çok temas ettiği teknik alan."
 outcomes:
   - "'Neden bu renk değişmiyor?' sorusunun cevabını cascade ve specificity ile verebilirsin."
   - "Padding ile margin farkını ve tıklanabilir alanı neden padding'in büyüttüğünü açıklayabilirsin."
   - "display: none'ın erişilebilirliğe etkisini söyleyebilirsin."
   - "CSS değişkeninin design token'ın koddaki karşılığı olduğunu bilirsin."
-minutes: 11
+minutes: 5
+standard: 2
 sources:
   - label: "MDN — Cascade"
     url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_cascade/Cascade"
@@ -30,8 +31,9 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Tasarımda 16px'lik bir boşluk çizdin; sayfada 24px çıktı. Ya da bir rengi değiştirdin ama ekranda eski renk duruyor. Bunların cevabı CSS'te. Bu ders, CSS'in tasarımcıyı en çok ilgilendiren kavramlarını anlatır.
+Tasarımda 16px'lik bir boşluk çizdin; sayfada 24px çıktı. Ya da bir rengi değiştirdin ama ekranda eski renk duruyor. Bunların cevabı CSS'te. Bu ders, CSS'in tasarımı en çok ilgilendiren kavramlarını anlatır.
 
 ## Selector ve çakışma kuralları
 
@@ -49,7 +51,7 @@ Aynı elemana birden fazla stil uygulandığında hangisinin kazanacağını ü�
 
 <BoxModelFigure />
 
-Her eleman dört katmandır: içerik, **padding** (iç boşluk), **border** (kenarlık), **margin** (dış boşluk). Boşluk konuşmasının dili budur ve **padding ile margin farkı tasarımcı için kritiktir:** padding kutunun içinde kalır ve arka plan rengini alır; margin dışarıdadır ve almaz. Bir butonun tıklanabilir alanını büyütmek istiyorsan padding kullanırsın, margin değil. DevTools'ta seçilen elemanın altında bu katmanlar renkli gösterilir. "Kart içindeki boşluk padding olsun, kartlar arasındaki margin veya gap."
+Her eleman dört katmandır: içerik, **padding** (iç boşluk), **border** (kenarlık), **margin** (dış boşluk). Boşluk konuşmasının dili budur ve **padding ile margin farkı tasarım için kritiktir:** padding kutunun içinde kalır ve arka plan rengini alır; margin dışarıdadır ve almaz. Bir butonun tıklanabilir alanını büyütmek istiyorsan padding kullanırsın, margin değil. DevTools'ta seçilen elemanın altında bu katmanlar renkli gösterilir. "Kart içindeki boşluk padding olsun, kartlar arasındaki margin veya gap."
 
 ## display, position, overflow
 
@@ -57,7 +59,7 @@ Her eleman dört katmandır: içerik, **padding** (iç boşluk), **border** (ken
 
 **position**, bir elemanın belge akışına göre yerleşimini belirler (static, relative, absolute, fixed, sticky). **sticky** özellikle önemlidir: eleman normal akışta durur, belirli bir kaydırma noktasında yapışır. Sticky header, sticky CTA ve sabit tablo başlıkları bununla kurulur.
 
-**overflow**, içerik kutusuna sığmadığında ne olacağını belirler: görünür kalır, kırpılır, kaydırılır. Bu karar tasarımcıyı doğrudan ilgilendirir: uzun bir kullanıcı adı kartı taşırsa ne olacak? **Bu karar tasarımda verilmezse geliştirici tahmin eder.** "Uzun başlıklar iki satırda kesilsin ve sonuna üç nokta gelsin; tooltip'te tamamı görünsün."
+**overflow**, içerik kutusuna sığmadığında ne olacağını belirler: görünür kalır, kırpılır, kaydırılır. Bu karar tasarımı doğrudan ilgilendirir: uzun bir kullanıcı adı kartı taşırsa ne olacak? **Bu karar tasarımda verilmezse geliştirici tahmin eder.** "Uzun başlıklar iki satırda kesilsin ve sonuna üç nokta gelsin; tooltip'te tamamı görünsün."
 
 ## CSS değişkeni
 
@@ -68,6 +70,19 @@ Her eleman dört katmandır: içerik, **padding** (iç boşluk), **border** (ken
 Bu sitenin renkleri ve boşlukları CSS değişkenleridir; tüm galaksi teması tek bir dosyada tanımlı, bileşenler yalnızca bu değişkenlere başvurur. Bileşenler ham renk yerine anlamlı adlar (örneğin metin, eylem, ilerleme rengi) kullanır.
 
 </Callout>
+
+<Case>
+
+Panel'in sipariş kartında üç CSS sorunu bir sabah birlikte çıktı:
+
+1. **Renk değişmiyor:** "Hazırlanıyor" etiketinin rengi kontrast denetiminden sonra koyulaştırılmıştı ama ekranda eski renk duruyordu. Eski bir kural `!important` ile yazılmıştı. Emre kuralı kaldırdı ve seçiciyi sadeleştirdi.
+2. **Boşluk:** kart içi boşluk 16 piksel padding, kartlar arası 24 piksel gap oldu; tasarım dosyasındaki adlarla aynı.
+3. **Taşma:** uzun ürün adları kartı taşırıyordu. Karar: en çok iki satır, sonunda üç nokta; ürün adı fişte zaten 40 karakterle sınırlı.
+4. **Gizleme:** dar ekranda "Sipariş notu" başlığı `display: none` ile gizlenmişti; ekran okuyucu notun ne olduğunu duyurmuyordu. Başlık yalnız görsel olarak gizlendi.
+
+Renkler `--renk-uyari` gibi CSS değişkenleriyle tanımlı; koyu temaya geçiş bu yüzden kolay oldu.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -107,5 +122,11 @@ Padding kutunun içinde kalır ve arka plan rengini alır; margin dışarıdadı
 <SelfCheck question="`display: none` kullanmanın erişilebilirlik açısından sonucu nedir?">
 
 Öğeyi tamamen kaldırır ve ekran okuyucudan da gizler. Yalnızca görsel gizleme gerekiyorsa farklı bir teknik gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir kartta uzun bir kullanıcı adı taşıyor. Tasarımda hangi karar verilmeliydi?">
+
+Taşma (overflow) davranışı: metin kaç satırda kesilecek, sonuna üç nokta gelecek mi, tamamı nerede görünecek. Bu karar tasarımda verilmezse geliştirici tahmin eder.
 
 </SelfCheck>

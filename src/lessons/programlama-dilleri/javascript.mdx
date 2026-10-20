@@ -1,10 +1,11 @@
 ---
-summary: "Tarayıcıda çalışan tek programlama dili. Nerede çalıştığı, neyi iyi ve kötü yaptığı ve tasarımcı olarak JavaScript bütçesini neden önemsemen gerektiği."
+summary: "Tarayıcıda çalışan tek programlama dili. Nerede çalıştığı, neyi iyi ve kötü yaptığı ve JavaScript bütçesinin neden önemli olduğu."
 outcomes:
   - "'Bunu istemcide yapalım' cümlesinin JavaScript demek olduğunu söyleyebilirsin."
   - "İstemciye gönderilen hiçbir şeyin gizli olmadığını açıklayabilirsin."
   - "Etkileşimli her bileşenin indirilen kod demek olduğunu bilirsin."
-minutes: 6
+minutes: 3
+standard: 2
 sources:
   - label: "MDN — JavaScript"
     url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
@@ -21,10 +22,36 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bir sayfada tıklamaya tepki veren, veri çeken, ekranı güncelleyen her şey ya JavaScript'tir ya da JavaScript'e derlenmiştir. **Tarayıcıda çalışan tek** programlama dilidir. Kavramsal tarafı (event, promise, fetch) Front-end bölümünde gördün; burada dil profili var.
 
 ## Nerede karşına çıkar
+
+<Tree
+  label="JavaScript'in çalıştığı yerler"
+  caption="JavaScript üç yerde çalışır. Tarayıcıda zorunludur; alternatifi yoktur. Sunucuda Node.js ile çalışır; ekip iki tarafı aynı dille yazabilir. Mobil ve masaüstünde React Native ve Electron gibi araçlarla kullanılır."
+  root={{
+  title: "JavaScript",
+  tone: "accent",
+  children: [
+    {
+      title: "Tarayıcı",
+      sub: "zorunlu"
+    },
+    {
+      title: "Sunucu",
+      sub: "Node.js"
+    },
+    {
+      title: "Mobil, masaüstü",
+      sub: "React Native, Electron",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 - **Tarayıcı.** Alternatifi yok: "bunu istemcide yapalım" demek JavaScript demektir.
 - **Sunucu.** Node.js ile aynı dil arkada da çalışır. Bir ekibin tek dille iki tarafı yazabilmesi küçük ekiplerde büyük avantajdır.
@@ -41,6 +68,17 @@ Bir sayfada tıklamaya tepki veren, veri çeken, ekranı güncelleyen her şey y
 - **Paket bağımlılığı derinleşir.** Küçük bir özellik yüzlerce dolaylı bağımlılık getirebilir; bu hem güvenlik hem performans yüzeyidir.
 
 **Alternatifler:** TypeScript (aynı dilin tipli hâli, yeni projelerde varsayılan sayılır) ve WebAssembly (tarayıcıda ağır hesap için; JavaScript'in yerine değil, yanına).
+
+<Case>
+
+Demlik'te JavaScript iki tarafta da çalışıyor; TypeScript olarak yazılıyor:
+
+1. **Tarayıcı:** müşteri sitesi ve Panel. Alternatif yok.
+2. **Sunucu:** sipariş ve ödeme servisleri Node.js üzerinde. Burak bir doğrulama şemasını hem formda hem sunucuda kullanabiliyor.
+3. **Bağımlılık:** Panel'e bir tarih seçici eklemek dolaylı olarak 40'tan fazla paket getirdi. Ece daha küçük bir alternatif buldu.
+4. **Gizlilik:** Panel'de "yalnız dükkân sahibi görsün" denen ciro bilgisi ilk sürümde tarayıcıya gönderilip gizleniyordu. Bilgi artık sunucudan yalnız yetkisi olana geliyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -65,5 +103,17 @@ Bir sayfada tıklamaya tepki veren, veri çeken, ekranı güncelleyen her şey y
 <SelfCheck question="'Bunu sadece admin görsün' isteği neden istemci tarafında çözülemez?">
 
 Tarayıcıya gönderilen her şey kullanıcının elindedir; gizli sayılamaz. Yetkiyi sunucu tarafında doğrulamak gerekir.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Bu bilgiyi yalnız yöneticiler görsün, diğerlerinde gizleyelim\" isteği neden yalnız istemci tarafında çözülemez?"}>
+
+Tarayıcıya gönderilen her şey kullanıcı tarafından görülebilir; gizlenmiş olsa bile kodda ve ağ yanıtında durur. Yetki kontrolü sunucuda yapılmalı; bilgi yetkisi olmayana hiç gönderilmemelidir.
+
+</SelfCheck>
+
+<SelfCheck question="WebAssembly JavaScript'in yerine mi geçer?">
+
+Hayır. Tarayıcıda ağır hesaplama gibi işler için JavaScript'in yanında çalışır; arayüzün çoğu yine JavaScript ile yazılır.
 
 </SelfCheck>

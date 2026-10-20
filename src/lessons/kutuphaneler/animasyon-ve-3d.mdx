@@ -4,7 +4,8 @@ outcomes:
   - "Motion ile GSAP'ın rakip değil, farklı işler için araçlar olduğunu söyleyebilirsin."
   - "Yumuşak kaydırma kütüphanelerinin erişilebilirlik riskini ve çözümünü açıklayabilirsin."
   - "3B bir sahneyi eklemeden önce hangi maliyeti ölçmen gerektiğini bilirsin."
-minutes: 8
+minutes: 5
+standard: 2
 sources:
   - label: "Motion"
     url: "https://motion.dev/"
@@ -27,6 +28,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bu alanda 2024-2025'te iki büyük değişiklik oldu ve ikisini de bilmen gerekiyor. Materyale göre kaynaklar yeniden adlandırma tarihlerinde tutarsız; **tarihe değil, mevcut duruma güven** ve kullanmadan önce doğrula.
 
@@ -44,6 +47,21 @@ Bu alanda 2024-2025'te iki büyük değişiklik oldu ve ikisini de bilmen gereki
 
 Motion ile GSAP **rakip değil,** farklı işler için araçlardır. Aynı projede ikisi de kullanılabilir; yeter ki her öğenin sahibi net olsun.
 
+<Tree
+  label="Animasyon araçları ve işleri"
+  caption="Animasyon araçları dört işe ayrılır. Arayüz hareketi için Motion: bileşenin girişi, çıkışı ve jestler. Zaman çizelgesi ve kaydırma için GSAP ve yumuşak kaydırma için Lenis. Tasarım aracında hazırlanan animasyon için Lottie ve Spline. 3B grafik için Three.js ve React Three Fiber; bunlar en ağır araçlardır."
+  root={{
+    title: "Animasyon araçları",
+    tone: "accent",
+    children: [
+      { title: "Arayüz hareketi", children: [{ title: "Motion" }] },
+      { title: "Zaman ve kaydırma", children: [{ title: "GSAP" }, { title: "Lenis" }] },
+      { title: "Tasarım aracından", children: [{ title: "Lottie" }, { title: "Spline" }] },
+      { title: "3B", sub: "en ağır", children: [{ title: "Three.js, R3F", tone: "progress" }] },
+    ],
+  }}
+/>
+
 ## Lenis ve yumuşak kaydırma
 
 **Lenis**, sayfa kaydırmasını yumuşatan küçük bir kütüphanedir; tanıtım sitelerinde "premium" hissi verir. Ama kaydırma davranışını değiştirmek bir **erişilebilirlik riskidir:** kullanıcının beklediği kaydırma hissini bozar ve bazı kullanıcılarda rahatsızlık ya da yön kaybı yaratır. Hareket azaltma açıkken devre dışı kalmalı ve kapatılabilir olmalıdır. "Lenis ekleyelim ama `prefers-reduced-motion` açıkken devre dışı kalsın."
@@ -54,7 +72,18 @@ Motion ile GSAP **rakip değil,** farklı işler için araçlardır. Aynı proje
 
 ## Lottie ve Spline
 
-**Lottie**, tasarım aracında hazırlanmış vektör animasyonlarını web'de oynatan formattır; **Spline** kod yazmadan 3B sahne hazırlamayı sağlar. Tasarımcının geliştiriciye bağımlı olmadan animasyon üretmesini sağlar; **bu senin için doğrudan bir imkândır.** Boş durum illüstrasyonlarında, onboarding animasyonlarında ve hero sahnelerinde karşına çıkar. "Boş durum animasyonunu Lottie olarak verelim; geliştiriciye JSON dosyası yeterli." Lottie dosyaları beklenenden büyük olabilir; dosya boyutunu kontrol et. Araçların fiyatlandırma ve dışa aktarma seçenekleri değişir.
+**Lottie**, tasarım aracında hazırlanmış vektör animasyonlarını web'de oynatan formattır; **Spline** kod yazmadan 3B sahne hazırlamayı sağlar. Tasarım ekibinin geliştiriciye bağımlı olmadan animasyon üretmesini sağlar. Boş durum illüstrasyonlarında, onboarding animasyonlarında ve hero sahnelerinde karşına çıkar. "Boş durum animasyonunu Lottie olarak verelim; geliştiriciye JSON dosyası yeterli." Lottie dosyaları beklenenden büyük olabilir; dosya boyutunu kontrol et. Araçların fiyatlandırma ve dışa aktarma seçenekleri değişir.
+
+<Case>
+
+Demlik'te animasyon kararları iki araçla sınırlı kaldı:
+
+1. **Motion:** sipariş onayındaki 300 ms'lik tik ve kupon penceresinin giriş-çıkışı. Hareket azaltma tercihi açıksa tik hareket etmeden beliriyor.
+2. **Lottie:** kampüs lansmanındaki ilk sipariş kutlaması Selin'in hazırladığı bir Lottie dosyası. Erişilebilirlik incelemesinde yanıp sönen kısmı çıkarıldı; dosya boyutu teslim notunda yazılı.
+3. **Lenis:** kampüs sayfası için "premium his" diye önerildi. Kaydırma davranışını değiştirdiği için eklenmedi.
+4. **3B:** "fincanı döndürelim" fikri, paket boyutu ölçülünce rafa kalktı.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -87,5 +116,11 @@ Rakip değiller. Motion: React arayüz hareketi (giriş/çıkış geçişleri, y
 <SelfCheck question="Lenis gibi yumuşak kaydırma kütüphaneleri hangi erişilebilirlik riskini taşır?">
 
 Kullanıcının beklediği kaydırma hissini değiştirir; bazı kullanıcılarda rahatsızlık ve yön kaybı yaratabilir. Hareket azaltma açıkken devre dışı kalmalı ve kapatılabilir olmalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir tanıtım sitesine yumuşak kaydırma (smooth scroll) eklenmesi isteniyor. Hangi koşulları koyarsın?">
+
+Hareket azaltma tercihi açıkken devre dışı kalmasını ve kullanıcının kapatabilmesini. Kaydırma davranışını değiştirmek bazı kullanıcılarda rahatsızlık ve yön kaybı yaratır; bu bir erişilebilirlik riskidir.
 
 </SelfCheck>

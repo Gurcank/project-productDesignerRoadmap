@@ -1,9 +1,10 @@
 ---
-summary: "Büyük kurumsal sistemlerin dili: bankalar, sigorta, telekom, kamu. Uzun ömürlü, öngörülebilir ve katmanlı sistemler; tasarımcı için takvim ve devralınan kısıtlar."
+summary: "Büyük kurumsal sistemlerin dili: bankalar, sigorta, telekom, kamu. Uzun ömürlü, öngörülebilir ve katmanlı sistemler; ürün ekibi için takvim ve devralınan kısıtlar."
 outcomes:
   - "Java'nın hangi tür sistemlerde baskın olduğunu söyleyebilirsin."
   - "Katmanlı bir kurumsal mimarinin küçük bir değişikliği neden pahalı kıldığını açıklayabilirsin."
-minutes: 5
+minutes: 3
+standard: 2
 sources:
   - label: "dev.java — Java öğren"
     url: "https://dev.java/learn/"
@@ -18,10 +19,36 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Java, uzun ömürlü ve çok kişiyle yazılan sistemlerin dilidir: bankalar, sigorta, telekom, kamu. Bir banka uygulamasının arkasında çoğu zaman bir Java servisi bulunur.
 
 ## Nerede karşına çıkar
+
+<Tree
+  label="Java'nın karşına çıktığı yerler"
+  caption="Java üç yerde karşına çıkar. Kurumsal back-end'de: bankalar, sigorta, telekom, kamu. Android'de: yeni işler Kotlin'e kaydı ama devralınan kodun çoğu Java'dır. Büyük veri altyapısında: Elasticsearch gibi araçlar Java ile yazılıdır."
+  root={{
+  title: "Java",
+  tone: "accent",
+  children: [
+    {
+      title: "Kurumsal back-end",
+      sub: "banka, sigorta, kamu"
+    },
+    {
+      title: "Android",
+      sub: "devralınan kod"
+    },
+    {
+      title: "Büyük veri altyapısı",
+      sub: "Elasticsearch",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 - **Kurumsal back-end.** Bankacılık ve büyük kurumlarda çok yaygındır.
 - **Android.** Tarihsel olarak Android'in diliydi; yeni işler Kotlin'e kaydı ama devralınan kodun çoğu Java'dır.
@@ -38,6 +65,19 @@ Java, uzun ömürlü ve çok kişiyle yazılan sistemlerin dilidir: bankalar, si
 - **Değişim yavaştır.** Bu bir güvenlik özelliğidir ama modern bir arayüz ihtiyacını karşılamak zaman alabilir.
 
 **Alternatifler:** aynı ekosistemde çok daha az ayrıntıyla Kotlin; Microsoft dünyasında C#; basit ve yüksek trafikli servislerde Go.
+
+<Case>
+
+Demlik ödeme kuruluşuyla entegre çalışıyor; kuruluşun sistemleri büyük ve kurumsal.
+
+1. **Takvim:** kuruluş, entegrasyon arayüzünde değişikliği yılda birkaç planlı sürümle yapıyor. Demlik'in istediği yeni bir alan, bir sonraki sürümü beklemek zorunda.
+2. **Kısıt:** kampüs mağazaları için ek onay riski risk kaydındaydı; kuruluşun süreci yavaş ama öngörülebilir.
+3. **Tasarıma etkisi:** Selin kart ekleme ekranında kuruluşun hata kodlarına bağlı kalan mesajlar yazdı; yeni bir kod gelene kadar genel bir mesaj gösteriliyor.
+4. **Ders:** "Ödeme ekranına şu alanı ekleyelim" isteğinin cevabı Demlik'in ekibinde değil, kuruluşun takviminde.
+
+Değişim yavaş; ama bir ödeme sistemi için bu bir güvenlik özelliği.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -61,5 +101,17 @@ Java, uzun ömürlü ve çok kişiyle yazılan sistemlerin dilidir: bankalar, si
 <SelfCheck question="Java'lı kurumsal bir sistemde küçük bir değişiklik neden pahalı olabilir?">
 
 Katmanlı mimaride bir alan birçok noktaya (servis, veri, entegrasyon) bağlıdır; küçük görünen bir değişiklik çok dosyaya ve yıllanmış entegrasyonlara dokunabilir.
+
+</SelfCheck>
+
+<SelfCheck question="Java ile Kotlin arasındaki ilişki nedir?">
+
+Kotlin, Java'nın modern ve daha az ayrıntılı alternatifidir ve onunla aynı ekosistemde çalışır. Android'in birinci sınıf dili Kotlin'dir; devralınan Android kodunun çoğu ise Java'dır.
+
+</SelfCheck>
+
+<SelfCheck question="Kurumsal bir Java sistemiyle entegrasyonda tasarım ekibi neyi erken sormalı?">
+
+Karşı sistemin değişiklik takvimini ve sınırlarını: yeni bir alan ya da hata kodu ne zaman gelebilir, hangi davranışlar değiştirilemez? Tasarım bu kısıtlara göre kurulur.
 
 </SelfCheck>

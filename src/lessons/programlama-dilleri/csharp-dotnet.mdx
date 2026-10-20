@@ -3,7 +3,8 @@ summary: "Microsoft'un kurumsal dili ve platformu. Java ile aynı alanlarda bulu
 outcomes:
   - "C#'ın hangi alanlarda karşına çıktığını söyleyebilirsin."
   - "Unity ile yapılan bir ürünün neden web tasarım kurallarıyla birebir ilerlemediğini açıklayabilirsin."
-minutes: 4
+minutes: 3
+standard: 2
 sources:
   - label: "Microsoft Learn — C# turu"
     url: "https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/"
@@ -18,10 +19,36 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 C# ve onun platformu .NET, Microsoft'un kurumsal dilidir. Java ile aynı işi yapar, aynı yerlerde bulunur; hangisinin kullanıldığı genelde şirketin tarihine bağlıdır.
 
 ## Nerede karşına çıkar
+
+<Tree
+  label="C# ve .NET'in karşına çıktığı yerler"
+  caption="C# ve .NET üç yerde karşına çıkar. Kurumsal back-end'de, özellikle Microsoft altyapısı kullanan şirketlerde. Windows masaüstü uygulamalarında; kafelerdeki kasa yazılımları gibi. Oyunlarda, çünkü Unity'nin dili C#'tır."
+  root={{
+  title: "C# ve .NET",
+  tone: "accent",
+  children: [
+    {
+      title: "Kurumsal back-end",
+      sub: "Microsoft altyapısı"
+    },
+    {
+      title: "Windows masaüstü",
+      sub: "kasa yazılımı"
+    },
+    {
+      title: "Oyun",
+      sub: "Unity",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 - **Kurumsal back-end,** özellikle Microsoft altyapısı kullanan şirketlerde.
 - **Windows masaüstü uygulamaları.**
@@ -37,6 +64,17 @@ C# ve onun platformu .NET, Microsoft'un kurumsal dilidir. Java ile aynı işi ya
 - **Açık kaynak topluluğu JavaScript ya da Python kadar geniş değildir;** niş bir ihtiyaç için hazır paket bulmak daha zor olabilir.
 
 **Alternatifler:** aynı kurumsal alanda Java; daha hafif servisler için Node.js ya da Go.
+
+<Case>
+
+Kampüs projesinde kasa entegrasyonunu bir tedarikçi yapıyor. Kafelerdeki kasa yazılımı bir Windows masaüstü uygulaması ve .NET ile yazılmış.
+
+1. **Kim yazıyor:** entegrasyon katmanını tedarikçi C# ile yazıyor; Demlik'in ekibi bu koda dokunmuyor.
+2. **Sınır:** Demlik ile kasa arasında bir arayüz şartnamesi var (WBS 2.1). Hangi alanın ne biçimde gideceği orada yazılı.
+3. **Takvim:** entegrasyon geliştirme için tedarikçinin beklenen tahmini 4,5 haftaydı. 6. haftada test ortamı hazır değildi; bu, projenin en büyük gecikmesi oldu.
+4. **Tasarıma etkisi:** fişin kasada nasıl basıldığı kasa yazılımının elindeydi. "Fiş 50 cm'den okunmalı" gereksinimi tedarikçiye şartname değişikliği olarak gitti.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -60,5 +98,17 @@ C# ve onun platformu .NET, Microsoft'un kurumsal dilidir. Java ile aynı işi ya
 <SelfCheck question="C# hangi üç alanda karşına çıkar?">
 
 Kurumsal back-end (özellikle Microsoft altyapısında), Windows masaüstü uygulamaları ve Unity ile oyun geliştirme.
+
+</SelfCheck>
+
+<SelfCheck question="C# ile Java aynı alanlarda kullanılıyorsa, bir şirket neden birini seçer?">
+
+Çoğunlukla şirketin tarihi ve altyapısı yüzünden: Microsoft altyapısı kullanan şirketler genelde C#'ı, diğerleri Java'yı seçer. İkisi de benzer güvenceler verir.
+
+</SelfCheck>
+
+<SelfCheck question="Bir tedarikçinin yazdığı sisteme dokunmadan onunla çalışmanın sınırı nerede çizilir?">
+
+Bir arayüz şartnamesinde: hangi verinin hangi biçimde gideceği ve geleceği yazılı olarak kararlaştırılır. Değişiklikler şartname üzerinden istenir.
 
 </SelfCheck>

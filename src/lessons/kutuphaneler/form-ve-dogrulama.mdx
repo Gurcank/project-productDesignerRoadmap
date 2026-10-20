@@ -1,10 +1,11 @@
 ---
-summary: "React Hook Form, Zod ve eski nesil Formik/Yup: form durumunu ve doğrulamayı yöneten araçlar. Zod'un tasarımcı için anlamı: doğrulama kuralları ve hata mesajları tek yerde."
+summary: "React Hook Form, Zod ve eski nesil Formik/Yup: form durumunu ve doğrulamayı yöneten araçlar. Zod'un tasarım için anlamı: doğrulama kuralları ve hata mesajları tek yerde."
 outcomes:
   - "React Hook Form'un uzun formlarda neden performans farkı yarattığını söyleyebilirsin."
   - "TypeScript ile Zod'un farklı anlarda koruduğunu açıklayabilirsin."
   - "Hata mesajlarının neden bir şema dosyasında toplu gözden geçirilebildiğini bilirsin."
-minutes: 5
+minutes: 3
+standard: 2
 sources:
   - label: "React Hook Form"
     url: "https://react-hook-form.com/"
@@ -19,8 +20,10 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+import Case from "~/components/lesson/Case.astro";
 
-Formlar tasarımcının sürekli temas ettiği bir alan; arkasındaki araçların iki adını bilmek, hata mesajlarını nerede düzelteceğini bilmek demektir.
+Formlar tasarımın sürekli temas ettiği bir alan; arkasındaki araçların iki adını bilmek, hata mesajlarını nerede düzelteceğini bilmek demektir.
 
 ## React Hook Form
 
@@ -30,13 +33,35 @@ Formlar tasarımcının sürekli temas ettiği bir alan; arkasındaki araçları
 
 **Zod**, verinin beklenen yapıya uyup uymadığını **çalışma zamanında** kontrol eden şema doğrulama kütüphanesidir. TypeScript tipleri yalnızca yazarken korur; sunucudan beklenmedik veri gelirse bir şey yapmaz. Zod bu boşluğu doldurur: aynı şemayı hem form doğrulaması hem API yanıtı kontrolü için kullanabilirsin.
 
-**Tasarımcı için anlamı:** doğrulama kuralları (minimum uzunluk, format, zorunluluk) tek yerde tanımlanır ve hata mesajları buradan gelir; yani mesaj metinlerini bir yerde toplu gözden geçirebilirsin. "Zod şemasındaki hata mesajlarını gözden geçirelim; kullanıcıya teknik dille konuşuyoruz."
+**Tasarım için anlamı:** doğrulama kuralları (minimum uzunluk, format, zorunluluk) tek yerde tanımlanır ve hata mesajları buradan gelir; yani mesaj metinleri bir yerde toplu gözden geçirilebilir. "Zod şemasındaki hata mesajlarını gözden geçirelim; kullanıcıya teknik dille konuşuyoruz."
 
 Zod (çalışma zamanı doğrulama) ile TypeScript (derleme zamanı tip kontrolü) farklı anlarda korur ve birbirinin yerine geçmez.
+
+<StepFlow
+  label="Bir form alanının doğrulanması"
+  caption="Kullanıcı kart ekleme formunda son kullanma tarihini yazar. React Hook Form değeri her tuşta formu yeniden çizmeden tutar. Kullanıcı alandan çıkınca Zod şeması kuralı kontrol eder: tarih geçmiş mi? Kural sağlanmazsa şemada yazılı hata mesajı alanın altında görünür. Aynı şema, gönderimde sunucu tarafında da çalışır."
+  steps={[
+    { title: "Kullanıcı yazar", tone: "accent" },
+    { title: "RHF değeri tutar", sub: "yeniden çizim yok" },
+    { title: "Zod kuralı denetler", sub: "tarih geçmiş mi?" },
+    { title: "Mesaj alanın altında", sub: "şemadan gelir", tone: "progress" },
+  ]}
+/>
 
 ## Formik ve Yup
 
 **Formik** ve **Yup**, RHF ve Zod'dan önceki nesil form ve doğrulama kütüphaneleridir. Hâlâ çok sayıda projede kullanılır; adlarını duyduğunda tanıman yeterli. Yeni projelerde tercih edilme oranları düştü; güncel durumlarını kontrol et. "Proje Formik kullanıyor; yeni formları RHF'ye geçirmeden önce tutarlılığı düşünelim."
+
+<Case>
+
+Demlik'in kart ekleme formu ve Panel'in ürün ekleme formu aynı yaklaşımla yazıldı:
+
+1. **RHF:** formlar kontrolsüz alanlarla çalışıyor; uzun ürün formunda yazarken takılma yok.
+2. **Zod şeması:** Ayşe'nin ürün formu için yazdığı tablo (alan, kural, mesaj) doğrudan şemaya döndü: ad en çok 40 karakter, fiyat virgüllü yazılabilir.
+3. **Mesajlar:** "Son kullanma tarihi geçmiş. Kartının üzerindeki tarihi kontrol et." mesajı şemada duruyor. Selin bütün mesajları tek dosyada okuyup düzeltti.
+4. **Sunucu:** aynı şema, gelen isteği sunucuda da denetliyor; tarayıcıdaki kontrolü atlatan istek yine reddediliyor.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -62,5 +87,17 @@ Zod (çalışma zamanı doğrulama) ile TypeScript (derleme zamanı tip kontrol�
 <SelfCheck question="TypeScript ile Zod arasındaki fark nedir? Neden ikisi birden gerekir?">
 
 TypeScript yazarken korur (derleme zamanı); sunucudan beklenmedik veri gelirse bir şey yapmaz. Zod çalışma zamanında verinin şemaya uyup uymadığını kontrol eder. İkisi farklı anlarda korur ve birbirinin yerine geçmez.
+
+</SelfCheck>
+
+<SelfCheck question="Hata mesajlarının metnini değiştirmek istiyorsun. Zod kullanan bir projede nereye bakarsın?">
+
+Zod şemasına. Doğrulama kuralları ve hata mesajları orada tek yerde tanımlıdır; mesajlar toplu olarak gözden geçirilip düzeltilebilir.
+
+</SelfCheck>
+
+<SelfCheck question="React Hook Form uzun formlarda neden daha hızlıdır?">
+
+Kontrolsüz bileşen yaklaşımını kullanır; her tuş vuruşunda tüm formu yeniden çizmez. Değerleri gerektiğinde okur.
 
 </SelfCheck>

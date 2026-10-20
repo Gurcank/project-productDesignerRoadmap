@@ -4,6 +4,7 @@ outcomes:
   - "Dört stil yaklaşımından birini proje durumuna göre seçebilirsin."
   - "Yeni bir projede runtime CSS-in-JS'in neden varsayılan olmadığını söyleyebilirsin."
 minutes: 3
+standard: 2
 sources:
   - label: "Tailwind CSS — Utility sınıflarıyla stil"
     url: "https://tailwindcss.com/docs/styling-with-utility-classes"
@@ -18,10 +19,16 @@ flags: ["degisken"]
 
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
 
 > Bu bölüm hızla eskir. Aşağıdaki seçim özeti, materyalin Eylül 2026 doğrulamasına dayanır; kullanmadan önce güncel durumu kontrol et.
 
-Stil yaklaşımlarının ayrıntısını Front-end bölümündeki **CSS yaklaşımları** dersinde gördün. Bu ders yalnızca bir **seçim özetidir:** hangi durumda hangisi.
+Stil yaklaşımlarının ayrıntısı Front-end bölümündeki [CSS yaklaşımları](/front-end/css-yaklasimlari/) dersinde. Bu ders yalnızca bir **seçim özetidir:** hangi durumda hangisi.
+
+## Seçim tablosu
 
 | Yaklaşım | Ne zaman |
 |---|---|
@@ -30,12 +37,50 @@ Stil yaklaşımlarının ayrıntısını Front-end bölümündeki **CSS yaklaş�
 | **vanilla-extract / Panda CSS** | CSS-in-JS ergonomisini isteyip çalışma zamanı maliyeti istemeyenler |
 | **styled-components / Emotion** | Yeni projede önerilmiyor; mevcut projeleri sürdürmek için hâlâ geçerli |
 
+## Karar sorusu
+
 Karar sorusu basit: **ekip ne biliyor ve tasarım sistemin ölçeğini kodda nasıl zorunlu kılarsın?** Tailwind ölçeği yapılandırmaya bağlar, CSS Modules çakışmayı araçla çözer. Mevcut bir styled-components projesinde toptan yeniden yazım gerekmez; yeni bileşenleri başka bir yaklaşımla yazmak yeterlidir.
+
+<Tree
+  label="Stil yaklaşımı seçimi"
+  caption="Seçim önce projenin yeni mi mevcut mu olduğuna göre ayrılır. Yeni bir projede üç güvenli yol vardır: tasarım ölçeğini yapılandırmada zorunlu kılan Tailwind, sade CSS yazmayı sürdüren CSS Modules ve çalışma zamanı maliyeti olmayan vanilla-extract ya da Panda CSS. Mevcut bir styled-components ya da Emotion projesinde kod sürdürülür; yeni bileşenler başka bir yaklaşımla yazılır."
+  root={{
+    title: "Stil yaklaşımı",
+    tone: "accent",
+    children: [
+      { title: "Yeni proje", children: [{ title: "Tailwind" }, { title: "CSS Modules" }, { title: "vanilla-extract, Panda" }] },
+      { title: "Mevcut proje", sub: "styled-components, Emotion", children: [{ title: "Sürdür, yeniyi taşı", tone: "progress" }] },
+    ],
+  }}
+/>
+
+<Case>
+
+Panel'in yeni bir bölümü yazılırken Defne Panda CSS'i önerdi: CSS-in-JS rahatlığı, çalışma zamanı maliyeti yok.
+
+1. **Ekip:** müşteri sitesi ve Panel'in yeni ekranları zaten Tailwind'deydi; ekibin hepsi onu biliyordu.
+2. **Ölçek:** boşluk ve renk ölçeği Tailwind yapılandırmasında tanımlıydı; Panda için aynı ölçeğin ikinci kez kurulması gerekecekti.
+3. **Takas:** Panda'nın kazandırdığı ergonomi, iki stil sisteminin aynı projede yaşamasının bedelini karşılamıyordu.
+4. **Karar:** yeni bölüm Tailwind ile yazıldı; eski styled-components ekranları dokunuldukça taşınıyor.
+
+Defne'nin önerisi karar kaydına "değerlendirildi, şimdilik hayır" diye yazıldı; gerekçesiyle birlikte.
+
+</Case>
+
+<Lenses>
+<Lens role="product-designer">
+
+- **Teslim biçimini ekibin yaklaşımına uydur.** Tailwind'de ölçek adları, CSS Modules'ta bileşen sınırları.
+- **Tasarım ölçeğinin kodda zorunlu olup olmadığını sor.** Ölçek dışı değer yazılabiliyorsa sistem zamanla dağılır.
+
+</Lens>
+</Lenses>
 
 <Summary>
 
 - Tailwind modern projelerde varsayılan, CSS Modules güvenli ve çalışma zamanı maliyetsiz, zero-runtime seçenekler CSS-in-JS ergonomisi verir.
 - styled-components yeni projede önerilmez; mevcut projede çalışmaya devam eder.
+- Karar sorusu: ekip ne biliyor ve tasarım ölçeği kodda nasıl zorunlu kılınıyor?
 
 </Summary>
 
@@ -44,5 +89,17 @@ Karar sorusu basit: **ekip ne biliyor ve tasarım sistemin ölçeğini kodda nas
 <SelfCheck question="Sade CSS yazmak isteyen ve sıfır çalışma zamanı maliyeti arayan bir ekip hangi yaklaşıma bakar?">
 
 CSS Modules: sade CSS yazılır, sınıf adları derlemede otomatik benzersiz yapılır ve çalışma zamanı maliyeti yoktur.
+
+</SelfCheck>
+
+<SelfCheck question="Yeni bir React projesi için styled-components önerildi. Ne dersin?">
+
+Materyale göre styled-components bakım modunda ve yeni projeler için önerilmiyor. Ekibin bildiğine göre Tailwind, CSS Modules ya da çalışma zamanı maliyeti olmayan bir seçeneği öneririm; güncel durumu kullanmadan önce doğrularım.
+
+</SelfCheck>
+
+<SelfCheck question="Tailwind tasarım sistemine uymayı nasıl kolaylaştırır?">
+
+Sınıflar yapılandırmada tanımlı bir ölçekten gelir; boşluk ve renk değerleri bu ölçeğin dışına çıkamaz. Ölçek yapılandırmada tanımlanmazsa bu avantaj kaybolur.
 
 </SelfCheck>

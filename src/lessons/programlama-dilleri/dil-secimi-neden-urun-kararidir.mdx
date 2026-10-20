@@ -5,6 +5,7 @@ outcomes:
   - "Dil, runtime ve framework'ü birbirinden ayırabilirsin."
   - "'Şunu Go'ya taşıyalım' cümlesinin bir özellik değil mimari karar olduğunu açıklayabilirsin."
 minutes: 6
+standard: 2
 sources:
   - label: "Stack Overflow — Developer Survey"
     url: "https://survey.stackoverflow.co/"
@@ -19,6 +20,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Ekipte biri "bunu Go'ya taşısak mı?" diyor, bir başkası "bu iş için Python daha uygun" diye karşılık veriyor. Bu bölüm sana dil öğretmeyecek. Amacı şu: böyle bir tartışmada **konunun ne olduğunu** anlayabilmen.
 
@@ -27,6 +30,34 @@ Dil seçimi teknik bir zevk meselesi gibi görünür; ama sonuçlarının çoğu
 ## Seçimi dilin kendisi belirlemez
 
 Bir dil nadiren "daha iyi" olduğu için seçilir. Kararı genelde şu dört etken belirler:
+
+<Tree
+  label="Dil seçimini belirleyen dört etken"
+  caption="Bir dili dört etken seçtirir. Ekosistem: o iş için hazır kütüphane var mı? Ekip: kaç kişi biliyor, işe alım ne kadar kolay? Çalışma ortamı: tarayıcıda yalnız JavaScript, iOS'ta Swift, Android'de Kotlin birinci sınıftır; bu bir kısıttır. Devralınan kod: var olan sistem hangi dildeyse yeni iş de büyük olasılıkla orada yazılır."
+  root={{
+  title: "Dil seçimi",
+  tone: "accent",
+  children: [
+    {
+      title: "Ekosistem",
+      sub: "hazır kütüphane"
+    },
+    {
+      title: "Ekip",
+      sub: "bilen, işe alınabilen"
+    },
+    {
+      title: "Çalışma ortamı",
+      sub: "kısıt, tercih değil"
+    },
+    {
+      title: "Devralınan kod",
+      sub: "var olan sistem",
+      tone: "progress"
+    }
+  ]
+}}
+/>
 
 - **Ekosistem.** O iş için hazır kütüphane var mı? Görüntü işleme ve yapay zekâ Python'da, mobil arayüz Swift ya da Kotlin'de hazır gelir.
 - **Ekip.** Şirkette o dili bilen kaç kişi var, işe alım ne kadar kolay? En iyi dil, ekibin bakabildiği dildir.
@@ -53,6 +84,19 @@ Bir dil nadiren "daha iyi" olduğu için seçilir. Kararı genelde şu dört etk
 
 "Next.js'e geçelim" bir framework kararıdır, dil kararı değil. İkisini ayırmak, tartışmanın ne kadar büyük olduğunu anlamanı sağlar.
 
+<Case>
+
+Demlik'te hangi dilin nerede kullanıldığı, dört etkenin dördünü de gösteriyor:
+
+1. **Çalışma ortamı:** müşteri sitesi ve Panel tarayıcıda çalışıyor; TypeScript. iOS uygulaması Swift, Android uygulaması Kotlin.
+2. **Ekip:** sipariş servisleri de TypeScript ile Node.js üzerinde. Ece ve Burak iki tarafa da dokunabiliyor; küçük ekip için en büyük kazanç bu.
+3. **Devralınan kod:** kasa tedarikçisinin entegrasyon katmanı C# ile yazılı; Demlik o koda dokunmuyor, arayüzüyle konuşuyor.
+4. **Ekosistem:** haftalık metrik raporu bir Python betiğiyle üretiliyor; veri işleme kütüphaneleri orada hazır.
+
+"Sipariş servisini Go'ya taşıyalım" önerisi geldiğinde Elif'in ilk sorusu, yavaşlığın gerçekten dilden gelip gelmediğiydi.
+
+</Case>
+
 <Lenses>
 <Lens role="product-designer">
 
@@ -60,6 +104,30 @@ Bir dil nadiren "daha iyi" olduğu için seçilir. Kararı genelde şu dört etk
 - **Dil değişikliği bir mimari karardır,** özellik değil. "Şunu Go'ya taşıyalım" dendiğinde takvim aylarla ölçülür.
 - **Tarayıcıda ne istediğine dikkat et:** "bunu tarayıcıda yapalım" otomatik olarak JavaScript/TypeScript demektir.
 - **Dilin "modern" olması ürün için argüman değildir.** Ekibin bakabildiği, işe alabildiği, hazır parçası olan dil kazanır.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Dil değişikliği önerisini bir yatırım kararı gibi tart.** Kazanç ne, takvimden ne gidiyor, kullanıcı neyi fark edecek?
+- **"Hazır var mı?" sorusunu kapsam tahmininde sor.** Aynı özellik bir ekosistemde iki gün, diğerinde iki hafta sürebilir.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Mimari geçişi backlog'da görünür kıl.** Kullanıcıya değer vermeyen ama gereken işler de sıralanır.
+- **Geçiş sırasında özellik akışının ne kadar yavaşlayacağını sor.**
+
+</Lens>
+<Lens role="project-manager">
+
+- **Dil ya da platform değişikliğini proje olarak ele al.** Kapsamı, takvimi ve riski ayrı yazılır.
+- **İşe alım ve öğrenme süresini plana koy.** Ekibin bilmediği dil, ilk aylarda hızı düşürür.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Entegrasyon gereksinimlerinde karşı sistemin dilini ve sürüm takvimini öğren.** Kısıtlar oradan gelir.
+- **Performans gereksinimini dile değil, ölçüye bağla.** "Sipariş 5 saniyede düşer" dil seçmez.
 
 </Lens>
 </Lenses>
@@ -84,5 +152,11 @@ Ekosistem (hazır kütüphaneler), ekip (kim bilir, işe alım), çalışma orta
 <SelfCheck question="'Next.js'e geçelim' bir dil kararı mıdır?">
 
 Hayır, bir framework kararıdır. Dil (JavaScript/TypeScript) aynı kalır; framework dille yazılmış iskelettir.
+
+</SelfCheck>
+
+<SelfCheck question={"\"Bu ekran yavaş, servisi daha hızlı bir dile taşıyalım\" önerisine ilk sorulacak soru nedir?"}>
+
+Yavaşlığın gerçekten dilden gelip gelmediği. Çoğu zaman neden veritabanı sorgusu, ağ ya da gereksiz istekler olur. Önce ölçmek gerekir; dil değiştirmek aylar süren bir mimari iştir.
 
 </SelfCheck>

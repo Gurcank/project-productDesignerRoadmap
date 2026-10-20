@@ -4,7 +4,8 @@ outcomes:
   - "Element, tag ve attribute'u ayırt edip bir geliştiriciyle bu kelimelerle konuşabilirsin."
   - "Semantic HTML'in erişilebilirlik, SEO ve bakım için neden ortak temel olduğunu söyleyebilirsin."
   - "Belge akışını ve akıştan çıkarmanın bedelini açıklayabilirsin."
-minutes: 7
+minutes: 4
+standard: 2
 sources:
   - label: "MDN — HTML temelleri"
     url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Basic_HTML_syntax"
@@ -17,6 +18,8 @@ import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+import Case from "~/components/lesson/Case.astro";
 
 Bu bölümün amacı sana kod yazdırmak değil. Bir geliştirici "bu bileşen client'a düşüyor, o yüzden bundle büyüyor" dediğinde ne dendiğini anlaman ve "bu bölümü server component yapabilir miyiz?" diye sorabilmen. Bu yüzden söz dizimi yok; her terim **karar verirken işine yarayacağı kadar** anlatılıyor.
 
@@ -28,6 +31,19 @@ Sayfadaki her parça bir **element**'tir: bir başlık, bir buton, bir görsel. 
 
 Bu üç kelime konuşma birimidir. "Bu elemente `aria-label` niteliği ekle" cümlesinde geçen şey budur. Kod incelemesinde ve tarayıcı DevTools'unun Elements sekmesinde sürekli karşına çıkar. "Bu görsele `loading="lazy"` niteliği eklenmiş mi kontrol edelim."
 
+<Tree
+  label="Bir elementin parçaları"
+  caption="Demlik'in dükkân sayfasındaki ürün görseli bir elementtir. Onu işaretleyen tag img'dir. Elemente üç nitelik eklenmiştir: görselin adresini veren src, ekran okuyucunun okuduğu alt metin ve görselin ekrana yaklaşınca yüklenmesini sağlayan loading. Element sayfadaki parça, tag onun kodu, nitelikler ek bilgidir."
+  root={{
+    title: "Element: ürün görseli",
+    tone: "accent",
+    children: [
+      { title: "Tag: img" },
+      { title: "Nitelikler", children: [{ title: "src: görselin adresi" }, { title: "alt: Orta boy filtre kahve" }, { title: "loading: lazy", tone: "progress" }] },
+    ],
+  }}
+/>
+
 ## Semantic HTML
 
 Her öğe için işlevini ifade eden **doğru elemanı** kullanmak: başlık için başlık elemanı, buton için buton, gezinme için nav. Bir `div` yığını görsel olarak her şeyi yapabilir ama makineler için hiçbir şey ifade etmez. Erişilebilirlik bölümünde gördüğün gibi, bu seçim ekran okuyucunun, arama motorunun ve sonraki geliştiricinin sayfayı anlamasını belirler. Yani erişilebilirliğin ve SEO'nun temelini HTML kurar.
@@ -37,6 +53,19 @@ Her öğe için işlevini ifade eden **doğru elemanı** kullanmak: başlık iç
 **Document flow (belge akışı)**, hiçbir özel yerleşim kuralı verilmediğinde elemanların dizilme biçimidir: blok elemanlar alt alta, satır içi elemanlar yan yana. CSS'in çoğu bu varsayılan akışı **değiştirmekle** ilgilidir.
 
 Bir elemanı akıştan çıkarmak (absolute, fixed konumlandırma) güçlüdür ama responsive davranışı elle yönetmeyi gerektirir; bu yüzden ölçülü kullanılır. "Bu öğe akıştan çıkarılmış; o yüzden altındaki içerik onun altına kaymıyor, üstüne biniyor."
+
+<Case>
+
+Demlik'in dükkân sayfasında altta sabit bir "Sepeti gör" çubuğu vardı.
+
+1. **Akıştan çıkmak:** çubuk `position: fixed` ile belge akışından çıkarılmıştı. Listenin son ürünü çubuğun altında kalıyordu; kullanıcı ona dokunamıyordu.
+2. **Çözüm:** sayfanın altına çubuk yüksekliği kadar boşluk eklendi; son ürün artık çubuğun üstünde duruyor.
+3. **Nitelikler:** ürün görsellerine ürün adını söyleyen alt metin ve `loading="lazy"` eklendi; ekran dışındaki fotoğraflar sayfa açılışını yavaşlatmıyor.
+4. **Semantik:** menü kategorileri başlık, ürünler liste öğesi oldu. Bu değişiklik [Semantic HTML](/erisilebilirlik/semantic-html-erisilebilirligin-temeli/) dersinde ayrıntılı.
+
+Teslim dosyasında çubuğun yanına bir not düşülmüştü: "Sabit; içeriği kapatmasın." Not koda geçmemişti.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
@@ -60,5 +89,17 @@ Bir elemanı akıştan çıkarmak (absolute, fixed konumlandırma) güçlüdür 
 <SelfCheck question="Element, tag ve attribute arasındaki fark nedir?">
 
 Element sayfadaki bir parçadır (başlık, buton). Tag onu işaretleyen kod parçasıdır. Attribute elemente eklenen ek bilgidir (bağlantı adresi, alt metin, tür).
+
+</SelfCheck>
+
+<SelfCheck question="Bir elemanı `position: fixed` ile sabitlemenin bedeli nedir?">
+
+Eleman belge akışından çıkar; altındaki içerik onu hesaba katmaz ve üstüne binebilir. Responsive davranış ve kapatılan içerik için boşluk gibi düzenlemelerin elle yapılması gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Arama motorunun ve ekran okuyucunun sayfayı anlaması neden aynı temele dayanır?">
+
+İkisi de sayfayı görerek değil, HTML'in yapısını okuyarak anlar. Doğru elemanlar (başlık, liste, buton, nav) kullanıldığında ikisi de içeriğin ne olduğunu bilir; bir div yığını ise ikisine de bir şey söylemez.
 
 </SelfCheck>
