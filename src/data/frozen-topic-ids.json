@@ -311,6 +311,18 @@
     "urun-analitigi/kohort-ve-elde-tutma",
     "urun-analitigi/korelasyon-ve-nedensellik",
     "urun-analitigi/metrik-agaci",
-    "urun-analitigi/segmentasyon"
+    "urun-analitigi/segmentasyon",
+    "iletisim-ve-paydaslar/catisma",
+    "iletisim-ve-paydaslar/dagitik-ekipler",
+    "iletisim-ve-paydaslar/iletisim-plani",
+    "iletisim-ve-paydaslar/kotu-haber-ve-eskalasyon",
+    "iletisim-ve-paydaslar/muzakere-ve-batna",
+    "iletisim-ve-paydaslar/paydas-haritasi",
+    "iletisim-ve-paydaslar/piramit-ilkesi-ve-bluf",
+    "iletisim-ve-paydaslar/raci-daci-rapid",
+    "iletisim-ve-paydaslar/sbi-geri-bildirimi",
+    "iletisim-ve-paydaslar/toplanti-yonetimi",
+    "iletisim-ve-paydaslar/veriyle-hikaye",
+    "iletisim-ve-paydaslar/yetkisiz-etki"
   ]
 }

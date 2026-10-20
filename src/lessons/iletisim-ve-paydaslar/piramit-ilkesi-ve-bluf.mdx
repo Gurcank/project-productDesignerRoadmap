@@ -1,0 +1,171 @@
+---
+summary: "Meşgul okura önce sonucu ver. BLUF ana noktayı mesajın başına koyar; piramit ilkesi destekleyen fikirleri altına mantıklı gruplar hâlinde dizer. Okur ilk cümlede ne istendiğini bilir."
+outcomes:
+  - "Bir e-postayı ya da özeti sonuçla başlatabilirsin."
+  - "Destekleyen fikirleri birbirini dışlayan ve eksiksiz gruplara ayırabilirsin."
+  - "Tümdengelim ile tümevarım sunumu arasındaki farkı açıklayabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "Wikipedia — BLUF (communication)"
+    url: "https://en.wikipedia.org/wiki/BLUF_(communication)"
+  - label: "Wikipedia — Barbara Minto"
+    url: "https://en.wikipedia.org/wiki/Barbara_Minto"
+additions:
+  - "BLUF'ın tanımı, yönetici özetinden farkı ve Army Regulation 25–50'deki kökeni (Wikipedia)"
+  - "Piramit ilkesi ve MECE (Barbara Minto, Wikipedia aracılığıyla)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Tree from "~/components/diagrams/primitives/Tree.astro";
+
+Mert sekiz öğrenciyle görüştükten sonra Elif'e uzun bir e-posta yazdı. Görüşmeleri sırayla anlatıyor, alıntılar veriyor, en sonda bir öneri yapıyordu. Elif e-postayı telefonda, iki toplantı arasında açtı. Üçüncü paragrafta bırakmak zorunda kaldı ve öneriyi hiç görmedi.
+
+Öneri iyiydi; yeri yanlıştı. Bu ders, okurun ilk cümlede ne istendiğini bilmesi için mesajı tersten kurmayı anlatır.
+
+## BLUF: sonuç başa
+
+**BLUF** (bottom line up front), bir mesaja anahtar bilgiyle başlamaktır. Wikipedia'ya göre ABD ordusunun yazışma standardından gelir. Kaynağı Army Regulation 25–50'dir: ana noktayı yazışmanın başına koymak ve etken çatı kullanmak.
+
+Eski üslupta sonuç ve öneri sonda, gerekçelerin ardından gelir. BLUF bunu ters çevirir: önce sonuç, sonra onu açıklayan bağlam. Amaç, okurun, özellikle meşgul bir okurun, daha hızlı karar verebilmesidir.
+
+Wikipedia BLUF'ı yönetici özetinden ayırır. BLUF daha basit ve kısadır, bir tez cümlesine benzer. Gazetecilikteki ters piramide ve **tümdengelim** sunumuna yakındır: sonuç önce, onu destekleyenler sonra. **Tümevarım** sunumu ise gerekçeleri önce dizer, sonuca en sonda varır.
+
+## Piramit ilkesi
+
+BLUF ilk cümleyi söyler. Geri kalanını nasıl dizeceğini **piramit ilkesi** söyler. Barbara Minto, McKinsey'deki yıllarından sonra bu yöntemi 1985'te *The Pyramid Principle* kitabında yayımladı.
+
+Fikirler yukarıdan aşağı dizilir. Tepedeki ana fikir, altındaki anahtar fikirlerin özetidir. Her anahtar fikir de kendi destekleyen noktalarından türer. Minto'ya göre insanlar aldıkları bilgiye zaten böyle bir hiyerarşi dayatır; mesaj bu kalıba uyarsa daha net okunur.
+
+<Tree
+  label="Mert'in e-postasının piramidi"
+  caption="Tepede tek cümlelik sonuç ve öneri durur: öğrenciler dersten 10–15 dakika önce yürürken sipariş veriyor; hazırlık süresini sipariş ekranında gösterelim. Altında onu destekleyen üç anahtar fikir var: görüşmeler, sipariş verisi ve kafe gözlemi. Her birinin altında bir kanıt durur: sekiz öğrenciden altısı yolda sipariş veriyor; kampüs siparişlerinin yüzde 70'i ders saatinden önceki 20 dakikada geliyor; yoğun dakikalarda hazırlama süresi 8 dakikaya çıkıyor."
+  root={{
+    title: "Hazırlık süresini sipariş ekranında gösterelim",
+    sub: "BLUF · sonuç ve öneri",
+    tone: "accent",
+    children: [
+      {
+        title: "Öğrenciler yolda sipariş veriyor",
+        sub: "görüşmeler",
+        children: [{ title: "8 öğrenciden 6'sı yürürken" }],
+      },
+      {
+        title: "Siparişler ders öncesine yığılıyor",
+        sub: "veri",
+        children: [{ title: "%70'i dersten önceki 20 dakikada" }],
+      },
+      {
+        title: "Yoğunlukta hazırlık uzuyor",
+        sub: "kafe gözlemi",
+        children: [{ title: "yoğun dakikalarda 8 dakika" }],
+      },
+    ],
+  }}
+/>
+
+## Grupların kuralı: MECE
+
+Anahtar fikirler gelişigüzel seçilmez. Minto'nun **MECE** ilkesine göre bir küme alt gruplara ayrılırken gruplar **birbirini dışlamalı** (mutually exclusive) ve **toplamda eksiksiz** (collectively exhaustive) olmalıdır.
+
+Minto'nun bir cümlesi bunu özetler: bir gruptaki fikirler mantıksal olarak aynı türde ve mantıklı bir sırada değilse, o gruptan bir fikir türetemezsin. Mert'in üç fikri bu yüzden üç farklı kanıt türüdür: insanlar ne diyor, veri ne gösteriyor, sahada ne görülüyor.
+
+**Kısa ≠ BLUF.** Kısa bir mesaj da sonucu sona saklayabilir. BLUF uzunlukla değil, sırayla ilgilidir.
+
+<Case>
+
+Mert e-postayı yeniden yazdı:
+
+1. **Konu satırı:** "Kampüs araştırması: öneri ve senden beklenen karar."
+2. **İlk cümle:** "Öğrenciler dersten 10–15 dakika önce, yürürken sipariş veriyor; hazırlık süresini sipariş ekranında göstermeyi öneriyorum. Cuma'ya kadar sprint'e alıp almayacağına karar vermeni istiyorum."
+3. **Üç paragraf:** görüşmeler, sipariş verisi, kafe gözlemi. Her biri bir kanıtla.
+4. **En sonda:** görüşme notlarının bağlantısı, okumak isteyen için.
+
+Elif e-postayı yine iki toplantı arasında açtı. İlk cümleyi okuyup Deniz'e iletti: "Refinement'a alalım."
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Her yazının ilk cümlesinde ne istediğini söyle.** Karar mı, bilgi mi, onay mı?
+- **Yönetici özetini önce yaz.** Yazamıyorsan ne önerdiğin henüz net değildir.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Durum e-postasını sonuçla başlat.** Renk ve tek cümle önce, ayrıntı sonra.
+- **İstenen kararı tarihle yaz.** "Cuma'ya kadar onayın gerekiyor" okurun ne yapacağını söyler.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Story açıklamasını da sonuçla başlat.** Kime, ne değer, nasıl anlaşılacak; bağlam sonra.
+- **Paydaşa ret yazarken önce kararı söyle.** Gerekçeyi kararın ardından ver.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Takımın engel bildirimlerini kısalt.** "Neye ihtiyacımız var" ilk satırda olsun.
+- **Retro çıktısını tek cümleyle duyur.** Kim, neyi, ne zamana kadar değiştirecek?
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim belgesine bir yönetici özetiyle başla.** Okurların çoğu yalnız onu okur.
+- **Kuralları MECE grupla.** Örtüşen gruplar, çelişen gereksinimlerin habercisidir.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Tasarım sunumunu kararla aç.** "Bu ekranda şunu öneriyorum, şu nedenle" ve sonra ekranlar.
+- **Gerekçeleri kanıt türüne göre grupla.** Test, veri ve ilke ayrı ayrı daha ikna edicidir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Araştırma raporunu bulgu ile başlat, yöntemle değil.** Yöntem en sona, okumak isteyene.
+- **Her bulguyu bir kanıtla destekle.** Alıntı, sayı ya da gözlem; üçü birlikte en güçlüsüdür.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- BLUF ana noktayı mesajın başına koyar; ardından bağlam gelir.
+- BLUF ordu yazışmalarından gelir; amaç okurun daha hızlı karar vermesidir.
+- Piramit ilkesi ana fikri tepeye, destekleyen fikirleri altına dizer.
+- Gruplar MECE olmalı: birbirini dışlayan ve toplamda eksiksiz.
+- BLUF uzunlukla değil sırayla ilgilidir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="BLUF ile geleneksel yazışma üslubu arasındaki fark nedir?">
+
+Geleneksel üslup gerekçeleri önce dizer, sonucu ve öneriyi sona bırakır. BLUF sonucu başa koyar, gerekçeyi ardından verir.
+
+</SelfCheck>
+
+<SelfCheck question="MECE ne demektir?">
+
+Birbirini dışlayan ve toplamda eksiksiz. Bir konu gruplara ayrılırken gruplar örtüşmemeli ve birlikte konunun tamamını kapsamalıdır.
+
+</SelfCheck>
+
+<SelfCheck question="Bir e-postanın ilk paragrafı 'Geçen hafta üç toplantı yaptık…' diye başlıyor. Nasıl düzeltirsin?">
+
+Sonucu ve istenen kararı başa alırım: "Üç toplantıdan çıkan öneri şu; çarşambaya kadar onayını istiyorum." Toplantıların anlatımı, sonucu destekleyen bölüme iner.
+
+</SelfCheck>
+
+<SelfCheck question="Kısa bir mesaj her zaman BLUF mudur?">
+
+Hayır. Kısa bir mesaj da sonucu son cümleye saklayabilir. BLUF sıra ile ilgilidir: ana nokta ilk sırada olmalı.
+
+</SelfCheck>

@@ -1,0 +1,175 @@
+---
+/**
+ * A RACI table that checks itself. Each task is a fieldset with one select per
+ * role, so it fits a phone without a sideways scroll. Change a letter and the
+ * findings list is recomputed: a task without an A, with two A's, or with no R.
+ *
+ * Server-rendered with the starting grid and its findings, so without
+ * JavaScript it is a worked example with a deliberate mistake in it.
+ */
+import DemoFrame from "./DemoFrame.astro";
+import { checkRaci, describeIssues, type RaciCode } from "~/lib/demos/raci";
+
+interface Props {
+  caption: string;
+  roles: string[];
+  tasks: { task: string; cells: RaciCode[] }[];
+}
+
+const { caption, roles, tasks } = Astro.props;
+for (const t of tasks) {
+  if (t.cells.length !== roles.length) throw new Error(`RaciChecker: "${t.task}" satırı ${roles.length} hücre ister`);
+}
+const names = tasks.map((t) => t.task);
+const findings = describeIssues(checkRaci(tasks.map((t) => t.cells)), names);
+const CODES: RaciCode[] = ["", "R", "A", "C", "I"];
+const label = (c: RaciCode) => (c === "" ? "—" : c);
+---
+
+<DemoFrame
+  title="RACI denetleyici"
+  hint="Harfleri değiştir; her iş için tek A ve en az bir R kuralı yeniden denetlenir."
+  caption={caption}
+>
+  <div class="raci" data-raci data-tasks={JSON.stringify(names)}>
+    {
+      tasks.map((t, row) => (
+        <fieldset class="raci__task" data-raci-row={row}>
+          <legend>{t.task}</legend>
+          <div class="raci__cells">
+            {roles.map((role, col) => (
+              <label class="raci__cell">
+                <span>{role}</span>
+                <select data-raci-col={col}>
+                  {CODES.map((c) => (
+                    <option value={c} selected={t.cells[col] === c}>
+                      {label(c)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      ))
+    }
+    <div class="raci__result" aria-live="polite" data-raci-result>
+      {
+        findings.length === 0 ? (
+          <p>Tablo temiz: her işin tek bir hesap vereni ve en az bir yapanı var.</p>
+        ) : (
+          <>
+            <p>{findings.length} bulgu:</p>
+            <ul>
+              {findings.map((f) => (
+                <li>{f}</li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+    </div>
+  </div>
+</DemoFrame>
+
+<script>
+  import { checkRaci, describeIssues, type RaciCode } from "~/lib/demos/raci";
+
+  for (const root of document.querySelectorAll<HTMLElement>("[data-raci]")) {
+    const tasks = JSON.parse(root.dataset.tasks ?? "[]") as string[];
+    const result = root.querySelector<HTMLElement>("[data-raci-result]")!;
+    let last = result.textContent ?? "";
+    const update = () => {
+      const grid = [...root.querySelectorAll<HTMLElement>("[data-raci-row]")].map((row) =>
+        [...row.querySelectorAll<HTMLSelectElement>("[data-raci-col]")].map((s) => s.value as RaciCode),
+      );
+      const findings = describeIssues(checkRaci(grid), tasks);
+      const box = document.createElement("div");
+      if (findings.length === 0) {
+        const p = document.createElement("p");
+        p.textContent = "Tablo temiz: her işin tek bir hesap vereni ve en az bir yapanı var.";
+        box.append(p);
+      } else {
+        const p = document.createElement("p");
+        p.textContent = `${findings.length} bulgu:`;
+        const ul = document.createElement("ul");
+        for (const f of findings) {
+          const li = document.createElement("li");
+          li.textContent = f;
+          ul.append(li);
+        }
+        box.append(p, ul);
+      }
+      if (box.textContent !== last) {
+        result.replaceChildren(...box.childNodes);
+        last = result.textContent ?? "";
+      }
+    };
+    root.addEventListener("change", update);
+  }
+</script>
+
+<style>
+  .raci {
+    display: grid;
+    gap: var(--spacing-3);
+  }
+
+  .raci__task {
+    margin: 0;
+    padding: var(--spacing-2) var(--spacing-3) var(--spacing-3);
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-md);
+  }
+
+  .raci__task legend {
+    padding-inline: var(--spacing-1);
+    font-weight: 600;
+    color: var(--c-text);
+  }
+
+  .raci__cells {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
+    gap: var(--spacing-2);
+  }
+
+  .raci__cell {
+    display: grid;
+    gap: var(--spacing-1);
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+  }
+
+  .raci__cell select {
+    min-block-size: 44px;
+    padding-inline: var(--spacing-2);
+    border: 1px solid var(--c-control-border);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface);
+    color: var(--c-text);
+    font: inherit;
+  }
+
+  .raci__cell select:focus-visible {
+    outline: 2px solid var(--c-focus);
+    outline-offset: 2px;
+  }
+
+  .raci__result {
+    padding: var(--spacing-2) var(--spacing-3);
+    border: 1px solid var(--c-border-strong);
+    border-radius: var(--radius-md);
+    background-color: var(--c-surface-sunken);
+    color: var(--c-text-secondary);
+  }
+
+  .raci__result :global(p) {
+    margin: 0;
+  }
+
+  .raci__result :global(ul) {
+    margin: var(--spacing-1) 0 0;
+    padding-inline-start: 1.25rem;
+  }
+</style>

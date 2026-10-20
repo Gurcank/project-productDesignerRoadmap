@@ -15,6 +15,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { slugify } from "../src/lib/slugify";
+import { parseChecklists, parseFlowMap, parseStudyPlan } from "../src/lib/material-tools";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const MATERIALS = path.join(ROOT, "ProductDesignerMaterials");
@@ -22,6 +23,13 @@ const OUT_TOPICS = path.join(ROOT, "src/content/topics");
 const OUT_CATEGORIES = path.join(ROOT, "src/content/categories");
 const OUT_QUIZZES = path.join(ROOT, "src/content/quizzes");
 const OUT_DATA = path.join(ROOT, "src/data/generated");
+/** Chapters that are tools, not topics (plan §3.4): structured JSON for the Araçlar pages. */
+const OUT_TOOLS = path.join(OUT_DATA, "tools");
+const TOOL_SOURCES = [
+  { file: "21-kontrol-listesi.md", out: "checklists.json", parse: parseChecklists },
+  { file: "20-sifirdan-tam-surume-akis-haritasi.md", out: "flow-map.json", parse: parseFlowMap },
+  { file: "ek-a-ve-ek-b.md", out: "study-plan.json", parse: parseStudyPlan },
+] as const;
 
 /** Which material file(s) feed which category, and which sections belong there. */
 interface SourceRule {
@@ -284,6 +292,16 @@ async function buildTasks(only: string | null): Promise<{ tasks: WriteTask[]; to
       file: path.join(OUT_CATEGORIES, `${rule.category}.md`),
       content: `---\ncategory: ${yamlString(rule.category)}\nsourceFiles: [${rule.files.map(yamlString).join(", ")}]\n---\n\n${intro}\n`,
     });
+  }
+
+  if (!only) {
+    for (const source of TOOL_SOURCES) {
+      const raw = await readFile(path.join(MATERIALS, source.file), "utf8");
+      tasks.push({
+        file: path.join(OUT_TOOLS, source.out),
+        content: `${JSON.stringify({ source: source.file, ...source.parse(raw) }, null, 2)}\n`,
+      });
+    }
   }
 
   return { tasks, topics, terms };

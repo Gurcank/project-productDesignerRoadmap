@@ -1,10 +1,11 @@
 ---
-summary: "Engel ve olay dilinin kelimeleri: blocker/impediment, escalation, fire drill, war room, incident, sev1/sev2, postmortem, hotfix, rollback ve action item. Action item'ın sahibi ve tarihi yoksa yapılmaz; fire drill kelimesi aciliyeti sorgulama izni verir."
+summary: "Engel ve olay dilinin kelimeleri: blocker ve impediment, escalation, fire drill, war room, incident, sev1 ve sev2, postmortem, hotfix, rollback ve action item. Sahibi ve tarihi olmayan action item yapılmaz."
 outcomes:
-  - "Blocker ile impediment arasındaki farkı söyleyebilirsin."
-  - "Bir action item'ın taşıması gereken iki şeyi ve eksikse ne olduğunu açıklayabilirsin."
-  - "Fire drill kelimesinin ne kazandırdığını bilirsin."
-minutes: 5
+  - "Blocker ile impediment arasındaki farkı ve doğru kullanımı söyleyebilirsin."
+  - "Bir olayın hayat döngüsünü olay diliyle anlatabilirsin."
+  - "Fire drill'i sorgulayıp sahibi ve tarihi olan bir action item yazabilirsin."
+minutes: 6
+standard: 2
 sources:
   - label: "Atlassian — Olay şiddet seviyeleri"
     url: "https://www.atlassian.com/incident-management/kpis/severity-levels"
@@ -15,8 +16,16 @@ skipTerms: ["Accessibility (a11y)","accessibility (a11y)","erişilebilirlik","a1
 
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Bir cumartesi sabahı 08.10'da takım kanalına bir mesaj düştü: "Kayıtlı kartla ödemeler düşüyor, sev2 açıyorum, war room'a gelin." Selin mesajı üç kez okudu. Ödemelerin düştüğünü anlamıştı. Sev2'nin ne olduğunu, war room'un nerede olduğunu ve kendisinden ne beklendiğini anlamamıştı.
+
+Olay anında kimse kelimeleri açıklamaz. Bu ders, engellerin ve olayların konuşulduğu dili anlatır. Olay yönetiminin teknik tarafı [Olay yönetimi](/devops-ve-yayin/olay-yonetimi/) dersinde.
+
+## Engel dili
 
 | Terim | Anlamı |
 |---|---|
@@ -24,30 +33,97 @@ import Lenses from "~/components/lesson/Lenses.astro";
 | **Impediment** | Yavaşlatan ama durdurmayan engel |
 | **Escalation** | Sorunu karar yetkisi olan üst seviyeye taşımak |
 | **Fire drill** | Aciliyeti abartılmış, panikle yapılan iş |
-| **War room** | Kriz süresince herkesin aynı kanalda toplanması |
+
+**Blocker ≠ impediment.** Blocker kendi başına çözülemeyen ve ilerlemeyi tamamen durduran engeldir. Impediment yavaşlatır ama durdurmaz. Materyalin uyarısıyla her zorluğa "blocker" demek kelimenin gücünü tüketir.
+
+**Fire drill** ("yangın tatbikatı"), gerçek aciliyeti olmayan ama acilmiş gibi yürütülen, ekibin planını bozan iştir. Bu kelimeyi bilmek, bir işin gerçekten acil mi yoksa birinin paniği mi olduğunu sorgulama izni verir. Sürekli fire drill yaşayan ekipler planlı iş yapamaz hâle gelir. Sorulacak soru basittir: "Kaç kullanıcı etkileniyor?"
+
+## Olay dili
+
+Gerçek bir olayın kelimeleri sırayla gelir:
+
+<StepFlow
+  label="Bir olayın hayat döngüsü"
+  caption="Bir olay beş adımda yaşanır. Incident: kullanıcıyı etkileyen beklenmedik sorun ortaya çıkar ve önem seviyesi, sev1 ya da sev2, verilir. War room: ilgili herkes kriz süresince tek kanalda toplanır. Hotfix ya da rollback: sorun ya süreci atlayan acil bir düzeltmeyle ya da önceki sürüme dönülerek durdurulur. Postmortem: olaydan sonra kök neden ve önlemler suçlamadan konuşulur. Action item: her önlem sahibi ve tarihi olan bir işe dönüşür."
+  steps={[
+    { title: "Incident", sub: "sorun ve önem seviyesi: sev1, sev2", tone: "accent" },
+    { title: "War room", sub: "herkes tek kanalda" },
+    { title: "Hotfix ya da rollback", sub: "acil düzeltme ya da önceki sürüm" },
+    { title: "Postmortem", sub: "kök neden, suçlamadan" },
+    { title: "Action item", sub: "sahibi ve tarihi belli", tone: "progress" },
+  ]}
+/>
+
+| Terim | Anlamı |
+|---|---|
 | **Incident** | Kullanıcıyı etkileyen beklenmedik sorun |
-| **Sev1 / Sev2** | Olayın önem seviyesi |
-| **Postmortem** | Olay sonrası değerlendirme |
-| **Action item** | Toplantıdan çıkan, sahibi ve tarihi olan somut iş |
+| **Sev1 / Sev2** | Olayın önem seviyesi; numara küçüldükçe etki büyür |
+| **War room** | Kriz süresince herkesin aynı kanalda toplanması |
 | **Hotfix** | Süreci atlayan acil düzeltme |
 | **Rollback** | Önceki sürüme dönme |
+| **Postmortem** | Olay sonrası değerlendirme |
 
-Blocker ve impediment ayrımı önemli: **her zorluğa "blocker" demek kelimenin gücünü tüketir.** Blocker kendi başına çözülemeyen ve ilerlemeyi tamamen durduran engeldir.
+Atlassian'ın tanımlarıyla sev1 çok yüksek etkili kritik bir olaydır: veri kaybı ya da hizmetin bütün müşteriler için durması. Sev2, hizmetin bir müşteri grubu için durduğu büyük bir olaydır.
 
 ## Action item
 
-**Action item (aksiyon maddesi)**, bir toplantı veya değerlendirmeden çıkan, **sahibi ve tarihi belli** somut iştir. "Şuna bir bakalım" bir aksiyon maddesi değildir: kim, ne zaman, neyi bitirecek belli değilse hiç konuşulmamış sayılır. Retro ve postmortem'lerin işe yaramamasının bir numaralı sebebi budur. Toplantı notlarının sonunda karşına çıkar. "Aksiyon maddesi olarak yazalım: erişilebilirlik kontrol listesini PR şablonuna ekleme; sahibi ben, cuma."
+**Action item** (aksiyon maddesi), bir toplantıdan ya da değerlendirmeden çıkan, **sahibi ve tarihi belli** somut iştir. "Şuna bir bakalım" bir aksiyon maddesi değildir. Materyale göre retro ve postmortem'lerin işe yaramamasının bir numaralı sebebi budur.
 
-## Fire drill
+**Toplantı ≠ çözüm.** Postmortem ne kadar iyi geçerse geçsin, sahibi ve tarihi olmayan önlem bir sonraki olayda yine eksik olur.
 
-**Fire drill ("yangın tatbikatı")**, gerçek aciliyeti olmayan ama acilmiş gibi yürütülen, ekibin planını bozan iştir. Bu ifadeyi bilmek, bir işin gerçekten acil mi yoksa birinin paniği mi olduğunu sorgulama izni verir. Sürekli fire drill yaşayan ekipler planlı iş yapamaz hâle gelir. "Bu bir fire drill mı yoksa gerçekten sev1 mi? Etkilenen kullanıcı sayısına bakalım."
+<Case>
+
+O cumartesinin kaydı şöyleydi:
+
+1. **Incident, 08.10:** kayıtlı kartla yapılan ödemelerin yaklaşık üçte biri başarısız oluyordu. Ece önem seviyesini sev2 olarak açtı: sorun bir müşteri grubunu etkiliyordu, yeni kartla ödeme hâlâ çalışıyordu.
+2. **War room:** takımın olay kanalı. Selin'den beklenen tek şey, müşteriye gösterilecek hata metnini gözden geçirmekti.
+3. **Rollback, 08.50:** cuma akşamki sürüm geri alındı; ödemeler düzeldi. Hotfix yerine rollback seçildi, çünkü önceki sürüm güvenliydi.
+4. **Postmortem, pazartesi:** soru "kim yaptı" değil, "bu hata nasıl yayına kadar geldi" oldu. Kayıtlı kart yolunu deneyen otomatik bir test yoktu.
+5. **Action item:** "Kayıtlı kartla ödeme için uçtan uca test — sahibi Zeynep, Sprint 15 sonu."
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
 
-- **Engelini doğru adlandır:** durduruyorsa blocker, yavaşlatıyorsa impediment.
-- **Toplantıdan çıkarken her maddeye sahip ve tarih yaz.**
-- **"Acil" geldiğinde sor:** kaç kullanıcı etkileniyor? Gerçek mi, fire drill mı?
+- **Olay anında rolünü sor.** Müşteriye gösterilecek hata metni çoğu zaman senden beklenir.
+- **Postmortem'e tasarım gözüyle katıl.** Hata mesajı kullanıcıya ne söyledi, ne yapmasını önerdi?
+
+</Lens>
+<Lens role="product-manager">
+
+- **Önem seviyesini kullanıcı etkisiyle bağla.** Kaç kullanıcı, hangi akış? Sev1 ile sev2 arasındaki fark burada.
+- **Fire drill'i sorgula.** "Acil" kelimesi bir planı bozmadan önce etkiyi sor.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Postmortem'in action item'larını backlog'a al.** Sıralanmayan önlem yapılmaz.
+- **Blocker'ı Daily Scrum'da duy.** Takımın çözemediği bir blocker, aynı gün senin ya da Scrum Master'ın gündemine girer.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Blocker'ı risk kaydına ve RAID'e bağla.** Durduran bir engel, kritik yolu da durdurabilir.
+- **Eskalasyonu eşiğe göre yap.** Hangi blocker'ın sponsora gideceği baştan yazılı olsun.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Blocker ile impediment'i ayırt ettir.** Her şeye blocker demek gerçek blocker'ı görünmez yapar.
+- **Postmortem'in suçlamasız kalmasını sağla.** Soru "kim" değil, "nasıl" olmalı.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Olayın kural tarafını sor.** Hangi iş kuralı ya da kabul kriteri bu durumu öngörmemişti?
+- **Action item'ı gereksinime çevir.** Eksik test, eksik bir gereksinimin işareti olabilir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Olaydan etkilenen kullanıcıları dinle.** Müşteri hizmetlerine gelen mesajlar, olayın deneyim tarafını anlatır.
+- **Postmortem'e kullanıcı kanıtı getir.** "Kullanıcılar ne gördü, ne yaptı?" sorusu teknik zaman çizelgesini tamamlar.
 
 </Lens>
 </Lenses>
@@ -55,9 +131,10 @@ Blocker ve impediment ayrımı önemli: **her zorluğa "blocker" demek kelimenin
 <Summary>
 
 - Blocker durdurur, impediment yavaşlatır; her şeye blocker demek kelimeyi aşındırır.
-- Action item'ın sahibi ve tarihi olmalı; yoksa yapılmaz.
-- Fire drill, aciliyeti sorgulama izni verir.
-- Incident, sev1/sev2, postmortem, hotfix ve rollback olay yönetiminin dilidir (DevOps bölümünde ayrıntısı var).
+- Fire drill aciliyeti sorgulama izni verir: kaç kullanıcı etkileniyor?
+- Olay dili sırayla gelir: incident, war room, hotfix ya da rollback, postmortem, action item.
+- Action item'ın sahibi ve tarihi olur; yoksa yapılmaz.
+- Postmortem suçlamadan yapılır; soru "nasıl" sorusudur.
 
 </Summary>
 
@@ -65,7 +142,13 @@ Blocker ve impediment ayrımı önemli: **her zorluğa "blocker" demek kelimenin
 
 <SelfCheck question="Blocker ile impediment arasındaki fark nedir?">
 
-Blocker ilerlemeyi tamamen durdurur ve kendi başına çözülemez. Impediment yavaşlatır ama durdurmaz. Her zorluğa "blocker" demek kelimenin gücünü tüketir.
+Blocker ilerlemeyi tamamen durdurur ve kendi başına çözülemez. Impediment yavaşlatır ama durdurmaz. Her zorluğa blocker demek kelimenin gücünü tüketir.
+
+</SelfCheck>
+
+<SelfCheck question="Fire drill nedir ve bu kelimeyi bilmek ne kazandırır?">
+
+Gerçek aciliyeti olmayan ama acilmiş gibi yürütülen, planı bozan iştir. Kelimeyi bilmek, işin gerçekten acil mi yoksa birinin paniği mi olduğunu sorgulama iznini verir.
 
 </SelfCheck>
 
@@ -75,8 +158,8 @@ Sahibi ve tarihi. Eksikse "şuna bir bakalım" seviyesinde kalır ve yapılmaz; 
 
 </SelfCheck>
 
-<SelfCheck question="Fire drill nedir ve bu kelimeyi bilmek ne kazandırır?">
+<SelfCheck question="Rollback ile hotfix arasındaki fark nedir?">
 
-Gerçek aciliyeti olmayan ama acilmiş gibi yürütülen, ekibin planını bozan iş. Bir işin gerçekten acil mi yoksa birinin paniği mi olduğunu sorgulama izni verir.
+Rollback önceki sürüme dönmektir. Hotfix ise sorunu süreci atlayan acil bir düzeltmeyle gidermektir. Önceki sürüm güvenliyse rollback çoğu zaman daha hızlı ve az risklidir.
 
 </SelfCheck>

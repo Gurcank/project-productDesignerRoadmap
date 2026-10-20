@@ -1,10 +1,11 @@
 ---
-summary: "Yazışmalarda ve Slack'te en sık geçen kısaltmalar: zaman (EOD, ETA, OOO), iletişim (FYI, TL;DR), kod ve inceleme (PTAL, LGTM, nit) ve organizasyon (1:1, RFC, DRI). 'EOD' kimin günü olduğunu söylemez; nit ön eki tasarım geri bildirimini doğru ağırlıkta taşır."
+summary: "Yazışmalarda en sık geçen kısaltmalar: zaman (EOD, ETA, OOO), iletişim (FYI, TL;DR), kod incelemesi (PTAL, LGTM, nit) ve organizasyon (1:1, RFC, DRI). 'EOD' kimin günü olduğunu söylemez; nit yorumun ağırlığını söyler."
 outcomes:
   - "Zaman, iletişim, inceleme ve organizasyon kısaltmalarını doğru yerde okuyabilirsin."
   - "'EOD'un saat dilimi belirsizliğini ve çözümünü söyleyebilirsin."
   - "'nit:' ön ekinin neden işe yaradığını ve 1:1'in amacını açıklayabilirsin."
-minutes: 6
+minutes: 7
+standard: 2
 sources:
   - label: "Google Mühendislik Pratikleri — Review yorumları (Nit)"
     url: "https://google.github.io/eng-practices/review/reviewer/comments.html"
@@ -16,12 +17,16 @@ skipTerms: ["Latency","Merge","Request","latency","gecikme","merge","request"]
 
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Spectrum from "~/components/diagrams/primitives/Spectrum.astro";
 
-Bu bölüm diğerlerinden farklı: burada öğrendiklerin teknik bilgi değil, **bir odaya girdiğinde kendini yabancı hissetmemeni sağlayan kelimeler.** Teknik bilgi eksikliği fark edilmez; sorabilirsin. Ama bir toplantıda "bunu punt edelim, şimdilik nice-to-have" cümlesini anlamamak, tartışmanın dışında kalmak demektir. Bu kelimelerin çoğu hiçbir yerde öğretilmez; insanlar onları kullanarak öğrenir.
+Demlik'teki ilk gününde Ayşe takım kanalında şu mesajı gördü: "FYI: tedarikçinin API notları geldi. PTAL, EOD'a kadar LGTM verirsen yarın merge ederiz." Mesajda beş kısaltma vardı ve Ayşe yalnız birini biliyordu.
 
-Türkiye'deki yazılım ekiplerinin çoğunda bu terimler İngilizce hâlleriyle, Türkçe konuşmanın içine gömülmüş olarak kullanılır ("bunu bir sonraki sprint'e punt edelim"). Bu yüzden terimler İngilizce hâlleriyle verilir; yaygın bir Türkçe karşılığı varsa ayrıca belirtilir.
+Bu bölüm teknik bilgi değil, bir odaya girdiğinde kendini yabancı hissetmemeni sağlayan kelimeleri anlatır. Teknik bir eksik fark edilmez, sorabilirsin. Ama bir mesajı anlamamak, işin dışında kalmak demektir. Bu kelimelerin çoğu hiçbir yerde öğretilmez; insanlar onları kullanarak öğrenir.
+
+Türkiye'deki yazılım ekiplerinin çoğunda bu terimler İngilizce hâlleriyle kullanılır. Bu yüzden burada da İngilizce verilir; yaygın bir Türkçe karşılığı varsa ayrıca yazılır.
 
 ## Zaman ve takvim
 
@@ -29,66 +34,130 @@ Türkiye'deki yazılım ekiplerinin çoğunda bu terimler İngilizce hâlleriyle
 |---|---|---|---|
 | **EOD** | End of Day | Gün sonuna kadar | "Taslağı EOD'a kadar gönderirim." |
 | **EOW** | End of Week | Hafta sonuna kadar | "EOW hedefliyoruz." |
-| **COB** | Close of Business | Mesai bitimine kadar | "COB'a kadar geri dönerim." |
-| **ETA** | Estimated Time of Arrival | Tahmini bitiş/teslim zamanı | "ETA nedir?" |
+| **COB** | Close of Business | Mesai bitimine kadar | "COB'a kadar dönerim." |
+| **ETA** | Estimated Time of Arrival | Tahmini teslim zamanı | "ETA nedir?" |
 | **ASAP** | As Soon As Possible | Mümkün olan en kısa sürede | "ASAP değil, EOD yeterli." |
-| **OOO** | Out Of Office | Ofiste/erişilebilir değil | "Yarın OOO'yum." |
+| **OOO** | Out Of Office | Erişilebilir değil | "Yarın OOO'yum." |
 | **PTO** | Paid Time Off | Ücretli izin | "Gelecek hafta PTO aldım." |
 | **WFH** | Work From Home | Evden çalışma | "Bugün WFH'im." |
 
-**Saat dilimi tuzağı:** "EOD" kimin günü olduğunu söylemez. Farklı saat dilimlerinde çalışan ekiplerde bu belirsizlik gerçek gecikmeler üretir; net bir saat yazmak daha güvenlidir. Materyal bu konuda kendi notunda emin olmadığını işaretliyor; pratik sonuç yine de zararsız: saat yaz.
+**EOD kimin günü?** Materyal bu uyarıyı "emin değilim" etiketiyle verir: "EOD" kimin gününün sonu olduğunu söylemez. Farklı saat dilimlerinde çalışan ekiplerde bu belirsizlik gerçek gecikmeler üretebilir. Net bir saat yazmak daha güvenlidir.
+
+<Spectrum
+  label="Zaman ifadeleri, belirsizden nete"
+  caption="Sol uçta en belirsiz ifade durur: ASAP, yani mümkün olan en kısa sürede; ne zaman olduğunu söylemez. Ortada EOW ve EOD vardır: bir güne ya da haftaya bağlıdır ama kimin günü olduğunu söylemez. Sağ uçta tam bir saat ve saat dilimi durur: 'perşembe 18.00, İstanbul saati'. Farklı saat dilimlerindeki ekiplerde sağa yakın ifadeler gecikmeyi önler."
+  left={{ title: "Belirsiz", sub: "ne zaman olduğu yorum" }}
+  right={{ title: "Net", sub: "gün, saat, saat dilimi" }}
+  marks={[
+    { label: "ASAP", at: 0.06 },
+    { label: "EOW", at: 0.34 },
+    { label: "EOD", at: 0.5 },
+    { label: "Perşembe EOD", at: 0.68 },
+    { label: "Perşembe 18.00 TSİ", at: 0.94 },
+  ]}
+/>
 
 ## İletişim
 
 | Kısaltma | Açılımı | Anlamı | Örnek |
 |---|---|---|---|
 | **FYI** | For Your Information | Bilgin olsun; eylem beklenmiyor | "FYI: müşteri tarihi öne çekmek istiyor." |
-| **TL;DR** | Too Long; Didn't Read | Uzun metnin en başına konan özet | "TL;DR: iki hafta gecikiyoruz." |
+| **TL;DR** | Too Long; Didn't Read | Uzun metnin başına konan özet | "TL;DR: iki hafta gecikiyoruz." |
 | **IMO / IMHO** | In My (Humble) Opinion | Bence | "IMO ikinci seçenek daha güvenli." |
 | **AFAIK** | As Far As I Know | Bildiğim kadarıyla | "AFAIK bu hâlâ deneysel." |
 | **ICYMI** | In Case You Missed It | Kaçırdıysan diye | "ICYMI: dün karar aldık." |
 | **NDA** | Non-Disclosure Agreement | Gizlilik sözleşmesi | "NDA imzalamadan detay paylaşamayız." |
 
-## Kod ve inceleme
+## Kod incelemesi
 
 | Kısaltma | Açılımı | Anlamı | Örnek |
 |---|---|---|---|
 | **PTAL** | Please Take Another Look | Düzelttim, tekrar bakar mısın | "Yorumları uyguladım, PTAL." |
 | **LGTM** | Looks Good To Me | Bence uygun, onaylıyorum | "LGTM, merge edebilirsin." |
-| **WIP** | Work In Progress | Devam ediyor, henüz bitmedi | "WIP: henüz incelemeye hazır değil." |
+| **WIP** | Work In Progress | Devam ediyor, bitmedi | "WIP: incelemeye hazır değil." |
 | **nit** | nitpick | Küçük öneri; bloke etmiyor | "nit: buradaki boşluk 16 olmalı." |
-| **SSIA** | Subject Says It All | Başlık her şeyi anlatıyor | (kısa PR başlıklarında) |
+| **SSIA** | Subject Says It All | Başlık her şeyi anlatıyor | Kısa PR başlıklarında |
 
-**`nit:` ön eki senin için faydalı:** bir inceleme yorumunun bloke edici mi yoksa öneri mi olduğunu tek kelimeyle belirtir. Bunu kullanmak, tasarım geri bildirimlerinin yanlış ağırlıkta algılanmasını önler: "bu boşluk 16 olmalı" ile "bu akış çalışmıyor" aynı ağırlıkta değildir.
+**`nit:` ön eki** bir inceleme yorumunun bloke edici mi yoksa öneri mi olduğunu tek kelimeyle söyler. Google'ın kod inceleme rehberi de bu ön eki önerir. Bu, her türlü geri bildirime yarar: "bu boşluk 16 olmalı" ile "bu akış çalışmıyor" aynı ağırlıkta değildir.
 
 ## Toplantı ve organizasyon
 
 | Kısaltma | Açılımı | Anlamı |
 |---|---|---|
-| **1:1** | One-on-one | Yönetici ile birebir düzenli görüşme |
+| **1:1** | One-on-one | Yöneticiyle birebir düzenli görüşme |
 | **AMA** | Ask Me Anything | Serbest soru-cevap oturumu |
-| **RFC** | Request For Comments | Yorum istenen öneri belgesi (Yazılı Formatlar dersi) |
+| **RFC** | Request For Comments | Yorum istenen öneri belgesi |
 | **DRI** | Directly Responsible Individual | İşin tek sorumlusu |
 | **SME** | Subject Matter Expert | Konu uzmanı |
 
-**1:1 (birebir görüşme)**, bir çalışan ile yöneticisi arasındaki düzenli, genelde haftalık veya iki haftalık özel görüşmedir. **Durum raporu toplantısı değildir:** o bilgi başka kanallardan zaten akıyor. Amacı engelleri konuşmak, geri bildirim alışverişi yapmak ve kariyer/gelişim konularını ele almaktır. **Gündemi genelde çalışan belirler,** yönetici değil. 1:1'i durum raporuna çevirmek kurumların en yaygın hatasıdır; o zaman toplantı işlevsizleşir. "1:1'de konuşalım; burada uzun sürer."
+**1:1 (birebir görüşme)**, bir çalışan ile yöneticisi arasındaki düzenli, genelde haftalık ya da iki haftalık özel görüşmedir. **Durum raporu toplantısı değildir;** o bilgi başka kanallardan zaten akar. Amacı engelleri konuşmak, geri bildirim alışverişi yapmak ve gelişim konularını ele almaktır. Gündemi genelde çalışan belirler. 1:1'i durum raporuna çevirmek, materyale göre kurumların en yaygın hatasıdır.
+
+**Kısaltma ≠ hız.** Kısaltma yalnız herkes anladığında hızlandırır. Yeni gelen biri için her kısaltma bir sorudur.
+
+<Case>
+
+Kaan, Ayşe'nin ilk gününden sonra takımın kısaltma alışkanlıklarını çalışma sözleşmesine ekledi:
+
+1. **Saat:** "EOD" yerine saat ve şehir: "perşembe 18.00, İstanbul". Can Berlin'den çalıştığı için bu kural ona da yaradı.
+2. **İnceleme:** bloke etmeyen her yorum `nit:` ile başlar. Selin'in tasarım yorumları da bu kurala uyar.
+3. **Sözlük:** takım kanalının sabit mesajında en sık on kısaltma ve anlamı. Yeni gelen biri ilk gün okur.
+4. **Soru:** bilinmeyen bir kısaltmayı sormak ayıp değil, kural.
+
+Ayşe'nin ilk mesajı şuydu: "PTAL, perşembe 18.00'e kadar."
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
 
-- **Teslim tarihi verirken saat yaz:** "EOD" yerine "18:00 İstanbul saati".
-- **Tasarım yorumlarını `nit:` ile işaretle:** bloke etmeyeni ayır.
-- **1:1 gündemini sen hazırla:** engeller, geri bildirim, gelişim.
-- **Tanımadığın kısaltmayı sor:** sormak yabancılığı bitirir.
+- **Tasarım yorumlarını `nit:` ile ağırlıklandır.** Bloke edeni etmeyenden ayır.
+- **Teslim tarihini saatle ver.** "EOD" yerine "18.00 İstanbul saati".
+
+</Lens>
+<Lens role="product-manager">
+
+- **FYI ile karar isteğini karıştırma.** Eylem bekliyorsan FYI yazma; ne istediğini söyle.
+- **TL;DR'ı ilk satıra koy.** Uzun bir mesajın özeti en başta durur.
+
+</Lens>
+<Lens role="product-owner">
+
+- **ETA verirken belirsizliği söyle.** "ETA perşembe, test ortamına bağlı" bir tarihten daha dürüsttür.
+- **DRI'yı yaz.** Bir story ya da eylem maddesinin tek sorumlusu belli olsun.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Tedarikçi ve kafe takvimlerinde saat ve şehir yaz.** Saat dilimi farkı teslim tarihini kaydırabilir.
+- **OOO ve PTO'yu kapasite planına işle.** İzinli bir kişi, kritik yoldaki işi bekletebilir.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Takımın kısaltma sözlüğünü yaz.** Yeni gelenin ilk günü sorularla değil işle geçsin.
+- **1:1'leri durum raporuna dönüştürme.** Engel, geri bildirim ve gelişim için ayrılmış zamandır.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim belgesinde kısaltmayı ilk geçtiği yerde aç.** Belgeyi okuyan herkes ekipte değildir.
+- **SME'yi belgeye yaz.** Hangi konuyu kime soracağın belli olsun.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Katılımcıyla yazışmada kısaltma kullanma.** Ekip dili, kullanıcının dili değildir.
+- **NDA'yı görüşmeden önce sor.** Paylaşılabilecek bilgi baştan belli olsun.
 
 </Lens>
 </Lenses>
 
 <Summary>
 
-- Kısaltmalar hız içindir; yalnızca ekip anladığında işe yarar.
-- "EOD" kimin günü olduğunu söylemez; net saat yazmak daha güvenlidir.
-- `nit:` yorumun bloke etmediğini bildirir ve tasarım geri bildirimini doğru ağırlıkta taşır.
+- Kısaltmalar hız içindir; yalnız herkes anladığında işe yarar.
+- "EOD" kimin günü olduğunu söylemez; saat ve saat dilimi yazmak daha güvenlidir.
+- `nit:` yorumun bloke etmediğini bildirir ve geri bildirimi doğru ağırlıkta taşır.
+- FYI eylem beklemez; PTAL ve LGTM inceleme döngüsünün iki ucudur.
 - 1:1 durum raporu değil; engel, geri bildirim ve gelişim içindir ve gündemi çalışan belirler.
 
 </Summary>
@@ -97,7 +166,7 @@ Türkiye'deki yazılım ekiplerinin çoğunda bu terimler İngilizce hâlleriyle
 
 <SelfCheck question="EOD ve COB ne demek? 'EOD'a kadar' ifadesinin bilinen belirsizliği nedir?">
 
-EOD gün sonuna, COB mesai bitimine kadar demektir. Belirsizlik: kimin günü olduğunu söylemez; farklı saat dilimlerinde gerçek gecikme üretir. Net bir saat yazmak daha güvenlidir.
+EOD gün sonuna, COB mesai bitimine kadar demektir. Belirsizlik: kimin günü olduğunu söylemez; farklı saat dilimlerinde gecikme üretebilir. Net bir saat yazmak daha güvenlidir.
 
 </SelfCheck>
 
@@ -107,14 +176,14 @@ FYI: bilgin olsun, senden eylem beklenmiyor. PTAL: "düzelttim, tekrar bakar mı
 
 </SelfCheck>
 
-<SelfCheck question="`nit:` ön eki ne işe yarar ve senin için neden faydalı?">
+<SelfCheck question="`nit:` ön eki ne işe yarar?">
 
-Yorumun bloke edici mi yoksa öneri mi olduğunu tek kelimeyle belirtir. Tasarım geri bildirimlerinin yanlış ağırlıkta algılanmasını önler: "bu boşluk 16 olmalı" ile "bu akış çalışmıyor" farklı ağırlıklardır.
+Yorumun bloke edici mi yoksa öneri mi olduğunu tek kelimeyle belirtir. Geri bildirimin yanlış ağırlıkta algılanmasını önler: "bu boşluk 16 olmalı" ile "bu akış çalışmıyor" farklı ağırlıklardır.
 
 </SelfCheck>
 
 <SelfCheck question="1:1'in amacı nedir? En yaygın bozulma biçimi nedir?">
 
-Engelleri konuşmak, geri bildirim alışverişi yapmak ve gelişim konularını ele almak; gündemi genelde çalışan belirler. En yaygın bozulma durum raporu toplantısına dönüşmesidir; o bilgi zaten başka kanallardan akar.
+Engelleri konuşmak, geri bildirim alışverişi yapmak ve gelişim konularını ele almak; gündemi genelde çalışan belirler. En yaygın bozulma, durum raporu toplantısına dönüşmesidir.
 
 </SelfCheck>

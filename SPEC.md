@@ -54,18 +54,19 @@ diyagramlar.
 Manager, Scrum Master, Business Analyst, UX Researcher) ve rolsüz **Keşif modu**. Ana sayfada rol
 seçici, role göre çizilen harita (durak numarası + temel / önerilen / isteğe bağlı rozeti, yol dışı
 gezegen küçük ve soluk), rolün yüzdesi ve **Sıradaki adımın** kartı; Ayarlar'da rol seçimi; yedekte
-rol. Paylaşılabilir `/?rol=<id>`. Henüz yazılmamış kategoriler (şu an iki) haritada "hazırlanıyor" olarak durur.
+rol. Paylaşılabilir `/?rol=<id>`. Henüz yazılmamış kategoriler (şu an bir) haritada "hazırlanıyor" olarak durur.
 
 **Var — mobil.** Alt gezinme çubuğu · okuma ilerleme çubuğu · adımlar arası kaydırma · ana ekrana
 eklenebilir manifest · **çevrimdışı okuma** (ADR-012). Çevrimdışı katmanı yalnız üretim
 derlemesinde etkindir; `astro dev` altında service worker kaydedilmez, kalmış olan sökülür —
 gerekçesi ve bedeli ADR-012'de.
 
-**Var — Araçlar (Faz 3–8).** `/araclar/`: doldurulmuş örnekli 31 şablon (PRD, RACI, risk kaydı;
+**Var — Araçlar (Faz 3–9).** `/araclar/`: doldurulmuş örnekli 35 şablon (PRD, RACI, risk kaydı;
 proje tüzüğü, iş gerekçesi, WBS, takvim, RAID, değişiklik talebi, durum raporu, kapanış raporu;
 sprint hedefi, çalışma sözleşmesi, retro panosu, hazır ve bitti tanımı, Gherkin story; BRD, use case,
 as-is/to-be, karar tablosu, izlenebilirlik matrisi, UAT; one-pager, fırsat-çözüm ağacı, deney kartı,
-Now-Next-Later, lansman planı; izleme planı, metrik kartı, A/B test planı, Lean Canvas),
+Now-Next-Later, lansman planı; izleme planı, metrik kartı, A/B test planı, Lean Canvas; paydaş kaydı,
+iletişim planı, DACI karar kaydı, toplantı ve karar notu),
 Markdown ve Türkçe Excel'de açılan CSV indirmeleri (ADR-021).
 
 **Var — Proje Yönetimi (Faz 4).** Materyal dışı ilk tam kategori: 18 v2 ders (yaşam döngüsü,
@@ -105,9 +106,21 @@ rakamları eklendi. Kapsam haritaları `docs/icerik/kapsam-urun-analitigi.md` ve
 `kapsam-is-ve-strateji.md`; birincil kaynaklar Evan Miller, Microsoft ExP, Rodden (HEART), Amplitude,
 Twilio Segment, a16z, Strategyzer, Maurya, Salesforce, What Matters ve Wikipedia giriş bölümleri.
 
+**Var — İletişim, Şirket Sözlüğü v2 ve materyalden araçlar (Faz 9).** İletişim ve Paydaş Yönetimi: 12 v2
+ders (paydaş analizi ve güç-ilgi haritası, RACI/DACI/RAPID, iletişim planı, piramit ilkesi ve BLUF,
+toplantı yönetimi, veriyle hikâye, yetkisiz etki, müzakere ve BATNA, çatışma, SBI geri bildirimi, kötü
+haber ve eskalasyon, dağıtık ekipler), RACI denetleyici demosu, 4 şablon, 10 soruluk quiz, 17 terim.
+Şirket Sözlüğü'nün 7 dersi v2'ye taşındı ve içe aktarılmış quizin yerine rol-nötr, yazılmış bir quiz
+geçti. Materyalin 20., 21. bölümleri ve Ek A artık araç: içe aktarıcı onları
+`src/data/generated/tools/` altına yapı olarak yazar, metin birebir kalır. `/araclar/kontrol-listeleri/`
+(209 madde; tikler ve "geçerli değil" işaretleri ilerleme kaydında, yedekle taşınır),
+`/araclar/akis-haritasi/` (11 faz; materyalde olmayan beş rolün satırı "materyal dışı" ve ders
+bağlantılı) ve `/araclar/calisma-takvimi/` (materyalin takvimi ve her rolün yolundan haftada 100
+dakikalık plan). Materyaldeki "(21.9)" ve "Bölüm 20" referansları bu sayfalara bağlanır.
+Kapsam haritası `docs/icerik/kapsam-iletisim-ve-paydaslar.md`.
+
 **Henüz yok — planlı, yapılmadı.** EN arayüz (`/en/`, `src/i18n`): kullanıcı ertelemeyi seçti,
-şu an TR tek dil · Araçlar'da kontrol listeleri, proje akış haritası, çalışma takvimi ve diğer
-şablonlar · framework ve kütüphane profil sayfaları · Cloudflare Pages yayını.
+şu an TR tek dil · Araçlar'da Ek B kaynakları ve diğer şablonlar · framework ve kütüphane profil sayfaları · Cloudflare Pages yayını.
 
 **Yok — bilinçli olarak.** Hesap/giriş sistemi · sunucu tarafı veri · cihazlar arası senkron
 (mimari hazır, uygulama sonraki faz) · içerik EN çevirisi · yorum/not alma · aralıklı tekrar
@@ -123,14 +136,14 @@ eşlemesi orada; başka hiçbir yerde tekrarlanmaz.
 | Alan | Kategoriler (sıra = materyal bölüm sırası) |
 |---|---|
 | Temel | 1 Web Temelleri |
-| Ürün ve Ekip | 2 Ürün Geliştirme · 3 Çalışma Biçimi · 18 Şirket Ortamı Sözlüğü · *[hazırlanıyor]* İletişim ve Paydaş Yönetimi |
+| Ürün ve Ekip | 2 Ürün Geliştirme · 3 Çalışma Biçimi · 18 Şirket Ortamı Sözlüğü · İletişim ve Paydaş Yönetimi (materyal dışı) |
 | Strateji ve Ürün | Ürün Yönetimi · Ürün Analitiği ve Deney · İş Modeli ve Strateji (üçü de materyal dışı) |
 | Teslimat | Proje Yönetimi · Çevik Pratikler · İş Analizi (materyal dışı, bu site için yazıldı) |
 | Tasarım | 4 UX/UI Süreç ve İlkeler · *[hazırlanıyor]* Kullanıcı Araştırması · 5 Tasarım Sistemi · 6 Erişilebilirlik · 7 Arayüz Anatomisi |
 | Mühendislik | 8 Front-end · **Programlama Dilleri** · 9a Framework'ler · 9b Kütüphaneler · 10 Back-end ve API · 11 Veritabanı · **Veri Yapıları** · **Algoritmalar** |
 | Sistem ve Operasyon | 14 Sistem Mimarisi · 12 Auth · 13 Güvenlik ve Hukuk · 15 Git ve GitHub · 16 DevOps ve Yayın · 17 Test ve Kalite |
 | Yapay Zekâ | 19 AI ile Profesyonel Çalışma |
-| Araçlar (şema dışı) | 22 Sözlük · **[henüz yok]** 20 Proje Akış Haritası · 21 Kontrol Listeleri · Ek A Takvim · Ek B Kaynaklar |
+| Araçlar (şema dışı) | 22 Sözlük · 20 Proje Akış Haritası · 21 Kontrol Listeleri · Ek A Takvim · **[henüz yok]** Ek B Kaynaklar |
 
 **Kalın** olanlar materyalde yoktu, yazıldı (bkz. §7): Programlama Dilleri 11 adım, Veri Yapıları 9,
 Algoritmalar 9. Framework'ler (5) ve Kütüphaneler (9) materyalin 9. bölümünden yeniden yapılandırıldı.
@@ -188,9 +201,10 @@ toplu açma seçeneği.
 erişilir. *[henüz yok]* Navbar'ın içine gömülü arama alanı ve Cmd/Ctrl+K kısayolu — arama şu an
 kendi sayfasında yaşıyor.
 
-**Araçlar. [henüz yok]** İşaretlenebilir kontrol listeleri (21), faz faz akış haritası (20),
-çalışma takvimi (Ek A), kaynaklar (Ek B). Rota üretilmiyor; ilerleme modelindeki `checklists`
-alanı (§4) bu sayfalar için ayrılmış, henüz hiçbir şey yazmıyor.
+**Araçlar.** İşaretlenebilir kontrol listeleri (21), faz faz akış haritası (20) ve çalışma takvimi
+(Ek A) yayında. Tikler ilerleme modelindeki `checklists` alanına madde kimliğiyle yazılır; "geçerli
+değil" işareti aynı alanda `<kimlik>~na` anahtarıyla durur, şema `version: 1` kalır. Madde kimlikleri
+`src/data/frozen-checklist-ids.json` ile dondurulur. *[henüz yok]* Kaynaklar (Ek B).
 
 ## 4. İlerleme modeli
 

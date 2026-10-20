@@ -522,6 +522,77 @@ ayda 310 → 150'nin altı. Sipariş takımı KR2'yi, panel takımı KR3'ü üst
 sonucu. Ayrıca bir öğrenme OKR'ı: "Kampüs öğrencileri sabah ne kadar önceden sipariş veriyor?"
 (Mert). KPI olarak izlenen: uygulama puanı 4,3, ödeme kuruluşu hata oranı.
 
+## İletişim ve paydaş işleri
+
+İletişim ve Paydaşlar dersleri bu olguları kullanır. Çoğu kampüs projesinde geçer; proje yöneticisi
+**Leyla**, sponsor **Hakan**. Paydaş tablosundaki "Etki" sütunu güç-ilgi haritasında güç ekseni olur.
+
+**Güç-ilgi haritası (kampüs projesi, 1. hafta):** yakından yönet — Hakan; memnun tut — öğrenci
+işleri, ödeme kuruluşu, yatırımcılar; bilgilendir — kampüs kafeleri işletmecileri, müşteri hizmetleri;
+izle — (projenin başında kimse). POS tedarikçisi orta-orta: sözleşme gereği iki haftada bir
+görüşülür. Tutum: öğrenci işleri temkinli (KVKK ve kart listesi), POS tedarikçisi destekleyici,
+müşteri hizmetleri endişeli ("kampüsten gelecek iade sorularını kim cevaplayacak?").
+
+**İkinci dalga kararı (DACI):** lansmandan altı hafta sonra verilecek. Driver Leyla; Approver Hakan;
+Contributors Elif, Ozan, finans ve Mert; Informed kampüs kafeleri, müşteri hizmetleri, iki takım.
+Hakan'ın koşulu: kampüste 30 günde ikinci sipariş %41'in üstünde.
+
+**Öğrenci kartı protokolü (RAPID):** Recommend Leyla; Agree hukuk (KVKK uyumu); Perform sipariş
+takımı (Deniz); Input öğrenci işleri, Mert, Selin; Decide Hakan.
+
+**Kampüs iletişim planı:** Hakan — haftalık durum e-postası, pazartesi 10.00, Leyla yazar, ilk
+cümlesi BLUF; öğrenci işleri — ayda bir toplantı, Leyla ve Hakan; kafe işletmecileri — iki haftada bir
+telefon, duyurular bir mesaj grubunda, Leyla; müşteri hizmetleri — lansmandan iki hafta önce eğitim ve
+SSS, Ayşe; ödeme kuruluşu — kilometre taşlarında e-posta, Emre; yatırımcılar — aylık yatırımcı
+mektubunda bir paragraf, Hakan. **Eskalasyon eşiği:** kritik yoldaki bir iş bir haftadan fazla kayarsa
+Hakan aynı gün telefonla haber alır, rapor beklenmez.
+
+**Haftalık kampüs koordinasyon toplantısı (cuma):** başta 60 dakika ve 11 kişiydi. 4. haftada 45 dakika ve
+6 kişiye indi (Leyla, Emre, Ozan, Deniz, tedarikçi temsilcisi, Ayşe); diğerleri notları okuyor. Notlar
+gündemle aynı belgede; her eylem maddesinin sahibi ve tarihi var. Not alma sırası her hafta döner.
+
+**Kötü haber (6. hafta):** tedarikçinin 4. ve 5. hafta raporları yeşildi. 6. haftanın perşembesi Emre
+test ortamının hazır olmadığını öğrendi; tedarikçi koordinatörü "birkaç gün" dedi. Leyla aynı gün,
+eşiğe göre, Hakan'ı aradı: sorun, kritik yola etkisi ve iki seçenek. 7. hafta raporu sarıydı.
+
+**Tedarikçiyle müzakere (6–7. hafta):** Leyla'nın çıkarı dönem başında lansman; tedarikçinin çıkarı
+sabit fiyatlı sözleşmede zarar etmemek ve ilk kampüs referansı. Leyla'nın BATNA'sı iş gerekçesindeki
+ikinci seçenek: kafelere ayrı tablet (kasa entegrasyonu yok), iki haftada kurulabilir. Nesnel ölçüt:
+sözleşmedeki "entegrasyon hazır, 8. hafta" kilometre taşı. Anlaşma: test ortamı 7. haftanın sonunda;
+tedarikçi iki hafta ek bir mühendis verir, fiyat değişmez; Demlik lansman duyurusunda tedarikçiyi
+anar.
+
+**Yetkisiz etki (4. hafta):** kampüs menüleri (WBS 3.2) için Leyla'nın Emre'den bir haftalık işe
+ihtiyacı vardı; Emre panel takımında, önceliği Ozan veriyor. Leyla, menü kopyalama özelliğinin dükkân
+isteklerinde ilk üçte olduğunu gösterdi: aynı iş bütün çok şubeli dükkânlara yarıyordu. Ozan dört gün
+verdi. Leyla da iade analizi için Ayşe'ye kampüs kafelerinden iki görüşmeci buldu.
+
+**Çatışma (Sprint 6):** Elif ödeme A/B testinin kurulmasını, Leyla öğrenci kartı indirimini (D) aynı
+sprintte Ece'ye vermek istedi. İkisi de önce Kaan'a "benimki öncelikli" diye geldi. Kaan ikisini aynı
+masaya oturttu; çıkarlar konuşuldu: D'nin bir hafta bolluğu vardı, testin ise kampanyadan önce iki tam
+hafta koşması gerekiyordu. Çözüm: Ece ve Can ilk hafta D'yi bitirdi, Burak testi kurdu; test bir
+sonraki pazartesi başladı.
+
+**SBI (Sprint 13 review'dan sonra):** Kaan, Burak'a: "Dünkü Sprint Review'da Zeynep açık hataları
+anlatırken üç kez sözünü kestin. Zeynep son iki maddeye geçemedi; kafe fişindeki okunma sorunu
+konuşulmadan kaldı." Niyet sorusuna Burak'ın cevabı: süreyi yetiştirmeye çalışıyordu. Sonraki review'da
+hata listesi ilk 15 dakikaya alındı.
+
+**Veriyle hikâye (lansmandan 4 hafta sonra):** kampüsten günlük sipariş haftalara göre 180, 290, 360,
+410 (ilk dönem hedefi 600). Kampüste 30 günde ikinci sipariş %44. Ece'nin ilk grafiği 12 kafenin
+günlük siparişlerini 28 çizgide gösteriyordu; Leyla haftalık toplamı tek çizgiye indirdi, başlığa
+mesajı yazdı: "Kampüs siparişleri dört haftada iki katına çıktı; hedefin üçte ikisinde."
+
+**Öğrenci araştırmasının sonucu (Mert):** sekiz öğrenciden altısı dersten 10–15 dakika önce, yürürken
+sipariş veriyor; ikisi sabah evden çıkmadan. Kampüs siparişlerinin %70'i ders saatinden önceki 20
+dakikada geliyor; yoğun dakikalarda kafede hazırlama süresi 8 dakikaya çıkıyor. Öneri: hazırlık süresini
+sipariş ekranında göstermek. Mert önce uzun, kronolojik bir e-posta yazdı; sonra BLUF ile yeniden yazdı,
+Elif öneriyi refinement'a aldı.
+
+**Dağıtık çalışma:** Can bu yıl Berlin'den çalışıyor (İstanbul'un iki saat gerisi); ortak çalışma
+saatleri 10.00–16.00 onun için 08.00–14.00. Daily Scrum'a katılamadığı günlerde notunu önceki akşam
+panoya yazar. POS tedarikçisi İzmir'de; Mert haftanın iki günü kampüslerde sahada.
+
 ## Paydaşlar
 
 | Paydaş | İlgi | Etki |

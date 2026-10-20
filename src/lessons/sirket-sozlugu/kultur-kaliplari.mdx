@@ -1,10 +1,11 @@
 ---
-summary: "Bir ekibin nasıl çalıştığını tarif eden ifadeler: async-first, documentation-first, disagree and commit, blameless culture, bias for action, ownership/DRI. İş görüşmesinde ekibin kültürünü anlamana da yarar."
+summary: "Bir ekibin nasıl çalıştığını tarif eden ifadeler: async-first, documentation-first, disagree and commit, blameless culture, bias for action, DRI. Her birinin bir ön koşulu var; ön koşul yoksa kalıp zarar verir."
 outcomes:
-  - "Altı kültür kalıbını ve her birinin bedelini söyleyebilirsin."
-  - "'Disagree and commit' ilkesinin ön koşulunu ve ön koşul yoksa ne anlama geldiğini açıklayabilirsin."
-  - "'Bias for action'ın hangi kararlarda tehlikeli olduğunu bilirsin."
+  - "Altı kültür kalıbını ve her birinin ne işe yaradığını söyleyebilirsin."
+  - "Disagree and commit'in ön koşulunu ve ön koşul yoksa ne olduğunu açıklayabilirsin."
+  - "Bias for action'ın ne zaman tehlikeli olduğunu karar türüyle ayırt edebilirsin."
 minutes: 7
+standard: 2
 sources:
   - label: "Amazon — 2016 Hissedar Mektubu (disagree and commit)"
     url: "https://www.aboutamazon.com/news/company-news/2016-letter-to-shareholders"
@@ -19,73 +20,128 @@ flags: ["degisken"]
 
 import Summary from "~/components/lesson/Summary.astro";
 import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
 import Lens from "~/components/lesson/Lens.astro";
 import Lenses from "~/components/lesson/Lenses.astro";
+import Matrix2x2 from "~/components/diagrams/primitives/Matrix2x2.astro";
 
-Bir ekibin nasıl çalıştığını tarif eden ifadeler. Bunları bilmek, bir iş görüşmesinde ekibin kültürünü anlamana da yarar.
+Kayıtlı kart kararının RFC'sinde Ece ile Burak farklı seçenekleri savundu. Karar Ece'nin önerisinden yana çıktı. İki hafta sonra Burak'ın PR'larında kayıtlı kart işi hep "biraz sonra" kaldı. Burak itiraz etmiyordu; yalnız işi bitirmiyordu.
 
-## Async-first
+Bunun bir adı var ve tersinin de adı var. Bu ders, bir ekibin nasıl çalıştığını tarif eden altı ifadeyi anlatır. Materyalin de belirttiği gibi bu ifadeleri bilmek, bir iş görüşmesinde ekibin kültürünü anlamana da yarar.
 
-**Async-first (eş zamansız öncelikli)**: varsayılan iletişimin yazılı ve eş zamansız olduğu, toplantının istisna olduğu çalışma biçimi. Farklı saat dilimlerinde çalışmayı mümkün kılar ve kararların yazılı iz bırakmasını sağlar. **Bedeli:** karar süresi uzar ve yazma disiplini gerektirir. Uzaktan çalışan ekiplerin tanıtım metinlerinde karşına çıkar. "Async-first çalışıyoruz; toplantı yerine yazılı öneri bekliyoruz."
+## Yazı ve zaman
 
-## Documentation-first
+**Async-first** (eş zamansız öncelikli), varsayılan iletişimin yazılı ve eş zamansız olduğu, toplantının istisna olduğu çalışma biçimidir. Farklı saat dilimlerinde çalışmayı mümkün kılar ve kararların yazılı iz bırakmasını sağlar. Bedeli: karar süresi uzar ve yazma disiplini gerekir.
 
-**Documentation-first (belge öncelikli)**: bir işe başlamadan önce niyetin ve kararın yazıya dökülmesi. Yazmak düşünmeyi zorlar: bir fikri tek sayfaya sığdıramamak çoğu zaman fikrin henüz netleşmediğinin işaretidir. Ayrıca yeni katılan biri aylarca süren konuşmaları okuyarak yetişebilir. Bu yüzden yalnızca bir arşivleme pratiği değildir. "Önce bir RFC yazalım; tartışmayı onun üstünden yürütelim."
+**Documentation-first** (belge öncelikli), bir işe başlamadan önce niyetin ve kararın yazıya dökülmesidir. Materyalin vurgusuyla yazmak düşünmeyi zorlar: bir fikri tek sayfaya sığdıramamak, çoğu zaman fikrin henüz netleşmediğinin işaretidir. Ayrıca yeni gelen biri eski konuşmaları okuyarak yetişebilir.
 
-## Disagree and commit
+## Karar ve sahiplik
 
-**Disagree and commit ("katılmıyorum ama destekliyorum")**: bir karara katılmasan bile karar alındıktan sonra ona tam destek verme ilkesi. Ekipleri iki kötü uçtan korur: **sonsuz tartışma** (herkes ikna olana kadar ilerlememek) ve **sessiz sabotaj** (karara uymuş görünüp yarım çalışmak).
+**Disagree and commit** (katılmıyorum ama destekliyorum), bir karara katılmasan bile, karar alındıktan sonra ona tam destek verme ilkesidir. Ekipleri iki kötü uçtan korur: **sonsuz tartışma** ve **sessiz sabotaj**. Materyale göre ilkenin ön koşulu, itirazın gerçekten dinlenmiş olmasıdır. Aksi hâlde ilke "sus ve uy" anlamına gelir ve zararlıdır.
 
-İlkenin çalışması için **ön koşul, itirazın gerçekten dinlenmiş olmasıdır;** aksi hâlde "sus ve uy" anlamına gelir ve zararlıdır. İtirazın **kayıt altına alınması** da önemlidir (ADR'deki alternatifler bölümü): karar yanlış çıkarsa o itiraz süreci hızlandırır. "Ben hâlâ ikinci seçeneği tercih ederdim ama karar verildi; disagree and commit, tam destek veriyorum."
+<Matrix2x2
+  label="Disagree and commit ve üç bozulması"
+  caption="Yatay eksen itirazın dinlenip dinlenmediğini, dikey eksen alınan karara verilen desteği gösterir. Sağ üstte disagree and commit durur: itiraz dinlendi ve karar destekleniyor. Sol üstte sus ve uy vardır: destek var ama itiraz hiç dinlenmedi. Sol altta sessiz sabotaj durur: itiraz dinlenmedi ve kişi uymuş görünüp yarım çalışıyor. Sağ altta sonsuz tartışma vardır: itiraz dinlendi ama karar desteklenmiyor, tartışma bitmiyor. Burak'ın davranışı sol altta başladı, sağ üstte bitti."
+  x={{ title: "İtiraz dinlendi mi?", low: "hayır", high: "evet" }}
+  y={{ title: "Karara destek", low: "yok", high: "tam" }}
+  quadrants={[
+    { title: "Sus ve uy", sub: "zararlı" },
+    { title: "Disagree and commit", sub: "sağlıklı", tone: "progress" },
+    { title: "Sessiz sabotaj", sub: "uymuş görünüp yarım çalışmak" },
+    { title: "Sonsuz tartışma", sub: "karar hiç bitmez" },
+  ]}
+  points={[
+    { label: "Burak, ilk iki hafta", x: 0.2, y: 0.15 },
+    { label: "Burak, sonra", x: 0.82, y: 0.68 },
+  ]}
+/>
 
-## Blameless culture
+**Ownership / DRI** (Directly Responsible Individual), her işin **tek bir** sahibi olması ilkesidir. Materyalin cümlesiyle "herkesin sorumluluğu" pratikte "kimsenin sorumluluğu" demektir. Sahip işi kendisi yapmak zorunda değildir; bitmesini sağlamakla yükümlüdür.
 
-**Blameless culture (suçlamayan kültür, psikolojik güvenlik)**: hataların kişilere değil sisteme atfedildiği, insanların sorun bildirmekten çekinmediği ortam. **Suçlama kültüründe insanlar hataları gizler;** gizlenen hata büyür ve sistem öğrenemez. Yani nezaket değil, öğrenme kapasitesi meselesidir. Postmortem'lerin "blameless" olmasının sebebi budur; aynı ilke retro ve kod incelemesi için de geçerlidir. "Soru 'kim yaptı' değil, 'bu nasıl canlıya kadar geldi ve hangi kontrol eksikti'."
+## Hata ve hız
 
-## Bias for action
+**Blameless culture** (suçlamayan kültür, psikolojik güvenlik), hataların kişilere değil sisteme atfedildiği, insanların sorun bildirmekten çekinmediği ortamdır. Suçlama kültüründe insanlar hataları gizler; gizlenen hata büyür ve sistem öğrenemez. Bu yüzden nezaket değil, öğrenme kapasitesi meselesidir.
 
-**Bias for action (eyleme meyil)**: belirsizlik varken beklemek yerine, geri alınabilir kararlarda hızlı hareket etmeyi tercih eden yaklaşım. Çift yönlü kapı kararlarında uzun tartışma israftır. Ama **tek yönlü kapılarda (geri dönüşü olmayan veya çok pahalı kararlarda) aynı refleks tehlikelidir;** bu yüzden ilke, karar türünü ayırt etmeyi gerektirir. Şirket değerleri listelerinde ve iş görüşmelerinde karşına çıkar. "Bu geri alınabilir; bias for action, deneyip ölçelim."
+**Bias for action** (eyleme meyil), belirsizlik varken beklemek yerine, geri alınabilir kararlarda hızlı hareket etmektir. Materyalin uyarısı: **çift yönlü kapı** kararlarında uzun tartışma israftır, ama **tek yönlü kapı** kararlarında aynı refleks tehlikelidir. İlke, karar türünü ayırt etmeyi gerektirir.
 
-## Ownership ve DRI
+**Kalıp ≠ slogan.** Her kalıbın bir ön koşulu vardır. Ön koşulsuz uygulanan kalıp, adına yakışmayan bir davranışı örter.
 
-**Ownership / DRI (Directly Responsible Individual, tek sorumlu)**: her işin **tek bir** sahibi olması ilkesi. "Herkesin sorumluluğu" pratikte "kimsenin sorumluluğu" demektir: herkes başkasının bakacağını varsayar. Tek bir sahip işin takip edilmesini garanti eder. Sahip işi kendisi yapmak zorunda değildir; **bitmesini sağlamakla** yükümlüdür. "Bu maddenin DRI'ı kim? Sahipsiz kalırsa yapılmaz."
+<Case>
+
+Kaan, Burak'la bir 1:1 yaptı ve ardından takımla üç şeyi netleştirdi:
+
+1. **Disagree and commit:** Burak'ın itirazı RFC'de yazılıydı, ama toplantıda konuşulmamıştı. Kaan itirazı ADR'nin "reddedilen seçenekler" bölümüne gerekçesiyle ekletti. Burak'ın cevabı: "Hâlâ ikinci seçeneği tercih ederdim, ama karar verildi; tam destek veriyorum." İş o sprintte bitti.
+2. **DRI:** kayıtlı kart işinin tek sahibi Ece oldu; Burak bir parçasını üstlendi.
+3. **Bias for action:** "Son siparişini tekrarla" düğmesinin metni çift yönlü bir kapıydı: A/B testiyle hızla denenebilirdi. Kart bilgisini nerede tutacağımız ise tek yönlü bir kapıydı ve bir hafta RFC'de tartışılmıştı.
+
+Ayrıca bir cumartesi olayının postmortem'i suçlamasız yapıldı; soru "kim" değil, "nasıl" oldu.
+
+</Case>
 
 <Lenses>
 <Lens role="product-designer">
 
-- **İş görüşmesinde sor:** async mi, toplantı mı? Kararlar yazılı mı? Hata olunca ne olur?
-- **İtirazını karardan önce ve yazılı yap;** karardan sonra destek ver.
-- **Geri alınabilir tasarım kararlarında hızlı ol,** geri alınamayanlarda (marka, veri modeli) yavaşla.
-- **Her tasarım işine tek bir DRI yaz.**
+- **Tasarım kararlarında da disagree and commit uygula.** İtirazını yaz, dinlendiğinden emin ol, sonra tam destek ver.
+- **Çift yönlü kapıda hızlan.** Bir metni A/B testiyle denemek, haftalarca tartışmaktan ucuzdur.
+
+</Lens>
+<Lens role="product-manager">
+
+- **İtirazları karar kaydına yaz.** Karar yanlış çıkarsa o itiraz süreci hızlandırır.
+- **Karar türünü adlandır.** Tek yönlü kapıyı yavaş, çift yönlüyü hızlı karara bağla.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Her backlog maddesinin bir DRI'ı olsun.** Sahipsiz madde sprint sonunda yarım kalır.
+- **Sessiz sabotajı Review'da gör.** Hep "biraz sonra" kalan bir iş, konuşulmamış bir itirazın işareti olabilir.
+
+</Lens>
+<Lens role="project-manager">
+
+- **RAID'deki her maddenin sahibi tek kişi olsun.** "Ekip bakacak" bir sahip değildir.
+- **Suçlamasız kapanış yap.** Öğrenilen dersler toplantısında soru kişiler değil süreçlerdir.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **İtirazın dinlendiği bir ortam kur.** Disagree and commit, ancak psikolojik güvenliğin olduğu yerde işler.
+- **Sessiz sabotajı bir 1:1 sorusuna çevir.** Yargı yerine gözlemle başla.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Documentation-first'ü gereksinimde uygula.** Kural yazılmadan uygulanmaya başlamasın.
+- **Reddedilen seçenekleri izlenebilir tut.** Bir gereksinimin neden öyle olduğunu gelecek okur.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Suçlamasız kültür araştırmada da geçerli.** "Kullanıcı yanlış yaptı" değil, "arayüz neyi yanlış anlattı?"
+- **Bulguları belge öncelikli paylaş.** Async okunabilen bir bulgu, toplantıya sığmayan ekiplere de ulaşır.
 
 </Lens>
 </Lenses>
 
 <Summary>
 
-- Async-first ve documentation-first yazılı iz bırakır; bedelleri karar süresi ve yazma disiplini.
-- Disagree and commit, itiraz gerçekten dinlendiyse çalışır; yoksa "sus ve uy" olur.
-- Blameless kültür bir nezaket değil, öğrenme kapasitesi meselesidir.
-- Bias for action yalnızca geri alınabilir kararlarda; tek yönlü kapılarda tehlikelidir.
-- Her işin tek bir sahibi olmalı; herkesin sorumluluğu kimsenin sorumluluğudur.
+- Async-first ve documentation-first yazılı izi ve saat dilimi esnekliğini sağlar; bedeli yazma disiplinidir.
+- Disagree and commit sonsuz tartışmayı ve sessiz sabotajı önler; ön koşulu itirazın dinlenmesidir.
+- DRI her işin tek bir sahibi olmasıdır; "herkesin sorumluluğu" kimsenin sorumluluğu değildir.
+- Blameless kültür hataları gizlenmekten kurtarır ve sistemin öğrenmesini sağlar.
+- Bias for action çift yönlü kapılar içindir; tek yönlü kapılarda tehlikelidir.
 
 </Summary>
 
 ## Kendini yokla
 
-<SelfCheck question="Documentation-first neden yalnızca bir arşivleme pratiği değildir?">
+<SelfCheck question="'Disagree and commit' ilkesinin ön koşulu nedir? Ön koşul yoksa ne anlama gelir?">
 
-Çünkü yazmak düşünmeyi zorlar. Bir fikri tek sayfaya sığdıramamak çoğu zaman fikrin henüz netleşmediğinin işaretidir. Ayrıca yeni katılan biri aylarca süren konuşmaları okuyarak yetişebilir.
-
-</SelfCheck>
-
-<SelfCheck question="'Disagree and commit' ilkesinin çalışması için ön koşul nedir? Yoksa ne anlama gelir?">
-
-İtirazın gerçekten dinlenmiş olması. Yoksa ilke "sus ve uy" anlamına gelir ve zararlıdır. İtirazın kayıt altına alınması da önemlidir.
+Ön koşul, itirazın gerçekten dinlenmiş olmasıdır. Yoksa ilke "sus ve uy" anlamına gelir ve zararlıdır. İtirazın kayda geçmesi de önemlidir: karar yanlış çıkarsa süreci hızlandırır.
 
 </SelfCheck>
 
-<SelfCheck question="Blameless kültür neden pratik bir gereklilik, yalnızca nezaket değil?">
+<SelfCheck question="Blameless kültür neden pratik bir gerekliliktir, yalnız bir nezaket değil?">
 
 Suçlama kültüründe insanlar hataları gizler; gizlenen hata büyür ve sistem öğrenemez. Mesele öğrenme kapasitesidir.
 
@@ -93,12 +149,12 @@ Suçlama kültüründe insanlar hataları gizler; gizlenen hata büyür ve siste
 
 <SelfCheck question="'Bias for action' ne zaman tehlikelidir?">
 
-Tek yönlü kapı kararlarında (geri dönüşü olmayan veya çok pahalı olanlarda). İlke çift yönlü kapılar için doğrudur; karar türünü ayırt etmeden uygulanırsa pahalı hatalar üretir.
+Tek yönlü kapı kararlarında: geri dönüşü olmayan ya da çok pahalı olan kararlarda. İlke çift yönlü kapılar için doğrudur.
 
 </SelfCheck>
 
-<SelfCheck question="'Herkesin sorumluluğu' neden sorunlu? DRI bunu nasıl çözer?">
+<SelfCheck question="'Herkesin sorumluluğu' neden sorunludur? DRI bunu nasıl çözer?">
 
-Pratikte "kimsenin sorumluluğu" demektir: herkes başkasının bakacağını varsayar. DRI tek bir sahip atayarak takibi garanti eder; sahip işi kendisi yapmak zorunda değil, bitmesini sağlamakla yükümlüdür.
+Pratikte kimsenin sorumluluğu demektir; herkes başkasının bakacağını varsayar. DRI tek bir sahip atayarak takibi garanti eder; sahip işi yapmak zorunda değil, bitmesini sağlamakla yükümlüdür.
 
 </SelfCheck>

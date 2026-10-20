@@ -463,10 +463,21 @@ bileşendi. Yüzlerce derse görsel eklemek için her şekli baştan çizmek öl
   (1.008 B; tohumlu üreteç, sunucu ve betik aynı sayıları verir). Betiğin oluşturduğu öğeler Astro'nun
   kapsamlı CSS özniteliğini taşımaz; onların kuralları `:global()` ile kök sınıfın altına yazılır
   (`.mc :global(.mc__bar)`). Faz 5'te ilk etkileşimden sonra stilsiz kalan çubuklarla yakalandı.
+  Faz 9'da RACI denetleyici (617 B): her iş bir fieldset, rol başına bir seçim kutusu; telefonda yan
+  kaydırma olmadan sığar. Mantık `src/lib/demos/raci.ts`, testli.
   Faz 8'de A/B örneklem hesaplayıcısı (1.171 B; Evan Miller'ın hesaplayıcısıyla aynı sonucu verir,
   test edilir). Yüzde alanları `type="text" inputmode="decimal"`: `type="number"` İngilizce yerel
   ayarlı tarayıcıda "1,5"teki virgülü yutup 15 yapıyordu. `Chart` ve `Heatmap` sayıları `tr-TR` ile
   yazar (12,48 · %69,6); 10'un altındaki ölçeklerde eksen işaretleri ondalık alır, yoksa tekrar eder.
+- **Materyalden araçlar** (Faz 9): 20., 21. bölümler ve Ek A konu sayfası değil, araçtır. Ayrıştırıcılar
+  `src/lib/material-tools.ts` içinde saf fonksiyonlardır; içe aktarıcı onları çalıştırıp
+  `src/data/generated/tools/*.json` yazar ve `import:check` bu dosyaları da karşılaştırır. Metin birebir
+  kalır; yalnız yapı (paragraf, liste, tablo, alt başlık, onay kutusu) tanınır ve satır içi biçim
+  `renderInlineMarkdown` ile çizilir. `section-refs.ts` "20.x" ve "21.x" referanslarını araç
+  sayfalarının `#s-20-x` çapalarına bağlar. Kontrol listesi kimlikleri bölüm numarası ve madde
+  metninden türer ve konu kimlikleri gibi dondurulur (`validate --update-frozen`); materyal metni
+  değişirse kimlik değişir ve validate kırılır. Akış haritasındaki materyal dışı rol satırları
+  `src/authored/tools/akis-rolleri.json` içindedir; sayfa her satırın dersini build'de doğrular.
 - **İllüstrasyonlar** (`src/assets/illustrations/*.svg`): yalnız `il-*` sınıfları; renkler
   `--c-illu-*` token'larından. `<Illustration>` satır içi gömer (public/ değil: SW hash'siz
   dosyayı sonsuza dek tutar). `validate` ham renk, öznitelik rengi, betik/dış referans, viewBox ve 12

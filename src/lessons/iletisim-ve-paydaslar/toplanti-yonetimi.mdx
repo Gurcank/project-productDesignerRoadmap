@@ -1,0 +1,157 @@
+---
+summary: "İyi bir toplantının net bir amacı, gündemi, rolleri ve yazılı bir çıktısı vardır. Gündem bitince toplantı biter; her eylem maddesinin bir sahibi ve bir tarihi olur."
+outcomes:
+  - "Bir toplantıyı amaç, gündem ve rollerle hazırlayabilirsin."
+  - "Toplantıyı gündemde tutup park alanını kullanabilirsin."
+  - "Toplantıyı sahibi ve tarihi belli eylem maddeleriyle kapatabilirsin."
+minutes: 6
+standard: 2
+sources:
+  - label: "Digital.gov / 18F — How to Run an Efficient Meeting (2016)"
+    url: "https://medium.com/@DigitalGov/how-to-run-an-efficient-meeting-bdebbb66d179"
+additions:
+  - "Toplantı amacı, roller, gündem, park alanı, eylem maddesi ve kapanış (18F, Digital.gov)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import StepFlow from "~/components/lesson/StepFlow.astro";
+
+Kampüs koordinasyon toplantısı her cuma 60 dakika sürüyordu ve 11 kişi katılıyordu. Üçüncü haftanın sonunda Emre bir hesap yaptı: toplantı, ekipten haftada 11 saat alıyordu. Bir önceki haftanın kararlarını hatırlayan da yoktu.
+
+Toplantı kötü değildi; yönetilmiyordu. Toplantı türlerini [Toplantı türleri](/sirket-sozlugu/toplanti-turleri/) dersinde gördün. Bu ders bir toplantının nasıl yürütüldüğünü anlatır.
+
+## Önce: amaç, roller, gündem
+
+ABD hükümetinin dijital ekibi 18F'nin önerileri üç hazırlıkla başlar:
+
+- **Amaç:** bilgi paylaşmak mı, karar vermek mi, bir sorunu çözmek mi? Amaç yoksa toplantı planlanamaz. Toplantı, yapılmamasından daha iyi bir zaman kullanımı olmalıdır.
+- **Roller:** toplantıyı yöneten, zaman tutan ve **not alan**. 18F'ye göre en sık hata not alanı atamamaktır. Katılan herkes "not kim alıyor?" diye sorabilir.
+- **Gündem:** toplantının içeriğini verir ve ne zaman bittiğini söyler. Her madde için süre ve beklenti yazılır: "5 dakika, yalnız duyuru", "20 dakika, tartışma ve karar".
+
+18F katılımcı listesine de bakar. Çift haneli bir sayı varsa, rolü olmayanlar notları okuyabilir. Onlara göre iyi bir toplantı genelde 12 kişiden fazlasını gerektirmez.
+
+<StepFlow
+  label="Bir toplantının üç evresi"
+  caption="Toplantı üç evrede yönetilir. Önce: amaç, roller ve süreli bir gündem yazılır ve önceden gönderilir. Sırasında: zamanında başlanır, gündemde kalınır, konu dışı sorular park alanına yazılır. Sonunda: her eylem maddesine bir sahip ve tarih verilir, notlar yazılı olarak gönderilir."
+  steps={[
+    { title: "Önce", sub: "amaç · roller · süreli gündem", tone: "accent" },
+    { title: "Sırasında", sub: "zamanında başla · gündemde kal · park alanı" },
+    { title: "Sonunda", sub: "eylem: ne, kim, ne zaman · notları gönder", tone: "progress" },
+  ]}
+/>
+
+## Sırasında: gündemde kal
+
+- **Zamanında başla.** 18F'ye göre geç başlayan toplantılar, katılımcıları her seferinde biraz daha geç gelmeye alıştırır.
+- **Gündemden bilerek sap.** "Gündemde yok ama beş dakika ayıralım" demek, sapmayı yönetmektir.
+- **Park alanı kullan.** Konu dışı bir soru görünür bir listeye yazılır ve toplantı devam eder.
+- **Sesleri dengele.** Yüksek sesle konuşanın tartışmayı dondurmasına izin verme; az konuşanlara alan aç.
+
+Not alan kelimesi kelimesine yazmaz; anlamı yakalar. 18F'nin vurgusu nettir: en önemli ayrıntılar **kararlar** ve **atanan görevlerdir**.
+
+## Sonunda: eylem maddeleri
+
+18F'ye göre her eylem maddesinin bir hedefi, bir sahibi ve bir tarihi olur: "Alex iş tanımını 10 Aralık'a kadar taslak hâline getirecek." Maddeler toplantının sonunda sorumlularla sözlü olarak gözden geçirilir. Sonra notlar yazılı olarak gönderilir. Toplantıdan sonraki "toplantı sonrası toplantı" ise uzaktan katılanları dışarıda bırakır.
+
+**Toplantı ≠ karar.** Konuşulan ama yazılmayan karar, katılmayanlar için hiç alınmamış sayılır. Bu ilke materyalin [Şirket Sözlüğü](/sirket-sozlugu/toplanti-turleri/) bölümünde de geçer.
+
+<Case>
+
+Leyla dördüncü haftada toplantıyı yeniden kurdu:
+
+1. **Amaç:** yalnız kararlar ve engeller. Durum bilgisi pazartesi e-postasına taşındı.
+2. **Süre ve kişi:** 60 dakikadan 45 dakikaya, 11 kişiden 6 kişiye. Diğerleri notları okuyor.
+3. **Roller:** Leyla yönetiyor, Ozan zaman tutuyor; not alma her hafta dönüyor.
+4. **Belge:** gündem ve notlar aynı belgede. Her eylem maddesinin sahibi ve tarihi var.
+
+Altıncı haftanın cuma toplantısı 40 dakika sürdü. Tedarikçi gecikmesine karşı iki seçenek ve üç eylem maddesiyle bitti.
+
+</Case>
+
+<Tool slug="toplanti-notu" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Toplantıyı karar ve engele ayır.** Durum bilgisi yazılı gidebilir.
+- **Katılımcı listesini ayda bir gözden geçir.** Rolü olmayanı notların okuru yap.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Scrum olaylarının amacını koru.** Daily Scrum bir durum toplantısına dönüşüyorsa bunu görünür kıl.
+- **Kolaylaştırıcı ol, karar verici değil.** Rolün toplantının işlemesi, sonucun kendisi değil.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Karar toplantısına seçeneklerle gel.** Toplantı karar vermek içindir, bilgiyi ilk kez öğrenmek için değil.
+- **Kararı toplantının sonunda tek cümleyle oku.** Herkes aynı şeyi anlamış mı?
+
+</Lens>
+<Lens role="product-owner">
+
+- **Refinement'ın gündemini önceden paylaş.** Takım story'leri toplantıdan önce okuyabilmeli.
+- **Kararları backlog'a işle.** Toplantıda verilen öncelik kararı, backlog'da görünmüyorsa unutulur.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Gereksinim atölyesinin çıktısını önceden yaz.** "Bu toplantının sonunda iade kurallarının listesi onaylanmış olacak."
+- **Notta kararı ve gerekçesini ayır.** Gerekçe, izlenebilirlik için gerekir.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Tasarım eleştirisinin amacını baştan söyle.** "Bugün yalnız akışı konuşuyoruz, renkleri değil."
+- **Geri bildirimi eylem maddesine çevir.** Her yorum ya bir değişikliğe ya da bir park alanı maddesine dönüşür.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Bulgu paylaşımını karar toplantısından ayır.** Önce bulgular okunsun, toplantı neye karar verileceğine ayrılsın.
+- **Not alanı ata.** Araştırma bulgusunun hangi karara dönüştüğü kayda geçmeli.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Her toplantının bir amacı olur: bilgi, karar ya da sorun çözme.
+- Roller atanır: yöneten, zaman tutan, not alan; en sık hata not alanı atamamaktır.
+- Gündem süreli ve beklentili yazılır; gündem bitince toplantı biter.
+- Park alanı konu dışı soruları yakalar; sapma bilerek yapılır.
+- Her eylem maddesinin sahibi ve tarihi olur; notlar yazılı gönderilir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="18F'ye göre toplantılarda en sık yapılan hata nedir?">
+
+Not alanı atamamak. Kimse not almadıysa kararlar ve görevler kayda geçmez; katılan herkes "not kim alıyor?" diye sorabilir.
+
+</SelfCheck>
+
+<SelfCheck question="İyi bir eylem maddesinin üç parçası nedir?">
+
+Ne yapılacağı, kimin yapacağı ve ne zamana kadar yapılacağı. "Alex iş tanımını 10 Aralık'a kadar taslak hâline getirecek" gibi.
+
+</SelfCheck>
+
+<SelfCheck question="Toplantının ortasında biri gündemde olmayan bir konuyu açtı. Ne yaparsın?">
+
+Konu acil ve önemliyse bilerek ve süre koyarak ayırırım: "Beş dakika konuşalım." Değilse park alanına yazar, sonra ele alınacağını söyler ve gündeme dönerim.
+
+</SelfCheck>
+
+<SelfCheck question="Haftalık toplantıya 11 kişi katılıyor ve çoğu yalnız dinliyor. Ne önerirsin?">
+
+Rolü olmayanları notların okuru yapmayı. Durum bilgisini yazılı göndermek, toplantıyı karar ve engellere ayırmak süreyi ve kişi sayısını düşürür.
+
+</SelfCheck>

@@ -244,6 +244,21 @@ const STRATEGY_FOR_BUSINESS_ANALYST: TopicTiers = {
   "stratejiden-okra": I,
 };
 
+const COMMS_FOR_PRODUCT_DESIGNER: TopicTiers = {
+  "raci-daci-rapid": I,
+  "iletisim-plani": I,
+  "muzakere-ve-batna": I,
+  "kotu-haber-ve-eskalasyon": I,
+};
+
+const COMMS_FOR_UX_RESEARCHER: TopicTiers = {
+  "raci-daci-rapid": I,
+  "iletisim-plani": I,
+  "muzakere-ve-batna": I,
+  "catisma": I,
+  "kotu-haber-ve-eskalasyon": I,
+};
+
 const PRODUCT_MGMT_FOR_PRODUCT_DESIGNER: TopicTiers = {
   "vizyon-ve-strateji": I,
   "deger-onerisi-ve-konumlandirma": I,
@@ -378,7 +393,7 @@ export const ROLES: RoleDefinition[] = [
       entry("urun-gelistirme", T),
       entry("calisma-bicimi", T),
       entry("sirket-sozlugu", T),
-      entry("iletisim-ve-paydaslar", O),
+      entry("iletisim-ve-paydaslar", O, COMMS_FOR_PRODUCT_DESIGNER),
       entry("ux-ui-ilkeleri", T),
       entry("kullanici-arastirmasi", T),
       entry("tasarim-sistemi", T),
@@ -590,7 +605,7 @@ export const ROLES: RoleDefinition[] = [
       entry("sirket-sozlugu", T),
       entry("erisilebilirlik", T),
       entry("calisma-bicimi", O, WAYS_OF_WORKING_FOR_RESEARCHER),
-      entry("iletisim-ve-paydaslar", O),
+      entry("iletisim-ve-paydaslar", O, COMMS_FOR_UX_RESEARCHER),
       entry("urun-analitigi", O, ANALYTICS_FOR_UX_RESEARCHER),
       entry("urun-yonetimi", O, PRODUCT_MGMT_FOR_UX_RESEARCHER),
       entry("is-analizi", O, BA_FOR_UX_RESEARCHER),

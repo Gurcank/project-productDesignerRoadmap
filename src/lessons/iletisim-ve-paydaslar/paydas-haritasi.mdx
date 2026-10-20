@@ -1,0 +1,174 @@
+---
+summary: "Paydaş analizi bir değişiklikten kimin etkilendiğini ve kimin onu etkileyebileceğini çıkarır. Güç-ilgi haritası her paydaş için bir ilişki biçimi önerir: yakından yönet, memnun tut, bilgilendir, izle."
+outcomes:
+  - "Bir projenin paydaşlarını listeleyip birincil ve ikincil olarak ayırabilirsin."
+  - "Paydaşları güç ve ilgiye göre haritalayıp her köşe için bir strateji seçebilirsin."
+  - "Paydaş tutumunu haritaya ekleyip zamanla güncelleyebilirsin."
+minutes: 7
+standard: 2
+sources:
+  - label: "Wikipedia — Stakeholder analysis"
+    url: "https://en.wikipedia.org/wiki/Stakeholder_analysis"
+  - label: "Watt — Project Management, Ch. 5 Stakeholder Management"
+    url: "https://opentextbc.ca/projectmanagement/chapter/chapter-5-project-stakeholders-project-management/"
+additions:
+  - "Paydaş analizi, paydaş türleri, güç-ilgi (Mendelow) matrisi ve dört strateji (Wikipedia)"
+  - "Gücün nerede olduğunu ve paydaşın hedeflerini sorma (Watt)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Tool from "~/components/lesson/Tool.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Matrix2x2 from "~/components/diagrams/primitives/Matrix2x2.astro";
+
+Kampüs projesinin ilk haftasında Leyla bir e-posta listesi hazırladı ve herkese aynı haftalık raporu göndermeye başladı. Üçüncü haftada iki şikâyet geldi. Hakan raporu "çok yüzeysel" buldu. Kafe işletmecileri ise "bunları neden okuyoruz?" diye sordu.
+
+Herkes aynı bilgiyi istemiyordu, herkesin de aynı gücü yoktu. Bu ders, bir projenin insanlarını haritalamayı ve her biriyle nasıl bir ilişki kurulacağını seçmeyi anlatır.
+
+## Paydaş analizi
+
+**Paydaş** (stakeholder), bir işin sonucundan etkilenen ya da onu etkileyebilen kişi ya da gruptur. Paydaşın kullanıcıdan farkı [Ekipteki roller](/urun-gelistirme/ekipteki-roller/) dersinde.
+
+Wikipedia'nın tanımıyla **paydaş analizi**, bir sistemi ve olası değişiklikleri, ilgili tarafların ilgisi ve etkisi açısından değerlendirmektir. Amaç, bu çıkarların proje planında nasıl ele alınacağına karar vermektir. Çoğu zaman projenin hazırlık aşamasında yapılır ve tutumlar değiştikçe tekrarlanır.
+
+Paydaşlar etkilenme derecelerine göre ayrılabilir:
+
+- **Birincil paydaşlar:** işten en çok etkilenenler.
+- **İkincil paydaşlar:** dolaylı etkilenen aracılar.
+- **Kilit paydaşlar:** işi belirgin biçimde etkileyebilenler. Herhangi bir gruptan olabilirler.
+
+Liste çoğu zaman analiz edilebilecek olandan uzundur. Wikipedia'nın belirttiği gibi asıl iş, bugün önemli olan kilit paydaşlara odaklanmaktır.
+
+## Güç-ilgi haritası
+
+En yaygın gösterim iki eksenli bir matristir: dikeyde **güç**, yatayda **ilgi**. Mendelow matrisi diye de bilinir. Her köşe bir ilişki biçimi önerir:
+
+<Matrix2x2
+  label="Kampüs projesinin güç-ilgi haritası, 1. hafta"
+  caption="Dikey eksen güç, yatay eksen ilgidir. Sağ üstte, yakından yönetilecek köşede sponsor Hakan durur. Sol üstte, memnun tutulacak köşede gücü yüksek ama ilgisi daha düşük olanlar var: ödeme kuruluşu, yatırımcılar ve üniversite öğrenci işleri. Sağ altta, bilgilendirilecek köşede ilgisi yüksek ama gücü daha az olanlar var: kampüs kafeleri ve müşteri hizmetleri. Sol alttaki izlenecek köşe projenin başında boştur."
+  x={{ title: "İlgi", low: "düşük", high: "yüksek" }}
+  y={{ title: "Güç", low: "düşük", high: "yüksek" }}
+  quadrants={[
+    { title: "Memnun tut", sub: "güçlü, az ilgili" },
+    { title: "Yakından yönet", sub: "güçlü ve ilgili", tone: "progress" },
+    { title: "İzle", sub: "az güçlü, az ilgili" },
+    { title: "Bilgilendir", sub: "az güçlü, çok ilgili" },
+  ]}
+  points={[
+    { label: "Hakan (sponsor)", x: 0.85, y: 0.7 },
+    { label: "Ödeme kuruluşu", x: 0.12, y: 0.72 },
+    { label: "Yatırımcılar", x: 0.3, y: 0.58 },
+    { label: "Öğrenci işleri", x: 0.42, y: 0.66 },
+    { label: "Kampüs kafeleri", x: 0.8, y: 0.22 },
+    { label: "Müşteri hizmetleri", x: 0.62, y: 0.08 },
+  ]}
+/>
+
+Haritaya üçüncü bir boyut eklenebilir: **tutum**. Wikipedia'ya göre bu genelde renkle ya da işaretin boyutuyla gösterilir: destekleyici, nötr ya da karşı.
+
+**Harita ≠ hüküm.** Bir paydaşın köşesi kalıcı değildir. İlgisiz görünen bir grup, kendisini etkileyen bir karar duyunca bir gecede sağ üste geçebilir.
+
+## Gücün nerede olduğunu sor
+
+Watt'ın proje yönetimi kitabı, proje yöneticisinin ilk işini bir politikacınınkine benzetir: ortamı değerlendirmek. Sorular şunlardır: Kim en çok sayılır? Kimin eylemi projeyi en çok etkiler? Her paydaşı ne yönlendiriyor, açıkça söylenmeyen bir gündem var mı?
+
+Bu soruların cevabı, haritadaki noktanın neden orada durduğunu açıklar. "Öğrenci işleri güçlü" bilgisi yetmez. "Öğrenci verisini korumak istiyor" bilgisi ise onunla nasıl konuşulacağını söyler.
+
+<Case>
+
+Leyla tek raporu bırakıp bir paydaş kaydı tuttu:
+
+1. **Yakından yönet:** Hakan. Her pazartesi kısa bir durum e-postası, kritik bir sapmada aynı gün telefon.
+2. **Memnun tut:** öğrenci işleri, ödeme kuruluşu, yatırımcılar. Az ama doğru zamanda bilgi; öğrenci işleriyle ayda bir toplantı.
+3. **Bilgilendir:** kampüs kafeleri ve müşteri hizmetleri. Takvim, eğitim tarihleri, SSS.
+4. **Tutum:** öğrenci işleri temkinliydi, çünkü öğrenci verisi söz konusuydu. Müşteri hizmetleri endişeliydi: "Kampüsten gelecek iade sorularını kim cevaplayacak?" Leyla, Ayşe'yi müşteri hizmetleriyle eşleştirdi.
+
+Üçüncü haftanın iki şikâyeti dördüncü haftada kesildi.
+
+</Case>
+
+<Tool slug="paydas-kaydi" />
+
+<Lenses>
+<Lens role="project-manager">
+
+- **Paydaş kaydını tüzükle birlikte başlat.** Liste projenin ortasında değil, ilk haftasında yazılır.
+- **Tutumu her ay güncelle.** Destekleyici görünen bir paydaşın sessizleşmesi bir risk sinyalidir.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Kararı etkileyecek kişileri baştan bul.** Hukuk ve satış en sonda değil, en başta duyulmalı.
+- **Paydaşın çıkarını yaz.** Ne istediğini değil, neden istediğini bil.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Backlog isteklerinin kimden geldiğini bil.** Güçlü bir paydaşın isteği, değerli olduğu için değil gücü için öne geçiyorsa bunu görünür kıl.
+- **Sprint Review'a doğru paydaşları çağır.** İlgisi yüksek olanlar geri bildirim için oradadır.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Takımın paydaşlarla bağını kur.** Haritadaki insanlar Sprint Review'da takımla doğrudan konuşabilmeli.
+- **Takımı korumayı bilgiyi kesmekle karıştırma.** Paydaşın bilgiye erişimini kolaylaştır, takımın odağını koru.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Paydaş analizi gereksinim çıkarmanın ilk adımıdır.** Kimi dinlemediysen onun gereksinimi eksiktir.
+- **Dolaylı etkilenenleri ara.** Müşteri hizmetleri gibi ikincil paydaşlar çoğu zaman en somut gereksinimi verir.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Tasarım kararında kimin söz hakkı olduğunu bil.** Bir ekranı sonradan değiştirebilecek paydaşı baştan dahil et.
+- **Kullanıcıyı paydaşlarla karıştırma.** Paydaşların isteği kullanıcının ihtiyacıyla çelişebilir.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Bulgularının paydaşlarını haritala.** Araştırma sonucuyla en çok kim karar verecek? Raporu ona göre kur.
+- **Temkinli paydaşı erken dahil et.** Öğrenci işleri gibi bir paydaş, katılımcı bulmanın da anahtarı olabilir.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Paydaş, bir işin sonucundan etkilenen ya da onu etkileyebilen kişi ya da gruptur.
+- Paydaş analizi çıkarları ve etkileri değerlendirir; liste uzundur, odak kilit paydaşlardadır.
+- Güç-ilgi haritası dört strateji önerir: yakından yönet, memnun tut, bilgilendir, izle.
+- Tutum üçüncü boyuttur; harita zamanla değişir ve güncellenir.
+- Noktanın nedenini bilmek için paydaşın çıkarını ve gücünün kaynağını sor.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Güç-ilgi haritasının dört köşesi hangi stratejileri önerir?">
+
+Güçlü ve ilgili: yakından yönet. Güçlü ama az ilgili: memnun tut. Az güçlü ama çok ilgili: bilgilendir. Az güçlü ve az ilgili: izle.
+
+</SelfCheck>
+
+<SelfCheck question="Ödeme kuruluşu kampüs projesiyle pek ilgilenmiyor. Onu listeden çıkarır mısın?">
+
+Hayır. İlgisi düşük ama gücü yüksek: kampüs mağazaları için ek onay isteyebilir. Memnun tutulacak köşededir; az ama doğru zamanda, örneğin kilometre taşlarında bilgi alır.
+
+</SelfCheck>
+
+<SelfCheck question="Herkese aynı haftalık raporu göndermek neden işe yaramadı?">
+
+Paydaşların ihtiyaçları farklıydı. Sponsor karar verecek kadar ayrıntı, kafeler yalnız takvim ve eğitim bilgisi istiyordu. Herkese aynı rapor, kimsenin ihtiyacını tam karşılamaz.
+
+</SelfCheck>
+
+<SelfCheck question="Projenin ortasında müşteri hizmetleri yöneticisi karara itiraz etmeye başladı. Haritada ne değişti?">
+
+Gücü ya da tutumu değişti; belki ikisi de. Haritayı güncellerim ve nedenini sorarım: neyi önemsiyor, hangi karar onu etkiledi? Strateji buna göre değişir.
+
+</SelfCheck>

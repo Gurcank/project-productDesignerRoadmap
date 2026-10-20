@@ -25,6 +25,7 @@ import { PLANET_BY_SLUG } from "../src/data/planets";
 import { ROLE_IDS, ROLE_LABEL } from "../src/data/role-ids";
 import { ROLES } from "../src/data/roles";
 import { compileRolePath, type RolePath } from "../src/lib/role-path";
+import { checklistIds, type ChecklistData } from "../src/lib/material-tools";
 
 const ROOT = path.resolve(import.meta.dirname, "..");
 const FROZEN_FILE = path.join(ROOT, "src/data/frozen-topic-ids.json");
@@ -36,7 +37,7 @@ const UPDATE_FROZEN = process.argv.includes("--update-frozen");
  * "Araçlar" section (20, 21, 22, Ek A/B) and the reading guide (0); when a
  * chapter lands here, delete it from this list and the gate starts enforcing it.
  */
-const UNPUBLISHED_CHAPTERS = new Set(["0", "20", "21", "22"]);
+const UNPUBLISHED_CHAPTERS = new Set(["0", "22"]);
 
 interface Problem {
   file: string;
@@ -152,6 +153,40 @@ if (UPDATE_FROZEN && unfrozen.length > 0) {
   for (const id of unfrozen) {
     problems.push({ file: "src/data/frozen-topic-ids.json", message: `dondurulmamış yeni kimlik: ${id} — "npm run validate -- --update-frozen"` });
   }
+}
+
+/*
+ * Checklist item ids carry ticks the same way step ids carry progress (plan
+ * §4.7), so they get the same append-only snapshot. An id changes only if the
+ * material's item text changes — and then the reader's tick would be lost.
+ */
+const CHECKLIST_FROZEN_FILE = path.join(ROOT, "src/data/frozen-checklist-ids.json");
+const checklistData: ChecklistData = JSON.parse(readFileSync(path.join(ROOT, "src/data/generated/tools/checklists.json"), "utf8"));
+const currentChecklistIds = checklistIds(checklistData);
+const duplicateChecklistIds = currentChecklistIds.filter((id, i) => currentChecklistIds.indexOf(id) !== i);
+for (const id of duplicateChecklistIds) {
+  problems.push({ file: "src/data/generated/tools/checklists.json", message: `aynı kontrol listesi kimliği iki kez: ${id}` });
+}
+const frozenChecklist: { note: string; ids: string[] } = existsSync(CHECKLIST_FROZEN_FILE)
+  ? JSON.parse(readFileSync(CHECKLIST_FROZEN_FILE, "utf8"))
+  : { note: "Kontrol listesi maddelerinin kimlikleri. Tikler bu kimliklerle saklanır; liste yalnız büyür.", ids: [] };
+const liveChecklist = new Set(currentChecklistIds);
+for (const id of frozenChecklist.ids) {
+  if (!liveChecklist.has(id)) {
+    problems.push({ file: "src/data/frozen-checklist-ids.json", message: `donmuş madde kimliği kayıp: ${id} — bu maddenin tiki kaybolur` });
+  }
+}
+const frozenChecklistSet = new Set(frozenChecklist.ids);
+const unfrozenChecklist = currentChecklistIds.filter((id) => !frozenChecklistSet.has(id));
+if (UPDATE_FROZEN && unfrozenChecklist.length > 0) {
+  frozenChecklist.ids.push(...unfrozenChecklist);
+  writeFileSync(CHECKLIST_FROZEN_FILE, `${JSON.stringify(frozenChecklist, null, 2)}\n`, "utf8");
+  console.log(`${unfrozenChecklist.length} kontrol listesi maddesi donduruldu.`);
+} else if (unfrozenChecklist.length > 0) {
+  problems.push({
+    file: "src/data/frozen-checklist-ids.json",
+    message: `${unfrozenChecklist.length} dondurulmamış kontrol listesi maddesi — "npm run validate -- --update-frozen"`,
+  });
 }
 
 /*

@@ -187,7 +187,8 @@ const SIZES = [
     refreshBackup();
 
     const done = Object.values(progress.topics).filter((topic) => topic.done).length;
-    const checked = Object.values(progress.checklists).filter(Boolean).length;
+    // "<id>~na" marks an item as not applicable (kontrol-listeleri); it is not a tick.
+    const checked = Object.entries(progress.checklists).filter(([id, on]) => on && !id.endsWith("~na")).length;
     const percent = total > 0 ? Math.min(100, Math.round((done / total) * 100)) : 0;
 
     set("done", String(done));

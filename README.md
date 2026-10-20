@@ -1,6 +1,6 @@
 # SeeYourNextStep
 
-Ürün ekibindeki roller için Türkçe bir öğrenme haritası: **sıradaki adımını gör.** Product Designer, Product Manager, Product Owner, Project Manager, Scrum Master, Business Analyst ve UX Researcher için ayrı yollar, tek bir ortak bilgi tabanı üzerinde. Şu an **29 kategori, 311 ders ve 960 terim** yayında; iki yeni kategori hazırlanıyor. Ana sayfa bir gezegen haritası: her kategori bir gök cismi, rolünün yolu bir takımyıldızı.
+Ürün ekibindeki roller için Türkçe bir öğrenme haritası: **sıradaki adımını gör.** Product Designer, Product Manager, Product Owner, Project Manager, Scrum Master, Business Analyst ve UX Researcher için ayrı yollar, tek bir ortak bilgi tabanı üzerinde. Şu an **30 kategori, 323 ders ve 977 terim** yayında; bir yeni kategori hazırlanıyor. Araçlar'da 35 şablon, işaretlenebilir kontrol listeleri, proje akış haritası ve rolüne göre çalışma takvimi var. Ana sayfa bir gezegen haritası: her kategori bir gök cismi, rolünün yolu bir takımyıldızı.
 
 ## Özellikler
 
@@ -8,7 +8,7 @@
 - **Roller bölümü:** yedi rolün tanımı, neyden hesap verdiği, neye karar vermediği ve komşu rollerden farkı; yanlarında çalışan diğer roller.
 - **Gezegen haritası:** gezegenleri basılı tutup kendi alanında sürükleyebilirsin; üzerine gelince tamamlanma halkası çıkar.
 - **Dersler:** her adım bir ders anlatımı. Rolüne göre mercek kutuları ("Tasarımcı olarak sen", "Product Manager olarak sen" …), özet, kendini yoklama soruları ve kaynaklar içerir. Metindeki terimlerin üzerine gelince tanımı açılır.
-- **Sözlük ve arama:** 960 terimlik sözlük, tüm derslerde tam metin arama (Pagefind).
+- **Sözlük ve arama:** 977 terimlik sözlük, tüm derslerde tam metin arama (Pagefind).
 - **Çevrimdışı:** siteyi cihazına indirip internetsiz okuyabilirsin (service worker).
 - **İlerleme:** yalnızca tarayıcında saklanır (`localStorage`); Ayarlar'dan yedeklenir ve geri yüklenir.
 - **Erişilebilirlik:** WCAG 2.2 AA hedefi, klavye ile gezinme, hareket azaltma desteği, yazı boyutu ayarı.

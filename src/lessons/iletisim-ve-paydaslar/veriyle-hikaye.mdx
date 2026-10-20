@@ -1,0 +1,170 @@
+---
+summary: "Bir grafik bir mesaj taşır. Mesajı önce cümleyle yaz, grafiği verinin ilişkisine göre seç, başlığa mesajı koy, gereksiz süsü at ve ekseni dürüst kur."
+outcomes:
+  - "Bir grafiğin mesajını birkaç cümleyle yazabilirsin."
+  - "Verinin ilişkisine göre grafik türü seçebilirsin."
+  - "Bir grafiği başlık, etiket ve eksen kurallarıyla düzeltebilirsin."
+minutes: 6
+standard: 2
+skipTerms: ["ızgara"]
+sources:
+  - label: "UK Government Analysis Function — Data visualisation: charts (2022)"
+    url: "https://analysisfunction.civilservice.gov.uk/policy-store/data-visualisation-charts/"
+additions:
+  - "Grafiğin mesajı, ilişki türüne göre grafik seçimi, iki başlık, sadelik, doğrudan etiket, bar grafikte sıfır ekseni (UK Government Analysis Function)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Chart from "~/components/diagrams/primitives/Chart.astro";
+
+Lansmandan dört hafta sonra Hakan "kampüs nasıl gidiyor?" diye sordu. Ece bir grafik hazırladı: 12 kafenin 28 günlük siparişleri, 12 renkli çizgi. Hakan grafiğe yarım dakika baktı ve aynı soruyu yeniden sordu.
+
+Grafikte her şey vardı, ama bir cevap yoktu. Bu ders, bir grafiği bir soruya cevap verecek biçimde kurmayı anlatır. Panolardaki yanıltıcı grafikler [Pano tasarımı](/urun-analitigi/dashboard/) dersinde.
+
+## Önce mesaj
+
+İngiltere hükümetinin analiz rehberi grafikten önce bir soru sorar: bu grafik hangi mesajı vermek istiyor? Önerdikleri yöntem şudur: grafiği telefonda birine anlattığını düşün; ne söylerdin?
+
+Mesajı birkaç cümlede yazamıyorsan, rehbere göre grafiği yeniden düşünmen gerekir. Üç soru yardım eder: Bunu sadeleştirebilir miyim? Başka türlü bölebilir miyim? Tek bir grafikte çok fazla mesaj mı var?
+
+## İlişkiye göre grafik
+
+Mesaj belli olunca grafik, verinin anlattığı ilişkiye göre seçilir. Rehberin eşleşmelerinden bazıları:
+
+| İlişki | Örnek | Grafik |
+|---|---|---|
+| Zaman içinde değişim | Haftalık sipariş | Çizgi |
+| Sıralama | Kafelerin siparişe göre sırası | Bar |
+| Hedeften sapma | Kafelerin hedefe uzaklığı | Bar ya da nokta |
+| Parça-bütün | Siparişlerin kanallara dağılımı | Bar; az ve baskın kategoride pasta |
+| İlişki (korelasyon) | Sepet tutarı ve sipariş sıklığı | Saçılım |
+
+Rehber pasta grafiği yalnız beş ya da daha az kategori olduğunda ve baskın bir kategori varsa önerir. Aksi hâlde bar grafiği daha iyi okunur.
+
+## Başlık mesajı söyler
+
+Rehber iki başlık önerir:
+
+- **Manşet başlığı:** mesajı söyler. Örneğin "Kampüs siparişleri dört haftada iki katına çıktı".
+- **Alt başlık:** verinin ne olduğunu, hangi yeri ve dönemi kapsadığını söyler. Örneğin "Günlük ortalama sipariş, 12 kampüs kafesi, lansmandan sonraki 4 hafta".
+
+<Chart
+  kind="line"
+  label="Kampüs siparişleri dört haftada iki katına çıktı; hedefin üçte ikisinde"
+  caption="Günlük ortalama sipariş, 12 kampüs kafesi, lansmandan sonraki dört hafta. Birinci hafta 180, ikinci hafta 290, üçüncü hafta 360, dördüncü hafta 410 sipariş. Kesikli çizgi ilk dönemin sonu için konan hedeftir: günde 600 sipariş. Dördüncü haftada hedefin yaklaşık üçte ikisine ulaşılmıştır."
+  x={{ title: "Lansmandan sonraki hafta", labels: ["1", "2", "3", "4"] }}
+  y={{ title: "Günlük sipariş", max: 600 }}
+  series={[
+    { name: "Günlük sipariş", values: [180, 290, 360, 410], tone: "accent" },
+    { name: "Dönem sonu hedefi", values: [600, 600, 600, 600], tone: "plain", dashed: true },
+  ]}
+/>
+
+## Sadelik ve dürüstlük
+
+Rehberin biçim kuralları kısa bir listedir:
+
+- **Süsü at:** gölgeli arka plan, gereksiz çerçeve, desen, gölge, üç boyut ve koyu ızgara çizgileri.
+- **Her şeyi etiketle:** eksenler ve seriler açıkça adlandırılır; metin yatay yazılır.
+- **Mümkünse lejant yerine doğrudan etiketle:** okur rengi etikete eşlemek zorunda kalmaz.
+- **Bar grafikte ekseni kırma:** barlar orantı olarak algılanır; sıfırdan başlamayan eksen bu oranı bozar.
+
+**Çok veri ≠ çok bilgi.** Rehber bunu da hatırlatır: iyi düzenlenmiş bir tablo çoğu zaman bir grafik kadar güçlüdür.
+
+<Case>
+
+Leyla, Ece'nin grafiğini Hakan'ın sorusuna göre yeniden kurdu:
+
+1. **Mesaj:** "Kampüs büyüyor ama henüz hedefte değil."
+2. **Veri:** 12 kafenin günlük çizgileri yerine haftalık ortalama tek çizgi. Kafe kafe kırılım ekte, isteyen için bir tabloda.
+3. **Başlık:** "Kampüs siparişleri dört haftada iki katına çıktı; hedefin üçte ikisinde."
+4. **Bağlam:** hedef kesikli çizgiyle grafikte. Altına tek cümle: "Kampüste 30 günde ikinci sipariş %44; ikinci dalga koşulun sağlanıyor."
+
+Hakan bu kez soru sormadı. Grafiği yatırımcı mektubuna olduğu gibi koydu.
+
+</Case>
+
+<Lenses>
+<Lens role="product-manager">
+
+- **Grafikten önce cümleyi yaz.** Cümle yoksa grafik de yoktur.
+- **Başlığa sonucu koy.** "Haftalık sipariş" bir etikettir; "Siparişler iki katına çıktı" bir mesajdır.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Durum raporundaki grafiği hedefle birlikte çiz.** Hedef olmadan gidişatın iyi mi kötü mü olduğu okunmaz.
+- **Kırılımı ekte ver.** Sponsor özeti, ilgilenen ayrıntıyı okusun.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Sprint Review'da bir metrik göster.** Teslim edilen işin girdiyi nasıl oynattığını tek grafikle anlat.
+- **Bir grafikte bir mesaj olsun.** Çok mesajlı grafik, hiçbir mesajı taşımaz.
+
+</Lens>
+<Lens role="scrum-master">
+
+- **Akış metriklerini takımın sorusuyla göster.** "İşlerimiz neden yavaşladı?" sorusuna bir grafik, bir cevap.
+- **Takımın kendi verisini okumasına yardım et.** Grafik bir yargı değil, bir konuşma başlatıcısı olsun.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **As-is verisini karşılaştırmalı göster.** Bugün ile hedef arasındaki boşluk, bar grafiğinde en net görünür.
+- **Ekseni dürüst kur.** Bar grafikte sıfırdan başla.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Grafiği bir arayüz gibi tasarla.** Hiyerarşi, etiket ve kontrast burada da geçerlidir.
+- **Rengi tek ayırıcı yapma.** Doğrudan etiket ve çizgi deseni, renk görmeyen okura da çalışır.
+
+</Lens>
+<Lens role="ux-researcher">
+
+- **Nitel bulguyu sayıyla destekle, sayıyı alıntıyla canlandır.** Grafik "ne kadar", alıntı "neden" der.
+- **Grafiği veriyi bilmeyen birine göster.** Rehberin önerisi: test et, anlaşılıyor mu?
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Grafikten önce mesajı birkaç cümleyle yaz; yazamıyorsan grafiği yeniden düşün.
+- Grafik türünü verinin ilişkisine göre seç: zaman için çizgi, sıralama için bar.
+- Manşet başlığı mesajı, alt başlık verinin ne olduğunu söyler.
+- Süsü at, her şeyi etiketle, mümkünse doğrudan etiket kullan.
+- Bar grafikte ekseni sıfırdan başlat; iyi bir tablo da bir seçenektir.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Bir grafiğin mesajını bulmak için hangi soruyu sorarsın?">
+
+Grafiği telefonda birine anlatsam ne derdim? Mesajı birkaç cümlede yazamıyorsam grafiği sadeleştirmem ya da bölmem gerekir.
+
+</SelfCheck>
+
+<SelfCheck question="Manşet başlığı ile alt başlık arasındaki fark nedir?">
+
+Manşet başlığı mesajı söyler ("siparişler iki katına çıktı"). Alt başlık verinin ne olduğunu, hangi yeri ve dönemi kapsadığını söyler.
+
+</SelfCheck>
+
+<SelfCheck question="Bir bar grafiğinin ekseni 300'den başlıyor. Neden sorun?">
+
+Barlar orantı olarak algılanır. Eksen sıfırdan başlamazsa küçük farklar büyük görünür ve oranlar bozulur. Sıfırdan başlamak hikâyeyi gizliyorsa başka bir grafik türü düşünülür.
+
+</SelfCheck>
+
+<SelfCheck question="Siparişlerin altı kanala dağılımını pasta grafiğiyle göstermek istiyorsun. Ne düşünürsün?">
+
+Rehber pastayı beş ya da daha az kategoride ve baskın bir kategori varsa önerir. Altı benzer büyüklükte dilim için bar grafiği daha iyi okunur.
+
+</SelfCheck>

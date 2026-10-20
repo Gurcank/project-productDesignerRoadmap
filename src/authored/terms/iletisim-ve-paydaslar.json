@@ -1,0 +1,123 @@
+[
+  {
+    "term": "Paydaş analizi",
+    "english": "Stakeholder analysis",
+    "definition": "Bir değişiklikten kimin etkilendiğini ve kimin onu etkileyebileceğini, çıkarları ve tutumlarıyla değerlendirme.",
+    "topic": "paydas-haritasi"
+  },
+  {
+    "term": "Güç-ilgi haritası",
+    "english": "Power-interest grid",
+    "definition": "Paydaşları güç ve ilgiye göre dört köşeye yerleştiren matris: yakından yönet, memnun tut, bilgilendir, izle. Mendelow matrisi de denir.",
+    "topic": "paydas-haritasi",
+    "aliases": [
+      "Mendelow matrisi",
+      "Güç-ilgi matrisi"
+    ]
+  },
+  {
+    "term": "RACI",
+    "english": "Responsible, Accountable, Consulted, Informed",
+    "definition": "Bir işte kimin yaptığını (R), hesap verdiğini (A), danışıldığını (C) ve bilgilendirildiğini (I) gösteren tablo. Her işte tek A olur.",
+    "topic": "raci-daci-rapid",
+    "aliases": [
+      "RACI matrisi"
+    ]
+  },
+  {
+    "term": "DACI",
+    "english": "Driver, Approver, Contributors, Informed",
+    "definition": "Bir kararın rolleri: süreci yürüten sürücü, kararı veren tek onaylayıcı, katkı verenler ve bilgilendirilenler.",
+    "topic": "raci-daci-rapid"
+  },
+  {
+    "term": "RAPID",
+    "english": "Recommend, Agree, Perform, Input, Decide",
+    "definition": "Bain'in karar çerçevesi: öneren, onay veren, uygulayan, girdi veren ve karar veren. Karar veren idealde tek kişidir.",
+    "topic": "raci-daci-rapid"
+  },
+  {
+    "term": "İletişim planı",
+    "english": "Communication plan",
+    "definition": "Hangi bilginin kime, neden, ne zaman, hangi yolla ve kim tarafından iletileceğini yazan plan.",
+    "topic": "iletisim-plani"
+  },
+  {
+    "term": "Eskalasyon eşiği",
+    "english": "Escalation threshold",
+    "definition": "Düzenli raporu beklemeden bir üst kademeye haber verilmesini gerektiren, önceden yazılmış koşul.",
+    "topic": "kotu-haber-ve-eskalasyon"
+  },
+  {
+    "term": "BLUF",
+    "english": "Bottom line up front",
+    "definition": "Mesaja ana noktayla başlamak: önce sonuç ve istek, sonra bağlam. ABD ordusu yazışma standardından gelir.",
+    "topic": "piramit-ilkesi-ve-bluf"
+  },
+  {
+    "term": "Piramit ilkesi",
+    "english": "Pyramid principle",
+    "definition": "Ana fikri tepeye, onu destekleyen anahtar fikirleri ve kanıtları altına dizen yazma yöntemi (Barbara Minto).",
+    "topic": "piramit-ilkesi-ve-bluf",
+    "aliases": [
+      "Minto piramidi"
+    ]
+  },
+  {
+    "term": "MECE",
+    "english": "Mutually exclusive, collectively exhaustive",
+    "definition": "Bir konuyu birbirini dışlayan ve birlikte konunun tamamını kapsayan gruplara ayırma ilkesi.",
+    "topic": "piramit-ilkesi-ve-bluf"
+  },
+  {
+    "term": "Park alanı",
+    "english": "Parking lot",
+    "definition": "Toplantıda konu dışı kalan soruların sonra ele alınmak üzere görünür biçimde yazıldığı liste.",
+    "topic": "toplanti-yonetimi",
+    "aliases": [
+      "Parking lot"
+    ]
+  },
+  {
+    "term": "Yetkisiz etki",
+    "english": "Influence without authority",
+    "definition": "Kendisine bağlı olmayan insanlarla, onların hedeflerini ve ortak çıkarı kullanarak iş yürütme becerisi.",
+    "topic": "yetkisiz-etki"
+  },
+  {
+    "term": "İlkeli müzakere",
+    "english": "Principled negotiation",
+    "definition": "Pozisyonlar yerine çıkarlara odaklanan, seçenek üreten ve nesnel ölçütlere dayanan müzakere yöntemi (Fisher ve Ury).",
+    "topic": "muzakere-ve-batna"
+  },
+  {
+    "term": "BATNA",
+    "english": "Best alternative to a negotiated agreement",
+    "definition": "Anlaşma olmazsa izleyeceğin en iyi yol; önerilen her anlaşmanın gerçek ölçüsü.",
+    "topic": "muzakere-ve-batna"
+  },
+  {
+    "term": "Çatışma tarzları",
+    "english": "Conflict modes",
+    "definition": "Atılganlık ve işbirliği eksenlerinden çıkan beş yaklaşım: rekabet, işbirliği, uzlaşma, kaçınma, uyma (Thomas ve Kilmann).",
+    "topic": "catisma",
+    "aliases": [
+      "Thomas-Kilmann modeli"
+    ]
+  },
+  {
+    "term": "SBI",
+    "english": "Situation-Behavior-Impact",
+    "definition": "Geri bildirimi durum, gözlenen davranış ve etki olarak veren yöntem; niyet sorusuyla SBII olur.",
+    "topic": "sbi-geri-bildirimi",
+    "aliases": [
+      "SBII"
+    ]
+  },
+  {
+    "term": "Sanal ekip",
+    "english": "Virtual team",
+    "definition": "Ağırlıkla elektronik iletişimle, farklı yerlerden ve çoğu zaman farklı saat dilimlerinden çalışan ekip.",
+    "topic": "dagitik-ekipler"
+  }
+]

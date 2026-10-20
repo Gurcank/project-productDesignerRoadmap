@@ -1,0 +1,158 @@
+---
+summary: "Çatışma kaçınılmazdır; asıl soru ona nasıl yaklaşıldığıdır. Atılganlık ve işbirliği eksenleri beş tarz verir: rekabet, işbirliği, uzlaşma, kaçınma ve uyma. Her biri bazı durumlarda doğrudur."
+outcomes:
+  - "Beş çatışma tarzını iki eksenle açıklayabilirsin."
+  - "Bir çatışmada hangi tarzın kullanıldığını tanıyabilirsin."
+  - "Pozisyon çatışmasını çıkar konuşmasına çevirebilirsin."
+minutes: 6
+standard: 2
+skipTerms: ["sınıflandırma"]
+sources:
+  - label: "Wikipedia — Thomas–Kilmann Conflict Mode Instrument"
+    url: "https://en.wikipedia.org/wiki/Thomas%E2%80%93Kilmann_Conflict_Mode_Instrument"
+  - label: "Wikipedia — Getting to Yes"
+    url: "https://en.wikipedia.org/wiki/Getting_to_Yes"
+additions:
+  - "Atılganlık ve işbirliği eksenleri, beş çatışma tarzı, Thomas ve Kilmann 1974 (Wikipedia)"
+  - "Pozisyon ve çıkar ayrımı (Getting to Yes, Wikipedia aracılığıyla)"
+---
+
+import Summary from "~/components/lesson/Summary.astro";
+import SelfCheck from "~/components/lesson/SelfCheck.astro";
+import Case from "~/components/lesson/Case.astro";
+import Lens from "~/components/lesson/Lens.astro";
+import Lenses from "~/components/lesson/Lenses.astro";
+import Matrix2x2 from "~/components/diagrams/primitives/Matrix2x2.astro";
+
+Sprint 6'nın planlamasından bir gün önce Elif, Kaan'ın masasına geldi: "Ece bu sprintte ödeme testini kurmalı, öncelikli." Bir saat sonra Leyla geldi: "Ece bu sprintte öğrenci kartı indirimini bitirmeli, öncelikli." İkisi de haklıydı, ikisi de Kaan'dan bir karar bekliyordu.
+
+Bu bir çatışmaydı ve henüz kimse kimseyle konuşmamıştı. Bu ders, çatışmaya yaklaşmanın beş yolunu ve hangisinin ne zaman işe yaradığını anlatır.
+
+## İki eksen, beş tarz
+
+Kenneth Thomas ve Ralph Kilmann 1974'te bir çatışma tarzı envanteri geliştirdi. Envanterin dayandığı model iki eksen kullanır:
+
+- **Atılganlık:** kendi hedefini ne kadar ileri sürdüğün.
+- **İşbirliği:** karşı tarafın hedefini ne kadar gözettiğin.
+
+İki eksen beş tarz verir:
+
+<Matrix2x2
+  label="Beş çatışma tarzı"
+  caption="Dikey eksen atılganlık, yatay eksen işbirliğidir. Sol üstte rekabet durur: atılgan, işbirliksiz. Sağ üstte işbirliği: atılgan ve işbirlikçi. Sol altta kaçınma: ne atılgan ne işbirlikçi. Sağ altta uyma: işbirlikçi ama atılgan değil. Ortada uzlaşma vardır: ikisinden de biraz. Sprint 6'nın çatışması rekabetle başladı, işbirliğiyle çözüldü."
+  x={{ title: "İşbirliği", low: "düşük", high: "yüksek" }}
+  y={{ title: "Atılganlık", low: "düşük", high: "yüksek" }}
+  quadrants={[
+    { title: "Rekabet", sub: "kazan-kaybet" },
+    { title: "İşbirliği", sub: "kazan-kazan", tone: "progress" },
+    { title: "Kaçınma", sub: "konuyu ertele" },
+    { title: "Uyma", sub: "karşı taraf kazansın" },
+  ]}
+  points={[
+    { label: "Uzlaşma", x: 0.5, y: 0.5 },
+    { label: "Sprint 6, başta", x: 0.18, y: 0.68 },
+    { label: "Sprint 6, sonunda", x: 0.82, y: 0.68 },
+  ]}
+/>
+
+- **Rekabet:** kendi hedefini karşı tarafınkinin önüne koymak. Hızlı karar gereken acil durumlarda işe yarar; sık kullanılırsa ilişkiyi ve güveni zedeler.
+- **İşbirliği:** iki tarafın da hedefini karşılayan bir çözüm aramak. Hedefler örtüşüyorsa ve zaman varsa en iyi sonucu verir.
+- **Uzlaşma:** herkesin bir kısmını aldığı orta yol. İki tarafın da ilerlemesi gerektiğinde işe yarar.
+- **Kaçınma:** konuyu açmamak ya da ertelemek.
+- **Uyma:** karşı tarafın hedefine öncelik vermek.
+
+Wikipedia, envanter maddesinin tek bir kaynağa dayandığını not eder. Bu yüzden burada yalnız eksenler ve tarzlar kullanılıyor; envanterin kişileri sınıflandırma iddiası değil.
+
+**Tarz ≠ kişilik.** Aynı kişi bir konuda rekabet eder, başka bir konuda uyar. Asıl soru, bu durumda hangi tarzın uygun olduğudur.
+
+## Pozisyondan çıkara
+
+Çatışmaların çoğu iki pozisyonun çarpışması gibi görünür: "Ece bunu yapmalı" ve "Ece şunu yapmalı." *Getting to Yes* burada da işe yarar: pozisyonun arkasındaki çıkarı sor. Çıkarlar çoğu zaman pozisyonlar kadar çatışmaz.
+
+Rekabetten işbirliğine geçmenin yolu, iki tarafı aynı masaya oturtup "neden?" sorusunu sormaktır.
+
+<Case>
+
+Kaan iki kararı da vermedi. Elif ile Leyla'yı aynı masaya oturttu:
+
+1. **Pozisyonlar:** ikisi de Ece'nin bu sprintini istiyordu.
+2. **Çıkarlar:** Leyla'nın işi (öğrenci kartı indirimi) kritik yolda değildi; bir hafta bolluğu vardı. Elif'in testi kampanyadan önce iki tam hafta koşmalıydı.
+3. **Seçenek:** Ece ve Can ilk hafta indirimi bitirdi. Burak testi kurdu; test bir sonraki pazartesi başladı.
+4. **Sonuç:** iki iş de zamanında bitti. Kaan retroda bir eylem önerdi: "Takımlar arası öncelik çatışması önce iki tarafla birlikte konuşulur."
+
+</Case>
+
+<Lenses>
+<Lens role="scrum-master">
+
+- **Hakem olma, masayı kur.** İki tarafı ayrı ayrı dinleyip karar vermek, çatışmayı sana taşır.
+- **Tarzı adlandır.** "Şu an ikimiz de rekabet ediyoruz" demek, konuşmayı değiştirebilir.
+
+</Lens>
+<Lens role="product-manager">
+
+- **Önceliği savunurken karşı tarafın hedefini de söyle.** İşbirliği, karşı tarafın hedefini bildiğini göstermekle başlar.
+- **Uzlaşmayı son çare yap.** Herkesin yarısını aldığı çözüm, bazen kimsenin işine yaramaz.
+
+</Lens>
+<Lens role="product-owner">
+
+- **Backlog çatışmasını sıralama ilkesine bağla.** Değer, risk ve bağımlılık, kişisel ısrardan güçlüdür.
+- **Uymayı bilinçli seç.** Bir paydaşa bu kez öncelik vermek, ilişkiye yapılan bir yatırım olabilir.
+
+</Lens>
+<Lens role="project-manager">
+
+- **Kritik yol bilgisini masaya koy.** Bolluk, çatışmanın sessiz çözümüdür.
+- **Acil durumda rekabet etmekten çekinme.** Lansman tehlikedeyse hızlı ve net karar gerekir; sonra ilişkiyi onar.
+
+</Lens>
+<Lens role="business-analyst">
+
+- **Çelişen gereksinimlerin arkasındaki çıkarı bul.** İki departmanın iki kuralı, çoğu zaman aynı riskten korunmak ister.
+- **Kaçınmanın bedelini yaz.** Ertelenen çatışma, çelişen bir gereksinim olarak geri döner.
+
+</Lens>
+<Lens role="product-designer">
+
+- **Tasarım tartışmasını kişisel olmaktan çıkar.** "Benim tasarımım" değil, "kullanıcının sorunu" üzerine konuş.
+- **Ne zaman uyacağını seç.** Her detay için rekabet etmek, önemli olan için gücünü azaltır.
+
+</Lens>
+</Lenses>
+
+<Summary>
+
+- Thomas ve Kilmann'ın modeli iki eksen kullanır: atılganlık ve işbirliği.
+- Beş tarz: rekabet, işbirliği, uzlaşma, kaçınma ve uyma.
+- Her tarz bazı durumlarda doğrudur; tarz kişilik değil, seçimdir.
+- Pozisyon çatışması çoğu zaman çıkar konuşmasıyla çözülür.
+- Kolaylaştırıcı hakem olmaz; iki tarafı aynı masaya oturtur.
+
+</Summary>
+
+## Kendini yokla
+
+<SelfCheck question="Atılganlık ve işbirliği eksenleri ne ölçer?">
+
+Atılganlık kendi hedefini ne kadar ileri sürdüğünü, işbirliği karşı tarafın hedefini ne kadar gözettiğini ölçer.
+
+</SelfCheck>
+
+<SelfCheck question="Rekabet tarzı ne zaman doğrudur, bedeli nedir?">
+
+Hızlı karar gereken acil durumlarda doğrudur. Sık kullanılırsa ilişkiyi ve güveni zedeler.
+
+</SelfCheck>
+
+<SelfCheck question="İki PM aynı geliştiriciyi istiyor ve ikisi de Scrum Master'dan karar bekliyor. Ne yaparsın?">
+
+Karar vermem; iki tarafı aynı masaya oturtup çıkarlarını sorarım. Takvim, bolluk ve bağımlılıklar görünür olunca çoğu zaman iki işi de karşılayan bir sıra bulunur.
+
+</SelfCheck>
+
+<SelfCheck question="Uzlaşma ile işbirliği arasındaki fark nedir?">
+
+Uzlaşmada herkes bir kısmını alır, kimse tam istediğini almaz. İşbirliğinde iki tarafın da hedefini karşılayan bir çözüm aranır; daha çok zaman ve açıklık ister.
+
+</SelfCheck>

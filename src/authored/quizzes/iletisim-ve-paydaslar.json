@@ -1,0 +1,57 @@
+{
+  "category": "iletisim-ve-paydaslar",
+  "sources": [
+    { "label": "Wikipedia — Stakeholder analysis", "url": "https://en.wikipedia.org/wiki/Stakeholder_analysis" },
+    { "label": "Watt — Project Management, Ch. 15 Communications Planning", "url": "https://opentextbc.ca/projectmanagement/chapter/chapter-15-communications-planning-project-management/" },
+    { "label": "Atlassian Team Playbook — DACI", "url": "https://www.atlassian.com/team-playbook/plays/daci" },
+    { "label": "Bain & Company — RAPID Decision Making", "url": "https://www.bain.com/insights/rapid-decision-making/" },
+    { "label": "Wikipedia — BLUF (communication)", "url": "https://en.wikipedia.org/wiki/BLUF_(communication)" },
+    { "label": "Digital.gov / 18F — How to Run an Efficient Meeting", "url": "https://medium.com/@DigitalGov/how-to-run-an-efficient-meeting-bdebbb66d179" },
+    { "label": "UK Government Analysis Function — Data visualisation: charts", "url": "https://analysisfunction.civilservice.gov.uk/policy-store/data-visualisation-charts/" },
+    { "label": "Wikipedia — Getting to Yes", "url": "https://en.wikipedia.org/wiki/Getting_to_Yes" },
+    { "label": "Center for Creative Leadership — SBI", "url": "https://www.ccl.org/articles/leading-effectively-articles/closing-the-gap-between-intent-vs-impact-sbii/" },
+    { "label": "Google SRE Book — Managing Incidents", "url": "https://sre.google/sre-book/managing-incidents/" }
+  ],
+  "items": [
+    {
+      "question": "Ödeme kuruluşu projeyle pek ilgilenmiyor ama kampüs mağazaları için ek onay isteyebilir. Güç-ilgi haritasında nerede durur, onunla nasıl çalışırsın?",
+      "answer": "Gücü yüksek, ilgisi düşük: memnun tutulacak köşede. Ona her şeyi göndermem; kilometre taşlarında, onayını gerektirecek konularda ve zamanında bilgi veririm."
+    },
+    {
+      "question": "Lansman kararının RACI satırında hem proje yöneticisi hem sponsor A olarak yazılı. Ne yaparsın?",
+      "answer": "Tek bir A seçtiririm. Hesap verebilirlik bölünürse karar ya hiç verilmez ya da iki kez verilir. Sponsor A olur, proje yöneticisi kararı hazırlayan R; kararın kendisi için ayrıca bir DACI yazılabilir."
+    },
+    {
+      "question": "Bir kararda hukukun KVKK onayı zorunlu ama kararı hukuk vermiyor. Bunu hangi çerçeveyle yazarsın?",
+      "answer": "RAPID ile: hukuk Agree rolündedir; önerinin uygulanabilir olduğunu onaylar. Kararı Decide rolündeki kişi verir. Öneren ile hukuk anlaşamazsa son sözü karar veren söyler."
+    },
+    {
+      "question": "Kafeler kurulum tarihlerini öğrencilerden duyuyor, müşteri hizmetleri lansmanı sosyal medyadan öğreniyor. Eksik olan ne?",
+      "answer": "Bir iletişim planı: her paydaş için ne, ne zaman, nasıl ve kim tarafından iletileceği. Kanal paydaşın tercihine göre seçilir; planın altına bir eskalasyon eşiği de yazılır."
+    },
+    {
+      "question": "Sponsora gidecek bir e-posta 'Geçen hafta üç toplantı yaptık…' diye başlıyor ve istenen karar son paragrafta. Nasıl düzeltirsin?",
+      "answer": "BLUF ile: ilk cümleye sonucu ve istenen kararı tarihiyle koyarım. Toplantıların anlatımı, sonucu destekleyen ve MECE gruplanmış paragraflara iner."
+    },
+    {
+      "question": "Haftalık toplantı 60 dakika sürüyor, 11 kişi katılıyor, kimse not almıyor ve geçen haftanın kararlarını kimse hatırlamıyor. Üç değişiklik öner.",
+      "answer": "Bir not alan ata ve notları gündemle aynı belgede tut; toplantıyı karar ve engellere ayırıp durum bilgisini yazılı gönder; rolü olmayanları notların okuru yap. Her eylem maddesinin sahibi ve tarihi olsun."
+    },
+    {
+      "question": "Sponsor 12 renkli çizgili bir grafiğe baktı ve 'kampüs nasıl gidiyor?' diye yeniden sordu. Grafiği nasıl düzeltirsin?",
+      "answer": "Önce mesajı cümleyle yazarım. Sonra kafeleri tek bir haftalık toplam çizgiye indirir, hedefi kesikli çizgiyle eklerim. Mesajı manşet başlığına koyarım; kafe kırılımını ekte bir tablo olarak veririm."
+    },
+    {
+      "question": "Tedarikçi 'sözleşme sabit fiyatlı, ek kaynak koyamayız' diyor, sen 'test ortamı pazartesi hazır olmalı' diyorsun. Nasıl ilerlersin?",
+      "answer": "Pozisyonlardan çıkarlara inerim: benim çıkarım dönem başında lansman, onunki zarar etmemek ve referans. Sözleşmedeki kilometre taşını nesnel ölçüt yaparım, iki tarafa yarayan seçenekler üretirim. BATNA'mı önceden bilirim ama tehdit olarak kullanmam."
+    },
+    {
+      "question": "Bir geliştirici review'da QA'nın sözünü üç kez kesti. Ona 'çok kabaydın' demek yerine ne dersin?",
+      "answer": "SBI ile: 'Dünkü Sprint Review'da (durum), Zeynep hataları anlatırken üç kez sözünü kestin (davranış). Son iki madde konuşulamadı (etki).' Sonra niyetini sorar ve dinlerim."
+    },
+    {
+      "question": "Kritik yoldaki bir iş bir hafta kaydı ve haftalık rapora dört gün var. Ne yaparsın?",
+      "answer": "Raporu beklemem; eşik aşıldıysa sponsoru aynı gün ararım. Sorunu, etkisini ve seçenekleri birlikte, önerimle ve kararın beklendiği tarihle anlatırım. Erken haber yönetilebilir, geç haber bir güven sorunudur."
+    }
+  ]
+}

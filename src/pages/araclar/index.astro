@@ -34,12 +34,24 @@ const templates = await getTemplates();
       </ul>
     </section>
 
-    <section aria-labelledby="yakinda" class="tools__section">
-      <h2 id="yakinda">Hazırlanıyor</h2>
-      <ul class="tools__soon">
-        <li><strong>Daha fazla şablon:</strong> proje tüzüğü, iş kırılım yapısı, durum raporu, sprint ve retro panoları, gereksinim belgeleri, araştırma planı. Her biri kendi kategorisiyle birlikte gelir.</li>
-        <li><strong>İşaretlenebilir kontrol listeleri:</strong> yayına hazırlık, erişilebilirlik ve kalite listeleri; tiklerin ilerlemenle birlikte saklanır.</li>
-        <li><strong>Proje akış haritası:</strong> fikirden yayına her fazda hangi rolün ne yaptığı.</li>
+    <section aria-labelledby="materyalden" class="tools__section">
+      <h2 id="materyalden">Materyalden araçlar</h2>
+      <ul class="tools__grid">
+        <li class="tool-card glass">
+          <p class="tool-card__kind">Bölüm 21 · İşaretlenebilir</p>
+          <h3 class="tool-card__title"><a href="/araclar/kontrol-listeleri/">Kontrol listeleri</a></h3>
+          <p class="tool-card__summary">Bir sitede olması gerekenler: dokuz liste ve küçük projeler için 15 maddelik hızlı sürüm. Tiklerin ilerlemenle birlikte saklanır.</p>
+        </li>
+        <li class="tool-card glass">
+          <p class="tool-card__kind">Bölüm 20 · Rollere göre</p>
+          <h3 class="tool-card__title"><a href="/araclar/akis-haritasi/">Proje akış haritası</a></h3>
+          <p class="tool-card__summary">Fikirden ölçülen yayına on bir faz: amaç, çıktı, kim ne yapar, kritik kararlar ve atlanırsa ne olur.</p>
+        </li>
+        <li class="tool-card glass">
+          <p class="tool-card__kind">Ek A · Rolüne göre</p>
+          <h3 class="tool-card__title"><a href="/araclar/calisma-takvimi/">Çalışma takvimi</a></h3>
+          <p class="tool-card__summary">Materyalin altı aylık takvimi ve kendi yolundan çıkarılmış haftalık plan.</p>
+        </li>
       </ul>
       <p class="tools__glossary">Terimler için: <a href="/sozluk/">Sözlük</a></p>
     </section>
@@ -135,19 +147,6 @@ const templates = await getTemplates();
     color: var(--c-text-muted);
   }
 
-  .tools__soon {
-    display: grid;
-    gap: var(--spacing-3);
-    max-inline-size: var(--measure);
-    margin-block-start: var(--spacing-4);
-    padding-inline-start: var(--spacing-6);
-    list-style: disc;
-    color: var(--c-text-secondary);
-  }
-
-  .tools__soon strong {
-    color: var(--c-text);
-  }
 
   .tools__glossary {
     margin-block-start: var(--spacing-6);

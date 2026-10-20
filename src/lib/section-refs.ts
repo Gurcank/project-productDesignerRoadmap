@@ -54,14 +54,35 @@ export const SECTION_REF_PATTERN = /(?<![\d.])(\d+\.\d{1,2})(?!\.\d)\b|\bBölüm
 /** Only parenthesised text is scanned, so "4.5:1" in a sentence stays plain. */
 export const PARENTHESISED_PATTERN = /\(([^()]{1,80})\)/g;
 
+/**
+ * Chapters 20 and 21 are tools, not topics: one page each under /araclar/, with
+ * an anchor per section ("21.2" → #s-21-2). The anchors are written by the
+ * pages from the same rule, see toolSectionAnchor.
+ */
+const TOOL_CHAPTERS: Record<string, string> = {
+  "20": "/araclar/akis-haritasi/",
+  "21": "/araclar/kontrol-listeleri/",
+};
+/** The last section of each tool chapter, so "21.12" stays unresolved instead of linking a missing anchor. */
+const TOOL_LAST_SECTION: Record<string, number> = { "20": 12, "21": 9 };
+
+export function toolSectionAnchor(section: string): string {
+  return `s-${section.replace(".", "-")}`;
+}
+
 export function resolveSectionHref(section?: string, chapter?: string): string | null {
   if (section) {
     const target = sectionMap[section];
-    return target ? `/${target.category}/${target.slug}/` : null;
+    if (target) return `/${target.category}/${target.slug}/`;
+    const [chapterPart = "", sectionPart = ""] = section.split(".");
+    const tool = TOOL_CHAPTERS[chapterPart];
+    const inRange = Number(sectionPart) >= 1 && Number(sectionPart) <= (TOOL_LAST_SECTION[chapterPart] ?? 0);
+    return tool && inRange ? `${tool}#${toolSectionAnchor(section)}` : null;
   }
   if (chapter) {
     const slug = chapterMap[chapter];
-    return slug ? `/${slug}/` : null;
+    if (slug) return `/${slug}/`;
+    return TOOL_CHAPTERS[chapter] ?? null;
   }
   return null;
 }
